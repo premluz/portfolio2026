@@ -1,4 +1,5 @@
 import {applyDefaultSettings} from './default-settings.js';
+import {copyContactEmail,mountContactEmailCopy} from './contact-actions.js';
 import {VoiceDock} from './voice-dock.js';
 import {ComposerContext,readContextualButtons} from './composer-context.js';
 import {CardRail,applySectionPresentation} from './card-rail.js';
@@ -330,6 +331,7 @@ const projectMenu=$('#projectMenu'),projectMenuToggle=$('#projectMenuToggle');
 projectMenu.innerHTML=projectMenuMarkup(projects,canonicalProjectRoute(current));
 mountMenuIconSettings($('#settings'),projectMenu);
 const siteToast=createSiteToast($('#interactionFeedback'),{reduced:()=>reduce.matches});
+mountContactEmailCopy(projectMenu,siteToast.show);
 const statusStack=mountStatusStack({dock:$('#dock'),hud:$('#interactionHud'),messages:$('#interactionFeedback'),obstacles:()=>[$('#dock .composer-suggestions'),$('#dock .composer-context-actions')]});
 const menuPreview=new ProjectMenuPreview(projectMenu,projects,{reduced:()=>reduce.matches});
 installProjectMenuHover(projectMenu,{reduced:()=>reduce.matches,onHover:row=>menuPreview.show(row),onLeave:()=>menuPreview.hide()});
@@ -409,7 +411,7 @@ composerContext=new ComposerContext(dockMorph,{mode:contextualButtons,splitProje
  else if(action==='previous'&&scene.carousel)scene.carousel.previous?.click();
  else if(action==='next'&&scene.carousel)scene.carousel.next?.click();
  else if(action==='prototype'||action==='fullscreen')openMediaAction(action,button);
- else if(action==='contact-message')void dispatchCommand({id:'route.contact',source:'pointer'});
+ else if(action==='contact-email')void copyContactEmail(siteToast.show);
  else void dispatchCommand({id:action==='back'?'navigation.back':'project.'+action,source:'pointer'});
 }});
 $('#splitProjectControls').checked=splitProjectControls;$('#splitProjectControls').onchange=e=>{splitProjectControls=e.target.checked;composerContext.setSplitProjectControls(splitProjectControls);try{localStorage.setItem('prem-split-project-controls',String(splitProjectControls));}catch{}};

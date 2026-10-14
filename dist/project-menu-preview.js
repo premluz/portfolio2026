@@ -1,4 +1,7 @@
 import {imageSource} from './media-loading.js';
+import {ProjectPreviewVideo} from './project-preview-video.js';
+export const PROJECT_PREVIEW_SIZE=Object.freeze({width:360,height:260});
+const previewGap=24;
 // A shared, unclipped thumbnail portal. Row movement never replays its entrance.
 export function menuPreviewPosition(menu,row,{width:vw,height:vh},size={width:200,height:160},placement='left',gap=16){
  const edge=12,w=Math.min(size.width,vw-edge*2),h=size.height;
@@ -14,9 +17,10 @@ export function menuPreviewPosition(menu,row,{width:vw,height:vh},size={width:20
  return null;
 }
 export class ProjectMenuPreview{
- constructor(menu,projects,{reduced=()=>false,anchor=()=>menu,size={width:200,height:160},placement='left',gap=16}={}){
+ constructor(menu,projects,{reduced=()=>false,anchor=()=>menu,size=PROJECT_PREVIEW_SIZE,placement='left',gap=previewGap}={}){
   this.menu=menu;this.anchor=anchor;this.size=size;this.placement=placement;this.gap=gap;this.projects=new Map(projects.map(p=>[p.id,p]));this.reduced=reduced;this.token=0;this.cache=new Map();this.animations=new Map();
   this.el=document.createElement('div');this.el.className='project-menu-preview';this.el.setAttribute('aria-hidden','true');document.body.append(this.el);
+  this.video=new ProjectPreviewVideo(this.el,{reduced});
   this.focus=e=>{const row=e.target.closest('[data-project-menu-item]');row?this.show(row):this.hide();};
   this.blur=e=>{if(!menu.contains(e.relatedTarget))this.hide();};
   this.resize=()=>{if(this.row)this.position(this.row);};
@@ -35,12 +39,13 @@ export class ProjectMenuPreview{
  }
  async show(row){
   const project=this.projects.get(row?.dataset.projectMenuItem);if(!project?.image){this.hide();return;}
+  const changed=this.row!==row;if(changed)this.video.stop();
   this.row=row;this.el.classList.toggle('no-motion',this.reduced()||document.documentElement?.dataset.animation==='off');
   if(!this.position(row)){this.hide();return;}
-  if(this.url===project.image){++this.token;this.pendingUrl=null;this.el.classList.add('is-visible');return;}
+  if(this.url===project.image){++this.token;this.pendingUrl=null;this.el.classList.add('is-visible');if(changed)this.video.start(project);return;}
   if(this.pendingUrl===project.image)return;
   const token=++this.token;this.pendingUrl=project.image;
-  let loaded;try{loaded=await this.load(project.image);}catch{if(token===this.token)this.pendingUrl=null;return;}
+  let loaded;try{loaded=await this.load(project.image);}catch(error){if(token===this.token)this.pendingUrl=null;console.warn('Project preview image could not load.',error);return;}
   if(token!==this.token||!this.row||this.menu.hidden)return;
   this.pendingUrl=null;this.url=project.image;
   const image=loaded.cloneNode();image.alt='';image.draggable=false;image.className='project-menu-preview-image';
@@ -48,13 +53,14 @@ export class ProjectMenuPreview{
   const old=[...this.el.children];
   for(const node of old){const opacity=getComputedStyle(node).opacity;const running=this.animations.get(node);if(running){running.onfinish=null;running.cancel();this.animations.delete(node);}node.style.opacity=opacity;}
   this.image=image;this.el.append(image);this.el.classList.add('is-visible');
+  this.video.start(project);
   const duration=this.reduced()?0:220;
   for(const node of old){const animation=node.animate([{opacity:node.style.opacity},{opacity:0}],{duration,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'});this.animations.set(node,animation);animation.onfinish=()=>{if(this.animations.get(node)!==animation)return;this.removeImage(node);};}
-  const animation=image.animate([{opacity:old.length?0:1},{opacity:1}],{duration,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'});this.animations.set(image,animation);animation.onfinish=()=>{if(this.animations.get(image)!==animation)return;image.style.opacity='1';animation.onfinish=null;animation.cancel();this.animations.delete(image);if(this.image===image)for(const node of [...this.el.children])if(node!==image)this.removeImage(node);};
+  const animation=image.animate([{opacity:old.length?0:1},{opacity:1}],{duration,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'});this.animations.set(image,animation);animation.onfinish=()=>{if(this.animations.get(image)!==animation)return;image.style.opacity='1';animation.onfinish=null;animation.cancel();this.animations.delete(image);if(this.image===image)for(const node of [...this.el.children])if(node!==image&&node!==this.video.video)this.removeImage(node);};
   // Bound rapid scrubbing, then retain exactly one image when the swap settles.
   while(this.el.children.length>3)this.removeImage(this.el.firstElementChild);
  }
  removeImage(node){const animation=this.animations.get(node);if(animation){animation.onfinish=null;animation.cancel();this.animations.delete(node);}node.remove();}
- hide(){++this.token;this.pendingUrl=null;this.row=null;this.el.classList.remove('is-visible');}
+ hide(){this.video.stop();++this.token;this.pendingUrl=null;this.row=null;this.el.classList.remove('is-visible');}
  destroy(){this.hide();for(const animation of this.animations.values())animation.cancel();this.animations.clear();this.el.remove();this.menu.removeEventListener('focusin',this.focus);this.menu.removeEventListener('focusout',this.blur);this.menu.removeEventListener('scroll',this.resize);removeEventListener('resize',this.resize);removeEventListener('scroll',this.resize);}
 }

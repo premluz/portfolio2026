@@ -8,7 +8,7 @@ export function installTooltips(root=document){
  const find=target=>target?.closest?.('[data-tooltip]');
  root.addEventListener('pointerover',e=>{const node=find(e.target);if(node&&!node.contains(e.relatedTarget)&&e.pointerType!=='touch')show(node);});
  root.addEventListener('pointerout',e=>{if(active&&active.contains(e.target)&&!active.contains(e.relatedTarget)&&document.activeElement!==active)hide();});
- root.addEventListener('focusin',e=>{const node=find(e.target);if(node)show(node);else hide();});
+ root.addEventListener('focusin',e=>{const node=find(e.target);if(node&&node.dataset.tooltipPointerOnly===undefined)show(node);else hide();});
  root.addEventListener('focusout',e=>{if(active===e.target)hide();});
  root.addEventListener('pointerdown',e=>{const node=find(e.target);if(e.pointerType==='touch'&&node?.classList.contains('setting-info'))show(node);else hide();});
  addEventListener('keydown',e=>{if(e.key==='Escape')hide();});addEventListener('resize',hide);addEventListener('scroll',hide,true);

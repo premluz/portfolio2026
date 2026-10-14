@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
-import {menuPreviewPosition,ProjectMenuPreview} from '../dist/project-menu-preview.js';
+import {menuPreviewPosition,ProjectMenuPreview,PROJECT_PREVIEW_SIZE} from '../dist/project-menu-preview.js';
 const rect={left:300,right:820,top:300},rowRect={top:450,height:40};
+assert.equal(menuPreviewPosition({left:500,right:700,top:300},rowRect,{width:1200,height:900},PROJECT_PREVIEW_SIZE,'left',24).left,116,'Large list previews sit to the left with a clear gap');
 assert.equal(menuPreviewPosition(rect,rowRect,{width:1200,height:900}).left,84,'Preview sits beside the glass, never inside its clip');
 assert.equal(menuPreviewPosition({left:12,right:532,top:300},rowRect,{width:900,height:900}).left,548,'Falls back to the right');
 assert.equal(menuPreviewPosition({left:300,right:400,top:300},rowRect,{width:1200,height:900},{width:200,height:160},'right',24).left,424,'Text-list thumbnails sit to the right with a clear gap');
@@ -14,6 +15,7 @@ const loads=new Map();globalThis.Image=class{constructor(){Object.assign(this,no
 const menu={hidden:false,getBoundingClientRect:()=>rect,contains:target=>!!target?.dataset,addEventListener(key,fn){listeners.set('menu-'+key,fn);},removeEventListener(key){listeners.delete('menu-'+key);}};
 const row=id=>({dataset:{projectMenuItem:id},getBoundingClientRect:()=>rowRect});
 const preview=new ProjectMenuPreview(menu,[{id:'a',image:'a.png'},{id:'b',image:'b.png'},{id:'c',image:'c.png'}]);
+assert.equal(preview.size,PROJECT_PREVIEW_SIZE,'Navigation and homepage previews share their default dimensions');
 const a=row('a'),b=row('b');
 const first=preview.show(a),second=preview.show(b);loads.get('a.png').onload();await first;assert.equal(preview.url,undefined,'Slow old loads cannot replace the latest hover');loads.get('b.png').onload();await second;assert.equal(preview.url,'b.png');assert(preview.el.classList.contains('is-visible'));
 const third=preview.show(a);await third;assert.equal(preview.url,'a.png');assert.equal(preview.el.children.length,2,'Next row crossfades in the existing preview');

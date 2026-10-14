@@ -9,7 +9,7 @@ export function carouselVisibility(rect,{top=0,bottom}={}){
 }
 export function contextualActions({project=null,carousel=null,section=null,back=false,fullScreen=true}={}){
  if(section?.kind==='testimonials')return [{id:'testimonials-linkedin',group:'testimonials',label:'View on LinkedIn',text:true,href:section.href,external:true}];
- if(section?.kind==='footer')return [{id:'contact-linkedin',group:'contact-linkedin',label:'LinkedIn',tooltip:'LinkedIn',href:section.linkedin,external:true},{id:'contact-email',group:'contact-email',label:'Email',tooltip:'Email',href:section.email,external:true},{id:'contact-message',group:'contact-message',label:'Send a message',text:true}];
+ if(section?.kind==='footer')return [{id:'contact-linkedin',group:'contact-linkedin',label:'LinkedIn',tooltip:'LinkedIn',href:section.linkedin,external:true},{id:'contact-email',group:'contact-email',label:'Copy email',tooltip:'Copy email'}];
  if(project)return [{id:'back',group:'back',label:'Go Back',tooltip:'Go Back [Esc]',text:true},...(project.prototype?.url?[{id:'prototype',group:'prototype',label:'View prototype',compactLabel:'Prototype',text:true}]:[]),...(fullScreen?[{id:'fullscreen',group:'fullscreen',label:'Full screen',tooltip:'Full screen'}]:[]),{id:'previous',group:'navigation',label:'Previous project',tooltip:'[←] Previous'},{id:'next',group:'navigation',label:'Next project',tooltip:'Next [→]'}];
  if(carousel)return [{id:'view',group:'primary',label:'View project',text:true},{id:'previous',group:'navigation',label:'Previous card',tooltip:'[←] Previous'},{id:'next',group:'navigation',label:'Next card',tooltip:'Next [→]'}];
  return back?[{id:'back',group:'back',label:'Go Back',tooltip:'Go Back [Esc]',text:true}]:[];

@@ -1,0 +1,22 @@
+import assert from 'node:assert/strict';
+import {ProjectPreviewVideo,PREVIEW_VIDEO_DELAY} from '../dist/project-preview-video.js';
+
+const timers=new Map();let timerId=0,plays=0,destroys=0,reduced=false;
+globalThis.setTimeout=(fn,delay)=>{timers.set(++timerId,{fn,delay});return timerId;};
+globalThis.clearTimeout=id=>timers.delete(id);
+const media=[];
+globalThis.document={documentElement:{dataset:{}},createElement:()=>({dataset:{},setAttribute(){},remove(){this.removed=true;}})};
+const root={classList:{contains:()=>true},append:node=>media.push(node)};
+const controller=new ProjectPreviewVideo(root,{reduced:()=>reduced,createPlayer:()=>({play:async()=>plays++,destroy:()=>destroys++})});
+controller.start({videoUrl:'assets/porter.mp4'});assert.equal(media.length,0,'The still stays first, with no video created before dwell');
+assert.equal([...timers.values()][0].delay,PREVIEW_VIDEO_DELAY);
+controller.stop();assert.equal(timers.size,0,'Leaving before dwell cancels playback');
+controller.start({videoUrl:'assets/porter.mp4'});controller.start({videoUrl:'assets/bastion.mp4'});
+assert.equal(timers.size,1,'Scrubbing rows retains only the latest dwell timer');
+const scheduled=[...timers.values()][0];timers.clear();scheduled.fn();
+assert.equal(media[0].dataset.videoUrl,'assets/bastion.mp4');assert.equal(plays,1);
+controller.stop();assert.equal(destroys,1);assert(media[0].removed,'Leaving releases the active media controller and node');
+controller.start({image:'assets/still-only.png'});assert.equal(timers.size,0,'Image-only projects never schedule media');
+reduced=true;controller.start({videoUrl:'assets/porter.mp4'});assert.equal(timers.size,0,'Reduced motion keeps the image');
+reduced=false;document.documentElement.dataset.animation='off';controller.start({videoUrl:'assets/porter.mp4'});assert.equal(timers.size,0);
+console.log('Project preview video passed: image-first dwell, latest-row ownership, cancellation, media cleanup and motion preferences.');

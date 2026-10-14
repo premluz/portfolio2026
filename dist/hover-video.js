@@ -8,8 +8,8 @@ function watch(enabled){for(const event of events)globalThis[enabled?'addEventLi
 // Each hover owns one complete playback. Spotlight/detail playback repeats at
 // the native ended boundary, so leaving never cuts a clip short.
 export class HoverVideo {
- constructor(el,video,onMetadata=()=>{}){
-  this.el=el;this.video=video;this.active=false;this.dead=false;this.generation=0;
+ constructor(el,video,onMetadata=()=>{},{decorative=false}={}){
+  this.el=el;this.video=video;this.decorative=decorative;this.active=false;this.dead=false;this.generation=0;
   this.trigger=el.closest?.('.project-card')||el;
   this.hover=matchMedia('(hover: hover)');this.reduced=matchMedia('(prefers-reduced-motion: reduce)');
   video.muted=true;video.defaultMuted=true;video.loop=false;video.playsInline=true;
@@ -26,7 +26,8 @@ export class HoverVideo {
   queue();
  }
  visible(){
-  if(this.dead||this.reduced.matches||document.hidden||!this.el.isConnected||this.el.closest?.('[hidden],[aria-hidden="true"],.flow-shell,.drag-stage,.transition-clone')||getComputedStyle(this.el).visibility==='hidden'||document.documentElement?.classList?.contains('route-transition'))return false;
+  const hiddenSelector=this.decorative?'[hidden],.flow-shell,.drag-stage,.transition-clone':'[hidden],[aria-hidden="true"],.flow-shell,.drag-stage,.transition-clone';
+  if(this.dead||this.reduced.matches||document.hidden||!this.el.isConnected||this.el.closest?.(hiddenSelector)||getComputedStyle(this.el).visibility==='hidden'||document.documentElement?.classList?.contains('route-transition'))return false;
   if(this.el.getBoundingClientRect){const r=this.el.getBoundingClientRect();return r.width>0&&r.height>0&&r.bottom>0&&r.top<innerHeight&&r.right>0&&r.left<innerWidth;}
   return true;
  }

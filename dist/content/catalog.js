@@ -921,7 +921,7 @@ export const catalog={
         {
           "id": "about-side-projects",
           "type": "timeline",
-          "title": "Side projects",
+          "title": "Side Projects & R&D",
           "items": [
             {
               "id": "side-rios",
@@ -933,6 +933,18 @@ export const catalog={
               "id": "side-porter",
               "type": "text",
               "title": "Porter",
+              "paragraphs": []
+            },
+            {
+              "id": "side-merlin",
+              "type": "text",
+              "title": "Merlin",
+              "paragraphs": []
+            },
+            {
+              "id": "side-bastion",
+              "type": "text",
+              "title": "Bastion",
               "paragraphs": []
             }
           ]

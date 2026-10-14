@@ -14,6 +14,11 @@ applyDefaultSettings(storage);
 assert.equal(storage.getItem('prem-home-layout'),'user-choice','Existing scalar preferences are preserved');
 assert.deepEqual(JSON.parse(storage.getItem('prem-motion-settings')),{duration:999},'Existing grouped preferences are preserved');
 assert.equal(storage.getItem('prem-home-product-display'),'carousel');
+assert.equal(storage.getItem('prem-split-project-controls'),'true');
+const legacySplit=new Map([['prem-split-project-controls','false']]);
+const splitStorage={getItem:key=>legacySplit.get(key)??null,setItem:(key,value)=>legacySplit.set(key,String(value))};
+applyDefaultSettings(splitStorage);assert.equal(legacySplit.get('prem-split-project-controls'),'true');
+legacySplit.set('prem-split-project-controls','false');applyDefaultSettings(splitStorage);assert.equal(legacySplit.get('prem-split-project-controls'),'false','Later explicit control-layout choices persist');
 for(const [previous,expected] of [['text','carousel'],['cards','cards']]){
  const saved=new Map([['prem-home-product-display',previous]]);
  const existing={getItem:key=>saved.get(key)??null,setItem:(key,value)=>saved.set(key,String(value))};

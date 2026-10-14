@@ -7,7 +7,7 @@ export const DEFAULT_STORAGE_VALUES=Object.freeze({
  'prem-card-title-size':'18','prem-card-padding-uniform':'true','prem-card-padding-all':'32','prem-card-padding-top':'32','prem-card-padding-right':'32','prem-card-padding-bottom':'32','prem-card-padding-left':'32','prem-card-rounding':'46','prem-card-gap':'56',
  'prem-ambient-light-movement':'true','prem-ambient-hover-speed':'65','prem-ambient-detail-glow':'true','prem-composer-glow':'false','prem-full-bleed':'false','prem-image-rounding':'25','prem-show-full-screen-option':'true',
  'prem-detail-heading-beside':'true','prem-wide-hero':'false','prem-hide-branding':'true','prem-nav-rounding':'100','prem-nav-item-padding':'13','prem-nav-container-padding':'0','prem-nav-item-font-size':'12',
- 'prem-split-project-controls':'false','prem-contextual-buttons':'composer','prem-contextual-composer':'true','prem-always-dark-glass':'true','prem-menu-gesture-visible':'false','prem-menu-info-visible':'false','prem-menu-animation-visible':'false',
+ 'prem-split-project-controls':'true','prem-contextual-buttons':'composer','prem-contextual-composer':'true','prem-always-dark-glass':'true','prem-menu-gesture-visible':'false','prem-menu-info-visible':'false','prem-menu-animation-visible':'false',
  'prem-image-ripple-enabled':'false','prem-image-blur-enabled':'false','prem-glassOpacity':'40','prem-roomBlur':'11','prem-roomShade':'6','prem-edge-shade-top':'false','prem-edge-shade-bottom':'true','prem-edge-shade-left':'false','prem-edge-shade-right':'false','prem-edge-shade-retreat':'false','prem-edge-shade-depth':'70',
  'prem-assistant-sound':'true','prem-animations':'true','prem-theme':'light'
 });
@@ -23,6 +23,8 @@ export const DEFAULT_JSON_STORAGE_VALUES=Object.freeze({
 
 const productDisplayDefaultKey='prem-home-product-display-default';
 const productDisplayKey='prem-home-product-display';
+const splitControlsKey='prem-split-project-controls';
+const splitControlsDefaultKey='prem-split-project-controls-default';
 
 export function applyDefaultSettings(storage){
  if(storage===undefined)try{storage=globalThis.localStorage;}catch(error){console.warn('Portfolio defaults could not access browser storage.',error);return;}
@@ -32,6 +34,10 @@ export function applyDefaultSettings(storage){
   if(storage.getItem(productDisplayDefaultKey)===null){
    if(storage.getItem(productDisplayKey)==='text')storage.setItem(productDisplayKey,DEFAULT_STORAGE_VALUES[productDisplayKey]);
    storage.setItem(productDisplayDefaultKey,DEFAULT_STORAGE_VALUES[productDisplayKey]);
+  }
+  if(storage.getItem(splitControlsDefaultKey)===null){
+   if(storage.getItem(splitControlsKey)==='false')storage.setItem(splitControlsKey,DEFAULT_STORAGE_VALUES[splitControlsKey]);
+   storage.setItem(splitControlsDefaultKey,DEFAULT_STORAGE_VALUES[splitControlsKey]);
   }
   for(const [key,value] of Object.entries(DEFAULT_STORAGE_VALUES))if(storage.getItem(key)===null)storage.setItem(key,value);
   for(const [key,value] of Object.entries(DEFAULT_JSON_STORAGE_VALUES))if(storage.getItem(key)===null)storage.setItem(key,JSON.stringify(value));
