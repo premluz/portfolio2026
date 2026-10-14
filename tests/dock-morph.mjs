@@ -1,6 +1,18 @@
 import assert from 'node:assert/strict';
 import {DockMorph,dockGeometry,backGeometry} from '../dist/dock-morph.js';
 
+for(const diameter of [48,54]){
+ const seam=12,width=diameter*2+seam;
+ const glass=dockGeometry(0,{main:358,height:48},{anchor:'main',position:1,split:1,left:0,width,height:diameter,radius:diameter/2,splitAts:[.5]}).popover;
+ assert.equal(glass.segments.length,2);
+ for(const segment of glass.segments)assert.equal(segment.width,glass.height,'Each detached icon outline has equal width and height');
+ for(const path of glass.path.split(/(?=M )/).filter(Boolean)){
+  const top=/^M (-?[\d.]+) (-?[\d.]+) H (-?[\d.]+)/.exec(path);
+  assert(top,'The detached outline has a measurable top edge');
+  assert.equal(Number(top[1]),Number(top[3]),'A circular outline has no flat top edge between its two corner curves');
+ }
+}
+
 // The glass must have one contour while attached and two only after pinching.
 for(const metrics of [{main:252,context:120,gap:12,height:48,radius:24},{main:210,context:82,gap:8,height:48,radius:0}]){
  let width=metrics.main;

@@ -8,7 +8,7 @@ assert.equal(readContextualButtons({getItem:()=>null}),'inline');assert.equal(re
 assert.deepEqual(contextualActions({project:{prototype:{url:'https://example.com'}}}).map(item=>item.id),['back','prototype','fullscreen','previous','next']);
 assert.deepEqual(contextualActions({project:{},fullScreen:false}).map(item=>item.id),['back','previous','next']);assert.deepEqual(contextualActions({back:true}).map(item=>item.id),['back'],'Go Back is the first action above the composer');
 assert.equal(carouselVisibility({top:100,bottom:500,height:400},{bottom:700}),1);assert.equal(carouselVisibility({top:-390,bottom:10,height:400},{bottom:700}),0);assert.equal(carouselVisibility({top:0,bottom:400,height:400},{bottom:0}),0);
-let now=0,id=0,reduced=false;const frames=new Map(),listeners=new Map();
+let now=0,id=0,reduced=false,rowHeight=48;const frames=new Map(),listeners=new Map();
 globalThis.performance={now:()=>now};globalThis.requestAnimationFrame=fn=>{frames.set(++id,fn);return id;};globalThis.cancelAnimationFrame=id=>frames.delete(id);
 globalThis.addEventListener=(name,fn)=>{listeners.set(name,fn);};globalThis.removeEventListener=name=>listeners.delete(name);globalThis.dispatchEvent=()=>{};globalThis.innerWidth=390;
 class Node {
@@ -21,7 +21,7 @@ class Node {
  querySelector(selector){const match=/data-context-action="([^"]+)"/.exec(selector);return match?this.all().find(node=>node.dataset.contextAction===match[1]):null;}
  get activeChildren(){return this.children.filter(node=>node.style.position!=='absolute');}
  get offsetWidth(){if(this.style.width)return parseFloat(this.style.width);if(this.tag==='button'||this.tag==='a')return this.textContent?120:38;if(this.className==='composer-context-slot'||this.className==='composer-context-presence')return this.children[0]?.offsetWidth||0;return Math.min(innerWidth-32,this.activeChildren.reduce((sum,child)=>sum+child.offsetWidth+(parseFloat(child.style.marginRight)||0),10)+Math.max(0,this.activeChildren.length-1)*4);}
- get offsetHeight(){return this.className==='composer-context-actions'?48:38;}
+ get offsetHeight(){return this.className==='composer-context-actions'?rowHeight:38;}
  get offsetLeft(){if(this.style.position==='absolute')return parseFloat(this.style.left)||0;if(this.parent?.className==='composer-context-actions'){let left=5;for(const sibling of this.parent.activeChildren){if(sibling===this)return left;left+=sibling.offsetWidth+4+(parseFloat(sibling.style.marginRight)||0);}}return 0;}
  get offsetTop(){return this.style.position==='absolute'?parseFloat(this.style.top)||0:this.parent?.className==='composer-context-actions'?5:0;}
  get scrollWidth(){return this.offsetWidth;}get scrollHeight(){return this.offsetHeight;}
@@ -65,7 +65,10 @@ context.setMode('composer');finish();assert.equal(context.position,1);assert.equ
 const testimonialRoot={isConnected:true,closest:()=>null,getBoundingClientRect:()=>({top:100,bottom:500,height:400})};
 scene={route:'work',galleries:[gallery],contextSections:[{kind:'testimonials',root:testimonialRoot,href:'https://www.linkedin.com/in/premluczak/details/recommendations/'}]};context.refresh();finish();assert.deepEqual(context.rendered.actions.map(action=>action.id),['testimonials-linkedin']);const testimonialLink=context.actions.items.get('testimonials-linkedin').button;assert.equal(testimonialLink.tag,'a');assert.equal(testimonialLink.href,scene.contextSections[0].href);assert.equal(testimonialLink.target,'_blank');
 testimonialRoot.getBoundingClientRect=()=>({top:-500,bottom:-100,height:400});context.refresh();finish();assert.equal(context.rendered.actions[0].id,'view','Leaving testimonials restores the visible gallery controls');
+rowHeight=54;
 scene={route:'work',contextSections:[{kind:'footer',root:{...testimonialRoot,getBoundingClientRect:()=>({top:100,bottom:500,height:400})},linkedin:'https://www.linkedin.com/in/premluczak/'}]};context.refresh();finish();assert.deepEqual(context.rendered.actions.map(action=>action.id),['contact-linkedin','contact-email']);const emailButton=context.actions.items.get('contact-email').button;assert.equal(emailButton.tag,'button');assert.equal(emailButton.dataset.tooltip,'Copy email');emailButton.onclick();assert.deepEqual(actions.at(-1),['contact-email','work']);
+assert.equal(accessory.height,rowHeight,'Switching to mobile footer icons updates the glass height');
+assert.equal(accessory.radius,rowHeight/2,'The footer glass does not retain the previous row radius');
 reduced=true;context.setFocused(true);assert(context.row.hidden);assert.equal(frames.size,0);context.setFocused(false);assert.equal(context.position,1);assert.equal(frames.size,0);context.destroy();assert(context.row.removed);assert.equal(listeners.size,0);
 
 const suggestions=new Node();suggestions.hidden=true;suggestions.children=[new Node('button'),new Node('button'),new Node('button')];reduced=false;

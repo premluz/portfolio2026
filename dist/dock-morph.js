@@ -15,7 +15,7 @@ function splitPopover(branch,popover){
  // silhouette is continuous; each group reverses into the original neck.
  const gap=Math.min(12,branch.width*.18)*clamp(popover.split||0)*smooth(.94,1,popover.position);
  if(branch.connected||gap<.001||!branch.path)return;
- const radius=Math.min(popover.radius||24,branch.height/2),inner=Math.min(radius,gap*2);
+ const radius=Math.min(popover.radius||24,branch.height/2),inner=radius*clamp(popover.split||0)*smooth(.94,1,popover.position);
  const fractions=popover.splitAts?.length?popover.splitAts:[popover.splitAt||.5],cuts=[];
  for(const [index,fraction] of fractions.entries()){
   const cut=branch.left+branch.width*Math.max(.05,Math.min(.95,fraction)),seam=popover.splitGaps?Math.max(gap,popover.splitGaps[index]*clamp(popover.split||0)*smooth(.94,1,popover.position)):gap;

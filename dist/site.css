@@ -1757,8 +1757,9 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 :root[data-contextual-buttons="composer"] .spatial-gallery-primary-action{display:none}
 :root[data-contextual-buttons="composer"] .detail-media-actions [data-media-focus="fullscreen"]{display:none}
 :root[data-contextual-buttons="inline"] .detail-media-actions [data-media-focus="fullscreen"]{display:none}
-#dock .composer-context-actions{position:absolute;z-index:3;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px;width:max-content;max-width:calc(100vw - 32px);padding:5px;pointer-events:auto;perspective:600px}
+#dock .composer-context-actions{--context-action-padding:5px;--context-action-gap:4px;--context-glass-gap:12px;position:absolute;z-index:3;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:var(--context-action-gap);width:max-content;max-width:calc(100vw - 32px);padding:var(--context-action-padding);pointer-events:auto;perspective:600px}
 #dock .composer-context-slot{display:flex;flex:0 0 auto;height:38px;transform-style:preserve-3d}
+#dock .composer-context-slot[data-group-end="true"]{margin-right:calc(var(--context-glass-gap) + 2 * var(--context-action-padding) - var(--context-action-gap))!important}
 #dock .composer-context-presence{display:flex;transform-origin:center;transform-style:preserve-3d}
 #dock .composer-context-slot[data-exiting="true"]{pointer-events:none}
 #dock .composer-context-actions[hidden]{display:none}
@@ -1774,8 +1775,7 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 :root[data-animation="off"] #dock .composer-context-actions :is(button,a){transition:none;transform:none}
 
 @media(max-width:600px){
- #dock .composer-context-actions{gap:2px}
- #dock .composer-context-slot[data-group-end="true"]{margin-right:8px!important}
+ #dock .composer-context-actions{--context-action-gap:2px}
  #dock .composer-context-actions :is(button,a){padding-inline:8px;font-size:min(14px,var(--composer-font-size))}
  #dock .composer-context-actions .composer-context-icon{width:38px;min-width:38px;flex-basis:38px;padding:6px}
  #dock .composer-context-actions [data-compact-label]{font-size:0}

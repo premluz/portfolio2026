@@ -72,7 +72,7 @@ export class ComposerContext {
   const rect=this.dock.el.getBoundingClientRect(),natural=this.row.getBoundingClientRect(),width=Math.min(Math.max(48,natural.width),innerWidth-32),height=natural.height||48;
   const base=dockGeometry(this.dock.position,this.dock.metrics),center=base.mainLeft+base.mainWidth/2;
   const left=Math.max(16-rect.left,Math.min(center-width/2,innerWidth-16-rect.left-width));
-  this.targetMetrics={anchor:'main',left,width,height,gap:12,radius:24};
+  this.targetMetrics={anchor:'main',left,width,height,gap:12,radius:height/2};
   const present=this.rendered.actions.filter(action=>this.actions.items.get(action.id)?.target);
   this.splitAts=[];this.splitGaps=[];
   for(let index=1;index<present.length;index++)if(present[index].group!==present[index-1].group){
@@ -95,10 +95,10 @@ export class ComposerContext {
  moving(now){return this.position!==this.target||this.velocity||this.splitPosition!==this.splitTarget||this.splitVelocity||this.actions.moving(now)||this.metrics&&['left','width','height'].some(key=>Math.abs(this.metrics[key]-this.targetMetrics[key])>.01||this.metricVelocity[key]);}
  paint(){
   if(this.position===0&&!this.target){this.row.hidden=true;this.row.inert=true;this.dock.setAccessory(null);for(const resolve of this.waiters.splice(0))resolve();return;}
-  this.row.hidden=false;this.measure();const branch={...this.metrics,position:this.position,split:this.splitPosition,splitAts:this.splitAts,splitGaps:this.rendered?.project&&this.splitProjectControls?this.splitGaps:undefined};this.dock.setAccessory(branch);
+  this.row.hidden=false;this.measure();const branch={...this.metrics,radius:this.metrics.height/2,position:this.position,split:this.splitPosition,splitAts:this.splitAts,splitGaps:this.rendered?.project&&this.splitProjectControls?this.splitGaps:undefined};this.dock.setAccessory(branch);
   const shape=dockGeometry(this.dock.position,this.dock.metrics,branch).popover;if(!shape)return;
   const {left,gap}=this.metrics,{width,height}=this.targetMetrics,top=-this.metrics.height-gap;
-  this.row.style.clipPath=`inset(${Math.max(0,shape.top-top)}px ${Math.max(0,left+width-shape.left-shape.width)}px ${Math.max(0,top+height-shape.top-shape.height)}px ${Math.max(0,shape.left-left)}px round ${Math.min(24,shape.height/2)}px)`;
+  this.row.style.clipPath=`inset(${Math.max(0,shape.top-top)}px ${Math.max(0,left+width-shape.left-shape.width)}px ${Math.max(0,top+height-shape.top-shape.height)}px ${Math.max(0,shape.left-left)}px round ${shape.height/2}px)`;
   this.row.style.opacity=String(shape.reveal);this.row.inert=!this.target||shape.reveal<.7;
   for(const [id,source] of [['previous',this.rendered?.carousel?.previous],['next',this.rendered?.carousel?.next]]){const item=this.actions.items.get(id);if(item?.target) item.button.disabled=!!source?.disabled;}
   dispatchEvent(new Event('composer-overlay-change'));
