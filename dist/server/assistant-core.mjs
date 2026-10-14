@@ -1,7 +1,7 @@
 import {answerPublishedQuestion} from './assistant-answer.js';
 import {assistantKnowledge,findCuratedAnswer,suggestionsFor} from './assistant-knowledge.js';
 import {signSpeech} from './voice-core.mjs';
-import {providerErrorCode} from './provider-error.mjs';
+import {providerErrorCode,providerRateLimits} from './provider-error.mjs';
 
 const fallback='I couldn’t find a supported answer. Try something else.';
 const maxBodyBytes=4096;
@@ -135,7 +135,7 @@ export async function handleAssistantRequest(request,env,{documents=[],fetcher=g
     response=await send({...body,service_tier:'auto'});
    }
   }
-  if(!response.ok)return recover('model_unavailable',502,{providerStatus:response.status,providerCode:await providerErrorCode(response)});
+  if(!response.ok)return recover('model_unavailable',502,{providerStatus:response.status,providerCode:await providerErrorCode(response),providerLimits:providerRateLimits(response)});
   const result=await response.json();
   const answer=parseModelAnswer(result?.choices?.[0]?.message?.content,new Set(corpus.map(document=>document.id)));
   if(!answer)return recover('invalid_model_response',502);

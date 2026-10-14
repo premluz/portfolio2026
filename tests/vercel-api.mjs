@@ -4,7 +4,7 @@ import assistant from '../api/assistant.js';
 import voice from '../api/voice.js';
 import {vercelEnvironment,vercelRequest} from '../worker/vercel-adapter.mjs';
 import {resetAssistantRateLimitsForTests} from '../worker/assistant-core.mjs';
-import {providerErrorCode} from '../worker/provider-error.mjs';
+import {providerErrorCode,providerRateLimits} from '../worker/provider-error.mjs';
 
 globalThis.crypto??=webcrypto;
 const origin='https://portfolio.example';
@@ -21,6 +21,7 @@ try{
  process.env.AI_VOICE_ID='GEcKlrQ1MWkJKoc7UTJd';
  assert.equal(vercelEnvironment().AI_MODEL,'gpt-6-luna');
  assert.equal(vercelEnvironment({AI_MODEL:'custom',AI_API_BASE_URL:'https://models.example/v1'}).AI_MODEL,'custom');
+ assert.equal(vercelEnvironment({AI_VOICE_KEY:' test-only-voice-key\n'}).AI_VOICE_KEY,'test-only-voice-key');
  const normalized=vercelRequest(request('assistant',{question:'Who is Prem?',sessionId:'header'}, {'cf-connecting-ip':'spoofed'}));
  assert.equal(normalized.headers.get('cf-connecting-ip'),'198.51.100.42');
  assert.equal((await normalized.json()).sessionId,'header','IP normalization preserves the body stream');
@@ -70,6 +71,8 @@ try{
  const voiceFailure=await absentVoice.json();assert.equal(voiceFailure.providerCode,'voice_not_found');assert(!JSON.stringify(voiceFailure).includes('Private voice details'));
  assert.equal(await providerErrorCode(Response.json({error:{code:'unrecognized-private-value'}})),'unknown_provider_error');
  assert.equal(await providerErrorCode(new Response('not JSON')),'invalid_provider_error');
+ assert.deepEqual(providerRateLimits(new Response('',{headers:{'x-ratelimit-limit-tokens':'10000','retry-after':'2.5'}})),{tokens:10000,retryAfterSeconds:2.5});
+ assert.deepEqual(providerRateLimits(new Response('',{headers:{'x-ratelimit-limit-project-tokens':'0','x-ratelimit-remaining-requests':'bad','retry-after':'-1'}})),{projectTokens:0});
 }finally{
  globalThis.fetch=previousFetch;
  for(const [name,value] of previous)value===undefined?delete process.env[name]:process.env[name]=value;

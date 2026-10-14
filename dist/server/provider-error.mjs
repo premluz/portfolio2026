@@ -15,3 +15,19 @@ export async function providerErrorCode(response){
  const candidates=[body?.error?.code,body?.error?.type,body?.detail?.status,body?.detail?.code];
  return candidates.find(code=>publicCodes.has(code))||'unknown_provider_error';
 }
+
+const rateHeaders=Object.freeze({
+ requests:'x-ratelimit-limit-requests',remainingRequests:'x-ratelimit-remaining-requests',
+ tokens:'x-ratelimit-limit-tokens',remainingTokens:'x-ratelimit-remaining-tokens',
+ projectTokens:'x-ratelimit-limit-project-tokens',remainingProjectTokens:'x-ratelimit-remaining-project-tokens',
+ retryAfterSeconds:'retry-after',
+});
+
+export function providerRateLimits(response){
+ const limits={};
+ for(const [name,header] of Object.entries(rateHeaders)){
+  const raw=response.headers.get(header);if(raw===null||raw.trim()==='')continue;
+  const value=Number(raw);if(Number.isFinite(value)&&value>=0)limits[name]=value;
+ }
+ return limits;
+}

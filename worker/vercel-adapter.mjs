@@ -2,12 +2,12 @@ const defaults=Object.freeze({AI_API_BASE_URL:'https://api.openai.com/v1',AI_MOD
 
 export function vercelEnvironment(env=process.env){
  return {
-  AI_API_BASE_URL:env.AI_API_BASE_URL||defaults.AI_API_BASE_URL,
-  AI_MODEL:env.AI_MODEL||defaults.AI_MODEL,
-  AI_API_KEY:env.AI_API_KEY,
-  OPENAI_API_KEY:env.OPENAI_API_KEY,
-  AI_VOICE_KEY:env.AI_VOICE_KEY,
-  AI_VOICE_ID:env.AI_VOICE_ID,
+  AI_API_BASE_URL:env.AI_API_BASE_URL?.trim()||defaults.AI_API_BASE_URL,
+  AI_MODEL:env.AI_MODEL?.trim()||defaults.AI_MODEL,
+  AI_API_KEY:env.AI_API_KEY?.trim(),
+  OPENAI_API_KEY:env.OPENAI_API_KEY?.trim(),
+  AI_VOICE_KEY:env.AI_VOICE_KEY?.trim(),
+  AI_VOICE_ID:env.AI_VOICE_ID?.trim(),
  };
 }
 
