@@ -372,7 +372,7 @@
       "challenge": "The live platform had inconsistent workflows, repeated solutions and low design maturity. Every improvement needed to ship incrementally while rebuilding stakeholder trust.",
       "prototype": {
         "label": "View prototype",
-        "url": "https://tracr-beryl.vercel.app/inventory/polished"
+        "url": "https://tracr-beryl.vercel.app/"
       }
     },
     {
