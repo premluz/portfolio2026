@@ -7,7 +7,7 @@ export const DEFAULT_STORAGE_VALUES=Object.freeze({
  'prem-card-title-size':'18','prem-card-padding-uniform':'true','prem-card-padding-all':'32','prem-card-padding-top':'32','prem-card-padding-right':'32','prem-card-padding-bottom':'32','prem-card-padding-left':'32','prem-card-rounding':'46','prem-card-gap':'56',
  'prem-ambient-light-movement':'true','prem-ambient-hover-speed':'65','prem-ambient-detail-glow':'true','prem-composer-glow':'false','prem-full-bleed':'false','prem-image-rounding':'25','prem-show-full-screen-option':'true',
  'prem-detail-heading-beside':'true','prem-wide-hero':'false','prem-hide-branding':'true','prem-nav-rounding':'100','prem-nav-item-padding':'13','prem-nav-container-padding':'0','prem-nav-item-font-size':'12',
- 'prem-split-project-controls':'false','prem-contextual-buttons':'composer','prem-contextual-composer':'true','prem-always-dark-glass':'true','prem-menu-gesture-icon':'hand','prem-menu-info-icon':'help','prem-menu-animation-icon':'play',
+ 'prem-split-project-controls':'false','prem-contextual-buttons':'composer','prem-contextual-composer':'true','prem-always-dark-glass':'true','prem-menu-gesture-visible':'false','prem-menu-info-visible':'false','prem-menu-animation-visible':'false',
  'prem-image-ripple-enabled':'false','prem-image-blur-enabled':'false','prem-glassOpacity':'40','prem-roomBlur':'11','prem-roomShade':'6','prem-edge-shade-top':'false','prem-edge-shade-bottom':'true','prem-edge-shade-left':'false','prem-edge-shade-right':'false','prem-edge-shade-retreat':'false','prem-edge-shade-depth':'70',
  'prem-assistant-sound':'true','prem-animations':'true','prem-theme':'light'
 });

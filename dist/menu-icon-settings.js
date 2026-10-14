@@ -1,36 +1,24 @@
-import {setIconSwitchState,switchIcon} from './icon-switch.js';
-
-const choices={
- menuGestureIcon:{storage:'prem-menu-gesture-icon',button:'gesturePreference',fallback:'hand',presets:{hand:['hand','hand'],fingers:['fingers','fingers']}},
- menuInfoIcon:{storage:'prem-menu-info-icon',button:'siteHelp',fallback:'help',presets:{help:'help',info:'info'}},
- menuAnimationIcon:{storage:'prem-menu-animation-icon',button:'animationPreference',fallback:'motion',presets:{motion:['still','motion'],play:['play','pause']}}
+const controls={
+ showGestureControl:{storage:'prem-menu-gesture-visible',button:'gesturePreference'},
+ showInfoControl:{storage:'prem-menu-info-visible',button:'siteHelp'},
+ showAnimationControl:{storage:'prem-menu-animation-visible',button:'animationPreference'}
 };
 
-export function menuIconPreset(setting,value){
- const config=choices[setting];
- return config?.presets[value]||config?.presets[config.fallback]||null;
-}
-
-function applyChoice(setting,value,menu){
- const config=choices[setting],button=menu.querySelector('#'+config.button),preset=menuIconPreset(setting,value);
- if(!button||!preset)return;
- if(setting==='menuInfoIcon')button.innerHTML=switchIcon(preset);
- else{
-  button.dataset.switchIcons=preset.join(',');
-  setIconSwitchState(button,button.dataset.state||(config.button==='animationPreference'?'on':'off'));
- }
+function applyVisibility(toggle,button,enabled){
+ toggle.setAttribute('aria-checked',String(enabled));
+ if(button){button.hidden=!enabled;button.disabled=!enabled;}
 }
 
 export function mountMenuIconSettings(panel,menu,{storage=globalThis.localStorage}={}){
- for(const [id,config] of Object.entries(choices)){
-  const select=panel.querySelector('#'+id);if(!select)continue;
-  let saved;try{saved=storage?.getItem(config.storage);}catch{}
-  select.value=Object.hasOwn(config.presets,saved)?saved:config.fallback;
-  applyChoice(id,select.value,menu);
-  select.addEventListener('change',()=>{
-   const value=Object.hasOwn(config.presets,select.value)?select.value:config.fallback;
-   select.value=value;applyChoice(id,value,menu);
-   try{storage?.setItem(config.storage,value);}catch{}
+ for(const [id,config] of Object.entries(controls)){
+  const toggle=panel.querySelector('#'+id);if(!toggle)continue;
+  const button=menu.querySelector('#'+config.button);let saved;
+  try{saved=storage?.getItem(config.storage);}catch{}
+  let enabled=saved==='true';
+  applyVisibility(toggle,button,enabled);
+  toggle.addEventListener('click',()=>{
+   enabled=!enabled;applyVisibility(toggle,button,enabled);
+   try{storage?.setItem(config.storage,String(enabled));}catch{}
   });
  }
 }
