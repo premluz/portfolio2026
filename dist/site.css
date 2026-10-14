@@ -1691,10 +1691,8 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 .detail.text-only-detail .description dd{max-width:72ch}
 .ask-cards .text-only-card{grid-template-columns:minmax(0,1fr)}
 .ask-cards .text-only-card .visual{display:none}
-/* Magnetic hover gaps, generated hit areas and nested text share one cursor. */
-:is(.home-product-text,.home-about-list-content){cursor:default;user-select:none;-webkit-user-select:none}
-:is(.home-product-text a,.home-about-row)>*{pointer-events:none}
-:is(.home-product-text ul,.home-about-list ul,.spatial-gallery-copy[href]),:is(.home-product-text ul,.home-about-list ul,.spatial-gallery-copy[href]) *,:is(.home-product-text ul,.home-about-list ul,.spatial-gallery-copy[href])::before,:is(.home-product-text a,.home-about-row)::before{cursor:pointer;user-select:none;-webkit-user-select:none}
+/* Generated hit areas and nested text use the same link cursor. */
+:is(.home-product-text a,.home-about-row[href],.spatial-gallery-copy[href]),:is(.home-product-text a,.home-about-row[href],.spatial-gallery-copy[href]) *,:is(.home-product-text a,.home-about-row[href],.spatial-gallery-copy[href])::before{cursor:pointer;user-select:none;-webkit-user-select:none}
 
 /* menu-controls.css */
 /* Two persistent groups share the same icon switch and glass colour tokens. */

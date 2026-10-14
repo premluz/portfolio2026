@@ -12,7 +12,7 @@ export function magneticHoverTarget(pointerY,rows){
 }
 
 export function installProjectMenuHover(root,{reduced=()=>false,onHover=()=>{},onLeave=()=>{}}={}){
- let pointerY=null,hoverState=null;
+ let pointerY=null;
  const update=event=>{
   if(event.pointerType==='touch')return;
   if(event.target?.closest?.('.project-menu-actions')){leave();return;}
@@ -23,17 +23,14 @@ export function installProjectMenuHover(root,{reduced=()=>false,onHover=()=>{},o
    return {node,top:rect.top-bounds.top+scrollTop,height:rect.height};
   }).filter(row=>row.height>0);
   const field=magneticHoverTarget(pointerY,rows),top=clamp(field.y-field.height/2,0,Math.max(0,root.scrollHeight-field.height));
-  const row=rows[field.index]?.node,motion=reduced()?'none':field.snapped?'snap':'follow';
-  if(hoverState?.row===row&&hoverState.top===top&&hoverState.height===field.height&&hoverState.motion===motion)return;
-  hoverState={row,top,height:field.height,motion};
   root.style?.setProperty?.('--project-menu-hover-y',`${top.toFixed(2)}px`);
   root.style?.setProperty?.('--project-menu-hover-height',`${field.height.toFixed(2)}px`);
   root.dataset.cursorTracking='true';
   root.dataset.cursorSnap=field.snapped?'true':'false';
-  root.dataset.cursorMotion=motion;
-  if(row)onHover(row);
+  root.dataset.cursorMotion=reduced()?'none':field.snapped?'snap':'follow';
+  if(field.index>=0)onHover(rows[field.index].node);
  };
- const clearPointer=()=>{pointerY=null;hoverState=null;delete root.dataset.cursorTracking;delete root.dataset.cursorSnap;delete root.dataset.cursorMotion;};
+ const clearPointer=()=>{pointerY=null;delete root.dataset.cursorTracking;delete root.dataset.cursorSnap;delete root.dataset.cursorMotion;};
  const leave=()=>{onLeave();clearPointer();};
  const scroll=()=>{
   if(pointerY===null)return;

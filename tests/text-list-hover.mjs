@@ -1,5 +1,4 @@
 import assert from 'node:assert/strict';
-import {readFile} from 'node:fs/promises';
 import {mountTextListHover} from '../dist/text-list-hover.js';
 import {homeProjects} from '../dist/documents.js';
 
@@ -25,7 +24,4 @@ events.get('focusin')({target:{closest:()=>row}});await Promise.resolve();await 
 assert(loaded.includes('assets/porter.png'),'Hero text previews resolve Porter from the complete published registry');
 assert.equal(portals[0].style.width,'360px');assert.equal(portals[0].style.left,'216px','The thumbnail is on the left with a 24px gap');
 controller.destroy();assert.equal(events.size,0);assert.equal(globalListeners.size,0);
-const css=await readFile(new URL('../dist/content-widths.css',import.meta.url),'utf8');
-assert(css.includes(':is(.home-product-text,.home-about-list-content){cursor:default;user-select:none;-webkit-user-select:none}'),'Blank column gaps explicitly use the arrow instead of browser text-selection heuristics');
-assert(css.includes(':is(.home-product-text a,.home-about-row)>*{pointer-events:none}'),'Hero and Experience row text delegates pointer targeting to the row');
 console.log('Text list hover passed: grid-only input still resolves Porter, shared size, left-side gap and cleanup.');
