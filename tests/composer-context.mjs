@@ -71,6 +71,17 @@ rowHeight=54;
 scene={route:'work',contextSections:[{kind:'footer',root:{...testimonialRoot,getBoundingClientRect:()=>({top:100,bottom:500,height:400})},linkedin:'https://www.linkedin.com/in/premluczak/'}]};context.refresh();finish();assert.deepEqual(context.rendered.actions.map(action=>action.id),['contact-linkedin','contact-email']);const emailButton=context.actions.items.get('contact-email').button;assert.equal(emailButton.tag,'button');assert.equal(emailButton.dataset.tooltip,'Copy email');emailButton.onclick();assert.deepEqual(actions.at(-1),['contact-email','work']);
 assert.equal(accessory.height,rowHeight,'Switching to mobile footer icons updates the glass height');
 assert.equal(accessory.radius,rowHeight/2,'The footer glass does not retain the previous row radius');
+const footerSections=scene.contextSections,contactWidth=accessory.width;rowHeight=48;
+for(const viewport of [390,1440]){
+ globalThis.innerWidth=viewport;dock.metrics.main=Math.min(520,viewport-32);
+ scene={route:'one',project:{id:'one',prototype:{url:'https://example.com/prototype'}},contextSections:[]};context.setSplitProjectControls(true);finish();assert.equal(parseFloat(context.row.style.width),dock.metrics.main);
+ scene={...scene,contextSections:footerSections};context.refresh();finish();
+ assert.equal(context.row.style.width,'','Footer controls release the project row’s full width');assert.equal(context.row.dataset.splitProjectControls,'false');
+ const footerGlass=dockGeometry(0,dock.metrics,accessory).popover;
+ assert.equal(footerGlass.segments.length,2);assert.equal(footerGlass.width,contactWidth,'Project footers use the same compact contact width as the homepage');
+ assert.equal(footerGlass.left+footerGlass.width/2,dock.metrics.main/2,'Contact circles stay centred above the composer');
+ scene={...scene,contextSections:[]};context.refresh();finish();assert.equal(parseFloat(context.row.style.width),dock.metrics.main,'Returning to project actions restores their left/right layout');
+}
 reduced=true;context.setFocused(true);assert(context.row.hidden);assert.equal(frames.size,0);context.setFocused(false);assert.equal(context.position,1);assert.equal(frames.size,0);context.destroy();assert(context.row.removed);assert.equal(listeners.size,0);
 
 const suggestions=new Node();suggestions.hidden=true;suggestions.children=[new Node('button'),new Node('button'),new Node('button')];reduced=false;

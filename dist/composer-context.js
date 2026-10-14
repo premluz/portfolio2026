@@ -46,8 +46,9 @@ export class ComposerContext {
   if(scene.route!=='assistant')for(const candidate of scene.contextSections||[]){if(!candidate.root?.isConnected||candidate.root.closest('[hidden]'))continue;const next=carouselVisibility(candidate.root.getBoundingClientRect(),{bottom:limit});if(next>sectionScore){sectionScore=next;section=candidate;}}
   let carousel=null,score=0;
   for(const gallery of scene.galleries||[]){if(!gallery.root?.isConnected||gallery.root.closest('[hidden]')||!gallery.details?.getAttribute('href'))continue;const next=carouselVisibility(gallery.viewport.getBoundingClientRect(),{bottom:limit});if(next>score){score=next;carousel=gallery;}}
-  const actions=contextualActions({...scene,carousel,section});if(scene.project&&this.splitProjectControls){const firstRight=actions.find(action=>action.id==='fullscreen'||action.id==='previous');if(firstRight)firstRight.pushRight=true;}if(!actions.length)return null;
-  return {...scene,carousel,section,actions,key:JSON.stringify(actions.map(action=>[action.id,action.label,action.text,action.tooltip,action.group,action.href,action.pushRight]))};
+  const project=section?null:scene.project;
+  const actions=contextualActions({...scene,project,carousel,section});if(project&&this.splitProjectControls){const firstRight=actions.find(action=>action.id==='fullscreen'||action.id==='previous');if(firstRight)firstRight.pushRight=true;}if(!actions.length)return null;
+  return {...scene,project,carousel,section,actions,key:JSON.stringify(actions.map(action=>[action.id,action.label,action.text,action.tooltip,action.group,action.href,action.pushRight]))};
  }
  reconcile(){
   this.desired=this.scene();
