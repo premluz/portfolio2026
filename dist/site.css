@@ -1531,12 +1531,12 @@ body:has(.home-carousel-active){overflow-x:clip}
 #dock.is-composer .dock-content>nav>a{opacity:0;visibility:hidden;pointer-events:none}
 #dock .assistant-composer{position:absolute;inset:0;display:flex;align-items:center;gap:4px;width:100%;padding:var(--nav-container-padding) calc(var(--nav-container-padding) + 7px);margin:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .24s ease,visibility .24s}
 #dock.is-composer .assistant-composer{opacity:1;visibility:visible;pointer-events:auto;transition-delay:.1s}
-#dock .assistant-composer button{flex:0 0 36px;width:36px;height:36px;display:grid;place-items:center;border-radius:max(10px,calc(var(--nav-rounding) - 6px));padding:0;background:transparent;color:var(--nav-item-ink);transition:background-color .2s,color .2s}
+#dock .assistant-composer button{flex:0 0 var(--nav-icon-size);width:var(--nav-icon-size);height:var(--nav-icon-size);display:grid;place-items:center;border-radius:var(--radius-icon-control);padding:0;background:transparent;color:var(--nav-item-ink);transition:background-color .2s,color .2s}
 #dock .assistant-composer button:hover,#dock .assistant-composer button:focus-visible{background:var(--nav-item-hover);color:var(--ink)}
 #dock .assistant-composer button[aria-pressed=true]{color:var(--ink);background:var(--nav-active)}
 #dock .assistant-composer button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 #dock .assistant-composer input{flex:1 1 auto;min-width:0;width:100%;height:100%;padding:0 2px;border:0;outline:0;background:transparent;color:var(--ink);font:inherit;font-size:var(--composer-font-size)}#dock .assistant-composer input::placeholder{color:var(--muted)}#dock .assistant-composer input:focus-visible{outline:0}#dock .assistant-composer button:disabled{opacity:.3;cursor:default}
-@media(max-width:650px){.assistant-page{padding:24px 22px calc(var(--assistant-scroll-clearance) + 48px + env(safe-area-inset-bottom,0px))}.assistant-welcome{margin-bottom:45px}.ask-messages{gap:26px}.ask-cards{grid-template-columns:1fr}.ask-cards .project-card{min-height:112px;padding:15px}.ask-cards .project-card .visual{height:76px!important}#dock .assistant-composer{gap:2px;padding-inline:6px}#dock .assistant-composer button{flex-basis:34px;width:34px}#dock .composer-suggestions{max-width:calc(100vw - 20px);gap:6px}#dock .composer-suggestions button{padding:8px 11px;font-size:var(--composer-font-size)}}
+@media(max-width:650px){.assistant-page{padding:24px 22px calc(var(--assistant-scroll-clearance) + 48px + env(safe-area-inset-bottom,0px))}.assistant-welcome{margin-bottom:45px}.ask-messages{gap:26px}.ask-cards{grid-template-columns:1fr}.ask-cards .project-card{min-height:112px;padding:15px}.ask-cards .project-card .visual{height:76px!important}#dock .assistant-composer{gap:2px;padding-inline:6px}#dock .composer-suggestions{max-width:calc(100vw - 20px);gap:6px}#dock .composer-suggestions button{padding:8px 11px;font-size:var(--composer-font-size)}}
 @media(prefers-reduced-motion:reduce){#dock.is-composer .composer-aura-light::before,#dock.is-composer .composer-aura-light::after{animation:none;opacity:.16}#dock .assistant-composer{transition:none}.ask-suggestions button.suggestion-chip{animation:none;opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.ask-cards .project-card.ask-card-enter{animation:none}}
 :root[data-animation="off"] #dock.is-composer .composer-aura-light::before,:root[data-animation="off"] #dock.is-composer .composer-aura-light::after{animation:none;opacity:.16}
@@ -1547,33 +1547,21 @@ body:has(.home-carousel-active){overflow-x:clip}
 .ask-suggestions button.glass-surface{border:1px solid var(--dock-outline);box-shadow:inset 0 1px 0 var(--nav-highlight);color:var(--composer-text-ink);font-size:var(--composer-font-size);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);line-height:var(--line-height-label)}
 .ask-suggestions button.glass-surface:is(:hover,:focus-visible),#dock .composer-suggestions button.glass-surface:is(:hover,:focus-visible){background:linear-gradient(var(--nav-item-hover),var(--nav-item-hover)),linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));color:var(--ink)}
 
-#dock .project-menu button:has(.project-menu-client){display:flex;align-items:baseline;gap:24px}
 .project-menu-client{flex:0 0 auto;color:inherit}
 .project-menu-title{min-width:0;overflow:hidden;text-overflow:ellipsis}
 
 /* A tall field dips below the viewport, leaving a soft semicircular presence. */
 #dock .composer-aura-light{height:clamp(400px,65vw,660px);bottom:calc(var(--dock-bottom) - clamp(250px,42vw,440px))}
-#dock .project-menu button:has(.project-menu-client){justify-content:space-between}
 .project-menu-client{text-align:right;margin-left:auto}
 #dock .project-menu-group+.project-menu-group{margin-top:0}
-#dock .project-menu-actions{position:relative;left:auto;top:auto;width:100%;height:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 12px 12px;margin-top:12px;background:transparent;transform:none;clip-path:none}
-#dock .project-menu-actions>div{display:flex;gap:8px}
-#dock .project-menu-actions button,#dock .project-menu-actions a{display:grid;place-items:center;flex:0 0 36px;width:36px;height:36px;padding:8px;border-radius:50%;background:transparent;color:var(--composer-text-ink);border:1px solid var(--dock-outline);box-shadow:none}
-#dock .project-menu-actions :is(button,a):is(:hover,:focus-visible){background:var(--nav-item-hover);color:var(--ink)}
-#dock .project-menu-actions button:disabled{opacity:.4;cursor:default}
-#dock .project-menu-actions svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-@media(max-width:380px){#dock .project-menu-actions{padding-inline:8px;gap:8px}#dock .project-menu-actions>div{gap:4px}}
 
 /* Suggestions start at the full dock's left edge, including contextual controls. */
 #dock .composer-suggestions{left:calc(-1 * var(--dock-back-space,0px));transform:none;width:calc(var(--dock-painted-width,var(--nav-main-width)) + var(--dock-back-space,0px));max-width:calc(100vw - 32px);justify-content:flex-start}
 #dock .assistant-back{position:absolute;left:calc(-1 * (var(--nav-back-width) + 10px));bottom:0;width:var(--nav-back-width);height:var(--nav-height);display:grid;place-items:center;padding:6px 12px;border:1px solid var(--dock-outline);border-radius:var(--nav-rounding);color:var(--composer-text-ink);font-size:var(--nav-item-font-size);line-height:var(--line-height-label);white-space:nowrap;pointer-events:auto;z-index:5}
 #dock .assistant-back[hidden]{display:none}
 #dock .assistant-back:is(:hover,:focus-visible){color:var(--ink);background:var(--nav-item-hover)}
-#dock .project-menu-actions{justify-content:center;gap:14px;padding-top:20px;padding-bottom:24px}
-#dock .project-menu-actions>div{display:contents}
 
 
-@media(max-width:380px){#dock .project-menu-actions{gap:8px}}
 
 @media(max-width:650px){#dock .composer-aura-light{width:calc(1.5 * (var(--dock-painted-width,var(--nav-main-width)) + 220px));height:360px;bottom:calc(var(--dock-bottom) - 230px)}}
 
@@ -1696,14 +1684,18 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 
 /* menu-controls.css */
 /* Two persistent groups share the same icon switch and glass colour tokens. */
+:root{--nav-icon-size:36px;--touch-icon-size:44px;--radius-icon-control:50%}
 #dock .project-menu{--menu-inset:24px;--menu-section-gap:24px;padding:0}
 #dock .project-menu-projects{padding:var(--menu-inset) calc(var(--menu-inset) / 2) 0}
-#dock .project-menu-projects [data-project-menu-item]{padding-inline:calc(var(--menu-inset) / 2)}
-#dock .project-menu-actions{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px 16px;padding:var(--menu-section-gap) var(--menu-inset) var(--menu-inset);margin-top:0}
+#dock .project-menu-projects [data-project-menu-item]{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding-inline:calc(var(--menu-inset) / 2);min-height:var(--touch-icon-size)}
+#dock .project-menu-actions{position:relative;left:auto;top:auto;width:100%;height:auto;display:flex;align-items:center;flex-wrap:wrap;justify-content:space-between;gap:20px 16px;padding:var(--menu-section-gap) var(--menu-inset) var(--menu-inset);margin-top:0;background:transparent;transform:none;clip-path:none}
 #dock .project-menu::before{left:calc(var(--menu-inset) / 2);right:calc(var(--menu-inset) / 2)}
 #dock .project-menu-actions>div{display:flex;align-items:center;gap:10px}
 #dock .project-menu-actions>div:last-child{margin-left:auto;justify-content:flex-end}
-#dock .project-menu-actions :is(button,a){flex:0 0 36px;width:36px;height:36px;min-height:36px;border:0;border-radius:50%;padding:9px}
+#dock .project-menu-actions :is(button,a){display:grid;place-items:center;flex:0 0 var(--nav-icon-size);width:var(--nav-icon-size);height:var(--nav-icon-size);min-height:var(--nav-icon-size);border:0;border-radius:var(--radius-icon-control);padding:9px;background:transparent;color:var(--composer-text-ink);box-shadow:none}
+#dock .project-menu-actions :is(button,a):is(:hover,:focus-visible){background:var(--nav-item-hover);color:var(--ink)}
+#dock .project-menu-actions button:disabled{opacity:.4;cursor:default}
+#dock .project-menu-actions svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 #dock .project-menu-actions .icon-switch[aria-checked="true"]{background:var(--nav-active);color:var(--ink)}
 #dock .project-menu-actions .icon-switch[aria-checked="false"]{background:transparent;color:var(--composer-text-ink)}
 #dock .project-menu-actions .icon-switch:is(:hover,:focus-visible){background:var(--nav-item-hover);color:var(--ink)}
@@ -1774,7 +1766,7 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 #dock .composer-context-actions :is(button,a):is(:hover,:focus-visible):not(:disabled){background:var(--nav-item-hover);color:var(--ink);transform:scale(.96);transition-duration:var(--nav-hover-in-duration)}
 #dock .composer-context-actions :is(button,a):disabled{opacity:.35;cursor:default}
 #dock .composer-context-actions :is(button,a):focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
-#dock .composer-context-actions .composer-context-icon{width:38px;padding:8px;flex:0 0 38px}
+#dock .composer-context-actions .composer-context-icon{width:38px;padding:8px;flex:0 0 38px;border-radius:var(--radius-icon-control)}
 #dock .composer-context-actions svg{display:block;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 #dock .composer-suggestions button.suggestion-chip{animation:none}
 :root[data-contextual-buttons="composer"] #dock .composer-suggestions{left:0;width:var(--dock-painted-width,var(--composer-max-width));max-width:calc(100vw - 32px)}
@@ -1842,3 +1834,15 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 @media(max-width:750px){.detail,.home-carousel-active .card-placement{touch-action:pan-y pinch-zoom}.timeline-viewport{touch-action:pan-x pan-y pinch-zoom}}
 
 @media(max-width:750px){.corner-controls{right:max(16px,env(safe-area-inset-right));bottom:calc(92px + env(safe-area-inset-bottom))}}
+@media(max-width:650px){
+ :root{--nav-icon-size:var(--touch-icon-size)}
+ #dock .assistant-composer,#dock .voice-composer{padding:0 var(--space-1)}
+ #dock .voice-composer button{flex-basis:var(--touch-icon-size);width:var(--touch-icon-size);height:var(--touch-icon-size)}
+ #dock .project-menu{--menu-inset:var(--space-4);--menu-section-gap:var(--space-4);--menu-client-max-width:50%}
+ #dock .project-menu-actions{gap:var(--space-3)}
+ #dock .project-menu-actions>div{gap:var(--space-2)}
+ #dock .project-menu-client{flex:0 1 auto;min-width:0;max-width:var(--menu-client-max-width);overflow:hidden;text-overflow:ellipsis}
+ #dock .composer-context-actions .composer-context-icon{width:var(--touch-icon-size);height:var(--touch-icon-size);min-width:var(--touch-icon-size);flex-basis:var(--touch-icon-size)}
+ #dock .composer-context-slot:has(.composer-context-icon){height:var(--touch-icon-size)}
+ .corner-controls :is(#askToggle,#settingsToggle){width:var(--touch-icon-size);height:var(--touch-icon-size);padding:0;border-radius:var(--radius-icon-control)}
+}

@@ -10,7 +10,7 @@
 #dock .composer-context-actions :is(button,a):is(:hover,:focus-visible):not(:disabled){background:var(--nav-item-hover);color:var(--ink);transform:scale(.96);transition-duration:var(--nav-hover-in-duration)}
 #dock .composer-context-actions :is(button,a):disabled{opacity:.35;cursor:default}
 #dock .composer-context-actions :is(button,a):focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
-#dock .composer-context-actions .composer-context-icon{width:38px;padding:8px;flex:0 0 38px}
+#dock .composer-context-actions .composer-context-icon{width:38px;padding:8px;flex:0 0 38px;border-radius:var(--radius-icon-control)}
 #dock .composer-context-actions svg{display:block;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 #dock .composer-suggestions button.suggestion-chip{animation:none}
 :root[data-contextual-buttons="composer"] #dock .composer-suggestions{left:0;width:var(--dock-painted-width,var(--composer-max-width));max-width:calc(100vw - 32px)}

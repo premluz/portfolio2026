@@ -12,3 +12,15 @@
 @media(max-width:750px){.detail,.home-carousel-active .card-placement{touch-action:pan-y pinch-zoom}.timeline-viewport{touch-action:pan-x pan-y pinch-zoom}}
 
 @media(max-width:750px){.corner-controls{right:max(16px,env(safe-area-inset-right));bottom:calc(92px + env(safe-area-inset-bottom))}}
+@media(max-width:650px){
+ :root{--nav-icon-size:var(--touch-icon-size)}
+ #dock .assistant-composer,#dock .voice-composer{padding:0 var(--space-1)}
+ #dock .voice-composer button{flex-basis:var(--touch-icon-size);width:var(--touch-icon-size);height:var(--touch-icon-size)}
+ #dock .project-menu{--menu-inset:var(--space-4);--menu-section-gap:var(--space-4);--menu-client-max-width:50%}
+ #dock .project-menu-actions{gap:var(--space-3)}
+ #dock .project-menu-actions>div{gap:var(--space-2)}
+ #dock .project-menu-client{flex:0 1 auto;min-width:0;max-width:var(--menu-client-max-width);overflow:hidden;text-overflow:ellipsis}
+ #dock .composer-context-actions .composer-context-icon{width:var(--touch-icon-size);height:var(--touch-icon-size);min-width:var(--touch-icon-size);flex-basis:var(--touch-icon-size)}
+ #dock .composer-context-slot:has(.composer-context-icon){height:var(--touch-icon-size)}
+ .corner-controls :is(#askToggle,#settingsToggle){width:var(--touch-icon-size);height:var(--touch-icon-size);padding:0;border-radius:var(--radius-icon-control)}
+}
