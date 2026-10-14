@@ -3,6 +3,9 @@ import {readFile} from 'node:fs/promises';
 import {settingsSchema,exportSettings,parseSettings,importSettings,mountSettingsTransfer,MAX_SETTINGS_BYTES} from '../dist/settings-transfer.js';
 
 const html=await readFile(new URL('../dist/index.html',import.meta.url),'utf8');
+const utilityCSS=await readFile(new URL('../dist/portfolio-assistant.css',import.meta.url),'utf8');
+assert(html.includes('<div class="corner-controls" hidden'),'Public utility controls remain hidden in the HTML');
+assert(utilityCSS.includes('.corner-controls[hidden]{display:none!important}'),'The utility container keeps its hidden state despite the display rule');
 const panelHTML=html.slice(html.indexOf('<aside id="settings"'),html.indexOf('</aside>'));
 const attributes=text=>Object.fromEntries([...text.matchAll(/([\w-]+)(?:="([^"]*)")?/g)].map(match=>[match[1],match[2]??'']));
 const camel=text=>text.replace(/-([a-z])/g,(_,letter)=>letter.toUpperCase());
