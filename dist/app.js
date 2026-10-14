@@ -1,3 +1,4 @@
+import {applyDefaultSettings} from './default-settings.js';
 import {VoiceDock} from './voice-dock.js';
 import {ComposerContext,readContextualButtons} from './composer-context.js';
 import {CardRail,applySectionPresentation} from './card-rail.js';
@@ -57,6 +58,7 @@ import {AssistantNavigationMemory} from './assistant-navigation-memory.js';
 import {ProjectEntryMemory} from './project-entry-memory.js';
 import {MediaLoader} from './media-loading.js';
 import {presentedImage,clearImageHandoffs} from './image-handoff.js';
+applyDefaultSettings();
 const $=s=>document.querySelector(s), main=$('#main'), systemReduce=matchMedia('(prefers-reduced-motion: reduce)'), desktopLabelMode=matchMedia('(min-width:601px)');
 const mediaLoader=new MediaLoader();
 addEventListener('gallery-selection-change',()=>mediaLoader.refresh(main));

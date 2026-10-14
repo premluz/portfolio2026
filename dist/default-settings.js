@@ -1,0 +1,31 @@
+export const DEFAULT_STORAGE_VALUES=Object.freeze({
+ 'prem-home-content-width':'small','prem-content-page-width':'small','prem-detail-content-width':'large',
+ 'prem-home-product-display':'text','prem-hero-carousel':'false','prem-hero-timeline-enabled':'false','prem-hero-description-enabled':'true','prem-hero-timeline-mode':'drag',
+ 'prem-home-view':'current','prem-home-layout':'masonry','prem-home-columns':'1','prem-one-column-card-position':'alternating','prem-multi-column-card-position':'bottom','prem-card-copy-hover-desktop':'false',
+ 'prem-about-gallery-variant':'circular','prem-about-gallery-orientation':'horizontal','prem-services-layout':'carousel','prem-services-carousel-alignment':'content','prem-testimonial-card-background':'false','prem-footer-contact-links':'false',
+ 'prem-card-show-client':'true','prem-card-show-title':'true','prem-card-show-description':'true','prem-hide-card-background':'true','prem-hide-card-color':'false','prem-hide-card-hover':'true','prem-card-hover-effect':'glow',
+ 'prem-card-title-size':'18','prem-card-padding-uniform':'true','prem-card-padding-all':'32','prem-card-padding-top':'32','prem-card-padding-right':'32','prem-card-padding-bottom':'32','prem-card-padding-left':'32','prem-card-rounding':'46','prem-card-gap':'56',
+ 'prem-ambient-light-movement':'true','prem-ambient-hover-speed':'65','prem-ambient-detail-glow':'true','prem-composer-glow':'false','prem-full-bleed':'false','prem-image-rounding':'25','prem-show-full-screen-option':'true',
+ 'prem-detail-heading-beside':'true','prem-wide-hero':'false','prem-hide-branding':'true','prem-nav-rounding':'100','prem-nav-item-padding':'13','prem-nav-container-padding':'0','prem-nav-item-font-size':'12',
+ 'prem-split-project-controls':'false','prem-contextual-buttons':'composer','prem-contextual-composer':'true','prem-always-dark-glass':'true','prem-menu-gesture-icon':'hand','prem-menu-info-icon':'help','prem-menu-animation-icon':'play',
+ 'prem-image-ripple-enabled':'false','prem-image-blur-enabled':'false','prem-glassOpacity':'40','prem-roomBlur':'11','prem-roomShade':'6','prem-edge-shade-top':'false','prem-edge-shade-bottom':'true','prem-edge-shade-left':'false','prem-edge-shade-right':'false','prem-edge-shade-retreat':'false','prem-edge-shade-depth':'70',
+ 'prem-assistant-sound':'true','prem-animations':'true','prem-theme':'light'
+});
+
+export const DEFAULT_JSON_STORAGE_VALUES=Object.freeze({
+ 'prem-home-content':{approach:false,services:false,about:true,'about-timeline':false,experience:true,testimonials:false},
+ 'prem-home-section-spans':{approach:'content',services:'content',about:'content',experience:'content',testimonials:'content'},
+ 'prem-design-system':{typeSize:'small',spaceSize:'large',headingWeight:'bold',bodyWeight:'thin',typeTracking:'small',typeLeading:'small'},
+ 'prem-carousel-settings':{tilt:47,spread:60,depth:200,gap:96,speed:100,peek:12},
+ 'prem-motion-settings':{intensity:46,duration:400,slow:false,stretch:100,lag:38,stiffness:62,damping:39,reflections:0,glow:0,overshoot:0,ripple:65,motionBlur:55},
+ 'prem-bleed-image':{top:28,side:0,bottom:8,backing:true,settingsVersion:1}
+});
+
+export function applyDefaultSettings(storage){
+ if(storage===undefined)try{storage=globalThis.localStorage;}catch(error){console.warn('Portfolio defaults could not access browser storage.',error);return;}
+ if(!storage)return;
+ try{
+  for(const [key,value] of Object.entries(DEFAULT_STORAGE_VALUES))if(storage.getItem(key)===null)storage.setItem(key,value);
+  for(const [key,value] of Object.entries(DEFAULT_JSON_STORAGE_VALUES))if(storage.getItem(key)===null)storage.setItem(key,JSON.stringify(value));
+ }catch(error){console.warn('Portfolio defaults could not be applied.',error);}
+}
