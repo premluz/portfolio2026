@@ -4,6 +4,7 @@ import assistant from '../api/assistant.js';
 import voice from '../api/voice.js';
 import {vercelEnvironment,vercelRequest} from '../worker/vercel-adapter.mjs';
 import {resetAssistantRateLimitsForTests} from '../worker/assistant-core.mjs';
+import {providerErrorCode} from '../worker/provider-error.mjs';
 
 globalThis.crypto??=webcrypto;
 const origin='https://portfolio.example';
@@ -59,6 +60,16 @@ try{
  assert.deepEqual([...new Uint8Array(await spoken.arrayBuffer())],[73,68,51]);
  assert.equal((await voice.fetch(request('voice',{text:answer.text,sessionId:'wrong-session',speechToken:answer.speechToken}))).status,403);
  assert.equal((await voice.fetch(new Request(origin+'/api/voice'))).status,405);
+
+ globalThis.fetch=async()=>Response.json({error:{code:'insufficient_quota',message:'Private provider details'}},{status:429});
+ const exhausted=await assistant.fetch(request('assistant',{question:'How did Tracr simplify its platform?',sessionId:'vercel-quota'}));
+ assert.equal(exhausted.status,502);
+ const quota=await exhausted.json();assert.equal(quota.providerCode,'insufficient_quota');assert(!JSON.stringify(quota).includes('Private provider details'));
+ globalThis.fetch=async()=>Response.json({detail:{status:'voice_not_found',message:'Private voice details'}},{status:400});
+ const absentVoice=await voice.fetch(request('voice',{text:answer.text,sessionId:'vercel-curated',speechToken:answer.speechToken}));
+ const voiceFailure=await absentVoice.json();assert.equal(voiceFailure.providerCode,'voice_not_found');assert(!JSON.stringify(voiceFailure).includes('Private voice details'));
+ assert.equal(await providerErrorCode(Response.json({error:{code:'unrecognized-private-value'}})),'unknown_provider_error');
+ assert.equal(await providerErrorCode(new Response('not JSON')),'invalid_provider_error');
 }finally{
  globalThis.fetch=previousFetch;
  for(const [name,value] of previous)value===undefined?delete process.env[name]:process.env[name]=value;

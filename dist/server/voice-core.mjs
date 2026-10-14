@@ -1,3 +1,4 @@
+import {providerErrorCode} from './provider-error.mjs';
 const voiceId='JBFqnCBsd6RMkjVDRZzb'; // George; override with AI_VOICE_ID.
 const maxSpeech=1000;
 const windowMs=60*60*1000;
@@ -57,7 +58,7 @@ export async function handleVoiceRequest(request,env,{fetcher=globalThis.fetch,n
    method:'POST',headers:{'xi-api-key':env.AI_VOICE_KEY,'content-type':'application/json','accept':'audio/mpeg'},
    body:JSON.stringify({text,model_id:'eleven_flash_v2_5'}),signal:AbortSignal.timeout(18000),
   });
-  if(!provider.ok||!provider.body)return json({error:'voice_unavailable',providerStatus:provider.status},502);
+  if(!provider.ok||!provider.body)return json({error:'voice_unavailable',providerStatus:provider.status,providerCode:await providerErrorCode(provider)},502);
   return new Response(provider.body,{status:200,headers:{'content-type':'audio/mpeg','cache-control':'no-store','x-content-type-options':'nosniff'}});
  }catch{return json({error:'voice_unavailable'},502);}
 }

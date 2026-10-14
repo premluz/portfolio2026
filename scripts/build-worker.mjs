@@ -28,6 +28,7 @@ await fs.writeFile(path.join(server,'assistant-core.mjs'),assistantCore.replace(
 await fs.copyFile(path.join(dist,'assistant-knowledge.js'),path.join(server,'assistant-knowledge.js'));
 await fs.copyFile(path.join(dist,'assistant-answer.js'),path.join(server,'assistant-answer.js'));
 await fs.copyFile(path.join(root,'worker/voice-core.mjs'),path.join(server,'voice-core.mjs'));
+await fs.copyFile(path.join(root,'worker/provider-error.mjs'),path.join(server,'provider-error.mjs'));
 let hosting=null;
 try{hosting=JSON.parse(await fs.readFile(path.join(root,'.openai/hosting.json'),'utf8'));}
 catch(error){if(error.code!=='ENOENT')throw error;}
