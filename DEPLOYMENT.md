@@ -37,6 +37,24 @@ The Node server supports byte-range requests for video files, standard GET/HEAD 
 
 ## 3. Static host plus separate API service
 
+### Vercel
+
+Use `npm run build` and the configured `dist/client` output directory. The root
+`api/assistant.js` and `api/voice.js` entry points run the shared handlers as
+Node.js Vercel Functions. Their request adapter maps Vercel's client IP header
+to the core rate limiter, and voice responses stream directly to the browser.
+
+Set `AI_API_KEY` (or `OPENAI_API_KEY`) and `AI_VOICE_KEY` in the project's
+Production environment variables. The Vercel adapter defaults
+`AI_API_BASE_URL` to `https://api.openai.com/v1` and `AI_MODEL` to `gpt-6-luna`;
+explicit environment variables override those values. `AI_VOICE_ID` overrides
+the shared voice handler's default. Redeploy after changing variables.
+
+Run `node tests/vercel-api.mjs` to check both entry points, provider configuration,
+signed playback, origin validation, bounded bodies and client IP normalization.
+
+### Other static hosts
+
 The browser expects same-origin paths `/api/assistant` and `/api/voice`. If static files and API run on separate services, configure the domain's reverse proxy to forward `/api/*` to the API service while keeping the browser URL same-origin. Set the API service's trusted-proxy mode correctly and preserve the public Host/protocol for origin checks.
 
 Static files are generated under `dist/client/`. Use `dist/client/index.html` as the site entry and preserve the directory structure. Keep HTTP range support for `.mp4` files. Hash navigation means project routes do not require server-side HTML rewrites, though rewriting unknown paths to `index.html` is harmless.
