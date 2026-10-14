@@ -137,7 +137,7 @@ export class HomeLayout {
  }
  updateDescription(){
   const doc=this.mode!=='current'&&scrollY>8?this.documents.find(doc=>doc.id===this.activeId):null;
-  if(this.heroAbout)this.heroAbout.dataset.heroCombinedContent=String(!doc&&this.heroContent.timeline&&this.heroContent.description);
+  if(this.heroAbout)this.heroAbout.dataset.heroCombinedContent=String(!doc&&(this.heroContent.timeline||this.heroContent.timelineText)&&this.heroContent.description);
   const key=doc?.id||'introduction';if(this.lastDescription===key)return;this.lastDescription=key;
   this.timeline?.destroy();this.timeline=null;if(this.heroGreeting)this.heroGreeting.hidden=!!doc;
   this.heroTitle.textContent=doc?doc.title:this.introduction.title;

@@ -1,4 +1,5 @@
 <!doctype html><html lang="en"><head><meta charset="UTF-8">
+<script>document.documentElement.classList.add('page-booting');var BOOT_FAILSAFE_MS=8000;setTimeout(function(){document.documentElement.classList.remove('page-booting');},BOOT_FAILSAFE_MS);</script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-H99J6F5J5V"></script>
 <script>
@@ -62,6 +63,7 @@
 <label>Product display <select id="homeProductDisplay"><option value="cards">Cards</option><option value="carousel" selected>Carousel</option><option value="text">Text</option></select></label>
 <label class="check" id="heroCarouselSetting"><input id="heroCarousel" type="checkbox"> Hero carousel · scroll into grid</label>
 <label class="check"><input id="heroTimelineEnabled" type="checkbox" checked> Show hero timeline</label>
+<label class="check"><input id="heroTimelineTextEnabled" type="checkbox" checked> Show timeline text</label>
 <label class="check"><input id="heroDescriptionEnabled" type="checkbox"> Show hero description</label>
 <label id="heroTimelineModeSetting">Timeline interaction <select id="heroTimelineMode"><option value="cursor">Cursor movement</option><option value="drag">Drag</option></select></label>
 <label>Homepage layout <select id="homeViewSelect"><option value="current">Current grid</option><option value="flip">Flip</option><option value="flat">Two columns · Flat cards</option></select></label>
@@ -89,8 +91,9 @@
 <details class="developer-settings-group">
 <summary>Content</summary><div class="developer-settings-content">
 <div class="setting-subsection">Section presentation</div>
-<label>Services layout <select id="servicesLayout"><option value="grid">Grid</option><option value="carousel" selected>Carousel</option></select></label>
-<label>Services carousel start <select id="servicesCarouselAlignment"><option value="full-bleed">Full bleed · global side padding</option><option value="content">Align with content width</option></select></label>
+<label>Card layout <select id="servicesLayout"><option value="grid">Grid</option><option value="carousel" selected>Carousel</option></select></label>
+<label class="check"><input id="servicesCardBackground" type="checkbox" checked> Show card</label>
+<label>Card carousel start <select id="servicesCarouselAlignment"><option value="full-bleed">Full bleed · global side padding</option><option value="content">Align with content width</option></select></label>
 <label class="check"><input id="testimonialCardBackground" type="checkbox" checked> Testimonial card backgrounds</label>
 <label class="check"><input id="showFooterContactLinks" type="checkbox"> Show contact links in footer</label>
 <div class="setting-subsection">Homepage sections</div>

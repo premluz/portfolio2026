@@ -48,4 +48,12 @@ const key=event(0,handle,{key:'Home'});timeline.key(key);pump();assert.equal(vie
 timeline.down(event(200,handle,{pointerType:'touch'}));assert(timeline.drag,'The dot supports touch capture');timeline.release(event(200,handle,{pointerType:'touch'}));
 timeline.aim(1000);assert(callbacks.size);timeline.destroy();assert.equal(callbacks.size,0,'Cleanup cancels outstanding animation work');
 const reduced=new HeroTimeline(root,{reduced:()=>true});reduced.aim(800);assert.equal(viewport.scrollLeft,800);assert.equal(callbacks.size,0);reduced.destroy();
+const graphicOnly=timelineMarkup(block,{text:false}),textOnly=timelineMarkup(block,{graphic:false});
+assert(graphicOnly.includes('timeline-rule')&&graphicOnly.includes('data-timeline-handle')&&!graphicOnly.includes('<p>')&&!graphicOnly.includes('<a '),'Graphic-only timeline drops the text but keeps the rule and handle');
+assert(!textOnly.includes('timeline-rule')&&!textOnly.includes('data-timeline-handle')&&!textOnly.includes('timeline-scrubber')&&textOnly.includes('<p>'),'Text-only timeline drops the graphic but keeps the items');
+assert.equal(timelineMarkup(block,{graphic:false,text:false}),'','Both off emits no timeline markup');
+const textHero=homeHero({heroContent:{timeline:false,timelineText:true,description:false}}),noTimelineHero=homeHero({heroContent:{timeline:false,timelineText:false,description:true}});
+assert(textHero.includes('data-hero-timeline')&&!textHero.includes('data-timeline-handle'),'Text toggle alone renders the timeline without its graphic');
+assert(!noTimelineHero.includes('data-hero-timeline')&&noTimelineHero.includes('data-hero-description'),'Both timeline toggles off leaves only the description');
+assert(homeHero({heroContent:{timeline:true,description:false}}).includes('timeline-rule'),'Objects without timelineText follow the timeline toggle');
 console.log('Hero timeline passed: structured items, safe rendering, cursor/drag modes, grab handle, bounds, keyboard isolation, native touch, reduced motion and cleanup.');

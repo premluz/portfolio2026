@@ -3,18 +3,18 @@ import {timelineMarkup} from './hero-timeline.js';
 import {content} from './content/local.js';
 import {escapeText,headingText} from './content/html.js';
 export function normalizeHeroContent(value='timeline'){
- if(value&&typeof value==='object')return {timeline:value.timeline!==false,description:value.description===true};
- return value==='paragraph'?{timeline:false,description:true}:{timeline:true,description:false};
+ if(value&&typeof value==='object')return {timeline:value.timeline!==false,timelineText:value.timelineText??value.timeline!==false,description:value.description===true};
+ return value==='paragraph'?{timeline:false,timelineText:false,description:true}:{timeline:true,timelineText:true,description:false};
 }
 export function heroCopyMarkup(mode='timeline'){
  const hero=content.get('home'),timeline=hero.blocks.find(b=>b.id==='home-timeline'||b.type==='timeline'),description=hero.blocks.find(b=>b.id==='home-description');
  const selection=normalizeHeroContent(mode),parts=[];
  if(selection.description&&description)parts.push((description.paragraphs||[]).map(text=>`<p data-hero-description>${contextualText(text)}</p>`).join(''));
- if(selection.timeline&&timeline)parts.push(timelineMarkup(timeline));
+ if((selection.timeline||selection.timelineText)&&timeline)parts.push(timelineMarkup(timeline,{graphic:selection.timeline,text:selection.timelineText}));
  return parts.join('');
 }
 export function homeHero({heroContent='timeline'}={}){const hero=content.get('home'),intro=hero.blocks.find(b=>b.id==='home-introduction'),selection=normalizeHeroContent(heroContent);return `<section class="home-hero" aria-label="Introduction">
- <div class="hero-about" data-hero-combined-content="${selection.timeline&&selection.description}">
+ <div class="hero-about" data-hero-combined-content="${(selection.timeline||selection.timelineText)&&selection.description}">
   <h1 data-hero-title>${intro?.label?`<span class="hero-greeting">${escapeText(intro.label)}</span> `:''}${headingText(intro?.title||hero.title)}</h1>
   <div class="hero-copy" data-hero-copy>${heroCopyMarkup(heroContent)}</div>
  </div>

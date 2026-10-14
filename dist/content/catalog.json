@@ -595,9 +595,9 @@
       "template": "information",
       "status": "published",
       "slug": "about",
-      "title": "Technically fluent.\nHuman by design.",
+      "title": "Hello, I'm Prem",
       "name": "About",
-      "summary": "I turn complex systems into products people understand, trust, and adopt.",
+      "summary": "Product designer with a technical background, 10+ years across Web3, DeFi, blockchain, IoT & Telco, 0→1 through growth and scale.",
       "category": "Prem / Designer + creative technologist",
       "aliases": [],
       "domains": [],
@@ -608,9 +608,16 @@
           "id": "about-body",
           "type": "text",
           "paragraphs": [
-            "I turn complex systems into products people understand, trust, and adopt.",
-            "End-to-end design across consumer products and enterprise platforms. Based in Warsaw."
+            "Product designer with a technical background, 10+ years across Web3, DeFi, blockchain, IoT & Telco, 0→1 through growth and scale.",
+            "I solve complexity and ambiguity wherever they show up in product, system, team, or workflow.",
+            "Today, I’m building AI-native design systems and experiences."
           ]
+        },
+        {
+          "id": "about-portrait",
+          "type": "image",
+          "mediaId": "about-portrait",
+          "alt": "Portrait of Prem"
         },
         {
           "id": "about-timeline",
@@ -1242,6 +1249,123 @@
           ]
         }
       ]
+    },
+    {
+      "id": "about-traits",
+      "type": "component",
+      "status": "published",
+      "title": "Open-minded with a bright personality and small ego.",
+      "summary": "Daily rhythm, roots, philosophy, interests, pattern-spotting and sense of humour.",
+      "revision": 1,
+      "blocks": [
+        {
+          "id": "trait-coffee",
+          "type": "info-card",
+          "title": "I wake up, stretch, meditate, have a coffee,  then go on making software simpler for humans."
+        },
+        {
+          "id": "trait-roots",
+          "type": "info-card",
+          "title": "My roots",
+          "paragraphs": [
+            "Originally from Poland, spent most of my adult life in London."
+          ]
+        },
+        {
+          "id": "trait-philosophy",
+          "type": "info-card",
+          "title": "My philosophy",
+          "paragraphs": [
+            "Always improving – things, products, processes, people, or myself. I try to leave everything a little better than I found it."
+          ]
+        },
+        {
+          "id": "trait-interests",
+          "type": "info-card",
+          "title": "My interests",
+          "paragraphs": [
+            "Bio-hacking, physical and cognitive health, psychology, philosophy, traveling, cooking, and some weird ones too!"
+          ]
+        },
+        {
+          "id": "trait-sixth-sense",
+          "type": "info-card",
+          "title": "My sixth-sense",
+          "paragraphs": [
+            "Seeing things that others don't. Spotting patterns and connections between seemingly disparate things. I love finding order in chaos and achieving simplicity out of complexity."
+          ]
+        },
+        {
+          "id": "trait-seventh-sense",
+          "type": "info-card",
+          "title": "My seventh-sense",
+          "paragraphs": [
+            "Is sense of humour ;) I'm positive, cheerful and love a good laugh, good pun, and meme, but I'm also tactful and respectful."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "about-unusual",
+      "type": "component",
+      "status": "published",
+      "title": "Unusual things about me",
+      "summary": "Things that don't fit on a CV: a water well, a school, a barefoot pilgrimage, a 28-day fast and hypnotherapy.",
+      "revision": 1,
+      "blocks": [
+        {
+          "id": "unusual-intro",
+          "type": "text",
+          "paragraphs": [
+            "that don't fit on a CV."
+          ]
+        },
+        {
+          "id": "unusual-well",
+          "type": "info-card",
+          "title": "Building water well",
+          "paragraphs": [
+            "Initiated and fundraised a drinking water project for the community I lived with."
+          ],
+          "mediaId": "unusual-well"
+        },
+        {
+          "id": "unusual-school",
+          "type": "info-card",
+          "title": "Building a school",
+          "paragraphs": [
+            "Organised a project to build a school in Sri Lanka."
+          ],
+          "mediaId": "unusual-school"
+        },
+        {
+          "id": "unusual-pilgrimage",
+          "type": "info-card",
+          "title": "Walking ancient pilgrimage route",
+          "paragraphs": [
+            "5 days barefoot in scorching sun — through jungle, savannah, and across a river with crocodiles."
+          ],
+          "mediaId": "unusual-pilgrimage"
+        },
+        {
+          "id": "unusual-fast",
+          "type": "info-card",
+          "title": "Fasting for 28 days",
+          "paragraphs": [
+            "Nothing but water, coffee, and tea. Surprisingly clarifying."
+          ],
+          "mediaId": "unusual-fast"
+        },
+        {
+          "id": "unusual-hypnotherapy",
+          "type": "info-card",
+          "title": "Studying hypnotherapy",
+          "paragraphs": [
+            "Certified. Ask me about it when we meet."
+          ],
+          "mediaId": "unusual-hypnotherapy"
+        }
+      ]
     }
   ],
   "assets": [
@@ -1428,6 +1552,48 @@
       "status": "published",
       "url": "assets/porter.mp4",
       "alt": ""
+    },
+    {
+      "id": "about-portrait",
+      "type": "image",
+      "status": "published",
+      "url": "assets/prem.png",
+      "alt": "Portrait of Prem in a black sweater against a white background"
+    },
+    {
+      "id": "unusual-well",
+      "type": "image",
+      "status": "published",
+      "url": "assets/well.jpg",
+      "alt": "A newly built community water tower and the commemorative plaque for the project"
+    },
+    {
+      "id": "unusual-school",
+      "type": "image",
+      "status": "published",
+      "url": "assets/school.jpg",
+      "alt": "Children and teachers gathered in front of the school built in Sri Lanka"
+    },
+    {
+      "id": "unusual-pilgrimage",
+      "type": "image",
+      "status": "published",
+      "url": "assets/pilgrimage.jpg",
+      "alt": "Barefoot pilgrims with staffs on a forest track along the ancient route"
+    },
+    {
+      "id": "unusual-fast",
+      "type": "image",
+      "status": "published",
+      "url": "assets/fast.jpg",
+      "alt": "Prem speaking to camera on a London street during a 28-day fast"
+    },
+    {
+      "id": "unusual-hypnotherapy",
+      "type": "image",
+      "status": "published",
+      "url": "assets/hipnotherapy.jpg",
+      "alt": "Prem seated beside a hypnotherapy teacher in a wood-panelled room"
     }
   ],
   "presentations": [

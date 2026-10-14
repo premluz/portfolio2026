@@ -12,5 +12,6 @@ reduced=true;let stopped=false;rail.onKey({key:'ArrowRight',preventDefault(){},s
 rail.move(1);rail.refresh();flush();assert(next.disabled);assert(!previous.disabled);
 root.dataset.cardRailMode='grid';rail.refresh();flush();assert.equal(viewport.tabIndex,-1);assert(previous.disabled&&next.disabled);
 const testimonial=node(),page={querySelectorAll:selector=>selector.includes('services')?[root]:[testimonial]};applySectionPresentation(page,{servicesLayout:'carousel',testimonialCardBackground:false});assert.equal(root.dataset.cardRailMode,'carousel');assert.equal(testimonial.dataset.cardBackground,'false');
+assert.equal(root.dataset.cardBackground,'true','Cards show by default');applySectionPresentation(page,{servicesCardBackground:false});assert.equal(root.dataset.cardBackground,'false','Show card off applies to every card section');
 rail.destroy();assert(disconnected);assert.equal(viewport.listeners.size,0);assert.equal(frames.size,0);
 console.log('Card rail passed: bounds, keyboard, responsive steps, reduced motion, presentation switching and listener cleanup.');

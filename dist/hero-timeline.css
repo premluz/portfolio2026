@@ -21,3 +21,4 @@
 .home-view-split .timeline-track li{flex-basis:260px}
 @media(max-width:850px){.timeline-track ol{padding-inline:24px}}
 @media(max-width:600px){.timeline-track li{flex-basis:min(72vw,300px)}.timeline-track ol{gap:36px;padding-inline:24px}}
+.hero-timeline[data-timeline-graphic=false] .timeline-track{padding-top:0}

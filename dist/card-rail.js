@@ -13,7 +13,7 @@ export class CardRail{
  destroy(){this.dead=true;cancelAnimationFrame(this.frame);this.observer.disconnect();this.previous.removeEventListener('click',this.onPrevious);this.next.removeEventListener('click',this.onNext);this.viewport.removeEventListener('scroll',this.onScroll);this.viewport.removeEventListener('keydown',this.onKey);}
 }
 
-export function applySectionPresentation(root,{servicesLayout='grid',servicesCarouselAlignment='full-bleed',testimonialCardBackground=true,homeOnly=false}={}){
- for(const section of root.querySelectorAll('[data-component="services"]'+(homeOnly?'[data-home-section="services"]':''))){section.dataset.servicesLayout=servicesLayout==='carousel'?'carousel':'grid';section.dataset.cardRailMode=section.dataset.servicesLayout;section.dataset.servicesCarouselAlignment=servicesCarouselAlignment==='content'?'content':'full-bleed';}
+export function applySectionPresentation(root,{servicesLayout='grid',servicesCarouselAlignment='full-bleed',servicesCardBackground=true,testimonialCardBackground=true,homeOnly=false}={}){
+ for(const section of root.querySelectorAll('[data-component="services"]'+(homeOnly?'[data-home-section="services"]':''))){section.dataset.servicesLayout=servicesLayout==='carousel'?'carousel':'grid';section.dataset.cardRailMode=section.dataset.servicesLayout;section.dataset.servicesCarouselAlignment=servicesCarouselAlignment==='content'?'content':'full-bleed';section.dataset.cardBackground=String(servicesCardBackground!==false);}
  for(const section of root.querySelectorAll('[data-component="testimonials"]'+(homeOnly?'[data-home-section="testimonials"]':'')))section.dataset.cardBackground=String(testimonialCardBackground!==false);
 }

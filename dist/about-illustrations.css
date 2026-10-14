@@ -1,0 +1,32 @@
+.about-trait-art{--trait-dur-short:180ms;--trait-dur:420ms;--trait-dur-long:600ms;--trait-spring:cubic-bezier(.34,1.56,.64,1);--trait-lift:-3px;--trait-tilt:-2deg;display:block;width:100%;height:auto;aspect-ratio:1;color:color-mix(in oklch,var(--ink) 48%,var(--card-surface))}
+.about-trait-art .trait-face{fill:color-mix(in oklch,var(--ink) 7%,var(--card-surface))}.about-trait-art .trait-side{fill:color-mix(in oklch,var(--ink) 12%,var(--card-surface))}.about-trait-art .trait-top{fill:var(--card-surface)}.about-trait-art .trait-accent{fill:var(--ink);stroke:var(--ink)}
+.about-trait-art .trait-ink{fill:currentColor}.about-trait-art .trait-shadow{stroke:none}.about-trait-art .trait-grid{stroke-dasharray:2 3}.about-trait-art .trait-node{stroke-width:1}
+@media(prefers-reduced-motion:no-preference){
+ .about-trait-art :is(.trait-body,.trait-steam,.trait-hemisphere,.trait-heart,.trait-spark,.trait-eye,.trait-lid,.trait-smile,.trait-wink){transform-box:fill-box;transform-origin:center}
+ .about-trait-art .trait-body{transition:transform var(--trait-dur) var(--trait-spring);animation:trait-settle var(--trait-dur-long) var(--ease-standard) backwards}
+ .about-trait-art .trait-continents{transform-box:view-box;transform-origin:60px 56px;transition:transform var(--trait-dur-long) var(--ease-standard)}
+ .about-trait-art :is(.trait-lid,.trait-smile,.trait-wink){transition:transform var(--trait-dur) var(--trait-spring)}
+ .about-trait-art .trait-ray{stroke-dasharray:1}
+ .about-trait-art .trait-hemisphere-l{--trait-dx:-2.5px}.about-trait-art .trait-hemisphere-r{--trait-dx:2.5px}
+ @media(hover:hover){
+  .about-trait:is(:hover,:focus-within) .trait-body{transform:translateY(var(--trait-lift)) rotate(var(--trait-tilt))}
+  .about-trait:is(:hover,:focus-within) .trait-steam{animation:trait-waver var(--trait-dur-long) var(--ease-standard) 2}
+  .about-trait:is(:hover,:focus-within) .trait-steam-b{animation-delay:var(--trait-dur-short)}
+  .about-trait:is(:hover,:focus-within) .trait-continents{transform:rotate(-8deg)}
+  .about-trait:is(:hover,:focus-within) .trait-hemisphere{animation:trait-apart var(--trait-dur-long) var(--ease-standard)}
+  .about-trait:is(:hover,:focus-within) .trait-heart{animation:trait-beat var(--trait-dur-long) var(--ease-standard)}
+  .about-trait:is(:hover,:focus-within) .trait-spark{animation:trait-pop var(--trait-dur) var(--trait-spring)}
+  .about-trait:is(:hover,:focus-within) .trait-ray{animation:trait-draw var(--trait-dur-long) var(--ease-standard)}
+  .about-trait:is(:hover,:focus-within) .trait-eye{animation:trait-look var(--trait-dur-long) var(--ease-standard)}
+  .about-trait:is(:hover,:focus-within) .trait-lid{transform:translateY(-2px)}
+  .about-trait:is(:hover,:focus-within) .trait-smile{transform:scale(1.12,1.18)}
+  .about-trait:is(:hover,:focus-within) .trait-wink{transform:scaleY(.4)}
+ }
+}
+@keyframes trait-settle{from{opacity:0;transform:translateY(4px)}}
+@keyframes trait-waver{50%{opacity:.35;transform:translate(1.5px,-4px)}}
+@keyframes trait-apart{50%{transform:translateX(var(--trait-dx))}}
+@keyframes trait-beat{15%{transform:scale(1.08)}30%{transform:scale(1)}45%{transform:scale(1.05)}60%{transform:scale(1)}}
+@keyframes trait-pop{from{opacity:0;transform:scale(.4) rotate(-45deg)}60%{transform:scale(1.25)}}
+@keyframes trait-draw{from{stroke-dashoffset:1}}
+@keyframes trait-look{30%,70%{transform:translateX(-5px)}}

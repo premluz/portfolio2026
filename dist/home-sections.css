@@ -18,7 +18,7 @@
 .home-service-card,.home-testimonial{min-width:0;margin:0;padding:var(--home-content-card-padding);border:1px solid color-mix(in oklch,var(--ink) 5%,transparent);border-radius:var(--radius-home-content-card);background:var(--card-surface)}
 .service-illustration{display:block;width:100%;height:auto;aspect-ratio:330 / 230;margin:0 0 var(--space-6);color:color-mix(in oklch,var(--ink) 48%,var(--card-surface))}
 .service-face{fill:color-mix(in oklch,var(--ink) 7%,var(--card-surface))}.service-side{fill:color-mix(in oklch,var(--ink) 12%,var(--card-surface))}.service-top{fill:var(--card-surface)}.service-accent{fill:var(--ink);stroke:var(--ink)}.service-dashed{stroke-dasharray:3 4}
-.home-service-card h3{margin:0 0 var(--space-3);font-size:var(--font-size-section-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink)}
+.home-service-card h3{margin:0 0 var(--space-3);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--ink)}
 .home-service-card p{max-width:34ch;margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
 .home-service-card p+p{margin-top:var(--space-3)}
 .home-about:has(.home-about-introduction[hidden]) .home-about-lists{margin-top:0}
@@ -55,3 +55,4 @@
 .home-services[data-services-carousel-alignment="content"]{--services-carousel-inset:max(var(--content-gutter),calc((var(--app-canvas-width) - var(--content-rail-width,var(--content-width)))/2))}
 
 @media(max-width:600px){.home-testimonials[data-card-background="false"] .home-testimonials-grid{--testimonial-gap:var(--space-page-rhythm-sm)}.home-testimonial:nth-child(n){margin-inline:0}}
+.home-services[data-card-background="false"] .home-service-card{padding:0;background:transparent;border:0;border-radius:0}
