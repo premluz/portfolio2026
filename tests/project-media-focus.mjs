@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {focusedImageRect,descriptionExitTargets,mediaExitKeyframes,composerExitKeyframes,ProjectMediaFocus} from '../dist/project-media-focus.js';
+import {focusedImageRect,descriptionExitTargets,mediaExitKeyframes,ProjectMediaFocus} from '../dist/project-media-focus.js';
 import {contentModel} from '../dist/content/model.js';
 import {catalog} from '../dist/content/catalog.js';
 import {createContentStore} from '../dist/content/provider.js';
@@ -26,16 +26,13 @@ const projectMediaCss=await (await import('node:fs/promises')).readFile(new URL(
 const actionFrames=mediaExitKeyframes({matches:selector=>selector==='.detail-media-actions'},'.8');assert.deepEqual(actionFrames,[{opacity:'.8',transform:'translateY(0px)'},{opacity:0,transform:'translateY(18px)'}],'Media actions fade and slide down on fullscreen entry, then reverse on close.');
 copy.documents.find(d=>d.id==='playstation').prototype.url='javascript:alert(1)';assert(contentModel.validate(copy).some(issue=>issue.includes('prototype')));
 // Escape reverses existing animations, without rebuilding them or losing their phase.
-let reverseCount=0,awaitCount=0,destroyed=0;
-const controller=Object.create(ProjectMediaFocus.prototype);Object.assign(controller,{active:true,target:true,settled:false,frame:{remove(){}},reduced:()=>false,animations:[{currentTime:137,reverse(){reverseCount++;}}],awaitEnd(){awaitCount++;},destroy(){destroyed++;}});
+let reverseCount=0,awaitCount=0,destroyed=0;const dockModes=[];
+const controller=Object.create(ProjectMediaFocus.prototype);Object.assign(controller,{active:true,target:true,settled:false,dock:()=>({setMediaFocus:active=>dockModes.push(active)}),duration:()=>400,frame:{remove(){}},reduced:()=>false,animations:[{currentTime:137,reverse(){reverseCount++;}}],awaitEnd(){awaitCount++;},destroy(){destroyed++;}});
 controller.close();assert.equal(reverseCount,1);assert.equal(controller.animations[0].currentTime,137);assert.equal(awaitCount,1);controller.close();assert.equal(reverseCount,1);
 controller.target=true;controller.reduced=()=>true;controller.close();assert.equal(destroyed,1,'Reduced motion exits immediately');
+assert.deepEqual(dockModes,[false,false],'Both animated and reduced-motion exits restore the composer');
 console.log('Project media focus passed: proportional viewport limits, bottom-up description, prototype metadata/URL safety, shared controls and Escape reversal.');
 
 const layoutCss=await (await import('node:fs/promises')).readFile(new URL('../dist/style.css',import.meta.url),'utf8');
 assert(layoutCss.includes('.detail.heading-beside-image[data-card-orientation="portrait"]>.detail-layout>.detail-media-column>.visual{height:max('),'Viewport-height image holders are restricted to portraits');
 assert(!layoutCss.includes('.detail.heading-beside-image>.detail-layout>.detail-media-column>.visual{height:max('),'Landscape images cannot inherit the portrait letterbox that pushes media buttons away');
-
-globalThis.getComputedStyle=()=>({opacity:'0.9',transform:'matrix(1, 0, 0, 1, -260, 0)'});
-const composer={getBoundingClientRect:()=>({top:820})};
-assert.deepEqual(composerExitKeyframes(composer,900),[{opacity:'0.9',transform:'translateY(0px) matrix(1, 0, 0, 1, -260, 0)'},{opacity:0,transform:'translateY(104px) matrix(1, 0, 0, 1, -260, 0)'}],'Composer fades below the viewport without losing its horizontal centring; the same animation reverses on exit');

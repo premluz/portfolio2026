@@ -67,7 +67,7 @@ const mediaLoader=new MediaLoader();
 addEventListener('gallery-selection-change',()=>mediaLoader.refresh(main));
 hydrateFooter();
 let showFullScreenOption=true;try{showFullScreenOption=localStorage.getItem('prem-show-full-screen-option')!=='false';}catch{}
-const mediaFocus=new ProjectMediaFocus(main,{duration:()=>duration*(slow?2.5:1),reduced:()=>reduce.matches});
+const mediaFocus=new ProjectMediaFocus(main,{dock:()=>dockMorph,duration:()=>duration*(slow?2.5:1),reduced:()=>reduce.matches});
 function syncMediaFocusControls(){composerContext?.refresh();main.querySelectorAll('[data-media-focus=fullscreen]').forEach(button=>button.hidden=!showFullScreenOption);$('#showFullScreenOption').checked=showFullScreenOption;}
 $('#showFullScreenOption').onchange=e=>{showFullScreenOption=e.target.checked;try{localStorage.setItem('prem-show-full-screen-option',String(showFullScreenOption));}catch{}syncMediaFocusControls();};
 function openMediaAction(kind,button){if(busy||mediaFocus.active)return;if(summaryStream){summaryStream.position=1;summaryStream.paint();summaryStream.destroy();summaryStream=null;}detailContentReveal?.cancel();const p=cards.find(p=>p.id===current);mediaFocus.open(button,{detail:main.querySelector('.detail'),prototypeUrl:kind==='prototype'?p?.prototype?.url:undefined});}

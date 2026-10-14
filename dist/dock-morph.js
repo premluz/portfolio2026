@@ -95,6 +95,7 @@ export class DockMorph {
  constructor(el,{reduced=()=>false}={}){
   this.el=el;this.reduced=reduced;this.position=0;this.velocity=0;this.target=0;this.duration=400;
   this.voicePosition=0;this.voiceVelocity=0;this.voiceTarget=0;
+  this.focusPosition=0;this.focusVelocity=0;this.focusTarget=0;
   this.composerPosition=0;this.composerVelocity=0;this.composerTarget=0;this.backPosition=0;this.backVelocity=0;this.backTarget=0;this.back=el.querySelector('#assistantBack');
   el.querySelector('.dock-shapes')?.remove();
   this.context=el.querySelector('.context-nav');this.main=el.querySelector('nav');
@@ -134,6 +135,11 @@ export class DockMorph {
   if(immediate||this.reduced()){this.backPosition=this.backTarget;this.backVelocity=0;this.paint();return;}this.start();
  }
  setVoiceCompact(active){this.voiceTarget=active?1:0;if(this.reduced()){this.voicePosition=this.voiceTarget;this.voiceVelocity=0;this.paint();this.onLayout?.();}else this.start();}
+ setMediaFocus(active,{duration=400,immediate=false,returnFocus=null}={}){
+  if(returnFocus)this.focusReturn=returnFocus;
+  this.focusTarget=active?1:0;this.duration=duration;this.el.classList.toggle('is-media-focus',active||this.focusPosition>0);
+  if(immediate||this.reduced()){this.focusPosition=this.focusTarget;this.focusVelocity=0;this.paint();this.onLayout?.();return;}this.start();
+ }
  setComposer(active,{duration=400,immediate=false}={}){
   this.composerTarget=active?1:0;this.duration=Math.max(550,duration*1.55);this.updateComposerWidth();
   this.el.classList.toggle('is-composer',active);
@@ -151,24 +157,30 @@ export class DockMorph {
   const back=stepDockSpring(this.backPosition,this.backVelocity,this.backTarget,seconds,this.duration);this.backPosition=back.position;this.backVelocity=back.velocity;
   if(Math.abs(this.backPosition-this.backTarget)<.0001&&Math.abs(this.backVelocity)<.003){this.backPosition=this.backTarget;this.backVelocity=0;}
   const voice=stepDockSpring(this.voicePosition,this.voiceVelocity,this.voiceTarget,seconds,220);this.voicePosition=voice.position;this.voiceVelocity=voice.velocity;if(Math.abs(this.voicePosition-this.voiceTarget)<.0001&&Math.abs(this.voiceVelocity)<.003){this.voicePosition=this.voiceTarget;this.voiceVelocity=0;}
-  this.paint();this.onLayout?.();if(this.voicePosition!==this.voiceTarget||this.voiceVelocity||this.position!==this.target||this.velocity||this.composerPosition!==this.composerTarget||this.composerVelocity||this.backPosition!==this.backTarget||this.backVelocity)this.raf=requestAnimationFrame(time=>this.tick(time));
+  const focus=stepDockSpring(this.focusPosition,this.focusVelocity,this.focusTarget,seconds,this.duration);this.focusPosition=focus.position;this.focusVelocity=focus.velocity;if(Math.abs(this.focusPosition-this.focusTarget)<.0001&&Math.abs(this.focusVelocity)<.003){this.focusPosition=this.focusTarget;this.focusVelocity=0;}
+  this.paint();this.onLayout?.();if(this.focusPosition!==this.focusTarget||this.focusVelocity||this.voicePosition!==this.voiceTarget||this.voiceVelocity||this.position!==this.target||this.velocity||this.composerPosition!==this.composerTarget||this.composerVelocity||this.backPosition!==this.backTarget||this.backVelocity)this.raf=requestAnimationFrame(time=>this.tick(time));
  }
  paint(){
   this.updateComposerWidth();
   this.metrics={...this.baseMetrics,main:this.layoutMain+(this.composerWidth-this.layoutMain)*this.composerPosition};
-  const extension=this.popover||this.accessory;
-  const shape=dockGeometry(this.position,this.metrics,extension);this.el.style.width=shape.width+'px';this.el.style.setProperty('--dock-painted-width',shape.width+'px');
+  const remaining=1-this.focusPosition,phase=this.position*remaining;
+  this.metrics.main=this.metrics.height+(this.metrics.main-this.metrics.height)*remaining;this.metrics.radius+=(this.metrics.height/2-this.metrics.radius)*this.focusPosition;
+  this.el.classList.toggle('is-media-focus',!!this.focusTarget||this.focusPosition>0);
+  this.content.inert=!!this.focusTarget||this.focusPosition>0;
+  if(!this.content.inert&&this.focusReturn){this.focusReturn.focus({preventScroll:true});this.focusReturn=null;}
+  const extensionSource=this.popover||this.accessory,extension=extensionSource?{...extensionSource,position:extensionSource.position*remaining}:null;
+  const shape=dockGeometry(phase,this.metrics,extension);this.el.style.width=shape.width+'px';this.el.style.setProperty('--dock-painted-width',shape.width+'px');
   // Keep the receding action branch in the same glass while the menu grows.
   // Both paths share the base, so their clipped surface remains continuous.
-  const receding=this.popover&&this.accessory?dockGeometry(this.position,this.metrics,this.accessory):null;
+  const receding=this.popover&&this.accessory?dockGeometry(phase,this.metrics,{...this.accessory,position:this.accessory.position*remaining}):null;
   if(receding)shape.path+=' '+receding.path;
-  const back=this.back&&this.backPosition>0?backGeometry(shape,this.backPosition,this.metrics):null;if(back)shape.path=back.path;
+  const back=this.back&&this.backPosition>0?backGeometry(shape,this.backPosition*remaining,this.metrics):null;if(back)shape.path=back.path;
   const backSpace=back?.space||0;
   this.el.style.setProperty('--dock-back-space',backSpace+'px');
-  this.el.style.setProperty('--dock-center-offset',(backSpace-this.settingsSpace)/2+'px');
+  this.el.style.setProperty('--dock-center-offset',(backSpace-this.settingsSpace*remaining)/2+'px');
   if(this.back){this.back.hidden=this.backPosition===0&&this.backTarget===0;this.back.inert=!this.backTarget||!back||back.reveal<.7;this.back.style.opacity=String(back?.reveal||0);if(back)this.back.style.left=back.left+(back.width-this.metrics.backWidth)/2+'px';}
   const clip=`path('${shape.path.replace(/\s+/g,' ')}')`;
-  this.content.style.clipPath=extension?`path('${dockGeometry(this.position,this.metrics).path.replace(/\s+/g,' ')}')`:clip;this.main.style.width=shape.mainWidth+'px';
+  this.content.style.clipPath=extension?`path('${dockGeometry(phase,this.metrics).path.replace(/\s+/g,' ')}')`:clip;this.main.style.width=shape.mainWidth+'px';
   const branch=shape.popover,branches=[branch,receding?.popover].filter(Boolean),left=Math.min(0,...branches.map(item=>item.left),back?.left||0),top=Math.min(0,...branches.map(item=>item.top)),width=Math.max(shape.width,...branches.map(item=>item.left+item.width))-left,height=shape.height-top;
   for(const node of [this.glass,this.rim])Object.assign(node.style,{left:left+'px',top:top+'px',width:width+'px',height:height+'px'});
   this.clipPath.setAttribute('d',shape.path);this.clipPath.setAttribute('transform',`translate(${-left} ${-top})`);

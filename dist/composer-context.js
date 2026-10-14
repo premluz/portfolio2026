@@ -34,7 +34,7 @@ export class ComposerContext {
   const scene=this.getScene();
   // Chat autofocus must leave Back available: chat has no floating suggestions
   // that need to occupy the contextual controls' space.
-  if(this.focused&&scene.route!=='assistant'||this.blocked)return null;
+  if(this.focused&&scene.route!=='assistant'||this.blocked||this.dock.focusTarget||this.dock.focusPosition>0)return null;
   if(!this.dock.el.classList.contains('is-composer')&&this.mode==='inline'){
    if(!scene.project)return null;
    const actions=contextualActions(scene).filter(action=>action.id==='prototype'||action.id==='fullscreen');if(!actions.length)return null;

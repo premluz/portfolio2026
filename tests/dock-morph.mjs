@@ -151,6 +151,21 @@ for(const elapsed of [32,96,192,304]){
  finish();assert.equal(controller.position,0);assert.equal(controller.backPosition,0);
  assert(context.inert);assert(backControl.hidden);
 }
+for(const viewport of [390,1440]){
+ globalThis.innerWidth=viewport;dock.dataset.separateSettings='false';
+ controller.setComposer(true,{immediate:true});controller.setSplit(false,{immediate:true});controller.setBack(false,{immediate:true});controller.refresh();
+ const width=dock.style.width;
+ controller.setMediaFocus(true);assert.equal(dock.style.width,width,'Fullscreen starts at the existing composer width');
+ for(let i=0;i<6;i++)step(16);
+ const position=controller.focusPosition,velocity=controller.focusVelocity,movingWidth=dock.style.width;
+ controller.setMediaFocus(false);assert.equal(controller.focusPosition,position);assert.equal(controller.focusVelocity,velocity);assert.equal(dock.style.width,movingWidth,'Early exit reverses without resetting the outline');
+ finish();assert.equal(dock.style.width,width,'Early exit restores the composer');
+ controller.setMediaFocus(true);finish();
+ assert.equal(Number.parseFloat(dock.style.width),controller.baseMetrics.height,'Fullscreen close glass is circular on mobile and desktop');
+ assert.equal(Number.parseFloat(dock.style['--dock-center-offset']),0,'Fullscreen remains horizontally centred');
+ controller.setMediaFocus(false);finish();assert.equal(dock.style.width,width);
+ reduced=true;controller.setMediaFocus(true);assert.equal(controller.focusPosition,1);controller.setMediaFocus(false);assert.equal(controller.focusPosition,0);reduced=false;
+}
 controller.destroy();
 console.log('Dock morph passed: continuous contour, neck separation, Escape at four phases, stalls, reduced motion and idle cleanup.');
 
