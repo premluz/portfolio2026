@@ -25,7 +25,7 @@
 @keyframes dictation-wave-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(prefers-reduced-motion:reduce){.dictation-wave-track{animation:none}}
 :root[data-animation="off"] .dictation-wave-track{animation:none}
-#dock .voice-composer{position:absolute;inset:0;display:flex;align-items:center;gap:4px;padding:6px 7px;pointer-events:auto}
+#dock .voice-composer{position:absolute;inset:0;display:flex;align-items:center;gap:4px;padding:var(--composer-control-inset);pointer-events:auto}
 #dock .voice-composer[hidden]{display:none}
 #dock.voice-mode .assistant-composer{opacity:0;visibility:hidden;pointer-events:none}
 #dock .voice-composer button{flex:0 0 36px;width:36px;height:36px;display:grid;place-items:center;border-radius:50%;padding:0;background:transparent;color:var(--composer-text-ink);cursor:pointer;transition:background 160ms ease,color 160ms ease}

@@ -1,3 +1,4 @@
+import {splitPopover} from './dock-segments.js';
 const clamp=value=>Math.max(0,Math.min(1,value));
 const smooth=(a,b,value)=>{const t=clamp((value-a)/(b-a));return t*t*(3-2*t);};
 const k=.55228475;
@@ -9,24 +10,6 @@ function roundedRect(x,y,w,h,r,topEdge=''){
 function roundedSegment(x,y,w,h,leftRadius,rightRadius){
  const l=Math.min(leftRadius,w/2,h/2),r=Math.min(rightRadius,w/2,h/2),p=point;
  return `M ${p(x+l,y)} H ${x+w-r} C ${p(x+w-r+k*r,y)} ${p(x+w,y+r-k*r)} ${p(x+w,y+r)} V ${y+h-r} C ${p(x+w,y+h-r+k*r)} ${p(x+w-r+k*r,y+h)} ${p(x+w-r,y+h)} H ${x+l} C ${p(x+l-k*l,y+h)} ${p(x,y+h-l+k*l)} ${p(x,y+h-l)} V ${y+l} C ${p(x,y+l-k*l)} ${p(x+l-k*l,y)} ${p(x+l,y)} Z`;
-}
-function splitPopover(branch,popover){
- // The internal corners round with the opening seam. At zero separation the
- // silhouette is continuous; each group reverses into the original neck.
- const gap=Math.min(12,branch.width*.18)*clamp(popover.split||0)*smooth(.94,1,popover.position);
- if(branch.connected||gap<.001||!branch.path)return;
- const radius=Math.min(popover.radius||24,branch.height/2),inner=radius*clamp(popover.split||0)*smooth(.94,1,popover.position);
- const fractions=popover.splitAts?.length?popover.splitAts:[popover.splitAt||.5],cuts=[];
- for(const [index,fraction] of fractions.entries()){
-  const cut=branch.left+branch.width*Math.max(.05,Math.min(.95,fraction)),seam=popover.splitGaps?Math.max(gap,popover.splitGaps[index]*clamp(popover.split||0)*smooth(.94,1,popover.position)):gap;
-  if(!cuts.length||cut-cuts.at(-1).position>(seam+cuts.at(-1).gap)/2+2)cuts.push({position:cut,gap:seam});
- }
- branch.segments=Array.from({length:cuts.length+1},(_,index)=>{
-  const left=index?cuts[index-1].position+cuts[index-1].gap/2:branch.left,right=index<cuts.length?cuts[index].position-cuts[index].gap/2:branch.left+branch.width;
-  return {left,width:right-left};
- }).filter(segment=>segment.width>0);
- branch.segmentGap=gap;
- branch.path=branch.segments.map((segment,index)=>roundedSegment(segment.left,branch.top,segment.width,branch.height,index?inner:radius,index===branch.segments.length-1?radius:inner)).join(' ');
 }
 
 // A vertical branch of the very same perimeter, not a scaled popover skin.
@@ -58,7 +41,7 @@ export function dockGeometry(phase,{main=252,context=120,gap=12,height=48,radius
  const neck=ch*(1-smooth(.20,.96,t));
  const mainBranch=popover?.anchor==='main';
  const branch=popover&&(mainBranch||c>.001)?popoverGeometry(popover.position,{...popover,baseLeft:mainBranch?m:0,baseWidth:mainBranch?body:c,baseTop:mainBranch?0:top}):null;
- if(branch)splitPopover(branch,popover);
+ if(branch)splitPopover(branch,popover,roundedSegment,clamp(popover.split||0)*smooth(.94,1,popover.position));
  let path=roundedRect(m,0,body,h,r,mainBranch?branch?.edge:''),connected=false;
  if(c>.001&&ch>.001){
   if(neck<.02)path+=' '+roundedRect(0,top,c,ch,cr,mainBranch?'':branch?.edge);
@@ -124,7 +107,7 @@ export class DockMorph {
  }
  refresh(){
   const style=getComputedStyle(this.el),read=(name,fallback)=>parseFloat(style.getPropertyValue(name))||fallback;
-  this.baseMetrics={main:read('--nav-main-width',252),context:Number.parseFloat(getComputedStyle(this.context).width)||read('--nav-context-width',120),gap:read('--nav-section-gap',12),height:read('--nav-height',48),backWidth:read('--nav-back-width',78),radius:parseFloat(style.getPropertyValue('--nav-rounding'))||0};
+  this.baseMetrics={main:read('--nav-main-width',252),context:Number.parseFloat(getComputedStyle(this.context).width)||read('--nav-context-width',120),gap:read('--nav-section-gap',12),height:Number.parseFloat(style.height)||read('--nav-height',48),backWidth:read('--nav-back-width',78),radius:parseFloat(style.getPropertyValue('--nav-rounding'))||0};
   this.updateComposerWidth();
   this.paint();
   this.onLayout?.();

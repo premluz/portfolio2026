@@ -72,12 +72,21 @@ export class ComposerContext {
   const rect=this.dock.el.getBoundingClientRect(),natural=this.row.getBoundingClientRect(),width=Math.min(Math.max(48,natural.width),innerWidth-32),height=natural.height||48;
   const base=dockGeometry(this.dock.position,this.dock.metrics),center=base.mainLeft+base.mainWidth/2;
   const left=Math.max(16-rect.left,Math.min(center-width/2,innerWidth-16-rect.left-width));
-  this.targetMetrics={anchor:'main',left,width,height,gap:12,radius:height/2};
   const present=this.rendered.actions.filter(action=>this.actions.items.get(action.id)?.target);
+  const padding=Number.parseFloat(getComputedStyle(this.row).paddingLeft),groups=new Map();
+  for(const action of present){
+   const slot=this.actions.items.get(action.id).slot.getBoundingClientRect(),group=groups.get(action.group);
+   if(group){group.left=Math.min(group.left,slot.left);group.right=Math.max(group.right,slot.right);group.top=Math.min(group.top,slot.top);group.bottom=Math.max(group.bottom,slot.bottom);}
+   else groups.set(action.group,{left:slot.left,right:slot.right,top:slot.top,bottom:slot.bottom});
+  }
+  const bounds=[...groups.values()],wrapped=Math.max(...bounds.map(group=>group.top))-Math.min(...bounds.map(group=>group.top))>padding;
+  this.splitRects=wrapped?bounds.map(group=>({left:group.left-natural.left-padding,top:group.top-natural.top-padding,width:group.right-group.left+2*padding,height:group.bottom-group.top+2*padding})):undefined;
+  const radius=wrapped?Math.max(...this.splitRects.map(group=>group.height))/2:height/2;
+  this.targetMetrics={anchor:'main',left,width,height,gap:12,radius};
   this.splitAts=[];this.splitGaps=[];
   for(let index=1;index<present.length;index++)if(present[index].group!==present[index-1].group){
-   const previous=this.actions.items.get(present[index-1].id).slot,next=this.actions.items.get(present[index].id).slot;
-   this.splitAts.push((previous.offsetLeft+previous.offsetWidth+next.offsetLeft)/(2*width));this.splitGaps.push(Math.max(0,next.offsetLeft-previous.offsetLeft-previous.offsetWidth-10));
+   const previous=this.actions.items.get(present[index-1].id).slot.getBoundingClientRect(),next=this.actions.items.get(present[index].id).slot.getBoundingClientRect();
+   this.splitAts.push((previous.right+next.left-2*natural.left)/(2*width));this.splitGaps.push(Math.max(0,next.left-previous.right-2*padding));
   }
   if(!this.metrics||this.position===0||this.reduced()){this.metrics={...this.targetMetrics};this.metricVelocity={left:0,width:0,height:0};this.splitPosition=this.splitTarget;this.splitVelocity=0;}
   Object.assign(this.row.style,{left:this.metrics.left+'px',top:-(this.metrics.height+12)+'px'});
@@ -95,10 +104,10 @@ export class ComposerContext {
  moving(now){return this.position!==this.target||this.velocity||this.splitPosition!==this.splitTarget||this.splitVelocity||this.actions.moving(now)||this.metrics&&['left','width','height'].some(key=>Math.abs(this.metrics[key]-this.targetMetrics[key])>.01||this.metricVelocity[key]);}
  paint(){
   if(this.position===0&&!this.target){this.row.hidden=true;this.row.inert=true;this.dock.setAccessory(null);for(const resolve of this.waiters.splice(0))resolve();return;}
-  this.row.hidden=false;this.measure();const branch={...this.metrics,radius:this.metrics.height/2,position:this.position,split:this.splitPosition,splitAts:this.splitAts,splitGaps:this.rendered?.project&&this.splitProjectControls?this.splitGaps:undefined};this.dock.setAccessory(branch);
+  this.row.hidden=false;this.measure();const branch={...this.metrics,radius:Math.min(this.targetMetrics.radius,this.metrics.height/2),position:this.position,split:this.splitPosition,splitAts:this.splitAts,splitRects:this.splitRects,splitGaps:this.rendered?.project&&this.splitProjectControls?this.splitGaps:undefined};this.dock.setAccessory(branch);
   const shape=dockGeometry(this.dock.position,this.dock.metrics,branch).popover;if(!shape)return;
   const {left,gap}=this.metrics,{width,height}=this.targetMetrics,top=-this.metrics.height-gap;
-  this.row.style.clipPath=`inset(${Math.max(0,shape.top-top)}px ${Math.max(0,left+width-shape.left-shape.width)}px ${Math.max(0,top+height-shape.top-shape.height)}px ${Math.max(0,shape.left-left)}px round ${shape.height/2}px)`;
+  this.row.style.clipPath=`inset(${Math.max(0,shape.top-top)}px ${Math.max(0,left+width-shape.left-shape.width)}px ${Math.max(0,top+height-shape.top-shape.height)}px ${Math.max(0,shape.left-left)}px round ${branch.radius}px)`;
   this.row.style.opacity=String(shape.reveal);this.row.inert=!this.target||shape.reveal<.7;
   for(const [id,source] of [['previous',this.rendered?.carousel?.previous],['next',this.rendered?.carousel?.next]]){const item=this.actions.items.get(id);if(item?.target) item.button.disabled=!!source?.disabled;}
   dispatchEvent(new Event('composer-overlay-change'));

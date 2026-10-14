@@ -13,6 +13,21 @@ for(const diameter of [48,54]){
  }
 }
 
+const wrappedGroups=[{left:0,top:0,width:76,height:54},{left:94,top:0,width:85,height:54},{left:234,top:0,width:54,height:54},{left:94,top:46,width:100,height:54}];
+for(const position of [.1,.5,.94,.97,1]){
+ const wrapped=dockGeometry(0,{main:288,height:54},{anchor:'main',position,split:1,left:0,width:288,height:100,radius:27,splitRects:wrappedGroups}).popover;
+ assert(!/NaN|Infinity/.test(wrapped.path),'Wrapped control rows retain valid geometry throughout the morph');
+ if(position!==1)continue;
+ assert.equal(wrapped.segments.length,wrappedGroups.length,'Each wrapped action group retains its own glass outline');
+ wrapped.segments.forEach((segment,index)=>{
+  const group=wrappedGroups[index];
+  assert.equal(segment.height,group.height,'A one-row control does not inherit the height of the complete two-row pane');
+  assert.equal(segment.width,group.width);
+  assert.equal(segment.top,wrapped.top+group.top);
+  assert.equal(segment.left,wrapped.left+group.left);
+ });
+}
+
 // The glass must have one contour while attached and two only after pinching.
 for(const metrics of [{main:252,context:120,gap:12,height:48,radius:24},{main:210,context:82,gap:8,height:48,radius:0}]){
  let width=metrics.main;
@@ -42,6 +57,11 @@ globalThis.document={createElement:element,createElementNS:element};
 globalThis.getComputedStyle=()=>({getPropertyValue:()=>''});
 const backControl=element(),context=element(),main=element(),legacy=element(),dock=element();dock.querySelector=selector=>selector==='.context-nav'?context:selector==='nav'?main:selector==='.dock-shapes'?legacy:selector==='#assistantBack'?backControl:null;dock.prepend=(...nodes)=>dock.children.unshift(...nodes);
 const controller=new DockMorph(dock,{reduced:()=>reduced});
+const initialComputedStyle=globalThis.getComputedStyle;
+globalThis.getComputedStyle=()=>({height:'54px',getPropertyValue:name=>name==='--nav-height'?'calc(44px + 2 * 5px)':''});
+controller.refresh();
+assert.equal(controller.baseMetrics.height,54,'Glass uses the resolved CSS height instead of falling back when a height token contains calc()');
+globalThis.getComputedStyle=initialComputedStyle;controller.refresh();
 assert(legacy.removed,'Legacy static surfaces are removed rather than layered over the morph');
 assert.deepEqual(controller.content.children,[context,main],'Visible controls belong to the shared morph layer');
 assert.deepEqual(dock.children,[controller.glass,controller.content,controller.rim],'Rim is the foreground sibling');

@@ -28,7 +28,7 @@ class Node {
  getBoundingClientRect(){const root=this.parent?.getBoundingClientRect()||{left:0,top:0};const left=root.left+(this.className==='composer-context-actions'?parseFloat(this.style.left)||0:this.offsetLeft),top=root.top+(this.className==='composer-context-actions'?parseFloat(this.style.top)||0:this.offsetTop),width=this.offsetWidth,height=this.offsetHeight;return {left,top,width,height,right:left+width,bottom:top+height};}
  animate(keyframes,options){let finish;const animation={keyframes,options,finished:new Promise(resolve=>finish=resolve),finish:()=>finish(),cancel:()=>finish()};(this.calls??=[]).push(animation);return animation;}
 }
-globalThis.document={documentElement:{dataset:{}},createElement:tag=>new Node(tag),activeElement:null};globalThis.getComputedStyle=()=>({opacity:'1',transform:'none'});
+globalThis.document={documentElement:{dataset:{}},createElement:tag=>new Node(tag),activeElement:null};globalThis.getComputedStyle=()=>({opacity:'1',transform:'none',paddingLeft:'5px'});
 const el=new Node();el.getBoundingClientRect=()=>({left:16,top:720});let accessory=null;
 const dock={el,position:0,backPosition:0,metrics:{main:358,context:88,gap:12,height:48,radius:24},setAccessory:value=>accessory=value};
 let galleryRect={top:100,bottom:600,height:500};const gallery={root:{isConnected:true,dataset:{cardGallery:'test'},closest:()=>null},viewport:{getBoundingClientRect:()=>galleryRect},details:{getAttribute:()=> '#one'},previous:{disabled:true},next:{disabled:false}};

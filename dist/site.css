@@ -1529,14 +1529,14 @@ body:has(.home-carousel-active){overflow-x:clip}
 @keyframes assistant-presence-b{from{transform:translate3d(6%,-3%,0) scale(.96,1.04);border-radius:54% 46% 60% 40% / 42% 57% 43% 58%}to{transform:translate3d(-8%,4%,0) scale(1.07,.91);border-radius:40% 60% 47% 53% / 59% 41% 57% 43%}}
 #dock .dock-content>nav>a{transition:opacity .18s ease,background-color var(--nav-hover-out-duration) ease-out}
 #dock.is-composer .dock-content>nav>a{opacity:0;visibility:hidden;pointer-events:none}
-#dock .assistant-composer{position:absolute;inset:0;display:flex;align-items:center;gap:4px;width:100%;padding:var(--nav-container-padding) calc(var(--nav-container-padding) + 7px);margin:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .24s ease,visibility .24s}
+#dock .assistant-composer{position:absolute;inset:0;display:flex;align-items:center;gap:4px;width:100%;padding:var(--composer-control-inset);margin:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .24s ease,visibility .24s}
 #dock.is-composer .assistant-composer{opacity:1;visibility:visible;pointer-events:auto;transition-delay:.1s}
 #dock .assistant-composer button{flex:0 0 var(--nav-icon-size);width:var(--nav-icon-size);height:var(--nav-icon-size);display:grid;place-items:center;border-radius:var(--radius-icon-control);padding:0;background:transparent;color:var(--nav-item-ink);transition:background-color .2s,color .2s}
 #dock .assistant-composer button:hover,#dock .assistant-composer button:focus-visible{background:var(--nav-item-hover);color:var(--ink)}
 #dock .assistant-composer button[aria-pressed=true]{color:var(--ink);background:var(--nav-active)}
 #dock .assistant-composer button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 #dock .assistant-composer input{flex:1 1 auto;min-width:0;width:100%;height:100%;padding:0 2px;border:0;outline:0;background:transparent;color:var(--ink);font:inherit;font-size:var(--composer-font-size)}#dock .assistant-composer input::placeholder{color:var(--muted)}#dock .assistant-composer input:focus-visible{outline:0}#dock .assistant-composer button:disabled{opacity:.3;cursor:default}
-@media(max-width:650px){.assistant-page{padding:24px 22px calc(var(--assistant-scroll-clearance) + 48px + env(safe-area-inset-bottom,0px))}.assistant-welcome{margin-bottom:45px}.ask-messages{gap:26px}.ask-cards{grid-template-columns:1fr}.ask-cards .project-card{min-height:112px;padding:15px}.ask-cards .project-card .visual{height:76px!important}#dock .assistant-composer{gap:2px;padding-inline:6px}#dock .composer-suggestions{max-width:calc(100vw - 20px);gap:6px}#dock .composer-suggestions button{padding:8px 11px;font-size:var(--composer-font-size)}}
+@media(max-width:650px){.assistant-page{padding:24px 22px calc(var(--assistant-scroll-clearance) + 48px + env(safe-area-inset-bottom,0px))}.assistant-welcome{margin-bottom:45px}.ask-messages{gap:26px}.ask-cards{grid-template-columns:1fr}.ask-cards .project-card{min-height:112px;padding:15px}.ask-cards .project-card .visual{height:76px!important}#dock .assistant-composer{gap:2px}#dock .composer-suggestions{max-width:calc(100vw - 20px);gap:6px}#dock .composer-suggestions button{padding:8px 11px;font-size:var(--composer-font-size)}}
 @media(prefers-reduced-motion:reduce){#dock.is-composer .composer-aura-light::before,#dock.is-composer .composer-aura-light::after{animation:none;opacity:.16}#dock .assistant-composer{transition:none}.ask-suggestions button.suggestion-chip{animation:none;opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.ask-cards .project-card.ask-card-enter{animation:none}}
 :root[data-animation="off"] #dock.is-composer .composer-aura-light::before,:root[data-animation="off"] #dock.is-composer .composer-aura-light::after{animation:none;opacity:.16}
@@ -1684,7 +1684,8 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 
 /* menu-controls.css */
 /* Two persistent groups share the same icon switch and glass colour tokens. */
-:root{--nav-icon-size:36px;--touch-icon-size:44px;--radius-icon-control:50%}
+:root{--nav-icon-size:36px;--touch-icon-size:44px;--radius-icon-control:50%;--control-glass-inset:5px}
+#dock{--composer-control-inset:max(0px,calc((var(--nav-height) - var(--nav-icon-size)) / 2))}
 #dock .project-menu{--menu-inset:24px;--menu-section-gap:24px;padding:0}
 #dock .project-menu-projects{padding:var(--menu-inset) calc(var(--menu-inset) / 2) 0}
 #dock .project-menu-projects [data-project-menu-item]{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding-inline:calc(var(--menu-inset) / 2);min-height:var(--touch-icon-size)}
@@ -1736,7 +1737,7 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 @keyframes dictation-wave-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(prefers-reduced-motion:reduce){.dictation-wave-track{animation:none}}
 :root[data-animation="off"] .dictation-wave-track{animation:none}
-#dock .voice-composer{position:absolute;inset:0;display:flex;align-items:center;gap:4px;padding:6px 7px;pointer-events:auto}
+#dock .voice-composer{position:absolute;inset:0;display:flex;align-items:center;gap:4px;padding:var(--composer-control-inset);pointer-events:auto}
 #dock .voice-composer[hidden]{display:none}
 #dock.voice-mode .assistant-composer{opacity:0;visibility:hidden;pointer-events:none}
 #dock .voice-composer button{flex:0 0 36px;width:36px;height:36px;display:grid;place-items:center;border-radius:50%;padding:0;background:transparent;color:var(--composer-text-ink);cursor:pointer;transition:background 160ms ease,color 160ms ease}
@@ -1757,29 +1758,38 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 :root[data-contextual-buttons="composer"] .spatial-gallery-primary-action{display:none}
 :root[data-contextual-buttons="composer"] .detail-media-actions [data-media-focus="fullscreen"]{display:none}
 :root[data-contextual-buttons="inline"] .detail-media-actions [data-media-focus="fullscreen"]{display:none}
-#dock .composer-context-actions{--context-action-padding:5px;--context-action-gap:4px;--context-glass-gap:12px;position:absolute;z-index:3;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:var(--context-action-gap);width:max-content;max-width:calc(100vw - 32px);padding:var(--context-action-padding);pointer-events:auto;perspective:600px}
-#dock .composer-context-slot{display:flex;flex:0 0 auto;height:38px;transform-style:preserve-3d}
+#dock .composer-context-actions{--context-control-height:38px;--context-action-padding:var(--control-glass-inset);--context-action-gap:4px;--context-glass-gap:12px;position:absolute;z-index:3;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:var(--context-action-gap);width:max-content;max-width:calc(100vw - 32px);padding:var(--context-action-padding);pointer-events:auto;perspective:600px}
+#dock .composer-context-slot{display:flex;flex:0 0 auto;height:var(--context-control-height);transform-style:preserve-3d}
 #dock .composer-context-slot[data-group-end="true"]{margin-right:calc(var(--context-glass-gap) + 2 * var(--context-action-padding) - var(--context-action-gap))!important}
 #dock .composer-context-presence{display:flex;transform-origin:center;transform-style:preserve-3d}
 #dock .composer-context-slot[data-exiting="true"]{pointer-events:none}
 #dock .composer-context-actions[hidden]{display:none}
-#dock .composer-context-actions :is(button,a){display:flex;align-items:center;justify-content:center;height:38px;min-width:38px;max-width:100%;padding:8px 12px;border:0;border-radius:var(--radius-header-control);background:transparent;color:var(--composer-text-ink,var(--muted));font:inherit;font-size:var(--composer-font-size);line-height:var(--line-height-label);white-space:nowrap;cursor:pointer;transition:background var(--nav-hover-out-duration) ease-out,color 160ms ease,transform 160ms cubic-bezier(.22,1,.36,1)}
-#dock .composer-context-actions :is(button,a):is(:hover,:focus-visible):not(:disabled){background:var(--nav-item-hover);color:var(--ink);transform:scale(.96);transition-duration:var(--nav-hover-in-duration)}
+#dock .composer-context-actions :is(button,a){display:flex;align-items:center;justify-content:center;height:var(--context-control-height);min-width:var(--context-control-height);max-width:100%;padding:8px 12px;border:0;border-radius:calc(var(--context-control-height) / 2);background:transparent;color:var(--composer-text-ink,var(--muted));font:inherit;font-size:var(--composer-font-size);line-height:var(--line-height-label);white-space:nowrap;cursor:pointer;transition:background var(--nav-hover-out-duration) ease-out,color 160ms ease}
+#dock .composer-context-actions :is(button,a):is(:hover,:focus-visible):not(:disabled){background:var(--nav-item-hover);color:var(--ink);transition-duration:var(--nav-hover-in-duration)}
 #dock .composer-context-actions :is(button,a):disabled{opacity:.35;cursor:default}
 #dock .composer-context-actions :is(button,a):focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
-#dock .composer-context-actions .composer-context-icon{width:38px;padding:8px;flex:0 0 38px;border-radius:var(--radius-icon-control)}
+#dock .composer-context-actions .composer-context-icon{width:var(--context-control-height);padding:8px;flex:0 0 var(--context-control-height);border-radius:var(--radius-icon-control)}
 #dock .composer-context-actions svg{display:block;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 #dock .composer-suggestions button.suggestion-chip{animation:none}
 :root[data-contextual-buttons="composer"] #dock .composer-suggestions{left:0;width:var(--dock-painted-width,var(--composer-max-width));max-width:calc(100vw - 32px)}
-@media(prefers-reduced-motion:reduce){#dock .composer-context-actions :is(button,a){transition:none}#dock .composer-context-actions :is(button,a):hover{transform:none}}
-:root[data-animation="off"] #dock .composer-context-actions :is(button,a){transition:none;transform:none}
+@media(prefers-reduced-motion:reduce){#dock .composer-context-actions :is(button,a){transition:none}}
+:root[data-animation="off"] #dock .composer-context-actions :is(button,a){transition:none}
 
 @media(max-width:600px){
  #dock .composer-context-actions{--context-action-gap:2px}
  #dock .composer-context-actions :is(button,a){padding-inline:8px;font-size:min(14px,var(--composer-font-size))}
- #dock .composer-context-actions .composer-context-icon{width:38px;min-width:38px;flex-basis:38px;padding:6px}
+ #dock .composer-context-actions .composer-context-icon{padding:6px}
  #dock .composer-context-actions [data-compact-label]{font-size:0}
  #dock .composer-context-actions [data-compact-label]::after{content:attr(data-compact-label);font-size:min(14px,var(--composer-font-size))}
+}
+@media(max-width:380px){
+ #dock .composer-context-actions[data-split-project-controls="true"]:has([data-context-action="prototype"]){display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+ #dock .composer-context-actions[data-split-project-controls="true"]:has([data-context-action="prototype"])>.composer-context-slot{margin:0!important;justify-self:center}
+ #dock .composer-context-actions[data-split-project-controls="true"]:has([data-context-action="prototype"])>.composer-context-slot:has([data-context-action="back"]){grid-column:1 / span 2;grid-row:1;justify-self:start}
+ #dock .composer-context-actions[data-split-project-controls="true"]>.composer-context-slot:has([data-context-action="prototype"]){grid-column:3 / span 2;grid-row:1;justify-self:start}
+ #dock .composer-context-actions[data-split-project-controls="true"]:has([data-context-action="prototype"])>.composer-context-slot:has([data-context-action="fullscreen"]){grid-column:5 / span 2;grid-row:1;justify-self:end}
+ #dock .composer-context-actions[data-split-project-controls="true"]:has([data-context-action="prototype"])>.composer-context-slot:has([data-context-action="previous"]){grid-column:3;grid-row:2;justify-self:end}
+ #dock .composer-context-actions[data-split-project-controls="true"]:has([data-context-action="prototype"])>.composer-context-slot:has([data-context-action="next"]){grid-column:4;grid-row:2;justify-self:start}
 }
 
 /* status-stack.css */
@@ -1836,13 +1846,12 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 @media(max-width:750px){.corner-controls{right:max(16px,env(safe-area-inset-right));bottom:calc(92px + env(safe-area-inset-bottom))}}
 @media(max-width:650px){
  :root{--nav-icon-size:var(--touch-icon-size)}
- #dock .assistant-composer,#dock .voice-composer{padding:0 var(--space-1)}
+ #dock{--nav-height:calc(var(--touch-icon-size) + 2 * var(--control-glass-inset))}
  #dock .voice-composer button{flex-basis:var(--touch-icon-size);width:var(--touch-icon-size);height:var(--touch-icon-size)}
  #dock .project-menu{--menu-inset:var(--space-4);--menu-section-gap:var(--space-4);--menu-client-max-width:50%}
  #dock .project-menu-actions{gap:var(--space-3)}
  #dock .project-menu-actions>div{gap:var(--space-2)}
  #dock .project-menu-client{flex:0 1 auto;min-width:0;max-width:var(--menu-client-max-width);overflow:hidden;text-overflow:ellipsis}
- #dock .composer-context-actions .composer-context-icon{width:var(--touch-icon-size);height:var(--touch-icon-size);min-width:var(--touch-icon-size);flex-basis:var(--touch-icon-size)}
- #dock .composer-context-slot:has(.composer-context-icon){height:var(--touch-icon-size)}
+ #dock .composer-context-actions{--context-control-height:var(--touch-icon-size)}
  .corner-controls :is(#askToggle,#settingsToggle){width:var(--touch-icon-size);height:var(--touch-icon-size);padding:0;border-radius:var(--radius-icon-control)}
 }
