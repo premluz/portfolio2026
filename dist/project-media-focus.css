@@ -16,7 +16,10 @@
 .project-media-focus-image,.project-media-focus-prototype{position:absolute;object-fit:contain;max-width:none;max-height:none;margin:0;border:0}
 .project-media-focus-image{will-change:transform}
 #dock.dock-morph.is-media-focus{z-index:121}
-#dock.dock-morph.is-media-focus>:not(.dock-glass,.dock-outline,.project-media-focus-close),#dock.dock-morph.is-media-focus>:not(.dock-glass,.dock-outline,.project-media-focus-close) *{visibility:hidden;pointer-events:none}
+#dock.dock-morph.is-media-focus-active>:not(.dock-glass,.dock-outline,.project-media-focus-close),#dock.dock-morph.is-media-focus-active>:not(.dock-glass,.dock-outline,.project-media-focus-close) *{visibility:hidden;pointer-events:none}
+#dock.dock-morph.is-media-focus:not(.is-media-focus-active) .dock-content{opacity:var(--dock-return-reveal)}
+#dock.dock-morph.is-media-focus:not(.is-media-focus-active) .assistant-composer{transition-delay:0s}
+#dock.dock-morph:not(.is-media-focus-active) .project-media-focus-close{visibility:hidden;pointer-events:none}
 #dock .project-media-focus-close{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:var(--nav-icon-size);height:var(--nav-icon-size);min-height:var(--nav-icon-size);padding:0;border:0;border-radius:var(--radius-icon-control);background:transparent;color:var(--nav-item-ink);cursor:pointer;z-index:2}
 #dock .project-media-focus-close:hover{background:var(--nav-item-hover);color:var(--ink)}
 @media(max-width:750px){.detail-layout>.detail-media-column{grid-column:1;grid-row:1}.detail-layout>.description{grid-column:1;grid-row:2}.detail.heading-beside-image>.detail-layout>.detail-media-column{grid-column:1;grid-row:4}.detail.heading-beside-image>.detail-layout>.description{grid-row:6}}

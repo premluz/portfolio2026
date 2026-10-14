@@ -138,7 +138,7 @@ export class DockMorph {
  setMediaFocus(active,{duration=400,immediate=false,returnFocus=null}={}){
   if(returnFocus)this.focusReturn=returnFocus;
   this.focusTarget=active?1:0;this.duration=duration;this.el.classList.toggle('is-media-focus',active||this.focusPosition>0);
-  if(immediate||this.reduced()){this.focusPosition=this.focusTarget;this.focusVelocity=0;this.paint();this.onLayout?.();return;}this.start();
+  if(immediate||this.reduced()){this.focusPosition=this.focusTarget;this.focusVelocity=0;this.paint();this.onLayout?.();return;}this.paint();this.onLayout?.();this.start();
  }
  setComposer(active,{duration=400,immediate=false}={}){
   this.composerTarget=active?1:0;this.duration=Math.max(550,duration*1.55);this.updateComposerWidth();
@@ -166,6 +166,7 @@ export class DockMorph {
   const remaining=1-this.focusPosition,phase=this.position*remaining;
   this.metrics.main=this.metrics.height+(this.metrics.main-this.metrics.height)*remaining;this.metrics.radius+=(this.metrics.height/2-this.metrics.radius)*this.focusPosition;
   this.el.classList.toggle('is-media-focus',!!this.focusTarget||this.focusPosition>0);
+  this.el.classList.toggle('is-media-focus-active',!!this.focusTarget);this.el.style.setProperty('--dock-return-reveal',String(remaining));
   this.content.inert=!!this.focusTarget||this.focusPosition>0;
   if(!this.content.inert&&this.focusReturn){this.focusReturn.focus({preventScroll:true});this.focusReturn=null;}
   const extensionSource=this.popover||this.accessory,extension=extensionSource?{...extensionSource,position:extensionSource.position*remaining}:null;

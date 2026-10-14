@@ -62,6 +62,8 @@ const cancelledBlock=context.setBlocked(true);step(32);context.setBlocked(false)
 // In traditional navigation, only Full Screen emerges above the dock.
 scene={...scene,fullScreen:true};context.setMode('inline');finish();assert.deepEqual(context.rendered.actions.map(action=>action.id),['fullscreen']);assert.equal(context.position,1);
 context.setMode('composer');finish();assert.equal(context.position,1);assert.equal(dockGeometry(0,dock.metrics,accessory).popover.segments.length,3);
+dock.focusTarget=1;dock.focusPosition=1;context.refresh();finish();assert.equal(context.target,0,'Fullscreen suppresses contextual controls');
+dock.focusTarget=0;dock.focusPosition=.6;context.refresh();assert.equal(context.target,1,'Contextual controls start returning before the composer finishes expanding');step();assert(context.position>0&&!context.row.hidden);finish();dock.focusPosition=0;
 const testimonialRoot={isConnected:true,closest:()=>null,getBoundingClientRect:()=>({top:100,bottom:500,height:400})};
 scene={route:'work',galleries:[gallery],contextSections:[{kind:'testimonials',root:testimonialRoot,href:'https://www.linkedin.com/in/premluczak/details/recommendations/'}]};context.refresh();finish();assert.deepEqual(context.rendered.actions.map(action=>action.id),['testimonials-linkedin']);const testimonialLink=context.actions.items.get('testimonials-linkedin').button;assert.equal(testimonialLink.tag,'a');assert.equal(testimonialLink.href,scene.contextSections[0].href);assert.equal(testimonialLink.target,'_blank');
 testimonialRoot.getBoundingClientRect=()=>({top:-500,bottom:-100,height:400});context.refresh();finish();assert.equal(context.rendered.actions[0].id,'view','Leaving testimonials restores the visible gallery controls');

@@ -163,7 +163,7 @@ for(const viewport of [390,1440]){
  controller.setMediaFocus(true);finish();
  assert.equal(Number.parseFloat(dock.style.width),controller.baseMetrics.height,'Fullscreen close glass is circular on mobile and desktop');
  assert.equal(Number.parseFloat(dock.style['--dock-center-offset']),0,'Fullscreen remains horizontally centred');
- controller.setMediaFocus(false);finish();assert.equal(dock.style.width,width);
+ controller.setMediaFocus(false);step(16);assert(controller.focusPosition>0&&controller.focusPosition<1);assert(Number(dock.style['--dock-return-reveal'])>0,'Composer contents emerge while the glass is still expanding');finish();assert.equal(dock.style.width,width);
  reduced=true;controller.setMediaFocus(true);assert.equal(controller.focusPosition,1);controller.setMediaFocus(false);assert.equal(controller.focusPosition,0);reduced=false;
 }
 controller.destroy();
