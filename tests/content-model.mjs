@@ -12,7 +12,8 @@ assert.deepEqual(JSON.parse(await fs.readFile(new URL('../dist/content/schema.js
 assert.equal(content.list({type:'portfolio-item'}).length,8);
 assert.equal(cards.length,14);assert.equal(projects.length,8,'Project navigation includes authored projects and text-only list entries');
 for(const id of ['merlin','planner','playstation','vodafone-iot','tracr','galachain','bastion','porter'])assert(content.get(id),`The published portfolio includes ${id}`);
-assert.equal(content.get('porter').listOnly,true);assert.equal(content.getCard('porter').image,undefined);assert.equal(content.getCard('porter').client,'Porter • Agent switchboard');
+assert.equal(content.get('porter').listOnly,true);assert.equal(content.getCard('porter').image,'assets/porter.png');assert.equal(content.getCard('porter').videoUrl,'assets/porter.mp4');assert.equal(content.getCard('porter').client,'Porter • Agent switchboard');
+assert(content.get('home').blocks.find(block=>block.id==='home-projects').items.some(item=>item.documentId==='porter'),'The homepage carousel connects Porter to its project details');
 assert.equal(content.get('digital-trading'),null,'The replaced digital-trading placeholder is no longer published');
 assert.equal(content.get('playstation-02'),null,'A placement never creates a second content document');
 const canonical=content.getCard('playstation'),duplicate=cards.find(c=>c.id==='playstation-02');

@@ -32,7 +32,9 @@ assert(labels.every((position,index)=>position>=0&&(!index||position>labels[inde
 const authoredDetail=cardDetail(createContentStore(catalog).getCard('playstation'));
 assert(authoredDetail.includes('<h1 tabindex="-1">Transformation saving hundreds of hours for developers and publishers</h1>'),'The page thesis is separate from the outcome-led card headline');
 const authoredStore=createContentStore(catalog);
-const porterCard=card(authoredStore.getCard('porter'),0,'regular',{link:true});assert(porterCard.includes('text-only-card')&&porterCard.includes('Porter • Agent switchboard'));assert(!porterCard.includes('<div class="visual">'),'A text-only project card never emits an empty media frame');
+const porter=authoredStore.getCard('porter'),porterCard=card(porter,0,'regular',{link:true});assert(porterCard.includes('href="#porter"')&&porterCard.includes('assets/porter.png')&&porterCard.includes('assets/porter.mp4'));
+const {image,videoUrl,...textOnlyPorter}=porter;
+const textOnlyCard=card(textOnlyPorter,0,'regular',{link:true});assert(textOnlyCard.includes('text-only-card')&&textOnlyCard.includes('Porter • Agent switchboard'));assert(!textOnlyCard.includes('<div class="visual">'),'A text-only project card never emits an empty media frame');
 for(const project of catalog.documents.filter(document=>document.type==='portfolio-item')){
  const markup=cardDetail(authoredStore.getCard(project.id));
  if(project.heroMediaId)assert(markup.includes('class="detail-media-column"'),'Projects with hero media keep their media column');

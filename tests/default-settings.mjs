@@ -13,4 +13,14 @@ storage.setItem('prem-motion-settings',JSON.stringify({duration:999}));
 applyDefaultSettings(storage);
 assert.equal(storage.getItem('prem-home-layout'),'user-choice','Existing scalar preferences are preserved');
 assert.deepEqual(JSON.parse(storage.getItem('prem-motion-settings')),{duration:999},'Existing grouped preferences are preserved');
+assert.equal(storage.getItem('prem-home-product-display'),'carousel');
+for(const [previous,expected] of [['text','carousel'],['cards','cards']]){
+ const saved=new Map([['prem-home-product-display',previous]]);
+ const existing={getItem:key=>saved.get(key)??null,setItem:(key,value)=>saved.set(key,String(value))};
+ applyDefaultSettings(existing);
+ assert.equal(saved.get('prem-home-product-display'),expected);
+ saved.set('prem-home-product-display','text');
+ applyDefaultSettings(existing);
+ assert.equal(saved.get('prem-home-product-display'),'text','Later explicit choices survive the one-time correction');
+}
 console.log('Default settings passed: every preset value is applied for new storage and existing preferences remain unchanged.');

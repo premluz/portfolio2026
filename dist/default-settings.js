@@ -1,6 +1,6 @@
 export const DEFAULT_STORAGE_VALUES=Object.freeze({
  'prem-home-content-width':'small','prem-content-page-width':'small','prem-detail-content-width':'large',
- 'prem-home-product-display':'text','prem-hero-carousel':'false','prem-hero-timeline-enabled':'false','prem-hero-description-enabled':'true','prem-hero-timeline-mode':'drag',
+ 'prem-home-product-display':'carousel','prem-hero-carousel':'false','prem-hero-timeline-enabled':'false','prem-hero-description-enabled':'true','prem-hero-timeline-mode':'drag',
  'prem-home-view':'current','prem-home-layout':'masonry','prem-home-columns':'1','prem-one-column-card-position':'alternating','prem-multi-column-card-position':'bottom','prem-card-copy-hover-desktop':'false',
  'prem-about-gallery-variant':'circular','prem-about-gallery-orientation':'horizontal','prem-services-layout':'carousel','prem-services-carousel-alignment':'content','prem-testimonial-card-background':'false','prem-footer-contact-links':'false',
  'prem-card-show-client':'true','prem-card-show-title':'true','prem-card-show-description':'true','prem-hide-card-background':'true','prem-hide-card-color':'false','prem-hide-card-hover':'true','prem-card-hover-effect':'glow',
@@ -21,10 +21,18 @@ export const DEFAULT_JSON_STORAGE_VALUES=Object.freeze({
  'prem-bleed-image':{top:28,side:0,bottom:8,backing:true,settingsVersion:1}
 });
 
+const productDisplayDefaultKey='prem-home-product-display-default';
+const productDisplayKey='prem-home-product-display';
+
 export function applyDefaultSettings(storage){
  if(storage===undefined)try{storage=globalThis.localStorage;}catch(error){console.warn('Portfolio defaults could not access browser storage.',error);return;}
  if(!storage)return;
  try{
+  // Correct the previously shipped Text default once, then preserve later choices.
+  if(storage.getItem(productDisplayDefaultKey)===null){
+   if(storage.getItem(productDisplayKey)==='text')storage.setItem(productDisplayKey,DEFAULT_STORAGE_VALUES[productDisplayKey]);
+   storage.setItem(productDisplayDefaultKey,DEFAULT_STORAGE_VALUES[productDisplayKey]);
+  }
   for(const [key,value] of Object.entries(DEFAULT_STORAGE_VALUES))if(storage.getItem(key)===null)storage.setItem(key,value);
   for(const [key,value] of Object.entries(DEFAULT_JSON_STORAGE_VALUES))if(storage.getItem(key)===null)storage.setItem(key,JSON.stringify(value));
  }catch(error){console.warn('Portfolio defaults could not be applied.',error);}

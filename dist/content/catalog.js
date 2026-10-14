@@ -561,6 +561,8 @@ export const catalog={
       ],
       "kind": "lab",
       "listOnly": true,
+      "heroMediaId": "porter-cover",
+      "hoverVideoId": "porter-walkthrough",
       "intro": "I created Porter around a simple idea: people now work with several AI agents at once, and the real bottleneck is no longer the agents but your attention.",
       "context": "A native Mac utility that lists conversations from Claude, ChatGPT, Codex and Claude Code, wherever they live, and takes you to the exact tab or window in one click.",
       "challenge": "Agents are scattered across browser tabs, editor windows, desktop apps and terminals, and none of them can see the others. You can't tell which one is working, which has finished, or which is waiting for you, so an agent sits idle while you look in the wrong place. The tool also had to earn trust: it could not read conversations, send anything off the Mac, or claim a status it couldn't know.",
@@ -811,6 +813,12 @@ export const catalog={
               "id": "home-project-bastion",
               "type": "reference",
               "documentId": "bastion",
+              "presentation": "card"
+            },
+            {
+              "id": "home-project-porter",
+              "type": "reference",
+              "documentId": "porter",
               "presentation": "card"
             }
           ],
@@ -1392,6 +1400,22 @@ export const catalog={
       "type": "video",
       "status": "published",
       "url": "assets/bastion.mp4",
+      "alt": ""
+    },
+    {
+      "id": "porter-cover",
+      "type": "image",
+      "status": "published",
+      "url": "assets/porter.png",
+      "alt": "Porter Mac app for tracking AI agents and opening their conversations",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "id": "porter-walkthrough",
+      "type": "video",
+      "status": "published",
+      "url": "assets/porter.mp4",
       "alt": ""
     }
   ],
