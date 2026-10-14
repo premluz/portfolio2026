@@ -1,0 +1,10 @@
+/* Only the optional lower hero strip changes; the introduction keeps its layout. */
+.hero-carousel-stage[hidden]{display:none}
+.hero-carousel-stage{position:relative;height:clamp(220px,32svh,340px);margin-bottom:clamp(80px,12vh,140px);touch-action:pan-y}
+.hero-carousel-controls{position:absolute;inset:auto 0 -48px;display:flex;align-items:center;justify-content:center;gap:14px;color:var(--muted);font-size:12px;z-index:2}
+.hero-carousel-controls span{margin-inline:6px}
+.hero-carousel-controls button{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;background:var(--chrome);color:var(--ink);font-size:17px}
+.home-carousel-active .card-placement{position:relative;transform-origin:0 0;touch-action:pan-y}
+.home-carousel-active .card-slot{position:relative}
+body:has(.home-carousel-active){overflow-x:clip}
+@media(max-width:600px){.hero-carousel-stage{height:clamp(220px,34svh,300px);margin-bottom:80px}.hero-carousel-controls{font-size:11px;gap:8px}}

@@ -1,0 +1,219 @@
+/* Five independent three-step presets. Tokens remain the source of truth;
+   the existing image/card geometry controls are separate fine adjustments. */
+:root[data-type-size="small"]{--type-scale:.9}
+:root[data-type-size="large"]{--type-scale:1.125}
+:root[data-space-size="small"]{--space-density:.8}
+:root[data-space-size="large"]{--space-density:1.2}
+:root[data-heading-weight="thin"]{--font-weight-heading:300}
+:root[data-heading-weight="regular"]{--font-weight-heading:400}
+:root[data-heading-weight="bold"]{--font-weight-heading:500}
+:root[data-body-weight="thin"]{--font-weight-body:300}
+:root[data-body-weight="regular"]{--font-weight-body:400}
+:root[data-body-weight="bold"]{--font-weight-body:500}
+:root[data-type-tracking="small"]{--letter-spacing-heading:-.035em;--letter-spacing-card:-.03em;--letter-spacing-body:-.01em;--letter-spacing-label:.055em}
+:root[data-type-tracking="large"]{--letter-spacing-heading:-.01em;--letter-spacing-card:-.005em;--letter-spacing-body:.005em;--letter-spacing-label:.11em}
+:root[data-type-leading="small"]{--line-height-heading:1.08;--line-height-card:1.14;--line-height-body:1.45;--line-height-label:1.25}
+:root[data-type-leading="large"]{--line-height-heading:1.25;--line-height-card:1.32;--line-height-body:1.8;--line-height-label:1.55}
+
+body{font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
+button,input,select,textarea{font-family:var(--font-family-sans)}
+.hero-about h1,.surface.detail h1{font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);max-width:var(--measure-heading);text-wrap:balance}
+.hero-about h1,.home-view-split .hero-about h1{margin:0 0 var(--space-hero-heading-content)}
+.hero-copy,.home-view-split .hero-copy{font-size:var(--font-size-hero-support);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);max-width:var(--measure-body)}
+.hero-copy p+p{margin-top:var(--space-paragraph)}
+.home-hero{padding-block:var(--space-page-rhythm)}
+.home-view-split .home-hero{padding-block:0;top:calc(var(--header-height) + var(--space-10));margin-top:var(--space-hero-top)}
+.home-view-split .homepage-layout{gap:var(--space-detail-columns)}
+.gallery-toolbar{margin-bottom:var(--space-6)}
+.home-news{margin-top:calc(var(--space-unit) * 24)}
+.hero-news h2,.eyebrow,.description dt,.wide-hero-card .description dt,.project-menu-group h2{font-size:var(--font-size-caption);font-weight:var(--font-weight-label);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-label)}
+.hero-news h2{margin-bottom:var(--space-4)}
+.hero-news li{padding-block:var(--space-6)}
+.hero-news h3{font-size:var(--font-size-body);font-weight:var(--font-weight-heading);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body)}
+
+.project-card h2,.project-card[data-card-presentation="flip"] h2{font-size:calc(var(--font-size-card-heading) * var(--card-title-scale));font-weight:var(--font-weight-heading);line-height:var(--line-height-card);letter-spacing:var(--letter-spacing-card)}
+.project-card .eyebrow,.project-card[data-card-presentation="flip"] .eyebrow,.project-card[data-card-presentation="current"]:not([data-image-mode="bleed"])>.card-copy>.eyebrow{font-size:var(--font-size-caption);margin-top:var(--space-title-eyebrow)}
+.surface.detail>.eyebrow,.wide-hero-card>.eyebrow{margin-top:var(--space-detail-heading);font-size:var(--font-size-caption)}
+.detail.heading-beside-image>.eyebrow{margin:var(--space-detail-heading) 0 var(--space-detail-context)}
+.detail-layout,.wide-hero-card .detail-layout{gap:var(--space-detail-columns);margin-top:var(--space-text-media)}
+.detail.heading-beside-image{column-gap:var(--space-detail-columns)}
+.description dt,.wide-hero-card .description dt{margin:var(--space-6) 0 var(--space-2)}
+.description dt:first-child,.wide-hero-card .description dt:first-child,.description .detail-fact:first-child dt,.wide-hero-card .description .detail-fact:first-child dt{margin-top:0}
+.description .detail-fact{grid-column:1/-1}
+.description dd,.wide-hero-card .description dd{font-size:var(--font-size-reading);font-weight:var(--font-weight-body);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body);max-width:48ch}
+.story h2{font-size:var(--font-size-section-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-card);letter-spacing:var(--letter-spacing-card);margin:0 0 var(--space-4)}
+.story p,.info-body p,.info-card .info-summary{font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body);max-width:var(--measure-body)}
+.story p,.info-body p{margin:0 0 var(--space-paragraph)}
+.info-card .info-summary{margin:var(--space-6) 0 0}
+.info-body{margin-top:var(--space-text-media)}
+.detail-footer,.footer-note{font-size:var(--font-size-note);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body)}
+.project-card[data-card-presentation="current"]:not([data-image-mode="bleed"])>.visual{margin-top:var(--space-text-media)}
+@media(min-width:601px){body.card-labels-hidden-desktop .image-card[data-image-mode="inset"]>.visual{margin-top:0}}
+
+.dock nav a{font-size:var(--font-size-note);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body);padding-inline:var(--space-3)}
+.project-menu button{font-size:var(--font-size-small);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body);padding:calc(var(--space-unit) * 2.5) var(--space-3)}
+.project-menu-group h2{padding:var(--space-2) var(--space-3)}
+.project-menu-group+.project-menu-group{margin-top:var(--space-3)}
+.layout-control button,.gallery-toolbar .layout-control button,header .theme-toggle{font-size:var(--font-size-small);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body)}
+.brand{font-weight:var(--font-weight-strong);letter-spacing:var(--letter-spacing-heading)}
+.discipline{font-size:var(--font-size-small);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body)}
+.design-system-controls{border:0;padding:0;margin:0 0 24px;min-width:0}
+.design-system-controls legend{padding:0;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+#settings .design-system-controls select{display:block;width:100%;margin-top:8px;padding:10px 12px;border:1px solid var(--nav-rim);border-radius:12px;background:var(--chrome);color:var(--ink);font:inherit}
+#settings #cardHoverEffect{display:block;width:100%;margin-top:8px;padding:10px 12px;border:1px solid var(--nav-rim);border-radius:12px;background:var(--chrome);color:var(--ink);font:inherit}
+#settings .design-system-controls label{font-size:13px;font-weight:400;line-height:1.5;letter-spacing:0;margin:16px 0}
+#settings .design-system-controls p{font-size:12px;line-height:1.5;letter-spacing:0}
+@media(max-width:1000px){.home-hero{padding-block:calc(var(--space-unit) * 20)}.home-view-split .home-hero{padding-block:0;margin-top:calc(var(--space-unit) * 16)}}
+@media(max-width:850px){.project-card{padding-inline:var(--space-card-inset-compact-x)}}
+@media(max-width:750px){.detail.heading-beside-image{column-gap:0}.detail.heading-beside-image>.detail-layout>.description{margin-top:var(--space-text-media)}}
+@media(max-width:600px){.home-hero{padding-block:calc(var(--space-unit) * 14) calc(var(--space-unit) * 18)}.home-view-split .home-hero{padding-block:0;margin-top:var(--space-12)}.hero-news li{padding-block:var(--space-5)}}
+@media(max-width:380px){.dock nav a{padding-inline:6px}}
+@media(hover:none){.project-menu button{min-height:44px}}
+
+/* Page rhythm is shared by the opening hero, the work canvas and the closing footer. */
+main{padding-bottom:var(--space-page-rhythm)}
+main:not(.wide-project-hero){/* padding-top:calc(var(--header-height) + var(--page-top)); */padding-top:0}
+main.wide-project-hero{padding-top:var(--space-page-rhythm-sm)}
+main.home-canvas{padding-top:0}
+main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:var(--space-page-rhythm-sm)}
+.home-hero{padding-block:var(--space-page-rhythm-lg)}
+.home-news{margin-top:var(--space-page-rhythm)}
+.home-view-split .home-hero{margin-top:var(--space-page-rhythm-lg)}
+.home-view-split .home-work{padding-top:var(--space-page-rhythm)}
+.site-footer{padding-block:var(--space-page-rhythm-lg)}
+
+/* Footer follows the same type ladder as the header and page heroes. */
+.site-footer h2{font-size:var(--font-size-home-heading);max-width:var(--measure-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading)}
+.footer-invitation{margin-top:var(--space-hero-heading-content);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
+.footer-credit{font-size:var(--font-size-caption);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--eyebrow-tracking);color:var(--eyebrow-ink)}
+
+/* Project statements use sentence-case supporting text. Outcomes live in detail highlights. */
+.project-card .project-summary,.surface.detail>.project-summary{max-width:58ch;margin:var(--space-title-eyebrow) 0 0;color:var(--muted);font-size:var(--font-size-project-summary);font-weight:var(--font-weight-body);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body);text-transform:none}
+.surface.detail>.project-summary{margin-top:var(--space-hero-heading-content)}
+/* Hero statements share the body scale rather than separate support sizes. */
+.hero-copy,.home-view-split .hero-copy,.surface.detail>.project-summary{font-size:var(--font-size-body);line-height:var(--line-height-body);max-width:var(--measure-body)}
+
+.detail.heading-beside-image>.detail-layout>.description{margin-top:var(--space-detail-context)}
+
+/* One-column project compositions keep the shared card and media nodes. */
+#singleColumnCardPositionSetting[hidden]{display:none}
+#singleColumnCardPosition{display:block;width:100%;font:inherit;color:var(--ink);background:var(--chrome);border:1px solid var(--card-rim);padding:10px;border-radius:12px;margin-top:12px}
+.homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-card-copy-position="bottom"]{display:flex;flex-direction:column;height:auto;min-height:0}
+.homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-card-copy-position="bottom"]>.visual{position:relative;inset:auto;order:0;flex:none;margin:0 auto 0 0;height:var(--card-image-frame-height,auto);max-width:100%;border-radius:var(--radius-visual)}
+.homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-card-copy-position="bottom"]>.card-copy{position:relative;order:1;margin-top:var(--space-text-media);color:var(--ink);text-shadow:none}
+.homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-card-copy-position="bottom"]>.visual::after{display:none}
+.homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"][data-layout="regular"] .image-card[data-card-copy-position="bottom"]{height:auto;min-height:0}
+@media(min-width:701px){
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card:is([data-card-copy-position="left"],[data-card-copy-position="right"]){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-detail-columns);align-items:center;height:auto;min-height:0}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card:is([data-card-copy-position="left"],[data-card-copy-position="right"])>.card-copy{position:relative;grid-row:1;grid-column:1;align-self:center;min-width:0;color:var(--ink);text-shadow:none}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card:is([data-card-copy-position="left"],[data-card-copy-position="right"])>.visual{position:relative;inset:auto;grid-row:1;grid-column:2;align-self:center;width:100%!important;height:var(--card-image-frame-height,auto);min-width:0;max-width:none;margin:0;border-radius:var(--radius-visual)}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-card-copy-position="right"]>.card-copy{grid-column:2}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-card-copy-position="right"]>.visual{grid-column:1}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card:is([data-card-copy-position="left"],[data-card-copy-position="right"])>.visual::after{display:none}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"][data-layout="regular"] .image-card:is([data-card-copy-position="left"],[data-card-copy-position="right"]){height:auto;min-height:0}
+}
+
+/* Multi-column cards can move their text block above or below the image while
+   keeping the image frame and copy dimensions stable. */
+#multiColumnCardPositionSetting[hidden],#cardCopyHoverSetting[hidden]{display:none}
+#multiColumnCardPosition{display:block;width:100%;font:inherit;color:var(--ink);background:var(--chrome);border:1px solid var(--card-rim);padding:10px;border-radius:12px;margin-top:12px}
+.homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-card-copy-position="bottom"]:not([data-image-mode="bleed"]){display:flex;flex-direction:column}
+.homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-card-copy-position="bottom"]:not([data-image-mode="bleed"])>.visual{position:relative;inset:auto;order:0;flex:none;margin:0 auto var(--space-text-media);height:var(--card-image-frame-height,auto);max-width:100%}
+.homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-card-copy-position="bottom"]:not([data-image-mode="bleed"])>.card-copy{position:relative;order:1;margin:0;color:var(--ink);text-shadow:none}
+.homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-image-mode="bleed"][data-card-copy-position="bottom"]>.card-copy{margin-top:auto}
+
+/* Hover-only titles remains in the card's layout and streams in word by word. */
+@media(min-width:751px) and (hover:hover) and (pointer:fine){
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-copy-hover="true"]>.card-copy>h2{opacity:0;pointer-events:none;transition:opacity 180ms cubic-bezier(.22,1,.36,1)}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-copy-hover="true"]>.card-copy>h2 [data-card-copy-word]{opacity:0;transition:opacity 150ms ease-out}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-copy-hover="true"]:is(:hover,:focus-visible,.gesture-hover)>.card-copy>h2{opacity:1;pointer-events:auto;transition-duration:90ms}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-copy-hover="true"]:is(:hover,:focus-visible,.gesture-hover)>.card-copy>h2 [data-card-copy-word]{animation:card-copy-stream 190ms cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--card-copy-word-index,0) * 14ms)}
+}
+@keyframes card-copy-stream{from{opacity:0}to{opacity:1}}
+html[data-animation="off"] .image-card[data-copy-hover="true"]>.card-copy{transition:none!important}
+html[data-animation="off"] .image-card[data-copy-hover="true"]:is(:hover,:focus-visible,.gesture-hover)>.card-copy [data-card-copy-word]{opacity:1;animation:none!important}
+@media(prefers-reduced-motion:reduce){.image-card[data-copy-hover="true"]>.card-copy{transition:none!important}.image-card[data-copy-hover="true"]:is(:hover,:focus-visible,.gesture-hover)>.card-copy [data-card-copy-word]{opacity:1;animation:none!important}}
+
+/* Keep each eyebrow/value pair distinct while bringing the first one closer
+   to the summary. Explicit grid spacing avoids margin collapse between facts. */
+.surface.detail .description dl{display:grid;grid-template-columns:minmax(0,1fr);row-gap:var(--space-detail-sections)}
+.surface.detail .description .detail-fact{grid-column:1/-1}
+.surface.detail .description .detail-fact dt,.wide-hero-card .description .detail-fact dt{margin:0 0 var(--space-2)}
+
+/* Hero support and detail prose share one theme-responsive reading colour. */
+.hero-copy,.surface.detail>.project-summary,.surface.detail .description dd,.surface.detail .info-body p,.story p{color:var(--body-ink)}
+.has-room{--body-ink:var(--ink)}
+
+/* Quiet metadata supports the reading hierarchy without competing with prose. */
+.surface.detail .eyebrow,.surface.detail .description dt,.story .eyebrow{color:var(--eyebrow-ink);font-weight:var(--eyebrow-weight);letter-spacing:var(--eyebrow-tracking)}
+
+/* Navigation shares the eyebrow scale and colour hierarchy. Resting labels
+   are quiet; hover adds a very small wash, while selected/open states use the
+   slightly denser semantic surface from the active token. */
+.dock-morph nav a,.dock-morph .context-nav button,.dock-morph nav .site-settings-toggle,#settingsToggle{color:var(--nav-item-ink)}
+.dock-morph nav a{font-size:var(--font-size-caption);font-weight:var(--eyebrow-weight);line-height:var(--line-height-label);letter-spacing:var(--eyebrow-tracking)}
+.dock-morph nav a.active{background:var(--nav-active);color:var(--ink)}
+.dock-morph .context-nav button:is(:hover,:focus-visible,.hover-trail){background:var(--nav-item-hover);color:var(--ink)}
+.dock-morph nav a:not(.active):is(:hover,:focus-visible,.hover-trail){background:var(--nav-item-hover);color:var(--ink)}
+.dock-morph nav .site-settings-toggle{font-size:var(--font-size-caption);font-weight:var(--eyebrow-weight);line-height:1;letter-spacing:var(--eyebrow-tracking)}
+.dock-morph nav .site-settings-toggle[aria-expanded="true"]{background:var(--nav-active);color:var(--ink)}
+.dock-morph nav .site-settings-toggle svg,.context-nav button svg{width:16px;height:16px;stroke-width:1.5}
+.dock-morph .project-menu button{font-size:var(--font-size-caption);font-weight:var(--eyebrow-weight);line-height:var(--line-height-label);letter-spacing:var(--eyebrow-tracking);color:var(--nav-item-ink)}
+.dock-morph .project-menu button.active{background:var(--nav-active);color:var(--ink)}
+.dock-morph .project-menu button:not(.active):is(:hover,:focus-visible,.hover-trail){background:var(--nav-item-hover);color:var(--ink)}
+.dock-morph .project-menu-group h2{color:var(--eyebrow-ink)}
+.dock-morph .project-menu{isolation:isolate}
+.dock-morph .project-menu::before{content:"";position:absolute;z-index:0;left:8px;right:8px;top:0;height:var(--project-menu-hover-height,36px);border-radius:14px;background:var(--nav-item-hover);opacity:0;pointer-events:none;transform:translate3d(0,var(--project-menu-hover-y,0px),0);transition:transform 110ms cubic-bezier(.2,.8,.2,1),height 130ms cubic-bezier(.2,.8,.2,1),opacity 180ms ease;will-change:transform,height}
+.dock-morph .project-menu[data-cursor-tracking="true"]::before{opacity:1}
+.dock-morph .project-menu[data-cursor-motion="snap"]::before{transition-duration:210ms,160ms,160ms;transition-timing-function:cubic-bezier(.16,1,.3,1)}
+.dock-morph .project-menu[data-cursor-motion="none"]::before{transition-duration:0ms}
+.dock-morph .project-menu-group{position:relative;z-index:1}
+.dock-morph .project-menu[data-cursor-tracking="true"] button:not(.active):is(:hover,:focus-visible,.hover-trail){background:transparent}
+#settingsToggle{font-size:18px}
+
+/* Nav settings live on the final, high-specificity selectors so the control
+   tokens win over the structural and mobile nav rules above. */
+#dock nav a{font-size:var(--nav-item-font-size);line-height:var(--line-height-label);padding:var(--nav-item-padding) min(calc(var(--nav-item-padding) + 5px),16px)}
+#dock .dock-content>nav{padding:var(--nav-container-padding)}
+@media(max-width:600px){#dock nav a{padding-inline:min(calc(var(--nav-item-padding) + 5px),12px)}}
+@media(max-width:380px){#dock nav a{font-size:min(var(--nav-item-font-size),14px);padding-inline:min(calc(var(--nav-item-padding) + 5px),6px)}}
+
+/* Reserve a glimpse of work as the window becomes shorter, using measured hero content. */
+main.home-canvas:not(.home-view-split) .home-hero{--hero-padding:min(var(--space-page-rhythm-lg),var(--hero-viewport-space,var(--space-page-rhythm-lg)));--hero-top-bias:min(32px,var(--hero-padding));padding-top:108px;padding-bottom:0}
+.home-view-split .home-hero{margin-top:calc(var(--space-page-rhythm-lg) + 32px)}
+
+/* Client, project title and summary are independently visible card fields. */
+.project-card.image-card>.card-copy{--card-client-gap:24px;position:relative;display:grid;grid-template-columns:fit-content(35%) minmax(0,1fr);column-gap:var(--card-client-gap);align-items:baseline}
+.project-card.image-card>.card-copy>.card-client{grid-column:1;grid-row:1;margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-body);color:var(--eyebrow-ink);text-wrap:pretty;overflow-wrap:anywhere}
+.project-card.image-card>.card-copy>h2{grid-column:2;grid-row:1;min-width:0}
+.project-card.image-card>.card-copy>.project-summary{grid-column:2;grid-row:2;min-width:0}
+.project-card.image-card>.card-copy:not(:has(.card-client)){grid-template-columns:minmax(0,1fr)}
+.project-card.image-card>.card-copy:not(:has(.card-client))>h2,.project-card.image-card>.card-copy:not(:has(.card-client))>.project-summary{grid-column:1}
+@media(max-width:600px){.project-card.image-card>.card-copy>.card-client{font-size:var(--font-size-small);line-height:var(--line-height-body)}}
+
+body.card-client-hidden .project-card.image-card>.card-copy{grid-template-columns:minmax(0,1fr)}
+body.card-client-hidden .project-card.image-card>.card-copy>h2,body.card-client-hidden .project-card.image-card>.card-copy>.project-summary{grid-column:1}
+body.card-client-hidden.card-title-hidden .project-card.image-card>.card-copy>.project-summary,body.card-client-hidden .project-card.image-card>.card-copy:not(:has(.card-client))>.project-summary{grid-row:1}
+body.card-client-hidden .project-card.image-card>.card-copy>.card-client,body.card-title-hidden .project-card.image-card>.card-copy>h2,body.card-description-hidden .project-card.image-card>.card-copy>.project-summary{display:none}
+
+/* Align customer and the first visible line on one shared baseline. */
+.project-card.image-card>.card-copy>h2{margin-top:0}
+#projectMenuToggle{display:none}
+#dock .project-menu:not(.site-settings-menu) button{font-size:var(--composer-font-size);color:var(--composer-text-ink);letter-spacing:var(--letter-spacing-body);font-weight:var(--font-weight-body)}
+
+/* Match each arrow's square hit area and inset to the separate settings button. */
+#dock{--nav-context-width:calc(88px + 2 * var(--nav-container-padding));--composer-text-ink:var(--muted)}
+#dock .context-nav{padding:var(--nav-container-padding) calc(6px + var(--nav-container-padding));justify-content:center;gap:4px}
+#dock .context-nav button{flex:0 0 36px;width:36px;height:36px}
+#dock .project-menu:not(.site-settings-menu) button:is(:hover,:focus-visible,.hover-trail,.active){color:var(--ink)}
+
+/* Client metadata joins the shared title morph; project names stay client-free. */
+.surface.detail>.project-client{margin:0 0 var(--space-2);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body);color:var(--eyebrow-ink)}
+
+/* Content-page hero follows the same heading/body rhythm as project details. */
+.surface.detail.about-detail{min-height:0}
+.about-detail>.info-body{margin-top:var(--space-hero-heading-content)}
+.about-detail>.info-body p{margin:0;line-height:var(--line-height-body)}
+.about-detail>.story{margin:var(--space-hero-heading-content) 0 0;width:100%;max-width:none}
+.about-detail .card-gallery-block{margin:0}
+body.card-background-hidden .info-detail>.liquid-skin{display:none!important}

@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {syncComposerAction,syncComposerMic,syncComposerVoice} from '../dist/composer-controls.js';
+const button=()=>({dataset:{},attrs:{},setAttribute(key,value){this.attrs[key]=value;}});
+const action=button(),mic=button(),input={value:''};
+syncComposerAction(input,action);assert.equal(action.dataset.mode,'voice');assert.equal(action.type,'button');assert(!action.disabled);assert.equal(action.dataset.tooltip,'Start voice');
+syncComposerVoice(action,true);assert.equal(action.dataset.tooltip,'Stop voice');assert.equal(action.attrs['aria-pressed'],'true');
+input.value='  What was the result? ';syncComposerAction(input,action,{voice:true});assert.equal(action.dataset.mode,'send');assert.equal(action.type,'submit');assert.equal(action.attrs['aria-pressed'],'false');assert.equal(action.dataset.tooltip,'Send question');
+syncComposerVoice(action,false);assert.equal(action.dataset.tooltip,'Send question','Voice state cannot overwrite a draft’s send control');
+input.value='';syncComposerAction(input,action);assert.equal(action.dataset.mode,'voice');assert(!action.disabled,'Cleared input restores the voice action');
+syncComposerAction(input,action,{pending:true});assert(action.disabled);assert(input.disabled);
+syncComposerAction(input,action,{count:20,limit:20});assert(action.disabled,'The voice/send UI retains the question cap');
+action.dataset.responseActive='true';syncComposerAction(input,action,{pending:true,count:20,limit:20,voice:true});assert(!action.disabled,'Stopping output is always available, including while loading or at the question cap');assert.equal(action.dataset.mode,'stop');assert.equal(action.type,'button');assert.equal(action.dataset.tooltip,'Stop response');
+syncComposerVoice(action,true);assert.equal(action.dataset.tooltip,'Stop response','Voice state never overrides a live response stop control');
+action.dataset.responseActive='false';syncComposerAction(input,action,{voice:true});assert.equal(action.dataset.mode,'voice');assert.equal(action.dataset.tooltip,'Stop voice','Stopping a reply preserves voice mode');
+syncComposerMic(mic,false);assert.equal(mic.dataset.tooltip,'Start dictation');assert(mic.innerHTML.includes('rx="3"'));
+syncComposerMic(mic,true,{disabled:true});assert(!mic.disabled,'The user can always stop an active microphone');assert.equal(mic.dataset.tooltip,'Stop dictation');assert(mic.innerHTML.includes('stroke="none"'));
+console.log('Composer controls passed: two action states, voice/send swap, cleared draft, pending/cap gates and stoppable microphone.');

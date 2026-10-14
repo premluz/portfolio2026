@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {readImageEffectPreferences} from '../dist/image-effect-preferences.js';
+import {imageEffects} from '../dist/material-settings.js';
+const browser=values=>({getItem:key=>values[key]??null});
+assert.equal(imageEffects.ripple,false,'The published runtime default is Off');
+assert.deepEqual(readImageEffectPreferences(browser({})),{ripple:false,blur:true},'A fresh mobile browser has no implicit ripple');
+assert.deepEqual(readImageEffectPreferences(browser({'prem-image-ripple-enabled':'false'})),{ripple:false,blur:true},'Desktop Off survives reload and viewport changes');
+assert.deepEqual(readImageEffectPreferences(browser({'prem-image-ripple-enabled':'true','prem-image-blur-enabled':'false'})),{ripple:true,blur:false},'Explicit per-browser choices remain usable');
+assert.deepEqual(readImageEffectPreferences({getItem(){throw Error('unavailable');}}),{ripple:false,blur:true},'Blocked storage uses the same published defaults');
+console.log('Image preferences passed: ripple Off by default, explicit choices, reload and unavailable storage.');

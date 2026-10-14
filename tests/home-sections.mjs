@@ -1,0 +1,78 @@
+import assert from 'node:assert/strict';
+import {HOME_SECTION_DEFAULTS,readHomeSections,initHomeSectionSettings} from '../dist/home-sections.js';
+import {homeApproachMarkup} from '../dist/home-approach.js';
+import {homeServicesMarkup,servicesMarkup} from '../dist/home-services.js';
+import {homeTestimonialsMarkup,testimonialsMarkup} from '../dist/home-testimonials.js';
+import {homeMarkup} from '../dist/home-layout.js';
+import {content} from '../dist/content/local.js';
+import {cards} from '../dist/documents.js';
+
+let saved=null;
+const storage={getItem:()=>saved,setItem:(key,value)=>{assert.equal(key,'prem-home-content');saved=value;}};
+assert.deepEqual(readHomeSections(storage),HOME_SECTION_DEFAULTS);
+saved='{broken';assert.deepEqual(readHomeSections(storage),HOME_SECTION_DEFAULTS);
+saved=JSON.stringify({about:false,experience:'false',services:0,unknown:false});
+assert.deepEqual(readHomeSections(storage),{approach:true,services:true,about:false,'about-timeline':true,experience:true,testimonials:true});
+assert.deepEqual(readHomeSections({getItem(){throw new Error('Unavailable storage');}}),HOME_SECTION_DEFAULTS);
+saved=null;
+
+const nodes=Object.fromEntries(Object.keys(HOME_SECTION_DEFAULTS).map(id=>[id,{dataset:{homeSection:id},hidden:false}]));
+const group={hidden:false,querySelectorAll:()=>[nodes.about,nodes['about-timeline'],nodes.experience]};
+const root={querySelectorAll:()=>Object.values(nodes),querySelector:()=>group};
+const controls=Object.fromEntries(Object.keys(HOME_SECTION_DEFAULTS).map(id=>[id,{dataset:{homeSectionControl:id},checked:false,addEventListener(type,listener){this[type]=listener;}}]));
+const panel={querySelectorAll:selector=>selector==='[data-home-section-control]'?Object.values(controls):[]};
+let changes=0,allowed=true;
+const controller=initHomeSectionSettings(panel,{storage,getRoot:()=>root,canChange:()=>allowed,onChange:()=>changes++});
+assert(Object.values(controls).every(input=>input.checked));
+controls.about.checked=false;controls.about.change();
+assert(nodes.about.hidden);assert(!nodes.experience.hidden);assert(!group.hidden,'Experience can remain visible when About is hidden');
+assert(!nodes.services.hidden);assert(!nodes.testimonials.hidden);
+controls.experience.checked=false;controls.experience.change();assert(!group.hidden,'An enabled timeline keeps the About group visible');
+controls['about-timeline'].checked=false;controls['about-timeline'].change();assert(group.hidden,'An empty About group leaves no section or spacing behind');
+controls.services.checked=false;controls.services.change();assert(nodes.services.hidden);
+assert.equal(changes,4);assert.equal(root.querySelectorAll().find(node=>node.dataset.homeSection==='services'),nodes.services,'Toggles preserve the existing DOM instead of rebuilding the portfolio canvas');
+assert.deepEqual(readHomeSections(storage),controller.value,'Choices survive a new browser page');
+allowed=false;controls.testimonials.checked=false;controls.testimonials.change();
+assert(controls.testimonials.checked);assert(!nodes.testimonials.hidden);assert.equal(changes,4,'A transition in progress cannot be disturbed by a settings change');
+allowed=true;controls.experience.checked=true;controls.experience.change();assert(!group.hidden);assert(!nodes.experience.hidden);assert(nodes.about.hidden);
+const inaccessible={getItem(){throw new Error('Denied');},setItem(){throw new Error('Denied');}};
+const local=initHomeSectionSettings(panel,{storage:inaccessible,getRoot:()=>root});
+controls.services.checked=false;controls.services.change();assert.equal(local.value.services,false,'Settings still work when persistence is unavailable');
+
+assert.equal((homeApproachMarkup().match(/<article>/g)||[]).length,4);
+assert(homeApproachMarkup().includes('How I work'));
+assert(homeApproachMarkup().includes('Own the work from early definition through launch, iteration and growth.'),'Deliver keeps its authored description');
+const approach=content.get('home-approach');assert.equal(approach.blocks.find(block=>block.type==='text').paragraphs.length,2);assert.equal((homeApproachMarkup().split('</div>')[0].match(/<p>/g)||[]).length,2,'The structured introduction renders as two separate paragraphs');assert.deepEqual(approach.blocks.filter(block=>block.type==='info-card').map(block=>block.title),['Partner','Build','Simplify','Deliver']);
+const services=content.get('home-services'),quotes=content.get('home-testimonials');
+assert.equal(services.type,'component');assert.equal(quotes.type,'component');
+const serviceHTML=homeServicesMarkup(),quoteHTML=homeTestimonialsMarkup();
+assert.equal((serviceHTML.match(/<article /g)||[]).length,6);assert.equal((serviceHTML.match(/<svg /g)||[]).length,6);
+assert.equal((quoteHTML.match(/<blockquote>/g)||[]).length,4);assert.equal((quoteHTML.match(/<figcaption>/g)||[]).length,4);
+assert((await (await import('node:fs/promises')).readFile(new URL('../dist/home-sections.css',import.meta.url),'utf8')).includes('font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body)'),'Testimonials use the site body typography');
+const sectionStyles=await (await import('node:fs/promises')).readFile(new URL('../dist/home-sections.css',import.meta.url),'utf8');
+assert(sectionStyles.includes('.home-approach{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))')&&sectionStyles.includes('.home-approach-intro h2{grid-column:1 / -1')&&sectionStyles.includes('.home-approach-intro>p{grid-column:2;')&&sectionStyles.includes('.home-approach-intro>p+p{grid-column:3}')&&sectionStyles.includes('.home-approach-principles{grid-column:2 / span 2'),'How I work spans the page, with About-style paragraphs in columns two and three and the list below');
+assert(sectionStyles.includes('.home-approach-principles h3{margin:0 0 var(--space-1);font-size:var(--font-size-body)'),'Role labels use body type with the compact title gap');
+assert(sectionStyles.includes('margin-top:var(--space-page-rhythm-sm)')&&sectionStyles.includes('.home-approach-principles p{font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--eyebrow-ink)}'),'Role details use body typography and secondary color after a section gap');
+assert(sectionStyles.includes('.home-testimonial figcaption{display:flex;flex-direction:column;gap:var(--space-1);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}')&&sectionStyles.includes('.testimonial-author{color:var(--eyebrow-ink)}.testimonial-role{font-size:var(--font-size-body);color:var(--eyebrow-ink)}'),'Testimonial attribution uses body typography and secondary color');
+assert(sectionStyles.includes('.home-testimonials{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))')&&sectionStyles.includes('.home-testimonials>h2{grid-column:1/-1}')&&sectionStyles.includes('.home-testimonials-grid{grid-column:2 / span 2}'),'Testimonial heading spans all columns while the irregular card grid occupies columns two and three');
+assert(sectionStyles.includes('.home-testimonials-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));--testimonial-gap:var(--space-6);column-gap:0;row-gap:var(--testimonial-gap);min-width:0;width:auto;max-width:100%}')&&sectionStyles.includes('column-gap:var(--space-6);min-width:0}'),'Testimonial grid stays within the selected page content width');
+assert(sectionStyles.includes('.home-testimonial:nth-child(4n+1),.home-testimonial:nth-child(4n){grid-column:span 7}')&&sectionStyles.includes('.home-testimonial{grid-column:span 5'),'Testimonial cards keep their nested irregular two-column rhythm');
+for(const name of ['Gabriele Ciaccasassi','Matt Bindoff','Venessa Benett','Jonathan Burk'])assert(quoteHTML.includes(name));
+for(const block of quotes.blocks)assert(quotes.evidence.some(e=>block.evidenceIds.includes(e.id)&&e.text===block.text),'Every displayed quote retains its supplied evidence');
+assert(!/Derek|Christine Fernandez|Mick Gow/.test(quoteHTML),'Reference layout does not introduce testimonials about someone else');
+for(const layout of ['regular','masonry']){
+ const html=homeMarkup(cards,layout);
+ assert(html.indexOf('data-home-product-text')>html.indexOf('class="home-hero"')&&html.indexOf('data-home-product-text')<html.indexOf('data-home-section="approach"')&&html.indexOf('data-gallery')<html.indexOf('data-home-section="approach"'),'All project displays follow the hero before the role-shift section');
+ const order=['services','about','experience','testimonials'].map(id=>html.indexOf(`data-home-section="${id}"`));
+ assert(order.every(index=>index>=0));assert.deepEqual(order,[...order].sort((a,b)=>a-b),'Services, About, Experience and Testimonials keep their authored order');
+}
+const unsafeService=structuredClone(services);unsafeService.blocks[0].title='<script>bad</script>';
+assert(homeServicesMarkup(unsafeService).includes('&lt;script&gt;'));assert(!homeServicesMarkup(unsafeService).includes('<script>'));
+const unsafeQuote=structuredClone(quotes);unsafeQuote.blocks[0].text='<img onerror=bad>';
+assert(homeTestimonialsMarkup(unsafeQuote).includes('&lt;img'));assert(!homeTestimonialsMarkup(unsafeQuote).includes('<img'));
+console.log('Home sections passed: independent live toggles, persistence, storage denial, transition guards, empty-group collapse, six services, attributed quotes, order and safe content.');
+
+assert(servicesMarkup(services,{id:'reused-services',layout:'carousel'}).includes('data-card-rail-mode="carousel"'));
+assert(!servicesMarkup(services,{id:'reused-services'}).includes('data-home-section='),'Standalone Services has no homepage dependency');
+assert(testimonialsMarkup(quotes,{id:'reused-quotes',cardBackground:false}).includes('data-card-background="false"'));
+assert(!testimonialsMarkup(quotes,{id:'reused-quotes'}).includes('data-home-section='),'Standalone Testimonials has no homepage dependency');

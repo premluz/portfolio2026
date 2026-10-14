@@ -1,0 +1,252 @@
+/* Typed stops let native CSS animate the same gradient in either theme. */
+@property --surface-fill { syntax: "<color>"; inherits: true; initial-value: oklch(0.95485951 0.00132926 106.42431); }
+@property --surface-fill-end { syntax: "<color>"; inherits: true; initial-value: oklch(0.95485951 0.00132926 106.42431); }
+/* Shared visual, layout, shape and type tokens. Components consume these
+   defaults; theme and studio controls override the same custom properties. */
+:root {
+  color-scheme: light;
+
+  /* Semantic colour */
+  --page: oklch(0.97885053 0.00132105 106.42353);
+  --page-rgb: 248, 248, 247;
+  --card-surface: oklch(0.95485951 0.00132926 106.42431);
+  --card-surface-rgb: 240, 240, 239;
+  /* Quiet vertical wash: colour pools above, then recedes into the base. */
+  --card-gradient-angle: 180deg;
+  --card-surface-end: oklch(.968 .0013 106.4);
+  --card-hover-lightness: .925;
+  --card-hover-chroma: .048;
+  --card-hover-lightness-end: .968;
+  --card-hover-chroma-end: .009;
+  --card-label-rest-strength: 42%;
+  --card-summary-rest-strength: 80%;
+  --surface-hover-in-duration: 240ms;
+  --surface-hover-out-duration: 1000ms;
+  --card-content-in-duration: 220ms;
+  --card-content-out-duration: 180ms;
+  --card-reflection-scale: .7;
+  --card-glow-rgb: 230, 208, 252;
+  --card-glow-scale: 1;
+  --ink: oklch(0.25543328 0.01903326 298.77205);
+  --muted: oklch(0.48511463 0.03270015 301.15180);
+  --body-ink: oklch(.55 .00786971 304.15263);
+  --eyebrow-ink: oklch(.58 .007 304);
+  --eyebrow-weight: var(--font-weight-body);
+  --eyebrow-tracking: calc(var(--letter-spacing-label) * .625);
+  --panel: oklch(0.99999999 0.00000004 0.00000 / 0.95);
+  --chrome: oklch(0.99999999 0.00000004 0.00000 / 0.78);
+  --image-edge: oklch(0.25543328 0.01903326 298.77205 / 0.06);
+  --nav-glass-rgb: 255, 255, 255;
+  --nav-glass-alpha: .48;
+  --dock-glass-alpha: .30;
+  --dock-glass-blur: 22px;
+  --dock-backdrop-brightness: 1;
+  --nav-rim: oklch(0.99999999 0.00000004 0.00000 / 0.65);
+  --dock-outline: oklch(0.25543328 0.01903326 298.77205 / 0.06);
+  --nav-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.18);
+  --nav-shadow: oklch(0.22773614 0.03305204 297.22251 / 0.09);
+  /* Navigation follows the eyebrow hierarchy: quiet at rest, a small
+     tonal lift on hover, and a slightly denser selected surface. */
+  --nav-item-ink: var(--eyebrow-ink);
+  --nav-active: oklch(0.25543328 0.01903326 298.77205 / 0.065);
+  --nav-item-hover: oklch(0.25543328 0.01903326 298.77205 / 0.025);
+  --nav-hover-in-duration: 70ms;
+  --nav-hover-out-duration: 420ms;
+  --nav-rounding: 24px;
+  --nav-item-padding: 9px;
+  --nav-item-font-size: 12px;
+  --nav-container-padding: 0px;
+  --nav-height: 48px;
+  --nav-main-width: 252px;
+  --nav-context-width: 120px;
+  --nav-section-gap: 12px;
+
+  /* Glass material */
+  --glass-rgb: 247, 245, 253;
+  --glass-alpha: .45;
+  --glass-contrast: 0;
+  --card-rim: oklch(0.99999999 0.00000004 0.00000 / 0.08);
+  --card-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.18);
+  --card-shade: oklch(0.24036760 0.04137380 305.37990 / 0.06);
+  --glass-edge: inset 0 1px 0 var(--card-highlight), inset 0 -1px 0 var(--card-shade);
+  --room-blur: 12px;
+  --room-shade: .18;
+  --text-shadow: none;
+
+  /* Type */
+  --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --type-scale: 1;
+  --space-density: 1;
+  --font-weight-body: 400;
+  --font-weight-heading: 400;
+  --font-weight-label: 500;
+  --font-weight-strong: 600;
+  --letter-spacing-heading: -.025em;
+  --letter-spacing-card: -.02em;
+  --letter-spacing-body: 0em;
+  --letter-spacing-label: .08em;
+  --line-height-heading: 1.15;
+  --line-height-card: 1.2;
+  --line-height-label: 1.4;
+  --card-title-scale: 1;
+  --font-size-caption: max(10px, calc(11px * var(--type-scale)));
+  --font-size-note: max(11px, calc(12px * var(--type-scale)));
+  --font-size-small: max(12px, calc(13px * var(--type-scale)));
+  --font-size-project-summary: clamp(14px, calc(15px * var(--type-scale)), 16px);
+  --font-size-body: max(14px, calc(16px * var(--type-scale)));
+  --font-size-reading: var(--font-size-body);
+  --font-size-home-heading: clamp(calc(31px * var(--type-scale)), calc(2.86vw * var(--type-scale)), calc(44px * var(--type-scale)));
+  --font-size-card-heading: clamp(calc(22px * var(--type-scale)), calc(2vw * var(--type-scale)), calc(30px * var(--type-scale)));
+  --font-size-section-heading: clamp(calc(20px * var(--type-scale)), calc(1.6vw * var(--type-scale)), calc(26px * var(--type-scale)));
+  --font-size-footer-heading: var(--font-size-home-heading);
+  --font-size-hero-support: var(--font-size-body);
+  --measure-body: 66ch;
+  --measure-heading: 32ch;
+  --space-detail-heading: var(--space-2);
+  --space-detail-context: var(--space-4);
+  --space-detail-sections: var(--space-8);
+  --line-height-body: 1.6;
+  --line-height-reading: var(--line-height-body);
+
+  /* Spacing scale */
+  --space-unit: calc(4px * var(--space-density));
+  --space-1: var(--space-unit);
+  --space-2: calc(var(--space-unit) * 2);
+  --space-3: calc(var(--space-unit) * 3);
+  --space-4: calc(var(--space-unit) * 4);
+  --space-5: calc(var(--space-unit) * 5);
+  --space-6: calc(var(--space-unit) * 6);
+  --space-7: calc(var(--space-unit) * 7);
+  --space-8: calc(var(--space-unit) * 8);
+  --space-10: calc(var(--space-unit) * 10);
+  --space-12: calc(var(--space-unit) * 12);
+  --space-card-inset: var(--space-10);
+  --space-card-inset-compact-y: 30px;
+  --space-card-inset-compact-x: var(--space-6);
+  --card-padding-top: 56px;
+  --card-padding-bottom: 60px;
+  --space-story-inset: var(--space-8);
+  --space-title-eyebrow: calc(var(--space-2) * var(--card-title-scale));
+  --space-hero-heading-content: var(--space-6);
+  --space-text-media: var(--space-8);
+  --space-paragraph: var(--space-5);
+  --space-detail-columns: clamp(var(--space-8), 4vw, calc(var(--space-unit) * 20));
+  --space-hero-top: clamp(calc(var(--space-unit) * 24), 17vh, calc(var(--space-unit) * 48));
+  --space-hero-bottom: clamp(var(--space-12), 11vh, calc(var(--space-unit) * 32));
+  --space-footer-inset: clamp(calc(var(--space-unit) * 20), 12vh, calc(var(--space-unit) * 40));
+  --space-footer-heading-content: var(--space-hero-heading-content);
+  /* Major page gaps: 10 / 20 / 40 spacing units. */
+  --space-page-rhythm-sm: calc(var(--space-unit) * 10);
+  --space-page-rhythm-md: calc(var(--space-unit) * 20);
+  --space-page-rhythm-lg: calc(var(--space-unit) * 40);
+  --space-page-rhythm: var(--space-page-rhythm-sm);
+  --image-max-width-landscape: 1000px;
+  --image-max-width-portrait: 600px;
+  --image-max-height-portrait: 700px;
+  --image-frame-regular-aspect: 8 / 5;
+  --image-rounding: 6px;
+  --image-frame-masonry-portrait-aspect: 3 / 4;
+  --full-bleed-padding-top: 0px;
+  --full-bleed-padding-side: 0px;
+  --full-bleed-padding-bottom: 0px;
+  --image-shade-rgb: 10, 9, 17;
+  --card-gap-desktop: 28px;
+  --card-gap-mobile: 18px;
+  --card-gap: var(--card-gap-desktop);
+
+  /* Card geometry; studio controls scale these related values together. */
+  --radius-card: 64px;
+  --radius-card-compact: 44px;
+  --radius-card-flip: 44px;
+  --radius-card-flip-compact: 36px;
+  --radius-card-wide-min: 48px;
+  --radius-card-wide-fluid: 7vw;
+  --radius-card-wide-max: 140px;
+  --radius-card-simple: 42px;
+  --radius-visual: 24px;
+  --radius-visual-portrait: 29px;
+  --radius-visual-flip: 26px;
+  --radius-header-control: 18px;
+
+  /* Page layout and edge fade */
+  --header-height: 112px;
+  --page-top: 18px;
+  --flat-text-column: .88fr;
+  --flat-card-column: 1.12fr;
+  --portrait-detail-viewport-inset: clamp(96px, 14svh, 160px);
+  --detail-image-top-inset: 160px;
+  --detail-image-bottom-inset: max(80px, calc(env(safe-area-inset-bottom) + 56px));
+  --edge-shade-top-depth: 23vh;
+  --edge-shade-bottom-depth: 31vh;
+  --edge-shade-side-depth: 18vw;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: oklch(.185 .003 285.9);
+  --page-rgb: 19, 19, 21;
+  --card-surface: oklch(.205 .004 285.9);
+  --card-surface-end: oklch(.135 .002 285.9);
+  --card-surface-rgb: 23, 23, 25;
+  --card-hover-lightness: .27;
+  --card-hover-chroma: .031;
+  --card-hover-lightness-end: .145;
+  --card-hover-chroma-end: .006;
+  --card-label-rest-strength: 48%;
+  --card-summary-rest-strength: 72%;
+  --card-reflection-scale: .25;
+  --card-glow-rgb: 13, 13, 15;
+  --card-glow-scale: .3;
+  --ink: oklch(0.97184305 0.01472839 294.47299);
+  --muted: oklch(0.80000842 0.02860611 299.43531);
+  --body-ink: var(--muted);
+  --eyebrow-ink: oklch(.68 .012 300);
+  --panel: oklch(0.24590671 0.02266461 288.42877 / 0.96);
+  --chrome: oklch(0.30272328 0.03049884 289.83659 / 0.82);
+  --image-edge: oklch(0.99999999 0.00000004 0.00000 / 0.06);
+  --nav-glass-rgb: 28, 27, 37;
+  --nav-glass-alpha: .58;
+  --dock-glass-alpha: .34;
+  --dock-backdrop-brightness: .65;
+  --nav-rim: oklch(0.99999999 0.00000004 0.00000 / 0.04);
+  --dock-outline: oklch(0.97184305 0.01472839 294.47299 / 0.03);
+  --nav-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.035);
+  --nav-shadow: oklch(0.00000000 0.00000000 0.00000 / 0.18);
+  --nav-item-ink: var(--eyebrow-ink);
+  --nav-active: oklch(0.99999999 0.00000004 0.00000 / 0.08);
+  --nav-item-hover: oklch(0.99999999 0.00000004 0.00000 / 0.025);
+  --glass-rgb: 13, 13, 15;
+  --glass-contrast: .15;
+  --card-rim: oklch(0.99999999 0.00000004 0.00000 / 0.02);
+  --card-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.04);
+  --card-shade: oklch(0.00000000 0.00000000 0.00000 / 0.16);
+  --text-shadow: 0 1px 4px oklch(0 0 0 / .25);
+}
+
+@media (max-width: 1000px) {
+  :root { --font-size-home-heading: clamp(calc(24.5px * var(--type-scale)), calc(3.1vw * var(--type-scale)), calc(34.5px * var(--type-scale))); }
+}
+
+@media (max-width: 600px) {
+  :root { --font-size-home-heading: clamp(calc(22px * var(--type-scale)), calc(5.5vw * var(--type-scale)), calc(30px * var(--type-scale))); }
+  :root { --card-gap: var(--card-gap-mobile); }
+}
+
+/* Neutral cards keep their separation from the page in either theme. */
+:root.card-color-hidden {
+  --page: #f4f4ef;
+  --page-rgb: 244, 244, 239;
+  --card-surface: #fefef9;
+  --card-surface-end: #fdfdf8;
+  --card-surface-rgb: 254, 254, 249;
+}
+
+:root[data-theme="dark"].card-color-hidden {
+  --page: #050506;
+  --page-rgb: 19, 19, 21;
+  --card-surface: #131314;
+  --card-surface-end: #101011;
+  --card-surface-rgb: 19, 19, 20;
+}
+
+:root{--composer-max-width:520px;--composer-font-size:clamp(13px,1.3vw,15px);--composer-text-ink:var(--muted)}

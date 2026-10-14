@@ -1,0 +1,127 @@
+/* Surface hover is opt-in and independent of card layout/content. An effect
+   name can be combined with others (e.g. "tint blur scale"). The liquid skin
+   is the visual plane; the host keeps its geometry and pointer semantics. */
+[data-hover-effect]{--surface-hover-duration:var(--surface-hover-out-duration);transition:--surface-fill var(--surface-hover-duration) ease,--surface-fill-end var(--surface-hover-duration) ease}
+[data-hover-effect][data-hover-rest="page"]:not(:hover,:focus-visible,.gesture-hover){--surface-fill:var(--page);--surface-fill-end:var(--page)}
+
+/* The existing chromatic gradient is the default recipe. */
+@media(hover:hover) and (pointer:fine){
+ [data-hover-effect~="tint"]:not([data-hover-disabled]):hover{--surface-hover-duration:var(--surface-hover-in-duration);--surface-fill:oklch(var(--card-hover-lightness) calc(var(--card-hover-chroma) * var(--project-chroma-scale,1)) var(--project-hue-start,0));--surface-fill-end:oklch(var(--card-hover-lightness-end) calc(var(--card-hover-chroma-end) * var(--project-chroma-scale,1)) var(--project-hue-end,0))}
+}
+[data-hover-effect~="tint"]:not([data-hover-disabled]):is(:focus-visible,.gesture-hover){--surface-hover-duration:var(--surface-hover-in-duration);--surface-fill:oklch(var(--card-hover-lightness) calc(var(--card-hover-chroma) * var(--project-chroma-scale,1)) var(--project-hue-start,0));--surface-fill-end:oklch(var(--card-hover-lightness-end) calc(var(--card-hover-chroma-end) * var(--project-chroma-scale,1)) var(--project-hue-end,0))}
+[data-hover-effect][data-hover-disabled]:is(:hover,:focus-visible,.gesture-hover){--surface-fill:var(--card-surface);--surface-fill-end:var(--card-surface-end)}
+
+/* Reveal the same project gradient through a soft, three-lobed alpha mask.
+   The underlying surface remains neutral; media and text stay untouched. */
+[data-hover-effect~="reveal"],[data-hover-effect~="reveal-soft"],[data-hover-effect~="glow"]{--liquid-hover-a:oklch(var(--card-hover-lightness) calc(var(--card-hover-chroma) * var(--project-chroma-scale,1)) var(--project-hue-start,0));--liquid-hover-b:oklch(var(--card-hover-lightness-end) calc(var(--card-hover-chroma-end) * var(--project-chroma-scale,1)) var(--project-hue-end,0))}
+[data-hover-effect~="reveal"][data-hover-rest="page"],[data-hover-effect~="reveal-soft"][data-hover-rest="page"],[data-hover-effect~="glow"][data-hover-rest="page"]{--surface-fill:var(--page);--surface-fill-end:var(--page)}
+[data-hover-effect~="reveal"]>.liquid-skin>.surface-effect-layer{
+ z-index:1;opacity:0;
+ background:linear-gradient(var(--card-gradient-angle) in oklab,var(--liquid-hover-a),var(--liquid-hover-b));
+ --liquid-mask:
+  radial-gradient(ellipse var(--liquid-rx,170px) var(--liquid-ry,170px) at var(--liquid-x,50%) var(--liquid-y,45%),#000 7%,#000d 34%,#0005 66%,transparent 96%),
+  radial-gradient(ellipse var(--liquid-tail-rx,140px) var(--liquid-tail-ry,140px) at var(--liquid-tail-x,46%) var(--liquid-tail-y,50%),#000b 8%,#0007 43%,transparent 94%),
+  radial-gradient(ellipse var(--liquid-side-rx,100px) var(--liquid-side-ry,105px) at var(--liquid-side-x,50%) var(--liquid-side-y,45%),#000a 5%,#0006 42%,transparent 92%);
+ -webkit-mask-image:var(--liquid-mask);mask-image:var(--liquid-mask);
+ transition:opacity var(--surface-hover-out-duration) ease;
+}
+[data-hover-effect~="reveal-soft"]>.liquid-skin>.surface-effect-layer{
+ z-index:1;opacity:0;
+ background:linear-gradient(var(--card-gradient-angle) in oklab,var(--liquid-hover-a),var(--liquid-hover-b));
+ --liquid-soft-mask:
+  radial-gradient(ellipse var(--liquid-rx,360px) var(--liquid-ry,300px) at var(--liquid-x,50%) var(--liquid-y,45%),#000 4%,#000b 38%,transparent 100%),
+  radial-gradient(ellipse var(--liquid-tail-rx,250px) var(--liquid-tail-ry,220px) at var(--liquid-tail-x,46%) var(--liquid-tail-y,50%),#0007 5%,transparent 94%);
+ -webkit-mask-image:var(--liquid-soft-mask);mask-image:var(--liquid-soft-mask);
+ transition:opacity var(--surface-hover-out-duration) ease;
+}
+[data-hover-effect~="reveal"]>.liquid-skin>.material-reflection,[data-hover-effect~="reveal-soft"]>.liquid-skin>.material-reflection{z-index:2}
+[data-hover-effect~="reveal"]:not([data-hover-disabled])>.liquid-skin>.surface-effect-layer.is-active,[data-hover-effect~="reveal-soft"]:not([data-hover-disabled])>.liquid-skin>.surface-effect-layer.is-active{opacity:.9;transition-duration:var(--surface-hover-in-duration)}
+.has-room [data-hover-effect~="reveal"]>.liquid-skin>.surface-effect-layer,.has-room [data-hover-effect~="reveal-soft"]>.liquid-skin>.surface-effect-layer{background:linear-gradient(var(--card-gradient-angle) in oklab,color-mix(in oklab,var(--liquid-hover-a) calc((var(--glass-alpha) + var(--glass-contrast)) * 100%),transparent),color-mix(in oklab,var(--liquid-hover-b) calc((var(--glass-alpha) + var(--glass-contrast)) * 100%),transparent))}
+
+/* Broad, overlapping light fields bloom from the image. Each gradient fades
+   fully inside its plane, so the animation has no discernible blob boundary. */
+[data-hover-effect~="glow"]{--ambient-lightness:.82;--ambient-chroma:.055;--liquid-glow-a:oklch(var(--ambient-lightness) var(--ambient-chroma) var(--project-hue-start,0));--liquid-glow-b:oklch(var(--ambient-lightness) var(--ambient-chroma) var(--project-hue-end,0))}
+[data-theme="dark"] [data-hover-effect~="glow"]{--ambient-lightness:.48;--ambient-chroma:.032}
+#ambientDetailGlowSetting[hidden],#ambientLightMovementSetting[hidden],#ambientHoverSpeedSetting[hidden]{display:none}
+/* The image field supplies the light for this recipe. MotionMaterial's
+   card-wide skin glow would stack a brief bright spot over it. */
+.surface[data-hover-effect~="glow"]>.liquid-skin::after{opacity:0!important}
+/* With card background off, its page-coloured skin and rim would still make
+   an opaque card-shaped block over a neighbouring image's ambient field. */
+body.card-background-hidden [data-hover-effect~="glow"]>.liquid-skin{
+ opacity:0!important;box-shadow:none!important;
+ backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+body.card-background-hidden [data-hover-effect~="glow"][data-image-mode="bleed"]>.visual{background:transparent!important}
+[data-hover-effect~="glow"]>.surface-effect-layer{
+ --ambient-spread:clamp(120px,17vw,230px);
+ position:absolute;inset:auto;
+ left:calc(var(--ambient-left,0px) - var(--ambient-spread));
+ top:calc(var(--ambient-top,0px) - var(--ambient-spread));
+ width:calc(var(--ambient-width,100%) + var(--ambient-spread) + var(--ambient-spread));
+ height:calc(var(--ambient-height,100%) + var(--ambient-spread) + var(--ambient-spread));
+ z-index:0;pointer-events:none;
+ border-radius:0;overflow:visible;opacity:0;-webkit-mask:none;mask:none;
+ background:radial-gradient(ellipse 70% 72% at 50% 52%,color-mix(in oklab,var(--liquid-glow-b) 11%,transparent) 0%,color-mix(in oklab,var(--liquid-glow-b) 6.5%,transparent) 42%,transparent 84%);
+ transition:opacity var(--surface-hover-out-duration) ease;
+}
+[data-hover-effect~="glow"]>.surface-effect-layer::before,
+[data-hover-effect~="glow"]>.surface-effect-layer::after{
+ content:"";position:absolute;pointer-events:none;
+ opacity:.2;
+ transition:transform 1100ms cubic-bezier(.16,1,.3,1),opacity 800ms ease;
+}
+[data-hover-effect~="glow"]>.surface-effect-layer::before{
+ left:1%;top:2%;width:91%;height:96%;
+ background:radial-gradient(ellipse 68% 70% at 51% 52%,color-mix(in oklab,var(--liquid-glow-a) 24%,transparent) 0%,color-mix(in oklab,var(--liquid-glow-a) 10.5%,transparent) 42%,transparent 82%);
+ transform:translate(10%,7%) scale(.76,.82) rotate(-4deg);
+}
+[data-hover-effect~="glow"]>.surface-effect-layer::after{
+ right:0;bottom:0;width:94%;height:98%;
+ background:radial-gradient(ellipse 66% 72% at 49% 50%,color-mix(in oklab,var(--liquid-glow-b) 21%,transparent) 0%,color-mix(in oklab,var(--liquid-glow-b) 9%,transparent) 44%,transparent 83%);
+ transform:translate(-9%,-7%) scale(.78,.84) rotate(4deg);
+}
+[data-hover-effect~="glow"]:not([data-hover-disabled])>.surface-effect-layer.is-active{opacity:1;transition-duration:var(--surface-hover-in-duration)}
+[data-hover-effect~="glow"]>.surface-effect-layer.is-active::before{
+ opacity:.78;
+ transform:translate(-14%,-9%) scale(1.16,1.04) rotate(5deg);
+}
+[data-hover-effect~="glow"]>.surface-effect-layer.is-active::after{
+ opacity:.76;
+ transform:translate(14%,10%) scale(1.14,1.02) rotate(-5deg);
+}
+/* The shared light owns its opacity and spring motion. Reparenting this same
+   field between image hosts preserves its colour and physical momentum. */
+.ambient-light-stage{position:fixed;inset:0;z-index:24;pointer-events:none;overflow:clip;isolation:isolate}
+.ambient-light-stage[hidden]{display:none}
+[data-hover-effect~="glow"]>.ambient-light-field,
+[data-hover-effect~="glow"]>.ambient-light-field::before,
+[data-hover-effect~="glow"]>.ambient-light-field::after{transition:none!important}
+[data-hover-effect~="glow"]>.ambient-light-field.is-active::before{
+ transform:translate(calc(-14% + var(--ambient-drift-x,0%)),calc(-9% + var(--ambient-drift-y,0%))) scale(var(--ambient-stretch-x,1.16),var(--ambient-stretch-y,1.04)) rotate(5deg);
+}
+[data-hover-effect~="glow"]>.ambient-light-field.is-active::after{
+ transform:translate(calc(14% - var(--ambient-drift-x,0%)),calc(10% - var(--ambient-drift-y,0%))) scale(var(--ambient-stretch-x,1.14),var(--ambient-stretch-y,1.02)) rotate(-5deg);
+}
+@media(prefers-reduced-motion:reduce){[data-hover-effect~="reveal"]>.liquid-skin>.surface-effect-layer,[data-hover-effect~="reveal-soft"]>.liquid-skin>.surface-effect-layer,[data-hover-effect~="glow"]>.surface-effect-layer{transition:none!important}}
+@media(prefers-reduced-motion:reduce){[data-hover-effect~="glow"]>.surface-effect-layer::before,[data-hover-effect~="glow"]>.surface-effect-layer::after{transition:none!important}}
+
+/* Optional effects use the skin's overlay, never transform the host or text.
+   They can be combined with tint or used alone on any .surface. */
+[data-hover-effect~="scale"]>.liquid-skin::before,[data-hover-effect~="blur"]>.liquid-skin::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:var(--surface-effect-layer-fill,color-mix(in oklab,var(--surface-fill) 22%,transparent));opacity:0;transform:scale(1);filter:blur(0);transition:opacity var(--surface-hover-out-duration) ease,transform var(--surface-hover-out-duration) ease,filter var(--surface-hover-out-duration) ease}
+[data-hover-effect~="scale"]:is(:focus-visible,.gesture-hover):not([data-hover-disabled])>.liquid-skin::before,[data-hover-effect~="blur"]:is(:focus-visible,.gesture-hover):not([data-hover-disabled])>.liquid-skin::before{opacity:1;transition-duration:var(--surface-hover-in-duration)}
+[data-hover-effect~="scale"]:is(:focus-visible,.gesture-hover):not([data-hover-disabled])>.liquid-skin::before{transform:scale(var(--surface-effect-scale,1.06))}
+[data-hover-effect~="blur"]:is(:focus-visible,.gesture-hover):not([data-hover-disabled])>.liquid-skin::before{filter:blur(var(--surface-effect-blur,12px))}
+@media(hover:hover) and (pointer:fine){
+ [data-hover-effect~="scale"]:hover:not([data-hover-disabled])>.liquid-skin::before,[data-hover-effect~="blur"]:hover:not([data-hover-disabled])>.liquid-skin::before{opacity:1;transition-duration:var(--surface-hover-in-duration)}
+ [data-hover-effect~="scale"]:hover:not([data-hover-disabled])>.liquid-skin::before{transform:scale(var(--surface-effect-scale,1.06))}
+ [data-hover-effect~="blur"]:hover:not([data-hover-disabled])>.liquid-skin::before{filter:blur(var(--surface-effect-blur,12px))}
+}
+.liquid-skin>.surface-effect-layer{position:absolute;inset:0;border-radius:inherit;pointer-events:none;overflow:hidden}
+.liquid-skin>.surface-effect-layer>canvas{display:block;width:100%;height:100%}
+@media(prefers-reduced-motion:reduce){[data-hover-effect],[data-hover-effect]>.liquid-skin::before{transition:none!important}}
+
+/* Keep liquid colour quiet against the dark canvas, including the shared field. */
+[data-theme="dark"] [data-hover-effect~="glow"]>.surface-effect-layer{background:radial-gradient(ellipse 70% 72% at 50% 52%,color-mix(in oklab,var(--liquid-glow-b) 7%,transparent) 0%,color-mix(in oklab,var(--liquid-glow-b) 4%,transparent) 42%,transparent 84%)}
+[data-theme="dark"] [data-hover-effect~="glow"]>.surface-effect-layer.is-active::before{opacity:.36}
+[data-theme="dark"] [data-hover-effect~="glow"]>.surface-effect-layer.is-active::after{opacity:.34}

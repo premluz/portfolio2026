@@ -1,0 +1,14 @@
+/* Keep editable text large enough to avoid Safari's automatic input zoom.
+   This is independent of iframe width and primary-pointer classification. */
+#dock #askInput{font-size:max(16px,var(--composer-font-size));line-height:1.4}
+@supports(-webkit-touch-callout:none){html{-webkit-text-size-adjust:100%;text-size-adjust:100%}input:not([type="range"]):not([type="checkbox"]),textarea,select{font-size:max(16px,var(--font-size-body))}}
+@media(max-width:1024px){
+ .detail-layout,.description,.info-body,.content-grid>.surface{min-width:0}
+ .detail h1,.description dd,.info-body p{overflow-wrap:anywhere}
+ #settings{max-width:calc(100vw - 32px);right:16px;max-height:calc(100dvh - 96px)}
+ .detail-media-actions button,.project-media-focus-close{min-height:44px}
+ .detail-media-actions [data-media-focus="fullscreen"],.project-media-focus-close{width:44px;height:44px}
+}
+@media(max-width:750px){.detail,.home-carousel-active .card-placement{touch-action:pan-y pinch-zoom}.timeline-viewport{touch-action:pan-x pan-y pinch-zoom}}
+
+@media(max-width:750px){.corner-controls{right:max(16px,env(safe-area-inset-right));bottom:calc(92px + env(safe-area-inset-bottom))}}

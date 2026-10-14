@@ -1,0 +1,24 @@
+import assert from 'node:assert/strict';
+import {projects} from '../dist/documents.js';
+import {projectMenuMarkup} from '../dist/project-menu.js';
+
+const html=projectMenuMarkup(projects,'planner');
+assert.equal((html.match(/<section /g)||[]).length,2,'Shipped and Lab remain semantic groups without headings.');
+assert(!html.includes('<h2'),'Group headings are hidden for now.');
+assert.equal((html.match(/data-page-menu-item=/g)||[]).length,3,'Home, About and Contact appear in the same index.');
+assert.equal((html.match(/data-project-menu-item=/g)||[]).length,projects.length,'Every route remains selectable once');
+assert(!/<small|project-menu-index/.test(html),'Rows have no number or status badge');
+assert(html.includes('project-menu-actions'),'Icon actions appear at the bottom');
+assert.equal((html.match(/role="group"/g)||[]).length,2,'Pages and controls remain separate icon groups');
+assert.match(html,/<button type="button" data-page-menu-item="contact"[^>]*><svg[^>]*><rect x="3" y="5" width="18" height="14" rx="2"\/><path d="m3 6 9 7 9-7"\/>/,'Contact uses a clear envelope icon');
+for(const id of ['themeToggle','soundPreference','siteHelp','animationPreference','gesturePreference'])assert(html.includes(`id="${id}"`));
+const controls=['themeToggle','soundPreference','gesturePreference','animationPreference','siteHelp'];
+for(let i=1;i<controls.length;i++)assert(html.indexOf(`id="${controls[i-1]}"`)<html.indexOf(`id="${controls[i]}"`),'Animation is second-last, Help last in the right group');
+assert.equal((html.match(/data-icon-switch /g)||[]).length,4,'Three binary controls and one theme cycle share the icon switch');
+assert.match(html,/data-project-menu-item="planner" class="active" aria-current="page"/);
+const groups=html.split('</section>');
+for(const p of projects)assert(groups[p.projectKind==='lab'?1:0].includes(`data-project-menu-item="${p.id}"`));
+const escaped=projectMenuMarkup([{id:'test"',name:'<script>&',projectKind:'lab'}],'');
+assert(escaped.includes('test&quot;'));assert(escaped.includes('&lt;script&gt;&amp;'));
+assert(projectMenuMarkup([{id:'x',name:'Product',client:'Customer <x>'}],'').includes('Customer &lt;x&gt;'),'Customer metadata stays visible and escaped in the index');
+console.log('Project menu passed: Pages/Shipped/Lab grouping, route identity, active item, envelope contact icon, clean rows and escaped labels.');

@@ -1,0 +1,28 @@
+import assert from 'node:assert/strict';
+import {content} from '../dist/content/local.js';
+import {cards,homeProjects} from '../dist/documents.js';
+import {homeMarkup} from '../dist/home-layout.js';
+import {homeAboutMarkup} from '../dist/home-about.js';
+const document=content.get('home-about'),html=homeAboutMarkup();
+assert.equal(document.type,'component');assert.equal(document.blocks.find(b=>b.id==='about-introduction').paragraphs.length,2);
+const intro=document.blocks.find(b=>b.id==='about-introduction');assert.equal(intro.title,'I’ve spent the last 10+ years untangling complex products and helping teams turn them into something coherent.');assert.equal(intro.paragraphs[0],'My work has ranged from early product definition and research to interaction models, design systems and implementation.');assert.equal(intro.paragraphs[1],'I’m most useful where the problem is messy, the constraints are real, and the path forward isn’t obvious yet.');
+assert(html.indexOf('data-home-section="about"')<html.indexOf('data-home-section="about-timeline"'));assert(html.indexOf('data-home-section="about-timeline"')<html.indexOf('data-home-section="experience"'),'The About timeline sits between the introduction and Experience');
+assert(html.includes('data-timeline-item="about-building"'),'The homepage reuses the existing About timeline content');
+assert.equal((html.match(/<li>/g)||[]).length,7);for(const years of ['2023–2026','2021–2023','2018–2021','2016–2018','2006–2009'])assert(html.includes(years));
+assert(!/Jul|Jan|Nov|May|Mar|Oct|Dec|linkedin\.com\/in\/premluczak\/edit/.test(html),'Role rows use years only, with no private edit links');
+assert(!html.includes('>About</p>'),'The About eyebrow is removed');
+assert(html.indexOf('data-about-list="about-roles"')<html.indexOf('data-about-list="about-side-projects"'),'Experience precedes Side projects');
+const aboutStyles=await (await import('node:fs/promises')).readFile(new URL('../dist/home-about.css',import.meta.url),'utf8');
+assert(aboutStyles.includes('grid-template-columns:repeat(3,minmax(0,1fr))'),'About content uses three columns');
+assert(aboutStyles.includes('--timeline-text-gap:clamp(36px,4vw,56px)')&&aboutStyles.includes('padding-inline:clamp(48px,6vw,120px)'),'The About timeline has clear label spacing and side insets');
+assert(aboutStyles.includes('.home-about-path{grid-column:1/-1;margin-top:var(--space-page-rhythm-md);'),'The About timeline uses the medium page rhythm above it');
+assert(aboutStyles.includes('grid-column:2 / span 2'),'Experience and side projects share the two right-hand columns');
+assert(aboutStyles.includes('.home-about-copy p{grid-column:2')&&aboutStyles.includes('.home-about-copy p+p{grid-column:3}'),'The first column stays open while paragraphs use columns two and three');
+assert(!aboutStyles.includes('border-top:1px solid color-mix(in oklch,var(--ink) 7%,transparent)'),'About list separators are removed');
+assert(aboutStyles.includes('.home-about-list li:hover .home-about-item'),'List entries receive restrained hover emphasis');
+assert(html.indexOf('Experience')<html.indexOf('Side projects'));assert(!html.includes('Roles'));assert(html.includes('Rios'));assert(html.includes('Porter'));assert(html.includes('data-project-menu-item="porter" href="#porter" data-text-project="porter"'),'Porter in Side projects opens its content page through the shared project route');
+for(const layout of ['regular','masonry']){const home=homeMarkup(cards,layout);assert(!home.includes('data-card="about"'));assert(!home.includes('data-card="contact"'));assert(!home.includes('Technically fluent.'));assert(!home.includes('Good things start'));assert.equal((home.match(/data-slot=/g)||[]).length,homeProjects.length);assert(home.indexOf('data-content-document="home-about"')>home.indexOf('data-gallery'));}
+assert(content.getCard('about'));assert(content.getCard('contact'),'Page routes remain addressable through the index');
+assert(content.search({query:'Carter London'}).items.some(item=>item.documentId==='home-about'),'Role history is retrievable from the structured content');
+const unsafe=structuredClone(document);unsafe.blocks[0].title='<img onerror=bad>';unsafe.blocks[0].paragraphs=['<script>bad</script>','Normal'];assert(homeAboutMarkup(unsafe).includes('&lt;img'));assert(!homeAboutMarkup(unsafe).includes('<script>'));
+console.log('Home About passed: structured biography, two paragraphs, year-only roles, side projects, hidden homepage information cards, retained routes and safe rendering.');

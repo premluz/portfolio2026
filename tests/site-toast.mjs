@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {createSiteToast} from '../dist/site-toast.js';
+let serial=0,reduced=false;const timers=new Map(),animations=[];
+globalThis.setTimeout=fn=>{timers.set(++serial,fn);return serial;};globalThis.clearTimeout=id=>timers.delete(id);
+const element=()=>({hidden:true,textContent:'',children:[],attrs:{},setAttribute(key,value){this.attrs[key]=value;},append(child){child.parent=this;this.children.push(child);},remove(){if(this.parent)this.parent.children=this.parent.children.filter(child=>child!==this);},animate(){let resolve;const a={cancelled:false,finished:new Promise(done=>resolve=done),cancel(){this.cancelled=true;},finish(){resolve();}};animations.push(a);return a;}});
+globalThis.document={createElement:element};
+const node=element(),toast=createSiteToast(node,{reduced:()=>reduced});
+toast.show('Light mode',{key:'theme'});toast.show('Sound on',{key:'sound'});assert.equal(node.children.length,2,'Independent notices stack instead of replacing each other');assert.equal(node.attrs['aria-live'],'polite');assert.equal(timers.size,2);
+assert(node.children.every(child=>child.attrs['data-status-tone']==='success'),'Mode confirmations use success tone');
+assert(node.children.every(child=>child.className.includes('glass-surface')),'Every notice uses the shared navigation glass material');
+const expire=()=>{const pending=[...timers.values()];timers.clear();pending.forEach(fn=>fn());};
+expire();const exits=animations.slice(-2);toast.show('Dark mode',{key:'theme'});exits[0].finish();await Promise.resolve();assert.equal(node.children[0].textContent,'Dark mode');assert.equal(node.children.length,2,'A stale fade cannot hide the updated feature state');
+exits[1].finish();await Promise.resolve();assert.equal(node.children.length,1);expire();animations.at(-1).finish();await Promise.resolve();assert(node.hidden);assert.equal(timers.size,0);
+reduced=true;toast.show('Microphone access denied',{key:'permissions',tone:'error'});assert.equal(node.children[0].attrs['data-status-tone'],'error');toast.show('Permission granted',{key:'permissions',tone:'success'});assert.equal(node.children[0].attrs['data-status-tone'],'success','Replacing a keyed error clears its red tone');toast.hide();const count=animations.length;toast.show('Preparing voice…',{key:'answer',duration:0});toast.show('Dictating…',{key:'dictation',duration:0});assert.equal(timers.size,0);assert.equal(node.children.length,2);assert(node.children.every(child=>child.attrs['data-status-tone']==='neutral'),'Listening and speaking states stay neutral');toast.clear('dictation');assert.equal(node.children.length,1);assert.equal(animations.length,count);
+for(const text of ['a','b','c','d'])toast.show(text);assert.equal(node.children.length,4,'Three transient notices coexist with the persistent answer state');
+toast.destroy();assert(node.hidden);assert.equal(timers.size,0);assert.equal(node.children.length,0);
+reduced=false;toast.show('Dictating…',{key:'dictation',duration:0});toast.clear('dictation');assert(!node.hidden,'Explicitly clearing a persistent state lets its exit finish');animations.at(-1).finish();await Promise.resolve();assert(node.hidden);toast.destroy();
+console.log('Status messages passed: independent stacked states, keyed replacement, stale fades, persistent lifecycle, notice bound and reduced motion.');

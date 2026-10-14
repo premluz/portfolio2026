@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {handleSiteIndexShortcut,menuInitialTarget} from '../dist/menu-keyboard.js';
+let opened=0,prevented=0;const event=(key,extra={})=>({key,target:{tagName:'BUTTON'},preventDefault(){prevented++;},...extra});
+assert(handleSiteIndexShortcut(event('/'),{open:()=>opened++}));assert.equal(opened,1);assert.equal(prevented,1);
+for(const extra of [{target:{tagName:'INPUT'}},{target:{tagName:'TEXTAREA'}},{target:{isContentEditable:true}},{ctrlKey:true},{metaKey:true},{altKey:true},{isComposing:true},{defaultPrevented:true}])assert(!handleSiteIndexShortcut(event('/',extra),{open:()=>opened++}));
+assert(!handleSiteIndexShortcut(event('/'),{canOpen:()=>false}));assert.equal(opened,1);
+const item=(name,client='')=>({querySelector:()=>({textContent:name}),getAttribute:()=>client});
+const a=item('Amble','R&D'),p=item('Publishing pipeline','Sony'),p2=item('Porter','Prem'),t=item('Tracr','De Beers');
+assert.equal(menuInitialTarget(event('p'),[a,p,p2,t],null),p);assert.equal(menuInitialTarget(event('P'),[a,p,p2,t],p),p2);assert.equal(menuInitialTarget(event('p'),[a,p,p2,t],p2),p);
+assert.equal(menuInitialTarget(event('s'),[a,p,p2,t],null),null,'Customer initial never selects a project');
+assert.equal(menuInitialTarget(event('é'),[item('Élan')],null).querySelector().textContent,'Élan');
+assert.equal(menuInitialTarget(event('t',{target:{tagName:'INPUT'}}),[t],null),null);assert.equal(menuInitialTarget(event('t',{metaKey:true}),[t],null),null);
+console.log('Menu keyboard passed: slash shortcut, editing/modifier/modal guards, title initials, duplicate cycling and case/diacritic matching.');

@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import {createStatusMotion} from '../dist/status-motion.js';
+let reduced=false;const animations=[];
+const node={hidden:true,animate(frames,options){let finish;const animation={frames,options,finished:new Promise(done=>finish=done),cancel(){this.cancelled=true;},finish(){finish();}};animations.push(animation);return animation;}};
+globalThis.getComputedStyle=()=>({opacity:'.4',transform:'matrix(1, 0, 0, 1, 0, 4)'});
+let hidden=0;const motion=createStatusMotion(node,{reduced:()=>reduced});
+motion.set(true);assert(!node.hidden);assert.equal(animations[0].frames[0].transform,'translateY(8px)');assert.equal(animations[0].frames[1].opacity,1);
+motion.set(false,{onHidden:()=>hidden++});assert(!node.hidden,'Status remains mounted until its exit finishes');assert.equal(animations[1].frames[0].opacity,'.4','Reversal begins at the current visual state');assert.equal(animations[1].frames[1].transform,'translateY(8px)');
+motion.set(true);animations[1].finish();await Promise.resolve();assert(!node.hidden);assert.equal(hidden,0,'A stale exit cannot remove a revived status');
+animations[2].finish();await Promise.resolve();motion.set(false,{onHidden:()=>hidden++});animations[3].finish();await Promise.resolve();assert(node.hidden);assert.equal(hidden,1);
+reduced=true;const count=animations.length;motion.set(true);motion.set(false);assert(node.hidden);assert.equal(animations.length,count,'Reduced motion skips both directions');
+motion.destroy();console.log('Status motion passed: shared entrance/exit, current-state reversal, late completion guards and reduced motion.');

@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {CardRail,applySectionPresentation} from '../dist/card-rail.js';
+const frames=new Map();let id=0;globalThis.requestAnimationFrame=fn=>{frames.set(++id,fn);return id;};globalThis.cancelAnimationFrame=id=>frames.delete(id);
+const flush=()=>{for(const [id,fn] of [...frames]){frames.delete(id);fn();}};
+let disconnected=false;globalThis.ResizeObserver=class{observe(){}disconnect(){disconnected=true;}};
+const node=()=>({dataset:{},listeners:new Map(),addEventListener(name,fn){this.listeners.set(name,fn);},removeEventListener(name){this.listeners.delete(name);}});
+const root=node(),viewport=node(),previous=node(),next=node();root.dataset.cardRailMode='carousel';viewport.clientWidth=600;viewport.scrollWidth=1800;viewport.scrollLeft=0;
+let behavior;viewport.scrollBy=options=>{behavior=options.behavior;viewport.scrollLeft=Math.max(0,Math.min(1200,viewport.scrollLeft+options.left));};root.querySelector=selector=>({'[data-card-rail-viewport]':viewport,'[data-card-rail-previous]':previous,'[data-card-rail-next]':next})[selector];
+let reduced=false;const rail=new CardRail(root,{reduced:()=>reduced});flush();assert(previous.disabled&&!next.disabled);assert.equal(viewport.tabIndex,0);
+rail.move(1);rail.refresh();flush();assert.equal(viewport.scrollLeft,480);assert.equal(behavior,'smooth');
+reduced=true;let stopped=false;rail.onKey({key:'ArrowRight',preventDefault(){},stopPropagation(){stopped=true;}});rail.refresh();flush();assert(stopped);assert.equal(behavior,'instant');assert.equal(viewport.scrollLeft,960);
+rail.move(1);rail.refresh();flush();assert(next.disabled);assert(!previous.disabled);
+root.dataset.cardRailMode='grid';rail.refresh();flush();assert.equal(viewport.tabIndex,-1);assert(previous.disabled&&next.disabled);
+const testimonial=node(),page={querySelectorAll:selector=>selector.includes('services')?[root]:[testimonial]};applySectionPresentation(page,{servicesLayout:'carousel',testimonialCardBackground:false});assert.equal(root.dataset.cardRailMode,'carousel');assert.equal(testimonial.dataset.cardBackground,'false');
+rail.destroy();assert(disconnected);assert.equal(viewport.listeners.size,0);assert.equal(frames.size,0);
+console.log('Card rail passed: bounds, keyboard, responsive steps, reduced motion, presentation switching and listener cleanup.');

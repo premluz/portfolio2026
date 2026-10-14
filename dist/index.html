@@ -1,0 +1,204 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Prem — technically fluent designer. A fluid collection of work and experiments."><title>Prem — Selected work</title><link rel="modulepreload" href="app.js"><link rel="modulepreload" href="content/catalog.js"><link rel="stylesheet" href="site.css"></head><body class="branding-hidden edge-shade-top edge-shade-bottom edge-shade-left edge-shade-right"><div id="roomBackdrop" class="room-backdrop" aria-hidden="true"></div><div class="room-shade" aria-hidden="true"></div><div class="page-edge-shades" aria-hidden="true"><i class="top"></i><i class="bottom"></i><i class="left"></i><i class="right"></i></div><div id="roomDropOverlay" class="room-drop-overlay" hidden><span>Drop your room image</span></div>
+<svg class="filters" aria-hidden="true"><defs id="filters"><filter id="goo" x="-30%" y="-100%" width="160%" height="300%"><feGaussianBlur in="SourceGraphic" stdDeviation="9"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 24 -10"/><feComposite in="SourceGraphic" operator="atop"/></filter></defs></svg>
+<header><a href="#work" class="brand">prem<span>®</span></a><span class="discipline">Design + technology</span></header>
+<div class="corner-controls" role="group" aria-label="Site utilities"><button id="settingsToggle" class="glass-utility-button" data-tooltip="Developer settings" aria-label="Open developer settings">⚙</button><button id="askToggle" class="glass-utility-button" aria-label="Open assistant page" data-tooltip="Ask about the work" aria-pressed="false" aria-controls="askPage"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 11.5a8 8 0 0 1-8 8 8.5 8.5 0 0 1-3-.5L4 20l1.4-4A8 8 0 1 1 20 11.5Z"/><path d="M8 11.5h8"/></svg></button></div>
+<main id="main"></main><main id="askPage" class="assistant-page" hidden aria-labelledby="askTitle"><div class="assistant-thread"><div class="assistant-welcome"><h1 id="askTitle">What would you like to know?</h1><p>I’m Prem’s custom-built assistant, powered by ChatGPT and ElevenLabs.</p></div><div id="askMessages" class="ask-messages" role="log" aria-live="polite" aria-relevant="additions"></div></div></main><footer class="site-footer" aria-labelledby="footer-title">
+<h2 id="footer-title">Building something<br>complex?</h2>
+<p class="footer-invitation">Let's make it happen</p>
+<nav class="footer-links" aria-label="Get in touch" hidden>
+<a href="https://www.linkedin.com/in/premluczak/" target="_blank" rel="noopener noreferrer" aria-label="Prem on LinkedIn" data-tooltip="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M5.4 3.5a1.9 1.9 0 1 1 0 3.8 1.9 1.9 0 0 1 0-3.8ZM3.8 9h3.3v11H3.8Zm5.4 0h3.2v1.5c.5-1 1.6-1.8 3.3-1.8 3.5 0 4.5 2.2 4.5 5.1V20h-3.4v-5.5c0-1.5-.3-2.8-1.9-2.8-1.7 0-2.3 1.2-2.3 2.8V20H9.2Z"/></svg></a>
+<a href="https://prems.design/contact" target="_blank" rel="noopener noreferrer" aria-label="Contact Prem" data-tooltip="Contact Prem"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></svg></a>
+<a href="#contact" data-nav="contact" aria-label="Open contact page" data-tooltip="Let's talk"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 9.6 9.6 0 0 1-4-.9L3 21l1.9-5.5A9.6 9.6 0 0 1 4 11.5 8.5 8.5 0 0 1 12.5 3 8.5 8.5 0 0 1 21 11.5Z"/></svg></a>
+</nav>
+
+</footer><div id="announcer" class="sr" aria-live="polite"></div>
+<div class="dock" id="dock"><div class="context-nav" id="contextNav"><button id="previous" aria-label="Previous project" data-tooltip="[←] Previous"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m14.5 5-7 7 7 7"/></svg></button><button id="next" aria-label="Next project" data-tooltip="Next [→]"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m9.5 5 7 7-7 7"/></svg></button></div><nav aria-label="Main navigation"><a href="#work" data-nav="work">Work</a><a href="#about" data-nav="about">About</a><a href="#contact" data-nav="contact">Contact</a><button id="projectMenuToggle" class="project-menu-toggle" aria-label="Site index menu" data-tooltip="Site index menu [ / ]" aria-keyshortcuts="/" aria-expanded="false"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg></button><form id="askForm" novalidate class="assistant-composer" aria-label="Ask about Prem’s work"><button id="assistantIndexToggle" class="assistant-index-toggle" type="button" aria-label="Site index menu" data-tooltip="Site index menu [ / ]" aria-keyshortcuts="/" aria-expanded="false"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><label class="sr" for="askInput">Your question</label><span class="composer-draft"><input id="askInput" name="question" type="text" maxlength="240" autocomplete="off" placeholder="Ask a question…"><span class="dictation-waveform" aria-hidden="true" hidden><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></span><button id="assistantMic" class="assistant-mic" type="button" aria-label="Start dictation" aria-pressed="false" data-tooltip="Start dictation"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11v2a7 7 0 0 0 14 0v-2M12 20v2"/></svg></button><button id="assistantAction" class="assistant-send assistant-action" data-mode="voice" type="button" aria-pressed="false" aria-label="Start voice" data-tooltip="Start voice"><svg class="composer-voice-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6M8 5v14M12 3v18M16 7v10M20 9v6"/></svg><svg class="composer-stop-icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="2" fill="currentColor" stroke="none"/></svg><svg class="composer-send-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></button></form></nav><div id="projectMenu" class="project-menu" hidden aria-label="Site index"></div></div>
+<div id="interactionHud" class="interaction-hud" hidden>
+<div id="voiceStatus" class="input-status" hidden><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="8" y="3" width="8" height="12" rx="4"/><path d="M5 11v2a7 7 0 0 0 14 0v-2M12 20v2"/></svg><span data-input-status>Listening</span><button id="voiceStop" aria-label="Stop voice navigation" data-tooltip="Stop listening"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+<div id="gestureStatus" class="input-status" hidden><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 13V4a2 2 0 0 1 4 0v9M12 5a2 2 0 0 1 4 0v8M16 11a2 2 0 0 1 4 0v6a5 5 0 0 1-5 5h-3a5 5 0 0 1-4-2l-5-6a2 2 0 0 1 3-2l2 2"/></svg><span data-input-status>Show two fingers together</span><button id="gesturesStop" aria-label="Stop gesture navigation" data-tooltip="Stop camera"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+</div>
+<div id="interactionFeedback" class="interaction-feedback" role="status" aria-live="polite" hidden></div>
+<div id="gestureCursor" class="gesture-cursor" aria-hidden="true" hidden></div>
+<div id="gestureScrollControl" class="gesture-scroll-control" data-direction="neutral" aria-hidden="true" hidden><svg class="scroll-up" viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></svg><span class="scroll-neutral"></span><span class="scroll-marker"></span><svg class="scroll-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></div>
+<dialog id="interactionGuide" class="interaction-guide" aria-labelledby="interactionGuideTitle" aria-describedby="interactionPrivacy">
+<div class="interaction-guide-content">
+<p class="interaction-eyebrow">Voice &amp; gestures</p>
+<h2 id="interactionGuideTitle">Navigate with your voice.</h2>
+<p id="interactionPrivacy" class="interaction-privacy">Hand tracking runs on your device. Voice uses the browser’s speech service, which may process audio online. This site does not record or store audio or camera frames.</p>
+<div class="interaction-guide-grid">
+<section aria-labelledby="voiceGuideTitle"><h3 id="voiceGuideTitle">Voice</h3><button type="button" id="voicePreference" class="guide-voice-toggle" role="switch" aria-checked="false" aria-label="Voice navigation" data-tooltip="Turn voice navigation on or off">Voice navigation</button><p class="voice-command-example">“Open PlayStation”</p><p class="guide-body">Say <em>Open</em> and a project name: Merlin, Rios, PlayStation, Vodafone, Tracr, Gala or Bastion.</p><div class="voice-command-list"><span>Next</span><span>Previous</span><span>Work</span><span>About</span><span>Contact</span><span>Settings</span><span>Menu</span><span>Index</span><span>List</span><span>Back</span><span>Scroll up</span><span>Scroll down</span></div><p class="guide-body">“Menu”, “Index” and “List” open the project list.</p><p class="guide-body">For scrolling, “Up”, “Down”, “Move up” and “Move down” also work. Each command moves part of a page, or scrolls the open project list.</p><p class="guide-body">A complete command activates immediately. A short pause finishes the phrase. Listening pauses while the action runs, then resumes.</p><p class="guide-body">Next and Previous work inside a project. Say “Stop listening” to switch voice off.</p></section>
+<section aria-labelledby="gestureGuideTitle"><h3 id="gestureGuideTitle">Gestures</h3><ul class="gesture-guide-list">
+<li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 13V4a2 2 0 0 1 4 0v9M12 5a2 2 0 0 1 4 0v8M16 11a2 2 0 0 1 4 0v6a5 5 0 0 1-5 5h-3a5 5 0 0 1-4-2l-5-6a2 2 0 0 1 3-2l2 2"/></svg><span><strong>Point</strong>Index and middle fingers together; ring and little fingers tucked. Extend your thumb away to make an L-shape. Move your hand to move the cursor.</span></li>
+<li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 13V7a3 3 0 0 1 6 0v3M13 8a2 2 0 0 1 4 0v5M17 12a2 2 0 0 1 4 0v5a5 5 0 0 1-5 5h-4a5 5 0 0 1-4-2l-5-7a2 2 0 0 1 3-2l2 2 4-3a2 2 0 0 1 2 3l-3 3"/></svg><span><strong>Click</strong>Point at a card or button, then touch your thumb to both fingertips. The pointed item locks before contact and activates once. Release your thumb to point again.</span></li>
+<li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v18M7 8l5-5 5 5M7 16l5 5 5-5"/></svg><span><strong>Scroll</strong>Hold your open hand flat like a wing until the scroll control appears. Tip the fingers down to scroll down, showing the back of your hand; tip them up to scroll up, showing your palm. More tilt moves faster. Flatten or close the hand to stop. Point again before clicking.</span></li>
+<li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 9V6a2 2 0 0 1 4 0v3M9 6a2 2 0 0 1 4 0v3M13 7a2 2 0 0 1 4 0v3M17 8a2 2 0 0 1 4 0v8a6 6 0 0 1-6 6h-4a6 6 0 0 1-6-6v-4a2 2 0 0 1 4 0v2"/><path d="m7 1 3 2M15 1l-2 2"/></svg><span><strong>Back</strong>From a closed hand, briefly open your palm, then close it before the scroll control appears. This also reverses a transition. Closing after a click or during scrolling only releases.</span></li>
+<li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 12h18m-5-5 5 5-5 5M8 7l-5 5 5 5"/></svg><span><strong>Next / previous</strong>Swipe the two joined fingers left for next, right for previous.</span></li>
+</ul></section>
+</div>
+<p id="interactionGuideHint" class="interaction-guide-hint">Enable your microphone after OK. Voice uses the browser’s speech service.</p>
+<div class="interaction-guide-actions"><button id="interactionCancel">Not now</button><button id="interactionConfirm" class="primary">OK</button></div>
+<p id="interactionSetupStatus" class="interaction-setup-status" role="status" aria-live="polite"></p>
+</div></dialog>
+<aside id="settings" hidden aria-label="Developer settings">
+<div class="panel-heading">Developer settings<button id="settingsClose" data-tooltip="Close developer settings" aria-label="Close developer settings">×</button></div>
+<div class="settings-transfer"><div class="settings-transfer-actions"><button id="settingsExport" type="button">Export settings</button><button id="settingsImport" type="button">Import settings</button></div><input id="settingsImportFile" type="file" accept="application/json,.json" hidden><p>Save a JSON preset. Import applies it and reloads this page. Chat and room images stay separate.</p><p id="settingsTransferStatus" role="status" aria-live="polite"></p></div>
+<details class="developer-settings-group" open>
+<summary>Layout</summary><div class="developer-settings-content">
+<div class="setting-subsection">Page template widths</div>
+<label>Home <select id="homeContentWidth"><option value="small">Small · 1200px</option><option value="medium" selected>Medium · 1440px</option><option value="large">Large · 1760px</option></select></label>
+<label>About / content page <select id="contentPageWidth"><option value="small">Small · 1200px</option><option value="medium" selected>Medium · 1440px</option><option value="large">Large · 1760px</option></select></label>
+<label>Project details <select id="detailContentWidth"><option value="small">Small · 1200px</option><option value="medium" selected>Medium · 1440px</option><option value="large">Large · 1760px</option></select></label>
+
+<div class="setting-subsection">Homepage</div>
+<label>Product display <select id="homeProductDisplay"><option value="cards">Cards</option><option value="carousel" selected>Carousel</option><option value="text">Text</option></select></label>
+<label class="check" id="heroCarouselSetting"><input id="heroCarousel" type="checkbox"> Hero carousel · scroll into grid</label>
+<label class="check"><input id="heroTimelineEnabled" type="checkbox" checked> Show hero timeline</label>
+<label class="check"><input id="heroDescriptionEnabled" type="checkbox"> Show hero description</label>
+<label id="heroTimelineModeSetting">Timeline interaction <select id="heroTimelineMode"><option value="cursor">Cursor movement</option><option value="drag">Drag</option></select></label>
+<label>Homepage layout <select id="homeViewSelect"><option value="current">Current grid</option><option value="flip">Flip</option><option value="flat">Two columns · Flat cards</option></select></label>
+<label>Card arrangement <select id="homeLayoutSelect"><option value="masonry">Masonry</option><option value="regular">Regular</option></select></label>
+<label>Grid columns <select id="gridColumns"><option value="1">1 column</option><option value="2" selected>2 columns</option><option value="3">3 columns</option><option value="4">4 columns</option></select></label>
+<label id="singleColumnCardPositionSetting" hidden>One-column card composition <select id="singleColumnCardPosition"><option value="top">Description top</option><option value="bottom">Description bottom</option><option value="left">Description left</option><option value="right">Description right</option><option value="alternating">Alternate left / right</option></select></label>
+<label id="multiColumnCardPositionSetting" hidden>Multi-column card composition <select id="multiColumnCardPosition"><option value="top">Copy above image</option><option value="bottom">Copy below image</option></select></label>
+<label class="check" id="cardCopyHoverSetting" hidden><input id="cardCopyHover" type="checkbox"> Show title on hover (desktop)</label>
+</div></details>
+<details class="developer-settings-group">
+<summary>Carousel</summary><div class="developer-settings-content">
+<label>Presentation <select id="aboutGalleryVariant"><option value="perspective">Perspective</option><option value="circular" selected>Circular</option></select></label>
+<label>Orientation <select id="aboutGalleryOrientation"><option value="horizontal">Horizontal</option><option value="vertical">Vertical</option></select></label>
+<div id="carouselArcSettings">
+<div class="setting-subsection">Circular arc</div>
+<label>Side tilt <output data-carousel-output="tilt">24°</output><input id="carouselTilt" data-carousel-control="tilt" type="range" min="0" max="60" step="1" value="24"></label>
+<label>Horizontal spread <output data-carousel-output="spread">100%</output><input id="carouselSpread" data-carousel-control="spread" type="range" min="60" max="180" step="5" value="100"></label>
+<label>Arc depth <output data-carousel-output="depth">100%</output><input id="carouselDepth" data-carousel-control="depth" type="range" min="0" max="200" step="5" value="100"></label>
+<label>Minimum gap <output data-carousel-output="gap">32px</output><input id="carouselGap" data-carousel-control="gap" type="range" min="8" max="96" step="2" value="32"></label>
+<div class="setting-subsection">Motion and mobile</div>
+<label>Motion speed <output data-carousel-output="speed">100%</output><input id="carouselSpeed" data-carousel-control="speed" type="range" min="25" max="200" step="5" value="100"></label>
+<label>Mobile neighbour peek <output data-carousel-output="peek">12px</output><input id="carouselPeek" data-carousel-control="peek" type="range" min="0" max="32" step="1" value="12"></label>
+</div>
+</div></details>
+<details class="developer-settings-group">
+<summary>Content</summary><div class="developer-settings-content">
+<div class="setting-subsection">Section presentation</div>
+<label>Services layout <select id="servicesLayout"><option value="grid">Grid</option><option value="carousel" selected>Carousel</option></select></label>
+<label>Services carousel start <select id="servicesCarouselAlignment"><option value="full-bleed">Full bleed · global side padding</option><option value="content">Align with content width</option></select></label>
+<label class="check"><input id="testimonialCardBackground" type="checkbox" checked> Testimonial card backgrounds</label>
+<label class="check"><input id="showFooterContactLinks" type="checkbox"> Show contact links in footer</label>
+<div class="setting-subsection">Homepage sections</div>
+<label class="check"><input type="checkbox" data-home-section-control="approach" checked> How I work</label>
+<label>How I work width <select data-home-span-control="approach"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
+<label class="check"><input type="checkbox" data-home-section-control="services" checked> Services</label>
+<label>Services width <select data-home-span-control="services"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
+<label class="check"><input type="checkbox" data-home-section-control="about" checked> About</label>
+<label>About width <select data-home-span-control="about"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
+<label class="check"><input type="checkbox" data-home-section-control="about-timeline" checked> About timeline</label>
+<label class="check"><input type="checkbox" data-home-section-control="experience" checked> Experience &amp; side projects</label>
+<label>Experience width <select data-home-span-control="experience"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
+<label class="check"><input type="checkbox" data-home-section-control="testimonials" checked> Testimonials</label>
+
+</div></details>
+<details class="developer-settings-group">
+<summary>Cards</summary><div class="developer-settings-content">
+<div class="setting-subsection">Card content</div>
+<label class="check"><input id="cardShowClient" type="checkbox" checked> Show client / company</label>
+<label class="check"><input id="cardShowTitle" type="checkbox" checked> Show project title</label>
+<label class="check"><input id="cardShowDescription" type="checkbox" checked> Show project description</label>
+<div class="setting-subsection">Surface</div>
+<label class="check"><input id="cardBackground" type="checkbox" checked> Card background</label>
+<label class="check"><input id="hideCardColor" type="checkbox"> Hide card color</label>
+<label class="check"><input id="hideCardHover" type="checkbox"> Hide card hover</label>
+<label>Card hover effect <select id="cardHoverEffect"><option value="reveal">Liquid morph</option><option value="reveal-soft">Soft reveal · previous</option><option value="tint">Original colour hover</option><option value="glow">Ambient liquid glow</option></select></label>
+<div class="setting-subsection">Shape and spacing</div>
+<label>Card title size <output id="cardTitleSizeValue">31px</output><input id="cardTitleSize" type="range" min="18" max="48" step="1" value="31"></label>
+<div id="cardPaddingSettings"><label class="check"><input id="cardPaddingSame" type="checkbox"> Same on all sides</label>
+<div id="cardPaddingAllSettings" hidden><label>All sides <output id="cardPaddingAllValue">56px</output><input id="cardPaddingAll" type="range" min="0" max="160" step="4" value="56"></label></div>
+<div id="cardPaddingSidesSettings"><label>Top <output id="cardPaddingTopValue">56px</output><input id="cardPaddingTop" type="range" min="0" max="160" step="4" value="56"></label><label>Right <output id="cardPaddingRightValue">40px</output><input id="cardPaddingRight" type="range" min="0" max="160" step="4" value="40"></label><label>Bottom <output id="cardPaddingBottomValue">60px</output><input id="cardPaddingBottom" type="range" min="0" max="160" step="4" value="60"></label><label>Left <output id="cardPaddingLeftValue">40px</output><input id="cardPaddingLeft" type="range" min="0" max="160" step="4" value="40"></label></div>
+<p>Card padding controls the surface inset on every side, independently of image padding.</p></div>
+<label>Card rounding <output id="cardRoundingValue">64px</output><input id="cardRounding" type="range" min="0" max="128" step="2" value="64"></label>
+<label>Card gap <output id="cardGapValue">28px</output><input id="cardGap" type="range" min="0" max="56" step="2" value="28"></label>
+</div></details>
+<details class="developer-settings-group">
+<summary>Ambient</summary><div class="developer-settings-content">
+<div class="setting-subsection">Image glow</div>
+<label class="check" id="ambientLightMovementSetting" hidden><input id="ambientLightMovement" type="checkbox" checked> Ambient light movement</label>
+<label id="ambientHoverSpeedSetting" hidden>Ambient hover speed <output id="ambientHoverSpeedValue">60%</output><input id="ambientHoverSpeed" type="range" min="20" max="150" step="5" value="60"></label>
+<label class="check" id="ambientDetailGlowSetting" hidden><input id="ambientDetailGlow" type="checkbox"> Keep ambient light on details</label>
+<div class="setting-subsection">Composer</div>
+<label class="check"><input id="showComposerGlow" type="checkbox" checked> Show composer ambient glow</label>
+</div></details>
+<details class="developer-settings-group">
+<summary>Images</summary><div class="developer-settings-content">
+<div class="setting-subsection">Card images</div>
+<label class="check"><input id="fullBleed" type="checkbox"> Full-bleed card images</label>
+<div id="imagePaddingSettings"><p>Landscape images max out at 1000px wide. Portrait images max out at 600px wide and 700px high.</p><label>Image top padding <output id="bleedTopValue">0px</output><input id="bleedTop" type="range" min="0" max="240" step="4" value="0"></label><label>Image side padding <output id="bleedSideValue">0px</output><input id="bleedSide" type="range" min="0" max="100" step="2" value="0"></label><label>Image bottom padding <output id="bleedBottomValue">0px</output><input id="bleedBottom" type="range" min="0" max="120" step="2" value="0"></label></div>
+<div id="bleedSettings" hidden><label class="check"><input id="bleedBacking" type="checkbox" checked> Image gap fill</label><p>Image gap fill follows the card surface. When desktop labels are hidden in full-bleed mode, image top padding follows side padding.</p></div>
+<label>Image corner rounding <output id="imageRoundingValue">6px</output><input id="imageRounding" type="range" min="0" max="32" step="1" value="6"></label>
+</div></details>
+<details class="developer-settings-group">
+<summary>Project details</summary><div class="developer-settings-content">
+<label class="check"><input id="showFullScreenOption" type="checkbox" checked> Show full screen option</label>
+<label class="check"><input id="detailHeadingBeside" type="checkbox"> Details title beside image</label>
+<label class="check"><input id="wideHero" type="checkbox" checked> Wide hero card</label>
+</div></details>
+<details class="developer-settings-group" open>
+<summary>Navigation</summary><div class="developer-settings-content">
+<div class="setting-subsection">Header</div>
+<label class="check"><input id="hideBranding" type="checkbox" checked> Hide logo &amp; tagline</label>
+<div class="setting-subsection">Floating dock</div>
+<label>Bottom nav roundness <output id="navRoundingValue">24px</output><input id="navRounding" type="range" min="0" max="100" step="1" value="24"></label>
+<label>Nav item padding <output id="navItemPaddingValue">9px</output><input id="navItemPadding" type="range" min="4" max="14" step="1" value="9"></label>
+<label>Nav container padding <output id="navContainerPaddingValue">0px</output><input id="navContainerPadding" type="range" min="0" max="12" step="1" value="0"></label>
+<label>Nav font size <output id="navItemFontSizeValue">12px</output><input id="navItemFontSize" type="range" min="10" max="16" step="1" value="12"></label>
+<div class="setting-subsection">Composer</div>
+<label><input id="splitProjectControls" type="checkbox">Split project controls left / right</label>
+<label>Contextual buttons <select id="contextualButtons"><option value="inline" selected>Inline</option><option value="composer">In composer</option></select></label>
+<div class="dev-setting-row"><span id="contextualComposerLabel">Contextual composer</span><button id="contextualComposerPreference" class="preference-switch" type="button" role="switch" aria-checked="true" aria-labelledby="contextualComposerLabel" data-tooltip="Show the assistant composer in the floating dock across all pages."><span></span></button></div>
+<div class="dev-setting-row"><span id="alwaysDarkGlassLabel">Always dark glass</span><button id="alwaysDarkGlassPreference" class="preference-switch" type="button" role="switch" aria-checked="false" aria-labelledby="alwaysDarkGlassLabel" data-tooltip="Keep the floating dock and its popovers in dark blurred glass, independent of theme."><span></span></button></div>
+<div class="setting-subsection">Menu icons</div>
+<label>Gestures icon <select id="menuGestureIcon"><option value="hand" selected>Hand</option><option value="fingers">Two fingers</option></select></label>
+<label>Info icon <select id="menuInfoIcon"><option value="help" selected>Question mark</option><option value="info">Info</option></select></label>
+<label>Animation icon <select id="menuAnimationIcon"><option value="motion" selected>Motion lines</option><option value="play">Play / pause</option></select></label>
+</div></details>
+<details class="developer-settings-group">
+<summary>Motion</summary><div class="developer-settings-content">
+<div class="setting-subsection">Card movement</div>
+<label>Liquid intensity <output id="intensityValue">70%</output><input id="intensity" type="range" min="0" max="100" value="70"></label>
+<label>Transition duration <output id="durationValue">0.4s</output><input id="duration" type="range" min="100" max="2400" step="50" value="400"></label>
+<label>Directional stretch <output id="stretchValue">55%</output><input id="stretch" type="range" min="0" max="100" value="55"></label>
+<label>Trailing edge lag <output id="lagValue">65%</output><input id="lag" type="range" min="0" max="100" value="65"></label>
+<label>Spring stiffness <output id="stiffnessValue">45%</output><input id="stiffness" type="range" min="0" max="100" value="45"></label>
+<label>Damping <output id="dampingValue">70%</output><input id="damping" type="range" min="0" max="100" value="70"></label>
+<label>Glass reflections <output id="reflectionsValue">10%</output><input id="reflections" type="range" min="0" max="100" value="10"></label>
+<label>Afterglow <output id="glowValue">25%</output><input id="glow" type="range" min="0" max="100" value="25"></label>
+<label>Glass overshoot <output id="overshootValue">60%</output><input id="overshoot" type="range" min="0" max="100" value="60"></label>
+<div class="setting-subsection">Image response</div>
+<label class="check"><input id="imageRippleEnabled" type="checkbox"> Image transition ripple</label>
+<label>Image glass ripple <output id="rippleValue">65%</output><input id="ripple" type="range" min="0" max="100" value="65"></label>
+<label class="check"><input id="imageBlurEnabled" type="checkbox" checked> Directional image blur</label>
+<label>Directional image trail <output id="motionBlurValue">55%</output><input id="motionBlur" type="range" min="0" max="100" value="55"></label>
+<p>Switch both image effects off for clear images throughout transitions. Card glass motion stays active.</p>
+<label class="check"><input type="checkbox" id="slow"> Slow motion</label>
+<p>Drag a card left and right to feel the response. Escape settles it back.</p>
+<button id="replay">Replay transition</button>
+</div></details>
+<details class="developer-settings-group">
+<summary>Environment</summary><div class="developer-settings-content">
+<div class="setting-subsection">Room background</div>
+<div class="room-upload"><button id="chooseRoom"><span id="roomName">Drop a room image</span><small>or choose an image</small></button><input id="roomFile" type="file" accept="image/jpeg,image/png,image/webp,image/avif,image/gif" hidden><button id="removeRoom" hidden>Remove background</button></div>
+<p id="roomStatus" role="status" aria-live="polite"></p>
+<label>Glass opacity <output id="glassOpacityValue">45%</output><input id="glassOpacity" type="range" min="15" max="90" value="45"></label>
+<label>Background blur <output id="roomBlurValue">12px</output><input id="roomBlur" type="range" min="0" max="24" value="12"></label>
+<label>Room dimming <output id="roomShadeValue">18%</output><input id="roomShade" type="range" min="0" max="60" value="18"></label>
+<div class="setting-subsection">Edge shades</div>
+<label class="check"><input id="edgeShadeTop" type="checkbox" checked> Top edge shade</label>
+<label class="check"><input id="edgeShadeBottom" type="checkbox" checked> Bottom edge shade</label>
+<label class="check"><input id="edgeShadeLeft" type="checkbox" checked> Left edge shade</label>
+<label class="check"><input id="edgeShadeRight" type="checkbox" checked> Right edge shade</label>
+<label class="check"><input id="edgeShadeRetreat" type="checkbox" checked> Move edge shades away on details</label>
+<label>Edge shade depth <output id="edgeShadeDepthValue">100%</output><input id="edgeShadeDepth" type="range" min="0" max="200" step="10" value="100"></label>
+</div></details>
+<details class="developer-settings-group">
+<summary>Design system</summary><div class="developer-settings-content" data-settings-slot="design-system"></div>
+</details>
+</aside>
+<script type="module" src="app.js"></script></body></html>

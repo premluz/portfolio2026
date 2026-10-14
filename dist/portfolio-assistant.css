@@ -1,0 +1,106 @@
+#askToggle{width:40px;height:40px;display:grid;place-items:center;padding:0;color:var(--muted);border-radius:var(--radius-header-control);background:linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--nav-glass-alpha) + .14)),rgba(var(--nav-glass-rgb),var(--nav-glass-alpha)));backdrop-filter:blur(24px) saturate(1.4);-webkit-backdrop-filter:blur(24px) saturate(1.4);box-shadow:inset 0 1px 0 var(--nav-highlight),0 6px 22px var(--nav-shadow);border:1px solid var(--nav-rim)}
+#askToggle:hover,#askToggle[aria-pressed=true]{color:var(--ink)}#askToggle svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+#askPage[hidden],#main[hidden]{display:none}.assistant-route .site-footer{display:none}
+.assistant-page{--assistant-scroll-clearance:calc(160px + var(--composer-keyboard-inset,0px));max-width:none;width:100%;min-height:calc(100svh - var(--header-height));padding:var(--space-page-rhythm-md) clamp(24px,6vw,96px) calc(var(--assistant-scroll-clearance) + 48px + env(safe-area-inset-bottom,0px))}
+/* Card auras can spill out of their cards, but never enlarge the conversation's
+   scroll extent. Otherwise their scroll-following springs fight bottom clamping. */
+#askPage.assistant-page{overflow:clip;contain:paint}
+.assistant-thread{width:min(100%,900px);margin:0 auto}.assistant-welcome{width:100%;max-width:none;margin:0 0 48px;text-align:left}.assistant-eyebrow{display:block;color:var(--eyebrow-ink);font-size:var(--font-size-caption);font-weight:var(--eyebrow-weight);letter-spacing:var(--eyebrow-tracking);text-transform:uppercase}.assistant-welcome h1{max-width:var(--measure-heading);margin:0 0 var(--space-hero-heading-content);font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);text-wrap:balance}.assistant-welcome p{margin:0;max-width:var(--measure-body);color:var(--body-ink);font-size:var(--font-size-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
+.ask-messages{display:flex;flex-direction:column;gap:36px;width:100%;min-height:20vh}.ask-messages>*{scroll-margin-bottom:var(--assistant-scroll-clearance)}.ask-message,.ask-response{margin:0;font-size:var(--font-size-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}.ask-user{align-self:flex-end;max-width:min(80%,580px);padding:15px 20px;border-radius:22px;background:var(--nav-active);color:var(--ink)}.ask-response{align-self:flex-start;width:100%;color:var(--body-ink)}.ask-response>p{max-width:690px;margin:0 0 22px}.ask-status{align-self:flex-start;color:var(--eyebrow-ink);font-size:var(--font-size-small)}.ask-sources{margin-top:12px;color:var(--muted);font-size:var(--font-size-caption)}.ask-sources a{text-decoration:underline;text-underline-offset:3px}
+.ask-response-lead{display:flex;flex-direction:column;align-items:flex-start;gap:10px;max-width:750px;width:100%}.ask-response-lead p{width:100%;margin:0 0 22px}.ask-speech-button{flex:0 0 auto;display:flex;align-items:center;gap:7px;min-height:24px;margin:0;padding:0;border:0;background:transparent;color:var(--muted);font-size:var(--font-size-caption);white-space:nowrap;transition:opacity 180ms cubic-bezier(.22,1,.36,1),background-color .18s,color .18s}.ask-speech-button:is(:hover,:focus-visible),.ask-speech-button[data-speech-state=playing],.ask-speech-button[data-speech-state=blocked],.ask-speech-button[data-speech-state=error]{background:transparent;color:var(--ink)}.ask-speech-button[data-speech-state=loading]{opacity:.7}.ask-speech-button svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.ask-speech-hint{align-self:center;white-space:nowrap;color:var(--muted);font-size:var(--font-size-caption)}
+.ask-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.ask-cards .project-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(80px,30%);align-items:center;gap:20px;width:100%;min-height:138px;height:auto;padding:20px;border-radius:var(--radius-card-compact,24px);background:var(--surface-gradient);box-shadow:none;text-decoration:none;isolation:isolate}.ask-cards .project-card .card-lab-mark{display:none}.ask-cards .project-card .card-copy,.ask-cards .project-card .visual{z-index:1}.ask-cards .project-card .card-copy{position:relative;min-width:0;visibility:visible;opacity:1}.ask-cards .project-card h2{max-width:none;font-size:clamp(15px,calc(var(--font-size-card-heading) * var(--card-title-scale) * .68),19px);line-height:1.25;letter-spacing:var(--letter-spacing-card)}.ask-cards .project-card .project-summary{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:8px 0 0;font-size:var(--font-size-caption);line-height:1.45}.ask-cards .project-card .visual{grid-column:2;grid-row:1;width:100%!important;height:94px!important;margin:0!important;border-radius:var(--image-rounding,8px);overflow:hidden;background:transparent}.ask-cards .project-card .visual img{width:100%;height:100%;object-fit:contain}.ask-cards .project-card .visual video{display:none}
+@keyframes ask-card-arrive{0%{opacity:0;transform:translate3d(0,14px,0) scale(.975)}68%{opacity:1;transform:translate3d(0,-2px,0) scale(1.008)}100%{opacity:1;transform:translate3d(0,0,0) scale(1)}}
+.ask-cards .project-card.ask-card-enter{animation:ask-card-arrive 460ms cubic-bezier(.2,1,.3,1) both;animation-delay:calc(var(--ask-card-index,0)*70ms);will-change:transform,opacity}
+.ask-response-lead p{white-space:pre-wrap}
+.ask-suggestions{display:flex;flex-wrap:wrap;gap:9px;margin-top:-10px}.ask-suggestions button{border:1px solid color-mix(in oklab,var(--body-ink) 18%,transparent);border-radius:999px;background:color-mix(in oklab,var(--card-surface) 75%,transparent);color:var(--body-ink);padding:9px 14px;font-size:var(--font-size-caption);line-height:1.35;text-align:left;transition:background-color .2s ease,border-color .2s ease}.ask-suggestions button:hover,.ask-suggestions button:focus-visible{background:var(--nav-active);border-color:color-mix(in oklab,var(--body-ink) 35%,transparent)}
+@keyframes suggestion-chip-appear{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.ask-suggestions button.suggestion-chip{animation:suggestion-chip-appear 300ms cubic-bezier(.2,1,.3,1) both;animation-delay:calc(var(--suggestion-index,0)*65ms)}
+#dock .composer-suggestions{position:absolute;z-index:4;left:50%;bottom:calc(100% + 16px);width:max-content;max-width:min(var(--composer-max-width),calc(100vw - 28px));justify-content:center;gap:8px;margin:0;transform:translateX(-50%);pointer-events:auto}
+#dock .composer-suggestions[hidden]{display:none}
+#dock .composer-suggestions button{flex:0 1 auto;max-width:100%;background:color-mix(in oklab,var(--card-surface) 82%,transparent);backdrop-filter:blur(18px) saturate(1.15);-webkit-backdrop-filter:blur(18px) saturate(1.15)}
+/* The dock's existing outline widens into the composer. Its aura lives outside
+   the clipped glass, so the light remains atmospheric rather than a new card. */
+#dock.is-composer{z-index:60;--assistant-glow-a:oklch(.78 .105 235);--assistant-glow-b:oklch(.82 .09 315)}
+:root[data-theme="dark"] #dock.is-composer{--assistant-glow-a:oklch(.58 .06 235);--assistant-glow-b:oklch(.57 .048 315)}
+/* The viewport wrapper has a fixed extent. Moving light cannot change document overflow. */
+#dock .composer-aura-viewport{display:none;position:absolute;left:calc(50% - var(--dock-center-offset,0px));bottom:calc(-1 * var(--dock-bottom));width:100vw;height:100dvh;transform:translateX(-50%);overflow:clip;contain:paint;z-index:-1;pointer-events:none}
+#dock.is-composer .composer-aura-viewport{display:block}
+#dock.composer-glow-hidden .composer-aura-viewport{display:none}
+#dock .composer-aura-light{position:absolute;left:calc(50% + var(--dock-center-offset,0px));bottom:calc(var(--dock-bottom) - 58px);width:calc(3 * (var(--dock-painted-width,var(--nav-main-width)) + 300px));height:calc(var(--nav-height) + 142px);transform:translateX(-50%)}
+#dock.is-composer .composer-aura-light::before,#dock.is-composer .composer-aura-light::after{content:"";position:absolute;z-index:-1;pointer-events:none;inset:0;border-radius:48% 52% 46% 54% / 55% 44% 56% 45%;filter:blur(30px);opacity:.19;will-change:transform,border-radius,opacity}
+#dock.is-composer .composer-aura-light::before{background:radial-gradient(ellipse 58% 72% at 38% 49%,color-mix(in oklab,var(--assistant-glow-a) 72%,transparent),transparent 94%);animation:assistant-presence-a 11s ease-in-out infinite alternate}
+#dock.is-composer .composer-aura-light::after{background:radial-gradient(ellipse 57% 73% at 62% 51%,color-mix(in oklab,var(--assistant-glow-b) 68%,transparent),transparent 94%);animation:assistant-presence-b 13s ease-in-out infinite alternate}
+#dock.is-composer.assistant-working .composer-aura-light::before{opacity:.26;animation-duration:3.5s}#dock.is-composer.assistant-working .composer-aura-light::after{opacity:.25;animation-duration:4.1s}
+@keyframes assistant-presence-a{from{transform:translate3d(-6%,3%,0) scale(.94,1);border-radius:48% 52% 46% 54% / 55% 44% 56% 45%}to{transform:translate3d(8%,-3%,0) scale(1.09,.92);border-radius:62% 38% 56% 44% / 42% 58% 43% 57%}}
+@keyframes assistant-presence-b{from{transform:translate3d(6%,-3%,0) scale(.96,1.04);border-radius:54% 46% 60% 40% / 42% 57% 43% 58%}to{transform:translate3d(-8%,4%,0) scale(1.07,.91);border-radius:40% 60% 47% 53% / 59% 41% 57% 43%}}
+#dock .dock-content>nav>a{transition:opacity .18s ease,background-color var(--nav-hover-out-duration) ease-out}
+#dock.is-composer .dock-content>nav>a{opacity:0;visibility:hidden;pointer-events:none}
+#dock .assistant-composer{position:absolute;inset:0;display:flex;align-items:center;gap:4px;width:100%;padding:var(--nav-container-padding) calc(var(--nav-container-padding) + 7px);margin:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .24s ease,visibility .24s}
+#dock.is-composer .assistant-composer{opacity:1;visibility:visible;pointer-events:auto;transition-delay:.1s}
+#dock .assistant-composer button{flex:0 0 36px;width:36px;height:36px;display:grid;place-items:center;border-radius:max(10px,calc(var(--nav-rounding) - 6px));padding:0;background:transparent;color:var(--nav-item-ink);transition:background-color .2s,color .2s}
+#dock .assistant-composer button:hover,#dock .assistant-composer button:focus-visible{background:var(--nav-item-hover);color:var(--ink)}
+#dock .assistant-composer button[aria-pressed=true]{color:var(--ink);background:var(--nav-active)}
+#dock .assistant-composer button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+#dock .assistant-composer input{flex:1 1 auto;min-width:0;width:100%;height:100%;padding:0 2px;border:0;outline:0;background:transparent;color:var(--ink);font:inherit;font-size:var(--composer-font-size)}#dock .assistant-composer input::placeholder{color:var(--muted)}#dock .assistant-composer input:focus-visible{outline:0}#dock .assistant-composer button:disabled{opacity:.3;cursor:default}
+@media(max-width:650px){.assistant-page{padding:24px 22px calc(var(--assistant-scroll-clearance) + 48px + env(safe-area-inset-bottom,0px))}.assistant-welcome{margin-bottom:45px}.ask-messages{gap:26px}.ask-cards{grid-template-columns:1fr}.ask-cards .project-card{min-height:112px;padding:15px}.ask-cards .project-card .visual{height:76px!important}#dock .assistant-composer{gap:2px;padding-inline:6px}#dock .assistant-composer button{flex-basis:34px;width:34px}#dock .composer-suggestions{max-width:calc(100vw - 20px);gap:6px}#dock .composer-suggestions button{padding:8px 11px;font-size:var(--composer-font-size)}}
+@media(prefers-reduced-motion:reduce){#dock.is-composer .composer-aura-light::before,#dock.is-composer .composer-aura-light::after{animation:none;opacity:.16}#dock .assistant-composer{transition:none}.ask-suggestions button.suggestion-chip{animation:none;opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.ask-cards .project-card.ask-card-enter{animation:none}}
+:root[data-animation="off"] #dock.is-composer .composer-aura-light::before,:root[data-animation="off"] #dock.is-composer .composer-aura-light::after{animation:none;opacity:.16}
+:root[data-animation="off"] .ask-suggestions button.suggestion-chip{animation:none;opacity:1;transform:none}
+
+/* One transparent glass material for dock surfaces and suggested prompts. */
+.glass-surface,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface{background:linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));-webkit-backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness))}
+.ask-suggestions button.glass-surface{border:1px solid var(--dock-outline);box-shadow:inset 0 1px 0 var(--nav-highlight);color:var(--composer-text-ink);font-size:var(--composer-font-size);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);line-height:var(--line-height-label)}
+.ask-suggestions button.glass-surface:is(:hover,:focus-visible),#dock .composer-suggestions button.glass-surface:is(:hover,:focus-visible){background:linear-gradient(var(--nav-item-hover),var(--nav-item-hover)),linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));color:var(--ink)}
+
+#dock .project-menu button:has(.project-menu-client){display:flex;align-items:baseline;gap:24px}
+.project-menu-client{flex:0 0 auto;color:inherit}
+.project-menu-title{min-width:0;overflow:hidden;text-overflow:ellipsis}
+
+/* A tall field dips below the viewport, leaving a soft semicircular presence. */
+#dock .composer-aura-light{height:clamp(400px,65vw,660px);bottom:calc(var(--dock-bottom) - clamp(250px,42vw,440px))}
+#dock .project-menu button:has(.project-menu-client){justify-content:space-between}
+.project-menu-client{text-align:right;margin-left:auto}
+#dock .project-menu-group+.project-menu-group{margin-top:0}
+#dock .project-menu-actions{position:relative;left:auto;top:auto;width:100%;height:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 12px 12px;margin-top:12px;background:transparent;transform:none;clip-path:none}
+#dock .project-menu-actions>div{display:flex;gap:8px}
+#dock .project-menu-actions button,#dock .project-menu-actions a{display:grid;place-items:center;flex:0 0 36px;width:36px;height:36px;padding:8px;border-radius:50%;background:transparent;color:var(--composer-text-ink);border:1px solid var(--dock-outline);box-shadow:none}
+#dock .project-menu-actions :is(button,a):is(:hover,:focus-visible){background:var(--nav-item-hover);color:var(--ink)}
+#dock .project-menu-actions button:disabled{opacity:.4;cursor:default}
+#dock .project-menu-actions svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:380px){#dock .project-menu-actions{padding-inline:8px;gap:8px}#dock .project-menu-actions>div{gap:4px}}
+
+/* Suggestions start at the full dock's left edge, including contextual controls. */
+#dock .composer-suggestions{left:calc(-1 * var(--dock-back-space,0px));transform:none;width:calc(var(--dock-painted-width,var(--nav-main-width)) + var(--dock-back-space,0px));max-width:calc(100vw - 32px);justify-content:flex-start}
+#dock .assistant-back{position:absolute;left:calc(-1 * (var(--nav-back-width) + 10px));bottom:0;width:var(--nav-back-width);height:var(--nav-height);display:grid;place-items:center;padding:6px 12px;border:1px solid var(--dock-outline);border-radius:var(--nav-rounding);color:var(--composer-text-ink);font-size:var(--nav-item-font-size);line-height:var(--line-height-label);white-space:nowrap;pointer-events:auto;z-index:5}
+#dock .assistant-back[hidden]{display:none}
+#dock .assistant-back:is(:hover,:focus-visible){color:var(--ink);background:var(--nav-item-hover)}
+#dock .project-menu-actions{justify-content:center;gap:14px;padding-top:20px;padding-bottom:24px}
+#dock .project-menu-actions>div{display:contents}
+
+
+@media(max-width:380px){#dock .project-menu-actions{gap:8px}}
+
+@media(max-width:650px){#dock .composer-aura-light{width:calc(1.5 * (var(--dock-painted-width,var(--nav-main-width)) + 220px));height:360px;bottom:calc(var(--dock-bottom) - 230px)}}
+
+/* Back uses the dock’s morphing glass and rim; the icon has no second skin. */
+#dock .assistant-back{background:transparent;border:0;border-radius:var(--nav-rounding)}
+
+.ask-speech-button:focus-visible{outline:1px solid var(--muted);outline-offset:4px}
+
+/* Reserve the control slot so revealing Listen never moves the response. */
+@media(hover:hover) and (pointer:fine){.ask-speech-button[data-speech-state="idle"]{opacity:0;pointer-events:none;transition:opacity 180ms cubic-bezier(.22,1,.36,1),color 180ms ease}.ask-response-lead:is(:hover,:focus-within) .ask-speech-button[data-speech-state="idle"]{opacity:1;pointer-events:auto}}
+
+/* Compact cards project the shared card entity into a readable vertical label stack. */
+#askPage .ask-cards .project-card{border-radius:calc(var(--radius-card) * .25)}
+#askPage .ask-cards .project-card>.card-copy{display:flex;flex-direction:column;align-items:stretch;gap:6px;position:relative;width:auto;inset:auto}
+#askPage .ask-cards .project-card>.card-copy>.card-client{margin:0;font-size:var(--font-size-small);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--eyebrow-ink)}
+#askPage .ask-cards .project-card>.card-copy>h2{position:static;visibility:visible;opacity:1;margin:0;width:auto;font-size:var(--font-size-body);font-weight:var(--font-weight-heading);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
+#askPage .ask-cards .project-card>.card-copy>.project-summary{margin:0;font-size:var(--font-size-small);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
+#askPage .ask-cards .project-card>.visual{--image-padding-top:0px;--image-padding-right:0px;--image-padding-bottom:0px;--image-padding-left:0px;border-radius:0;background:transparent;overflow:visible}
+
+#dock{bottom:calc(var(--dock-bottom) + var(--composer-keyboard-inset,0px))}
+@media(max-width:750px) and (pointer:coarse){#dock .assistant-composer input{font-size:max(16px,var(--composer-font-size))}}
+
+.corner-controls{position:fixed;right:max(24px,env(safe-area-inset-right));bottom:max(24px,env(safe-area-inset-bottom));z-index:44;display:flex;align-items:center;gap:8px}

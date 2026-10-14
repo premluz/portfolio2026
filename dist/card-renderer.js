@@ -1,0 +1,27 @@
+import {contextualText} from './contextual-popovers.js';
+import {detailSummaryMarkup,summaryParts} from './summary-stream.js';
+import {oklchChannels} from './surface-colors.js';
+import {contentBlocks} from './content-blocks.js';
+import {escapeText,headingText,safeHref} from './content/html.js';
+import {imageMarkup} from './media-loading.js';
+// The same card projection renders in the grid, content references and AI results.
+function cardColorTokens(p){
+ const colors=String(p.bg||'').match(/#[0-9a-f]{6}/gi)||[];
+ const first=oklchChannels(colors[0]),last=oklchChannels(colors.at(-1));
+ const hue=color=>color?color[2].toFixed(2):'0';
+ return `--project-hue-start:${hue(first)};--project-hue-end:${hue(last)};--project-chroma-scale:${first&&first[1]>.001?1:0};--card-title-ink:var(--ink)`;
+}
+function labMark(p){return p.projectKind==='lab'?'<span class="card-lab-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v7L4.8 18.3A1.8 1.8 0 0 0 6.3 21h11.4a1.8 1.8 0 0 0 1.5-2.7L14 10V3M8 15h8"/></svg></span>':'';}
+function visual(p,eager=false){if(!p.image&&!p.videoUrl)return '';return `<div class="visual">${p.image?imageMarkup(p.image,p.imageAlt||`Product design screen for ${p.name}`,{eager}):''}${p.videoUrl?`<video class="project-video" data-video-url="${safeHref(p.videoUrl,{asset:true})}" muted playsinline preload="none" aria-hidden="true"></video>`:''}</div>`;}
+function streamWords(value,start=0){return (String(value||'').match(/\S+\s*/g)||[]).map((word,index)=>`<span data-card-copy-word style="--card-copy-word-index:${start+index}">${escapeText(word).replace(/\r?\n/g,'<br>')}</span>`).join('');}
+const start=(p,options,classes,attributes='')=>`<${options.link?'a':'button'} class="surface project-card ${classes}" data-hover-effect="reveal" style="--project-bg:${escapeText(p.bg)};${cardColorTokens(p)}" ${options.link?`href="#${escapeText(p.documentId||p.id)}" data-content-card="${escapeText(p.documentId||p.id)}"`:`data-card="${escapeText(p.id)}"`} ${attributes} aria-label="Open ${escapeText(p.name)}${p.projectKind==='lab'?' — Lab project':''}">`;
+export function card(p,i,layout='masonry',options={}){
+ if(p.body)return informationCard(p,options);
+ const lead=summaryParts(p).lead;
+ const titleWords=(String(p.title||'').match(/\S+\s*/g)||[]).length;
+ return start(p,options,`image-card ${!p.image&&!p.videoUrl?'text-only-card ':''}${p.cardAspect==='portrait'?'portrait':''}`,`data-card-layout="${escapeText(layout)}" data-card-orientation="${escapeText(p.cardAspect||'landscape')}" data-featured="${p.featured===true}"`)+`${labMark(p)}<div class="card-copy">${p.client?`<p class="card-client">${escapeText(p.client)}</p>`:''}<h2>${streamWords(p.title)}</h2>${lead?`<p class="project-summary">${streamWords(lead,titleWords+2)}</p>`:''}</div>${visual(p)}</${options.link?'a':'button'}>`;
+}
+function mediaActions(p){return `<div class="detail-media-actions"><button type="button" data-media-focus="fullscreen" aria-label="View full screen" data-tooltip="View full screen" hidden><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></div>`;}
+function detail(p,layout,{headingBesideImage=false}={}){const hasMedia=Boolean(p.image||p.videoUrl);return `<section class="surface detail${headingBesideImage&&hasMedia?' heading-beside-image':''}${hasMedia?'':' text-only-detail'}" style="--project-bg:${escapeText(p.bg)};${cardColorTokens(p)}" data-card-layout="${escapeText(layout)}" data-card-orientation="${escapeText(p.cardAspect||'landscape')}" data-surface>${p.client?`<p class="project-client">${escapeText(p.client)}</p>`:''}<h1 tabindex="-1">${headingText(p.pageTitle||p.title)}</h1>${detailSummaryMarkup(p)}<div class="detail-layout">${hasMedia?`<div class="detail-media-column">${visual(p,true)}${mediaActions(p)}</div>`:''}<div class="description"><dl>${[['Context',p.context],['Challenge',p.challenge],['My role',p.role],['Key work',p.work],['Impact',p.impact||p.results]].filter(([,value])=>value).map(([label,value])=>`<div class="detail-fact" data-detail-fact><dt>${escapeText(label)}</dt><dd>${escapeText(value).replace(/\r?\n/g,'<br>')}</dd></div>`).join('')}</dl></div></div></section>`;}
+function informationCard(p,options={}){return start(p,options,'info-card')+`<h2>${headingText(p.title)}</h2><p class="eyebrow">${escapeText(p.category)}</p><p class="info-summary">${escapeText(p.body[0])}</p></${options.link?'a':'button'}>`;}
+export function cardDetail(p,layout='regular',options={}){if(!p.body)return detail(p,layout,options);if(p.id==='about')return `<section class="surface detail info-detail about-detail" style="--project-bg:${escapeText(p.bg)};${cardColorTokens(p)}" data-surface><h1 tabindex="-1">${headingText(p.title)}</h1><div class="info-body"><p class="info-summary">${contextualText(p.body.join(' '))}</p></div>${p.blocks?.length?contentBlocks(p.blocks,p.contentColumns):''}</section>`;return `<section class="surface detail info-detail" style="--project-bg:${escapeText(p.bg)};${cardColorTokens(p)}" data-surface><h1 tabindex="-1">${headingText(p.title)}</h1><p class="eyebrow">${escapeText(p.category)}</p><div class="info-body">${p.body.map((text,i)=>`<p${i===0?' class="info-summary"':''}>${contextualText(text)}</p>`).join('')}${p.link?`<a href="${safeHref(p.link.url)}" target="_blank" rel="noopener">${escapeText(p.link.label)}</a>`:''}</div></section>${p.blocks?.length?contentBlocks(p.blocks,p.contentColumns):''}`;}

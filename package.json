@@ -1,0 +1,15 @@
+{
+  "name": "prem-liquid-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=20.6"
+  },
+  "scripts": {
+    "build": "node scripts/build-content.mjs && node scripts/build-worker.mjs",
+    "check": "node scripts/check.mjs",
+    "start": "node deploy/node-server.mjs",
+    "start:local": "node --env-file=.env deploy/node-server.mjs"
+  }
+}

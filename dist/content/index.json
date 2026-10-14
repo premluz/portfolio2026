@@ -1,0 +1,331 @@
+{
+  "schemaVersion": 1,
+  "documents": [
+    {
+      "id": "merlin",
+      "type": "portfolio-item",
+      "title": "Designed an AI workspace that assembles itself around the analysis",
+      "pageTitle": "An AI analyst whose workspace assembles itself as it reasons",
+      "summary": "0→1 prototype • Desktop + mobile • Solo designer/builder",
+      "domains": [
+        "AI",
+        "Financial intelligence",
+        "Generative interfaces"
+      ],
+      "capabilities": [
+        "Product strategy",
+        "Interaction design",
+        "Prototyping",
+        "Front-end development"
+      ],
+      "tags": [],
+      "kind": "lab",
+      "client": "Merlin • Financial intelligence • R&D",
+      "evidenceIds": [
+        "highlights",
+        "impact"
+      ]
+    },
+    {
+      "id": "planner",
+      "type": "portfolio-item",
+      "title": "Designed and built a spatial planner for days that change",
+      "pageTitle": "A spatial planner designed around life changing the plan",
+      "summary": "0→1 product • Mobile + desktop • Solo designer/builder",
+      "domains": [
+        "Planning",
+        "Independent product",
+        "Mobile"
+      ],
+      "capabilities": [
+        "Product strategy",
+        "Interaction design",
+        "Product design",
+        "Implementation"
+      ],
+      "tags": [],
+      "kind": "shipped",
+      "client": "Rios • Life-first planner",
+      "evidenceIds": [
+        "highlights",
+        "impact"
+      ]
+    },
+    {
+      "id": "playstation",
+      "type": "portfolio-item",
+      "title": "Designed a unified workflow saving developers and publishers hundreds of hours",
+      "pageTitle": "Transformation saving hundreds of hours for developers and publishers",
+      "summary": "1st designer • 3 systems → 1 workflow",
+      "domains": [
+        "Enterprise",
+        "Publishing platforms",
+        "PlayStation Network"
+      ],
+      "capabilities": [
+        "Product design",
+        "Workflow strategy",
+        "Team leadership",
+        "Research"
+      ],
+      "tags": [],
+      "kind": "shipped",
+      "client": "PlayStation • Publishing pipeline",
+      "evidenceIds": [
+        "highlights",
+        "impact"
+      ]
+    },
+    {
+      "id": "vodafone-iot",
+      "type": "portfolio-item",
+      "title": "Designed a unified interaction model for a platform users dreaded opening",
+      "pageTitle": "Redesigned a fragmented IoT platform around one scalable interaction model",
+      "summary": "Senior product designer • NPS −33 → +62",
+      "domains": [
+        "Enterprise",
+        "Connectivity",
+        "Internet of Things"
+      ],
+      "capabilities": [
+        "Senior product design",
+        "Research",
+        "Information architecture",
+        "Interaction design"
+      ],
+      "tags": [],
+      "kind": "shipped",
+      "client": "Vodafone • IoT connectivity",
+      "evidenceIds": [
+        "highlights",
+        "impact"
+      ]
+    },
+    {
+      "id": "tracr",
+      "type": "portfolio-item",
+      "title": "Used a design system to uncover and fix a fragmented platform",
+      "pageTitle": "Turned a design-system brief into a broader platform redesign",
+      "summary": "IC lead product designer • Architecture 10 → 3",
+      "domains": [
+        "Enterprise",
+        "Supply chain",
+        "Blockchain traceability"
+      ],
+      "capabilities": [
+        "Product design",
+        "Design systems",
+        "Product architecture",
+        "Incremental redesign"
+      ],
+      "tags": [],
+      "kind": "shipped",
+      "client": "Tracr • Blockchain traceability",
+      "evidenceIds": [
+        "highlights",
+        "impact"
+      ]
+    },
+    {
+      "id": "galachain",
+      "type": "portfolio-item",
+      "title": "Made Web3 invisible for fans and creators on a decentralised entertainment platform",
+      "pageTitle": "Designed Web3 entertainment around fans and creators, not crypto mechanics",
+      "summary": "Product designer • Gala Film 0→1",
+      "domains": [
+        "Web3",
+        "Entertainment",
+        "Creator economy",
+        "Film",
+        "Music"
+      ],
+      "capabilities": [
+        "Product design",
+        "UX and UI",
+        "Motion design",
+        "Front-end prototyping"
+      ],
+      "tags": [],
+      "kind": "shipped",
+      "client": "Gala • Web3 ecosystem",
+      "evidenceIds": [
+        "highlights",
+        "impact"
+      ]
+    },
+    {
+      "id": "bastion",
+      "type": "portfolio-item",
+      "title": "Designed a wallet where the assistant is the main way in",
+      "pageTitle": "A wallet where you can ask, speak or tap and the interface adapts around the task",
+      "summary": "0→1 prototype • Mobile • Solo designer/builder",
+      "domains": [
+        "AI",
+        "Wallet",
+        "Financial technology",
+        "Generative interfaces"
+      ],
+      "capabilities": [
+        "Product strategy",
+        "Interaction design",
+        "Prototyping",
+        "Front-end development"
+      ],
+      "tags": [],
+      "kind": "lab",
+      "client": "Bastion • AI wallet • R&D",
+      "evidenceIds": [
+        "highlights",
+        "impact"
+      ]
+    },
+    {
+      "id": "porter",
+      "type": "portfolio-item",
+      "title": "Designed a calm switchboard for the AI agents people now work with all day",
+      "pageTitle": "I designed and built a Mac app that keeps track of your AI agents, so you never lose one or keep one waiting.",
+      "summary": "0→1 product • Mac native • Solo designer/builder",
+      "domains": [
+        "AI",
+        "Mac apps",
+        "Agent workflows",
+        "Independent product"
+      ],
+      "capabilities": [
+        "Product strategy",
+        "Interaction design",
+        "Native app design",
+        "Implementation"
+      ],
+      "tags": [],
+      "kind": "lab",
+      "client": "Porter • Agent switchboard",
+      "evidenceIds": [
+        "highlights",
+        "impact"
+      ]
+    },
+    {
+      "id": "about",
+      "type": "page",
+      "title": "Technically fluent.\nHuman by design.",
+      "pageTitle": "Technically fluent.\nHuman by design.",
+      "summary": "I turn complex systems into products people understand, trust, and adopt.",
+      "domains": [],
+      "capabilities": [],
+      "tags": [],
+      "kind": null,
+      "client": null,
+      "evidenceIds": []
+    },
+    {
+      "id": "contact",
+      "type": "page",
+      "title": "Good things start\nwith a conversation.",
+      "pageTitle": "Good things start\nwith a conversation.",
+      "summary": "Have a complex product or an interesting idea?",
+      "domains": [],
+      "capabilities": [],
+      "tags": [],
+      "kind": null,
+      "client": null,
+      "evidenceIds": []
+    },
+    {
+      "id": "home",
+      "type": "page",
+      "title": "Hey, I’m Prem. Builder turned designer.",
+      "pageTitle": "Hey, I’m Prem. Builder turned designer.",
+      "summary": "I started out building for the web and running a solo studio. For the last 10+ years, I’ve designed products for technical and expert users. Recently I built Rios and Porter. Today, my focus is AI-native experiences, generative interfaces and building prototypes in code.",
+      "domains": [],
+      "capabilities": [],
+      "tags": [],
+      "kind": null,
+      "client": null,
+      "evidenceIds": []
+    },
+    {
+      "id": "site-footer",
+      "type": "component",
+      "title": "Footer call to action",
+      "pageTitle": "Footer call to action",
+      "summary": "",
+      "domains": [],
+      "capabilities": [],
+      "tags": [],
+      "kind": null,
+      "client": null,
+      "evidenceIds": []
+    },
+    {
+      "id": "home-about",
+      "type": "component",
+      "title": "About Prem",
+      "pageTitle": "About Prem",
+      "summary": "I’ve spent the last 10+ years untangling complex products, from early definition and research through interaction, systems and implementation.",
+      "domains": [],
+      "capabilities": [],
+      "tags": [],
+      "kind": null,
+      "client": null,
+      "evidenceIds": []
+    },
+    {
+      "id": "home-approach",
+      "type": "component",
+      "title": "How I work",
+      "pageTitle": "How I work",
+      "summary": "My work has ranged from early product definition and research to interaction models, design systems and implementation. I’m most useful where the problem is messy, the constraints are real, and the path forward isn’t obvious yet.",
+      "domains": [],
+      "capabilities": [],
+      "tags": [],
+      "kind": null,
+      "client": null,
+      "evidenceIds": []
+    },
+    {
+      "id": "home-services",
+      "type": "component",
+      "title": "Services",
+      "pageTitle": "Services",
+      "summary": "Product design, working prototypes, brand and motion, interim design leadership, hiring and coaching.",
+      "domains": [],
+      "capabilities": [],
+      "tags": [],
+      "kind": null,
+      "client": null,
+      "evidenceIds": []
+    },
+    {
+      "id": "home-testimonials",
+      "type": "component",
+      "title": "Testimonials",
+      "pageTitle": "Testimonials",
+      "summary": "Feedback from collaborators at PlayStation, Tracr, Vodafone and Gala.",
+      "domains": [],
+      "capabilities": [],
+      "tags": [],
+      "kind": null,
+      "client": null,
+      "evidenceIds": [
+        "testimonial-gabriele",
+        "testimonial-matt",
+        "testimonial-venessa",
+        "testimonial-jonathan"
+      ]
+    },
+    {
+      "id": "inline-context",
+      "type": "component",
+      "title": "Context behind the introduction",
+      "pageTitle": "Context behind the introduction",
+      "summary": "More about Prem’s experience, side projects and current direction.",
+      "domains": [],
+      "capabilities": [],
+      "tags": [],
+      "kind": null,
+      "client": null,
+      "evidenceIds": []
+    }
+  ]
+}

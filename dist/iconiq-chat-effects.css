@@ -1,0 +1,33 @@
+/* Adapted from Iconiq, MIT © Edwin Vakayil. */
+.iconiq-send-wave{position:absolute;inset:0;z-index:10;overflow:hidden;pointer-events:none;border-radius:var(--nav-rounding)}
+.iconiq-send-wash{position:absolute;inset:0 0 auto;height:150%;filter:blur(20px);background:linear-gradient(180deg,transparent,rgba(34,211,238,.07),rgba(59,130,246,.09),rgba(217,70,239,.1),rgba(244,63,94,.09),rgba(249,115,22,.08),transparent);will-change:transform}
+.iconiq-thinking{display:flex;align-items:center;gap:.6em;color:var(--eyebrow-ink);width:max-content}
+.iconiq-thinking svg{width:1lh;height:1lh;flex-shrink:0}
+.iconiq-thinking-glyph{transform-box:view-box;transform-origin:center;animation:iconiq-thinking-morph 4s ease-in-out infinite}
+.iconiq-thinking-twinkle{transform-box:fill-box;transform-origin:center;animation:iconiq-thinking-twinkle 4s ease-in-out infinite}
+.iconiq-thinking-label{--ti-spread:16px;background-image:linear-gradient(90deg,transparent calc(50% - var(--ti-spread)),var(--ink),transparent calc(50% + var(--ti-spread))),linear-gradient(var(--eyebrow-ink),var(--eyebrow-ink));background-size:250% 100%,auto;background-repeat:no-repeat;background-clip:text;-webkit-background-clip:text;color:transparent;animation:iconiq-thinking-shimmer 2s linear infinite}
+@keyframes iconiq-thinking-shimmer{from{background-position:100% center}to{background-position:0% center}}
+@keyframes iconiq-thinking-morph{
+ 0%,100%{d:path('M 12 3 C 12.9 7.4 16.6 11.1 21 12 C 16.6 12.9 12.9 16.6 12 21 C 11.1 16.6 7.4 12.9 3 12 C 7.4 11.1 11.1 7.4 12 3 Z')}
+ 0%{transform:rotate(0deg) scale(1)}
+ 30%{d:path('M 12 4.2 C 16.8 3.4 20.6 7.2 19.8 12 C 20.6 16.4 16.4 20.6 12 19.8 C 7.8 20.6 3.4 16.8 4.2 12 C 3.4 7.6 7.2 3.4 12 4.2 Z');transform:rotate(108deg) scale(.9)}
+ 50%{d:path('M 12 5 C 15.87 5 19 8.13 19 12 C 19 15.87 15.87 19 12 19 C 8.13 19 5 15.87 5 12 C 5 8.13 8.13 5 12 5 Z');transform:rotate(180deg) scale(.78)}
+ 70%{d:path('M 12 3.6 C 16.4 4.6 18.6 8 19.2 12 C 18.6 16.2 16.2 19.4 12 20.4 C 8 19.4 5.2 16.4 4.8 12 C 5.4 7.8 7.6 4.4 12 3.6 Z');transform:rotate(252deg) scale(.9)}
+ 100%{transform:rotate(360deg) scale(1)}
+}
+@keyframes iconiq-thinking-twinkle{0%,100%{opacity:0;transform:rotate(0deg) scale(.2)}30%,70%{opacity:0;transform:rotate(45deg) scale(.5)}50%{opacity:1;transform:rotate(90deg) scale(1)}}
+.iconiq-stream{white-space:pre-wrap}
+.iconiq-stream-word{display:inline-grid;vertical-align:baseline;animation:iconiq-word-enter 500ms cubic-bezier(.25,.46,.45,.94) both}
+.iconiq-stream-base,.iconiq-stream-tint{grid-column:1;grid-row:1}
+.iconiq-stream-base{color:inherit;animation:iconiq-word-enter 450ms var(--stream-settle-delay,300ms) cubic-bezier(.4,0,.2,1) both}
+.iconiq-stream-tint{background:linear-gradient(90deg,#0ea5e9,#2563eb,#6366f1);background-size:300% 100%;background-clip:text;-webkit-background-clip:text;color:transparent;animation:iconiq-word-settle 450ms var(--stream-settle-delay,300ms) cubic-bezier(.4,0,.2,1) both}
+:root[data-theme=dark] .iconiq-stream-tint{background-image:linear-gradient(90deg,#38bdf8,#60a5fa,#a5b4fc)}
+.iconiq-stream-cursor{display:inline-block;width:.55em;height:.55em;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#6366f1);box-shadow:0 0 .7em rgba(56,189,248,.55);animation:iconiq-stream-cursor 1.2s ease-in-out infinite}
+@keyframes iconiq-word-enter{from{opacity:0}to{opacity:1}}
+@keyframes iconiq-word-settle{from{opacity:1}to{opacity:0}}
+@keyframes iconiq-stream-cursor{0%,100%{opacity:.4}50%{opacity:1}}
+.iconiq-thinking.no-motion *{animation:none!important}.iconiq-thinking.no-motion .iconiq-thinking-label{background:none;color:var(--eyebrow-ink)}.iconiq-thinking.no-motion .iconiq-thinking-twinkle{opacity:.5}
+:root[data-animation=off] :is(.iconiq-thinking *,.iconiq-stream *){animation:none!important}
+:root[data-animation=off] .iconiq-thinking-label{background:none;color:var(--eyebrow-ink)}
+:root[data-animation=off] .iconiq-stream-base{opacity:1}:root[data-animation=off] .iconiq-stream-tint,:root[data-animation=off] .iconiq-stream-cursor{display:none}
+@media(prefers-reduced-motion:reduce){.iconiq-thinking *,.iconiq-stream *{animation:none!important}.iconiq-thinking-label{background:none;color:var(--eyebrow-ink)}.iconiq-stream-base{opacity:1}.iconiq-stream-tint,.iconiq-stream-cursor{display:none}}
