@@ -54,6 +54,7 @@ assert(html.includes('data-gallery-orientation="landscape"')&&html.includes('dat
 assert.equal((html.match(/data-content-card=/g)||[]).length,block.items.length,'The variant uses one shared card per project');
 
 let now=0,id=0,reduced=false;const frames=new Map();
+globalThis.performance={now:()=>now};
 globalThis.requestAnimationFrame=fn=>{frames.set(++id,fn);return id;};globalThis.cancelAnimationFrame=id=>frames.delete(id);
 const flush=()=>{for(let n=0;frames.size&&n<200;n++){now+=16;const callbacks=[...frames];frames.clear();for(const [,fn] of callbacks)fn(now);}assert.equal(frames.size,0,'Motion stops after settling');};
 const node=()=>({dataset:{},style:{setProperty(k,v){this[k]=v;}},listeners:new Map(),addEventListener(k,fn){this.listeners.set(k,fn);},removeEventListener(k){this.listeners.delete(k);},setAttribute(k,v){this[k]=v;}});
@@ -78,6 +79,17 @@ gallery.onDown({pointerType:'touch',button:0,pointerId:1,clientX:0,clientY:0});
 gallery.onMove({pointerType:'touch',pointerId:1,clientX:2,clientY:40,preventDefault(){throw Error('Vertical page scrolling should remain native');}});assert.equal(gallery.drag,null);
 gallery.onDown({pointerType:'touch',button:0,pointerId:2,clientX:0,clientY:0});
 gallery.onMove({pointerType:'touch',pointerId:2,clientX:-330,clientY:0,preventDefault(){}});assert.equal(root.dataset.galleryDragging,'true');gallery.onUp({pointerId:2});flush();assert.equal(root.dataset.galleryDragging,undefined);
+for(const [pointerType,width] of [['mouse',1440],['touch',390]]){
+ viewport.clientWidth=width;items.forEach((item,index)=>item.offsetWidth=width<=600?width-(index%2?64:48):widths[index]);gallery.onResize();flush();gallery.go(0,false);
+ const press=now,event={pointerType,button:0,pointerId:3,clientX:0,clientY:0,timeStamp:press};gallery.onDown(event);
+ for(let step=1;step<=6;step++){now=press+step*16;gallery.onMove({...event,clientX:-step*60,timeStamp:now,preventDefault(){}});}
+ const releaseAngle=gallery.circular.angle;gallery.onUp({...event,timeStamp:now,type:'pointerup'});assert(gallery.circular.momentum.velocity<0,'Mouse and touch flicks retain release speed');
+ let prevented=false;gallery.onClick({target:{closest:()=>items[0]},preventDefault(){prevented=true;},stopPropagation(){}});assert(prevented,'Releasing a drag never opens a project');
+ flush();assert(gallery.circular.angle<releaseAngle-Math.PI*2/items.length,'One flick continues beyond another complete card');assert(Math.abs(wrapAngle(gallery.circular.angle+gallery.circular.angles[gallery.index]))<.001,'Momentum ends on a centred card');
+ gallery.onDown({...event,timeStamp:now});now+=16;gallery.onMove({...event,clientX:150,timeStamp:now,preventDefault(){}});gallery.onUp({...event,type:'pointercancel',timeStamp:now});assert.equal(gallery.circular.momentum.velocity,0,'A cancelled pointer cannot launch a spin');flush();
+ gallery.onDown({...event,timeStamp:now});now+=16;gallery.onMove({...event,clientX:-180,timeStamp:now,preventDefault(){}});gallery.onUp({...event,type:'pointerup',timeStamp:now});assert(gallery.circular.momentum.velocity);
+ gallery.onDown({...event,timeStamp:now});assert.equal(gallery.circular.momentum.velocity,0,'Pressing a moving carousel catches it immediately');gallery.onUp({...event,type:'pointerup',timeStamp:now});flush();
+}
 gallery.setVariant('perspective');flush();assert.equal(gallery.circular,null);assert(items.every(item=>item.style.transform===''&&item.style.visibility===''&&item.style.pointerEvents===''));assert.deepEqual(gallery.items,identities,'Changing placement retains and reveals the native cards');
 gallery.setVariant('circular');flush();assert(gallery.circular);reduced=true;gallery.setVariant('circular');flush();assert.equal(gallery.circular,null,'Reduced motion falls back to native scrolling');assert.equal(root.dataset.galleryReduced,'true');
 reduced=false;gallery.setVariant('circular');gallery.go(3);gallery.destroy();flush();assert.equal(viewport.listeners.size,0);assert(items.every(item=>item.style.transform===''),'Disposal clears ring transforms and pending animation');

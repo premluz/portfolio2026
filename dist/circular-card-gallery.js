@@ -1,6 +1,7 @@
 // Placement adapter for shared gallery cards. No cloned images, sliced tiles,
 // WebGL textures or idle animation: only a short transform loop while moving.
 import {defaultCarouselSettings} from './carousel-settings.js';
+import {CarouselMomentum,carouselMotion} from './carousel-momentum.js';
 const tau=Math.PI*2;
 const arcSpread=.46;
 export const wrapAngle=value=>((value+Math.PI)%tau+tau)%tau-Math.PI;
@@ -70,8 +71,8 @@ export function circularArcLayout(angles,radius,faces,{viewportWidth=0,compact=f
 }
 export class CircularCardPlacement{
  constructor(gallery){
-  this.gallery=gallery;this.root=gallery.root;this.viewport=gallery.viewport;this.items=gallery.items;this.angle=0;this.frame=0;
-  this.onWheel=event=>{if(Math.abs(event.deltaX)<=Math.abs(event.deltaY)||!event.deltaX)return;event.preventDefault();this.target=null;this.requestedIndex=null;this.angle-=event.deltaX/this.dragRadius;this.paint();clearTimeout(this.wheelTimer);this.wheelTimer=setTimeout(()=>this.snap(),120);};
+  this.gallery=gallery;this.root=gallery.root;this.viewport=gallery.viewport;this.items=gallery.items;this.angle=0;this.frame=0;this.momentum=new CarouselMomentum();
+  this.onWheel=event=>{if(Math.abs(event.deltaX)<=Math.abs(event.deltaY)||!event.deltaX)return;event.preventDefault();this.momentum.stop();this.target=null;this.requestedIndex=null;this.angle-=event.deltaX/this.dragRadius;this.paint();clearTimeout(this.wheelTimer);this.wheelTimer=setTimeout(()=>this.snap(),120);};
   this.viewport.addEventListener('wheel',this.onWheel,{passive:false});this.measure();this.go(gallery.index,false);
  }
  measure(){
@@ -86,6 +87,7 @@ export class CircularCardPlacement{
  }
  go(index,smooth=true){
   if(!this.items.length)return;index=((index%this.items.length)+this.items.length)%this.items.length;
+  this.momentum.stop();clearTimeout(this.wheelTimer);
   const target=this.angle+wrapAngle(-this.angles[index]-this.angle);
   this.requestedIndex=index;
   if(!smooth||this.gallery.reduced()){this.target=null;this.angle=target;this.paint();return;}
@@ -94,14 +96,28 @@ export class CircularCardPlacement{
  nearest(){let best=0,distance=Infinity;this.angles.forEach((angle,index)=>{const d=Math.abs(wrapAngle(angle+this.angle));if(d<distance){best=index;distance=d;}});return best;}
  snap(){this.go(this.nearest());}
  async prepareOpen(index,control,duration){
-  cancelAnimationFrame(this.frame);this.frame=0;this.target=null;
+  cancelAnimationFrame(this.frame);this.frame=0;this.target=null;this.momentum.stop();clearTimeout(this.wheelTimer);
   const start=this.angle,target=start+wrapAngle(-this.angles[index]-start);
   if(Math.abs(target-start)<.0005){this.angle=target;this.paint();return;}
   control.synchronize(Math.min(160,duration*.3));
   await new Promise(resolve=>{const frame=now=>{const p=control.advance(now),eased=p*p*(3-2*p);this.angle=start+(target-start)*eased;this.paint();if(!control.timeline.finished)requestAnimationFrame(frame);else resolve();};requestAnimationFrame(frame);});
   this.requestedIndex=this.nearest();
  }
- drag(delta){this.target=null;this.requestedIndex=null;this.angle=this.pressAngle+delta/this.dragRadius;this.paint();}
+ beginDrag(time){
+  const moving=!!this.momentum.velocity||this.target!==null&&this.target!==undefined;
+  cancelAnimationFrame(this.frame);clearTimeout(this.wheelTimer);this.frame=0;this.last=0;this.target=null;this.requestedIndex=null;this.pressAngle=this.angle;
+  // Match pointer travel to the visible arc, including mixed card widths.
+  const index=this.nearest(),step=carouselMotion.derivativeStep,options={viewportWidth:this.extent,compact:this.compact,settings:this.gallery.arcSettings};
+  const before=circularArcLayout(this.angles.map(angle=>angle+this.angle-step),this.radius,this.faces,options)[index];
+  const after=circularArcLayout(this.angles.map(angle=>angle+this.angle+step),this.radius,this.faces,options)[index];
+  this.dragRadius=Math.max(1,Math.abs(after.x-before.x)/(2*step));
+  this.momentum.begin(this.angle,time);return moving;
+ }
+ drag(delta,time){this.target=null;this.requestedIndex=null;this.angle=this.pressAngle+delta/this.dragRadius;this.momentum.track(this.angle,time);this.paint();}
+ release(time,cancelled=false){
+  if(cancelled||this.gallery.reduced())this.momentum.stop();else this.momentum.release(time,this.dragRadius);
+  if(this.momentum.velocity){this.last=time;this.wake();}else this.snap();
+ }
  paint(){
   if(this.dead)return;const vertical=this.gallery.axis==='vertical';
   const poses=circularArcLayout(this.angles.map(angle=>angle+this.angle),this.radius,this.faces,{viewportWidth:this.extent,compact:this.compact,settings:this.gallery.arcSettings});
@@ -113,8 +129,9 @@ export class CircularCardPlacement{
   this.gallery.updateSelection(this.nearest());
  }
  wake(){if(this.dead||this.frame)return;this.frame=requestAnimationFrame(now=>{this.frame=0;const dt=this.last?Math.min(40,Math.max(1,now-this.last)):16;this.last=now;
-   if(this.target!==null&&this.target!==undefined){const delta=this.target-this.angle;this.angle+=delta*(1-Math.exp(-dt/(95*100/this.gallery.arcSettings.speed)));if(Math.abs(delta)<.0005){this.angle=this.target;this.target=null;}}
-   this.paint();if(this.target!==null&&this.target!==undefined)this.wake();else this.last=0;
+   if(this.momentum.velocity){this.angle+=this.momentum.advance(dt,this.dragRadius);if(!this.momentum.velocity)this.snap();}
+   else if(this.target!==null&&this.target!==undefined){const delta=this.target-this.angle;this.angle+=delta*(1-Math.exp(-dt/(95*100/this.gallery.arcSettings.speed)));if(Math.abs(delta)<.0005){this.angle=this.target;this.target=null;}}
+   this.paint();if(this.momentum.velocity||this.target!==null&&this.target!==undefined)this.wake();else this.last=0;
   });}
- destroy(){this.dead=true;cancelAnimationFrame(this.frame);clearTimeout(this.wheelTimer);this.viewport.removeEventListener('wheel',this.onWheel);for(const item of this.items){item.style.transform='';item.style.zIndex='';item.style.visibility='';item.style.pointerEvents='';delete item.dataset.galleryFront;}}
+ destroy(){this.dead=true;this.momentum.stop();cancelAnimationFrame(this.frame);clearTimeout(this.wheelTimer);this.viewport.removeEventListener('wheel',this.onWheel);for(const item of this.items){item.style.transform='';item.style.zIndex='';item.style.visibility='';item.style.pointerEvents='';delete item.dataset.galleryFront;}}
 }
