@@ -1,10 +1,10 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {buildClientStyles} from './client-styles.mjs';
+import {buildClientStyles,versionClientStyles} from './client-styles.mjs';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-await buildClientStyles();
+const css=await buildClientStyles();
 const dist=path.join(root,'dist');
 const server=path.join(dist,'server');
 const client=path.join(dist,'client');
@@ -16,6 +16,9 @@ for(const entry of await fs.readdir(dist,{withFileTypes:true})){
  if(['client','server','.openai'].includes(entry.name))continue;
  await fs.cp(path.join(dist,entry.name),path.join(client,entry.name),{recursive:true});
 }
+// A new CSS URL bypasses stale browser caches after each stylesheet change.
+const clientHTML=path.join(client,'index.html');
+await fs.writeFile(clientHTML,versionClientStyles(await fs.readFile(clientHTML,'utf8'),css));
 await fs.mkdir(server,{recursive:true});
 const catalog=JSON.parse(await fs.readFile(path.join(dist,'content/catalog.json'),'utf8'));
 const publishedAssistantDocuments=catalog.documents
