@@ -1,3 +1,5 @@
+import {ambientLayerParent} from './ambient-layer.js';
+
 // Apply the same surface recipe to cards, controls, or spatial objects. A
 // renderer can mount a canvas in the skin without touching the host's content.
 export function configureSurfaceHover(surfaces,{rest='surface',enabled=true}={}){
@@ -14,7 +16,7 @@ export function mountSurfaceRenderer(host,renderer){
  const layer=document.createElement('div');layer.className='surface-effect-layer';layer.setAttribute('aria-hidden','true');skin.append(layer);
  const effect=renderer({host,layer})||{};
  const sync=()=>{
-  const parent=host.dataset.hoverEffect==='glow'?host:skin;
+  const parent=host.dataset.hoverEffect==='glow'?ambientLayerParent(host):skin;
   if(layer.parentNode!==parent)parent.append(layer);
   effect.setActive?.(!host.hasAttribute('data-hover-disabled')&&(host.hasAttribute('data-hover-persistent')||host.matches(':focus-visible,.gesture-hover')||((typeof matchMedia==='undefined'||matchMedia('(hover:hover) and (pointer:fine)').matches)&&host.matches(':hover'))));
  };

@@ -1,3 +1,5 @@
+import {trackAmbientGallery} from './ambient-layer.js';
+
 // The two reveal masks follow the pointer. Ambient glow measures the image
 // on hover and animates in CSS, with no pointer or idle rendering loop.
 const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
@@ -19,8 +21,9 @@ export function createLiquidReveal({host,layer}){
  const imageFrame=host.querySelector?.(':scope > .visual, :scope > .detail-layout > .visual, :scope > .detail-layout > .detail-media-column > .visual');
  const measureAmbient=()=>{
   if(!imageFrame)return;
-  const card=bounds(),imageRect=image?.getBoundingClientRect();
+  const parent=layer.parentElement||host,card=parent.getBoundingClientRect(),imageRect=image?.getBoundingClientRect();
   const rect=imageRect?.width>4&&imageRect?.height>4?imageRect:imageFrame.getBoundingClientRect();
+  if(parent!==host){const style=getComputedStyle(host);for(const key of ['--project-hue-start','--project-hue-end'])layer.style.setProperty(key,style.getPropertyValue(key));}
   layer.style.setProperty('--ambient-left',(rect.left-card.left).toFixed(1)+'px');
   layer.style.setProperty('--ambient-top',(rect.top-card.top).toFixed(1)+'px');
   layer.style.setProperty('--ambient-width',rect.width.toFixed(1)+'px');
@@ -28,6 +31,7 @@ export function createLiquidReveal({host,layer}){
  };
  const observer=typeof ResizeObserver!=='undefined'&&imageFrame?new ResizeObserver(()=>{if(active&&mode==='glow')measureAmbient();}):null;
  if(observer){observer.observe(host);observer.observe(image||imageFrame);}
+ const untrack=trackAmbientGallery(host,()=>{if(active&&mode==='glow')measureAmbient();});
  const put=(rect)=>{
   if(mode==='reveal-soft'){
    const rx=clamp(rect.width*.62,220,570),ry=clamp(rect.height*.72,180,460);
@@ -105,6 +109,6 @@ export function createLiquidReveal({host,layer}){
    else if(changed){energy=0;compression=0;put(bounds());}
    if(!reduced()&&!frame)frame=requestAnimationFrame(tick);
   },
-  destroy(){cancelAnimationFrame(frame);observer?.disconnect();host.removeEventListener('pointerenter',move);host.removeEventListener('pointermove',move);}
+  destroy(){cancelAnimationFrame(frame);observer?.disconnect();untrack();host.removeEventListener('pointerenter',move);host.removeEventListener('pointermove',move);}
  };
 }

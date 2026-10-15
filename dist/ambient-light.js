@@ -1,4 +1,5 @@
 import {EdgeSpring,materialSettings,springParameters} from './material-settings.js';
+import {ambientLayerParent,trackAmbientGallery} from './ambient-layer.js';
 
 const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
 const mix=(a,b,t)=>a+(b-a)*t;
@@ -94,16 +95,17 @@ export class AmbientLight {
  attach(parent){this.ensure();if(this.field.parentNode!==parent)parent.append(this.field);this.parent=parent;this.stage.hidden=parent!==this.stage;}
  register(host,proxy){
   proxy.hidden=true;const entry={active:false};this.hosts.set(host,entry);
+  const untrack=trackAmbientGallery(host,()=>{if(this.enabled&&this.owner===host&&!this.locked)this.wake();});
   return {setActive:on=>{
    entry.active=!!on&&(host.matches('.project-card')||host.hasAttribute('data-hover-persistent'));
    if(!this.enabled||this.locked)return;
    if(entry.active){this.context='hover';this.target(host);}
    else if(this.owner===host){clearTimeout(this.leaveTimer);this.leaveTimer=setTimeout(()=>{if(!this.locked&&this.owner===host&&!entry.active){this.motion.targetOpacity=0;this.wake();}},140);}
-  },destroy:()=>{this.hosts.delete(host);if(this.owner===host&&!this.locked){this.attach(this.stage);this.owner=null;if(this.motion.initialized){this.motion.targetOpacity=0;this.wake();}}}};
+  },destroy:()=>{untrack();this.hosts.delete(host);if(this.owner===host&&!this.locked){this.attach(this.stage);this.owner=null;if(this.motion.initialized){this.motion.targetOpacity=0;this.wake();}}}};
  }
  target(host,opacity=1){
   if(!this.enabled)return;const rect=ambientImageRect(host);if(!rect)return;
-  clearTimeout(this.leaveTimer);this.owner=host;this.viewportOrigin={x:Number(globalThis.scrollX)||0,y:Number(globalThis.scrollY)||0};this.attach(host);this.motion.aim(rect,paletteFor(host),opacity);this.wake();
+  clearTimeout(this.leaveTimer);this.owner=host;this.viewportOrigin={x:Number(globalThis.scrollX)||0,y:Number(globalThis.scrollY)||0};this.attach(ambientLayerParent(host));this.motion.aim(rect,paletteFor(host),opacity);this.wake();
   const image=host.querySelector('.visual img');if(image&&image!==this.observedImage){this.resizeObserver?.disconnect();this.resizeObserver?.observe(image);this.resizeObserver?.observe(host);this.observedImage=image;}
  }
  hold(source,sourceRect){

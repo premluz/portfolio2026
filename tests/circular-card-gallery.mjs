@@ -59,7 +59,7 @@ let now=0,id=0,reduced=false;const frames=new Map();
 globalThis.performance={now:()=>now};
 globalThis.requestAnimationFrame=fn=>{frames.set(++id,fn);return id;};globalThis.cancelAnimationFrame=id=>frames.delete(id);
 const flush=()=>{for(let n=0;frames.size&&n<200;n++){now+=16;const callbacks=[...frames];frames.clear();for(const [,fn] of callbacks)fn(now);}assert.equal(frames.size,0,'Motion stops after settling');};
-const node=()=>({dataset:{},style:{setProperty(k,v){this[k]=v;}},listeners:new Map(),addEventListener(k,fn){this.listeners.set(k,fn);},removeEventListener(k){this.listeners.delete(k);},setAttribute(k,v){this[k]=v;}});
+const node=()=>({dataset:{},style:{setProperty(k,v){this[k]=v;}},listeners:new Map(),addEventListener(k,fn){this.listeners.set(k,fn);},removeEventListener(k){this.listeners.delete(k);},dispatchEvent(event){this.listeners.get(event.type)?.(event);},setAttribute(k,v){this[k]=v;}});
 globalThis.ResizeObserver=class{observe(){}disconnect(){}};
 const root=node();root.dataset={galleryVariant:'circular',galleryAxis:'horizontal',galleryIndex:'2'};
 const viewport=node();Object.assign(viewport,{clientWidth:1440,clientHeight:564,scrollLeft:0,scrollTop:0,focus(){},scrollTo(p){this.scrollLeft=p.left;this.scrollTop=p.top;},getBoundingClientRect(){return {left:0,top:0,width:1440,height:564};}});
@@ -72,6 +72,9 @@ const retainedAdapter=gallery.circular,retainedItems=[...gallery.items];gallery.
 assert.equal(gallery.circular,retainedAdapter);assert.deepEqual(gallery.items,retainedItems,'Live knobs preserve the carousel and native card nodes');assert.equal(gallery.index,2);assert(Math.abs(gallery.circular.angle+gallery.circular.angles[2])<.001,'Changing gap keeps the selected project exactly centred');
 for(const item of items)assert(Math.abs(Number(item.style.transform.match(/rotateY\(([^d]+)deg\)/)[1]))<=8,'Side tilt changes immediately on existing cards');
 gallery.setArcSettings(defaultCarouselSettings);flush();
+let paints=0;root.addEventListener('gallery-paint',()=>paints++);
+gallery.circular.angle+=.01;gallery.circular.paint();gallery.circular.angle-=.01;gallery.circular.paint();
+assert.equal(paints,2,'Ambient geometry updates on every carousel pose, even without a selection change');root.removeEventListener('gallery-paint');
 gallery.circular.angle+=.1;const control=new TransitionControl(),preparing=gallery.prepareOpen(items[2].link,control,400);flush();await preparing;control.complete();assert.equal(gallery.index,2);assert(Math.abs(gallery.circular.angle+gallery.circular.angles[2])<.001,'Opening first brings the shared card face-on');
 const identities=[...gallery.items];gallery.go(4);flush();assert.equal(gallery.index,4);gallery.onNext();flush();assert.equal(gallery.index,0,'Circular arrows wrap around');
 gallery.onNext();gallery.onNext();flush();assert.equal(gallery.index,2,'Rapid input advances the destination without waiting for the previous motion');
