@@ -13,6 +13,7 @@
 .spatial-gallery-pose>.content-block{position:relative;z-index:1;height:100%;padding:0;background:transparent;border:0}
 .spatial-gallery-pose :is(.project-card,.content-media-frame){height:100%;width:100%;min-height:0;max-width:none;margin:0;border-radius:var(--radius-home-content-card)}
 .spatial-gallery-pose .project-card{padding:var(--space-4)!important}
+.home-product-carousel .spatial-gallery-item[data-gallery-media="true"] .project-card{padding:0!important}
 .spatial-gallery-item[data-gallery-media="true"] .card-copy,.spatial-gallery-item[data-gallery-media="true"] .content-block>:is(h2,p){display:none}
 .spatial-gallery-pose .visual{--image-padding-top:0px!important;--image-padding-right:0px!important;--image-padding-bottom:0px!important;--image-padding-left:0px!important;width:100%!important;height:100%!important;min-height:0;margin:0!important;aspect-ratio:auto!important}
 .spatial-gallery-pose .visual img{object-fit:contain;max-width:100%;max-height:100%}

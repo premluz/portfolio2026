@@ -13,6 +13,8 @@ assert.match(html,/class="spatial-gallery-primary-action"><div class="spatial-ga
 assert(html.includes('data-gallery-description=')&&html.includes('tabindex="0"'));
 assert.match(html,/class="spatial-gallery-client" data-gallery-client><\/p><h3 data-gallery-title><\/h3><p class="spatial-gallery-description" data-gallery-description>/,'Carousel project caption exposes company, title and description as three independent fields');
 const galleryStyles=await readFile(new URL('../dist/card-gallery.css',import.meta.url),'utf8');
+assert(galleryStyles.includes('.home-product-carousel .spatial-gallery-item[data-gallery-media="true"] .project-card{padding:0!important}'),'Hero media cards have no inner card padding on desktop or mobile');
+assert(galleryStyles.includes('.spatial-gallery-pose .project-card{padding:var(--space-4)!important}'),'Other galleries and text-only cards retain their existing padding');
 assert(galleryStyles.includes('.spatial-gallery-caption{display:flex;justify-content:space-between;align-items:start;gap:var(--space-6);width:100%;max-width:none;margin:0}'),'Carousel captions have no top margin');
 assert(galleryStyles.includes('.home-product-carousel .spatial-gallery-caption{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))')&&galleryStyles.includes('.home-product-carousel .spatial-gallery-copy{grid-column:2 / span 2'),'Home carousel description starts in column two and spans columns two and three');
 assert(galleryStyles.includes('.spatial-gallery-copy{display:grid;grid-template-columns:fit-content(35%) minmax(0,1fr)')&&galleryStyles.includes('.spatial-gallery-copy .spatial-gallery-description{grid-column:2;grid-row:2'),'Carousel client and title share a row while description sits beneath the title');

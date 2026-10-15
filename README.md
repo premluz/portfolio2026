@@ -48,6 +48,7 @@ For production, configure variables in the hosting provider's secret manager, th
 - Use [DEPLOY-NODE-READY.md](DEPLOY-NODE-READY.md) for the prebuilt Node deployment ZIP.
 - Use [API_CONNECTIONS.md](API_CONNECTIONS.md) for provider flows, variables and data handling.
 - See [CONTENT_MODEL.md](CONTENT_MODEL.md) for the content schema and authoring workflow.
+- Use [MEDIA_ASSETS.md](MEDIA_ASSETS.md) when replacing project images/videos or changing their orientation.
 - See [ASSISTANT.md](ASSISTANT.md) for assistant behavior and curated knowledge.
 - See [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md), [FRAMEWORK.md](FRAMEWORK.md), and [INTERACTIONS.md](INTERACTIONS.md) for the UI system.
 
