@@ -1527,15 +1527,19 @@
       "id": "bastion-cover",
       "type": "image",
       "status": "published",
-      "url": "assets/bastion.png",
-      "alt": "Bastion AI wallet prototype with a persistent assistant and financial interface"
+      "url": "assets/bastion3.png",
+      "alt": "Bastion AI wallet prototype with a persistent assistant and financial interface",
+      "width": 1440,
+      "height": 900
     },
     {
       "id": "bastion-walkthrough",
       "type": "video",
       "status": "published",
-      "url": "assets/bastion.mp4",
-      "alt": ""
+      "url": "assets/bastion.mp4?v=5a80f8559d8b",
+      "alt": "",
+      "width": 1440,
+      "height": 900
     },
     {
       "id": "porter-cover",
@@ -1704,7 +1708,7 @@
     {
       "documentId": "bastion",
       "card": {
-        "orientation": "portrait",
+        "orientation": "landscape",
         "surface": [
           "#e6e9f4",
           "#e5e7ef"
