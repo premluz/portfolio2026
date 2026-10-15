@@ -88,7 +88,6 @@
   --line-height-heading: 1.15;
   --line-height-card: 1.2;
   --line-height-label: 1.4;
-  --card-title-scale: 1;
   --font-size-caption: max(10px, calc(11px * var(--type-scale)));
   --font-size-note: max(11px, calc(12px * var(--type-scale)));
   --font-size-small: max(12px, calc(13px * var(--type-scale)));
@@ -96,7 +95,6 @@
   --font-size-body: max(14px, calc(16px * var(--type-scale)));
   --font-size-reading: var(--font-size-body);
   --font-size-home-heading: clamp(calc(31px * var(--type-scale)), calc(2.86vw * var(--type-scale)), calc(44px * var(--type-scale)));
-  --font-size-card-heading: clamp(calc(22px * var(--type-scale)), calc(2vw * var(--type-scale)), calc(30px * var(--type-scale)));
   --font-size-section-heading: clamp(calc(20px * var(--type-scale)), calc(1.6vw * var(--type-scale)), calc(26px * var(--type-scale)));
   --font-size-footer-heading: var(--font-size-home-heading);
   --font-size-hero-support: var(--font-size-body);
@@ -126,7 +124,7 @@
   --card-padding-top: 56px;
   --card-padding-bottom: 60px;
   --space-story-inset: var(--space-8);
-  --space-title-eyebrow: calc(var(--space-2) * var(--card-title-scale));
+  --space-title-eyebrow: var(--space-2);
   --space-hero-heading-content: var(--space-6);
   --space-text-media: var(--space-8);
   --space-paragraph: var(--space-5);

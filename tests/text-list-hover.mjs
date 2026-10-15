@@ -21,7 +21,7 @@ const section={querySelectorAll:()=>[],hidden:false,contains:()=>false,addEventL
 assert(!homeProjects.some(project=>project.id==='porter'),'The fixture preserves the grid-only input that originally excluded Porter');
 const controller=mountTextListHover({querySelectorAll:()=>[section]},homeProjects);
 events.get('focusin')({target:{closest:()=>row}});await Promise.resolve();await Promise.resolve();
-assert(loaded.includes('assets/porter.png'),'Hero text previews resolve Porter from the complete published registry');
+assert(loaded.some(url=>/assets\/(optimised\/)?porter[-.]/.test(url)),'Hero text previews resolve Porter from the complete published registry');
 assert.equal(portals[0].style.width,'360px');assert.equal(portals[0].style.left,'216px','The thumbnail is on the left with a 24px gap');
 controller.destroy();assert.equal(events.size,0);assert.equal(globalListeners.size,0);
 console.log('Text list hover passed: grid-only input still resolves Porter, shared size, left-side gap and cleanup.');

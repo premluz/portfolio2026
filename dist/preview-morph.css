@@ -1,0 +1,4 @@
+:root{--radius-preview-thumbnail:8px;--z-preview-morph:61}
+.preview-morph-proxy{position:fixed;z-index:var(--z-preview-morph);margin:0;pointer-events:none}
+.preview-morph-proxy>.visual{width:100%;height:100%;margin:0;border-radius:var(--radius-preview-thumbnail);overflow:hidden}
+.preview-morph-proxy img{display:block;width:100%;height:100%;object-fit:cover}

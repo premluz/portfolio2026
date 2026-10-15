@@ -5,6 +5,9 @@ const cards=allCards.filter(doc=>!doc.listOnly);
 import {flipPose,masonryRows} from '../dist/placement.js';
 import {TransitionControl} from '../dist/transition-control.js';
 import {contentBlocks} from '../dist/content-blocks.js';
+import {content} from '../dist/content/local.js';
+// Read from the catalog so editing the homepage copy never breaks layout tests.
+const authoredDescription=content.get('home').blocks.find(block=>block.id==='home-description').paragraphs[0].split(' ').slice(0,6).join(' ');
 for(const offset of [-100,-1,-.18,0,.18,1,100]){
  const pose=flipPose(offset);assert(Math.abs(pose.angle)<=76);assert(pose.scale>=.76&&pose.scale<=1);assert(pose.opacity>=.18-1e-10&&pose.opacity<=1);
  if(Math.abs(offset)<=.18)assert(pose.angle===0,'Spotlight must be face-on for the liquid handoff');
@@ -71,8 +74,8 @@ layout.focus('tracr');assert.equal(title.textContent,cards.find(doc=>doc.id==='t
 layout.apply({mode:'current',layout:'regular',columns:3});
 assert.equal(title.textContent,'Hey, I’m Prem. Builder turned designer.');assert.equal(description.innerHTML,'<p>Original introduction</p>');assert.equal(gallery.children.length,portfolioCount);assert.equal(information.children.length,informationCount);assert(!information.hidden);
 for(const item of original){assert(slots.includes(item.slot));assert.equal(item.slot.firstElementChild,item.carrier);assert.equal(item.slot.querySelector(),item.element);assert.equal(item.element.canvas,item.canvas);assert.equal(item.element.dataset.cardLayout,'regular');}
-layout.setHeroContent('paragraph');assert(description.innerHTML.includes('I make complex products and workflows feel simple through interaction, systems, and craft.'));assert(!description.innerHTML.includes('data-hero-timeline'));assert.equal(heroAbout.dataset.heroCombinedContent,'false');
-layout.setHeroContent({timeline:true,description:true});assert(description.innerHTML.includes('data-hero-timeline')&&description.innerHTML.includes('I make complex products and workflows feel simple through interaction, systems, and craft.'),'Timeline and description toggles can be enabled independently');assert.equal(heroAbout.dataset.heroCombinedContent,'true','Combined hero content state is explicit for its heading spacing');
+layout.setHeroContent('paragraph');assert(description.innerHTML.includes(authoredDescription));assert(!description.innerHTML.includes('data-hero-timeline'));assert.equal(heroAbout.dataset.heroCombinedContent,'false');
+layout.setHeroContent({timeline:true,description:true});assert(description.innerHTML.includes('data-hero-timeline')&&description.innerHTML.includes(authoredDescription),'Timeline and description toggles can be enabled independently');assert.equal(heroAbout.dataset.heroCombinedContent,'true','Combined hero content state is explicit for its heading spacing');
 layout.setHeroContent({timeline:false,description:false});assert.equal(description.innerHTML,'','Both hero content types can be hidden independently');assert.equal(heroAbout.dataset.heroCombinedContent,'false');
 layout.apply({mode:'flat'});layout.focus('tracr');layout.setHeroContent('timeline');assert.equal(description.textContent,cards.find(doc=>doc.id==='tracr').intro||cards.find(doc=>doc.id==='tracr').context,'Changing intro format preserves the current project spotlight');
 globalThis.scrollY=0;layout.flush(true);assert(description.innerHTML.includes('data-hero-timeline'),'Returning to the intro restores the selected format');

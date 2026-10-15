@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {captureSharedWords,copyOpacity,copyScale,createSharedWords,hasSharedLead} from '../dist/shared-copy.js';
+import {captureSharedWords,copyOpacity,copyScale,createSharedWords,hasSharedLead,lockLineBreaks} from '../dist/shared-copy.js';
 
 class Node{
  constructor(){this.style={};this.children=[];}
@@ -33,4 +33,12 @@ const item={a:{left:40,top:50},b:{left:400,top:140},scaleA:{x:.72,y:.54},scaleB:
 proxy.paint(item,{x:100,y:100,xPos:220,yPos:95,textP:.5,opacity:.8,fontSize:24,lineHeight:1.4,letterSpacing:0,color:'rgb(20,20,20)',fontWeight:450});
 const span=shell.children[0].children[0];assert.equal(span.style.left,'120px');assert.equal(span.style.top,'-5px');assert.equal(span.style.whiteSpace,'pre');assert.equal(span.style.opacity,'0.7');assert.equal(span.style.fontSize,'24px');assert.equal(span.style.fontWeight,450);assert(span.style.transform.startsWith('scaleX('));
 assert.equal(createSharedWords({words},[{text:'Different'}],new Node(),'title',shell),null,'Different content uses the ordinary route reveal');
+{
+ const rect=top=>({left:0,top,width:80,height:30}),word=(text,top)=>({text,rect:rect(top)});
+ const doc={createElement:tag=>({tag})},node={ownerDocument:doc,style:{},parts:[],set textContent(value){this.parts=[];},append(...items){this.parts.push(...items);}};
+ assert.equal(lockLineBreaks(node,[word('Turned',0),word('a',2),word('design-system',31),word('brief',33),word('into',64)]),true);
+ assert.deepEqual(node.parts.map(part=>part.tag||part),['Turned a',{tag:'br'}.tag,'design-system brief','br','into'],'Words keep the measured rows, separated by explicit breaks');
+ assert.equal(node.style.whiteSpace,'nowrap','Wrapping cannot change while width and font size animate');
+ assert.equal(lockLineBreaks(node,null),false,'Without measurements the copy is left alone');
+}
 console.log('Shared copy passed: word ranges, explicit line breaks, common lead isolation, partial opacity, scaled ancestors, continuous word placement and differing-content fallback.');

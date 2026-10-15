@@ -13,7 +13,7 @@ import {clearImageHandoffs} from '../dist/image-handoff.js';
 // race that midpoint-only morph tests could not exercise.
 const app=await readFile(new URL('../dist/app.js',import.meta.url),'utf8');
 const extract=(from,to)=>app.slice(app.indexOf(from),app.indexOf(to));
-const code={syncDockActions:extract('function syncDockActions(','installHoverTrail('),cleanup:extract('function cleanup()','function render('),render:extract('function render(','function syncRouteChrome('),navigate:extract('async function navigate()','function homeScrollMotion('),pushCards:extract('function pushCards(','async function slideCards(')};
+const code={galleryOriginTarget:extract('function galleryOriginTarget(','function syncGalleryOrigin('),syncGalleryOrigin:extract('function syncGalleryOrigin(','function disposeGalleryOrigin('),syncDockActions:extract('function syncDockActions(','installHoverTrail('),cleanup:extract('function cleanup()','function render('),render:extract('function render(','function syncRouteChrome('),navigate:extract('async function navigate()','function homeScrollMotion('),pushCards:extract('function pushCards(','async function slideCards(')};
 const compile=text=>new Function('env','args',`with(env){return (${text}).apply(null,args);}`);
 class Style{
  get cssText(){return Object.entries(this).map(([key,value])=>`${key}:${value}`).join(';');}
@@ -54,7 +54,7 @@ function fixture({homeGallery=false}={}){
  class Stream{constructor(){this.dead=false;}pause(){this.paused=true;}resume(){this.paused=false;}destroy(){this.dead=true;}}
  const reveals=()=>({dead:false,pause(){this.paused=true;},resume(){this.paused=false;},start(){},cancel(){this.dead=true;}});
  const projects=[{id:'one'},{id:'two'}],noop=()=>{},memory=new AssistantNavigationMemory(),morphs=[],assistantStates=[];
- const env={informationCards:[],returnHomeFromInformation(){throw Error('Information return unexpectedly used the fade path');},contextualButtons:'inline',contextualComposer:false,composerContext:null,projectEntry:new ProjectEntryMemory(),galleryProjectTarget:null,galleryProjectOrigin:null,cardGalleries:[],pageTimelines:[],homeProductDisplay:homeGallery?'carousel':'cards',main,current:'',cards:[...projects,{id:'about',body:['About']}],projects,homeProjects:projects,canonicalProjectRoute:id=>id,projectIds:['one','two'],cardIds:['one','two','about'],homeView:'current',layout:'masonry',homeColumns:2,oneColumnPosition:'top',multiColumnPosition:'top',showCardCopyOnHover:false,heroContent:'timeline',heroTimelineMode:'cursor',heroCarouselEnabled:false,homeCarouselState:{},detailHeadingBeside:false,homeScroll:0,scrollY:0,scrollingMaterial:false,homeScene:null,homeLayout:null,assistantProjectOrigin:null,assistantProjectTarget:null,navSlideTarget:null,homeOpenTarget:null,travelDirection:0,busy:false,navigationPreparing:false,instances:[],hoverEffects:[],summaryStream:null,detailContentReveal:null,activeTransition:null,chromeTransition:false,duration:400,slow:false,intensity:.7,reduce:{matches:false},location:{hash:'#work'},document:doc,innerWidth:1920,innerHeight:1080,
+ const env={previewProjectTarget:null,previewProjectOrigin:null,previewReturnProxy:()=>null,fadeOutProxy(){},informationCards:[],returnHomeFromInformation(){throw Error('Information return unexpectedly used the fade path');},contextualButtons:'inline',contextualComposer:false,composerContext:null,projectEntry:new ProjectEntryMemory(),galleryProjectTarget:null,galleryProjectOrigin:null,cardGalleries:[],pageTimelines:[],homeProductDisplay:homeGallery?'carousel':'cards',main,current:'',cards:[...projects,{id:'about',body:['About']}],projects,homeProjects:projects,canonicalProjectRoute:id=>id,projectIds:['one','two'],cardIds:['one','two','about'],homeView:'current',layout:'masonry',homeColumns:2,oneColumnPosition:'top',multiColumnPosition:'top',showCardCopyOnHover:false,heroContent:'timeline',heroTimelineMode:'cursor',heroCarouselEnabled:false,homeCarouselState:{},detailHeadingBeside:false,homeScroll:0,scrollY:0,scrollingMaterial:false,homeScene:null,homeLayout:null,assistantProjectOrigin:null,assistantProjectTarget:null,navSlideTarget:null,homeOpenTarget:null,travelDirection:0,busy:false,navigationPreparing:false,instances:[],hoverEffects:[],summaryStream:null,detailContentReveal:null,activeTransition:null,chromeTransition:false,duration:400,slow:false,intensity:.7,reduce:{matches:false},location:{hash:'#work'},document:doc,innerWidth:1920,innerHeight:1080,
   $:selector=>selector==='#back'?null:selector==='#askPage'?ask:getControl(selector),homeMarkup:()=> 'home',cardDetail:p=>p.id==='about'?'about':'detail:'+p.id,HomeLayout:Layout,SummaryStream:Stream,createDetailContentReveal:reveals,projectRevealMode:()=> 'stream',TransitionControl,morphProgress,neighborPush,cardNavigation,retainHome,clearImageHandoffs,stageHomeReturn:()=>noop,assistantNavigation:memory,
   mediaFocus:{destroy:noop},motionMaterial:{start:noop,stop:noop},homeSections:{sync:noop},dockMorph:{setBack:noop,setSplit:noop},edgeShades:{animateTo:noop,sync:noop},showBackControl:()=>true,showProjectControls:()=>true,ambientMovementEnabled:()=>false,pulseImages:noop,applyCardAppearance:noop,applyContentWidths:noop,syncRouteChrome:noop,attachHoverEffects:noop,homeScrollMotion:noop,refreshImageFrames:noop,
   snapshot:element=>element?{element,rect:element.rect}:null,freeze:element=>({clone:element.cloneNode(true)}),navigateAssistant(){throw Error('Shared Chat return incorrectly bypassed the card morph');},
@@ -126,3 +126,33 @@ console.log('Homepage carousel lifecycle passed: exact source card, live gallery
  assert.deepEqual(slides,[-1],'Menu Home from About slides the homepage in from the left');assert.equal(g.morphs.length,0);
 }
 console.log('Information return passed: fade-up for Back/hash changes, rightward slide for the menu Home, and no title morph.');
+
+// Stepping Next/Previous from a carousel-opened detail turns the hidden carousel with it.
+{
+ const card=id=>({id}),item=id=>({card:card(id),querySelector(selector){return selector===`[data-content-card="${id}"]`?this.card:null;}});
+ const items=['one','two','three','one-copy','four'].map(id=>item(id==='one-copy'?'one':id));
+ const moves=[],gallery={root:{dataset:{cardGallery:'home-projects'},querySelectorAll:()=>items},go(index,smooth){moves.push({index,smooth});},paint(){moves.push('paint');}};
+ const env={projectIds:['one','two','three','four'],homeScene:{scene:{galleries:[gallery]}},galleryProjectOrigin:{route:'work',project:'one',index:0,element:items[0].card,galleryId:'home-projects',galleries:[]}};
+ for(const name of ['galleryOriginTarget','syncGalleryOrigin']){const fn=compile(code[name]);env[name]=(...args)=>fn(env,args);}
+ env.syncGalleryOrigin('two');
+ assert.deepEqual(moves,[{index:1,smooth:false},'paint'],'Next turns the background carousel instantly to the new project');
+ assert.equal(env.galleryProjectOrigin.element,items[1].card,'Back docks into the newly centred card');assert.equal(env.galleryProjectOrigin.project,'two');
+ env.syncGalleryOrigin('three');env.syncGalleryOrigin('one');
+ assert.equal(env.galleryProjectOrigin.index,3,'A repeated project resolves to the copy nearest the current position');
+ moves.length=0;env.syncGalleryOrigin('one');env.syncGalleryOrigin('missing');assert.equal(moves.length,0,'Same or unknown projects leave the carousel alone');
+}
+console.log('Carousel origin sync passed: background carousel follows Next/Previous and Back docks into the centred card.');
+
+// A row clicked while its hover thumbnail shows opens from that thumbnail and returns into the
+// thumbnail of whichever project is open by then, without pushing or pulling the home cards.
+{
+ const f=fixture(),e=f.env;e.render('work');const proxyIn=new Node('preview-morph-proxy');proxyIn.root=true;const pushes=[];e.pushCards=(...args)=>{pushes.push(args);return Promise.resolve();};
+ e.previewProjectTarget=proxyIn;e.homeOpenTarget='one';e.location.hash='#one';await e.navigate();
+ assert.equal(f.morphs[0].source,proxyIn,'The detail opens from the hover thumbnail');assert.equal(pushes.length,0,'Home cards stay put for a thumbnail open');
+ assert.equal(proxyIn.style.visibility,'hidden','The thumbnail stand-in hides while its image flies');assert.deepEqual(e.previewProjectOrigin,{project:'one'});assert.equal(e.previewProjectTarget,null);
+ const proxyOut=new Node('preview-morph-proxy');proxyOut.visual={img:{naturalWidth:1000}};let faded=null,asked=null;e.previewReturnProxy=(root,project)=>{asked=project.id;return proxyOut;};e.fadeOutProxy=proxy=>{faded=proxy;};
+ e.location.hash='#work';await e.navigate();
+ assert.equal(asked,'one','Back docks into the thumbnail of the project that is open');assert.equal(f.morphs.at(-1).target,proxyOut);assert.equal(faded,proxyOut,'The docked thumbnail fades away afterwards');
+ assert.equal(pushes.length,0,'Home cards stay put for a thumbnail return');assert.equal(e.previewProjectOrigin,null,'Leaving projects clears the thumbnail origin');
+}
+console.log('Thumbnail morph passed: opens from the hover thumbnail and docks back into the current project thumbnail.');

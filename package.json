@@ -10,6 +10,11 @@
     "build": "node scripts/build-content.mjs && node scripts/build-worker.mjs",
     "check": "node scripts/check.mjs",
     "start": "node deploy/node-server.mjs",
-    "start:local": "node --env-file=.env deploy/node-server.mjs"
+    "start:local": "node --env-file=.env deploy/node-server.mjs",
+    "test:visual": "playwright test",
+    "test:flash": "playwright test tests/visual/screencast.spec.mjs && python3 scripts/check-flash-frames.py"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.1"
   }
 }

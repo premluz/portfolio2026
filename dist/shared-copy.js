@@ -44,6 +44,17 @@ export function captureSharedWords(node,key){
  }
  return words.length?words:null;
 }
+// A heading copy that cannot use per-word slots keeps the measured source rows. Width and
+// font size change every frame, so letting it wrap freely would re-break its lines mid-flight.
+export function lockLineBreaks(node,words){
+ if(!node||!words?.length)return false;
+ const rows=[];
+ for(const word of words){const row=rows.find(item=>Math.abs(item.top-word.rect.top)<word.rect.height/2);if(row)row.words.push(word.text);else rows.push({top:word.rect.top,words:[word.text]});}
+ node.textContent='';
+ rows.forEach((row,index)=>{if(index)node.append(node.ownerDocument.createElement('br'));node.append(row.words.join(' '));});
+ node.style.whiteSpace='nowrap';
+ return true;
+}
 export function createSharedWords(source,targetWords,node,key,shell){
  const words=source.words;
  if(!words?.length||words.length!==targetWords?.length||words.some((word,index)=>normalized(word.text)!==normalized(targetWords[index].text)))return null;

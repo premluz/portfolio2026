@@ -7,8 +7,8 @@ import {createBlockRenderer} from '../dist/content-blocks.js';
 const home=catalog.documents.find(doc=>doc.id==='home'),block=home.blocks.find(b=>b.type==='timeline');
 assert.equal(contentModel.validate(catalog).length,0);
 const paragraphHero=homeHero({heroContent:'paragraph'});
-assert(paragraphHero.includes('<h1 data-hero-title><span class="hero-greeting">Hey, I’m Prem.</span> Builder turned designer.</h1>'),'Greeting and title share one H1 without a forced line break');
-assert(paragraphHero.includes('I make complex products and workflows feel simple through interaction, systems, and craft.'),'Description mode uses its own authored content block');assert(!paragraphHero.includes('data-hero-timeline'),'Description format omits timeline UI');
+{const intro=home.blocks.find(b=>b.id==='home-introduction');assert(paragraphHero.includes(`<h1 data-hero-title><span class="hero-greeting">${intro.label}</span> ${intro.title.split(' ')[0]}`)&&!/<h1 data-hero-title>[^]*?<br>[^]*?<\/h1>/.test(paragraphHero),'Greeting and title share one H1 without a forced line break');}
+assert(paragraphHero.includes(home.blocks.find(b=>b.id==='home-description').paragraphs[0].split(' ').slice(0,6).join(' ')),'Description mode uses its own authored content block');assert(!paragraphHero.includes('data-hero-timeline'),'Description format omits timeline UI');
 const bothHero=homeHero({heroContent:{timeline:true,description:true}});assert(bothHero.includes('data-hero-timeline')&&bothHero.includes('data-hero-description'),'Timeline and description render as independently selected content');assert(bothHero.includes('data-hero-combined-content="true"'),'The combined hero state is explicit at first paint');
 const emptyHero=homeHero({heroContent:{timeline:false,description:false}});assert(!emptyHero.includes('data-hero-timeline')&&!emptyHero.includes('data-hero-description'),'Both hero content types can be hidden');
 const heroStyles=await (await import('node:fs/promises')).readFile(new URL('../dist/content-widths.css',import.meta.url),'utf8');

@@ -708,20 +708,20 @@
       "status": "published",
       "slug": "work",
       "title": "Hey, I’m Prem. Builder turned designer.",
-      "summary": "I started out building for the web and running a solo studio. For the last 10+ years, I’ve designed products for technical and expert users. Recently I built Rios and Porter. Today, my focus is AI-native experiences, generative interfaces and building prototypes in code.",
+      "summary": "I started out building for the web and running a solo studio. For the last 10+ years, I’ve designed products for technical and expert users. Recently I built Rios and Porter. Today, my focus is AI conversational and generative UI experiences. ",
       "blocks": [
         {
           "id": "home-introduction",
           "type": "text",
           "label": "Hey, I’m Prem.",
-          "title": "Builder turned designer.",
+          "title": "Builder turned designer. I make complex products feel simple through interaction, systems and craft.",
           "paragraphs": []
         },
         {
           "id": "home-description",
           "type": "text",
           "paragraphs": [
-            "I make complex products and workflows feel simple through interaction, systems, and craft."
+            "For the last 10+ years, I’ve designed products for technical users and creators. Today, my focus is AI conversational and generative UI experiences. I also built Rios and Porter."
           ]
         },
         {
@@ -876,7 +876,7 @@
         {
           "id": "about-introduction",
           "type": "text",
-          "title": "I’ve spent the last 10+ years untangling complex products and helping teams turn them into something coherent.",
+          "title": "I help teams untangle complexity and build products that users understand, trust, and adopt.",
           "paragraphs": [
             "My work has ranged from early product definition and research to interaction models, design systems and implementation.",
             "I’m most useful where the problem is messy, the constraints are real, and the path forward isn’t obvious yet."
@@ -1443,21 +1443,21 @@
       "id": "merlin-cover",
       "type": "image",
       "status": "published",
-      "url": "assets/merlin.png",
+      "url": "assets/merlin2.png",
       "alt": "Merlin financial intelligence workspace with an AI agent assembling research and analysis panels"
     },
     {
       "id": "merlin-walkthrough",
       "type": "video",
       "status": "published",
-      "url": "assets/merlin.mp4",
+      "url": "assets/merlin2.mp4",
       "alt": ""
     },
     {
       "id": "rios-cover",
       "type": "image",
       "status": "published",
-      "url": "assets/rios.png",
+      "url": "assets/rios2.png",
       "alt": "Rios life-first planner with a spatial timeline for shaping a changing day"
     },
     {
@@ -1643,7 +1643,7 @@
     {
       "documentId": "rios",
       "card": {
-        "orientation": "portrait",
+        "orientation": "landscape",
         "surface": [
           "#f5e5ee",
           "#e3ddf5"

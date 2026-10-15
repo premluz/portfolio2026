@@ -77,7 +77,7 @@ a.frame.destroy();assert.equal(document.listenerCount,0);assert.equal(hover.list
 // Spotlight entry works without a hover-capable pointer; leaving finishes one lap.
 hover.matches=false;
 const spot=create('spotlight');spot.preview.sync();assert.equal(spot.pending.length,1);spot.pending.shift().resolve();await Promise.resolve();spot.video.emit('ended');assert.equal(spot.pending.length,1,'Selected spotlight repeats');spot.pending.shift().resolve();await Promise.resolve();spot.select(false);spot.preview.sync();assert(spot.preview.active);spot.video.emit('ended');assert(!spot.preview.active,'Departed spotlight stops at its next boundary');spot.frame.destroy();
-const detail=create('detail');detail.preview.sync();detail.pending.shift().resolve();await Promise.resolve();detail.video.emit('ended');assert.equal(detail.pending.length,1,'Detail videos repeat without hover');detail.pending.shift().resolve();await Promise.resolve();detail.frame.destroy();hover.matches=true;
+const detail=create('detail');detail.preview.sync();detail.pending.shift().resolve();await Promise.resolve();detail.video.emit('ended');assert.equal(detail.pending.length,1,'Detail videos repeat without hover');detail.pending.shift().resolve();await Promise.resolve();detail.trigger.emit('pointerdown');assert(detail.preview.active,'Pressing an auto-playing clip to open it keeps it playing instead of blanking to the image');detail.frame.destroy();hover.matches=true;
 
 for(const p of projects){
  const html=card(p,0);

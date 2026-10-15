@@ -1,7 +1,7 @@
 import {imageSource} from './media-loading.js';
 import {ProjectPreviewVideo} from './project-preview-video.js';
 export const PROJECT_PREVIEW_SIZE=Object.freeze({width:360,height:260});
-const previewGap=24;
+export const PROJECT_PREVIEW_GAP=24;
 // A shared, unclipped thumbnail portal. Row movement never replays its entrance.
 export function menuPreviewPosition(menu,row,{width:vw,height:vh},size={width:200,height:160},placement='left',gap=16){
  const edge=12,w=Math.min(size.width,vw-edge*2),h=size.height;
@@ -17,7 +17,7 @@ export function menuPreviewPosition(menu,row,{width:vw,height:vh},size={width:20
  return null;
 }
 export class ProjectMenuPreview{
- constructor(menu,projects,{reduced=()=>false,anchor=()=>menu,size=PROJECT_PREVIEW_SIZE,placement='left',gap=previewGap}={}){
+ constructor(menu,projects,{reduced=()=>false,anchor=()=>menu,size=PROJECT_PREVIEW_SIZE,placement='left',gap=PROJECT_PREVIEW_GAP}={}){
   this.menu=menu;this.anchor=anchor;this.size=size;this.placement=placement;this.gap=gap;this.projects=new Map(projects.map(p=>[p.id,p]));this.reduced=reduced;this.token=0;this.cache=new Map();this.animations=new Map();
   this.el=document.createElement('div');this.el.className='project-menu-preview';this.el.setAttribute('aria-hidden','true');document.body.append(this.el);
   this.video=new ProjectPreviewVideo(this.el,{reduced});

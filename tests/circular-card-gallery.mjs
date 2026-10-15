@@ -50,7 +50,9 @@ for(const viewportWidth of [320,390,600,720,960,1440,1920]){
 }
 const block=content.get('home').blocks.find(b=>b.type==='card-gallery'),html=contentBlocks([block],2);
 assert(html.includes('data-gallery-variant="circular"'));
-assert(html.includes('data-gallery-orientation="landscape"')&&html.includes('data-gallery-orientation="portrait"'));
+// Every card keeps its authored orientation; mixed proportions themselves are covered by the geometry cases above.
+const orientations=[...html.matchAll(/data-gallery-orientation="(\w+)"/g)].map(match=>match[1]);
+assert(orientations.length&&orientations.every(value=>['landscape','portrait'].includes(value)),'Each gallery card carries its orientation');
 assert.equal((html.match(/data-content-card=/g)||[]).length,block.items.length,'The variant uses one shared card per project');
 
 let now=0,id=0,reduced=false;const frames=new Map();

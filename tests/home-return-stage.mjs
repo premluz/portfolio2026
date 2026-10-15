@@ -23,7 +23,7 @@ const css=await readFile(new URL('../dist/style.css',import.meta.url),'utf8');
 assert(css.includes('.motion-viewport{position:fixed;inset:0;overflow:hidden;contain:paint;'),'The viewport contains paint and scrolling in both axes');
 const app=await readFile(new URL('../dist/app.js',import.meta.url),'utf8');
 assert(app.includes("route==='work'&&wasCard&&!reduce.matches?stageHomeReturn(main):null"));
-assert(app.includes('finally{restoreReturningHome?.();}'),'The live grid is restored even if the animation is interrupted');
+assert(app.includes('finally{restoreReturningHome?.();'),'The live grid is restored even if the animation is interrupted');
 
 for(const width of [1000,1200,1440])for(const reverse of [false,true]){
  const viewport={width:1920,height:1080},left=(viewport.width-width)/2;

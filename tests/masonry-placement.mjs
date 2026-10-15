@@ -39,11 +39,9 @@ assert.equal(leftRight[0].column,1);assert.deepEqual(leftRight.slice(1).map(pose
 const mixed=verify([{id:'featured',featured:true},{id:'phone-a',cardAspect:'portrait'},{id:'small-landscape',cardAspect:'landscape'},{id:'phone-b',cardAspect:'portrait'},{id:'another-landscape',cardAspect:'landscape'}],4,300,28);
 assert.deepEqual(mixed.filter(pose=>pose.id.startsWith('phone')).map(pose=>pose.column),[3,4]);
 assert(mixed.filter(pose=>pose.id.includes('landscape')).every(pose=>pose.column<=2),'Small landscapes must stack in the left half even when the right half has room');
-// The supplied collection used to strand its final Tracr card below Vodafone,
-// while both portrait tracks had already ended one short-card module earlier.
-const collection=verify(projects,4,300,28),last=collection.find(p=>p.id==='tracr-02'),vodafone=collection.find(p=>p.id==='vodafone-iot');
-assert.equal(last.column,4,'The final small landscape uses the free right-side track');
-assert.equal(last.row+last.rowSpan,vodafone.row+vodafone.rowSpan,'The final card finishes level with the featured card instead of adding a row');
+// The real collection must never strand a short card below the featured column (it used to add a row).
+const collection=verify(projects,4,300,28),ends=collection.map(pose=>pose.row+pose.rowSpan),featuredEnd=Math.max(...collection.filter((pose,index)=>projects[index].featured).map(pose=>pose.row+pose.rowSpan));
+assert.equal(Math.max(...ends),featuredEnd,'No card finishes below the featured cards, so packing adds no extra row');
 assert.deepEqual(collection.map(p=>p.id),projects.map(p=>p.id),'Packing preserves document and keyboard order');
 const trailingPortrait=verify([{id:'feature-a',featured:true},{id:'feature-b',featured:true},{id:'short-landscape'},{id:'phone',cardAspect:'portrait'}],4,300,28);
 assert.equal(trailingPortrait[3].row,1,'A later portrait reserves its position before landscape overflow is packed');

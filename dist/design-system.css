@@ -31,7 +31,7 @@ button,input,select,textarea{font-family:var(--font-family-sans)}
 .hero-news li{padding-block:var(--space-6)}
 .hero-news h3{font-size:var(--font-size-body);font-weight:var(--font-weight-heading);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body)}
 
-.project-card h2,.project-card[data-card-presentation="flip"] h2{font-size:calc(var(--font-size-card-heading) * var(--card-title-scale));font-weight:var(--font-weight-heading);line-height:var(--line-height-card);letter-spacing:var(--letter-spacing-card)}
+.project-card h2,.project-card[data-card-presentation="flip"] h2{font-size:var(--font-size-body);font-weight:var(--font-weight-heading);line-height:var(--line-height-card);letter-spacing:var(--letter-spacing-card)}
 .project-card .eyebrow,.project-card[data-card-presentation="flip"] .eyebrow,.project-card[data-card-presentation="current"]:not([data-image-mode="bleed"])>.card-copy>.eyebrow{font-size:var(--font-size-caption);margin-top:var(--space-title-eyebrow)}
 .surface.detail>.eyebrow,.wide-hero-card>.eyebrow{margin-top:var(--space-detail-heading);font-size:var(--font-size-caption)}
 .detail.heading-beside-image>.eyebrow{margin:var(--space-detail-heading) 0 var(--space-detail-context)}

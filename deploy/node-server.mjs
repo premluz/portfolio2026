@@ -98,7 +98,7 @@ async function serveFile(incoming,response,url){
   const extension=path.extname(filename).toLowerCase();
   const headers={
    'accept-ranges':'bytes',
-   'cache-control':extension==='.html'?'no-cache':'public, max-age=3600',
+   'cache-control':extension==='.html'?'no-cache':isLocalRequest(incoming)?'no-store':'public, max-age=3600',
    'content-length':String(info.size),
    'content-type':mimeTypes[extension]||'application/octet-stream',
    'last-modified':info.mtime.toUTCString(),
@@ -145,5 +145,11 @@ const server=createServer(async(incoming,response)=>{
 });
 
 const port=Number(process.env.PORT)||3000;
+// Local development always serves fresh modules; a reload must never reuse a stale cached script.
+const LOCAL_HOSTNAMES=new Set(['localhost','127.0.0.1','[::1]']);
+function isLocalRequest(incoming){
+ const hostname=String(incoming.headers.host||'').replace(/:\d+$/,'').toLowerCase();
+ return LOCAL_HOSTNAMES.has(hostname)||hostname.endsWith('.localhost');
+}
 const host=process.env.HOST||'0.0.0.0';
 server.listen(port,host,()=>console.log(`Portfolio server listening on http://${host}:${port}`));
