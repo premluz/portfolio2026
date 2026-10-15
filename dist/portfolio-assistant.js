@@ -14,7 +14,7 @@ import {renderSuggestionChips} from './suggestion-chips.js';
 import {ComposerSuggestions} from './composer-suggestions.js';
 
 const cap=20;
-export const answerPortfolioQuestion=(question,{store=content}={})=>answerPublishedQuestion(question,{store});
+export const answerPortfolioQuestion=(question,{store=content,history=[]}={})=>answerPublishedQuestion(question,{store,history});
 
 export function readSessionTranscript(storage,store=content){
  let entries=[];try{entries=JSON.parse(storage?.getItem('prem-ask-transcript')||'[]');}catch{}
@@ -101,11 +101,11 @@ export function mountPortfolioAssistant(root,{store=content,limit=cap,onOpen=()=
   try{
    const response=await fetch('/api/assistant',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({question,sessionId:sessionId(),history}),signal:AbortSignal.timeout(18000)});
    const result=await response.json();
-   if(typeof result.text!=='string'||!Array.isArray(result.documentIds))return answerPortfolioQuestion(question,{store});
+   if(typeof result.text!=='string'||!Array.isArray(result.documentIds))return answerPortfolioQuestion(question,{store,history});
    const documentIds=[...new Set(result.documentIds)].filter(id=>store.get(id));
    const knowledgeSourceIds=(Array.isArray(result.knowledgeSources)?result.knowledgeSources:[]).map(source=>source?.id).filter(id=>knowledgeById.has(id));
    return {...resolvedAnswer(store,result.text,documentIds,knowledgeSourceIds,Array.isArray(result.suggestions)?result.suggestions:suggestionsFor(documentIds)),speechToken:typeof result.speechToken==='string'?result.speechToken:null,responseMode:result.responseMode||'model'};
-  }catch{return answerPortfolioQuestion(question,{store});}
+  }catch{return answerPortfolioQuestion(question,{store,history});}
  };
  toggle.addEventListener('click',onOpen);
  const submitQuestion=async(value,{spoken=false}={})=>{
@@ -118,7 +118,7 @@ export function mountPortfolioAssistant(root,{store=content,limit=cap,onOpen=()=
   playSendWave(form,{reduced:reducedMotion()});
   const waiting=append('status','');mountThinkingIndicator(waiting,{reduced:reducedMotion()});
   try{
-   const history=transcript.slice(0,-1).slice(-4).map(({role,text})=>({role,text:text.slice(0,400)}));
+   const history=transcript.slice(0,-1).slice(-4).map(({role,text,documentIds})=>({role,text:text.slice(0,400),documentIds:role==='assistant'&&Array.isArray(documentIds)?documentIds.filter(id=>typeof id==='string').slice(0,6):[]}));
    const answer=await askModel(question,history);waiting.remove();if(readAloud&&!answer.speechToken)onInputError('Showing a text answer. Voice could not connect.');addAnswer(answer,{auto:readAloud,spoken,animateCards:true});
    const documentIds=[...new Set([...(answer.cards||[]).map(item=>item.documentId),...(answer.sources||[]).map(item=>item.documentId)])].filter(id=>typeof id==='string'&&store.get(id));
    const knowledgeSourceIds=(answer.sources||[]).map(source=>source.documentId).filter(id=>knowledgeById.has(id));

@@ -9,6 +9,32 @@ const expand=word=>synonyms[word]||[word];
 const fallback='I couldn’t find a supported answer. Try something else.';
 const cited=(store,text,ids)=>store.resolveAnswer({type:'text',text,citations:ids.map(documentId=>({documentId}))});
 const sentence=value=>String(value||'').trim().replace(/[.!?]+$/,'');
+const firstSentence=value=>{const text=String(value||'').trim(),match=text.match(/^.*?[.!?](?=\s|$)/);return sentence(match?match[0]:text);};
+const MAX_PROJECTS_LISTED=4;
+
+// A project in one or two sentences: its headline, then what it is. Deeper asks add how it started.
+const projectLabel=d=>String(d.client||'').split(' • ')[0]||d.name||d.title;
+export function describeProject(d,{deep=false}={}){
+ const parts=[sentence(d.title),firstSentence(d.context),deep?firstSentence(d.intro):''].filter(Boolean);
+ return `${projectLabel(d)} — ${[...new Set(parts)].join('. ')}.`;
+}
+const describeAll=(projects,options)=>projects.map(project=>describeProject(project,options)).join('\n\n');
+
+// A follow-up ("describe each", "tell me more", "the second one") points at what the previous answer showed.
+const STRONG_FOLLOW_UP=/\b(each|every one|them|those|these|both|the (first|second|third|fourth|last) one|(first|second|third|fourth|last) (one|project)|tell me more|more (about|on|detail)|elaborate|expand)\b/;
+const WEAK_FOLLOW_UP=/\b(it|that|this|describe|explain|why|how)\b/;
+const ORDINALS={first:0,second:1,third:2,fourth:3};
+export function previousProjectIds(history=[],store){
+ const last=[...history].reverse().find(item=>item?.role==='assistant'&&Array.isArray(item.documentIds));
+ return (last?.documentIds||[]).filter(id=>typeof id==='string'&&store.getCard?.(id));
+}
+function followUpProjects(query,ids,store){
+ const projects=ids.map(id=>store.get(id)).filter(Boolean);
+ const ordinal=query.match(/\b(first|second|third|fourth|last)\b/)?.[1];
+ if(ordinal==='last')return projects.slice(-1);
+ if(ordinal in ORDINALS)return projects.slice(ORDINALS[ordinal],ORDINALS[ordinal]+1);
+ return projects;
+}
 export const knowledgeById=new Map(assistantKnowledge.facts.map(fact=>[fact.id,fact]));
 export function resolvedAnswer(store,text,documentIds=[],knowledgeSourceIds=[],suggestions=[]){
  const ids=[...new Set(documentIds)].filter(id=>store.get(id));
@@ -19,7 +45,7 @@ export function resolvedAnswer(store,text,documentIds=[],knowledgeSourceIds=[],s
 }
 
 /** Each response is assembled from published fields and resolved against canonical IDs. */
-export function answerPublishedQuestion(question,{store}={}){
+export function answerPublishedQuestion(question,{store,history=[]}={}){
  if(typeof question!=='string'||question.length>240)throw new RangeError('Questions must be text of at most 240 characters.');
  const curated=findCuratedAnswer(question);if(curated)return resolvedAnswer(store,curated.text,curated.sourceIds,[],curated.followUps);
  const query=normalize(question),tokens=[...new Set(words(query).filter(word=>!stop.has(word)))];
@@ -28,6 +54,8 @@ export function answerPublishedQuestion(question,{store}={}){
  const has=(re)=>re.test(query);
  const type=has(/\b(roles?|responsibilit\w*|contribut\w*|what did|involvement)\b/)?'role':has(/\b(impacts?|results?|outcomes?|metrics?|improv\w*|achiev\w*|chang\w*|nps)\b/)?'result':has(/\b(approach|process|problem|challenge|key work|how did)\b/)?'approach':'overview';
  const kind=has(/\blab\b/)?'lab':has(/\b(shipped|launched|live)\b/)?'shipped':null;
+ const deep=has(/\b(describe|each|explain|elaborate|details?|more)\b/);
+ const previousIds=previousProjectIds(history,store);
  if(has(/\b(contact|email|reach|hire|talk to)\b/)){
   const d=store.get('contact');return d?store.resolveAnswer({type:'mixed',text:d.summary||d.title,documentIds:['contact'],citations:[{documentId:'contact'}]}):cited(store,fallback,[]);
  }
@@ -47,6 +75,13 @@ export function answerPublishedQuestion(question,{store}={}){
   const score=matched.reduce((sum,token)=>sum+Math.max(...expand(token).map(term=>contains(title,term)?9:contains(topics,term)?5:contains(body,term)?2:0)),0);
   return {d,score,matched:matched.length};
  }).filter(({d,score})=>named.length?named.includes(d):tokens.length?score>=Math.max(2,tokens.length*1.5):Boolean(kind)).sort((a,b)=>b.score-a.score||a.d.title.localeCompare(b.d.title));
+
+ const followUp=!named.length&&previousIds.length&&(STRONG_FOLLOW_UP.test(query)||!candidates.length&&WEAK_FOLLOW_UP.test(query));
+ if(followUp){
+  const projects=followUpProjects(query,previousIds,store);
+  if(projects.length===1&&type!=='overview')return answerForProject(store,projects[0],type);
+  if(projects.length)return answerProjects(store,projects,{deep:true,lead:projects.length>1?'Here is each one in a little more detail:':''});
+ }
  const listIntent=has(/\b(show|find|list|examples|portfolio|case studies|which projects|projects in)\b/)||kind||named.length>1;
  if(!candidates.length){
   if(!tokens.length&&has(/\b(projects|portfolio|work)\b/))return store.resolveAnswer({type:'mixed',text:'Explore Prem’s published projects.',documentIds:portfolio.slice(0,5).map(d=>d.id),citations:[]});
@@ -55,9 +90,17 @@ export function answerPublishedQuestion(question,{store}={}){
  }
  const selected=candidates.slice(0,listIntent?4:3).map(({d})=>d);
  if(listIntent||!named.length){
-  return store.resolveAnswer({type:'mixed',text:kind?`${kind==='lab'?'Lab':'Shipped'} projects from Prem’s portfolio:`:'Related work from Prem’s portfolio:',documentIds:selected.map(d=>d.id),citations:selected.map(d=>({documentId:d.id}))});
+  const lead=kind?`${kind==='lab'?'Lab':'Shipped'} projects from Prem’s portfolio:`:'Related work from Prem’s portfolio:';
+  return answerProjects(store,selected,{deep,lead});
  }
- const d=selected[0],fields=type==='role'?[d.role]:type==='result'?[d.highlights,d.impact]:type==='approach'?[d.intro,d.context,d.challenge,d.keyWork]:[d.summary,d.intro,d.context];
+ return answerForProject(store,selected[0],type);
+}
+function answerProjects(store,projects,{deep=false,lead=''}={}){
+ const shown=projects.slice(0,MAX_PROJECTS_LISTED),text=[lead,describeAll(shown,{deep})].filter(Boolean).join('\n\n');
+ return store.resolveAnswer({type:'mixed',text,documentIds:shown.map(d=>d.id),citations:shown.map(d=>({documentId:d.id}))});
+}
+function answerForProject(store,d,type){
+ const fields=type==='role'?[d.role]:type==='result'?[d.highlights,d.impact]:type==='approach'?[d.intro,d.context,d.challenge,d.keyWork]:[d.summary,d.intro,d.context];
  const facts=[...new Set(fields.map(sentence).filter(Boolean))];
  if(!facts.length)return cited(store,fallback,[]);
  const citations=type==='result'?(d.evidence||[]).filter(e=>['highlights','impact'].includes(e.id)).map(e=>({documentId:d.id,evidenceId:e.id})):[{documentId:d.id}];

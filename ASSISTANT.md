@@ -13,6 +13,10 @@ The model is given one record per published document, built by `usableDocuments(
 
 At this size (about 25,000 characters) it is simpler to send the whole set than to maintain a vector database. The model picks the relevant records while answering. A future semantic or vector retriever can replace `usableDocuments()` without changing the contract. `tests/assistant-sources.mjs` fails if a project field, a block's text or an attribution stops reaching the model, so new content types cannot be dropped silently.
 
+## Conversation context
+
+Each question carries the last four chat turns. An assistant turn also carries the IDs of the projects it showed, because the answer text alone does not name its cards. The model receives them as `shownProjects`, so "describe each", "the second one" or "tell me more" resolve to those projects. The model is allowed 420 output tokens and told to give each relevant project a name and one or two sentences. The published (no-model) fallback follows the same chat context: lists describe every project in one or two sentences, and a follow-up such as "describe each" answers about the previous answer's projects in a little more detail. `tests/assistant-follow-up.mjs` covers both paths.
+
 ## Curated knowledge and answers
 
 Edit `dist/assistant-knowledge.js` to add independently authored `facts` (stable ID, title, text and optional route), `answers` (exact normalized phrases, approved response, source IDs and follow-ups), or opening `suggestedQuestions`. Facts are public, versioned content in the source repository; never put secrets or unapproved private material there. The Worker includes facts in the grounded model corpus and validates every returned ID. The client and Worker share the same curated answers, so common questions cost no model tokens even when the API is unavailable. The build copies this file into the Worker bundle.

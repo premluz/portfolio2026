@@ -21,7 +21,7 @@ assert.equal(captured.url,'https://models.example/v1/chat/completions');
 assert.equal(captured.options.headers.authorization,'Bearer test-only-secret');
 assert.equal(captured.body.model,'small-model');
 assert.equal(captured.body.temperature,0);
-assert.equal(captured.body.max_tokens,160);
+assert.equal(captured.body.max_tokens,420,'Room for a short description of several projects');
 const supplied=JSON.parse(captured.body.messages[1].content);
 assert(supplied.sources.some(source=>source.id==='tracr'));
 const timeline=supplied.sources.find(source=>source.id==='home').sections.find(section=>section.title==='My path');
@@ -62,7 +62,7 @@ const openAIResponse=await handleAssistantRequest(makeRequest({sessionId:'openai
 assert.equal(openAIResponse.status,200);
 assert.equal(captured.url,'https://api.openai.com/v1/chat/completions');
 assert.equal(captured.options.headers.authorization,'Bearer test-only-openai-secret');
-assert.equal(captured.body.max_completion_tokens,160);
+assert.equal(captured.body.max_completion_tokens,420);
 assert(!('max_tokens' in captured.body),'OpenAI must receive its supported completion cap.');
 assert.equal(captured.body.reasoning_effort,'none','Luna should not spend the short answer budget on reasoning.');
 assert.equal(captured.body.store,false);
