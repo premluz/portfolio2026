@@ -16,7 +16,7 @@ export const DEFAULT_JSON_STORAGE_VALUES=Object.freeze({
  'prem-home-content':{approach:false,services:false,about:true,'about-timeline':false,experience:true,testimonials:false},
  'prem-home-section-spans':{approach:'content',services:'content',about:'content',experience:'content',testimonials:'content'},
  'prem-design-system':{typeSize:'small',spaceSize:'large',headingWeight:'bold',bodyWeight:'thin',typeTracking:'small',typeLeading:'small'},
- 'prem-carousel-settings':{tilt:47,spread:60,depth:200,gap:96,speed:100,peek:12},
+ 'prem-carousel-settings':{tilt:47,spread:60,depth:200,size:100,gap:96,speed:100,peek:12},
  'prem-motion-settings':{intensity:46,duration:400,slow:false,stretch:100,lag:38,stiffness:62,damping:39,reflections:0,glow:0,overshoot:0,ripple:65,motionBlur:55},
  'prem-bleed-image':{top:28,side:0,bottom:8,backing:true,settingsVersion:1}
 });
