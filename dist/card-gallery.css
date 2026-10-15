@@ -38,6 +38,7 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 [data-gallery-axis="vertical"] .spatial-gallery-item{flex-basis:var(--gallery-card-height)}
 [data-gallery-reduced="true"] .spatial-gallery-pose{transition:none}
 .spatial-card-gallery[data-gallery-variant="circular"][data-gallery-reduced="false"] .spatial-gallery-viewport{display:block;padding:0;overflow:hidden;scroll-snap-type:none;perspective:1800px;touch-action:pan-y pinch-zoom}
+.spatial-card-gallery[data-gallery-variant="circular"][data-gallery-reduced="false"][data-gallery-axis="horizontal"] .spatial-gallery-viewport{overflow-x:clip;overflow-y:visible}
 .spatial-card-gallery[data-gallery-variant="circular"][data-gallery-reduced="false"] .spatial-gallery-item{position:absolute;left:50%;top:50%;scroll-snap-align:none;transform-origin:center;transform-style:preserve-3d}
 .spatial-card-gallery[data-gallery-variant="circular"][data-gallery-reduced="false"] .spatial-gallery-pose{transition:none}
 .spatial-card-gallery[data-gallery-variant="circular"][data-gallery-reduced="false"][data-gallery-axis="vertical"] .spatial-gallery-viewport{touch-action:pan-x pinch-zoom}
