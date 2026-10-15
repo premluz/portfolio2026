@@ -14,7 +14,7 @@ import {escapeText} from './content/html.js';
 import {flipPose,masonryMinimumHeight,masonryPlan,clamp} from './placement.js';
 
 export function homeProductText(documents){
- const independent=['planner','bastion','merlin','porter'],unique=documents.filter(doc=>!doc.body&&!doc.sourceProjectId),groups=[['Projects',unique.filter(doc=>!independent.includes(doc.id))],['Independent and R&D',independent.map(id=>unique.find(doc=>doc.id===id)).filter(Boolean)]];
+ const independent=['rios','bastion','merlin','porter'],unique=documents.filter(doc=>!doc.body&&!doc.sourceProjectId),groups=[['Projects',unique.filter(doc=>!independent.includes(doc.id))],['Independent and R&D',independent.map(id=>unique.find(doc=>doc.id===id)).filter(Boolean)]];
  return '<section class="home-product-text" data-home-product-text aria-label="Projects" hidden>'+groups.map(([title,items])=>'<div class="home-product-text-group"><h2>'+escapeText(title)+'</h2><ul>'+items.map(doc=>'<li><a href="#'+escapeText(doc.id)+'" data-text-project="'+escapeText(doc.id)+'" data-project-menu-item="'+escapeText(doc.id)+'"><span>'+escapeText(independent.includes(doc.id)?doc.name:doc.client?doc.client.split(' • ')[0]+' · '+doc.name:doc.name)+'</span><p>'+escapeText(doc.title)+'</p></a></li>').join('')+'</ul></div>').join('')+'</section>';
 }
 export function homeMarkup(documents,layout,{heroContent='timeline'}={}){

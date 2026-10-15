@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {projects} from '../dist/documents.js';
 import {projectMenuMarkup} from '../dist/project-menu.js';
 
-const html=projectMenuMarkup(projects,'planner');
+const html=projectMenuMarkup(projects,'rios');
 assert.equal((html.match(/<section /g)||[]).length,2,'Shipped and Lab remain semantic groups without headings.');
 assert(!html.includes('<h2'),'Group headings are hidden for now.');
 assert.equal((html.match(/data-page-menu-item=/g)||[]).length,2,'Home and About retain their page routes.');
@@ -17,7 +17,7 @@ for(const id of ['themeToggle','soundPreference','siteHelp','animationPreference
 const controls=['themeToggle','soundPreference','gesturePreference','animationPreference','siteHelp'];
 for(let i=1;i<controls.length;i++)assert(html.indexOf(`id="${controls[i-1]}"`)<html.indexOf(`id="${controls[i]}"`),'Animation is second-last, Help last in the right group');
 assert.equal((html.match(/data-icon-switch /g)||[]).length,4,'Three binary controls and one theme cycle share the icon switch');
-assert.match(html,/data-project-menu-item="planner" class="active" aria-current="page"/);
+assert.match(html,/data-project-menu-item="rios" class="active" aria-current="page"/);
 const groups=html.split('</section>');
 for(const p of projects)assert(groups[p.projectKind==='lab'?1:0].includes(`data-project-menu-item="${p.id}"`));
 const escaped=projectMenuMarkup([{id:'test"',name:'<script>&',projectKind:'lab'}],'');

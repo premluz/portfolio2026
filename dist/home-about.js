@@ -2,7 +2,7 @@ import {contextualText} from './contextual-popovers.js';
 import {content} from './content/local.js';
 import {escapeText,headingText} from './content/html.js';
 import {timelineMarkup} from './hero-timeline.js';
-const projectIds={'role-gala':'galachain','role-tracr':'tracr','role-vodafone':'vodafone-iot','role-playstation':'playstation','side-rios':'planner','side-porter':'porter','side-merlin':'merlin','side-bastion':'bastion'};
+const projectIds={'role-gala':'galachain','role-tracr':'tracr','role-vodafone':'vodafone-iot','role-playstation':'playstation','side-rios':'rios','side-porter':'porter','side-merlin':'merlin','side-bastion':'bastion'};
 function experienceItem(item){const projectId=projectIds[item.id],tag=projectId?'a':'span';return `<${tag} class="home-about-row" data-project-menu-item="${escapeText(projectId||item.id)}"${projectId?` href="#${escapeText(projectId)}" data-text-project="${escapeText(projectId)}"`:''}><span class="home-about-item">${escapeText(item.title)}</span>${item.label?`<span class="home-about-years">${escapeText(item.label)}</span>`:''}</${tag}>`;}
 // Authored content stays in one reusable component document; this is its home projection.
 export function homeAboutMarkup(doc=content.get('home-about')){

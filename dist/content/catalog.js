@@ -79,7 +79,7 @@ export const catalog={
       }
     },
     {
-      "id": "planner",
+      "id": "rios",
       "type": "portfolio-item",
       "status": "published",
       "slug": "rios",
@@ -805,9 +805,9 @@ export const catalog={
               "presentation": "card"
             },
             {
-              "id": "home-project-planner",
+              "id": "home-project-rios",
               "type": "reference",
-              "documentId": "planner",
+              "documentId": "rios",
               "presentation": "card"
             },
             {
@@ -1642,7 +1642,7 @@ export const catalog={
       }
     },
     {
-      "documentId": "planner",
+      "documentId": "rios",
       "card": {
         "orientation": "portrait",
         "surface": [
@@ -1730,8 +1730,8 @@ export const catalog={
           "featured": false
         },
         {
-          "id": "planner",
-          "documentId": "planner",
+          "id": "rios",
+          "documentId": "rios",
           "featured": false
         },
         {
@@ -1775,8 +1775,8 @@ export const catalog={
           "featured": false
         },
         {
-          "id": "planner-02",
-          "documentId": "planner",
+          "id": "rios-02",
+          "documentId": "rios",
           "featured": false
         },
         {

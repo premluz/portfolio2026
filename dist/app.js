@@ -49,6 +49,7 @@ import {captureSharedWords,copyOpacity,copyScale,sharedCopyNode} from './shared-
 import {stageMotion} from './motion-viewport.js';
 import {projects,homeProjects,informationCards,cards,cardIds,projectIds} from './documents.js';
 import {card,cardDetail} from './card-renderer.js';
+import {mountProjectRouteAliases} from './project-route-aliases.js';
 import {homeMarkup,HomeLayout} from './home-layout.js';
 import {HeroTimeline} from './hero-timeline.js';
 import {initHomeSectionSettings} from './home-sections.js';
@@ -63,6 +64,7 @@ import {MediaLoader} from './media-loading.js';
 import {presentedImage,clearImageHandoffs} from './image-handoff.js';
 applyDefaultSettings();
 const $=s=>document.querySelector(s), main=$('#main'), systemReduce=matchMedia('(prefers-reduced-motion: reduce)'), desktopLabelMode=matchMedia('(min-width:601px)');
+mountProjectRouteAliases(window);
 const mediaLoader=new MediaLoader();
 addEventListener('gallery-selection-change',()=>mediaLoader.refresh(main));
 hydrateFooter();

@@ -78,7 +78,7 @@
       }
     },
     {
-      "id": "planner",
+      "id": "rios",
       "type": "portfolio-item",
       "status": "published",
       "slug": "rios",
@@ -804,9 +804,9 @@
               "presentation": "card"
             },
             {
-              "id": "home-project-planner",
+              "id": "home-project-rios",
               "type": "reference",
-              "documentId": "planner",
+              "documentId": "rios",
               "presentation": "card"
             },
             {
@@ -1641,7 +1641,7 @@
       }
     },
     {
-      "documentId": "planner",
+      "documentId": "rios",
       "card": {
         "orientation": "portrait",
         "surface": [
@@ -1729,8 +1729,8 @@
           "featured": false
         },
         {
-          "id": "planner",
-          "documentId": "planner",
+          "id": "rios",
+          "documentId": "rios",
           "featured": false
         },
         {
@@ -1774,8 +1774,8 @@
           "featured": false
         },
         {
-          "id": "planner-02",
-          "documentId": "planner",
+          "id": "rios-02",
+          "documentId": "rios",
           "featured": false
         },
         {

@@ -9,7 +9,7 @@ for(const [phrase,id,target] of [
   ['Please open the Sony project.','project.open','playstation'],['Open Tracer','project.open','tracr'],
   ['Open Merlin','project.open','merlin'],['Open Bastion','project.open','bastion'],['Open Porter','project.open','porter'],
   ['Open Gala chain','project.open','galachain'],['Open Vodafone','project.open','vodafone-iot'],
-  ['Open Amble','project.open','planner'],['open Rios','project.open','planner'],
+  ['Open Amble','project.open','rios'],['open Rios','project.open','rios'],['Open Planner','project.open','rios'],
   ['Next','project.next'],['previous project','project.previous'],['Work','route.work'],
   ['Right','project.next'],['Left','project.previous'],['Move right','project.next'],['Go left','project.previous'],
   ['Close menu','overlay.projects.close'],['Close the menu','overlay.projects.close'],['Close index','overlay.projects.close'],
