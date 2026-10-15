@@ -781,12 +781,6 @@ export const catalog={
           },
           "items": [
             {
-              "id": "home-project-playstation",
-              "type": "reference",
-              "documentId": "playstation",
-              "presentation": "card"
-            },
-            {
               "id": "home-project-tracr",
               "type": "reference",
               "documentId": "tracr",
@@ -805,21 +799,27 @@ export const catalog={
               "presentation": "card"
             },
             {
+              "id": "home-project-playstation",
+              "type": "reference",
+              "documentId": "playstation",
+              "presentation": "card"
+            },
+            {
               "id": "home-project-rios",
               "type": "reference",
               "documentId": "rios",
               "presentation": "card"
             },
             {
-              "id": "home-project-merlin",
-              "type": "reference",
-              "documentId": "merlin",
-              "presentation": "card"
-            },
-            {
               "id": "home-project-bastion",
               "type": "reference",
               "documentId": "bastion",
+              "presentation": "card"
+            },
+            {
+              "id": "home-project-merlin",
+              "type": "reference",
+              "documentId": "merlin",
               "presentation": "card"
             },
             {
@@ -1528,7 +1528,7 @@ export const catalog={
       "id": "bastion-cover",
       "type": "image",
       "status": "published",
-      "url": "assets/bastion3.png",
+      "url": "assets/bastion.png",
       "alt": "Bastion AI wallet prototype with a persistent assistant and financial interface",
       "width": 1440,
       "height": 900
@@ -1537,7 +1537,7 @@ export const catalog={
       "id": "bastion-walkthrough",
       "type": "video",
       "status": "published",
-      "url": "assets/bastion.mp4?v=5a80f8559d8b",
+      "url": "assets/bastion2.mp4",
       "alt": "",
       "width": 1440,
       "height": 900

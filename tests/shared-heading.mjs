@@ -113,6 +113,7 @@ async function scenario({fromLine=1.13,toLine=1.3,sourceHidden=false,targetHidde
  const peakGlow=Math.max(...samples.map(sample=>sample.glow));
  if(!intensity||!glowStrength)assert.equal(peakGlow,0,'Disabling intensity or afterglow removes the transition wake');
  else assert(peakGlow>0&&peakGlow<=glowStrength/100,'The wake respects the Afterglow control');
+ if(reverseAt===null)assert(samples.at(-1).glow<.001,'The afterglow is gone by landing, so it never hazes the settled media');
  assert.equal(samples[0].line,fromLine,'First frame matches the actual source heading');
  if(sourceHidden&&(targetHidden||targetCopyHidden))assert(samples.every(sample=>sample.opacity===0),'Copy hidden at both ends stays hidden throughout the handoff');
  const end=samples.at(-1);

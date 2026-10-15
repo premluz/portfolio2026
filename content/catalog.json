@@ -1554,7 +1554,7 @@
       "id": "bastion-cover",
       "type": "image",
       "status": "published",
-      "url": "assets/bastion3.png",
+      "url": "assets/bastion.png",
       "alt": "Bastion AI wallet prototype with a persistent assistant and financial interface",
       "width": 1440,
       "height": 900
