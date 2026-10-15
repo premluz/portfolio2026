@@ -807,12 +807,6 @@
           },
           "items": [
             {
-              "id": "home-project-playstation",
-              "type": "reference",
-              "documentId": "playstation",
-              "presentation": "card"
-            },
-            {
               "id": "home-project-tracr",
               "type": "reference",
               "documentId": "tracr",
@@ -831,21 +825,27 @@
               "presentation": "card"
             },
             {
+              "id": "home-project-playstation",
+              "type": "reference",
+              "documentId": "playstation",
+              "presentation": "card"
+            },
+            {
               "id": "home-project-rios",
               "type": "reference",
               "documentId": "rios",
               "presentation": "card"
             },
             {
-              "id": "home-project-merlin",
-              "type": "reference",
-              "documentId": "merlin",
-              "presentation": "card"
-            },
-            {
               "id": "home-project-bastion",
               "type": "reference",
               "documentId": "bastion",
+              "presentation": "card"
+            },
+            {
+              "id": "home-project-merlin",
+              "type": "reference",
+              "documentId": "merlin",
               "presentation": "card"
             },
             {
