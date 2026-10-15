@@ -37,12 +37,38 @@ function consume(map,key,limit,now){
  return true;
 }
 
-function usableDocuments(documents){
- return documents.filter(document=>document.status==='published'&&(['portfolio-item'].includes(document.type)||['home','about'].includes(document.id))).map(document=>({
+// Everything visitors can read as content is source material: project pages, the home, About and Contact
+// pages, and the reusable sections they are built from (services, experience, traits, testimonials).
+// Page chrome (footer) and popover duplicates of project content are not.
+const COMPONENT_EXCLUDED_IDS=new Set(['inline-context','site-footer']);
+const text=value=>typeof value==='string'?value.trim():'';
+const isSourceDocument=document=>document.status==='published'&&(document.type==='portfolio-item'||document.type==='page'||(document.type==='component'&&!COMPONENT_EXCLUDED_IDS.has(document.id)));
+const NESTED_BLOCK_TYPES=new Set(['timeline','carousel','card-gallery']);
+// Block types carry their words in different fields; collect them all so no section is silently dropped.
+function blockLines(block){
+ const quote=text(block.text)&&text(block.attribution)?[text(block.text),'— '+text(block.attribution)]:[text(block.text)];
+ const metric=text(block.value)?[text(block.value),text(block.description)]:[text(block.description)];
+ return [...(block.paragraphs||[]).map(text),...quote,...metric,text(block.caption),text(block.link?.label)].filter(Boolean);
+}
+// An experience row has a title and a separate label (its years); keep both.
+function nestedItem(item){
+ const title=text(item.title),label=text(item.label);
+ return {label:title||label,paragraphs:[...(title&&label?[label]:[]),...blockLines(item)]};
+}
+function blockSection(block){
+ const items=NESTED_BLOCK_TYPES.has(block.type)?(block.items||[]).map(nestedItem).filter(item=>item.label||item.paragraphs.length):[];
+ return {title:text(block.title)||text(block.label),paragraphs:blockLines(block),items};
+}
+export function usableDocuments(documents){
+ return documents.filter(isSourceDocument).map(document=>({
   id:document.id,
   type:document.type,
   title:document.name||document.title,
   pageTitle:document.pageTitle||document.title,
+  client:document.client||'',
+  category:document.category||'',
+  kind:document.kind||'',
+  prototype:document.prototype?.url||'',
   aliases:document.aliases||[],
   domains:document.domains||[],
   capabilities:document.capabilities||[],
@@ -54,8 +80,8 @@ function usableDocuments(documents){
   highlights:document.highlights||'',
   keyWork:document.keyWork||'',
   impact:document.impact||'',
-  sections:(document.blocks||[]).map(block=>({title:block.title||'',paragraphs:block.paragraphs||[],items:block.type==='timeline'?(block.items||[]).map(item=>({label:item.label||'',paragraphs:item.paragraphs||[]})):[]})).filter(block=>block.title||block.paragraphs.length||block.items.length),
- }));
+  sections:(document.blocks||[]).map(blockSection).filter(section=>section.title||section.paragraphs.length||section.items.length),
+ })).filter(record=>record.summary||record.intro||record.sections.length||record.context);
 }
 
 function parseModelAnswer(value,allowedIds){

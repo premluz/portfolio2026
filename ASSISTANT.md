@@ -2,7 +2,16 @@
 
 The assistant is a dedicated `#assistant` page. Its composer grows from the site's bottom liquid navigation, with a site index on the left and Send on the right. The index groups Home, About, Contact, Shipped and Lab. The page keeps its conversation in browser `sessionStorage` for the current web session, including restored portfolio cards, citations and suggested questions after reload. The server-side answer route is `POST /api/assistant`: for open questions the Worker sends the visitor's question, the site's **published** project and profile records, and approved knowledge facts to an OpenAI-compatible model API. The model composes a concise third-person answer and source IDs; the Worker accepts only IDs from those sources. Common exact prompts return an authored answer without a model call.
 
-The published corpus currently contains six projects plus the home and about pages, including every item in the homepage timeline. At this size it is cheaper and simpler to send this compact, structured set to the model than to maintain a vector database. The model chooses relevant records while answering. A future semantic or vector retriever can replace `usableDocuments()` without changing the content model or UI contract.
+## What the model can see
+
+The model is given one record per published document, built by `usableDocuments()` in `worker/assistant-core.mjs` from `content/catalog.json` (through the generated `dist/server/content.js`), so editing the catalog and running `npm run build` is all it takes to update what the assistant knows:
+
+- **Projects** — every case-study field a visitor reads (summary, intro, context, challenge, role, highlights, key work, impact), plus client, category, kind and the prototype link, and the text of their blocks.
+- **Pages** — Home, About and Contact, including timeline items.
+- **Reusable sections** — Services, Experience and side projects, Approach, Testimonials (with attribution), and the About traits and unusual-things sections. Nested items keep both their title and their label (for example a role and its years).
+- **Not sent** — drafts and archived content, the site footer, and `inline-context` (popover copy that repeats project content).
+
+At this size (about 25,000 characters) it is simpler to send the whole set than to maintain a vector database. The model picks the relevant records while answering. A future semantic or vector retriever can replace `usableDocuments()` without changing the contract. `tests/assistant-sources.mjs` fails if a project field, a block's text or an attribution stops reaching the model, so new content types cannot be dropped silently.
 
 ## Curated knowledge and answers
 
