@@ -5,6 +5,7 @@ import voice from '../api/voice.js';
 import {vercelEnvironment,vercelRequest} from '../worker/vercel-adapter.mjs';
 import {resetAssistantRateLimitsForTests} from '../worker/assistant-core.mjs';
 import {providerErrorCode,providerRateLimits} from '../worker/provider-error.mjs';
+import {assistantLimits} from '../dist/assistant-limits.js';
 
 globalThis.crypto??=webcrypto;
 const origin='https://portfolio.example';
@@ -30,15 +31,17 @@ try{
  const missingIp=vercelRequest(new Request(origin+'/api/assistant',{headers:{'cf-connecting-ip':'spoofed'}}));
  assert.equal(missingIp.headers.get('cf-connecting-ip'),'unknown');
 
- globalThis.fetch=()=>{throw Error('Curated answers must not contact a provider.');};
+ delete process.env.AI_API_KEY;
+ globalThis.fetch=()=>{throw Error('Offline curated answers must not contact a provider.');};
  const curated=await assistant.fetch(request('assistant',{question:'Who is Prem?',sessionId:'vercel-curated'}));
  assert.equal(curated.status,200);
  const answer=await curated.json();assert(answer.text);assert(answer.speechToken);
  assert.equal((await assistant.fetch(new Request(origin+'/api/assistant'))).status,405);
  assert.equal((await assistant.fetch(request('assistant',{question:'Who is Prem?',sessionId:'cross-site'},{origin:'https://other.example'}))).status,403);
- assert.equal((await assistant.fetch(request('assistant',{question:'x'.repeat(5000),sessionId:'too-big'}))).status,413);
+ assert.equal((await assistant.fetch(request('assistant',{question:'x'.repeat(assistantLimits.requestBytes),sessionId:'too-big'}))).status,413);
 
  let providerCalls=0;
+ process.env.AI_API_KEY='test-only-model-key';
  globalThis.fetch=async(url,options)=>{
   providerCalls++;
   assert.equal(url,'https://api.openai.com/v1/chat/completions');

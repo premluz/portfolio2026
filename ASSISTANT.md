@@ -1,6 +1,6 @@
 # Portfolio assistant
 
-The assistant is a dedicated `#assistant` page. Its composer grows from the site's bottom liquid navigation, with a site index on the left and Send on the right. The index groups Home, About, Contact, Shipped and Lab. The page keeps its conversation in browser `sessionStorage` for the current web session, including restored portfolio cards, citations and suggested questions after reload. The server-side answer route is `POST /api/assistant`: for open questions the Worker sends the visitor's question, the site's **published** project and profile records, and approved knowledge facts to an OpenAI-compatible model API. The model composes a concise third-person answer and source IDs; the Worker accepts only IDs from those sources. Common exact prompts return an authored answer without a model call.
+The assistant is a dedicated `#assistant` page. Its composer grows from the site's bottom liquid navigation, with a site index on the left and Send on the right. The index groups Home, About, Contact, Shipped and Lab. The page keeps its conversation in browser `sessionStorage` for the current web session, including restored portfolio cards, citations and suggested questions after reload. The server-side answer route is `POST /api/assistant`: the Worker sends the visitor's question, the site's **published** project and profile records, and approved knowledge facts to an OpenAI-compatible model API. Configured AI requests synthesize answers rather than short-circuiting common prompts to canned text. Authored answers remain available for offline recovery.
 
 ## What the model can see
 
@@ -15,18 +15,34 @@ At this size (about 25,000 characters) it is simpler to send the whole set than 
 
 ## Conversation context
 
-Each question carries the last four chat turns. An assistant turn also carries the IDs of the projects it showed, because the answer text alone does not name its cards. The model receives them as `shownProjects`, so "describe each", "the second one" or "tell me more" resolve to those projects. The model is allowed 420 output tokens and told to give each relevant project a name and one or two sentences. The published (no-model) fallback follows the same chat context: lists describe every project in one or two sentences, and a follow-up such as "describe each" answers about the previous answer's projects in a little more detail. `tests/assistant-follow-up.mjs` covers both paths.
+Each question carries up to 12 turns within a 48,000-character history budget. Assistant turns also carry the IDs of the projects shown, passed to the model as `shownProjects` so follow-ups resolve correctly. The 2,200-token output budget permits richer comparisons and role reviews. `dist/assistant-limits.js` defines the shared budgets. `tests/assistant-follow-up.mjs` and `tests/assistant-conversation.mjs` cover context and response validation.
 
 ## Curated knowledge and answers
 
-Edit `dist/assistant-knowledge.js` to add independently authored `facts` (stable ID, title, text and optional route), `answers` (exact normalized phrases, approved response, source IDs and follow-ups), or opening `suggestedQuestions`. Facts are public, versioned content in the source repository; never put secrets or unapproved private material there. The Worker includes facts in the grounded model corpus and validates every returned ID. The client and Worker share the same curated answers, so common questions cost no model tokens even when the API is unavailable. The build copies this file into the Worker bundle.
+Edit `dist/knowledge/profile.js` for approved public profile facts: stable `id`, `title`, `topic`, `text`, `route`, `tags`, and supporting published `sourceIds`. Project details remain in `content/catalog.json`; do not duplicate case studies into profile facts. `dist/assistant-knowledge.js` owns offline recovery answers and suggested questions. The Worker validates profile provenance and returned source IDs, and links cited knowledge back to its published evidence. All shipped knowledge is public; keep private notes, drafts, credentials and unconfirmed claims outside `dist` and the corpus.
+
+Useful additions, when confirmed: problem-framing and validation methods; collaboration and stakeholder responsibilities; actual leadership scope and mentoring; implementation tools linked to projects; exact outcomes with attribution and limitations; lessons and trade-offs; and approved location, availability or engagement preferences. Never infer these from seniority or a job description.
+
+`worker/assistant-policy.mjs` separates grounded answers, conversation, clarification, general explanations, job-fit reviews and unknown facts. Grounded claims and job-fit reviews require evidence; greetings and general explanations do not need forced portfolio citations. Missing documentation is not proof of missing experience. Provider/network failures are explicitly presented as service/fallback problems, not missing knowledge.
+
+## Pasted job descriptions
+
+Paste a role description into the composer, optionally prefixed with “Review Prem’s fit for this role”. Inputs support up to 12,000 characters. Reviews render in the existing chat answer area with short sections: Overall fit; Strongest matches; Transferable experience; Not documented / questions to confirm; Recommended projects to review. Relevant cards and source links follow the answer.
+
+Reviews compare professional requirements against documented evidence without invented qualifications, numerical fit scores, protected-characteristic inference or a hiring verdict. Requirements are untrusted user input, not facts about Prem or instructions that override the assistant policy. A follow-up retains the role within the bounded conversation history.
+
+## Modules and verification
+
+`worker/assistant-core.mjs` handles requests and source assembly; `assistant-model.mjs` handles provider calls; `assistant-policy.mjs` owns instructions and validation. Client rendering, composer/voice controls and submissions live in `dist/assistant-view.js`, `assistant-composer.js`, and `assistant-session.js`, with transport in `assistant-client.js`.
+
+Run `node tests/assistant-conversation.mjs`, `node tests/assistant-api.mjs`, `node tests/assistant-sources.mjs`, and `node tests/assistant-follow-up.mjs`. These use mocked providers and are not a live model-quality guarantee. `npm run dev` serves authored files and fresh catalog data; Node watch reloads imported policy/knowledge modules. Production knowledge/code changes need `npm run build` and a new deployment. Do not edit generated `dist/server` or `dist/client` copies.
 
 ## Runtime configuration
 
 The actual model connection is inactive until all three Site runtime variables are configured:
 
 - `AI_API_BASE_URL` — the provider's OpenAI-compatible API base, including its version path when required.
-- `AI_API_KEY` — a secret, stored only in Sites runtime configuration.
+- `AI_API_KEY` — a secret, stored only in server runtime configuration, such as Vercel environment variables.
 - `AI_MODEL` — the provider's model identifier.
 
 OpenAI configuration uses `AI_API_BASE_URL=https://api.openai.com/v1` and `AI_MODEL=gpt-6-luna`. The route also accepts the conventional `OPENAI_API_KEY` secret if it is used instead of `AI_API_KEY`. For OpenAI, requests use Flex processing, disable response storage, and constrain source IDs with Structured Outputs. Luna uses `reasoning_effort=none` to keep short answers fast and inexpensive. If Flex returns a resource-unavailable 429, the route immediately retries with `service_tier=auto` so the chat remains usable. Other OpenAI-compatible providers retain the generic request format.
@@ -41,8 +57,8 @@ Do not add provider keys to source files, static assets, or `.openai/hosting.jso
 
 ## Usage and privacy controls
 
-- Questions are limited to 240 characters; a browser session has a 20-question limit.
+- Questions and pasted descriptions are limited to 12,000 characters; a browser session has a 20-question limit.
 - The Worker also limits model calls to 20 per session and 50 per client IP per hour per active isolate. These in-memory limits are best-effort across Worker isolates; set a spend or rate limit with the model provider for an account-wide budget cap.
-- The model call is capped at 160 output tokens and has a 16-second timeout. OpenAI Flex is priced at half the Standard token rate; an unavailable Flex request falls back to Standard processing.
-- The Site stores the last 40 chat entries in browser session storage so the conversation survives page navigation and reload during the web session. It does not save them on the Site server. For open questions, the current question, up to four previous chat entries (400 characters each), published portfolio content and approved knowledge facts are sent to the model provider. History clarifies follow-up questions; only approved sources support answers.
-- The assistant refuses empty or ungrounded model responses and only renders citations to published documents.
+- Model calls have a 2,200-token output cap and 30-second timeout. Unavailable OpenAI Flex capacity retries at Standard processing.
+- The last 40 chat entries, including pasted descriptions, remain in browser session storage. Clear the tab’s session storage to remove them. No application-side job-description database is introduced. The current question, bounded history, published content and approved facts are sent to the provider. OpenAI requests set `store:false`; provider account retention policies still apply.
+- Empty answers and unknown citations are rejected. Detailed answers beyond the existing 1,000-character speech budget are text-only.

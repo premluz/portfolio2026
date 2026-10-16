@@ -44,8 +44,8 @@ const response=await handleAssistantRequest(new Request('https://portfolio.examp
 assert.equal(response.status,200);
 const prompt=JSON.parse(captured.messages[1].content);
 assert.deepEqual(prompt.history[1].shownProjects,['Porter','Bastion'],'Earlier cards are named for the model; unknown ids are dropped');
-assert(captured.messages[0].content.includes('shownProjects')&&captured.messages[0].content.includes('one or two sentences'),'The model is told to use them and to give each project context');
-assert.equal(captured.max_tokens,420);
+assert(captured.messages[0].content.includes('shownProjects')&&captured.messages[0].content.includes('connect patterns'),'The model is told to use the shown projects and synthesize relevant context');
+assert(captured.max_tokens>420,'A detailed follow-up is not forced into the old short-answer cap');
 
 // With no model configured, the published fallback still understands the chat.
 resetAssistantRateLimitsForTests();
@@ -62,7 +62,7 @@ for(const [question,trait] of [['tell me about personally your interest','trait-
  assert(answer.sources.some(source=>source.documentId==='about'),'It cites the About page');
 }
 assert(ask('has prem done anything unusual').text.includes('Walking ancient pilgrimage route'),'Unusual things come from their section');
-assert(ask('What did Prem do at Bastion').text.startsWith('Bastion'),'Project questions are unaffected');
+assert.deepEqual(shown(ask('What did Prem do at Bastion')),['bastion'],'Project questions remain tied to the stable project ID');
 resetAssistantRateLimitsForTests();
 const personal=await handleAssistantRequest(new Request('https://portfolio.example/api/assistant',{method:'POST',headers:{'content-type':'application/json',origin:'https://portfolio.example','cf-connecting-ip':'198.51.100.79'},body:JSON.stringify({question:'tell me about personally your interest',sessionId:'profile'})}),{},{documents:catalog.documents});
 assert((await personal.json()).text.includes('Bio-hacking'),'The server fallback answers personal questions from the About page too');

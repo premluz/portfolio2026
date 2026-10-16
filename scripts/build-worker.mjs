@@ -24,7 +24,14 @@ const publishedAssistantDocuments=catalog.documents
 await fs.writeFile(path.join(server,'content.js'),`// Generated from the published content catalog.\nexport const publishedAssistantDocuments=${JSON.stringify(publishedAssistantDocuments)};\n`);
 await fs.copyFile(path.join(root,'worker/index.js'),path.join(server,'index.js'));
 const assistantCore=await fs.readFile(path.join(root,'worker/assistant-core.mjs'),'utf8');
-await fs.writeFile(path.join(server,'assistant-core.mjs'),assistantCore.replace("'../dist/assistant-knowledge.js'","'./assistant-knowledge.js'").replace("'../dist/assistant-answer.js'","'./assistant-answer.js'"));
+await fs.writeFile(path.join(server,'assistant-core.mjs'),assistantCore.replaceAll("'../dist/","'./"));
+for(const file of ['assistant-model.mjs','assistant-policy.mjs']){
+ const source=await fs.readFile(path.join(root,'worker',file),'utf8');
+ await fs.writeFile(path.join(server,file),source.replaceAll("'../dist/","'./"));
+}
+await fs.copyFile(path.join(dist,'assistant-limits.js'),path.join(server,'assistant-limits.js'));
+await fs.mkdir(path.join(server,'knowledge'),{recursive:true});
+await fs.copyFile(path.join(dist,'knowledge/profile.js'),path.join(server,'knowledge/profile.js'));
 await fs.copyFile(path.join(dist,'assistant-knowledge.js'),path.join(server,'assistant-knowledge.js'));
 await fs.copyFile(path.join(dist,'assistant-answer.js'),path.join(server,'assistant-answer.js'));
 await fs.copyFile(path.join(root,'worker/voice-core.mjs'),path.join(server,'voice-core.mjs'));

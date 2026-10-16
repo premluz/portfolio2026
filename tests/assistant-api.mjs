@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import {handleAssistantRequest,resetAssistantRateLimitsForTests} from '../worker/assistant-core.mjs';
+import {assistantLimits} from '../dist/assistant-limits.js';
 
 const catalog=JSON.parse(await fs.readFile(new URL('../dist/content/catalog.json',import.meta.url),'utf8'));
 const documents=catalog.documents;
@@ -16,12 +17,12 @@ const fetcher=async(url,options)=>{captured={url,options,body:JSON.parse(options
 resetAssistantRateLimitsForTests();
 const response=await handleAssistantRequest(makeRequest(),env,{documents,fetcher});
 assert.equal(response.status,200);
-assert.deepEqual(await response.json(),{text:'Tracr reduced navigation from ten areas to three.',documentIds:['tracr'],knowledgeSources:[],suggestions:['What changed at Tracr?','What did Prem do there?'],speechToken:null});
+assert.deepEqual(await response.json(),{text:'Tracr reduced navigation from ten areas to three.',kind:'grounded',documentIds:['tracr'],knowledgeSources:[],suggestions:['What changed at Tracr?','What did Prem do there?'],speechToken:null});
 assert.equal(captured.url,'https://models.example/v1/chat/completions');
 assert.equal(captured.options.headers.authorization,'Bearer test-only-secret');
 assert.equal(captured.body.model,'small-model');
 assert.equal(captured.body.temperature,0);
-assert.equal(captured.body.max_tokens,420,'Room for a short description of several projects');
+assert.equal(captured.body.max_tokens,assistantLimits.outputTokens,'Room for a multi-project comparison or job-fit review');
 const supplied=JSON.parse(captured.body.messages[1].content);
 assert(supplied.sources.some(source=>source.id==='tracr'));
 const timeline=supplied.sources.find(source=>source.id==='home').sections.find(section=>section.title==='My path');
@@ -52,8 +53,8 @@ const followUp=await handleAssistantRequest(makeRequest({sessionId:'follow-up',b
 assert.equal(followUp.status,200);
 const followUpInput=JSON.parse(captured.body.messages[1].content);
 assert.equal(followUpInput.question,'What was the result there?');
-assert.deepEqual(followUpInput.history.map(item=>item.role),['assistant','user','assistant']);
-assert.equal(followUpInput.history.at(-1).text.length,400);
+assert.deepEqual(followUpInput.history.map(item=>item.role),['user','assistant','user','assistant']);
+assert.equal(followUpInput.history.at(-1).text.length,'Tracr simplified its platform. '.length+500);
 assert(followUpInput.sources.some(source=>source.id==='tracr'));
 
 resetAssistantRateLimitsForTests();
@@ -62,7 +63,7 @@ const openAIResponse=await handleAssistantRequest(makeRequest({sessionId:'openai
 assert.equal(openAIResponse.status,200);
 assert.equal(captured.url,'https://api.openai.com/v1/chat/completions');
 assert.equal(captured.options.headers.authorization,'Bearer test-only-openai-secret');
-assert.equal(captured.body.max_completion_tokens,420);
+assert.equal(captured.body.max_completion_tokens,assistantLimits.outputTokens);
 assert(!('max_tokens' in captured.body),'OpenAI must receive its supported completion cap.');
 assert.equal(captured.body.reasoning_effort,'none','Luna should not spend the short answer budget on reasoning.');
 assert.equal(captured.body.store,false);
@@ -85,7 +86,7 @@ assert.deepEqual(tiers,['flex','auto'],'Only Flex resource unavailability should
 resetAssistantRateLimitsForTests();
 const rejected=await handleAssistantRequest(makeRequest({sessionId:'rejected-key'}),openAIEnv,{documents,fetcher:async()=>new Response('Provider details are private.',{status:401})});
 assert.equal(rejected.status,502);
-const rejectedAnswer=await rejected.json();assert.equal(rejectedAnswer.error,'model_unavailable');assert.equal(rejectedAnswer.providerStatus,401);assert.equal(rejectedAnswer.responseMode,'published-fallback');assert.deepEqual(rejectedAnswer.documentIds,['tracr']);assert(rejectedAnswer.text.startsWith('Regulated supply chain:'),'A failed provider still returns the published Tracr answer');
+const rejectedAnswer=await rejected.json();assert.equal(rejectedAnswer.error,'model_unavailable');assert.equal(rejectedAnswer.providerStatus,401);assert.equal(rejectedAnswer.responseMode,'published-fallback');assert.deepEqual(rejectedAnswer.documentIds,['tracr']);assert(rejectedAnswer.text.includes(documents.find(document=>document.id==='tracr').name),'A failed provider still returns the published Tracr answer');
 
 resetAssistantRateLimitsForTests();
 const unavailable=await handleAssistantRequest(makeRequest(),{}, {documents,fetcher});
@@ -96,12 +97,12 @@ const crossSite=await handleAssistantRequest(makeRequest({origin:'https://attack
 assert.equal(crossSite.status,403);
 
 resetAssistantRateLimitsForTests();
-const tooLarge=await handleAssistantRequest(makeRequest({body:JSON.stringify({question:'x'.repeat(6000),sessionId:'big'})}),env,{documents,fetcher});
+const tooLarge=await handleAssistantRequest(makeRequest({body:JSON.stringify({question:'x'.repeat(assistantLimits.requestBytes),sessionId:'big'})}),env,{documents,fetcher});
 assert.equal(tooLarge.status,413);
 
 resetAssistantRateLimitsForTests();
 const invalidSource=await handleAssistantRequest(makeRequest({sessionId:'invalid-source'}),env,{documents,fetcher:async()=>modelReply('Unverified statement.', ['draft-secret'])});
-assert.deepEqual(await invalidSource.json(),{text:'I couldn’t find a supported answer. Try something else.',documentIds:[],knowledgeSources:[],suggestions:['Who is Prem?','What has Prem worked on?','What did Prem change at Tracr?'],speechToken:null});
+assert.equal(invalidSource.status,502);const invalid=await invalidSource.json();assert.equal(invalid.error,'invalid_model_response');assert(!invalid.documentIds.includes('draft-secret'));assert(!invalid.text.includes('Unverified statement.'));
 
 resetAssistantRateLimitsForTests();
 for(let i=0;i<20;i++){

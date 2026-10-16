@@ -6,6 +6,7 @@ assert(css.startsWith('/* Keep editable text'));assert(css.includes('#dock #askI
 assert(!/maximum-scale|user-scalable\s*=\s*no/.test(html),'Native zoom remains available for accessibility');
 assert(html.includes('href="site.css"')&&clientStyles.indexOf('mobile.css')>clientStyles.indexOf('composer-controls.css'),'The single CSS bundle keeps mobile corrections after inherited composer styling');
 assert(css.includes('pan-y pinch-zoom')&&css.includes('overflow-wrap:anywhere'));
+assert(css.includes('@media(hover:none) and (pointer:coarse){html{overscroll-behavior-y:none}}'),'Touch viewports suppress vertical edge effects without blocking ordinary scrolling or horizontal navigation');
 assert(css.includes('max-width:calc(100vw - 32px)'),'Developer panel remains bounded on narrow screens');
 assert(css.includes('.surface.detail{padding-inline:0}'),'Mobile details use the page gutter without a second panel inset');
 assert(css.includes('.detail.heading-beside-image>.detail-layout>.detail-media-column{margin-top:var(--space-text-media)}'),'Stacked detail media retain the shared paragraph-to-image gap');

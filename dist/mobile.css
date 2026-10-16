@@ -1,6 +1,8 @@
 /* Keep editable text large enough to avoid Safari's automatic input zoom.
    This is independent of iframe width and primary-pointer classification. */
 #dock #askInput{font-size:max(16px,var(--composer-font-size));line-height:1.4}
+/* Keep native edge stretching from distorting the fixed, clipped glass. */
+@media(hover:none) and (pointer:coarse){html{overscroll-behavior-y:none}}
 @supports(-webkit-touch-callout:none){html{-webkit-text-size-adjust:100%;text-size-adjust:100%}input:not([type="range"]):not([type="checkbox"]),textarea,select{font-size:max(16px,var(--font-size-body))}}
 @media(max-width:1024px){
  .detail-layout,.description,.info-body,.content-grid>.surface{min-width:0}
