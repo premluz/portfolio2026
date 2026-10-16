@@ -10,10 +10,10 @@ try{
  const speech=new AssistantSpeech({AudioClass:AudioMock,fetcher:async(_url,options)=>{calls++;assert.deepEqual(JSON.parse(options.body),{text:'Hello Prem',sessionId:'tab-session',speechToken:'signed'});return new Response(new Blob(['mp3']),{status:200});},onStart:()=>starts++,onEnd:()=>ends++});
  const answer={text:'Hello Prem',sessionId:'tab-session',speechToken:'signed'},button={};
  assert.equal(await speech.play(answer,button),true);assert.equal(calls,1);assert.equal(starts,1);assert(speech.active);
- assert.equal(latest.playbackRate,1.25);assert.equal(latest.defaultPlaybackRate,1.25);assert.equal(latest.preservesPitch,true);
+ assert.equal(latest.playbackRate,1.15);assert.equal(latest.defaultPlaybackRate,1.15);assert.equal(latest.preservesPitch,true);
  assert.equal(await speech.play(answer,button),false,'Pressing the same control stops playback.');assert(latest.paused);assert.equal(ends,1);
  assert.equal(await speech.play(answer,button),true);assert.equal(calls,1,'Replay uses the already generated audio.');
- assert.equal(latest.playbackRate,1.25,'Cached answers also play at 1.25×.');
+ assert.equal(latest.playbackRate,1.15,'Cached answers also play at 1.15×.');
  latest.onended();assert.equal(speech.active,false);assert.equal(ends,2);
  speech.destroy();assert.equal(revoked.length,1);
  let players=0,turns=0;
@@ -22,7 +22,7 @@ try{
  assert(await session.prime());const player=latest;
  assert(await session.play({...answer,speechToken:'first'},{}));player.onended();
  assert(await session.play({...answer,text:'Second answer',speechToken:'second'},{}));assert.equal(latest,player,'Every answer uses the same audio element unlocked by Start voice');assert.equal(players,1);assert.equal(turns,2);player.onended();assert(!session.active);session.destroy();
- assert.equal(player.playbackRate,1.25,'Subsequent conversation turns keep the faster playback.');assert.equal(player.preservesPitch,true);
+ assert.equal(player.playbackRate,1.15,'Subsequent conversation turns keep the faster playback.');assert.equal(player.preservesPitch,true);
  const states=[];let blockedOnce=true,blockedFetches=0;
  class AutoplayMock extends AudioMock {play(){if(blockedOnce){blockedOnce=false;return Promise.reject(Object.assign(Error('Autoplay blocked'),{name:'NotAllowedError'}));}return Promise.resolve();}}
  const recovery=new AssistantSpeech({AudioClass:AutoplayMock,fetcher:async()=>{blockedFetches++;return new Response(new Blob(['mp3']),{status:200});},onState:state=>states.push(state)});
