@@ -55,7 +55,7 @@ export function mountContextualPopovers({root=document,reduced=()=>false,onRoute
  const click=e=>{const node=e.target.closest?.('[data-context-id]');if(node){const repeated=trigger===node&&pinned;if(node.tagName==='A'&&(e.pointerType!=='touch'||repeated))return;e.preventDefault();repeated?close():open(node,{pin:true});}};
  const outside=e=>{if(trigger&&!trigger.contains(e.target)&&!panel.contains(e.target))close();};
  const key=e=>{if(!trigger)return;if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();const previous=trigger;close();focusReturn=previous;previous.focus({preventScroll:true});}else if(e.target===trigger&&(e.key==='ArrowDown'||trigger.tagName!=='A'&&['Enter',' '].includes(e.key))){e.preventDefault();e.stopImmediatePropagation();open(trigger,{pin:true,focus:true});}};
- const scroll=e=>{if(e?.target&&panel.contains(e.target))return;close();};
+ const scroll=e=>{if(e?.target?.nodeType&&panel.contains(e.target))return;close();};
  const enter=()=>clearTimeout(timer);
  const routeClick=e=>{const link=e.target.closest?.('a');if(link?.getAttribute('href')?.startsWith('#')){e.preventDefault();const id=link.getAttribute('href').slice(1);close();onRoute(id);}else if(link)close();};
  root.addEventListener('pointerover',over);root.addEventListener('pointerout',out);root.addEventListener('focusin',focus);root.addEventListener('focusout',deferClose);root.addEventListener('click',click);root.addEventListener('pointerdown',outside);addEventListener('keydown',key,true);panel.addEventListener('pointerenter',enter);panel.addEventListener('pointerleave',deferClose);panel.addEventListener('click',routeClick);addEventListener('resize',position);addEventListener('scroll',scroll,true);addEventListener('hashchange',scroll);

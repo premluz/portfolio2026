@@ -77,6 +77,7 @@
 <summary>Carousel</summary><div class="developer-settings-content">
 <label>Presentation <select id="aboutGalleryVariant"><option value="perspective">Perspective</option><option value="circular" selected>Circular</option></select></label>
 <label>Orientation <select id="aboutGalleryOrientation"><option value="horizontal">Horizontal</option><option value="vertical">Vertical</option></select></label>
+<label class="check"><input id="carouselDescriptionInCard" type="checkbox"> Show description below each carousel image</label>
 <div id="carouselArcSettings">
 <div class="setting-subsection">Circular arc</div>
 <label>Side tilt <output data-carousel-output="tilt">24°</output><input id="carouselTilt" data-carousel-control="tilt" type="range" min="0" max="60" step="1" value="24"></label>
@@ -116,6 +117,7 @@
 <label class="check"><input id="cardShowClient" type="checkbox" checked> Show client / company</label>
 <label class="check"><input id="cardShowTitle" type="checkbox" checked> Show project title</label>
 <label class="check"><input id="cardShowDescription" type="checkbox" checked> Show project description</label>
+<label>Card title size <output id="cardTitleScaleValue">h3</output><input id="cardTitleScale" type="range" min="2" max="4" step="1" value="3"></label>
 <div class="setting-subsection">Surface</div>
 <label class="check"><input id="cardBackground" type="checkbox" checked> Card background</label>
 <label class="check"><input id="hideCardColor" type="checkbox"> Hide card color</label>
@@ -152,7 +154,7 @@
 <label class="check"><input id="detailHeadingBeside" type="checkbox"> Details title beside image</label>
 <label class="check"><input id="wideHero" type="checkbox" checked> Wide hero card</label>
 </div></details>
-<details class="developer-settings-group" hidden>
+<details class="developer-settings-group">
 <summary>Navigation</summary><div class="developer-settings-content">
 <div class="setting-subsection">Header</div>
 <label class="check"><input id="hideBranding" type="checkbox" checked> Hide logo &amp; tagline</label>
@@ -161,6 +163,8 @@
 <label>Nav item padding <output id="navItemPaddingValue">9px</output><input id="navItemPadding" type="range" min="4" max="14" step="1" value="9"></label>
 <label>Nav container padding <output id="navContainerPaddingValue">0px</output><input id="navContainerPadding" type="range" min="0" max="12" step="1" value="0"></label>
 <label>Nav font size <output id="navItemFontSizeValue">12px</output><input id="navItemFontSize" type="range" min="10" max="16" step="1" value="12"></label>
+<label>Liquid blend <output id="dockLiquidBlendValue">28px</output><input id="dockLiquidBlend" type="range" min="0" max="60" step="1" value="28"></label>
+<label>Pinch point <output id="dockLiquidPinchValue">60%</output><input id="dockLiquidPinch" type="range" min="30" max="95" step="1" value="60"></label>
 <div class="setting-subsection">Composer</div>
 <label><input id="splitProjectControls" type="checkbox">Split project controls left / right</label>
 <label>Contextual buttons <select id="contextualButtons"><option value="inline" selected>Inline</option><option value="composer">In composer</option></select></label>

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {streamText,streamGradientOffset} from '../dist/assistant-text-stream.js';
+import {streamText} from '../dist/assistant-text-stream.js';
 let now=0,id=0;const frames=new Map(),timers=new Map();
 globalThis.requestAnimationFrame=callback=>{frames.set(++id,callback);return id;};globalThis.cancelAnimationFrame=frame=>frames.delete(frame);
 globalThis.setTimeout=(fn,delay)=>{timers.set(++id,{fn,at:now+delay});return id;};globalThis.clearTimeout=timer=>timers.delete(timer);
@@ -7,9 +7,8 @@ function element(){let text='';const classes=new Set();return {children:[],class
 globalThis.document={createElement:element,createTextNode(text){const n=element();n.textContent=text;return n;}};
 const step=ms=>{now+=ms;const pending=[...frames.values()];frames.clear();pending.forEach(fn=>fn(now));for(const [key,timer] of [...timers])if(timer.at<=now){timers.delete(key);timer.fn();}};
 const answer='Prem designs products for technical and expert users, with a focus on AI experiences.',p=element();let completed=0;
-streamText(p,answer,{onComplete:()=>completed++});assert.equal(p.children[0].textContent,answer,'Screen readers receive the full answer once');assert.equal(p.children[1].attributes['aria-hidden'],'true');step(0);assert.equal(p.children[1].children[0].className,'iconiq-stream-word');assert.equal(p.children[1].children[0].children[0].textContent,'Prem');assert.equal(p.children[1].children[0].children[1].textContent,'Prem','Stacked tint and base share the same glyph layout');
-step(2000);assert.equal(frames.size,0,'Word scheduling stops after the last word');step(750);assert.equal(p.textContent,answer,'Settling removes the decoration and retains the exact answer');assert.equal(p.children.length,0);assert.equal(completed,1);assert.equal(timers.size,0);
+streamText(p,answer,{onComplete:()=>completed++});assert.equal(p.children[0].textContent,answer,'Screen readers receive the full answer once');assert.equal(p.children[1].attributes['aria-hidden'],'true');assert.equal(p.attributes['aria-busy'],'true');step(0);assert.equal(p.children[1].children[0].className,'vivid-stream-character');assert.equal(p.children[1].children[0].textContent,'P','New graphemes enter individually');
+step(2000);assert.equal(frames.size,0,'Pacing stops after the final grapheme');step(750);assert.equal(p.textContent,answer,'Settling removes the decoration and retains the exact answer');assert.equal(p.children.length,0);assert.equal(p.attributes['aria-busy'],'false');assert.equal(completed,1);assert.equal(timers.size,0);
 const exact='  Line one.\n\nLine two — <safe> & 😀. ';const special=element();const finish=streamText(special,exact);step(0);finish();assert.equal(special.textContent,exact,'Cancellation retains all whitespace, Unicode and literal markup');finish();assert.equal(frames.size,0);assert.equal(timers.size,0);
 const reduced=element();streamText(reduced,answer,{reduced:true});assert.equal(reduced.textContent,answer);assert.equal(reduced.children.length,0);assert.equal(frames.size,0);
-assert.deepEqual(Array.from({length:11},(_,i)=>streamGradientOffset(i)),['0% 50%','20% 50%','40% 50%','60% 50%','80% 50%','100% 50%','80% 50%','60% 50%','40% 50%','20% 50%','0% 50%']);
-console.log('Assistant text stream passed: Iconiq word colour trail, accessible single answer, exact settled/cancelled text, reduced motion and timer cleanup.');
+console.log('Assistant text stream passed: grapheme reveal, accessible single answer, exact settled/cancelled text, reduced motion and timer cleanup.');

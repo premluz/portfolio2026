@@ -32,6 +32,9 @@ button,input,select,textarea{font-family:var(--font-family-sans)}
 .hero-news h3{font-size:var(--font-size-body);font-weight:var(--font-weight-heading);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body)}
 
 .project-card h2,.project-card[data-card-presentation="flip"] h2{font-size:var(--font-size-body);font-weight:var(--font-weight-heading);line-height:var(--line-height-card);letter-spacing:var(--letter-spacing-card)}
+.project-card h2.h2,.spatial-gallery-copy h3.h2{font-size:var(--font-size-section-heading)}
+.project-card h2.h3,.spatial-gallery-copy h3.h3{font-size:var(--font-size-body)}
+.project-card h2.h4,.spatial-gallery-copy h3.h4{font-size:var(--font-size-small)}
 .project-card .eyebrow,.project-card[data-card-presentation="flip"] .eyebrow,.project-card[data-card-presentation="current"]:not([data-image-mode="bleed"])>.card-copy>.eyebrow{font-size:var(--font-size-caption);margin-top:var(--space-title-eyebrow)}
 .surface.detail>.eyebrow,.wide-hero-card>.eyebrow{margin-top:var(--space-detail-heading);font-size:var(--font-size-caption)}
 .detail.heading-beside-image>.eyebrow{margin:var(--space-detail-heading) 0 var(--space-detail-context)}
@@ -184,7 +187,7 @@ main.home-canvas:not(.home-view-split) .home-hero{--hero-padding:min(var(--space
 
 /* Client, project title and summary are independently visible card fields. */
 .project-card.image-card>.card-copy{--card-client-gap:24px;position:relative;display:grid;grid-template-columns:fit-content(35%) minmax(0,1fr);column-gap:var(--card-client-gap);align-items:baseline}
-.project-card.image-card>.card-copy>.card-client{grid-column:1;grid-row:1;margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-body);color:var(--eyebrow-ink);text-wrap:pretty;overflow-wrap:anywhere}
+.project-card.image-card>.card-copy>.card-client{grid-column:1;grid-row:1;max-width:none;margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-body);color:var(--eyebrow-ink);text-wrap:pretty;overflow-wrap:anywhere}
 .project-card.image-card>.card-copy>h2{grid-column:2;grid-row:1;min-width:0}
 .project-card.image-card>.card-copy>.project-summary{grid-column:2;grid-row:2;min-width:0}
 .project-card.image-card>.card-copy:not(:has(.card-client)){grid-template-columns:minmax(0,1fr)}
@@ -197,7 +200,7 @@ body.card-client-hidden.card-title-hidden .project-card.image-card>.card-copy>.p
 body.card-client-hidden .project-card.image-card>.card-copy>.card-client,body.card-title-hidden .project-card.image-card>.card-copy>h2,body.card-description-hidden .project-card.image-card>.card-copy>.project-summary{display:none}
 
 /* Align customer and the first visible line on one shared baseline. */
-.project-card.image-card>.card-copy>h2{margin-top:0}
+.project-card.image-card>.card-copy>h2{margin:0}
 #projectMenuToggle{display:none}
 #dock .project-menu:not(.site-settings-menu) button{font-size:var(--composer-font-size);color:var(--composer-text-ink);letter-spacing:var(--letter-spacing-body);font-weight:var(--font-weight-body)}
 

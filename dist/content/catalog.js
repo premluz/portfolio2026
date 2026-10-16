@@ -6,10 +6,10 @@ export const catalog={
       "id": "merlin",
       "slug": "merlin",
       "title": "Designed an AI workspace that assembles itself around the analysis",
-      "pageTitle": "An AI analyst whose workspace assembles itself as it reasons",
-      "name": "Merlin",
-      "client": "Merlin • Financial intelligence • R&D",
-      "summary": "0→1 prototype • Desktop + mobile • Solo designer/builder",
+      "pageTitle": "Designed an AI workspace that assembles itself around the analysis",
+      "name": "AI financial intelligence workspace",
+      "client": "Merlin",
+      "summary": "R&D • AI assistant • Genrative UI • Prototype",
       "category": "Financial intelligence · R&D",
       "aliases": [
         "Merlin",
@@ -29,7 +29,7 @@ export const catalog={
         "Front-end development"
       ],
       "kind": "lab",
-      "intro": "I designed and built Merlin around a simple idea: when an agent does the analysis, the interface should become part of the answer.",
+      "intro": "Wwhen an agent does the analysis, the interface should become part of the answer.",
       "context": "Financial intelligence platform where users ask questions, follow the reasoning and work with interfaces generated around the answer.",
       "challenge": "Generative interfaces often feel like chat with a chart attached. I wanted something analysts could trust, inspect and continue working in rather than a disposable response.",
       "role": "Sole designer and builder. Defined the product concept, interaction model, design system, motion and implementation.",
@@ -84,8 +84,8 @@ export const catalog={
       "status": "published",
       "slug": "rios",
       "title": "Designed and built a spatial planner for days that change",
-      "name": "Rios",
-      "summary": "0→1 product • Mobile + desktop • Solo designer/builder",
+      "name": "Life-first planner",
+      "summary": "0→1 product • Solo designer/builder",
       "category": "Life-first planner · Independent product",
       "aliases": [
         "Rios",
@@ -115,7 +115,7 @@ export const catalog={
         {
           "id": "highlights",
           "kind": "statement",
-          "text": "0→1 product • Mobile + desktop • Solo designer/builder",
+          "text": "0→1 product • Solo designer/builder",
           "provenance": {
             "kind": "author-provided"
           }
@@ -145,7 +145,7 @@ export const catalog={
         }
       ],
       "featured": false,
-      "client": "Rios • Life-first planner",
+      "client": "Rios",
       "pageTitle": "A spatial planner designed around life changing the plan",
       "intro": "I created Rios around a simple idea: planning is easy; reshaping the day when reality changes is the harder problem.",
       "challenge": "Traditional calendars make adding events easy but make busy days increasingly difficult to reorganise. I wanted replanning to feel direct, spatial and readable.",
@@ -220,7 +220,7 @@ export const catalog={
         }
       ],
       "featured": true,
-      "client": "PlayStation • Publishing pipeline",
+      "client": "PlayStation",
       "pageTitle": "Transformation saving hundreds of hours for developers and publishers",
       "intro": "I joined as the first designer on a programme that had already failed twice and was later described as the largest IT transformation in PlayStation history.",
       "challenge": "Three ageing regional systems created duplicated work, inconsistent workflows and operational overhead, while three organisations had to align around a programme with little inherited trust."
@@ -294,7 +294,7 @@ export const catalog={
         }
       ],
       "featured": true,
-      "client": "Vodafone • IoT connectivity",
+      "client": "Vodafone",
       "pageTitle": "Redesigned a fragmented IoT platform around one scalable interaction model",
       "intro": "I redesigned an operational platform serving users with very different levels of expertise, frequency of use and operational needs.",
       "challenge": "Years of feature additions had created fragmented workflows, inconsistent patterns and screens shared by experts and occasional operators alike. High-volume anomalies were hard to spot and no suitable design system existed."
@@ -304,9 +304,9 @@ export const catalog={
       "type": "portfolio-item",
       "status": "published",
       "slug": "tracr",
-      "title": "Used a design system to uncover and fix a fragmented platform",
-      "name": "Regulated supply chain",
-      "summary": "IC lead product designer • Architecture 10 → 3",
+      "title": "Created a design system as a vehiecle to fix fragmented platform",
+      "name": "Blockchain traceabiltiy",
+      "summary": "Design System 0 → 3 • 2x dev, QA speed • Architecture 10 → 3",
       "category": "Blockchain traceability · Regulated supply chain",
       "aliases": [
         "Tracr",
@@ -321,7 +321,7 @@ export const catalog={
       ],
       "capabilities": [
         "Product design",
-        "Design systems",
+        "Design systems ",
         "Product architecture",
         "Incremental redesign"
       ],
@@ -367,9 +367,9 @@ export const catalog={
         }
       ],
       "featured": true,
-      "client": "Tracr • Blockchain traceability",
+      "client": "Tracr",
       "pageTitle": "Turned a design-system brief into a broader platform redesign",
-      "intro": "Tracr brought me in to introduce a design system. The deeper problem was fragmented architecture and interaction, so the remit expanded into product strategy and redesign.",
+      "intro": "Tracr brought me in to introduce a design system. I discovered the deeper problem was fragmented architecture and interaction, so the remit expanded into product strategy and redesign.",
       "challenge": "The live platform had inconsistent workflows, repeated solutions and low design maturity. Every improvement needed to ship incrementally while rebuilding stakeholder trust.",
       "prototype": {
         "label": "View prototype",
@@ -381,8 +381,8 @@ export const catalog={
       "type": "portfolio-item",
       "status": "published",
       "slug": "galachain",
-      "title": "Made Web3 invisible for fans and creators on a decentralised entertainment platform",
-      "name": "Gala Film",
+      "title": "Made Web3 wiring invisible for fans and creators on a decentralised entertainment platform",
+      "name": "Web3 film platform",
       "summary": "Product designer • Gala Film 0→1",
       "category": "Web3 entertainment · Film and music",
       "aliases": [
@@ -447,8 +447,8 @@ export const catalog={
         }
       ],
       "featured": false,
-      "client": "Gala • Web3 ecosystem",
-      "pageTitle": "Designed Web3 entertainment around fans and creators, not crypto mechanics",
+      "client": "Gala",
+      "pageTitle": "Designed Web3 film platform rewarding creators and fans.",
       "intro": "I designed a decentralised entertainment platform where fans could watch, collect and earn while creators could publish and monetise directly.",
       "challenge": "Make unfamiliar Web3 concepts disappear into familiar consumer and creator workflows while inventing ownership, monetisation and distribution models from scratch.",
       "hoverVideoId": "gala-walkthrough"
@@ -456,11 +456,11 @@ export const catalog={
     {
       "id": "bastion",
       "slug": "bastion",
-      "title": "Designed a wallet where the assistant is the main way in",
+      "title": "Designed a mobile digital wallet with AI assistant and generastive UI",
       "pageTitle": "A wallet where you can ask, speak or tap and the interface adapts around the task",
-      "name": "Bastion",
-      "client": "Bastion • AI wallet • R&D",
-      "summary": "0→1 prototype • Mobile • Solo designer/builder",
+      "name": "Digital wallet with AI assistant",
+      "client": "Bastion",
+      "summary": "R&D • AI assistant • Genrative UI • Prototype",
       "category": "AI wallet · R&D",
       "aliases": [
         "Bastion",
@@ -535,11 +535,11 @@ export const catalog={
       "type": "portfolio-item",
       "status": "published",
       "slug": "porter",
-      "title": "Designed a calm switchboard for the AI agents people now work with all day",
+      "title": "Designed and built switchboard for the AI agents",
       "pageTitle": "I designed and built a Mac app that keeps track of your AI agents, so you never lose one or keep one waiting.",
-      "name": "Porter",
-      "client": "Porter • Agent switchboard",
-      "summary": "0→1 product • Mac native • Solo designer/builder",
+      "name": "AI agent swtichboard",
+      "client": "Porter",
+      "summary": "0→1 product • Solo designer/builder",
       "category": "Agent switchboard · R&D",
       "aliases": [
         "Porter",
@@ -563,7 +563,7 @@ export const catalog={
       "listOnly": true,
       "heroMediaId": "porter-cover",
       "hoverVideoId": "porter-walkthrough",
-      "intro": "I created Porter around a simple idea: people now work with several AI agents at once, and the real bottleneck is no longer the agents but your attention.",
+      "intro": "People now work with several AI agents at once, and the real bottleneck is knowing which one needs attention and switching between multiple windows they operate in.",
       "context": "A native Mac utility that lists conversations from Claude, ChatGPT, Codex and Claude Code, wherever they live, and takes you to the exact tab or window in one click.",
       "challenge": "Agents are scattered across browser tabs, editor windows, desktop apps and terminals, and none of them can see the others. You can't tell which one is working, which has finished, or which is waiting for you, so an agent sits idle while you look in the wrong place. The tool also had to earn trust: it could not read conversations, send anything off the Mac, or claim a status it couldn't know.",
       "role": "Sole product designer and builder. I defined the interaction model, information architecture, status language, character, motion and the native implementation.",
@@ -708,21 +708,21 @@ export const catalog={
       "template": "home",
       "status": "published",
       "slug": "work",
-      "title": "Hey, I’m Prem. Builder turned designer.",
+      "title": "Hey, I’m Prem, builder turned designer.",
       "summary": "I started out building for the web and running a solo studio. For the last 10+ years, I’ve designed products for technical and expert users. Recently I built Rios and Porter. Today, my focus is AI conversational and generative UI experiences. ",
       "blocks": [
         {
           "id": "home-introduction",
           "type": "text",
           "label": "Hey, I’m Prem.",
-          "title": "Builder turned designer. I make complex products feel simple through interaction, systems and craft.",
+          "title": "builder turned designer. I make complex products feel simple through interaction, systems and craft.",
           "paragraphs": []
         },
         {
           "id": "home-description",
           "type": "text",
           "paragraphs": [
-            "For the last 10+ years, I’ve designed products for technical users and creators. Today, my focus is AI conversational and generative UI experiences. I also built Rios and Porter."
+            "For the last 10+ years, I’ve designed products for technical users and creators. Today, my focus is AI conversational and generative UI experiences. I also built independent products Rios and Porter."
           ]
         },
         {
@@ -877,9 +877,9 @@ export const catalog={
         {
           "id": "about-introduction",
           "type": "text",
-          "title": "I help teams untangle complexity and build products that users understand, trust, and adopt.",
+          "title": "I connect vision and strategy with product, design, technology and business to turn complex opportunities into meaningful outcomes.",
           "paragraphs": [
-            "My work has ranged from early product definition and research to interaction models, design systems and implementation.",
+            "My work spans the full product journey from identifying opportunities and shaping product vision to research, interaction models, design systems, implementation and ongoing optimisation.",
             "I’m most useful where the problem is messy, the constraints are real, and the path forward isn’t obvious yet."
           ]
         },

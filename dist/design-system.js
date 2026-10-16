@@ -1,6 +1,7 @@
 const sizes=['small','medium','large'];
 const weights=['thin','regular','bold'];
 const controls=[['typeSize','Text size',sizes],['spaceSize','Spacing',sizes],['headingWeight','Header weight',weights],['bodyWeight','Body weight',weights],['typeTracking','Letter spacing',sizes],['typeLeading','Line spacing',sizes]];
+export {controls as designSettingControls};
 export function normalizeDesignSettings(value={}){
  const legacyWeight={small:'thin',medium:'regular',large:'bold'}[value?.typeWeight]||'regular';
  return Object.fromEntries(controls.map(([key,,options])=>[key,options.includes(value?.[key])?value[key]:key==='headingWeight'||key==='bodyWeight'?legacyWeight:'medium']));

@@ -2,6 +2,7 @@ import {escapeText} from './content/html.js';
 import {CircularCardPlacement} from './circular-card-gallery.js';
 import {GalleryExtrusion} from './gallery-extrusion.js';
 import {normaliseCarouselSettings} from './carousel-settings.js';
+import {mountGalleryCardCopy} from './gallery-card-copy.js';
 
 export function galleryPose(offset,reduced=false){
  const distance=Math.abs(offset),bend=Math.max(0,distance-.18);
@@ -32,13 +33,14 @@ export class CardGallery{
   this.onPrevious=()=>this.go((this.circular?.requestedIndex??this.index)-1);this.onNext=()=>this.go((this.circular?.requestedIndex??this.index)+1);
   this.onDown=event=>{if((!this.circular&&event.pointerType!=='mouse')||event.button!==0||event.isPrimary===false||this.drag)return;this.drag={id:event.pointerId,x:event.clientX,y:event.clientY,left:this.viewport.scrollLeft,top:this.viewport.scrollTop,moved:false,caught:this.circular?.beginDrag(event.timeStamp??performance.now())||false};};
   this.onMove=event=>{const drag=this.drag;if(!drag||event.pointerId!==drag.id)return;const delta=this.axis==='vertical'?event.clientY-drag.y:event.clientX-drag.x,cross=this.axis==='vertical'?event.clientX-drag.x:event.clientY-drag.y;if(!drag.moved){if(event.pointerType!=='mouse'&&Math.abs(cross)>=6&&Math.abs(cross)>Math.abs(delta)){this.circular?.release(event.timeStamp??performance.now(),true);this.drag=null;return;}if(Math.abs(delta)<6)return;}drag.moved=true;event.preventDefault();this.viewport.setPointerCapture?.(drag.id);this.root.dataset.galleryDragging='true';if(this.circular){this.circular.drag(delta,event.timeStamp??performance.now());return;}this.viewport.scrollTo({left:this.axis==='horizontal'?drag.left-delta:0,top:this.axis==='vertical'?drag.top-delta:0,behavior:'instant'});this.schedule();};
-  this.onUp=event=>{const drag=this.drag;if(!drag||event.pointerId!==drag.id)return;this.drag=null;delete this.root.dataset.galleryDragging;if(this.viewport.hasPointerCapture?.(drag.id))this.viewport.releasePointerCapture(drag.id);if(drag.moved||drag.caught){this.suppressClick=true;clearTimeout(this.clickTimer);this.clickTimer=setTimeout(()=>this.suppressClick=false,250);}if(this.circular){this.circular.release(event.timeStamp??performance.now(),event.type==='pointercancel'||!drag.moved);return;}if(drag.moved){this.paint();this.go(this.index);}};
+  this.onUp=event=>{const drag=this.drag;if(!drag||event.pointerId!==drag.id)return;this.drag=null;delete this.root.dataset.galleryDragging;if(this.viewport.hasPointerCapture?.(drag.id))this.viewport.releasePointerCapture(drag.id);if(drag.moved||drag.caught){this.suppressClick=true;clearTimeout(this.clickTimer);this.clickTimer=setTimeout(()=>this.suppressClick=false,250);}if(this.circular){this.circular.release(event.timeStamp??performance.now(),event.type==='pointercancel'||!drag.moved);return;}if(drag.moved)this.go(this.nearestIndex());};
   const selectClick=this.onClick;this.onClick=event=>{if(this.suppressClick){event.preventDefault();event.stopPropagation();return;}selectClick(event);};
   this.onImageDrag=event=>event.preventDefault();
   for(const [name,handler] of [['pointerdown',this.onDown],['pointermove',this.onMove],['pointerup',this.onUp],['pointercancel',this.onUp],['dragstart',this.onImageDrag]])this.viewport.addEventListener(name,handler);
   this.viewport.addEventListener('scroll',this.onScroll,{passive:true});this.root.addEventListener('keydown',this.onKey);this.viewport.addEventListener('click',this.onClick,true);this.previous.addEventListener('click',this.onPrevious);this.next.addEventListener('click',this.onNext);
   this.observer=new ResizeObserver(this.onResize);this.observer.observe(this.viewport);
   this.extrusions=this.items.map(item=>new GalleryExtrusion(item,()=>{this.circular?.measure();this.schedule();}));
+  if(root.dataset.cardGallery==='home-projects')this.cardCopyLayout=mountGalleryCardCopy(root);
   if(this.viewport.style?.setProperty){for(const [name,item] of [['first',this.items[0]],['last',this.items.at(-1)]])this.viewport.style.setProperty(`--gallery-${name}-width`,`var(--gallery-${item?.dataset.galleryOrientation==='portrait'?'portrait':'landscape'}-width)`);}
   this.setVariant(root.dataset.galleryVariant);this.setOrientation(root.dataset.galleryAxis);this.schedule();
  }
@@ -47,6 +49,11 @@ export class CardGallery{
  async prepareOpen(element,control,duration){const index=this.items.findIndex(item=>item.contains(element));if(index<0)return;if(this.circular&&!this.reduced())await this.circular.prepareOpen(index,control,duration);else{this.go(index,false);this.paint();}}
  setVariant(variant){this.variant=variant==='circular'?'circular':'perspective';this.circular?.destroy();this.circular=null;this.root.dataset.galleryVariant=this.variant;this.root.dataset.galleryReduced=String(this.reduced());if(this.variant==='circular'&&!this.reduced()){this.viewport.scrollTo({left:0,top:0,behavior:'instant'});this.items.forEach(item=>item.firstElementChild.style.transform='');this.circular=new CircularCardPlacement(this);}this.go(this.index,false);this.schedule();}
  setOrientation(axis){this.root.dataset.galleryAxis=axis==='vertical'?'vertical':'horizontal';this.root.dataset.galleryReduced=String(this.reduced());this.circular?.measure();this.go(this.index,false);this.schedule();}
+ setDescriptionInCard(enabled){this.root.dataset.descriptionInCard=String(enabled);this.cardCopyLayout?.refresh();}
+ setCardCopyPosition(position){
+  const value=position==='top'?'top':'bottom';this.root.dataset.cardCopyPosition=value;
+  for(const item of this.items){const card=item.querySelector('.project-card');if(card)card.dataset.cardCopyPosition=value;}
+ }
  go(index,smooth=true){
   if(this.circular){this.circular.go(index,smooth);return;}
   index=Math.min(this.items.length-1,Math.max(0,index));const item=this.items[index];if(!item)return;
@@ -58,6 +65,7 @@ export class CardGallery{
   this.items.forEach((item,index)=>{const r=item.getBoundingClientRect(),offset=((vertical?r.top+r.height/2:r.left+r.width/2)-center)/Math.max(1,vertical?r.height:r.width),pose=galleryPose(offset,this.reduced());if(Math.abs(offset)<distance){best=index;distance=Math.abs(offset);}const inner=item.firstElementChild;inner.style.transform=`perspective(1200px) rotate${vertical?'X':'Y'}(${pose.angle}deg) scale(${pose.scale})`;this.paintOpacity(item,pose.opacity);this.extrusions[index].paint(pose.angle,this.axis,this.reduced(),pose.opacity);});
   this.updateSelection(best);
  }
+ nearestIndex(){const vertical=this.axis==='vertical',viewport=this.viewport.getBoundingClientRect(),center=vertical?viewport.top+viewport.height/2:viewport.left+viewport.width/2;return this.items.reduce((nearest,item,index)=>{const rect=item.getBoundingClientRect(),distance=Math.abs((vertical?rect.top+rect.height/2:rect.left+rect.width/2)-center);return distance<nearest.distance?{index,distance}:nearest;},{index:0,distance:Infinity}).index;}
  paintOpacity(item,opacity){const plane=item.firstElementChild,face=plane.querySelector?.(':scope > .content-block');plane.style.opacity=face?'1':String(opacity);if(face)face.style.opacity=String(opacity);}
  updateSelection(best){
   this.index=best;this.root.dataset.galleryIndex=String(best);const copy=this.title.parentElement,link=this.items[best]?.querySelector?.('a[href]');const href=link?.getAttribute?.('href');for(const action of [copy,this.details])if(action){action.morphImageRoot=link||null;if(href){action.setAttribute('href',href);if(link.dataset?.contentCard)action.dataset.contentCard=link.dataset.contentCard;}else{action.removeAttribute?.('href');if(action.dataset)delete action.dataset.contentCard;}}if(this.details)this.details.hidden=!href;this.previous.disabled=!this.circular&&best===0;this.next.disabled=!this.circular&&best===this.items.length-1;
@@ -66,5 +74,5 @@ export class CardGallery{
   this.root.dispatchEvent(new Event('gallery-paint'));
  }
  schedule(){if(this.dead||this.frame)return;this.frame=requestAnimationFrame(()=>{this.frame=0;this.paint();});}
- destroy(){this.dead=true;this.circular?.destroy();this.circular=null;this.extrusions.forEach(edge=>edge.destroy());this.captionAnimation?.cancel();cancelAnimationFrame(this.frame);clearTimeout(this.clickTimer);this.observer.disconnect();if(this.drag&&this.viewport.hasPointerCapture?.(this.drag.id))this.viewport.releasePointerCapture(this.drag.id);this.drag=null;delete this.root.dataset.galleryDragging;for(const [name,handler] of [['pointerdown',this.onDown],['pointermove',this.onMove],['pointerup',this.onUp],['pointercancel',this.onUp],['dragstart',this.onImageDrag]])this.viewport.removeEventListener(name,handler);this.viewport.removeEventListener('scroll',this.onScroll);this.root.removeEventListener('keydown',this.onKey);this.viewport.removeEventListener('click',this.onClick,true);this.previous.removeEventListener('click',this.onPrevious);this.next.removeEventListener('click',this.onNext);}
+ destroy(){this.dead=true;this.cardCopyLayout?.destroy();this.circular?.destroy();this.circular=null;this.extrusions.forEach(edge=>edge.destroy());this.captionAnimation?.cancel();cancelAnimationFrame(this.frame);clearTimeout(this.clickTimer);this.observer.disconnect();if(this.drag&&this.viewport.hasPointerCapture?.(this.drag.id))this.viewport.releasePointerCapture(this.drag.id);this.drag=null;delete this.root.dataset.galleryDragging;for(const [name,handler] of [['pointerdown',this.onDown],['pointermove',this.onMove],['pointerup',this.onUp],['pointercancel',this.onUp],['dragstart',this.onImageDrag]])this.viewport.removeEventListener(name,handler);this.viewport.removeEventListener('scroll',this.onScroll);this.root.removeEventListener('keydown',this.onKey);this.viewport.removeEventListener('click',this.onClick,true);this.previous.removeEventListener('click',this.onPrevious);this.next.removeEventListener('click',this.onNext);}
 }

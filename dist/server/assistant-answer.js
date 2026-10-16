@@ -12,6 +12,35 @@ const sentence=value=>String(value||'').trim().replace(/[.!?]+$/,'');
 const firstSentence=value=>{const text=String(value||'').trim(),match=text.match(/^.*?[.!?](?=\s|$)/);return sentence(match?match[0]:text);};
 const MAX_PROJECTS_LISTED=4;
 
+// Personal questions are answered from the About page and the sections built for it, not from case studies.
+const PROFILE_INTENT=/\b(personal\w*|interests?|hobb\w+|outside (of )?work|free time|passions?|roots|where .* from|philosophy|values|humou?r|fun fact|unusual|quirky|about yourself)\b/;
+const ABOUT_SECTIONS=new Set(['about-traits','about-unusual']);
+// Each group is one topic of the About page; any word in it asks for that topic.
+const PROFILE_TOPICS=[['interest','hobby','hobbies','passion','fun','free time','enjoy'],['roots','origin','born','poland','london','where','grew'],['philosophy','value','principle','believe'],['humour','humor','funny','joke','laugh'],['unusual','quirky','fasting','pilgrimage','hypnotherapy']];
+const singular=word=>word.replace(/ies$/,'y').replace(/s$/,'');
+const profileTerms=token=>PROFILE_TOPICS.find(group=>group.includes(token)||group.includes(singular(token)))||[singular(token)];
+function profileEntries(store){
+ const documents=[store.get('about'),...[...ABOUT_SECTIONS].map(id=>store.get(id))].filter(Boolean);
+ return documents.flatMap(document=>(document.blocks||[]).flatMap(block=>[block,...(block.items||[])].map(part=>({
+  documentId:ABOUT_SECTIONS.has(document.id)?'about':document.id,
+  title:String(part.title||part.label||'').trim(),
+  lines:[...(part.paragraphs||[]),part.text,part.description].filter(line=>typeof line==='string'&&line.trim()),
+ })))).filter(entry=>entry.lines.length&&entry.title);
+}
+// Without an explicit personal question, a section must match by its title: body words alone are too loose.
+const TITLE_MATCH_SCORE=9;
+export function profileAnswer(store,tokens,{minimumScore=1}={}){
+ const wanted=tokens.filter(token=>!['personally','personal','prem','yourself'].includes(token));
+ const scored=profileEntries(store).map(entry=>{
+  const title=haystack(entry.title),body=haystack(entry.lines);
+  const score=wanted.reduce((sum,token)=>sum+Math.max(0,...profileTerms(token).map(term=>title.includes(' '+term)?9:body.includes(' '+term)?2:0)),0);
+  return {entry,score};
+ }).filter(item=>item.score>=minimumScore).sort((a,b)=>b.score-a.score);
+ if(!scored.length)return null;
+ const best=scored.filter(item=>item.score===scored[0].score).slice(0,2).map(item=>item.entry);
+ return cited(store,best.map(entry=>`${entry.title}: ${entry.lines.map(sentence).join('. ')}.`).join('\n\n'),[...new Set(best.map(entry=>entry.documentId))]);
+}
+
 // A project in one or two sentences: its headline, then what it is. Deeper asks add how it started.
 const projectLabel=d=>String(d.client||'').split(' • ')[0]||d.name||d.title;
 export function describeProject(d,{deep=false}={}){
@@ -62,6 +91,8 @@ export function answerPublishedQuestion(question,{store,history=[]}={}){
  if(has(/\b(who is prem|about prem|background|bio|introduction)\b/)){
   const d=store.get('home');return d?cited(store,d.summary,['home']):cited(store,fallback,[]);
  }
+ const profileFirst=PROFILE_INTENT.test(query)?profileAnswer(store,tokens):null;
+ if(profileFirst)return profileFirst;
  const named=portfolio.filter(d=>[d.name,d.title,...(d.aliases||[])].some(value=>{const alias=normalize(value);return alias.length>2&&(' '+query+' ').includes(' '+alias+' ');}));
  if(!named.length&&!kind&&has(/\b(years? of experience|how long|current focus|what is your focus)\b/)){
   const d=store.get('home');return d?cited(store,d.summary,['home']):cited(store,fallback,[]);
@@ -84,6 +115,7 @@ export function answerPublishedQuestion(question,{store,history=[]}={}){
  }
  const listIntent=has(/\b(show|find|list|examples|portfolio|case studies|which projects|projects in)\b/)||kind||named.length>1;
  if(!candidates.length){
+  const profile=profileAnswer(store,tokens,{minimumScore:TITLE_MATCH_SCORE});if(profile)return profile;
   if(!tokens.length&&has(/\b(projects|portfolio|work)\b/))return store.resolveAnswer({type:'mixed',text:'Explore Prem’s published projects.',documentIds:portfolio.slice(0,5).map(d=>d.id),citations:[]});
   if(tokens.includes('ai')){const home=store.get('home');if(home)return cited(store,'Prem focuses on AI-native experiences, generative interfaces and building in code. His published case studies do not yet describe a specific AI project.',['home']);}
   return cited(store,fallback,[]);

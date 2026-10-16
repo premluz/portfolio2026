@@ -7,7 +7,8 @@
     "node": ">=20.6"
   },
   "scripts": {
-    "build": "node scripts/build-content.mjs && node scripts/build-worker.mjs",
+    "build": "npm run build:settings && node scripts/build-content.mjs && node scripts/build-worker.mjs",
+    "build:settings": "node scripts/build-settings.mjs",
     "check": "node scripts/check.mjs",
     "start": "node deploy/node-server.mjs",
     "start:local": "node --env-file=.env deploy/node-server.mjs",

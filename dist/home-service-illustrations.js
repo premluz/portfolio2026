@@ -1,5 +1,5 @@
 const cube=(x,y,size=22,depth=30,accent=false)=>`<g><path d="M${x} ${y}l${size} ${size*.55}v${depth}l-${size} -${size*.55}Z" class="service-side"/><path d="M${x+size} ${y+size*.55}l${size} -${size*.55}v${depth}l-${size} ${size*.55}Z" class="service-face"/><path d="M${x} ${y}l${size} -${size*.55}l${size} ${size*.55}l-${size} ${size*.55}Z" class="${accent?'service-accent':'service-top'}"/></g>`;
-const plate=(y,filled=false)=>`<path d="M57 ${y+48}L157 ${y-8}Q165 ${y-12}173 ${y-8}L268 ${y+45}Q278 ${y+51}269 ${y+57}L174 ${y+111}Q165 ${y+116}156 ${y+111}L57 ${y+56}Q49 ${y+52}57 ${y+48}Z" class="${filled?'service-face':'service-top'}"/>`;
+const plate=(y,filled=false)=>`<path d="M57 ${y+48}L157 ${y-8}Q165 ${y-12} 173 ${y-8}L268 ${y+45}Q278 ${y+51} 269 ${y+57}L174 ${y+111}Q165 ${y+116} 156 ${y+111}L57 ${y+56}Q49 ${y+52} 57 ${y+48}Z" class="${filled?'service-face':'service-top'}"/>`;
 const figures={
  'service-product-design':()=>[...Array(3)].flatMap((_,row)=>[...Array(3)].map((_,col)=>cube(82+col*45+row*27,100-col*25+row*17,22,26,row===0&&col===2))).join(''),
  'service-prototyping':()=>plate(89,true)+plate(78,true)+plate(67,true)+plate(42)+`<path d="M125 76l38 -22 37 22-38 21Z M163 54v43 M125 76h75 M195 98l37 21 M176 109l21 12" fill="none"/><path d="M124 132l21 -12 29 16-21 13Z" class="service-accent"/>`,

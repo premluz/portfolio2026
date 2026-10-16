@@ -28,4 +28,7 @@ for(const [previous,expected] of [['text','carousel'],['cards','cards']]){
  applyDefaultSettings(existing);
  assert.equal(saved.get('prem-home-product-display'),'text','Later explicit choices survive the one-time correction');
 }
+const legacyCarousel=new Map([['prem-carousel-description-in-card','true']]);
+const carouselStorage={getItem:key=>legacyCarousel.get(key)??null,setItem:(key,value)=>legacyCarousel.set(key,String(value))};
+applyDefaultSettings(carouselStorage);assert.equal(legacyCarousel.get('prem-carousel-description-in-card'),'true','Saved per-card carousel captions remain enabled');
 console.log('Default settings passed: every preset value is applied for new storage and existing preferences remain unchanged.');

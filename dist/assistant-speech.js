@@ -1,5 +1,6 @@
 // Browser playback for server-authorized answers. The ElevenLabs key remains in
 // the Worker; a short-lived speech token binds each request to an exact answer.
+const assistantSpeechRate=1.15;
 export class AssistantSpeech {
  constructor({fetcher=(...args)=>globalThis.fetch(...args),AudioClass=globalThis.Audio,onState=()=>{},onStart=()=>{},onEnd=()=>{}}={}){
   Object.assign(this,{fetcher,AudioClass,onState,onStart,onEnd});
@@ -39,7 +40,7 @@ export class AssistantSpeech {
    if(epoch!==this.epoch)return false;
    this.abort=null;const audio=this.player||(this.player=new this.AudioClass(url));audio.src=url;audio.currentTime=0;this.audio=audio;
    // Speed up locally, including cached replies, without changing voice pitch.
-   audio.defaultPlaybackRate=1.25;audio.playbackRate=1.25;audio.preservesPitch=true;
+   audio.defaultPlaybackRate=assistantSpeechRate;audio.playbackRate=assistantSpeechRate;audio.preservesPitch=true;
    audio.onended=()=>{if(epoch===this.epoch)this.stop();};
    audio.onerror=()=>{if(epoch===this.epoch){this.stop();try{this.onState('error',button);}catch{}}};
    await audio.play();if(epoch!==this.epoch)return false;

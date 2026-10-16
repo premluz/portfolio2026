@@ -53,3 +53,17 @@ const offline=await handleAssistantRequest(new Request('https://portfolio.exampl
 const offlineBody=await offline.json();
 assert(offlineBody.documentIds.includes('porter')&&offlineBody.documentIds.includes('bastion')&&!offlineBody.text.includes('couldn’t find'),'The server fallback answers the follow-up from the chat context');
 console.log('Assistant follow-ups passed: described lists, "describe each", ordinals, model context and offline fallback.');
+
+// Personal questions are answered from the About page sections, locally and in the server fallback.
+const sentenceOf=id=>content.get('about-traits').blocks.find(block=>block.id===id).paragraphs[0].slice(0,40);
+for(const [question,trait] of [['tell me about personally your interest','trait-interests'],['What are Prem’s hobbies','trait-interests'],['what does prem do for fun','trait-interests'],['where is prem from','trait-roots'],['what is Prems philosophy','trait-philosophy'],['what is prems sense of humour','trait-seventh-sense']]){
+ const answer=ask(question);
+ assert(answer.text.includes(sentenceOf(trait)),`"${question}" answers from the About section ${trait}`);
+ assert(answer.sources.some(source=>source.documentId==='about'),'It cites the About page');
+}
+assert(ask('has prem done anything unusual').text.includes('Walking ancient pilgrimage route'),'Unusual things come from their section');
+assert(ask('What did Prem do at Bastion').text.startsWith('Bastion'),'Project questions are unaffected');
+resetAssistantRateLimitsForTests();
+const personal=await handleAssistantRequest(new Request('https://portfolio.example/api/assistant',{method:'POST',headers:{'content-type':'application/json',origin:'https://portfolio.example','cf-connecting-ip':'198.51.100.79'},body:JSON.stringify({question:'tell me about personally your interest',sessionId:'profile'})}),{},{documents:catalog.documents});
+assert((await personal.json()).text.includes('Bio-hacking'),'The server fallback answers personal questions from the About page too');
+console.log('Assistant profile answers passed: interests, roots, philosophy, humour, unusual things, project questions unaffected, server fallback.');

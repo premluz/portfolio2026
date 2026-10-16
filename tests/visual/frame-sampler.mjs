@@ -12,6 +12,7 @@ export function startFrameSampler(){
   return {
    url:video?.dataset.videoUrl||'',
    videoOpacity:video?Number(getComputedStyle(video).opacity):null,
+   time:video?Math.round(video.currentTime*1000)/1000:null,
    layers,
    where:visual.closest('.flow-shell')?'morph':visual.closest('.detail')?'detail':visual.closest('[data-gallery-item]')?'gallery':'other',
    playing:visual.classList.contains('video-preview-playing'),
@@ -24,6 +25,12 @@ export function startFrameSampler(){
   if(!window.__stopFrames)requestAnimationFrame(tick);
  };
  window.__frames=frames;window.__stopFrames=false;requestAnimationFrame(tick);
+}
+// A clip restarting (its time jumping back) shows its dark intro again: report any backwards jump.
+export function restartFrames(frames,url){
+ const out=[];let last=null;
+ for(const frame of frames){const item=frame.visuals.find(visual=>visual.url===url&&visual.time!==null&&visual.playing);if(item&&last!==null&&item.time<last-0.5)out.push({t:frame.t,from:last,to:item.time,where:item.where});if(item)last=item.time;}
+ return out;
 }
 // A frame flashes when the opened project's clip is not on screen as video: either a painted frame for it
 // shows the still image, or nothing for it is painted at all (a blank gap mid-transition).

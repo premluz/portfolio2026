@@ -4,7 +4,7 @@ import {readFile} from 'node:fs/promises';
 
 const html=await readFile(new URL('../dist/index.html',import.meta.url),'utf8');
 for(const id of ['showGestureControl','showInfoControl','showAnimationControl'])assert.match(html,new RegExp(`id="${id}"`));
-assert.match(html,/<details class="developer-settings-group" hidden>\s*<summary>Navigation/);
+assert.match(html,/<details class="developer-settings-group">\s*<summary>Navigation/);assert.doesNotMatch(html,/<details class="developer-settings-group" hidden>/,'Every developer settings group is visible');
 const ids=['showGestureControl','showInfoControl','showAnimationControl'];
 const toggles=new Map(ids.map(id=>[id,{attrs:{},listeners:{},addEventListener(type,callback){this.listeners[type]=callback;},setAttribute(name,value){this.attrs[name]=value;}}]));
 const makeButton=()=>({hidden:false,disabled:false});

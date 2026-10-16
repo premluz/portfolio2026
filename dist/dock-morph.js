@@ -1,4 +1,6 @@
 import {splitPopover} from './dock-segments.js';
+import {liquidOutline} from './liquid-contour.js';
+import {dockLiquidShapes,LIQUID_DEFAULTS} from './dock-liquid.js';
 const clamp=value=>Math.max(0,Math.min(1,value));
 const smooth=(a,b,value)=>{const t=clamp((value-a)/(b-a));return t*t*(3-2*t);};
 const k=.55228475;
@@ -94,7 +96,7 @@ export function stepDockSpring(position,velocity,target,seconds,duration=400){
 export class DockMorph {
  constructor(el,{reduced=()=>false}={}){
   this.el=el;this.reduced=reduced;this.position=0;this.velocity=0;this.target=0;this.duration=400;
-  this.voicePosition=0;this.voiceVelocity=0;this.voiceTarget=0;
+  this.voicePosition=0;this.voiceVelocity=0;this.voiceTarget=0;this.liquid={...LIQUID_DEFAULTS};
   this.focusPosition=0;this.focusVelocity=0;this.focusTarget=0;
   this.composerPosition=0;this.composerVelocity=0;this.composerTarget=0;this.backPosition=0;this.backVelocity=0;this.backTarget=0;this.back=el.querySelector('#assistantBack');
   el.querySelector('.dock-shapes')?.remove();
@@ -180,16 +182,22 @@ export class DockMorph {
   this.el.style.setProperty('--dock-back-space',backSpace+'px');
   this.el.style.setProperty('--dock-center-offset',(backSpace-this.settingsSpace*remaining)/2+'px');
   if(this.back){this.back.hidden=this.backPosition===0&&this.backTarget===0;this.back.inert=!this.backTarget||!back||back.reveal<.7;this.back.style.opacity=String(back?.reveal||0);if(back)this.back.style.left=back.left+(back.width-this.metrics.backWidth)/2+'px';}
-  const clip=`path('${shape.path.replace(/\s+/g,' ')}')`;
+  // While anything is moving, the glass, rim and controls share one metaball outline (even-odd, one
+  // contour per lobe); at rest the exact analytic shape is kept, so settled pills stay crisp.
+  const recedingSource=receding?{...this.accessory,position:this.accessory.position*remaining}:null;
+  const liquid=liquidOutline(dockLiquidShapes({shape,phase,metrics:this.metrics,extension,receding,recedingSource,back,backPhase:this.backPosition*remaining},this.liquid));
+  const outline=liquid||shape.path;
+  const clip=liquid?`path(evenodd, '${liquid}')`:`path('${shape.path.replace(/\s+/g,' ')}')`;
   this.content.style.clipPath=extension?`path('${dockGeometry(phase,this.metrics).path.replace(/\s+/g,' ')}')`:clip;this.main.style.width=shape.mainWidth+'px';
   const branch=shape.popover,branches=[branch,receding?.popover].filter(Boolean),left=Math.min(0,...branches.map(item=>item.left),back?.left||0),top=Math.min(0,...branches.map(item=>item.top)),width=Math.max(shape.width,...branches.map(item=>item.left+item.width))-left,height=shape.height-top;
   for(const node of [this.glass,this.rim])Object.assign(node.style,{left:left+'px',top:top+'px',width:width+'px',height:height+'px'});
-  this.clipPath.setAttribute('d',shape.path);this.clipPath.setAttribute('transform',`translate(${-left} ${-top})`);
+  this.clipPath.setAttribute('d',outline);this.clipPath.setAttribute('clip-rule',liquid?'evenodd':'nonzero');this.clipPath.setAttribute('transform',`translate(${-left} ${-top})`);
   this.glass.style.clipPath=branch||back?`url(#${this.clipId})`:clip;
-  this.rim.setAttribute('viewBox',`${left} ${top} ${width} ${height}`);this.path.setAttribute('d',shape.path);
+  this.rim.setAttribute('viewBox',`${left} ${top} ${width} ${height}`);this.path.setAttribute('d',outline);
   this.context.style.opacity=String(shape.reveal);this.context.style.visibility=shape.reveal>.001?'visible':'hidden';this.context.inert=this.target===0||shape.reveal<.7;this.context.setAttribute('aria-hidden',String(this.context.inert));
  }
  setPopover(popover){this.popover=popover;this.paint();}
+ setLiquid({blend=this.liquid.blend,pinch=this.liquid.pinch}={}){this.liquid={blend,pinch};this.paint();}
  setAccessory(accessory){if(this.accessory===accessory)return;this.accessory=accessory;this.paint();}
  destroy(){cancelAnimationFrame(this.raf);removeEventListener('resize',this.resize);this.el.append(this.context,this.main);this.content.remove();this.glass.remove();this.rim.remove();}
 }

@@ -431,7 +431,7 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 
 /* Lab status sits above image and video without adding a badge surface. */
 :root{--card-lab-icon-size:16px;--card-lab-icon-opacity:.58;--card-lab-icon-inset:max(22px,calc(var(--radius-card) * .32 + 6px))}
-.project-card>.card-lab-mark{position:absolute;top:var(--card-lab-icon-inset);right:var(--card-lab-icon-inset);z-index:3;display:block;width:var(--card-lab-icon-size);height:var(--card-lab-icon-size);color:var(--muted);opacity:var(--card-lab-icon-opacity);pointer-events:none}
+.project-card>.card-lab-mark{display:none}
 .card-lab-mark svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.35;stroke-linecap:round;stroke-linejoin:round}
 
 /* A shared closing invitation, outside the moving card canvas. */

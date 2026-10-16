@@ -1,6 +1,6 @@
 import {test,expect} from '@playwright/test';
 import {writeFile,mkdir} from 'node:fs/promises';
-import {startFrameSampler,stillImageFrames,jumpFrames} from './frame-sampler.mjs';
+import {startFrameSampler,stillImageFrames,jumpFrames,restartFrames} from './frame-sampler.mjs';
 
 const CENTRED='[data-home-product-gallery] [data-gallery-item][aria-current="true"]';
 const PROJECTS=4,REPEATS=2;
@@ -41,6 +41,9 @@ test('a playing carousel clip stays video, in place, through open and return',as
  await mkdir(info.outputDir,{recursive:true});
  await writeFile(info.outputPath('frames.json'),JSON.stringify(runs,null,1));
  await writeFile(info.outputPath('flashes.json'),JSON.stringify(report,null,1));
+ const restarts=runs.map(run=>({id:run.id,opening:restartFrames(run.opening,run.url),closing:restartFrames(run.closing,run.url)}));
+ await writeFile(info.outputPath('restarts.json'),JSON.stringify(restarts,null,1));
+ expect.soft(restarts.reduce((sum,run)=>sum+run.opening.length+run.closing.length,0),'times the playing clip restarted from the beginning (its dark intro replays)').toBe(0);
  const count=key=>report.reduce((sum,run)=>sum+run[key].opening.length+run[key].closing.length,0);
  expect.soft(count('flashes'),'frames where the playing clip is not what is on screen').toBe(0);
  expect.soft(count('jumps'),'frames where the moving clip jumps position').toBe(0);

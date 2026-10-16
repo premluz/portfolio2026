@@ -7,6 +7,7 @@ import {fileURLToPath} from 'node:url';
 import {handleAssistantRequest} from '../dist/server/assistant-core.mjs';
 import {publishedAssistantDocuments} from '../dist/server/content.js';
 import {handleVoiceRequest} from '../dist/server/voice-core.mjs';
+import {readPublishedSettings,publishedSettingsModule} from '../scripts/site-settings.mjs';
 
 const publicDirectory=path.resolve(fileURLToPath(new URL('../dist/client/',import.meta.url)));
 const trustedProxy=process.env.TRUST_PROXY==='true';
@@ -131,10 +132,17 @@ async function serveFile(incoming,response,url){
  }
 }
 
+async function serveSiteSettings(response){
+ const profile=await readPublishedSettings();
+ response.writeHead(200,{'content-type':'text/javascript; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff'});
+ response.end(publishedSettingsModule(profile));
+}
+
 const server=createServer(async(incoming,response)=>{
  try{
   const url=requestUrl(incoming);
   if(url.pathname==='/healthz')return sendJson(response,200,{status:'ok'});
+  if(url.pathname==='/published-settings.js')return await serveSiteSettings(response);
   if(url.pathname.startsWith('/api/'))return await serveApi(incoming,response,url);
   return await serveFile(incoming,response,url);
  }catch(error){

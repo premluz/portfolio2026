@@ -12,7 +12,7 @@ export function configureSurfaceHover(surfaces,{rest='surface',enabled=true}={})
 
 export function mountSurfaceRenderer(host,renderer){
  const skin=host.querySelector(':scope > .liquid-skin');
- if(!skin)throw new Error('Prepare the surface skin before mounting an effect');
+ if(!skin)throw new Error(`Prepare the surface skin before mounting an effect on <${host.tagName?.toLowerCase()} class="${host.className}" data-hover-effect="${host.dataset?.hoverEffect}"${host.dataset?.card?' data-card="'+host.dataset.card+'"':''}>`);
  const layer=document.createElement('div');layer.className='surface-effect-layer';layer.setAttribute('aria-hidden','true');skin.append(layer);
  const effect=renderer({host,layer})||{};
  const sync=()=>{

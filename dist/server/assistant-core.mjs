@@ -98,7 +98,7 @@ function parseModelAnswer(value,allowedIds){
 }
 
 export function publishedFallbackAnswer(question,documents,history=[]){
- const records=documents.filter(document=>document.status==='published'&&(document.type==='portfolio-item'||['home','about','contact'].includes(document.id)));
+ const records=documents.filter(isSourceDocument);
  const byId=new Map(records.map(document=>[document.id,document]));
  const store={get:id=>byId.get(id),list:({type}={})=>records.filter(document=>!type||document.type===type),getCard:id=>byId.get(id)?.type==='portfolio-item'?byId.get(id):null,resolveAnswer:answer=>({...answer,sources:(answer.citations||[]).filter(citation=>byId.has(citation.documentId))})};
  const answer=answerPublishedQuestion(question,{store,history});

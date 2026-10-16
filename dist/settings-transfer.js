@@ -1,13 +1,15 @@
+import {designSettingControls} from './design-system.js';
+
 const FORMAT='prem-portfolio-settings';
 const VERSION=1;
 export const MAX_SETTINGS_BYTES=64*1024;
 const motionKey='prem-motion-settings';
 const direct={
  showFooterContactLinks:'prem-footer-contact-links',splitProjectControls:'prem-split-project-controls',
- homeProductDisplay:'prem-home-product-display',contentPageWidth:'prem-content-page-width',servicesCarouselAlignment:'prem-services-carousel-alignment',servicesLayout:'prem-services-layout',servicesCardBackground:'prem-services-card-background',testimonialCardBackground:'prem-testimonial-card-background',aboutGalleryOrientation:'prem-about-gallery-orientation',aboutGalleryVariant:'prem-about-gallery-variant',heroCarousel:'prem-hero-carousel',heroTimelineEnabled:'prem-hero-timeline-enabled',heroTimelineTextEnabled:'prem-hero-timeline-text-enabled',heroDescriptionEnabled:'prem-hero-description-enabled',heroTimelineMode:'prem-hero-timeline-mode',homeViewSelect:'prem-home-view',homeLayoutSelect:'prem-home-layout',gridColumns:'prem-home-columns',singleColumnCardPosition:'prem-one-column-card-position',multiColumnCardPosition:'prem-multi-column-card-position',cardCopyHover:'prem-card-copy-hover-desktop',homeContentWidth:'prem-home-content-width',
- hideCardColor:'prem-hide-card-color',hideCardHover:'prem-hide-card-hover',cardHoverEffect:'prem-card-hover-effect',ambientLightMovement:'prem-ambient-light-movement',ambientHoverSpeed:'prem-ambient-hover-speed',showComposerGlow:'prem-composer-glow',cardShowClient:'prem-card-show-client',cardShowTitle:'prem-card-show-title',cardShowDescription:'prem-card-show-description',cardPaddingSame:'prem-card-padding-uniform',cardPaddingAll:'prem-card-padding-all',cardRounding:'prem-card-rounding',cardGap:'prem-card-gap',
+ homeProductDisplay:'prem-home-product-display',contentPageWidth:'prem-content-page-width',servicesCarouselAlignment:'prem-services-carousel-alignment',servicesLayout:'prem-services-layout',servicesCardBackground:'prem-services-card-background',testimonialCardBackground:'prem-testimonial-card-background',aboutGalleryOrientation:'prem-about-gallery-orientation',aboutGalleryVariant:'prem-about-gallery-variant',carouselDescriptionInCard:'prem-carousel-description-in-card',heroCarousel:'prem-hero-carousel',heroTimelineEnabled:'prem-hero-timeline-enabled',heroTimelineTextEnabled:'prem-hero-timeline-text-enabled',heroDescriptionEnabled:'prem-hero-description-enabled',heroTimelineMode:'prem-hero-timeline-mode',homeViewSelect:'prem-home-view',homeLayoutSelect:'prem-home-layout',gridColumns:'prem-home-columns',singleColumnCardPosition:'prem-one-column-card-position',multiColumnCardPosition:'prem-multi-column-card-position',cardCopyHover:'prem-card-copy-hover-desktop',homeContentWidth:'prem-home-content-width',
+ hideCardColor:'prem-hide-card-color',hideCardHover:'prem-hide-card-hover',cardHoverEffect:'prem-card-hover-effect',ambientLightMovement:'prem-ambient-light-movement',ambientHoverSpeed:'prem-ambient-hover-speed',showComposerGlow:'prem-composer-glow',cardShowClient:'prem-card-show-client',cardShowTitle:'prem-card-show-title',cardShowDescription:'prem-card-show-description',cardTitleScale:'prem-card-title-scale',cardPaddingSame:'prem-card-padding-uniform',cardPaddingAll:'prem-card-padding-all',cardRounding:'prem-card-rounding',cardGap:'prem-card-gap',
  fullBleed:'prem-full-bleed',imageRounding:'prem-image-rounding',showFullScreenOption:'prem-show-full-screen-option',detailHeadingBeside:'prem-detail-heading-beside',wideHero:'prem-wide-hero',detailContentWidth:'prem-detail-content-width',ambientDetailGlow:'prem-ambient-detail-glow',
- hideBranding:'prem-hide-branding',navRounding:'prem-nav-rounding',navItemPadding:'prem-nav-item-padding',navContainerPadding:'prem-nav-container-padding',navItemFontSize:'prem-nav-item-font-size',contextualComposerPreference:'prem-contextual-composer',contextualButtons:'prem-contextual-buttons',alwaysDarkGlassPreference:'prem-always-dark-glass',showGestureControl:'prem-menu-gesture-visible',showInfoControl:'prem-menu-info-visible',showAnimationControl:'prem-menu-animation-visible',imageRippleEnabled:'prem-image-ripple-enabled',imageBlurEnabled:'prem-image-blur-enabled',
+ hideBranding:'prem-hide-branding',navRounding:'prem-nav-rounding',dockLiquidBlend:'prem-dock-liquid-blend',dockLiquidPinch:'prem-dock-liquid-pinch',navItemPadding:'prem-nav-item-padding',navContainerPadding:'prem-nav-container-padding',navItemFontSize:'prem-nav-item-font-size',contextualComposerPreference:'prem-contextual-composer',contextualButtons:'prem-contextual-buttons',alwaysDarkGlassPreference:'prem-always-dark-glass',showGestureControl:'prem-menu-gesture-visible',showInfoControl:'prem-menu-info-visible',showAnimationControl:'prem-menu-animation-visible',imageRippleEnabled:'prem-image-ripple-enabled',imageBlurEnabled:'prem-image-blur-enabled',
  glassOpacity:'prem-glassOpacity',roomBlur:'prem-roomBlur',roomShade:'prem-roomShade',edgeShadeTop:'prem-edge-shade-top',edgeShadeBottom:'prem-edge-shade-bottom',edgeShadeLeft:'prem-edge-shade-left',edgeShadeRight:'prem-edge-shade-right',edgeShadeRetreat:'prem-edge-shade-retreat',edgeShadeDepth:'prem-edge-shade-depth'
 };
 const motionIds=['intensity','duration','slow','stretch','lag','stiffness','damping','reflections','glow','overshoot','ripple','motionBlur'];
@@ -31,11 +33,14 @@ export function settingsSchema(panel,root=document){
   const kind=input.tagName==='SELECT'?'enum':input.type==='range'?'number':'boolean';
   schema.set(key,{key,input,storage,path,invert,nullable,encode,kind,min:Number(input.min),max:Number(input.max),options:kind==='enum'?[...input.options].map(option=>option.value):null});
  }
- for(const [key,id,storage] of [['sound','soundPreference','prem-assistant-sound'],['animation','animationPreference','prem-animations']]){
-  const input=root.querySelector('#'+id);if(input)schema.set(key,{key,input,storage,kind:'boolean'});
+ for(const [path,,options] of designSettingControls){
+  const key='design.'+path;
+  if(!schema.has(key))schema.set(key,{key,storage:'prem-design-system',path,kind:'enum',options});
  }
- const theme=root.querySelector('#themeToggle');
- if(theme)schema.set('theme',{key:'theme',storage:'prem-theme',kind:'enum',options:['light','dark','system'],read:()=>root.documentElement.dataset.themePreference||'light'});
+ for(const [key,id,storage] of [['sound','soundPreference','prem-assistant-sound'],['animation','animationPreference','prem-animations']]){
+  const input=root.querySelector('#'+id);schema.set(key,{key,input,storage,kind:'boolean'});
+ }
+ schema.set('theme',{key:'theme',storage:'prem-theme',kind:'enum',options:['light','dark','system'],read:()=>root.documentElement.dataset.themePreference||'light'});
  return schema;
 }
 function readValue(field,storage){
