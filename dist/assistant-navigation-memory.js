@@ -19,5 +19,6 @@ export class AssistantNavigationMemory {
   if(this.returnToChat){this.preserveOrigin=true;return 'assistant';}
   return null;
  }
+ prepareHomeNavigation(){this.returnToChat=false;this.preserveOrigin=false;this.suppressNextReturn=true;}
  reverseToChat(){this.returnToChat=false;this.suppressNextReturn=false;}
 }

@@ -1552,21 +1552,21 @@ body:has(.home-carousel-active){overflow-x:clip}
 #dock .composer-suggestions{position:absolute;z-index:4;left:50%;bottom:calc(100% + 16px);width:max-content;max-width:min(var(--composer-max-width),calc(100vw - 28px));justify-content:center;gap:8px;margin:0;transform:translateX(-50%);pointer-events:auto}
 #dock .composer-suggestions[hidden]{display:none}
 #dock .composer-suggestions button{flex:0 1 auto;max-width:100%;background:color-mix(in oklab,var(--card-surface) 82%,transparent);backdrop-filter:blur(18px) saturate(1.15);-webkit-backdrop-filter:blur(18px) saturate(1.15)}
-/* The dock's existing outline widens into the composer. Its aura lives outside
-   the clipped glass, so the light remains atmospheric rather than a new card. */
-#dock.is-composer{z-index:60;--assistant-glow-a:oklch(.78 .105 235);--assistant-glow-b:oklch(.82 .09 315)}
-:root[data-theme="dark"] #dock.is-composer{--assistant-glow-a:oklch(.58 .06 235);--assistant-glow-b:oklch(.57 .048 315)}
+/* The composer has a separate ambient viewport. Its light is a quiet elliptical
+   field rising from below the page, never a glow attached to the input. */
+@property --assistant-glow-angle{syntax:"<angle>";inherits:false;initial-value:0deg}
+#dock.is-composer{z-index:60;--assistant-glow-cyan:oklch(.78 .2 205);--assistant-glow-blue:oklch(.69 .24 260);--assistant-glow-violet:oklch(.68 .25 300);--assistant-glow-pink:oklch(.73 .23 340);--assistant-glow-coral:oklch(.75 .2 25);--assistant-glow-orange:oklch(.84 .18 70);--assistant-glow-opacity:.12}
+:root[data-theme="dark"] #dock.is-composer{--assistant-glow-cyan:oklch(.72 .18 205);--assistant-glow-blue:oklch(.63 .22 260);--assistant-glow-violet:oklch(.62 .23 300);--assistant-glow-pink:oklch(.67 .21 340);--assistant-glow-coral:oklch(.7 .18 25);--assistant-glow-orange:oklch(.78 .16 70);--assistant-glow-opacity:.1}
 /* The viewport wrapper has a fixed extent. Moving light cannot change document overflow. */
 #dock .composer-aura-viewport{display:none;position:absolute;left:calc(50% - var(--dock-center-offset,0px));bottom:calc(-1 * var(--dock-bottom));width:100vw;height:100dvh;transform:translateX(-50%);overflow:clip;contain:paint;z-index:-1;pointer-events:none}
 #dock.is-composer .composer-aura-viewport{display:block}
 #dock.composer-glow-hidden .composer-aura-viewport{display:none}
-#dock .composer-aura-light{position:absolute;left:calc(50% + var(--dock-center-offset,0px));bottom:calc(var(--dock-bottom) - 58px);width:calc(3 * (var(--dock-painted-width,var(--nav-main-width)) + 300px));height:calc(var(--nav-height) + 142px);transform:translateX(-50%)}
-#dock.is-composer .composer-aura-light::before,#dock.is-composer .composer-aura-light::after{content:"";position:absolute;z-index:-1;pointer-events:none;inset:0;border-radius:48% 52% 46% 54% / 55% 44% 56% 45%;filter:blur(30px);opacity:.19;will-change:transform,border-radius,opacity}
-#dock.is-composer .composer-aura-light::before{background:radial-gradient(ellipse 58% 72% at 38% 49%,color-mix(in oklab,var(--assistant-glow-a) 72%,transparent),transparent 94%);animation:assistant-presence-a 11s ease-in-out infinite alternate}
-#dock.is-composer .composer-aura-light::after{background:radial-gradient(ellipse 57% 73% at 62% 51%,color-mix(in oklab,var(--assistant-glow-b) 68%,transparent),transparent 94%);animation:assistant-presence-b 13s ease-in-out infinite alternate}
-#dock.is-composer.assistant-working .composer-aura-light::before{opacity:.26;animation-duration:3.5s}#dock.is-composer.assistant-working .composer-aura-light::after{opacity:.25;animation-duration:4.1s}
-@keyframes assistant-presence-a{from{transform:translate3d(-6%,3%,0) scale(.94,1);border-radius:48% 52% 46% 54% / 55% 44% 56% 45%}to{transform:translate3d(8%,-3%,0) scale(1.09,.92);border-radius:62% 38% 56% 44% / 42% 58% 43% 57%}}
-@keyframes assistant-presence-b{from{transform:translate3d(6%,-3%,0) scale(.96,1.04);border-radius:54% 46% 60% 40% / 42% 57% 43% 58%}to{transform:translate3d(-8%,4%,0) scale(1.07,.91);border-radius:40% 60% 47% 53% / 59% 41% 57% 43%}}
+#dock .composer-aura-light{position:absolute;left:calc(50% + var(--dock-center-offset,0px));bottom:calc(var(--dock-bottom) - clamp(320px,50vw,520px));width:calc(3 * (var(--dock-painted-width,var(--nav-main-width)) + 300px));height:clamp(400px,65vw,660px);transform:translateX(-50%);border-radius:50%}
+#dock.is-composer .composer-aura-light::before,#dock.is-composer .composer-aura-light::after{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;border-radius:50%;background:conic-gradient(from var(--assistant-glow-angle),var(--assistant-glow-pink),var(--assistant-glow-violet) 17%,var(--assistant-glow-blue) 34%,var(--assistant-glow-cyan) 50%,var(--assistant-glow-orange) 67%,var(--assistant-glow-coral) 84%,var(--assistant-glow-pink));-webkit-mask:radial-gradient(ellipse 58% 48% at 50% 58%,#000 0 42%,transparent 80%);mask:radial-gradient(ellipse 58% 48% at 50% 58%,#000 0 42%,transparent 80%);will-change:filter,opacity,transform}
+#dock.is-composer .composer-aura-light::before{filter:blur(30px);opacity:var(--assistant-glow-opacity);animation:assistant-glow-shift 15s linear infinite}
+#dock.is-composer .composer-aura-light::after{filter:blur(48px);opacity:calc(var(--assistant-glow-opacity) * .72);animation:assistant-glow-shift 19s linear infinite reverse}
+#dock.is-composer.assistant-working .composer-aura-light::before{opacity:.18;animation-duration:5s}#dock.is-composer.assistant-working .composer-aura-light::after{opacity:.14;animation-duration:6.5s}
+@keyframes assistant-glow-shift{from{--assistant-glow-angle:0deg}to{--assistant-glow-angle:360deg}}
 #dock .dock-content>nav>a{transition:opacity .18s ease,background-color var(--nav-hover-out-duration) ease-out}
 #dock.is-composer .dock-content>nav>a{opacity:0;visibility:hidden;pointer-events:none}
 #dock .assistant-composer{position:absolute;inset:0;display:flex;align-items:center;gap:4px;width:100%;padding:var(--composer-control-inset);margin:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .24s ease,visibility .24s}
@@ -1577,9 +1577,9 @@ body:has(.home-carousel-active){overflow-x:clip}
 #dock .assistant-composer button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 #dock .assistant-composer input{flex:1 1 auto;min-width:0;width:100%;height:100%;padding:0 2px;border:0;outline:0;background:transparent;color:var(--ink);font:inherit;font-size:var(--composer-font-size)}#dock .assistant-composer input::placeholder{color:var(--muted)}#dock .assistant-composer input:focus-visible{outline:0}#dock .assistant-composer button:disabled{opacity:.3;cursor:default}
 @media(max-width:650px){.assistant-page{padding:24px 22px calc(var(--assistant-scroll-clearance) + 48px + env(safe-area-inset-bottom,0px))}.assistant-welcome{margin-bottom:45px}.ask-messages{gap:26px}.ask-cards{grid-template-columns:1fr}.ask-cards .project-card{min-height:112px;padding:15px}.ask-cards .project-card .visual{height:76px!important}#dock .assistant-composer{gap:2px}#dock .composer-suggestions{max-width:calc(100vw - 20px);gap:6px}#dock .composer-suggestions button{padding:8px 11px;font-size:var(--composer-font-size)}}
-@media(prefers-reduced-motion:reduce){#dock.is-composer .composer-aura-light::before,#dock.is-composer .composer-aura-light::after{animation:none;opacity:.16}#dock .assistant-composer{transition:none}.ask-suggestions button.suggestion-chip{animation:none;opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){#dock.is-composer .composer-aura-light::before,#dock.is-composer .composer-aura-light::after{animation:none;opacity:.1}#dock .assistant-composer{transition:none}.ask-suggestions button.suggestion-chip{animation:none;opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.ask-cards .project-card.ask-card-enter{animation:none}}
-:root[data-animation="off"] #dock.is-composer .composer-aura-light::before,:root[data-animation="off"] #dock.is-composer .composer-aura-light::after{animation:none;opacity:.16}
+:root[data-animation="off"] #dock.is-composer .composer-aura-light::before,:root[data-animation="off"] #dock.is-composer .composer-aura-light::after{animation:none;opacity:.1}
 :root[data-animation="off"] .ask-suggestions button.suggestion-chip{animation:none;opacity:1;transform:none}
 
 /* One transparent glass material for dock surfaces and suggested prompts. */
@@ -1590,8 +1590,6 @@ body:has(.home-carousel-active){overflow-x:clip}
 .project-menu-client{flex:0 0 auto;color:inherit}
 .project-menu-title{min-width:0;overflow:hidden;text-overflow:ellipsis}
 
-/* A tall field dips below the viewport, leaving a soft semicircular presence. */
-#dock .composer-aura-light{height:clamp(400px,65vw,660px);bottom:calc(var(--dock-bottom) - clamp(250px,42vw,440px))}
 .project-menu-client{text-align:right;margin-left:auto}
 #dock .project-menu-group+.project-menu-group{margin-top:0}
 
@@ -1603,7 +1601,7 @@ body:has(.home-carousel-active){overflow-x:clip}
 
 
 
-@media(max-width:650px){#dock .composer-aura-light{width:calc(1.5 * (var(--dock-painted-width,var(--nav-main-width)) + 220px));height:360px;bottom:calc(var(--dock-bottom) - 230px)}}
+@media(max-width:650px){#dock .composer-aura-light{width:calc(1.5 * (var(--dock-painted-width,var(--nav-main-width)) + 220px));height:340px;bottom:calc(var(--dock-bottom) - 270px)}}
 
 /* Back uses the dock’s morphing glass and rim; the icon has no second skin. */
 #dock .assistant-back{background:transparent;border:0;border-radius:var(--nav-rounding)}

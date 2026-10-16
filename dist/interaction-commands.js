@@ -78,7 +78,7 @@ export class CommandBus {
   }
   async dispatch(command) {
     if(!command||!this.ids.has(command.id))return {ok:false,message:'Command not recognized.'};
-    const state=this.getState(),interrupt=['navigation.back','input.voice.stop','overlay.projects.close','assistant.speech.stop'].includes(command.id);
+    const state=this.getState(),interrupt=['navigation.back','input.voice.stop','overlay.projects.close','assistant.speech.stop','assistant.ask'].includes(command.id);
     if((state.busy||this.pending)&&!interrupt)return {ok:false,message:'Let the current transition finish.'};
     if(command.id.startsWith('project.')&&command.id!=='project.open'&&!state.isProject&&!(state.isWork&&['project.next','project.previous'].includes(command.id)))
       return {ok:false,message:'Open a project first.'};

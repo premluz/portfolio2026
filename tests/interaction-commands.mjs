@@ -69,6 +69,7 @@ release({ok:true});await opening;assert.equal(bus.pending,0);
 assert.equal((await bus.dispatch({id:'assistant.ask',text:'who is prem',source:'voice'})).ok,true,'Assistant questions are routed through the shared command bus');
 state={busy:true,isProject:true,isWork:false};assert.equal((await bus.dispatch({id:'project.next'})).ok,false);
 assert.equal((await bus.dispatch({id:'viewport.scroll.down'})).ok,false,'Scrolling cannot fight a running card transition');
+assert.equal((await bus.dispatch({id:'assistant.ask',text:'interrupt the spoken answer'})).ok,true,'An addressed assistant question can interrupt a running transition');
 assert.equal((await bus.dispatch({id:'input.voice.stop'})).ok,true,'Stopping capture never waits for navigation');
 assert.equal((await bus.dispatch({id:'overlay.projects.close'})).ok,true,'Closing the menu can interrupt a transition');
 assert.equal((await bus.dispatch({id:'assistant.speech.stop'})).ok,true,'Stopping a response never waits for the current command');

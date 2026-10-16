@@ -13,11 +13,15 @@ import {clearImageHandoffs} from '../dist/image-handoff.js';
 // race that midpoint-only morph tests could not exercise.
 const app=await readFile(new URL('../dist/app.js',import.meta.url),'utf8');
 const extract=(from,to)=>app.slice(app.indexOf(from),app.indexOf(to));
-const code={galleryOriginTarget:extract('function galleryOriginTarget(','function syncGalleryOrigin('),syncGalleryOrigin:extract('function syncGalleryOrigin(','function disposeGalleryOrigin('),syncDockActions:extract('function syncDockActions(','installHoverTrail('),cleanup:extract('function cleanup()','function render('),render:extract('function render(','function syncRouteChrome('),navigate:extract('async function navigate()','function homeScrollMotion('),pushCards:extract('function pushCards(','async function slideCards(')};
+const code={galleryOriginTarget:extract('function galleryOriginTarget(','function syncGalleryOrigin('),syncGalleryOrigin:extract('function syncGalleryOrigin(','function disposeGalleryOrigin('),syncDockActions:extract('function syncDockActions(','installHoverTrail('),cleanup:extract('function cleanup()','function render('),render:extract('function render(','function syncRouteChrome('),scrollPage:extract('function scrollPage(','function navigateAssistant('),navigate:extract('async function navigate()','function homeScrollMotion('),pushCards:extract('function pushCards(','async function slideCards(')};
 const compile=text=>new Function('env','args',`with(env){return (${text}).apply(null,args);}`);
 class Style{
  get cssText(){return Object.entries(this).map(([key,value])=>`${key}:${value}`).join(';');}
  set cssText(value){for(const key of Object.keys(this))delete this[key];for(const pair of value.split(';').filter(Boolean)){const at=pair.indexOf(':');this[pair.slice(0,at)]=pair.slice(at+1);}}
+ getPropertyValue(key){return this[key]||'';}
+ getPropertyPriority(){return '';}
+ setProperty(key,value){this[key]=value;}
+ removeProperty(key){delete this[key];}
 }
 class Node{
  constructor(classes='',data={}){this.classes=new Set(classes.split(' ').filter(Boolean));this.dataset={...data};this.style=new Style();this.children=[];this.id='';this.hidden=false;this.rect={left:100,top:150,width:600,height:400};this.classList={add:name=>this.classes.add(name),remove:name=>this.classes.delete(name),contains:name=>this.classes.has(name),toggle:(name,on)=>{on??=!this.classes.has(name);on?this.classes.add(name):this.classes.delete(name);}};}

@@ -7,7 +7,8 @@ const messages={
   'language-not-supported':'English speech recognition is unavailable in this browser.',
   'network':'The browser’s speech service could not connect. Check your connection and try again.'
 };
-const outputCommands=new Set(['assistant.speech.stop','route.assistant','input.voice.stop']);
+const outputCommands=new Set(['assistant.speech.stop','assistant.ask','route.assistant','input.voice.stop']);
+const recognitionStartRetry=120;
 export class VoiceNavigation {
   constructor(catalog,{onCommand=()=>{},onUtterance=()=>{},canAsk=()=>false,onStatus=()=>{},onChange=()=>{},environment=globalThis}={}) {
     Object.assign(this,{catalog,onCommand,onUtterance,canAsk,onStatus,onChange,environment,conversation:false,enabled:false,paused:false,recognition:null,generation:0,pending:false,retries:0});
@@ -35,7 +36,7 @@ export class VoiceNavigation {
     // Use the browser-provided speech service. Do not request a language-pack
     // installation; the consent guide explains its possible online processing.
     recognition.lang=this.lang;
-    recognition.continuous=false;recognition.interimResults=true;recognition.maxAlternatives=1;
+    recognition.continuous=this.outputActive;recognition.interimResults=true;recognition.maxAlternatives=1;
     const valid=()=>this.enabled&&!this.paused&&generation===this.generation&&this.recognition===recognition;
     this.recognition=recognition;this.transcript='';this.executed=false;
     recognition.onstart=()=>{if(!valid())return;this.status(this.outputActive?'Say “Stop” to interrupt':'Listening',this.outputActive?'output':'listening');this.retries=0;clearTimeout(this.startTimer);this.startup?.resolve(true);this.startup=null;};
@@ -75,13 +76,13 @@ export class VoiceNavigation {
       clearTimeout(this.pauseTimer);
       if(generation!==this.generation||!this.enabled||this.paused||this.pending&&!this.outputActive)return;
       const command=!this.executed&&this.transcript?parseVoiceCommand(this.transcript,this.catalog,{final:true}):null;
-      if(this.outputActive){if(command&&outputCommands.has(command.id)){this.execute(command,null,generation);return;}this.transcript='';this.schedule(100);return;}
+      if(this.outputActive){if(command&&outputCommands.has(command.id)){this.execute(command,null,generation);return;}this.transcript='';return;}
       if(command){this.execute(command,null,generation);return;}
       if(!isVoiceNavigationRequest(this.transcript)&&(this.conversation||this.canAsk())&&this.transcript.trim()){this.execute({id:'assistant.utterance',text:this.transcript.trim()},null,generation);return;}
       if(isVoiceNavigationRequest(this.transcript))this.status('Try “Open Merlin”, “Next” or “List”.','ready');
       this.transcript='';this.schedule(this.retries?Math.min(1500,400+this.retries*150):350);
     };
-    try{recognition.start();}catch(error){this.fail(error.message||'The microphone could not start.');}
+    try{recognition.start();}catch(error){if(error?.name==='InvalidStateError'&&valid()){this.recognition=null;this.schedule(recognitionStartRetry);return;}this.fail(error.message||'The microphone could not start.');}
   }
   async execute(command,recognition,generation) {
     const interrupt=this.outputActive&&outputCommands.has(command.id);

@@ -36,4 +36,13 @@ assert.equal(reopened.backTarget('work'),'assistant');reopened.beforeNavigate('w
 assert.equal(reopened.backTarget('assistant'),'work');reopened.beforeNavigate('assistant','work');
 assert.deepEqual(reopened.beforeNavigate('about','assistant'),{returningToChat:false},'Manually opening Chat records the current page as its new origin');
 assert.equal(reopened.origin,'about');
+
+const home=new AssistantNavigationMemory();
+home.beforeNavigate('work','assistant');home.beforeNavigate('assistant','tracr');
+home.prepareHomeNavigation();
+assert.equal(home.returnToChat,false,'Home clears the pending Chat return');
+assert.equal(home.preserveOrigin,false,'Home clears the preserved Chat origin');
+assert.deepEqual(home.beforeNavigate('assistant','work'),{returningToChat:false},'Explicit Home navigation does not create a Chat loop');
+home.beforeNavigate('work','assistant');
+assert.deepEqual(home.beforeNavigate('assistant','work'),{returningToChat:false},'A later Chat session still starts with a clean Home return state');
 console.log('Assistant navigation memory passed: origin, Chat return, explicit close, Escape reversal and fresh entry.');

@@ -1,7 +1,7 @@
 import {test,expect} from '@playwright/test';
 
 const role='Review this senior product design role: '+('Research, complex workflows, prototyping and collaboration. '.repeat(90));
-const review='Overall fit\nRelevant product and prototyping experience.\n\nStrongest matches\nMerlin: generative interfaces and a component-based workbench.\n\nNot documented / questions to confirm\nConfirm the requested leadership scope.\n\nRecommended projects to review\nMerlin and Porter.';
+const review='Overall fit\nRelevant product and prototyping experience.\n\nStrongest matches\nMerlin: generative interfaces and a component-based workbench.\n\nTransferable experience\nPorter shows the same systems thinking across a different product context.\n\nRecommended projects to review\nMerlin and Porter.';
 
 for(const mobile of [true,false])test.describe(mobile?'mobile review':'desktop review',()=>{
  test.use({viewport:mobile?{width:393,height:851}:{width:1440,height:900},isMobile:mobile,hasTouch:mobile,reducedMotion:'reduce'});
