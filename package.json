@@ -7,6 +7,8 @@
     "node": ">=20.6"
   },
   "scripts": {
+    "dev": "node --watch deploy/node-server.mjs --dev",
+    "dev:local": "node --env-file=.env --watch deploy/node-server.mjs --dev",
     "build": "npm run build:settings && node scripts/build-content.mjs && node scripts/build-worker.mjs",
     "build:settings": "node scripts/build-settings.mjs",
     "check": "node scripts/check.mjs",

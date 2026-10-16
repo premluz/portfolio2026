@@ -9,14 +9,21 @@ This handoff contains the source, media, tests, documentation and a portable Nod
 Requirements: Node.js 20.6 or newer. There are no third-party npm runtime or build dependencies.
 
 ```sh
-cp .env.example .env
-# Put provider keys in .env for local development only.
-npm run build
-npm run check
-npm run start:local
+npm run dev
 ```
 
 Open `http://localhost:3000`. The assistant falls back to authored answers if the model API is not configured. Speech playback is disabled until `AI_VOICE_KEY` is configured.
+
+Save edits and reload the page; local development needs no build or cache clearing.
+The dev server serves authored files from `dist/`, reads `content/catalog.json`
+on each catalog request, and assembles CSS in memory. Settings exports in
+`settings/` are also read directly. Do not edit generated `dist/client/` copies.
+For local API credentials, copy `.env.example` to `.env`, enter the keys locally,
+and use `npm run dev:local`.
+
+In the `home` document, `title` supplies the hero greeting. The `home-introduction`
+block's `title` supplies the main statement; `home-description.paragraphs` supplies
+the supporting text. `summary` is catalog metadata, not the visible paragraph.
 
 For production, configure variables in the hosting provider's secret manager, then run `npm run build` during deployment and `npm start` as the service command. Do not upload a populated `.env` file or commit provider keys.
 
@@ -55,6 +62,7 @@ For production, configure variables in the hosting provider's secret manager, th
 ## Common commands
 
 ```sh
+npm run dev     # source files and catalog served directly; save and reload
 npm run build   # refresh generated content and Node/Worker output
 npm run check   # generated-content validation and test suite
 npm start       # run with environment variables already set by the host

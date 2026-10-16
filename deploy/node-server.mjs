@@ -4,12 +4,14 @@ import {createServer} from 'node:http';
 import path from 'node:path';
 import {Readable} from 'node:stream';
 import {fileURLToPath} from 'node:url';
-import {handleAssistantRequest} from '../dist/server/assistant-core.mjs';
-import {publishedAssistantDocuments} from '../dist/server/content.js';
-import {handleVoiceRequest} from '../dist/server/voice-core.mjs';
 import {readPublishedSettings,publishedSettingsModule} from '../scripts/site-settings.mjs';
+import {readDevelopmentCatalog,developmentResponse} from './development.mjs';
 
-const publicDirectory=path.resolve(fileURLToPath(new URL('../dist/client/',import.meta.url)));
+const development=process.argv.includes('--dev');
+const {handleAssistantRequest}=await import(development?'../worker/assistant-core.mjs':'../dist/server/assistant-core.mjs');
+const {handleVoiceRequest}=await import(development?'../worker/voice-core.mjs':'../dist/server/voice-core.mjs');
+const publishedAssistantDocuments=development?null:(await import('../dist/server/content.js')).publishedAssistantDocuments;
+const publicDirectory=path.resolve(fileURLToPath(new URL(development?'../dist/':'../dist/client/',import.meta.url)));
 const trustedProxy=process.env.TRUST_PROXY==='true';
 const environment={
  AI_API_BASE_URL:process.env.AI_API_BASE_URL,
@@ -67,12 +69,14 @@ async function serveApi(incoming,response,url){
  const handler=url.pathname==='/api/assistant'?handleAssistantRequest:url.pathname==='/api/voice'?handleVoiceRequest:null;
  if(!handler)return sendJson(response,404,{error:'not_found'});
  try{
-  const result=await handler(fetchRequest(incoming,url),environment,{documents:publishedAssistantDocuments});
+  const documents=development&&url.pathname==='/api/assistant'?(await readDevelopmentCatalog()).documents.filter(doc=>['portfolio-item','component','page'].includes(doc.type)):publishedAssistantDocuments;
+  const result=await handler(fetchRequest(incoming,url),environment,{documents});
   response.statusCode=result.status;
   for(const [name,value] of result.headers)response.setHeader(name,value);
   if(!result.body){response.end();return;}
   Readable.fromWeb(result.body).pipe(response);
- }catch{
+ }catch(error){
+  console.error('API request failed:',error?.message||'unknown error');
   if(!response.headersSent)sendJson(response,500,{error:'internal_error'});
   else response.destroy();
  }
@@ -89,6 +93,7 @@ async function serveFile(incoming,response,url){
  const relative=decoded==='/'?'index.html':decoded.replace(/^\/+/, '');
  let filename=path.resolve(publicDirectory,relative);
  if(filename!==publicDirectory&&!filename.startsWith(publicDirectory+path.sep))return sendJson(response,404,{error:'not_found'});
+ if(development&&['client','server','.openai'].includes(path.relative(publicDirectory,filename).split(path.sep)[0]))return sendJson(response,404,{error:'not_found'});
  try{
   let info=await stat(filename);
   if(info.isDirectory()){
@@ -99,7 +104,7 @@ async function serveFile(incoming,response,url){
   const extension=path.extname(filename).toLowerCase();
   const headers={
    'accept-ranges':'bytes',
-   'cache-control':extension==='.html'?'no-cache':isLocalRequest(incoming)?'no-store':'public, max-age=3600',
+   'cache-control':development?'no-store':extension==='.html'?'no-cache':isLocalRequest(incoming)?'no-store':'public, max-age=3600',
    'content-length':String(info.size),
    'content-type':mimeTypes[extension]||'application/octet-stream',
    'last-modified':info.mtime.toUTCString(),
@@ -144,6 +149,13 @@ const server=createServer(async(incoming,response)=>{
   if(url.pathname==='/healthz')return sendJson(response,200,{status:'ok'});
   if(url.pathname==='/published-settings.js')return await serveSiteSettings(response);
   if(url.pathname.startsWith('/api/'))return await serveApi(incoming,response,url);
+  if(development&&['GET','HEAD'].includes(incoming.method||'GET')){
+   const output=await developmentResponse(url.pathname);
+   if(output){
+    response.writeHead(200,{'content-type':output.type,'cache-control':'no-store','x-content-type-options':'nosniff'});
+    response.end(incoming.method==='HEAD'?undefined:output.body);return;
+   }
+  }
   return await serveFile(incoming,response,url);
  }catch(error){
   console.error('Request failed:',error?.message||'unknown error');
@@ -160,4 +172,4 @@ function isLocalRequest(incoming){
  return LOCAL_HOSTNAMES.has(hostname)||hostname.endsWith('.localhost');
 }
 const host=process.env.HOST||'0.0.0.0';
-server.listen(port,host,()=>console.log(`Portfolio server listening on http://${host}:${port}`));
+server.listen(port,host,()=>console.log(`Portfolio ${development?'development':'production'} server listening on http://${host}:${port}`));

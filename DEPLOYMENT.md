@@ -20,9 +20,12 @@ Local development:
 ```sh
 cp .env.example .env
 # Edit .env and enter API keys only on your local machine.
-npm run build
-npm run start:local
+npm run dev:local
 ```
+
+No build is required locally. Save source/catalog/settings edits and reload the
+browser. Use `npm run dev` when local API credentials are not needed. Production
+still serves the generated build through `npm start`.
 
 Production host:
 
@@ -88,7 +91,7 @@ For a new deployment, begin with `.env.example`. The example contains no keys.
 - Edit assistant facts, exact-answer routes and suggested prompts in `dist/assistant-knowledge.js`.
 - Update prototype iframe URLs and external links in the catalog if they change.
 - Update the legal/contact links in the content or markup as appropriate.
-- Rebuild and run checks after changes. Do not edit generated `dist/client/` or `dist/server/` output directly.
+- During development, use `npm run dev`, save edits and reload. Before deployment, rebuild and run checks. Do not edit generated `dist/client/` or `dist/server/` output directly.
 
 ## 7. Post-deploy verification
 

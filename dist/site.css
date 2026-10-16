@@ -1098,7 +1098,7 @@ main.home-canvas:not(.home-view-split) .home-hero{--hero-padding:min(var(--space
 /* Client, project title and summary are independently visible card fields. */
 .project-card.image-card>.card-copy{--card-client-gap:24px;position:relative;display:grid;grid-template-columns:fit-content(35%) minmax(0,1fr);column-gap:var(--card-client-gap);align-items:baseline}
 .project-card.image-card>.card-copy>.card-client{grid-column:1;grid-row:1;max-width:none;margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-body);color:var(--eyebrow-ink);text-wrap:pretty;overflow-wrap:anywhere}
-.project-card.image-card>.card-copy>h2{grid-column:2;grid-row:1;min-width:0}
+.project-card.image-card>.card-copy>h2{grid-column:2;grid-row:1;min-width:0;width:100%;max-width:none}
 .project-card.image-card>.card-copy>.project-summary{grid-column:2;grid-row:2;min-width:0}
 .project-card.image-card>.card-copy:not(:has(.card-client)){grid-template-columns:minmax(0,1fr)}
 .project-card.image-card>.card-copy:not(:has(.card-client))>h2,.project-card.image-card>.card-copy:not(:has(.card-client))>.project-summary{grid-column:1}
@@ -1223,6 +1223,7 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 /* home-about.css */
 .home-about{margin-top:var(--space-page-rhythm-lg);width:100%;min-width:0;grid-column:1 / -1}
 .home-about h2{max-width:27ch;margin:0;font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink);text-wrap:pretty}
+.home-about-title-secondary{color:var(--body-ink)}
 .home-about-copy,.home-about-lists{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6)}
 .home-about-copy{margin-top:var(--space-page-rhythm-sm)}
 .home-about-copy p{grid-column:2;margin:0;max-width:38ch;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}

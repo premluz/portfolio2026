@@ -707,14 +707,14 @@
       "template": "home",
       "status": "published",
       "slug": "work",
-      "title": "Hey, I’m Prem, builder turned designer.",
+      "title": "Hey, I’m Prem,.",
       "summary": "I started out building for the web and running a solo studio. For the last 10+ years, I’ve designed products for technical and expert users. Recently I built Rios and Porter. Today, my focus is AI conversational and generative UI experiences. ",
       "blocks": [
         {
           "id": "home-introduction",
           "type": "text",
-          "label": "Hey, I’m Prem.",
-          "title": "builder turned designer. I make complex products feel simple through interaction, systems and craft.",
+          "label": "Hey, I’m Prem, .",
+          "title": "I make complex products feel simple through interaction, systems and craft.",
           "paragraphs": []
         },
         {
@@ -876,7 +876,8 @@
         {
           "id": "about-introduction",
           "type": "text",
-          "title": "I connect vision and strategy with product, design, technology and business to turn complex opportunities into meaningful outcomes.",
+          "title": "I connect vision and strategy with product, design, technology and business",
+          "label": "to turn complex opportunities into meaningful outcomes.",
           "paragraphs": [
             "My work spans the full product journey from identifying opportunities and shaping product vision to research, interaction models, design systems, implementation and ongoing optimisation.",
             "I’m most useful where the problem is messy, the constraints are real, and the path forward isn’t obvious yet."

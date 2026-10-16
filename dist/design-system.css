@@ -188,7 +188,7 @@ main.home-canvas:not(.home-view-split) .home-hero{--hero-padding:min(var(--space
 /* Client, project title and summary are independently visible card fields. */
 .project-card.image-card>.card-copy{--card-client-gap:24px;position:relative;display:grid;grid-template-columns:fit-content(35%) minmax(0,1fr);column-gap:var(--card-client-gap);align-items:baseline}
 .project-card.image-card>.card-copy>.card-client{grid-column:1;grid-row:1;max-width:none;margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-body);color:var(--eyebrow-ink);text-wrap:pretty;overflow-wrap:anywhere}
-.project-card.image-card>.card-copy>h2{grid-column:2;grid-row:1;min-width:0}
+.project-card.image-card>.card-copy>h2{grid-column:2;grid-row:1;min-width:0;width:100%;max-width:none}
 .project-card.image-card>.card-copy>.project-summary{grid-column:2;grid-row:2;min-width:0}
 .project-card.image-card>.card-copy:not(:has(.card-client)){grid-template-columns:minmax(0,1fr)}
 .project-card.image-card>.card-copy:not(:has(.card-client))>h2,.project-card.image-card>.card-copy:not(:has(.card-client))>.project-summary{grid-column:1}

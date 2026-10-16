@@ -1,7 +1,7 @@
 import {contextualText} from './contextual-popovers.js';
 import {timelineMarkup} from './hero-timeline.js';
 import {content} from './content/local.js';
-import {escapeText,headingText} from './content/html.js';
+import {headingText} from './content/html.js';
 export function normalizeHeroContent(value='timeline'){
  if(value&&typeof value==='object')return {timeline:value.timeline!==false,timelineText:value.timelineText??value.timeline!==false,description:value.description===true};
  return value==='paragraph'?{timeline:false,timelineText:false,description:true}:{timeline:true,timelineText:true,description:false};
@@ -15,7 +15,7 @@ export function heroCopyMarkup(mode='timeline'){
 }
 export function homeHero({heroContent='timeline'}={}){const hero=content.get('home'),intro=hero.blocks.find(b=>b.id==='home-introduction'),selection=normalizeHeroContent(heroContent);return `<section class="home-hero" aria-label="Introduction">
  <div class="hero-about" data-hero-combined-content="${(selection.timeline||selection.timelineText)&&selection.description}">
-  <h1 data-hero-title>${intro?.label?`<span class="hero-greeting">${escapeText(intro.label)}</span> `:''}${headingText(intro?.title||hero.title)}</h1>
+  <h1 data-hero-title><span class="hero-greeting">${headingText(hero.title)}</span> ${headingText(intro?.title||'')}</h1>
   <div class="hero-copy" data-hero-copy>${heroCopyMarkup(heroContent)}</div>
  </div>
  </section>`;}

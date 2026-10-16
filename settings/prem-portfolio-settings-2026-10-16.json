@@ -1,7 +1,7 @@
 {
   "format": "prem-portfolio-settings",
   "version": 1,
-  "exportedAt": "2026-10-16T08:26:42.567Z",
+  "exportedAt": "2026-10-16T11:28:31.751Z",
   "settings": {
     "homeContentWidth": "small",
     "contentPageWidth": "small",
@@ -114,7 +114,7 @@
     "design.headingWeight": "bold",
     "design.bodyWeight": "thin",
     "design.typeTracking": "small",
-    "design.typeLeading": "small",
+    "design.typeLeading": "medium",
     "sound": true,
     "animation": true,
     "theme": "light"

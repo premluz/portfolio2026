@@ -4,6 +4,12 @@ Run commands from the `portfolio2026` repository root. The authored catalog is
 `content/catalog.json`; files under `dist/content/`, `dist/server/` and
 `dist/client/` are generated output, not independent configuration.
 
+For local editing, run `npm run dev`, save changes and reload the browser. Catalog
+and authored files are served directly; a deployment build is not required for
+local text, orientation or media-reference changes. The build instructions below
+prepare production output. Responsive image regeneration is still needed after
+replacing originals that already have optimized variants.
+
 ## 1. Add the media and update its references
 
 Put originals in `dist/assets/`. Prefer a new filename when replacing a published

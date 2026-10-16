@@ -1,5 +1,5 @@
 import {content} from './content/local.js';
-import {escapeText,safeHref} from './content/html.js';
+import {escapeText,headingText,safeHref} from './content/html.js';
 
 export const contextualEntries=()=>content.get('inline-context')?.blocks||[];
 // Plain source text remains CMS-friendly; this projection adds only known,
@@ -9,8 +9,8 @@ export function contextualText(text,entries=contextualEntries()){
  while(cursor<source.length){
   let next=null;
   for(const entry of entries){if(!entry.title)continue;const at=source.indexOf(entry.title,cursor);if(at<0)continue;const after=source[at+entry.title.length];if(entry.id==='rios'&&after&&/[a-z]/i.test(after))continue;if(!next||at<next.at||at===next.at&&entry.title.length>next.entry.title.length)next={at,entry};}
-  if(!next){html+=escapeText(source.slice(cursor));break;}
-  html+=escapeText(source.slice(cursor,next.at));const {entry}=next,label=escapeText(entry.title),attrs=`data-context-id="${escapeText(entry.id)}" aria-haspopup="dialog" aria-expanded="false"`;
+  if(!next){html+=headingText(source.slice(cursor));break;}
+  html+=headingText(source.slice(cursor,next.at));const {entry}=next,label=escapeText(entry.title),attrs=`data-context-id="${escapeText(entry.id)}" aria-haspopup="dialog" aria-expanded="false"`;
   const highlighted=`<span class="context-marker-text">${label}</span>`;
   html+=entry.id==='rios'&&safeHref(entry.link?.url)?`<a class="context-marker context-marker-link" href="${safeHref(entry.link.url)}" target="_blank" rel="noopener" ${attrs}>${highlighted}</a>`:`<span class="context-marker" role="button" tabindex="0" ${attrs}>${highlighted}</span>`;
   cursor=next.at+entry.title.length;
