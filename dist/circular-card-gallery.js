@@ -113,7 +113,7 @@ export class CircularCardPlacement{
   this.dragRadius=Math.max(1,Math.abs(after.x-before.x)/(2*step));
   this.momentum.begin(this.angle,time);return moving;
  }
- drag(delta,time){this.target=null;this.requestedIndex=null;this.angle=this.pressAngle+delta/this.dragRadius;this.momentum.track(this.angle,time);this.paint();}
+ drag(delta,time){this.target=null;this.requestedIndex=null;this.angle=this.pressAngle+delta/this.dragRadius;this.momentum.track(this.angle,time);this.wake();}
  release(time,cancelled=false){
   if(cancelled||this.gallery.reduced())this.momentum.stop();else this.momentum.release(time,this.dragRadius);
   if(this.momentum.velocity){this.last=time;this.wake();}else this.snap();

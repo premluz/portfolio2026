@@ -95,7 +95,21 @@ for(const [pointerType,width] of [['mouse',1440],['touch',390]]){
  gallery.onDown({...event,timeStamp:now});now+=16;gallery.onMove({...event,clientX:-180,timeStamp:now,preventDefault(){}});gallery.onUp({...event,type:'pointerup',timeStamp:now});assert(gallery.circular.momentum.velocity);
  gallery.onDown({...event,timeStamp:now});assert.equal(gallery.circular.momentum.velocity,0,'Pressing a moving carousel catches it immediately');gallery.onUp({...event,type:'pointerup',timeStamp:now});flush();
 }
-gallery.setVariant('perspective');flush();assert.equal(gallery.circular,null);assert(items.every(item=>item.style.transform===''&&item.style.visibility===''&&item.style.pointerEvents===''));assert.deepEqual(gallery.items,identities,'Changing placement retains and reveals the native cards');
+let dragPaints=0,captures=0;
+const originalPaint=gallery.circular.paint.bind(gallery.circular);
+gallery.circular.paint=()=>{dragPaints++;originalPaint();};viewport.setPointerCapture=()=>captures++;
+gallery.onDown({pointerType:'touch',button:0,pointerId:4,clientX:0,clientY:0,timeStamp:now});
+for(let step=1;step<=60;step++)gallery.onMove({pointerType:'touch',pointerId:4,clientX:-step*5,clientY:0,timeStamp:now+step,preventDefault(){}});
+assert.equal(dragPaints,0,'Touch events only sample movement until the next animation frame');assert.equal(captures,1,'A drag captures its pointer only once');
+flush();assert.equal(dragPaints,1,'A burst of movement produces one visual paint');
+gallery.onUp({pointerId:4,type:'pointercancel',timeStamp:now});flush();
+let selectionWrites=0,paintEvents=0;
+const setters=items.map(item=>item.setAttribute);items.forEach((item,index)=>item.setAttribute=(...args)=>{selectionWrites++;setters[index].apply(item,args);});
+const onPaint=()=>paintEvents++;root.addEventListener('gallery-paint',onPaint);
+gallery.updateSelection(gallery.index);gallery.updateSelection(gallery.index);
+assert.equal(selectionWrites,0,'Unchanged selection does not rewrite card attributes');assert.equal(paintEvents,2,'Ambient listeners still receive each visual paint');
+items.forEach((item,index)=>item.setAttribute=setters[index]);root.removeEventListener('gallery-paint',onPaint);
+gallery.go(0,false);gallery.setVariant('perspective');gallery.updateSelection(0);assert.equal(previous.disabled,true,'Native end controls update when the variant changes at the same selection');flush();assert.equal(gallery.circular,null);assert(items.every(item=>item.style.transform===''&&item.style.visibility===''&&item.style.pointerEvents===''));assert.deepEqual(gallery.items,identities,'Changing placement retains and reveals the native cards');
 gallery.setVariant('circular');flush();assert(gallery.circular);reduced=true;gallery.setVariant('circular');flush();assert.equal(gallery.circular,null,'Reduced motion falls back to native scrolling');assert.equal(root.dataset.galleryReduced,'true');
 reduced=false;gallery.setVariant('circular');gallery.go(3);gallery.destroy();flush();assert.equal(viewport.listeners.size,0);assert(items.every(item=>item.style.transform===''),'Disposal clears ring transforms and pending animation');
 console.log('Circular gallery passed: mixed proportions, front/back depth, shared cards, both axes, captions, rapid navigation/wrap, touch scrolling, retained variant switching, reduced motion and cleanup.');

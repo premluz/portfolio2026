@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {captureSharedWords,copyOpacity,copyScale,createSharedWords,hasSharedLead,lockLineBreaks} from '../dist/shared-copy.js';
+import {captureSharedWords,copyOpacity,copyScale,createSharedWords,hasSharedLead,lockLineBreaks,sharedCopyNode} from '../dist/shared-copy.js';
 
 class Node{
  constructor(){this.style={};this.children=[];}
@@ -14,6 +14,11 @@ const measurements={
  createRange(){return {setStart(node){this.node=node;},setEnd(){},getBoundingClientRect(){return this.node.rect;}};}
 };
 const host=new Node(),part=new Node(),wordSpan=new Node();part.parentElement=host;part.opacity='.8';wordSpan.parentElement=part;wordSpan.opacity='.4';part.ownerDocument=measurements;
+for(const [key,standaloneSelector,cardSelector] of [['title','[data-gallery-title]','h1,h2'],['client','[data-gallery-client]','.card-client,.project-client'],['summary','[data-gallery-description]','.project-summary,.info-summary']]){
+ const standalone=new Node(),cardCopy=new Node();
+ assert.equal(sharedCopyNode({morphCopyRoot:{querySelector:selector=>selector===standaloneSelector?standalone:null}},key),standalone);
+ assert.equal(sharedCopyNode({morphCopyRoot:{querySelector:selector=>selector===cardSelector?cardCopy:null}},key),cardCopy,'Per-card text uses the same fields as grid cards');
+}
 part.walk=[{nodeType:1,tagName:'SPAN'},{nodeType:3,textContent:'Clear',parentElement:wordSpan,rect:{left:40,top:50,width:60,height:20}},{nodeType:1,tagName:'BR'},{nodeType:3,textContent:'systems.',parentElement:part,rect:{left:40,top:75,width:80,height:20}}];
 const words=captureSharedWords(part,'title');assert.deepEqual(words.map(word=>word.text),['Clear','systems.'],'Explicit line breaks remain separate words');assert.deepEqual(words.map(word=>word.opacity),[.4,1]);assert(Math.abs(copyOpacity(wordSpan,host)-.32)<1e-12,'Group and word opacity are captured independently');
 const lead=new Node(),summary=new Node(),context=new Node();summary.querySelector=selector=>selector==='[data-summary-lead]'?lead:null;lead.ownerDocument=measurements;lead.walk=part.walk;lead.textContent='Clear systems.';summary.textContent='Clear systems. Extra context.';

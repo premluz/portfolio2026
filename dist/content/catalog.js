@@ -880,7 +880,7 @@ export const catalog={
           "title": "Most useful where the problem is messy and the path isn’t obvious yet.",
           "label": "",
           "paragraphs": [
-            "My work spans the full product journey: from vision and research to interaction models and design systems, then building with engineers until it ships and moves the numbers that matter.",
+            "My work spans the full product journey, from business opportunity to shipped product: vision, research, interaction models, design systems, and building alongside engineers to get it live, then measuring and improving it.",
             ""
           ]
         },
@@ -1231,7 +1231,7 @@ export const catalog={
           "link": {
             "id": "rios-site",
             "label": "Rios",
-            "url": "#rios"
+            "url": "https://getrios.app"
           }
         },
         {

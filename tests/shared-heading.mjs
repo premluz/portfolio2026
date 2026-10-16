@@ -77,6 +77,11 @@ async function scenario({fromLine=1.13,toLine=1.3,sourceHidden=false,targetHidde
   assert(!animatedHeading&&!animatedClient,'Gallery text never travels between the page header and caption');
   const incoming=fadeEntry?shell.children.find(node=>node.classes.has('flow-content')&&node!==snapshot.clone&&node.querySelector('h1')?.textContent===target.textContent):null,nativeHeading=incoming?.querySelector('h1');
   const captions=shell.children.filter(node=>node.classes.has('flow-caption-out')||node.classes.has('flow-caption-in'));
+  for(const copy of captions){
+   assert.equal(parseFloat(copy.style.left)+parseFloat(shell.style.left),copy.rect.left,'Caption positioning is initialized before the first animation frame');
+   assert.equal(parseFloat(copy.style.top)+parseFloat(shell.style.top),copy.rect.top);
+   if(copy.classes.has('flow-caption-in'))assert.equal(copy.style.opacity,'0','Incoming captions cannot flash before their fade begins');
+  }
   let headerLeads=false,reversed=false,staggered=false;
   for(let time=0;frames.length&&time<2000;time+=16){
    frames.shift()(time);

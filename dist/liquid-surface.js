@@ -60,6 +60,9 @@ export async function flow(from,to,{duration,intensity,control,ambientGlow=false
   const source=galleryReturn?null:from.shared?.[key];if(source){const copy=createStaticCopy({...source,opacity:source.hidden?0:source.opacity},shell);if(key==='title')lockLineBreaks(copy.node,source.words);copy.node.classList.add('flow-caption-out');sourceCaptions.push({copy,index});const native=outgoing.querySelector(key==='title'?'h1,h2':key==='client'?'.card-client,.project-client':'.project-summary,.info-summary');if(native)native.style.visibility='hidden';}
   const target=independentReturn?sharedCopyNode(to,key):null;if(target){const style=getComputedStyle(target),copy=createStaticCopy({node:target,rect:target.getBoundingClientRect(),opacity:copyOpacity(target,to),fontFamily:style.fontFamily,fontSize:parseFloat(style.fontSize),fontWeight:style.fontWeight,lineHeight:parseFloat(style.lineHeight)/parseFloat(style.fontSize),letterSpacing:parseFloat(style.letterSpacing)||0,color:style.color},shell);copy.node.classList.add('flow-caption-in');if(key==='title')lockLineBreaks(copy.node,captureSharedWords(target,key));targetCaptions.push({copy,index});}
  }
+ // Staging can paint before the first animation callback positions the captions.
+ for(const {copy} of sourceCaptions)copy.paint(a.left,a.top,1);
+ for(const {copy} of targetCaptions)copy.paint(a.left,a.top,0);
  const paintIncomingFacts=bindDetailContentReveal(to,incoming),paintOutgoingFacts=bindDetailContentReveal(from.element,outgoing);
  // Shared headings morph from their real card slots, including labels hidden at rest.
  const detachSummary=attachSummaryStream(to.querySelector('.project-summary'),incoming.querySelector('.project-summary'));

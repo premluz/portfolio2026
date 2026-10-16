@@ -41,6 +41,13 @@ root.querySelectorAll=()=>items;root.querySelector=selector=>({'[data-gallery-vi
 const gallery=new CardGallery(root);flush();assert.equal(gallery.index,0,'A retained first card stays selected rather than resetting to the middle');assert.equal(title.textContent,'Card 0');assert(previous.disabled);assert.equal(title.parentElement.href,'#project-0');assert.equal(details.href,'#project-0');assert.equal(details.morphImageRoot,items[0].link);assert.equal(details.hidden,false);assert.equal(title.parentElement.morphImageRoot,items[0].link,'The caption routes through the actual image card');
 gallery.go(3,false);flush();assert.equal(gallery.index,3);assert.equal(description.textContent,'Description 3');assert.equal(items[3].link.tabIndex,0);assert.equal(items[0].link.tabIndex,-1);assert.equal(title.parentElement.href,'#project-3');assert.equal(details.href,'#project-3');assert.equal(details.morphImageRoot,items[3].link);assert.equal(title.parentElement.dataset.contentCard,'project-3');assert.equal(title.parentElement.morphImageRoot,items[3].link);
 gallery.setOrientation('vertical');flush();assert.equal(gallery.axis,'vertical');assert.equal(gallery.index,3);
+const cardCopies=items.map(()=>({}));
+items.forEach((item,index)=>item.querySelector=selector=>selector==='.card-copy'?cardCopies[index]:item.link);
+gallery.setDescriptionInCard(true);
+assert.equal(items[3].link.morphCopyRoot,cardCopies[3],'Per-card captions provide the measured transition copy, not the hidden standalone caption');
+assert.equal(items[0].link.morphCopyRoot,null,'Unselected cards do not borrow another card’s caption');
+gallery.setDescriptionInCard(false);
+assert.equal(items[3].link.morphCopyRoot,title.parentElement,'Changing caption mode refreshes transition endpoints without changing selection');
 let stopped=false;gallery.onKey({key:'ArrowUp',preventDefault(){},stopPropagation(){stopped=true;}});flush();assert(stopped);assert.equal(gallery.index,2);
 let prevented=false;gallery.onClick({target:{closest:()=>items[1]},preventDefault(){prevented=true;},stopPropagation(){}});flush();assert(prevented);assert.equal(gallery.index,1);
 gallery.onDown({pointerType:'mouse',button:0,pointerId:1,clientX:0,clientY:0});gallery.onMove({pointerId:1,clientY:-264,preventDefault(){}});gallery.onUp({pointerId:1});flush();assert.equal(gallery.index,2);assert.equal(root.dataset.galleryDragging,undefined);

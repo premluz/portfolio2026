@@ -4,7 +4,7 @@ export function sharedCopyNode(host,key){
  const external=host?.morphCopyRoot;
  const gallery={title:'[data-gallery-title]',client:'[data-gallery-client]',summary:'[data-gallery-description]'};
  const standard={title:'h1,h2',client:'.card-client,.project-client',category:'.eyebrow',summary:'.project-summary,.info-summary'};
- return external&&gallery[key]?external.querySelector(gallery[key]):host?.querySelector(standard[key]);
+ return external&&gallery[key]?external.querySelector(gallery[key])||external.querySelector(standard[key]):host?.querySelector(standard[key]);
 }
 export function sharedLead(node,key='summary'){
  return key==='summary'?node?.querySelector?.('[data-summary-lead]')||node:node;
