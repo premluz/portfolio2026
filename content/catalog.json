@@ -1261,6 +1261,19 @@
           }
         },
         {
+          "id": "porter",
+          "type": "info-card",
+          "title": "Porter",
+          "paragraphs": [
+            "A native Mac switcher for your AI conversations and agents. It lists them, wherever they live, and takes you to the exact tab or window in one click."
+          ],
+          "link": {
+            "id": "porter-page",
+            "label": "Porter",
+            "url": "#porter"
+          }
+        },
+        {
           "id": "ai-native",
           "type": "info-card",
           "title": "AI-native experiences, generative interfaces and building prototypes in code",

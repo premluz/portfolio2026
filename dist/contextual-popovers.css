@@ -1,5 +1,5 @@
 .context-marker{display:inline;margin:0;padding:0;border:0;background:transparent;color:inherit;font:inherit;line-height:inherit;letter-spacing:inherit;text-align:inherit;white-space:normal;cursor:pointer}
-.context-marker-text{display:inline;padding:0 .12em;border-radius:.24em;background:oklch(.76 .025 295 / .10);box-decoration-break:clone;-webkit-box-decoration-break:clone;transition:background-color 180ms ease}
+.context-marker-text{display:inline;padding:0 .12em;border-radius:.24em;background:oklch(.76 .025 295 / .15);box-decoration-break:clone;-webkit-box-decoration-break:clone;transition:background-color 180ms ease}
 .context-marker:is(:hover,:focus-visible)>.context-marker-text{background:oklch(.76 .035 295 / .18)}
 .context-marker:focus-visible{outline:1px solid var(--muted);outline-offset:3px;border-radius:.24em}
 .context-marker-link{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em}

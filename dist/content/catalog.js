@@ -708,21 +708,21 @@ export const catalog={
       "template": "home",
       "status": "published",
       "slug": "work",
-      "title": "Hey, I’m Prem,.",
+      "title": "Hey, I’m Prem, builder turned designer.",
       "summary": "I started out building for the web and running a solo studio. For the last 10+ years, I’ve designed products for technical and expert users. Recently I built Rios and Porter. Today, my focus is AI conversational and generative UI experiences. ",
       "blocks": [
         {
           "id": "home-introduction",
           "type": "text",
-          "label": "Hey, I’m Prem, .",
-          "title": "I make complex products feel simple through interaction, systems and craft.",
+          "label": "Hey, I’m Prem, builder turned designer.",
+          "title": "<br/>I make complex products feel simple.",
           "paragraphs": []
         },
         {
           "id": "home-description",
           "type": "text",
           "paragraphs": [
-            "For the last 10+ years, I’ve designed products for technical users and creators. Today, my focus is AI conversational and generative UI experiences. I also built independent products Rios and Porter."
+            "For the last 10+ years, I’ve designed products for technical users and creators. Today, my focus is AI  and genUI experiences. Recently built Rios and Porter."
           ]
         },
         {
@@ -877,11 +877,11 @@ export const catalog={
         {
           "id": "about-introduction",
           "type": "text",
-          "title": "I connect vision and strategy with product, design, technology and business",
-          "label": "to turn complex opportunities into meaningful outcomes.",
+          "title": "Most useful where the problem is messy and the path isn’t obvious yet.",
+          "label": "",
           "paragraphs": [
-            "My work spans the full product journey from identifying opportunities and shaping product vision to research, interaction models, design systems, implementation and ongoing optimisation.",
-            "I’m most useful where the problem is messy, the constraints are real, and the path forward isn’t obvious yet."
+            "My work spans the full product journey: from vision and research to interaction models and design systems, then building with engineers until it ships and moves the numbers that matter.",
+            ""
           ]
         },
         {
@@ -1231,7 +1231,20 @@ export const catalog={
           "link": {
             "id": "rios-site",
             "label": "Rios",
-            "url": "https://getrios.app"
+            "url": "#rios"
+          }
+        },
+        {
+          "id": "porter",
+          "type": "info-card",
+          "title": "Porter",
+          "paragraphs": [
+            "A native Mac switcher for your AI conversations and agents. It lists them, wherever they live, and takes you to the exact tab or window in one click."
+          ],
+          "link": {
+            "id": "porter-page",
+            "label": "Porter",
+            "url": "#porter"
           }
         },
         {
