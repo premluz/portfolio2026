@@ -34,7 +34,7 @@ assert(authoredDetail.includes('<h1 tabindex="-1">Transformation saving hundreds
 const authoredStore=createContentStore(catalog);
 const porter=authoredStore.getCard('porter'),porterCard=card(porter,0,'regular',{link:true});assert(porterCard.includes('href="#porter"')&&porterCard.includes('assets/porter.png')&&porterCard.includes('assets/porter.mp4'));
 const {image,videoUrl,...textOnlyPorter}=porter;
-const textOnlyCard=card(textOnlyPorter,0,'regular',{link:true});assert(textOnlyCard.includes('text-only-card')&&textOnlyCard.includes('Porter • Agent switchboard'));assert(!textOnlyCard.includes('<div class="visual">'),'A text-only project card never emits an empty media frame');
+const textOnlyCard=card(textOnlyPorter,0,'regular',{link:true});assert(textOnlyCard.includes('text-only-card')&&textOnlyCard.includes(textOnlyPorter.client));assert(!textOnlyCard.includes('<div class="visual">'),'A text-only project card never emits an empty media frame');
 for(const project of catalog.documents.filter(document=>document.type==='portfolio-item')){
  const markup=cardDetail(authoredStore.getCard(project.id));
  if(project.heroMediaId)assert(markup.includes('class="detail-media-column"'),'Projects with hero media keep their media column');

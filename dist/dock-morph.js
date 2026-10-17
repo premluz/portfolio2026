@@ -4,6 +4,7 @@ import {dockLiquidShapes,LIQUID_DEFAULTS} from './dock-liquid.js';
 const clamp=value=>Math.max(0,Math.min(1,value));
 const smooth=(a,b,value)=>{const t=clamp((value-a)/(b-a));return t*t*(3-2*t);};
 const k=.55228475;
+const RECEDE_UNDER_MENU=.35;
 const point=(x,y)=>`${x.toFixed(3)} ${y.toFixed(3)}`;
 function roundedRect(x,y,w,h,r,topEdge=''){
  r=Math.min(r,w/2,h/2);const p=point;
@@ -175,7 +176,10 @@ export class DockMorph {
   const shape=dockGeometry(phase,this.metrics,extension);this.el.style.width=shape.width+'px';this.el.style.setProperty('--dock-painted-width',shape.width+'px');
   // Keep the receding action branch in the same glass while the menu grows.
   // Both paths share the base, so their clipped surface remains continuous.
-  const receding=this.popover&&this.accessory?dockGeometry(phase,this.metrics,{...this.accessory,position:this.accessory.position*remaining}):null;
+  // The receding pill's glass sinks into the bar while the menu is still a small lobe at its button, so it
+  // never bridges menu and bar (which would enclose a pocket of page in the glass for a few frames).
+  const recedingPosition=this.popover&&this.accessory?this.accessory.position*remaining*(1-smooth(0,RECEDE_UNDER_MENU,this.popover.position*remaining)):0;
+  const receding=this.popover&&this.accessory?dockGeometry(phase,this.metrics,{...this.accessory,position:recedingPosition}):null;
   if(receding)shape.path+=' '+receding.path;
   const back=this.back&&this.backPosition>0?backGeometry(shape,this.backPosition*remaining,this.metrics):null;if(back)shape.path=back.path;
   const backSpace=back?.space||0;
@@ -184,7 +188,7 @@ export class DockMorph {
   if(this.back){this.back.hidden=this.backPosition===0&&this.backTarget===0;this.back.inert=!this.backTarget||!back||back.reveal<.7;this.back.style.opacity=String(back?.reveal||0);if(back)this.back.style.left=back.left+(back.width-this.metrics.backWidth)/2+'px';}
   // While anything is moving, the glass, rim and controls share one metaball outline (even-odd, one
   // contour per lobe); at rest the exact analytic shape is kept, so settled pills stay crisp.
-  const recedingSource=receding?{...this.accessory,position:this.accessory.position*remaining}:null;
+  const recedingSource=receding?{...this.accessory,position:recedingPosition}:null;
   const liquid=liquidOutline(dockLiquidShapes({shape,phase,metrics:this.metrics,extension,receding,recedingSource,back,backPhase:this.backPosition*remaining},this.liquid));
   const outline=liquid||shape.path;
   const clip=liquid?`path(evenodd, '${liquid}')`:`path('${shape.path.replace(/\s+/g,' ')}')`;

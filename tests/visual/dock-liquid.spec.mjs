@@ -1,7 +1,7 @@
 import {test,expect} from '@playwright/test';
 import {writeFile,mkdir} from 'node:fs/promises';
 
-// Records the dock while the site menu grows out of it and folds back, and while the dock splits for a
+// Records the dock (frames in test-results for review) while the site menu grows out of it and folds back, and while the dock splits for a
 // project and merges home. Frames go to test-results for review; the run fails on any page error.
 test('dock liquid morph frames',async({page},info)=>{
  test.setTimeout(90000);
@@ -12,7 +12,11 @@ test('dock liquid morph frames',async({page},info)=>{
  client.on('Page.screencastFrame',async frame=>{frames.push(frame);await client.send('Page.screencastFrameAck',{sessionId:frame.sessionId}).catch(()=>{});});
  await client.send('Page.startScreencast',{format:'png',everyNthFrame:1,maxWidth:1440,maxHeight:900});
  const marks={};const mark=name=>{marks[name]=Date.now()/1000;};
- mark('menu-open');await page.evaluate(()=>document.body.focus());await page.keyboard.press('/');await page.waitForTimeout(900);
+ const outline=()=>page.evaluate(()=>document.querySelector('#dock > svg.dock-outline > path')?.getAttribute('d')||'');
+ mark('menu-open');await page.evaluate(()=>document.body.focus());await page.keyboard.press('/');await page.waitForTimeout(150);
+ expect(await outline(),'mid-motion the glass, rim and controls share one metaball outline').toContain(' Q ');
+ await page.waitForTimeout(1200);
+ expect(await outline(),'at rest the exact analytic shape returns').not.toContain(' Q ');
  mark('menu-close');await page.keyboard.press('Escape');await page.waitForTimeout(900);
  const link=page.locator('[data-home-product-gallery] [data-gallery-item][aria-current="true"] [data-content-card]').first();
  mark('split');await link.click();await page.waitForTimeout(1500);

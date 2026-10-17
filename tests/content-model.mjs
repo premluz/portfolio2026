@@ -19,7 +19,7 @@ assert.equal(cards.find(card=>card.id==='rios-02').documentId,'rios');
 assert(!cards.some(card=>['planner','planner-02'].includes(card.id)));
 assert.equal(content.get('home').blocks.find(block=>block.id==='home-projects').items.find(item=>item.documentId==='rios').id,'home-project-rios');
 for(const answer of assistantKnowledge.answers)for(const id of answer.sourceIds)assert(content.get(id),`Assistant source ${id} resolves to a published document`);
-assert.equal(content.get('porter').listOnly,true);assert.equal(content.getCard('porter').image,'assets/porter.png');assert.equal(content.getCard('porter').videoUrl,'assets/porter.mp4');assert.equal(content.getCard('porter').client,'Porter • Agent switchboard');
+assert.equal(content.get('porter').listOnly,true);assert.equal(content.getCard('porter').image,'assets/porter.png');assert.equal(content.getCard('porter').videoUrl,'assets/porter.mp4');assert.equal(content.getCard('porter').client,content.get('porter').client,'The card carries the authored client label');
 assert(content.get('home').blocks.find(block=>block.id==='home-projects').items.some(item=>item.documentId==='porter'),'The homepage carousel connects Porter to its project details');
 assert.equal(content.get('digital-trading'),null,'The replaced digital-trading placeholder is no longer published');
 assert.equal(content.get('playstation-02'),null,'A placement never creates a second content document');
@@ -58,7 +58,7 @@ assert(!createContentStore(draft).get('private-note'));
 assert(createContentStore(draft,{includeUnpublished:true}).get('private-note'));
 const publishedToDraft=structuredClone(draft);publishedToDraft.documents[0].blocks.push({id:'draft-link',type:'reference',documentId:'private-note',presentation:'card'});assert.throws(()=>contentModel.assert(publishedToDraft),/publishes a reference/);
 // Retrieval is deterministic, filtered, paged and deduplicated independently of UI placements.
-assert.equal(content.getCard('playstation').client,'PlayStation • Publishing pipeline');assert.equal(duplicate.client,canonical.client,'Layout copies preserve client identity');
+assert.equal(content.getCard('playstation').client,content.get('playstation').client);assert.equal(duplicate.client,canonical.client,'Layout copies preserve client identity');
 assert.equal(content.search({query:'Vodafone',type:'portfolio-item'}).items[0].documentId,'vodafone-iot');
 assert.equal(content.search({query:'Sony',type:'portfolio-item'}).items[0].documentId,'playstation');
 assert.equal(content.search({query:'traceability',type:'portfolio-item'}).items[0].documentId,'tracr');

@@ -11,7 +11,10 @@ NEIGHBOUR_RATIO = 0.5  # the neighbours must be at least this much closer to eac
 frames = sorted(glob.glob(sys.argv[1] if len(sys.argv) > 1 else 'test-results/*screencast*/frames/*.png'))
 if not frames:
     sys.exit('No screencast frames found; run: npx playwright test tests/visual/screencast.spec.mjs')
-images = [Image.open(path).convert('L').resize(SCALE) for path in frames]
+# An optional crop "left,top,right,bottom" limits the scan to one area (e.g. the dock), where a flash
+# would otherwise be diluted by the rest of the page.
+crop = tuple(int(value) for value in sys.argv[2].split(',')) if len(sys.argv) > 2 else None
+images = [(Image.open(path).convert('L').crop(crop) if crop else Image.open(path).convert('L')).resize(SCALE) for path in frames]
 diff = lambda a, b: ImageStat.Stat(ImageChops.difference(a, b)).mean[0]
 flashes = []
 for i in range(1, len(images) - 1):

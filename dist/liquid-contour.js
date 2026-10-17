@@ -13,6 +13,20 @@ export function roundedRectDistance(px,py,{x,y,width,height,radius}){
  return Math.hypot(Math.max(qx,0),Math.max(qy,0))+Math.min(Math.max(qx,qy),0)-r;
 }
 
+// Approximate distance to the ellipse inscribed in the rectangle (exact on the boundary, which is what
+// the traced zero contour needs). A growing piece is a dome before it is a pill.
+function ellipseDistance(px,py,{x,y,width,height}){
+ const rx=Math.max(width/2,.001),ry=Math.max(height/2,.001),dx=(px-(x+rx))/rx,dy=(py-(y+ry))/ry;
+ return (Math.hypot(dx,dy)-1)*Math.min(rx,ry);
+}
+// A shape is a rounded rectangle, optionally domed (`dome` 1 = ellipse), or a group of parts that
+// blend only with each other (`partsBlend`) before the group joins the rest with its own `blend`.
+export function shapeDistance(px,py,shape){
+ if(shape.parts){let value=shapeDistance(px,py,shape.parts[0]);for(let index=1;index<shape.parts.length;index++)value=smoothMin(value,shapeDistance(px,py,shape.parts[index]),shape.partsBlend||0);return value;}
+ const box=roundedRectDistance(px,py,shape),dome=shape.dome||0;
+ return dome>0?box+(ellipseDistance(px,py,shape)-box)*dome:box;
+}
+
 // Polynomial smooth minimum: within `blend` pixels of each other two surfaces fuse with a fillet.
 export function smoothMin(a,b,blend){
  if(blend<=LIQUID_BLEND_EPSILON)return Math.min(a,b);
@@ -22,13 +36,15 @@ export function smoothMin(a,b,blend){
 
 // Each shape joins the union with its own blend, so a settled piece stays crisp while a moving one flows.
 export function liquidField(px,py,shapes){
- let value=roundedRectDistance(px,py,shapes[0]);
- for(let index=1;index<shapes.length;index++)value=smoothMin(value,roundedRectDistance(px,py,shapes[index]),shapes[index].blend||0);
+ let value=shapeDistance(px,py,shapes[0]);
+ for(let index=1;index<shapes.length;index++)value=smoothMin(value,shapeDistance(px,py,shapes[index]),shapes[index].blend||0);
  return value;
 }
 
 const usable=shape=>shape&&shape.width>.5&&shape.height>.5;
-export const needsLiquid=shapes=>shapes.filter(usable).slice(1).some(shape=>(shape.blend||0)>LIQUID_BLEND_EPSILON);
+// Traced whenever a piece is in motion, so the outline never swaps to the analytic path mid-move; at
+// rest the analytic outline returns, which is what the traced one has converged to by then.
+export const needsLiquid=shapes=>{const pieces=shapes.filter(usable);return pieces.length>1&&pieces.some(shape=>shape.moving);};
 
 function bounds(shapes){
  const reach=Math.max(0,...shapes.map(shape=>shape.blend||0))/4+MAX_STEP;

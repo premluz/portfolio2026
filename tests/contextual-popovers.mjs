@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {contextualText,contextualEntries,contextualPopoverMarkup,contextualPopoverPosition,mountContextualPopovers} from '../dist/contextual-popovers.js';
-const entries=contextualEntries();assert.equal(entries.length,4);
+import {content} from '../dist/content/local.js';
+const entries=contextualEntries();assert.equal(entries.length,content.get('inline-context').blocks.length,'One popover entry per authored context block');
 const html=contextualText('I design products for technical and expert users. I built Rios.');assert(html.includes('data-context-id="technical-users"'));assert(html.includes('href="https://getrios.app"'));assert(html.includes('context-marker-link'));
 assert(html.includes('role="button" tabindex="0"'));assert(html.includes('class="context-marker-text"'),'Marker paint belongs to a text span, independently of the clickable region');assert(!html.includes('<button'),'Inline context can wrap naturally with surrounding punctuation');
 assert.equal(contextualText('<script>bad</script>'), '&lt;script&gt;bad&lt;/script&gt;');assert(!contextualText('Riosphere').includes('data-context-id'));
