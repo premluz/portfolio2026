@@ -1381,6 +1381,54 @@ export const catalog={
           "mediaId": "unusual-hypnotherapy"
         }
       ]
+    },
+    {
+      "id": "about-lab",
+      "type": "page",
+      "template": "information",
+      "status": "published",
+      "slug": "about-lab",
+      "title": "Every card, one field",
+      "name": "About lab",
+      "summary": "An experimental view of the portfolio: every card in one spiral that unwinds into a grid as you scroll.",
+      "category": "Prem / Experiments",
+      "aliases": [],
+      "domains": [],
+      "capabilities": [],
+      "links": [],
+      "blocks": [
+        {
+          "id": "about-lab-body",
+          "type": "text",
+          "paragraphs": [
+            "An experimental view of the portfolio: every card in one spiral that unwinds into a grid as you scroll. Pick any card to open it."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "about-infinite",
+      "type": "page",
+      "template": "information",
+      "status": "published",
+      "slug": "about-infinite",
+      "title": "Fly through the cards",
+      "name": "About infinite",
+      "summary": "An experimental view of the portfolio: every card in an endless space you can fly through.",
+      "category": "Prem / Experiments",
+      "aliases": [],
+      "domains": [],
+      "capabilities": [],
+      "links": [],
+      "blocks": [
+        {
+          "id": "about-infinite-body",
+          "type": "text",
+          "paragraphs": [
+            "An experimental view of the portfolio: every card in an endless space. Drag to move, scroll to fly, and pick any project card to open it."
+          ]
+        }
+      ]
     }
   ],
   "assets": [
@@ -1732,6 +1780,32 @@ export const catalog={
       "detail": {
         "columns": 2
       }
+    },
+    {
+      "documentId": "about-lab",
+      "card": {
+        "orientation": "landscape",
+        "surface": [
+          "#ececf0",
+          "#ececf0"
+        ]
+      },
+      "detail": {
+        "columns": 1
+      }
+    },
+    {
+      "documentId": "about-infinite",
+      "card": {
+        "orientation": "landscape",
+        "surface": [
+          "#ececf0",
+          "#ececf0"
+        ]
+      },
+      "detail": {
+        "columns": 1
+      }
     }
   ],
   "layouts": [
@@ -1797,6 +1871,14 @@ export const catalog={
           "id": "about",
           "documentId": "about",
           "featured": false
+        },
+        {
+          "id": "about-lab",
+          "documentId": "about-lab"
+        },
+        {
+          "id": "about-infinite",
+          "documentId": "about-infinite"
         },
         {
           "id": "contact",

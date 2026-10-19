@@ -352,6 +352,32 @@
       "kind": null,
       "client": null,
       "evidenceIds": []
+    },
+    {
+      "id": "about-lab",
+      "type": "page",
+      "title": "Every card, one field",
+      "pageTitle": "Every card, one field",
+      "summary": "An experimental view of the portfolio: every card in one spiral that unwinds into a grid as you scroll.",
+      "domains": [],
+      "capabilities": [],
+      "tags": [],
+      "kind": null,
+      "client": null,
+      "evidenceIds": []
+    },
+    {
+      "id": "about-infinite",
+      "type": "page",
+      "title": "Fly through the cards",
+      "pageTitle": "Fly through the cards",
+      "summary": "An experimental view of the portfolio: every card in an endless space you can fly through.",
+      "domains": [],
+      "capabilities": [],
+      "tags": [],
+      "kind": null,
+      "client": null,
+      "evidenceIds": []
     }
   ]
 }

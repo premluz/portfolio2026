@@ -11,7 +11,7 @@ const invalid=(mutate,pattern)=>{const c=copy();mutate(c);assert.throws(()=>cont
 assert.deepEqual(contentModel.validate(catalog),[]);
 assert.deepEqual(JSON.parse(await fs.readFile(new URL('../dist/content/schema.json',import.meta.url))),contentModel.schema);
 assert.equal(content.list({type:'portfolio-item'}).length,8);
-assert.equal(cards.length,14);assert.equal(projects.length,8,'Project navigation includes authored projects and text-only list entries');
+assert.equal(cards.length,catalog.layouts.find(layout=>layout.id==='home').items.length+catalog.documents.filter(doc=>doc.listOnly===true&&doc.status==='published').length,'Every layout placement and list-only project is a route card');assert.equal(projects.length,8,'Project navigation includes authored projects and text-only list entries');
 for(const id of ['merlin','rios','playstation','vodafone-iot','tracr','galachain','bastion','porter'])assert(content.get(id),`The published portfolio includes ${id}`);
 assert.equal(content.get('planner'),null,'Rios has one canonical document, not an old-ID duplicate');
 assert.equal(content.get('rios').slug,'rios');

@@ -15,9 +15,11 @@
     "start": "node deploy/node-server.mjs",
     "start:local": "node --env-file=.env deploy/node-server.mjs",
     "test:visual": "playwright test",
-    "test:flash": "playwright test tests/visual/screencast.spec.mjs && python3 scripts/check-flash-frames.py"
+    "test:flash": "playwright test tests/visual/screencast.spec.mjs && python3 scripts/check-flash-frames.py",
+    "vendor": "node scripts/vendor-three.mjs"
   },
   "devDependencies": {
-    "@playwright/test": "1.61.1"
+    "@playwright/test": "1.61.1",
+    "three": "0.170.0"
   }
 }
