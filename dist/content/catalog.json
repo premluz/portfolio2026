@@ -721,7 +721,7 @@
           "id": "home-description",
           "type": "text",
           "paragraphs": [
-            "For the last 10+ years, I’ve designed products for technical users and creators. Today, my focus is AI and genUI experiences. Recently built Rios and Porter."
+            "For the last 10+ years, I’ve designed products for technical users and creators. Today, my focus is AI and genUI experiences. Recently built Rios, Porter & Bastion."
           ]
         },
         {
@@ -1299,6 +1299,19 @@
             "id": "porter-page",
             "label": "Porter",
             "url": "#porter"
+          }
+        },
+        {
+          "id": "bastion",
+          "type": "info-card",
+          "title": "Bastion",
+          "paragraphs": [
+            "Agent-first mobile wallet with an AI assistant and generative UI. Working R&D prototype with voice mode."
+          ],
+          "link": {
+            "id": "bastion-site",
+            "label": "Bastion",
+            "url": "https://www.youtube.com/watch?v=ipIZ0LvNj7c"
           }
         },
         {
