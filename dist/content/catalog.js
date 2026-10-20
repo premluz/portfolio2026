@@ -880,8 +880,55 @@ export const catalog={
           "title": "Most useful where the problem is messy and the path isn’t obvious yet.",
           "label": "",
           "paragraphs": [
-            "My work spans the full product journey, from business opportunity to shipped product: vision, research, interaction models, design systems, and building alongside engineers to get it live, then measuring and improving it.",
+            "I work from business opportunity to shipped product: vision, research, interaction models, design systems, and building with engineers, then measuring and improving.",
             ""
+          ]
+        },
+        {
+          "id": "about-how-i-work",
+          "type": "timeline",
+          "title": "HOW I WORK",
+          "items": [
+            {
+              "id": "about-how-first-principles",
+              "type": "text",
+              "title": "First principles",
+              "paragraphs": [
+                "Find the real problem before solving it."
+              ]
+            },
+            {
+              "id": "about-how-define-model",
+              "type": "text",
+              "title": "Define the model",
+              "paragraphs": [
+                "Turn needs & constraints into a clear product structure."
+              ]
+            },
+            {
+              "id": "about-how-own-outcome",
+              "type": "text",
+              "title": "Own the outcome",
+              "paragraphs": [
+                "Connect product, teams and business goals."
+              ]
+            },
+            {
+              "id": "about-how-learn-fast",
+              "type": "text",
+              "title": "Learn fast",
+              "paragraphs": [
+                "If I don’t know it, I learn it."
+              ]
+            },
+            {
+              "id": "about-how-day-one",
+              "type": "text",
+              "title": "Day one mindset",
+              "paragraphs": [
+                "Prototype early, decide quickly, ship, then scale."
+              ]
+            }
           ]
         },
         {
@@ -964,47 +1011,55 @@ export const catalog={
       "type": "component",
       "status": "published",
       "title": "How I work",
-      "summary": "My work has ranged from early product definition and research to interaction models, design systems and implementation. I’m most useful where the problem is messy, the constraints are real, and the path forward isn’t obvious yet.",
+      "summary": "",
       "revision": 2,
       "blocks": [
         {
           "id": "approach-intro",
           "type": "text",
           "paragraphs": [
-            "My work has ranged from early product definition and research to interaction models, design systems and implementation.",
-            "I’m most useful where the problem is messy, the constraints are real, and the path forward isn’t obvious yet."
+            "",
+            ""
           ]
         },
         {
-          "id": "approach-partner",
+          "id": "approach-principles",
           "type": "info-card",
-          "title": "Partner",
+          "title": "First principles",
           "paragraphs": [
-            "Work closely with product, engineering and leadership to frame the right problem and align around decisions."
+            "Find the real problem before solving it."
           ]
         },
         {
-          "id": "approach-build",
+          "id": "approach-model",
           "type": "info-card",
-          "title": "Build",
+          "title": "Define the model",
           "paragraphs": [
-            "Prototype in code, test ideas early and stay involved through implementation."
+            "Turn needs & constraints into a clear product structure."
           ]
         },
         {
-          "id": "approach-simplify",
+          "id": "approach-outcome",
           "type": "info-card",
-          "title": "Simplify",
+          "title": "Own the outcome",
           "paragraphs": [
-            "Reduce complexity, remove unnecessary scope and create coherent systems."
+            "Connect product, teams and business goals."
           ]
         },
         {
-          "id": "approach-deliver",
+          "id": "approach-learn",
           "type": "info-card",
-          "title": "Deliver",
+          "title": "Learn fast",
           "paragraphs": [
-            "Own the work from early definition through launch, iteration and growth."
+            "If I don’t know it, I learn it."
+          ]
+        },
+        {
+          "id": "approach-mindset",
+          "type": "info-card",
+          "title": "Day one mindset",
+          "paragraphs": [
+            "Prototype early, decide quickly, ship, then scale."
           ]
         }
       ]

@@ -49,6 +49,13 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 [data-gallery-axis="vertical"] .spatial-gallery-item{flex-basis:var(--gallery-card-height)}
 [data-gallery-reduced="true"] .spatial-gallery-pose{transition:none}
 .spatial-card-gallery[data-gallery-variant="circular"][data-gallery-reduced="false"] .spatial-gallery-viewport{display:block;padding:0;overflow:hidden;scroll-snap-type:none;perspective:1800px;touch-action:pan-y pinch-zoom}
+/* Native snap experiment: the viewport is a real snap scroller; the ring layer stays put while it scrolls. */
+.spatial-card-gallery[data-gallery-native-snap="true"][data-gallery-variant="circular"][data-gallery-reduced="false"][data-gallery-axis="horizontal"] .spatial-gallery-viewport{overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;touch-action:pan-x pan-y}
+.spatial-card-gallery[data-gallery-native-snap="true"][data-gallery-variant="circular"][data-gallery-reduced="false"][data-gallery-axis="horizontal"] .spatial-gallery-viewport::-webkit-scrollbar{display:none}
+.spatial-card-gallery[data-gallery-native-snap="true"][data-gallery-variant="circular"][data-gallery-reduced="false"][data-gallery-axis="horizontal"][data-gallery-native-free="true"] .spatial-gallery-viewport{scroll-snap-type:none}
+.spatial-gallery-native-track{position:relative;height:100%}
+.spatial-gallery-ring{position:sticky;left:0;height:100%;perspective:inherit;transform-style:preserve-3d}
+.spatial-gallery-snap{position:absolute;top:0;width:1px;height:1px;scroll-snap-align:start;pointer-events:none}
 .spatial-card-gallery[data-gallery-variant="circular"][data-gallery-reduced="false"][data-gallery-axis="horizontal"] .spatial-gallery-viewport{overflow-x:clip;overflow-y:visible}
 .spatial-card-gallery[data-gallery-variant="circular"][data-gallery-reduced="false"] .spatial-gallery-item{position:absolute;left:50%;top:50%;scroll-snap-align:none;transform-origin:center;transform-style:preserve-3d}
 .spatial-card-gallery[data-gallery-variant="circular"][data-gallery-reduced="false"] .spatial-gallery-pose{transition:none}

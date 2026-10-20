@@ -11,8 +11,8 @@
 .home-approach-intro>p{grid-column:2;min-width:0;max-width:38ch}
 .home-approach-intro>p+p{grid-column:3}
 .home-approach-principles{display:grid;gap:var(--space-6);margin-top:var(--space-page-rhythm-sm)}
-.home-approach-principles h3{margin:0 0 var(--space-1);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
-.home-approach-principles p{font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--eyebrow-ink)}
+.home-approach-principles h3{display:inline;margin:0 var(--space-2) 0 0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
+.home-approach-principles p{display:inline;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--eyebrow-ink)}
 @media(max-width:600px){.home-approach,.home-approach-intro{grid-template-columns:1fr}.home-approach-intro{row-gap:var(--space-6)}.home-approach-intro h2{margin-bottom:0}.home-approach-intro,.home-approach-intro>p,.home-approach-intro>p+p,.home-approach-principles{grid-column:1}.home-approach-intro>p{max-width:none}}
 @media(max-width:700px){.home-approach-principles{gap:var(--space-7)}}
 .home-service-card,.home-testimonial{min-width:0;margin:0;padding:var(--home-content-card-padding);border:1px solid color-mix(in oklch,var(--ink) 5%,transparent);border-radius:var(--radius-home-content-card);background:var(--card-surface)}

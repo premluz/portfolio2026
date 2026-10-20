@@ -18,7 +18,10 @@ export function retainHome(main,images){
  const layer=main.cloneNode(false);layer.removeAttribute('id');
  layer.classList.add('retained-home');layer.setAttribute('aria-hidden','true');layer.inert=true;
  Object.assign(layer.style,{position:'fixed',left:rect.left+'px',top:rect.top+'px',width:rect.width+'px',height:rect.height+'px',maxWidth:'none',minHeight:'0',margin:'0',padding:style.padding,boxSizing:'border-box',pointerEvents:'none',zIndex:'18'});
- layer.append(...main.childNodes);const removeViewport=stageMotion(layer,18);
+ // Moving a scroller resets its scroll position (a native snap carousel, the perspective gallery), so it is carried over.
+ const scrolled=[...main.querySelectorAll('*')].filter(node=>node.scrollLeft||node.scrollTop).map(node=>({node,left:node.scrollLeft,top:node.scrollTop}));
+ const keepScroll=()=>{for(const item of scrolled)item.node.scrollTo({left:item.left,top:item.top,behavior:'instant'});};
+ layer.append(...main.childNodes);const removeViewport=stageMotion(layer,18);keepScroll();
  for(const item of sticky)Object.assign(item.node.style,{position:'absolute',left:item.rect.left-rect.left+'px',top:item.rect.top-rect.top+'px',width:item.rect.width+'px',height:item.rect.height+'px',margin:'0'});
  return {
   images,
@@ -27,7 +30,7 @@ export function retainHome(main,images){
   stash(){layer.style.opacity='0';layer.dataset.retainedDormant='true';images.forEach(image=>image.suspend?.());},
   fadeRest(control,selected,duration){return [...layer.children].filter(node=>node!==selected).map(node=>control.track(node.animate([{opacity:getComputedStyle(node).opacity},{opacity:0}],{duration:duration*.4,easing:'ease-out',fill:'both'})).finished);},
   fadeChrome(control,duration){return fadeHomeChrome(layer,control,duration);},
-  restore(){if(typeof className==='string')main.className=className;for(const item of sticky)item.node.style.cssText=item.css;main.replaceChildren(...layer.childNodes);removeViewport();},
+  restore(){if(typeof className==='string')main.className=className;for(const item of sticky)item.node.style.cssText=item.css;main.replaceChildren(...layer.childNodes);keepScroll();removeViewport();},
   dispose(){images.forEach(image=>image.destroy());removeViewport();}
  };
 }

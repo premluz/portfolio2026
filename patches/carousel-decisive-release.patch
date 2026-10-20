@@ -1,0 +1,268 @@
+diff --git a/dist/carousel-momentum.js b/dist/carousel-momentum.js
+index e8d716c..9d13cd3 100644
+--- a/dist/carousel-momentum.js
++++ b/dist/carousel-momentum.js
+@@ -1,4 +1,4 @@
+-export const carouselMotion=Object.freeze({sampleWindow:90,releaseWindow:100,decay:420,maxSpeed:5,stopSpeed:.025,maxFrame:64,derivativeStep:.001});
++export const carouselMotion=Object.freeze({sampleWindow:90,releaseWindow:100,maxSpeed:5,stopSpeed:.025,derivativeStep:.001,settlePixels:.25,projectTime:220,flickSpeed:.3,pushDistance:40,maxTicks:3,settleBase:280,settlePerCard:60,wheelIdle:60,wheelGap:160,wheelInertiaSteps:3,wheelInertiaRatio:.8,wheelRepush:1.6,wheelRepushMin:4});
+ 
+ // Sample recent travel, so a flick retains its speed but a held card stops.
+ export class CarouselMomentum{
+@@ -22,12 +22,20 @@ export class CarouselMomentum{
+   this.velocity=Math.max(-carouselMotion.maxSpeed,Math.min(carouselMotion.maxSpeed,speed))/radius;
+   this.samples=[];
+  }
+- advance(elapsed,radius){
+-  const before=this.velocity,decay=Math.exp(-Math.min(carouselMotion.maxFrame,Math.max(0,elapsed))/carouselMotion.decay);
+-  this.velocity*=decay;
+-  const travel=(before-this.velocity)*carouselMotion.decay;
+-  if(Math.abs(this.velocity*radius)<carouselMotion.stopSpeed)this.velocity=0;
+-  return travel;
+- }
+  stop(){this.velocity=0;this.samples=[];this.lastMovement=0;}
+ }
++
++/**
++ * Timing of a settle covering `distance` (rad) from `velocity` (rad/ms) across `cards` cards: short and
++ * decisive, leaving at the release speed. A faster release arrives sooner rather than passing the card.
++ */
++export function settlePlan(distance,velocity,cards=1){
++ const duration=carouselMotion.settleBase+carouselMotion.settlePerCard*Math.max(0,cards-1),toward=Math.sign(velocity)===Math.sign(distance)?Math.abs(velocity):0;
++ const slope=distance?toward*duration/Math.abs(distance):0;
++ return slope>3?{duration:3*Math.abs(distance)/toward,slope:3}:{duration,slope};
++}
++/** Progress of a settle that leaves with `slope` (0..3) and comes to rest at 1 without passing it. */
++export function settleCurve(progress,slope){
++ const u=Math.max(0,Math.min(1,progress));
++ return slope*(u*u*u-2*u*u+u)+3*u*u-2*u*u*u;
++}
+diff --git a/dist/circular-card-gallery.js b/dist/circular-card-gallery.js
+index 6b10620..9879cc4 100644
+--- a/dist/circular-card-gallery.js
++++ b/dist/circular-card-gallery.js
+@@ -1,7 +1,7 @@
+ // Placement adapter for shared gallery cards. No cloned images, sliced tiles,
+ // WebGL textures or idle animation: only a short transform loop while moving.
+ import {defaultCarouselSettings} from './carousel-settings.js';
+-import {CarouselMomentum,carouselMotion} from './carousel-momentum.js';
++import {CarouselMomentum,carouselMotion,settlePlan,settleCurve} from './carousel-momentum.js';
+ const tau=Math.PI*2;
+ const arcSpread=.46;
+ export const wrapAngle=value=>((value+Math.PI)%tau+tau)%tau-Math.PI;
+@@ -72,7 +72,28 @@ export function circularArcLayout(angles,radius,faces,{viewportWidth=0,compact=f
+ export class CircularCardPlacement{
+  constructor(gallery){
+   this.gallery=gallery;this.root=gallery.root;this.viewport=gallery.viewport;this.items=gallery.items;this.angle=0;this.frame=0;this.momentum=new CarouselMomentum();
+-  this.onWheel=event=>{if(Math.abs(event.deltaX)<=Math.abs(event.deltaY)||!event.deltaX)return;event.preventDefault();this.momentum.stop();this.target=null;this.requestedIndex=null;this.angle-=event.deltaX/this.dragRadius;this.paint();clearTimeout(this.wheelTimer);this.wheelTimer=setTimeout(()=>this.snap(),120);};
++  this.onWheel=event=>{
++   if(Math.abs(event.deltaX)<=Math.abs(event.deltaY)||!event.deltaX)return;event.preventDefault();
++   // A trackpad swipe is handled like a drag: the ring follows the fingers, and the moment the swipe turns
++   // into the trackpad's own coasting (its steps start shrinking) counts as letting go. The rest of that
++   // coasting is ignored, so the ring settles as the fingers lift instead of drifting after them.
++   const time=event.timeStamp||performance.now(),size=Math.abs(event.deltaX);let gesture=this.wheelGesture;
++   if(gesture&&time-gesture.last>carouselMotion.wheelGap)gesture=null;
++   if(gesture?.released){
++    if(!(size>gesture.lastSize*carouselMotion.wheelRepush&&size>carouselMotion.wheelRepushMin)){gesture.last=time;gesture.lastSize=size;return;}
++    gesture=null;
++   }
++   if(!gesture){
++    cancelAnimationFrame(this.frame);this.frame=0;this.last=0;this.target=null;this.settle=null;this.requestedIndex=null;
++    gesture=this.wheelGesture={from:this.nearest(),start:this.angle,last:time,lastSize:0,peak:0,shrinking:0,released:false};this.momentum.begin(this.angle,time);
++   }
++   this.angle-=event.deltaX/this.dragRadius;this.momentum.track(this.angle,time);this.paint();
++   gesture.shrinking=size<gesture.lastSize?gesture.shrinking+1:0;gesture.peak=Math.max(gesture.peak,size);gesture.last=time;gesture.lastSize=size;
++   clearTimeout(this.wheelTimer);
++   if(gesture.shrinking>=carouselMotion.wheelInertiaSteps&&size<gesture.peak*carouselMotion.wheelInertiaRatio){this.releaseWheel(time);return;}
++   this.wheelTimer=setTimeout(()=>this.releaseWheel(time),carouselMotion.wheelIdle);
++  };
++
+   this.viewport.addEventListener('wheel',this.onWheel,{passive:false});this.measure();this.go(gallery.index,false);
+  }
+  measure(){
+@@ -87,16 +108,41 @@ export class CircularCardPlacement{
+  }
+  go(index,smooth=true){
+   if(!this.items.length)return;index=((index%this.items.length)+this.items.length)%this.items.length;
+-  this.momentum.stop();clearTimeout(this.wheelTimer);
++  this.momentum.stop();clearTimeout(this.wheelTimer);this.wheelGesture=null;this.settle=null;
+   const target=this.angle+wrapAngle(-this.angles[index]-this.angle);
+   this.requestedIndex=index;
+   if(!smooth||this.gallery.reduced()){this.target=null;this.angle=target;this.paint();return;}
+   this.target=target;this.wake();
+  }
+  nearest(){let best=0,distance=Infinity;this.angles.forEach((angle,index)=>{const d=Math.abs(wrapAngle(angle+this.angle));if(d<distance){best=index;distance=d;}});return best;}
+- snap(){this.go(this.nearest());}
++ /** Rest angle of the card `ticks` cards on from card `from`, counted the long way round when needed. */
++ restAfter(from,ticks){
++  const count=this.angles.length,unwrapped=i=>this.angles[((i%count)+count)%count]+tau*Math.floor(i/count);
++  return this.angle+wrapAngle(-unwrapped(from)-this.angle)-(unwrapped(from+ticks)-unwrapped(from));
++ }
++ /**
++  * Letting go decides the card at once and moves there in one short curve that leaves at the release
++  * speed: the card nearest to where that speed points (at most maxTicks on from `from`), never one behind
++  * a moving ring, and one card on for a deliberate push without speed. It never overshoots or comes back.
++  */
++ settleFrom(velocity,from,start){
++  const moving=Math.abs(velocity*this.dragRadius)>=carouselMotion.flickSpeed,direction=moving?Math.sign(velocity):0,max=carouselMotion.maxTicks;
++  const projected=this.angle+velocity*carouselMotion.projectTime;let ticks=0;
++  for(let k=-max;k<=max;k++)if(Math.abs(this.restAfter(from,k)-projected)<Math.abs(this.restAfter(from,ticks)-projected))ticks=k;
++  if(direction)while(Math.abs(ticks)<max&&(this.restAfter(from,ticks)-this.angle)*direction<=0)ticks-=direction;
++  else if(!ticks&&Math.abs(this.angle-start)*this.dragRadius>=carouselMotion.pushDistance)ticks=-Math.sign(this.angle-start);
++  const count=this.angles.length,index=((from+ticks)%count+count)%count,target=this.restAfter(from,ticks);
++  this.momentum.stop();this.requestedIndex=index;
++  if(this.gallery.reduced()||Math.abs(target-this.angle)*this.dragRadius<carouselMotion.settlePixels){this.target=null;this.settle=null;this.angle=target;this.paint();return;}
++  this.target=target;this.settle={from:this.angle,elapsed:0,...settlePlan(target-this.angle,velocity,Math.max(1,Math.abs(ticks)))};this.wake();
++ }
++ releaseWheel(time){
++  const gesture=this.wheelGesture;if(!gesture||gesture.released)return;
++  gesture.released=true;clearTimeout(this.wheelTimer);this.momentum.release(time,this.dragRadius);
++  this.settleFrom(this.gallery.reduced()?0:this.momentum.velocity,gesture.from,gesture.start);
++ }
+  async prepareOpen(index,control,duration){
+-  cancelAnimationFrame(this.frame);this.frame=0;this.target=null;this.momentum.stop();clearTimeout(this.wheelTimer);
++  cancelAnimationFrame(this.frame);this.frame=0;this.target=null;this.momentum.stop();clearTimeout(this.wheelTimer);this.wheelGesture=null;this.settle=null;
+   const start=this.angle,target=start+wrapAngle(-this.angles[index]-start);
+   if(Math.abs(target-start)<.0005){this.angle=target;this.paint();return;}
+   control.synchronize(Math.min(160,duration*.3));
+@@ -104,8 +150,8 @@ export class CircularCardPlacement{
+   this.requestedIndex=this.nearest();
+  }
+  beginDrag(time){
+-  const moving=!!this.momentum.velocity||this.target!==null&&this.target!==undefined;
+-  cancelAnimationFrame(this.frame);clearTimeout(this.wheelTimer);this.frame=0;this.last=0;this.target=null;this.requestedIndex=null;this.pressAngle=this.angle;
++  const moving=this.target!==null&&this.target!==undefined;
++  cancelAnimationFrame(this.frame);clearTimeout(this.wheelTimer);this.wheelGesture=null;this.settle=null;this.frame=0;this.last=0;this.target=null;this.requestedIndex=null;this.pressAngle=this.angle;this.pressIndex=this.nearest();
+   // Match pointer travel to the visible arc, including mixed card widths.
+   const index=this.nearest(),step=carouselMotion.derivativeStep,options={viewportWidth:this.extent,compact:this.compact,settings:this.gallery.arcSettings};
+   const before=circularArcLayout(this.angles.map(angle=>angle+this.angle-step),this.radius,this.faces,options)[index];
+@@ -116,7 +162,8 @@ export class CircularCardPlacement{
+  drag(delta,time){this.target=null;this.requestedIndex=null;this.angle=this.pressAngle+delta/this.dragRadius;this.momentum.track(this.angle,time);this.wake();}
+  release(time,cancelled=false){
+   if(cancelled||this.gallery.reduced())this.momentum.stop();else this.momentum.release(time,this.dragRadius);
+-  if(this.momentum.velocity){this.last=time;this.wake();}else this.snap();
++  if(cancelled){this.go(this.nearest());return;}
++  this.last=time;this.settleFrom(this.momentum.velocity,this.pressIndex,this.pressAngle);
+  }
+  paint(){
+   if(this.dead)return;const vertical=this.gallery.axis==='vertical';
+@@ -129,9 +176,9 @@ export class CircularCardPlacement{
+   this.gallery.updateSelection(this.nearest());
+  }
+  wake(){if(this.dead||this.frame)return;this.frame=requestAnimationFrame(now=>{this.frame=0;const dt=this.last?Math.min(40,Math.max(1,now-this.last)):16;this.last=now;
+-   if(this.momentum.velocity){this.angle+=this.momentum.advance(dt,this.dragRadius);if(!this.momentum.velocity)this.snap();}
++   if(this.settle&&this.target!==null&&this.target!==undefined){const settle=this.settle;settle.elapsed+=dt;const done=settle.elapsed>=settle.duration;this.angle=done?this.target:settle.from+(this.target-settle.from)*settleCurve(settle.elapsed/settle.duration,settle.slope);if(done){this.target=null;this.settle=null;}}
+    else if(this.target!==null&&this.target!==undefined){const delta=this.target-this.angle;this.angle+=delta*(1-Math.exp(-dt/(95*100/this.gallery.arcSettings.speed)));if(Math.abs(delta)<.0005){this.angle=this.target;this.target=null;}}
+-   this.paint();if(this.momentum.velocity||this.target!==null&&this.target!==undefined)this.wake();else this.last=0;
++   this.paint();if(this.target!==null&&this.target!==undefined)this.wake();else this.last=0;
+   });}
+  destroy(){this.dead=true;this.momentum.stop();cancelAnimationFrame(this.frame);clearTimeout(this.wheelTimer);this.viewport.removeEventListener('wheel',this.onWheel);for(const item of this.items){item.style.transform='';item.style.zIndex='';item.style.visibility='';item.style.pointerEvents='';delete item.dataset.galleryFront;}}
+ }
+diff --git a/tests/carousel-momentum.mjs b/tests/carousel-momentum.mjs
+index f370fed..f03fb46 100644
+--- a/tests/carousel-momentum.mjs
++++ b/tests/carousel-momentum.mjs
+@@ -1,24 +1,20 @@
+ import assert from 'node:assert/strict';
+-import {CarouselMomentum} from '../dist/carousel-momentum.js';
++import {CarouselMomentum,carouselMotion,settlePlan,settleCurve} from '../dist/carousel-momentum.js';
+ 
+ function flick({radius=300,distance=-240,duration=80,interval=10,hold=0}={}){
+  const motion=new CarouselMomentum();motion.begin(0,0);
+  for(let time=interval;time<duration;time+=interval)motion.track(distance*time/duration/radius,time);
+  motion.track(distance/radius,duration);motion.release(duration+hold,radius);return motion;
+ }
+-function coast(motion,radius,interval){
+- let travel=0,frames=0;
+- while(motion.velocity&&frames++<1000){const speed=Math.abs(motion.velocity),step=motion.advance(interval,radius);assert(Math.abs(motion.velocity)<=speed);travel+=step;}
+- assert.equal(motion.velocity,0,'A released flick stops without an idle animation');return travel*radius;
+-}
+ for(const radius of [220,650]){
+- const fast=coast(flick({radius}),radius,16),slow=coast(flick({radius,duration:600}),radius,16);
++ const fast=flick({radius}).velocity,slow=flick({radius,duration:600}).velocity;
+  assert(fast<0&&Math.abs(fast)>Math.abs(slow)*4,'Release speed controls travel instead of a fixed one-card step');
+- const sixty=coast(flick({radius}),radius,1000/60),oneTwenty=coast(flick({radius}),radius,1000/120);
+- assert(Math.abs(sixty-oneTwenty)<1,'Momentum distance is independent of rendering frame rate');
+  const sparse=flick({radius,duration:160,interval:1000/60}),dense=flick({radius,duration:160,interval:1000/120});assert(Math.abs(sparse.velocity-dense.velocity)<.000001,'Pointer event frequency does not change release speed');
+  assert.equal(flick({radius,hold:200}).velocity,0,'Holding before release cancels momentum');
+  const reverse=new CarouselMomentum();reverse.begin(0,0);reverse.track(-1,80);reverse.track(-.5,160);reverse.track(0,240);reverse.release(240,radius);assert(reverse.velocity>0,'The latest direction wins after a deliberate reversal');
+  const caught=flick({radius});caught.begin(-1,100);assert.equal(caught.velocity,0,'A fresh press catches the spinning carousel immediately');
+ }
+-console.log('Carousel momentum passed: speed-dependent travel, both display scales, frame-rate independence, hold-to-stop, reversal and catch.');
++for(const slope of [0,1,2,3]){let previous=0;for(let i=1;i<=100;i++){const x=settleCurve(i/100,slope);assert(x>=previous-1e-12&&x<=1+1e-12,'A settle never passes its card or turns back');previous=x;}}
++{const plan=settlePlan(-.2,-.002,1);assert(Math.abs(.2*plan.slope/plan.duration-.002)<1e-9,'A settle leaves at the release speed');}
++{const fast=settlePlan(-.05,-.01,1);assert(fast.slope===3&&fast.duration<carouselMotion.settleBase,'A fast release arrives sooner instead of overshooting');}
++console.log('Carousel momentum passed: speed-dependent travel, both display scales, hold-to-stop, reversal and catch.');
+diff --git a/tests/circular-card-gallery.mjs b/tests/circular-card-gallery.mjs
+index ec802fb..a59cfa9 100644
+--- a/tests/circular-card-gallery.mjs
++++ b/tests/circular-card-gallery.mjs
+@@ -5,6 +5,7 @@ import {contentBlocks} from '../dist/content-blocks.js';
+ import {content} from '../dist/content/local.js';
+ import {TransitionControl} from '../dist/transition-control.js';
+ import {defaultCarouselSettings} from '../dist/carousel-settings.js';
++import {carouselMotion} from '../dist/carousel-momentum.js';
+ 
+ const geometry=circularGeometry([700,360,700,360,700]);
+ assert(geometry.angles.every((a,i)=>!i||a>geometry.angles[i-1]));
+@@ -58,7 +59,8 @@ assert.equal((html.match(/data-content-card=/g)||[]).length,block.items.length,'
+ let now=0,id=0,reduced=false;const frames=new Map();
+ globalThis.performance={now:()=>now};
+ globalThis.requestAnimationFrame=fn=>{frames.set(++id,fn);return id;};globalThis.cancelAnimationFrame=id=>frames.delete(id);
+-const flush=()=>{for(let n=0;frames.size&&n<200;n++){now+=16;const callbacks=[...frames];frames.clear();for(const [,fn] of callbacks)fn(now);}assert.equal(frames.size,0,'Motion stops after settling');};
++// A flick coasts, then softly settles: allow up to ~5 s of frames before calling it stuck.
++const flush=()=>{for(let n=0;frames.size&&n<300;n++){now+=16;const callbacks=[...frames];frames.clear();for(const [,fn] of callbacks)fn(now);}assert.equal(frames.size,0,'Motion stops after settling');};
+ const node=()=>({dataset:{},style:{setProperty(k,v){this[k]=v;}},listeners:new Map(),addEventListener(k,fn){this.listeners.set(k,fn);},removeEventListener(k){this.listeners.delete(k);},dispatchEvent(event){this.listeners.get(event.type)?.(event);},setAttribute(k,v){this[k]=v;}});
+ globalThis.ResizeObserver=class{observe(){}disconnect(){}};
+ const root=node();root.dataset={galleryVariant:'circular',galleryAxis:'horizontal',galleryIndex:'2'};
+@@ -88,12 +90,48 @@ for(const [pointerType,width] of [['mouse',1440],['touch',390]]){
+  viewport.clientWidth=width;items.forEach((item,index)=>item.offsetWidth=width<=600?width-(index%2?64:48):widths[index]);gallery.onResize();flush();gallery.go(0,false);
+  const press=now,event={pointerType,button:0,pointerId:3,clientX:0,clientY:0,timeStamp:press};gallery.onDown(event);
+  for(let step=1;step<=6;step++){now=press+step*16;gallery.onMove({...event,clientX:-step*60,timeStamp:now,preventDefault(){}});}
+- const releaseAngle=gallery.circular.angle;gallery.onUp({...event,timeStamp:now,type:'pointerup'});assert(gallery.circular.momentum.velocity<0,'Mouse and touch flicks retain release speed');
++ const releaseAngle=gallery.circular.angle;gallery.onUp({...event,timeStamp:now,type:'pointerup'});assert(gallery.circular.target<releaseAngle&&gallery.circular.settle,'Mouse and touch flicks carry on with their release speed');
+  let prevented=false;gallery.onClick({target:{closest:()=>items[0]},preventDefault(){prevented=true;},stopPropagation(){}});assert(prevented,'Releasing a drag never opens a project');
+  flush();assert(gallery.circular.angle<releaseAngle-Math.PI*2/items.length,'One flick continues beyond another complete card');assert(Math.abs(wrapAngle(gallery.circular.angle+gallery.circular.angles[gallery.index]))<.001,'Momentum ends on a centred card');
+  gallery.onDown({...event,timeStamp:now});now+=16;gallery.onMove({...event,clientX:150,timeStamp:now,preventDefault(){}});gallery.onUp({...event,type:'pointercancel',timeStamp:now});assert.equal(gallery.circular.momentum.velocity,0,'A cancelled pointer cannot launch a spin');flush();
+- gallery.onDown({...event,timeStamp:now});now+=16;gallery.onMove({...event,clientX:-180,timeStamp:now,preventDefault(){}});gallery.onUp({...event,type:'pointerup',timeStamp:now});assert(gallery.circular.momentum.velocity);
+- gallery.onDown({...event,timeStamp:now});assert.equal(gallery.circular.momentum.velocity,0,'Pressing a moving carousel catches it immediately');gallery.onUp({...event,type:'pointerup',timeStamp:now});flush();
++ gallery.onDown({...event,timeStamp:now});now+=16;gallery.onMove({...event,clientX:-180,timeStamp:now,preventDefault(){}});gallery.onUp({...event,type:'pointerup',timeStamp:now});assert(gallery.circular.target<gallery.circular.angle,'A short flick carries on to a card ahead');
++ gallery.onDown({...event,timeStamp:now});assert.equal(gallery.circular.target,null,'Pressing a moving carousel catches it immediately');gallery.onUp({...event,type:'pointerup',timeStamp:now});flush();
++}
++// Letting go is decisive and seamless: the card is chosen at once, the ring leaves at the release speed,
++// arrives within a short settle, never passes its card or comes back, and ends centred. A trackpad swipe
++// lets go as its coasting begins, and that coasting no longer moves the ring.
++{
++ const ring=gallery.circular,timers=[],setTimer=globalThis.setTimeout,clearTimer=globalThis.clearTimeout;
++ globalThis.setTimeout=fn=>timers.push(fn);globalThis.clearTimeout=()=>{timers.length=0;};
++ const frame=()=>{now+=16;const callbacks=[...frames];frames.clear();for(const [,fn] of callbacks)fn(now);return ring.angle;};
++ const settles=(label,{velocity=null}={})=>{
++  const plan=ring.settle,path=[ring.angle];let count=0;for(;count<400&&frames.size;count++)path.push(frame());
++  assert.equal(frames.size,0,`${label} settles`);
++  assert(count*16<=carouselMotion.settleBase+carouselMotion.settlePerCard*(carouselMotion.maxTicks-1)+32,`${label} settles decisively (${count*16} ms)`);
++  const steps=path.slice(1).map((angle,i)=>angle-path[i]),direction=Math.sign(steps.find(step=>step)||0);
++  assert(steps.every(step=>step*direction>=-1e-12),`${label} never comes back`);
++  if(velocity!==null&&plan)assert(Math.abs(steps[0]/16-velocity)<=Math.abs(velocity)*.25,`${label} leaves at the release speed`);
++  assert(Math.abs(wrapAngle(ring.angle+ring.angles[gallery.index]))<.001,`${label} ends centred`);
++ };
++ for(const speed of [20,60,120]){
++  gallery.go(0,false);flush();const event={pointerType:'mouse',button:0,pointerId:7,clientX:0,clientY:0,timeStamp:now};gallery.onDown(event);
++  for(let n=1;n<=6;n++){now+=16;gallery.onMove({...event,clientX:-n*speed,timeStamp:now,preventDefault(){}});}
++  gallery.onUp({...event,clientX:-6*speed,timeStamp:now,type:'pointerup'});
++  const velocity=-Math.min(speed/16,carouselMotion.maxSpeed)/ring.dragRadius;settles(`A ${speed}px/frame flick`,{velocity});
++  assert(gallery.index>=1&&gallery.index<=carouselMotion.maxTicks,`A ${speed}px/frame flick moves between 1 and maxTicks cards`);
++ }
++ // Trackpad: the swipe builds up, then the trackpad coasts with shrinking steps.
++ gallery.go(0,false);flush();now+=1000;const swipe=[20,40,60,70,60,48,38,30,24,19,15,12,9,7,5,4,3,2,1];let releasedAt=-1;
++ swipe.forEach((deltaX,i)=>{const before=ring.angle,released=ring.wheelGesture?.released;ring.onWheel({deltaX,deltaY:0,timeStamp:now,preventDefault(){}});
++  if(released)assert.equal(ring.angle,before,'The trackpad\'s coasting no longer moves the ring');else if(ring.wheelGesture.released)releasedAt=i;frame();});
++ assert(releasedAt>0&&releasedAt<8,'A trackpad swipe lets go as its coasting begins');settles('A trackpad swipe');
++ // Mouse wheel notch: one deliberate push without speed moves one card.
++ gallery.go(0,false);flush();now+=1000;ring.onWheel({deltaX:carouselMotion.pushDistance+10,deltaY:0,timeStamp:now,preventDefault(){}});timers.shift()();timers.length=0;settles('A wheel notch');assert.equal(gallery.index,1);
++ // A tiny, slow drag returns to its card.
++ gallery.go(0,false);flush();now+=1000;const event={pointerType:'mouse',button:0,pointerId:8,clientX:0,clientY:0,timeStamp:now};gallery.onDown(event);
++ for(let n=1;n<=10;n++){now+=40;gallery.onMove({...event,clientX:-n,timeStamp:now,preventDefault(){}});}
++ now+=300;gallery.onUp({...event,clientX:-10,timeStamp:now,type:'pointerup'});settles('A tiny drag');assert.equal(gallery.index,0);
++ globalThis.setTimeout=setTimer;globalThis.clearTimeout=clearTimer;
+ }
+ let dragPaints=0,captures=0;
+ const originalPaint=gallery.circular.paint.bind(gallery.circular);
