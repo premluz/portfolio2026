@@ -13,7 +13,7 @@ import {clearImageHandoffs} from '../dist/image-handoff.js';
 // race that midpoint-only morph tests could not exercise.
 const app=await readFile(new URL('../dist/app.js',import.meta.url),'utf8');
 const extract=(from,to)=>app.slice(app.indexOf(from),app.indexOf(to));
-const code={galleryOriginTarget:extract('function galleryOriginTarget(','function syncGalleryOrigin('),syncGalleryOrigin:extract('function syncGalleryOrigin(','function disposeGalleryOrigin('),syncDockActions:extract('function syncDockActions(','installHoverTrail('),cleanup:extract('function cleanup()','function render('),render:extract('function render(','function syncRouteChrome('),scrollPage:extract('function scrollPage(','function navigateAssistant('),runNavigation:extract('async function runNavigation()','function homeScrollMotion('),navigate:extract('async function navigate(){','async function runNavigation()'),pushCards:extract('function pushCards(','async function slideCards(')};
+const code={galleryOriginTarget:extract('function galleryOriginTarget(','function syncGalleryOrigin('),syncGalleryOrigin:extract('function syncGalleryOrigin(','function disposeGalleryOrigin('),syncDockActions:extract('function syncDockActions(','installHoverTrail('),cleanup:extract('function cleanup()','function render('),render:extract('function render(','function syncRouteChrome('),scrollPage:extract('function scrollPage(','function navigateAssistant('),runNavigation:extract('async function runNavigation()','function homeScrollMotion('),navigate:extract('async function navigate(){','async function runNavigation()'),pushCards:extract('function pushCards(','async function slideCards('),slideCardsImplementation:extract('async function slideCards(','function fadeUpIn(')};
 const compile=text=>new Function('env','args',`with(env){return (${text}).apply(null,args);}`);
 class Style{
  get cssText(){return Object.entries(this).map(([key,value])=>`${key}:${value}`).join(';');}
@@ -121,7 +121,7 @@ console.log('Homepage carousel lifecycle passed: exact source card, live gallery
 
 // About and Contact have no home card: they never morph back, they fade up or (from the menu) slide right.
 {
- const entry=fixture(),x=entry.env;let fadedAbout=null;x.fadeUpIn=target=>{fadedAbout=target;};x.informationCards=[{id:'about'}];x.render('work');x.navSlideTarget='about';x.travelDirection=1;x.location.hash='#about';await x.navigate();assert.equal(fadedAbout,x.main,'About fades and lifts in after the route arrives');
+ const entry=fixture(),x=entry.env;let fadeCount=0,aboutSlide=null;x.fadeUpIn=()=>{fadeCount++;};x.slideCards=async(old,direction)=>{aboutSlide={direction,route:x.current};};x.informationCards=[{id:'about'}];x.render('work');x.location.hash='#about';await x.navigate();assert.deepEqual(aboutSlide,{direction:1,route:'about'});assert.equal(fadeCount,0,'About entrance does not replay a second fade after its route transition');
  const f=fixture(),e=f.env;let faded=0;e.informationCards=[{id:'about'}];
  e.returnHomeFromInformation=()=>{faded++;e.current='work';};
  e.render('about');e.location.hash='#work';await e.navigate();
@@ -131,6 +131,14 @@ console.log('Homepage carousel lifecycle passed: exact source card, live gallery
  assert.deepEqual(slides,[-1],'Menu Home from About slides the homepage in from the left');assert.equal(g.morphs.length,0);
 }
 console.log('Information return passed: fade-up for Back/hash changes, rightward slide for the menu Home, and no title morph.');
+
+// About's incoming slide combines opacity and upward motion in one animation.
+{
+ const {env,main}=fixture();env.current='about';env.pageEntranceLift=14;env.pulseImages=()=>{};env.stageMotion=()=>()=>{};env.innerWidth=1000;env.activeTransition={track(animation){return animation;}};
+ const frames=[],animation=keyframes=>{frames.push(keyframes);return {finished:Promise.resolve()};};main.animate=animation;
+ const old={clone:{style:{},animate:animation}};await env.slideCardsImplementation(old,1);
+ assert.deepEqual(frames[1],[{opacity:0,transform:'translate3d(1048px,14px,0)'},{opacity:1,transform:'translate3d(0,0,0)'}],'About fades and lifts as its page enters, in the same motion as the outgoing page');
+}
 
 // Stepping Next/Previous from a carousel-opened detail turns the hidden carousel with it.
 {
