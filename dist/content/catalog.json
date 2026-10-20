@@ -8,7 +8,7 @@
       "pageTitle": "Designed an AI workspace that assembles itself around the analysis",
       "name": "AI financial intelligence workspace",
       "client": "Merlin",
-      "summary": "R&D • AI assistant • Genrative UI • Prototype",
+      "summary": "R&D • AI assistant • Generative UI • Prototype",
       "category": "Financial intelligence · R&D",
       "aliases": [
         "Merlin",
@@ -157,7 +157,7 @@
       "slug": "playstation",
       "title": "Designed a unified workflow saving developers and publishers hundreds of hours",
       "name": "Publishing pipeline",
-      "summary": "1st designer • 3 systems → 1 workflow",
+      "summary": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 • 4 teams aligned",
       "category": "Publishing pipeline · PlayStation Network",
       "aliases": [
         "PlayStation",
@@ -180,7 +180,7 @@
       "kind": "shipped",
       "context": "Self-service content pipeline for developers and publishers managing product details, regional rules and publishing across PlayStation Network.",
       "role": "First designer. Led end-to-end design across discovery, research, prototyping, testing and implementation support through launch, while helping align four product teams.",
-      "highlights": "1st designer • 3 systems → 1 workflow",
+      "highlights": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 • 4 teams aligned",
       "keyWork": "Unified three regional systems into one publishing workflow and established design foundations across onboarding, international pricing, entitlements and issue management.",
       "impact": "3 systems → 1 workflow • 4 teams aligned • Hundreds of hours saved across partner and internal workflows",
       "heroMediaId": "playstation-cover",
@@ -229,9 +229,9 @@
       "type": "portfolio-item",
       "status": "published",
       "slug": "vodafone-iot",
-      "title": "Designed a unified interaction model for a platform users dreaded opening",
+      "title": "Redesigned platform around research-informed IA and interaction model for technical users and occasional operators",
       "name": "IoT connectivity",
-      "summary": "Senior product designer • NPS −33 → +62",
+      "summary": "NPS –33 → +62 · Operations time reduced to under 10 seconds · 240M+ devices ",
       "category": "IoT connectivity · Enterprise",
       "aliases": [
         "Vodafone",
@@ -303,9 +303,9 @@
       "type": "portfolio-item",
       "status": "published",
       "slug": "tracr",
-      "title": "Created a design system as a vehiecle to fix fragmented platform",
-      "name": "Blockchain traceabiltiy",
-      "summary": "Design System 0 → 3 • 2x dev, QA speed • Architecture 10 → 3",
+      "title": "Created a design system as a vehicle to fix fragmented platform",
+      "name": "Blockchain traceability",
+      "summary": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
       "category": "Blockchain traceability · Regulated supply chain",
       "aliases": [
         "Tracr",
@@ -327,9 +327,9 @@
       "kind": "shipped",
       "context": "Blockchain-based provenance and traceability across the regulated global diamond supply chain, including complex statuses, exceptions and conflict management.",
       "role": "IC lead product designer. Owned the design system, governance and adoption, product architecture, North Star and strategic design direction while supporting leadership and mentoring.",
-      "highlights": "Design System + platform redesign • ~2× faster dev & QA • Architecture 10→3",
+      "highlights": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
       "keyWork": "Used the design system as a vehicle for incremental redesign, reframed the architecture around the diamond and unified five independent workflows through one reusable action model.",
-      "impact": "~2× design, dev and QA velocity • 3× workflow efficiency • Architecture simplified 10 → 3",
+      "impact": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
       "heroMediaId": "tracr-cover",
       "hoverVideoId": "tracr-walkthrough",
       "evidence": [
@@ -382,7 +382,7 @@
       "slug": "galachain",
       "title": "Made Web3 wiring invisible for fans and creators on a decentralised entertainment platform",
       "name": "Web3 film platform",
-      "summary": "Product designer • Gala Film 0→1",
+      "summary": "End-to-end design across 0 → 1 → Growth and continous improvements",
       "category": "Web3 entertainment · Film and music",
       "aliases": [
         "Gala",
@@ -455,11 +455,11 @@
     {
       "id": "bastion",
       "slug": "bastion",
-      "title": "Designed a mobile digital wallet with AI assistant and generastive UI",
+      "title": "Designed and built prototype of mobile wallet with AI assistant and generative UI",
       "pageTitle": "A wallet where you can ask, speak or tap and the interface adapts around the task",
       "name": "Digital wallet with AI assistant",
       "client": "Bastion",
-      "summary": "R&D • AI assistant • Genrative UI • Prototype",
+      "summary": "R&D • AI assistant • Generative UI • Prototype",
       "category": "AI wallet · R&D",
       "aliases": [
         "Bastion",
@@ -536,7 +536,7 @@
       "slug": "porter",
       "title": "Designed and built switchboard for the AI agents",
       "pageTitle": "I designed and built a Mac app that keeps track of your AI agents, so you never lose one or keep one waiting.",
-      "name": "AI agent swtichboard",
+      "name": "AI agent switchboard",
       "client": "Porter",
       "summary": "0→1 product • Solo designer/builder",
       "category": "Agent switchboard · R&D",
@@ -721,7 +721,7 @@
           "id": "home-description",
           "type": "text",
           "paragraphs": [
-            "For the last 10+ years, I’ve designed products for technical users and creators. Today, my focus is AI  and genUI experiences. Recently built Rios and Porter."
+            "For the last 10+ years, I’ve designed products for technical users and creators. Today, my focus is AI and genUI experiences. Recently built Rios and Porter."
           ]
         },
         {
@@ -1275,7 +1275,7 @@
         {
           "id": "trait-coffee",
           "type": "info-card",
-          "title": "I wake up, stretch, meditate, have a coffee,  then go on making software simpler for humans."
+          "title": "I wake up, stretch, meditate, have a coffee, then go on making software simpler for humans."
         },
         {
           "id": "trait-roots",

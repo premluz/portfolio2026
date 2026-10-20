@@ -1,4 +1,4 @@
-export const carouselMotion=Object.freeze({sampleWindow:90,releaseWindow:100,decay:420,maxSpeed:5,stopSpeed:.025,maxFrame:64,derivativeStep:.001});
+export const carouselMotion=Object.freeze({sampleWindow:90,releaseWindow:100,decay:420,maxSpeed:5,stopSpeed:.025,derivativeStep:.001,snapTime:130,snapStep:8,settlePixels:.25,coastMin:90,coastMax:700,wheelFollow:120,wheelIdle:80});
 
 // Sample recent travel, so a flick retains its speed but a held card stops.
 export class CarouselMomentum{
@@ -21,13 +21,6 @@ export class CarouselMomentum{
   const speed=(last.position-first.position)*radius/elapsed;
   this.velocity=Math.max(-carouselMotion.maxSpeed,Math.min(carouselMotion.maxSpeed,speed))/radius;
   this.samples=[];
- }
- advance(elapsed,radius){
-  const before=this.velocity,decay=Math.exp(-Math.min(carouselMotion.maxFrame,Math.max(0,elapsed))/carouselMotion.decay);
-  this.velocity*=decay;
-  const travel=(before-this.velocity)*carouselMotion.decay;
-  if(Math.abs(this.velocity*radius)<carouselMotion.stopSpeed)this.velocity=0;
-  return travel;
  }
  stop(){this.velocity=0;this.samples=[];this.lastMovement=0;}
 }

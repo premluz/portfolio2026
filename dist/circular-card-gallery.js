@@ -72,7 +72,15 @@ export function circularArcLayout(angles,radius,faces,{viewportWidth=0,compact=f
 export class CircularCardPlacement{
  constructor(gallery){
   this.gallery=gallery;this.root=gallery.root;this.viewport=gallery.viewport;this.items=gallery.items;this.angle=0;this.frame=0;this.momentum=new CarouselMomentum();
-  this.onWheel=event=>{if(Math.abs(event.deltaX)<=Math.abs(event.deltaY)||!event.deltaX)return;event.preventDefault();this.momentum.stop();this.target=null;this.requestedIndex=null;this.angle-=event.deltaX/this.dragRadius;this.paint();clearTimeout(this.wheelTimer);this.wheelTimer=setTimeout(()=>this.snap(),120);};
+  this.onWheel=event=>{
+   if(Math.abs(event.deltaX)<=Math.abs(event.deltaY)||!event.deltaX)return;event.preventDefault();
+   // The ring eases after the scrolled position; when scrolling stops, what is left of that motion is
+   // reshaped to come to rest on a card, so the snap is the end of the scroll, not a second movement.
+   if(!this.wheeling){this.momentum.stop();this.target=null;this.coast=null;this.spring=null;this.requestedIndex=null;this.raw=this.angle;this.wheeling=true;}
+   this.raw-=event.deltaX/this.dragRadius;
+   if(this.gallery.reduced()){this.angle=this.raw;this.paint();}else this.wake();
+   clearTimeout(this.wheelTimer);this.wheelTimer=setTimeout(()=>{this.wheeling=false;this.coastTo(this.raw,this.gallery.reduced()?0:(this.raw-this.angle)/carouselMotion.wheelFollow);},carouselMotion.wheelIdle);
+  };
   this.viewport.addEventListener('wheel',this.onWheel,{passive:false});this.measure();this.go(gallery.index,false);
  }
  measure(){
@@ -87,16 +95,40 @@ export class CircularCardPlacement{
  }
  go(index,smooth=true){
   if(!this.items.length)return;index=((index%this.items.length)+this.items.length)%this.items.length;
-  this.momentum.stop();clearTimeout(this.wheelTimer);
+  this.momentum.stop();clearTimeout(this.wheelTimer);this.wheeling=false;this.spring=null;this.coast=null;
   const target=this.angle+wrapAngle(-this.angles[index]-this.angle);
   this.requestedIndex=index;
   if(!smooth||this.gallery.reduced()){this.target=null;this.angle=target;this.paint();return;}
   this.target=target;this.wake();
  }
  nearest(){let best=0,distance=Infinity;this.angles.forEach((angle,index)=>{const d=Math.abs(wrapAngle(angle+this.angle));if(d<distance){best=index;distance=d;}});return best;}
- snap(){this.go(this.nearest());}
+ // Settling onto the nearest card is a critically damped spring, not the arrows' ease: it carries on from
+ // the speed the ring already has (0 after a scroll pauses), so it eases in and out instead of jumping.
+ // From rest (a drag held still), settling is a soft critically damped spring onto the nearest card.
+ snap(){
+  this.go(this.nearest(),!this.gallery.reduced());
+  if(this.target!==null&&this.target!==undefined)this.spring={velocity:0};
+ }
+ /**
+  * A moving ring coasts on and comes to rest exactly on a card, in one motion: the card nearest to where
+  * `projected` says it would stop, never one behind it, reached by an exponential slowdown that leaves at
+  * the current `velocity` (rad/ms). It never passes the card and never comes back.
+  */
+ coastTo(projected,velocity){
+  const direction=Math.abs(velocity*this.dragRadius)>=carouselMotion.stopSpeed?Math.sign(velocity):0;
+  if(!direction){this.snap();return;}
+  const rest=angle=>projected+wrapAngle(-angle-projected);
+  let index=0;this.angles.forEach((angle,i)=>{if(Math.abs(rest(angle)-projected)<Math.abs(rest(this.angles[index])-projected))index=i;});
+  let target=rest(this.angles[index]);
+  if((target-this.angle)*direction<=0){
+   let best=Infinity;this.angles.forEach((angle,i)=>{const ahead=((wrapAngle(-angle-this.angle)*direction)+tau)%tau;if(ahead>0&&ahead<best){best=ahead;index=i;}});
+   target=this.angle+best*direction;
+  }
+  this.go(index,!this.gallery.reduced());if(this.target===null||this.target===undefined)return;
+  this.target=target;this.coast={tau:Math.max(carouselMotion.coastMin,Math.min(carouselMotion.coastMax,(target-this.angle)/velocity))};
+ }
  async prepareOpen(index,control,duration){
-  cancelAnimationFrame(this.frame);this.frame=0;this.target=null;this.momentum.stop();clearTimeout(this.wheelTimer);
+  cancelAnimationFrame(this.frame);this.frame=0;this.target=null;this.momentum.stop();clearTimeout(this.wheelTimer);this.wheeling=false;this.coast=null;this.spring=null;
   const start=this.angle,target=start+wrapAngle(-this.angles[index]-start);
   if(Math.abs(target-start)<.0005){this.angle=target;this.paint();return;}
   control.synchronize(Math.min(160,duration*.3));
@@ -104,8 +136,8 @@ export class CircularCardPlacement{
   this.requestedIndex=this.nearest();
  }
  beginDrag(time){
-  const moving=!!this.momentum.velocity||this.target!==null&&this.target!==undefined;
-  cancelAnimationFrame(this.frame);clearTimeout(this.wheelTimer);this.frame=0;this.last=0;this.target=null;this.requestedIndex=null;this.pressAngle=this.angle;
+  const moving=this.wheeling||this.target!==null&&this.target!==undefined;
+  cancelAnimationFrame(this.frame);clearTimeout(this.wheelTimer);this.wheeling=false;this.coast=null;this.spring=null;this.frame=0;this.last=0;this.target=null;this.requestedIndex=null;this.pressAngle=this.angle;
   // Match pointer travel to the visible arc, including mixed card widths.
   const index=this.nearest(),step=carouselMotion.derivativeStep,options={viewportWidth:this.extent,compact:this.compact,settings:this.gallery.arcSettings};
   const before=circularArcLayout(this.angles.map(angle=>angle+this.angle-step),this.radius,this.faces,options)[index];
@@ -116,7 +148,8 @@ export class CircularCardPlacement{
  drag(delta,time){this.target=null;this.requestedIndex=null;this.angle=this.pressAngle+delta/this.dragRadius;this.momentum.track(this.angle,time);this.wake();}
  release(time,cancelled=false){
   if(cancelled||this.gallery.reduced())this.momentum.stop();else this.momentum.release(time,this.dragRadius);
-  if(this.momentum.velocity){this.last=time;this.wake();}else this.snap();
+  const velocity=this.momentum.velocity;this.momentum.stop();this.last=time;
+  if(velocity)this.coastTo(this.angle+velocity*carouselMotion.decay,velocity);else this.snap();
  }
  paint(){
   if(this.dead)return;const vertical=this.gallery.axis==='vertical';
@@ -128,10 +161,17 @@ export class CircularCardPlacement{
   });
   this.gallery.updateSelection(this.nearest());
  }
+ settleSpring(dt){
+  const omega=1/carouselMotion.snapTime,spring=this.spring;
+  for(let left=dt;left>0;left-=carouselMotion.snapStep){const h=Math.min(carouselMotion.snapStep,left);spring.velocity+=(-omega*omega*(this.angle-this.target)-2*omega*spring.velocity)*h;this.angle+=spring.velocity*h;}
+  if(Math.abs(this.target-this.angle)*this.dragRadius<carouselMotion.settlePixels&&Math.abs(spring.velocity*this.dragRadius)*16<carouselMotion.settlePixels){this.angle=this.target;this.target=null;this.spring=null;}
+ }
  wake(){if(this.dead||this.frame)return;this.frame=requestAnimationFrame(now=>{this.frame=0;const dt=this.last?Math.min(40,Math.max(1,now-this.last)):16;this.last=now;
-   if(this.momentum.velocity){this.angle+=this.momentum.advance(dt,this.dragRadius);if(!this.momentum.velocity)this.snap();}
+   if(this.wheeling)this.angle+=(this.raw-this.angle)*(1-Math.exp(-dt/carouselMotion.wheelFollow));
+   else if(this.coast&&this.target!==null&&this.target!==undefined){this.angle+=(this.target-this.angle)*(1-Math.exp(-dt/this.coast.tau));if(Math.abs(this.target-this.angle)*this.dragRadius<carouselMotion.settlePixels){this.angle=this.target;this.target=null;this.coast=null;}}
+   else if(this.spring&&this.target!==null&&this.target!==undefined)this.settleSpring(dt);
    else if(this.target!==null&&this.target!==undefined){const delta=this.target-this.angle;this.angle+=delta*(1-Math.exp(-dt/(95*100/this.gallery.arcSettings.speed)));if(Math.abs(delta)<.0005){this.angle=this.target;this.target=null;}}
-   this.paint();if(this.momentum.velocity||this.target!==null&&this.target!==undefined)this.wake();else this.last=0;
+   this.paint();if(this.wheeling||this.target!==null&&this.target!==undefined)this.wake();else this.last=0;
   });}
  destroy(){this.dead=true;this.momentum.stop();cancelAnimationFrame(this.frame);clearTimeout(this.wheelTimer);this.viewport.removeEventListener('wheel',this.onWheel);for(const item of this.items){item.style.transform='';item.style.zIndex='';item.style.visibility='';item.style.pointerEvents='';delete item.dataset.galleryFront;}}
 }

@@ -24,7 +24,7 @@ const premWork=ask('What is work by Prem?');assert(premWork.text.startsWith('Pre
 const porter=ask('Tell me about Porter');assert.equal(porter.cards[0].id,'porter');assert(porter.text.includes(content.get('porter').context));
 const contact=ask('How can I contact Prem?');assert.deepEqual(contact.cards.map(c=>c.id),['contact']);
 const catalog=content.export(),draft=structuredClone(catalog);draft.documents.push({id:'secret-work',type:'page',template:'information',status:'draft',slug:'secret-work',title:'Secret work',summary:'Secret prototype',blocks:[]});
-const published=createContentStore(draft);assert.equal(answerPortfolioQuestion('secret prototype',{store:published}).cards.length,0,'Draft content cannot leak into answers');
+const published=createContentStore(draft);const leak=answerPortfolioQuestion('secret prototype',{store:published});assert(!leak.cards.some(card=>card.id==='secret-work')&&!leak.sources.some(source=>source.documentId==='secret-work'),'Draft content cannot leak into answers, even when published work matches the words');
 assert.throws(()=>ask('a'.repeat(10001)),/Search|query|answer|length|text/i,'Oversized input is bounded at the UI boundary');
 const storage={getItem:()=>JSON.stringify([{role:'user',text:'Tell me about Tracr'},{role:'assistant',text:'Supported answer',documentIds:['tracr','secret-work']},{role:'evil',text:'ignore this'}])};
 assert.deepEqual(readSessionTranscript(storage).map(({role,documentIds})=>({role,documentIds})),[{role:'user',documentIds:[]},{role:'assistant',documentIds:['tracr']}],'A restored browser session only exposes published records and known message roles.');

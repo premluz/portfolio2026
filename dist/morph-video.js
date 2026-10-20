@@ -4,16 +4,26 @@ const GEOMETRY=['position','left','top','width','height','borderRadius','clipPat
 const BRIDGE_TIMEOUT_MS=400,BRIDGE_PRESENTED_FRAMES=2;
 
 const geometryOf=node=>Object.fromEntries(GEOMETRY.map(key=>[key,node?.style?.[key]||'']));
+const canMoveLive=(parent,node)=>typeof parent?.moveBefore==='function'&&parent.isConnected!==false&&node.isConnected!==false;
 
 /**
- * Chrome draws nothing for a <video> for a few frames after it is moved to a new parent, so the
- * still image under it shows through. A canvas, redrawn from the clip every frame, stands in at the
- * same place until the moved video has presented new frames in its new position.
- * Returns release(), called after the move.
+ * Moves the element before `reference` in `parent`. moveBefore keeps a playing <video> attached and
+ * painting through the move, so no stand-in is needed; elsewhere the move re-attaches it.
+ */
+function moveNode(parent,node,reference=null){
+ if(canMoveLive(parent,node)){parent.moveBefore(node,reference);return;}
+ parent.insertBefore(node,reference);
+}
+
+/**
+ * A re-attached <video> draws nothing for a few frames, so the still image under it shows through. A
+ * canvas, redrawn from the clip every frame, stands in until the moved video presents new frames. It is
+ * only a fallback: a canvas copy renders the clip's dark tones visibly darker than the video does, so
+ * where moveBefore keeps the video painting, no bridge is drawn. Returns release(), called after the move.
  */
 function bridgeFrame(video,visual,geometry,doc=document){
  const rect=video.getBoundingClientRect?.(),ratio=globalThis.devicePixelRatio||1;
- if(!visual||!rect?.width||!rect.height||!video.videoWidth)return {release(){},canvas:null};
+ if(!visual||canMoveLive(visual,video)||!rect?.width||!rect.height||!video.videoWidth)return {release(){},canvas:null};
  const canvas=doc.createElement('canvas'),context=canvas.getContext('2d');
  canvas.className='video-frame-bridge';canvas.setAttribute('aria-hidden','true');
  canvas.width=Math.round(rect.width*ratio);canvas.height=Math.round(rect.height*ratio);
@@ -41,7 +51,7 @@ export function carryVideo(video,picture,doc=document){
  const bridge=bridgeFrame(video,picture,geometryOf(picture.querySelector('img')),doc);
  preview?.release();
  picture.classList.add('video-preview-playing');
- video.replaceWith(placeholder);picture.append(video);
+ video.parentNode.insertBefore(placeholder,video);moveNode(picture,video);
  bridge.release();
  return {video,placeholder,css,home,preview,bridge:bridge.canvas};
 }
@@ -63,14 +73,14 @@ export function landVideo(carried,receiverVisual){
  const target=receiverVisual?.querySelector?.('video[data-video-url]');
  if(!target||target.dataset.videoUrl!==video.dataset.videoUrl){
   const bridge=bridgeFrame(video,placeholder.parentNode,home);
-  video.style.cssText=css;placeholder.replaceWith(video);preview?.adopt(video);bridge.release();return;
+  video.style.cssText=css;moveNode(placeholder.parentNode,video,placeholder);placeholder.remove();preview?.adopt(video);bridge.release();return;
  }
  const receiver=previewFor(target),targetCss=target.style.cssText;
  receiver?.release();
  receiverVisual.classList.add('video-preview-playing');
  const bridge=bridgeFrame(video,receiverVisual,geometryOf(target));
- target.replaceWith(video);video.style.cssText=targetCss;
- target.style.cssText=css;placeholder.replaceWith(target);
+ moveNode(target.parentNode,video,target);video.style.cssText=targetCss;
+ target.style.cssText=css;moveNode(placeholder.parentNode,target,placeholder);placeholder.remove();
  receiver?.adopt(video);preview?.adopt(target);
  bridge.release();
 }

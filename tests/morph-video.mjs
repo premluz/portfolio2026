@@ -4,7 +4,8 @@ import assert from 'node:assert/strict';
 class El{
  constructor(tag,attrs={}){this.tag=tag;this.children=[];this.parent=null;this.style={cssText:''};this.dataset={...attrs.dataset};this.paused=attrs.paused??true;this.classes=new Set();this.classList={add:(...n)=>n.forEach(x=>this.classes.add(x)),remove:(...n)=>n.forEach(x=>this.classes.delete(x)),contains:n=>this.classes.has(n)};this.listeners=new Map();}
  append(...nodes){for(const node of nodes){node.parent?.children.splice(node.parent.children.indexOf(node),1);node.parent=this;this.children.push(node);}}
- replaceWith(node){const list=this.parent.children,at=list.indexOf(this);node.parent?.children.splice(node.parent.children.indexOf(node),1);list.splice(at,1,node);node.parent=this.parent;this.parent=null;}
+ insertBefore(node,reference){node.parent?.children.splice(node.parent.children.indexOf(node),1);const at=reference?this.children.indexOf(reference):this.children.length;this.children.splice(at,0,node);node.parent=this;}
+ remove(){this.parent?.children.splice(this.parent.children.indexOf(this),1);this.parent=null;}
  querySelector(){return this.children.find(child=>child.tag==='video')||null;}
  querySelectorAll(){return this.children.filter(child=>child.tag==='video');}
  addEventListener(type,fn){this.listeners.set(type,fn);}removeEventListener(type){this.listeners.delete(type);}
@@ -49,6 +50,15 @@ for(const receiver of [null,frame('other.mp4').visual]){
  assert.equal(card.visual.children[0],card.video,'The clip returns to its own frame');assert.equal(card.video.style.cssText,'frame:a.mp4');assert.equal(card.preview.active,true,'Its player owns it again, still playing');
 }
 
+// Where moveBefore exists, every move uses it so the playing clip stays attached and needs no canvas copy.
+{
+ const moves=[];El.prototype.moveBefore=function(node,reference){moves.push(node.tag);this.insertBefore(node,reference);};
+ const card=frame('a.mp4',{playing:true}),detail=frame('a.mp4'),picture=new El('div'),carried=carryVideo(card.video,picture,doc);
+ landVideo(carried,detail.visual);delete El.prototype.moveBefore;
+ assert.deepEqual(moves,['video','video','video'],'The clip moves live into the picture and the detail, and the idle element goes home live');
+ assert.equal(detail.visual.children[0],card.video);assert.equal(card.visual.children.length,1,'No placeholder is left behind');
+}
+
 assert.equal(carryVideo(frame('a.mp4').video,new El('div'),doc),null,'A paused clip is not carried');
 assert.equal(carryVideo(null,new El('div'),doc),null);landVideo(null,null);
-console.log('Morph video passed: one playing element carried card → picture → detail, swapped frames, rounding, Escape and no-op cases.');
+console.log('Morph video passed: one playing element carried card → picture → detail, swapped frames, rounding, Escape, live moves and no-op cases.');

@@ -13,7 +13,7 @@ import {clearImageHandoffs} from '../dist/image-handoff.js';
 // race that midpoint-only morph tests could not exercise.
 const app=await readFile(new URL('../dist/app.js',import.meta.url),'utf8');
 const extract=(from,to)=>app.slice(app.indexOf(from),app.indexOf(to));
-const code={galleryOriginTarget:extract('function galleryOriginTarget(','function syncGalleryOrigin('),syncGalleryOrigin:extract('function syncGalleryOrigin(','function disposeGalleryOrigin('),syncDockActions:extract('function syncDockActions(','installHoverTrail('),cleanup:extract('function cleanup()','function render('),render:extract('function render(','function syncRouteChrome('),scrollPage:extract('function scrollPage(','function navigateAssistant('),navigate:extract('async function navigate()','function homeScrollMotion('),pushCards:extract('function pushCards(','async function slideCards(')};
+const code={galleryOriginTarget:extract('function galleryOriginTarget(','function syncGalleryOrigin('),syncGalleryOrigin:extract('function syncGalleryOrigin(','function disposeGalleryOrigin('),syncDockActions:extract('function syncDockActions(','installHoverTrail('),cleanup:extract('function cleanup()','function render('),render:extract('function render(','function syncRouteChrome('),scrollPage:extract('function scrollPage(','function navigateAssistant('),navigate:extract('async function runNavigation()','function homeScrollMotion('),pushCards:extract('function pushCards(','async function slideCards(')};
 const compile=text=>new Function('env','args',`with(env){return (${text}).apply(null,args);}`);
 class Style{
  get cssText(){return Object.entries(this).map(([key,value])=>`${key}:${value}`).join(';');}
