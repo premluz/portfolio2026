@@ -7,11 +7,11 @@ export function carouselVisibility(rect,{top=0,bottom}={}){
  const visible=Math.max(0,Math.min(rect.bottom,bottom)-Math.max(rect.top,top));
  return rect.height>0&&visible>=Math.min(rect.height,bottom-top)*.3?visible/Math.min(rect.height,bottom-top):0;
 }
-export function contextualActions({project=null,carousel=null,section=null,back=false,fullScreen=true}={}){
+export function contextualActions({route='',project=null,carousel=null,section=null,back=false,fullScreen=true}={}){
  if(section?.kind==='testimonials')return [{id:'testimonials-linkedin',group:'testimonials',label:'View on LinkedIn',text:true,href:section.href,external:true}];
- if(section?.kind==='about')return [{id:'about-me',group:'about-me',label:'About me',text:true,href:'#about'}];
  if(section?.kind==='footer')return [{id:'contact-linkedin',group:'contact-linkedin',label:'LinkedIn',tooltip:'LinkedIn',href:section.linkedin,external:true},{id:'contact-email',group:'contact-email',label:'Copy email',tooltip:'Copy email'}];
- if(project)return [{id:'back',group:'back',label:'Go Back',tooltip:'Go Back [Esc]',text:true},...(project.prototype?.url?[{id:'prototype',group:'prototype',label:'View prototype',compactLabel:'Prototype',text:true}]:[]),...(fullScreen?[{id:'fullscreen',group:'fullscreen',label:'Full screen',tooltip:'Full screen'}]:[]),{id:'previous',group:'navigation',label:'Previous project',tooltip:'[←] Previous'},{id:'next',group:'navigation',label:'Next project',tooltip:'Next [→]'}];
+ if(section?.kind==='about'||route==='about')return [{id:'about-me',group:'about-me',label:route==='about'?'Go Back':'About me',text:true,href:route==='about'?'#work':'#about'}];
+ if(project)return [{id:'back',group:'back',label:'Go Back',tooltip:'Go Back [Esc]',text:true},...(project.prototype?.url?[{id:'prototype',group:'prototype',label:'View prototype',compactLabel:'Prototype',text:true}]:[]),...(project.watchPrototype?.url?[{id:'watch-prototype',group:'prototype',label:project.watchPrototype.label||'Watch prototype',text:true}]:[]),...(fullScreen?[{id:'fullscreen',group:'fullscreen',label:'Full screen',tooltip:'Full screen'}]:[]),{id:'previous',group:'navigation',label:'Previous project',tooltip:'[←] Previous'},{id:'next',group:'navigation',label:'Next project',tooltip:'Next [→]'}];
  if(carousel)return [{id:'view',group:'primary',label:'View project',text:true},{id:'previous',group:'navigation',label:'Previous card',tooltip:'[←] Previous'},{id:'next',group:'navigation',label:'Next card',tooltip:'Next [→]'}];
  return back?[{id:'back',group:'back',label:'Go Back',tooltip:'Go Back [Esc]',text:true}]:[];
 }
@@ -38,7 +38,7 @@ export class ComposerContext {
   if(this.focused&&scene.route!=='assistant'||this.blocked||this.dock.focusTarget)return null;
   if(!this.dock.el.classList.contains('is-composer')&&this.mode==='inline'){
    if(!scene.project)return null;
-   const actions=contextualActions(scene).filter(action=>action.id==='prototype'||action.id==='fullscreen');if(!actions.length)return null;
+   const actions=contextualActions(scene).filter(action=>['prototype','watch-prototype','fullscreen'].includes(action.id));if(!actions.length)return null;
    return {...scene,actions,key:JSON.stringify(actions.map(action=>[action.id,action.group]))};
   }
   if(this.dock.position>.001)return null;

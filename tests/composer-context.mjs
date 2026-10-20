@@ -7,6 +7,7 @@ import {dockGeometry} from '../dist/dock-morph.js';
 assert.equal(readContextualButtons({getItem:()=>null}),'inline');assert.equal(readContextualButtons({getItem:()=> 'composer'}),'composer');assert.equal(readContextualButtons({getItem(){throw Error();}}),'inline');
 assert.deepEqual(contextualActions({project:{prototype:{url:'https://example.com'}}}).map(item=>item.id),['back','prototype','fullscreen','previous','next']);
 assert.deepEqual(contextualActions({project:{},fullScreen:false}).map(item=>item.id),['back','previous','next']);assert.deepEqual(contextualActions({back:true}).map(item=>item.id),['back'],'Go Back is the first action above the composer');
+assert.deepEqual(contextualActions({route:'about'}),[{id:'about-me',group:'about-me',label:'Go Back',text:true,href:'#work'}],'About keeps the same text action as its return control');
 assert.equal(carouselVisibility({top:100,bottom:500,height:400},{bottom:700}),1);assert.equal(carouselVisibility({top:-390,bottom:10,height:400},{bottom:700}),0);assert.equal(carouselVisibility({top:0,bottom:400,height:400},{bottom:0}),0);
 let now=0,id=0,reduced=false,rowHeight=48;const frames=new Map(),listeners=new Map();
 globalThis.performance={now:()=>now};globalThis.requestAnimationFrame=fn=>{frames.set(++id,fn);return id;};globalThis.cancelAnimationFrame=id=>frames.delete(id);
@@ -72,6 +73,10 @@ scene={route:'work',contextSections:[{kind:'footer',root:{...testimonialRoot,get
 assert.equal(accessory.height,rowHeight,'Switching to mobile footer icons updates the glass height');
 assert.equal(accessory.radius,rowHeight/2,'The footer glass does not retain the previous row radius');
 const footerSections=scene.contextSections,contactWidth=accessory.width;rowHeight=48;
+const aboutRoot={isConnected:true,closest:()=>null,getBoundingClientRect:()=>({top:100,bottom:500,height:400})};
+scene={route:'work',contextSections:[{kind:'about',root:aboutRoot}]};context.refresh();finish();const aboutButton=context.actions.items.get('about-me').button;assert.equal(aboutButton.textContent,'About me');assert.equal(aboutButton.href,'#about');
+scene={route:'about',contextSections:[]};context.refresh();finish();assert.equal(context.actions.items.get('about-me').button,aboutButton,'About changes into its back action without replacing the button');assert.equal(aboutButton.textContent,'Go Back');assert.equal(aboutButton.href,'#work');
+scene={route:'work',contextSections:[{kind:'about',root:aboutRoot}]};context.refresh();finish();assert.equal(context.actions.items.get('about-me').button,aboutButton,'Returning home morphs the same About control back');assert.equal(aboutButton.textContent,'About me');assert.equal(aboutButton.href,'#about');
 for(const viewport of [390,1440]){
  globalThis.innerWidth=viewport;dock.metrics.main=Math.min(520,viewport-32);
  scene={route:'one',project:{id:'one',prototype:{url:'https://example.com/prototype'}},contextSections:[]};context.setSplitProjectControls(true);finish();assert.equal(parseFloat(context.row.style.width),dock.metrics.main);

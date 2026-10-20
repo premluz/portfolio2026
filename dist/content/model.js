@@ -12,7 +12,7 @@ const surface={type:'array',items:{type:'string',pattern:'^#[0-9a-fA-F]{6}$'},mi
 const blockBase={id,title:short,label:short,layout:object({columns:{enum:[1,2]},mediaFit:{enum:['max-side','contain','full-bleed']},span:{type:'integer',minimum:1,maximum:4}}),appearance:object({surface}),evidenceIds:strings};
 const common={id,status:{enum:['published','draft','archived']},slug:id,title:{...short,minLength:1},summary:text,name:short,aliases:strings,domains:strings,capabilities:strings,tags:strings,category:short,revision:{type:'integer',minimum:1},updatedAt:{type:'string'},links:list(link),evidence:list(ref('evidence')),blocks:{...list(ref('block')),maxItems:CONTENT_LIMITS.blocks}};
 export const documentTypeDefinitions=Object.freeze({
- 'portfolio-item':{label:'Portfolio item',properties:{prototype:object({url:short,label:short}),client:short,kind:{enum:['shipped','lab']},featured:{type:'boolean'},listOnly:{type:'boolean'},pageTitle:short,intro:text,context:text,challenge:text,role:text,highlights:text,keyWork:text,impact:text,heroMediaId:id,hoverVideoId:id},required:['slug','name','kind','context','role','keyWork']},
+ 'portfolio-item':{label:'Portfolio item',properties:{prototype:object({url:short,label:short}),watchPrototype:object({url:short,label:short},['url','label']),qrCodeMediaId:id,qrCodeLabel:short,client:short,kind:{enum:['shipped','lab']},featured:{type:'boolean'},listOnly:{type:'boolean'},pageTitle:short,intro:text,context:text,challenge:text,role:text,highlights:text,keyWork:text,impact:text,heroMediaId:id,hoverVideoId:id},required:['slug','name','kind','context','role','keyWork']},
  page:{label:'Page',properties:{template:{enum:['home','information']}},required:['slug']},
  news:{label:'News',properties:{publishedAt:short},required:['slug']},
  component:{label:'Reusable component',properties:{}}
@@ -91,8 +91,9 @@ function validateCatalog(catalog,model){
   const evidence=new Set(),blockIds=new Set(),edges=[];inlineEdges.set(d.id,edges);
   for(const e of d.evidence||[]){if(evidence.has(e.id))issues.push(d.id+' has duplicate evidence ID '+e.id);evidence.add(e.id);if(e.provenance.source)visitLink(e.provenance.source,d.id+' evidence '+e.id);}
   if(d.prototype?.url){visitLink({url:d.prototype.url},d.id+' prototype');if(!/^https?:\/\//.test(d.prototype.url))issues.push(d.id+' prototype requires an HTTP(S) URL');}
+  if(d.watchPrototype?.url){visitLink({url:d.watchPrototype.url},d.id+' watch prototype');if(!/^https?:\/\//.test(d.watchPrototype.url))issues.push(d.id+' watch prototype requires an HTTP(S) URL');}
   const linkIds=new Set();for(const l of d.links||[]){if(linkIds.has(l.id))issues.push(d.id+' has duplicate link ID '+l.id);linkIds.add(l.id);visitLink(l,d.id+' link '+l.id);}
-  for(const [field,type] of [['heroMediaId','image'],['hoverVideoId','video']])if(d[field]){const a=assets.get(d[field]);related(d,a,'asset',d.id+'.'+field);if(a&&a.type!==type)issues.push(d.id+'.'+field+' requires '+type);}
+  for(const [field,type] of [['heroMediaId','image'],['hoverVideoId','video'],['qrCodeMediaId','image']])if(d[field]){const a=assets.get(d[field]);related(d,a,'asset',d.id+'.'+field);if(a&&a.type!==type)issues.push(d.id+'.'+field+' requires '+type);}
   let count=0;
   try{walkBlocks(d.blocks,b=>{
    count++;if(blockIds.has(b.id))issues.push(d.id+' has duplicate block ID '+b.id);blockIds.add(b.id);

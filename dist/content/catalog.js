@@ -525,10 +525,12 @@ export const catalog={
           }
         }
       ],
-      "prototype": {
-        "label": "View prototype",
-        "url": "https://bastion-ruddy.vercel.app/"
-      }
+      "watchPrototype": {
+        "label": "Watch prototype",
+        "url": "https://www.youtube.com/watch?v=ipIZ0LvNj7c"
+      },
+      "qrCodeMediaId": "bastion-qr",
+      "qrCodeLabel": "TestFlight (iOS)"
     },
     {
       "id": "porter",
@@ -598,7 +600,7 @@ export const catalog={
       "slug": "about",
       "title": "Hello, I'm Prem",
       "name": "About",
-      "summary": "Product designer with a technical background, 10+ years across Web3, DeFi, blockchain, IoT & Telco, 0→1 through growth and scale.",
+      "summary": "Product designer with a technical and entrepreneurial background, 10+ years across Web3, DeFi, blockchain, IoT & Telco, 0→1 through growth and scale.",
       "category": "Prem / Designer + creative technologist",
       "aliases": [],
       "domains": [],
@@ -1662,6 +1664,15 @@ export const catalog={
       "alt": "Bastion AI wallet prototype with a persistent assistant and financial interface",
       "width": 1440,
       "height": 900
+    },
+    {
+      "id": "bastion-qr",
+      "type": "image",
+      "status": "published",
+      "url": "assets/bastion.svg",
+      "alt": "QR code to install Bastion on TestFlight",
+      "width": 420,
+      "height": 420
     },
     {
       "id": "bastion-walkthrough",

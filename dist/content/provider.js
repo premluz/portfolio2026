@@ -34,10 +34,10 @@ export function createContentStore(catalog,{model=contentModel,includeUnpublishe
  };
  const card=documentId=>{
   const d=documents.get(documentId);if(!d||!(d.type==='portfolio-item'||d.type==='page'&&d.template==='information'))return null;
-  const p=presentations.get(d.id),image=assets.get(d.heroMediaId),video=assets.get(d.hoverVideoId);
+  const p=presentations.get(d.id),image=assets.get(d.heroMediaId),video=assets.get(d.hoverVideoId),qrCode=assets.get(d.qrCodeMediaId);
   const shared={id:d.id,documentId:d.id,title:d.title,name:d.name||d.title,summary:d.summary||'',category:d.category||'',bg:gradient(p?.card.surface||['#ececf0','#ececf0']),blocks:d.blocks,contentColumns:p?.detail.columns||2};
   if(d.type==='page'){const lead=d.blocks.find(b=>b.type==='text');return freeze({...shared,_type:'information',body:lead?.paragraphs||[d.summary||''],blocks:d.blocks.filter(b=>b!==lead),link:d.links?.[0]});}
-  return freeze({...shared,_type:'portfolio',client:d.client||'',prototype:d.prototype||{},featured:d.featured===true,listOnly:d.listOnly===true,projectKind:d.kind,commandAliases:d.aliases||[],pageTitle:d.pageTitle||d.title,intro:d.intro||'',context:d.context,challenge:d.challenge||'',role:d.role,results:d.highlights||'',work:d.keyWork,impact:d.impact||'',image:image?.url,imageAlt:image?.alt,videoUrl:video?.url,cardAspect:p?.card.orientation||'landscape'});
+  return freeze({...shared,_type:'portfolio',client:d.client||'',prototype:d.prototype||{},watchPrototype:d.watchPrototype,qrCodeUrl:qrCode?.url,qrCodeAlt:qrCode?.alt,qrCodeLabel:d.qrCodeLabel||'',featured:d.featured===true,listOnly:d.listOnly===true,projectKind:d.kind,commandAliases:d.aliases||[],pageTitle:d.pageTitle||d.title,intro:d.intro||'',context:d.context,challenge:d.challenge||'',role:d.role,results:d.highlights||'',work:d.keyWork,impact:d.impact||'',image:image?.url,imageAlt:image?.alt,videoUrl:video?.url,cardAspect:p?.card.orientation||'landscape'});
  };
  const texts=new Map(snapshot.documents.map(d=>{
   const body=[];walkBlocks(d.blocks,b=>body.push(b.title||'',b.label||'',...(b.paragraphs||[]),b.caption||'',b.text||'',b.description||'',b.value||''));

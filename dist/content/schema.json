@@ -464,6 +464,33 @@
           "required": [],
           "additionalProperties": false
         },
+        "watchPrototype": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "label": {
+              "type": "string",
+              "maxLength": 500
+            }
+          },
+          "required": [
+            "url",
+            "label"
+          ],
+          "additionalProperties": false
+        },
+        "qrCodeMediaId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "maxLength": 120
+        },
+        "qrCodeLabel": {
+          "type": "string",
+          "maxLength": 500
+        },
         "client": {
           "type": "string",
           "maxLength": 500
