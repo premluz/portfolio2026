@@ -1283,7 +1283,7 @@ export const catalog={
           "type": "info-card",
           "title": "Rios",
           "paragraphs": [
-            "A life-first planner I designed and built to bring tasks, habits and time together, with room for plans to change."
+            "A life-first planner turning your day into a canvas, so changing plans takes seconds."
           ],
           "link": {
             "id": "rios-site",
@@ -1316,6 +1316,14 @@ export const catalog={
             "label": "Bastion",
             "url": "https://www.youtube.com/watch?v=ipIZ0LvNj7c"
           }
+        },
+        {
+          "id": "projects-list",
+          "type": "info-card",
+          "title": "products for technical users and creators",
+          "paragraphs": [
+            "PlayStation Content Pipeline, Vodafone IoT connetivity, Tracr blockchain traceability platform, Gala Film, Gala Music - Web3 platforms"
+          ]
         },
         {
           "id": "ai-native",

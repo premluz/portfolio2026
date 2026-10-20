@@ -27,13 +27,27 @@ function group(parts,partsBlend,blend,inMotion){
  return {x:left,y:top,width,height,parts,partsBlend,blend:Math.min(blend,SIZE_BLEND_RATIO*Math.min(...parts.map(part=>Math.min(part.width,part.height)))),moving:inMotion};
 }
 
+// Each split piece is a full pill, so two pieces meeting leave a waist the blend cannot fill. A flat bridge
+// between neighbours on the same row fills it as they close (full height once nearly closed), so a
+// re-joining pill is one smooth pill long before the split settles, and an opening one pinches apart.
+const BRIDGE_UNTIL=.6;
+function seamBridges(parts,progress){
+ const height=1-smooth(0,BRIDGE_UNTIL,progress);if(height<=0)return [];
+ return parts.slice(1).flatMap((part,index)=>{
+  const previous=parts[index];if(Math.abs(part.y-previous.y)>.5)return [];
+  const left=previous.x+previous.width/2,right=part.x+part.width/2,full=Math.min(previous.height,part.height),bridge=full*height;
+  return right>left?[rect(left,previous.y+(full-bridge)/2,right-left,bridge,0)]:[];
+ });
+}
+
 function branchShapes(branch,{radius=24,position=0,split=0,height:fullHeight=branch?.height},liquid){
  if(!branch||branch.height<=.5||branch.width<=.5)return [];
  const opening=liquidBlend(position,liquid),progress=clamp(split)*smooth(.94,1,position),inMotion=moving(position);
  const grown=fullHeight?branch.height/fullHeight:1;
  if(!branch.segments?.length)return [rect(branch.left,branch.top,branch.width,branch.height,radius,opening,inMotion,grown)];
  const parts=branch.segments.map(segment=>rect(segment.left,segment.top??branch.top,segment.width,segment.height??branch.height,radius));
- return [group(parts,splitBlend(progress,liquid),opening,inMotion||progress>0&&progress<1)];
+ // The pieces' blend fades as the bridge takes over, so the closing union is a plain pill, not a lumpy one.
+ return [group([...parts,...seamBridges(parts,progress)],splitBlend(progress,liquid)*smooth(0,BRIDGE_UNTIL,progress),opening,inMotion||progress>0&&progress<1)];
 }
 
 /** The dock's pieces, main pill first; each later piece fuses into the union with its own blend. */
