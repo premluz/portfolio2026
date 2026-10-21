@@ -116,7 +116,7 @@ export class ImageFrame {
   const src=this.img.dataset?.originalImage||this.img.currentSrc||this.img.src;
   this.sourceCorners={radius:sourceCornerRadius(src),width:declaredWidth||width};this.sourceInset=sourceEdgeInset(src);
   // Copy placed under the frame sets this, so a letterboxed image sits on the copy instead of floating above it.
-  const blockAlign=getComputedStyle(this.el).getPropertyValue('--image-block-align').trim()==='end'?'end':'center';
+  const blockAlign=this.blockAlign=getComputedStyle(this.el).getPropertyValue('--image-block-align').trim()==='end'?'end':'center';
   const rect=imageGeometry(this.el.clientWidth,this.el.clientHeight,this.ratio,this.radius,this.padding,this.sourceCorners,1,this.maxWidth,this.maxHeight,this.align,blockAlign);
   if(this.thumbnail)rect.radius=thumbnailImageRadius(this.radius,rect,this.card.dataset.cardOrientation,this.sourceCorners);
   const geometry={position:'absolute',width:rect.width+'px',height:rect.height+'px',left:rect.left+'px',top:rect.top+'px',borderRadius:rect.radius+'px'};

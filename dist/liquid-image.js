@@ -132,7 +132,7 @@ export class LiquidImage {
   gl.useProgram(this.program);
   // UVs span more than the texture on the letterboxed axis. Scaling them
   // below one zooms into the texture and squashes it into the whole frame.
-  const bounds=imageGeometry(this.renderW,this.renderH,this.ratio,this.imageFrame?.radius,this.imageFrame?.padding,this.imageFrame?.sourceCorners,1,this.imageFrame?.maxWidth||Infinity,this.imageFrame?.maxHeight||Infinity,this.imageFrame?.align||'center');
+  const bounds=imageGeometry(this.renderW,this.renderH,this.ratio,this.imageFrame?.radius,this.imageFrame?.padding,this.imageFrame?.sourceCorners,1,this.imageFrame?.maxWidth||Infinity,this.imageFrame?.maxHeight||Infinity,this.imageFrame?.align||'center',this.imageFrame?.blockAlign||'center');
   gl.uniform2f(this.uniforms.fit,Math.max(1,this.renderW/bounds.width),Math.max(1,this.renderH/bounds.height));
   gl.uniform2f(this.uniforms.imageCenter,(bounds.left+bounds.width/2)/Math.max(1,this.renderW),(bounds.top+bounds.height/2)/Math.max(1,this.renderH));
   gl.uniform2f(this.uniforms.imageSize,bounds.width,bounds.height);gl.uniform1f(this.uniforms.cornerRadius,bounds.radius);

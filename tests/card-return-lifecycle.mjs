@@ -83,6 +83,11 @@ for(const reverseClose of [false,true]){
  assert.equal(f.homesBuilt,1,'The completed open → close cycle never rebuilds the grid');assert.equal(f.detailsBuilt,1);assert.deepEqual(f.main.querySelectorAll('[data-card]'),originals);assert.deepEqual(e.instances,images);assert(images.every(image=>!image.dead&&!image.suspended));assert.equal(e.homeLayout,layout);assert(!e.homeScene);
  assert.equal(f.morphs.at(-1).target,originals[0]);assert.equal(e.current,'work');assert.equal(e.busy,false);
 }
+// A project reached by link or refresh has no home card to morph into, so it leaves with the page fade instead.
+{
+ const f=fixture(),e=f.env;let fades=0;e.returnHomeWithoutOrigin=async()=>{fades++;};e.recoverNavigation=error=>{throw error;};
+ e.render('one');e.current='one';e.location.hash='#one';const morphs=f.morphs.length;e.location.hash='#work';await e.navigate();assert.equal(fades,1,'Direct project return uses the fade fallback');assert.equal(f.morphs.length,morphs,'No morph aims at a missing home card');
+}
 // Navigating to another project still returns into that original grid card.
 {
  const f=fixture(),e=f.env;e.render('work');const original=f.main.querySelector('[data-card="two"]');f.main.querySelectorAll('[data-card]').forEach(card=>card.visual.img.naturalWidth=1000);

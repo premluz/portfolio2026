@@ -226,6 +226,7 @@ body.edge-shade-top .page-edge-shades .top,body.edge-shade-bottom .page-edge-sha
 /* Fit source imagery inside its visual frame without cropping or changing its ratio. */
 .visual{background:transparent}
 .visual img,.flow-picture img{object-fit:contain;object-position:center}
+.flow-picture[data-block-align="end"] img{object-position:center bottom}
 .flow-picture.visual{background:transparent}
 .visual canvas,.flow-picture canvas{object-fit:fill}
 

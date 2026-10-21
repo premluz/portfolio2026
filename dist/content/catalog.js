@@ -783,6 +783,18 @@ export const catalog={
           },
           "items": [
             {
+              "id": "home-project-merlin",
+              "type": "reference",
+              "documentId": "merlin",
+              "presentation": "card"
+            },
+            {
+              "id": "home-project-porter",
+              "type": "reference",
+              "documentId": "porter",
+              "presentation": "card"
+            },
+            {
               "id": "home-project-tracr",
               "type": "reference",
               "documentId": "tracr",
@@ -816,18 +828,6 @@ export const catalog={
               "id": "home-project-bastion",
               "type": "reference",
               "documentId": "bastion",
-              "presentation": "card"
-            },
-            {
-              "id": "home-project-merlin",
-              "type": "reference",
-              "documentId": "merlin",
-              "presentation": "card"
-            },
-            {
-              "id": "home-project-porter",
-              "type": "reference",
-              "documentId": "porter",
               "presentation": "card"
             }
           ],
@@ -1322,7 +1322,7 @@ export const catalog={
           "type": "info-card",
           "title": "products for technical users and creators",
           "paragraphs": [
-            "PlayStation Content Pipeline, Vodafone IoT connetivity, Tracr blockchain traceability platform, Gala Film, Gala Music - Web3 platforms"
+            "PlayStation - Content Pipeline Vodafone IoT connectivity, Tracr blockchain traceability, Gala Film, Gala Music, Gala DeFi - Web3 platforms"
           ]
         },
         {
