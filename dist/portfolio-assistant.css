@@ -57,7 +57,7 @@
 .project-menu-client{flex:0 0 auto;color:inherit}
 .project-menu-title{min-width:0;overflow:hidden;text-overflow:ellipsis}
 
-.project-menu-client{text-align:right;margin-left:auto}
+.project-menu-client{text-align:left}
 #dock .project-menu-group+.project-menu-group{margin-top:0}
 
 /* Suggestions start at the full dock's left edge, including contextual controls. */

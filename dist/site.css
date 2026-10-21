@@ -336,6 +336,7 @@ main{position:relative;z-index:1}.material-wake{z-index:0}
 body{background:var(--page);color:var(--ink)}header{position:relative;z-index:2}.room-backdrop{position:fixed;inset:0;z-index:0;background-size:cover;background-position:center;pointer-events:none}.room-shade{position:fixed;inset:0;z-index:0;background:rgba(0,0,0,var(--room-shade));pointer-events:none;display:none}.has-room .room-shade{display:block}
 header .theme-toggle{margin-left:auto;padding:10px 16px;border-radius:18px;background:var(--chrome);font-size:13px}#settingsToggle{margin-left:0;color:var(--ink)}
 .has-room .liquid-skin,.has-room .flow-material{backdrop-filter:blur(var(--room-blur)) saturate(1.12);-webkit-backdrop-filter:blur(var(--room-blur)) saturate(1.12)}
+:root[data-room-blur="off"] .has-room :is(.liquid-skin,.flow-material,.home-hero){backdrop-filter:none;-webkit-backdrop-filter:none}
 .has-room .surface h1,.has-room .surface h2,.has-room .surface p,.has-room .description{color:var(--ink);text-shadow:var(--text-shadow)}
 [data-theme=dark] .discipline,[data-theme=dark] .eyebrow,[data-theme=dark] .card-bottom,[data-theme=dark] .intro p,[data-theme=dark] .description dt,[data-theme=dark] .detail-footer,[data-theme=dark] .story p,[data-theme=dark] .simple p,[data-theme=dark] .footer-note{color:var(--muted)}
 .has-room .discipline,.has-room .intro p,.has-room .footer-note,.has-room .detail-footer{color:var(--ink);text-shadow:var(--text-shadow)}
@@ -1401,7 +1402,7 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 .home-product-carousel .spatial-card-gallery[data-card-copy-position="bottom"]>.spatial-gallery-stage{order:0}
 .home-product-carousel .spatial-card-gallery[data-card-copy-position="bottom"]>.spatial-gallery-caption{order:1}
 .home-product-carousel .spatial-card-gallery[data-description-in-card="true"] .spatial-gallery-item[data-gallery-media="true"] .project-card{position:relative;display:flex;flex-direction:column;height:auto;min-height:0;overflow:visible}
-.home-product-carousel .spatial-card-gallery[data-description-in-card="true"] .spatial-gallery-item[data-gallery-media="true"] .project-card>.visual{position:relative;inset:auto;order:0;flex:none;height:calc(var(--gallery-card-height) - var(--card-padding-top) - var(--card-padding-bottom))!important;margin:0}
+.home-product-carousel .spatial-card-gallery[data-description-in-card="true"] .spatial-gallery-item[data-gallery-media="true"] .project-card>.visual{--image-block-align:end;position:relative;inset:auto;order:0;flex:none;height:calc(var(--gallery-card-height) - var(--card-padding-top) - var(--card-padding-bottom))!important;margin:0}
 .home-product-carousel .spatial-card-gallery[data-description-in-card="true"] .spatial-gallery-item[data-gallery-media="true"] .project-card>.card-copy{position:relative;inset:auto;order:1;flex:none;width:100%;max-width:none;margin:var(--space-text-media) 0 0;color:var(--ink);text-shadow:none}
 .spatial-gallery-pose .visual{--image-padding-top:0px!important;--image-padding-right:0px!important;--image-padding-bottom:0px!important;--image-padding-left:0px!important;width:100%!important;height:100%!important;min-height:0;margin:0!important;aspect-ratio:auto!important}
 .spatial-gallery-pose .visual img{object-fit:contain;max-width:100%;max-height:100%}
@@ -1675,7 +1676,7 @@ body:has(.home-carousel-active){overflow-x:clip}
 .project-menu-client{flex:0 0 auto;color:inherit}
 .project-menu-title{min-width:0;overflow:hidden;text-overflow:ellipsis}
 
-.project-menu-client{text-align:right;margin-left:auto}
+.project-menu-client{text-align:left}
 #dock .project-menu-group+.project-menu-group{margin-top:0}
 
 /* Suggestions start at the full dock's left edge, including contextual controls. */
@@ -1806,7 +1807,7 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 #dock{--composer-control-inset:max(0px,calc((var(--nav-height) - var(--nav-icon-size)) / 2))}
 #dock .project-menu{--menu-inset:24px;--menu-section-gap:24px;padding:0}
 #dock .project-menu-projects{padding:var(--menu-inset) calc(var(--menu-inset) / 2) 0}
-#dock .project-menu-projects [data-project-menu-item]{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding-inline:calc(var(--menu-inset) / 2);min-height:var(--touch-icon-size)}
+#dock .project-menu-projects [data-project-menu-item]{display:flex;align-items:center;justify-content:flex-start;gap:var(--space-2);padding-inline:calc(var(--menu-inset) / 2);min-height:var(--touch-icon-size)}
 #dock .project-menu-actions{position:relative;left:auto;top:auto;width:100%;height:auto;display:flex;align-items:center;flex-wrap:wrap;justify-content:space-between;gap:20px 16px;padding:var(--menu-section-gap) var(--menu-inset) var(--menu-inset);margin-top:0;background:transparent;transform:none;clip-path:none}
 #dock .project-menu::before{left:calc(var(--menu-inset) / 2);right:calc(var(--menu-inset) / 2)}
 #dock .project-menu-actions>div{display:flex;align-items:center;gap:10px}
@@ -1928,10 +1929,10 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 
 #composerStatusStack #interactionHud:not(:has(.input-status:not([hidden]))){display:none}
 /* Semantic feedback overlays the existing glass, retaining its blur and text. */
-:root{--status-error-accent:oklch(.65 .16 25);--status-success-accent:oklch(.69 .12 155);--status-error-tint:oklch(.65 .16 25 / .32);--status-success-tint:oklch(.69 .14 155 / .29)}
-#composerStatusStack :is([data-status-tone="error"],.input-status[data-phase="error"]){--status-tint:var(--status-error-tint);--status-accent:var(--status-error-accent)}
-#composerStatusStack :is([data-status-tone="success"],.input-status[data-phase="acting"]){--status-tint:var(--status-success-tint);--status-accent:var(--status-success-accent)}
-#composerStatusStack :is([data-status-tone="error"],[data-status-tone="success"],.input-status[data-phase="error"],.input-status[data-phase="acting"]){background:linear-gradient(var(--status-tint),var(--status-tint)),linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));border-color:color-mix(in oklch,var(--status-accent) 24%,var(--dock-outline))}
+:root{--status-error-accent:oklch(.65 .16 25);--status-success-accent:oklch(.69 .12 155);--status-error-tint:oklch(.65 .16 25 / .08);--status-success-tint:oklch(.69 .14 155 / .08);--status-error-glow:oklch(.65 .16 25 / .5);--status-success-glow:oklch(.69 .14 155 / .5);--status-glow-blur:16px;--status-glow-spread:1px;--status-border-strength:9%}
+#composerStatusStack :is([data-status-tone="error"],.input-status[data-phase="error"]){--status-tint:var(--status-error-tint);--status-accent:var(--status-error-accent);--status-glow:var(--status-error-glow)}
+#composerStatusStack :is([data-status-tone="success"],.input-status[data-phase="acting"]){--status-tint:var(--status-success-tint);--status-accent:var(--status-success-accent);--status-glow:var(--status-success-glow)}
+#composerStatusStack :is([data-status-tone="error"],[data-status-tone="success"],.input-status[data-phase="error"],.input-status[data-phase="acting"]){background:linear-gradient(var(--status-tint),var(--status-tint)),linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));border-color:color-mix(in oklch,var(--status-accent) var(--status-border-strength),var(--dock-outline));box-shadow:inset 0 0 var(--status-glow-blur) var(--status-glow-spread) var(--status-glow),inset 0 1px 0 var(--nav-highlight),0 4px 24px var(--nav-shadow)}
 
 /* contextual-popovers.css */
 .context-marker{display:inline;margin:0;padding:0;border:0;background:transparent;color:inherit;font:inherit;line-height:inherit;letter-spacing:inherit;text-align:inherit;white-space:normal;cursor:pointer}

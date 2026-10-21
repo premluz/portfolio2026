@@ -36,7 +36,7 @@ export function readFrameRadius(el){
  const radius=parseFloat(getComputedStyle(el).borderTopLeftRadius);
  return Number.isFinite(radius)?Math.max(0,radius):24;
 }
-export function imageGeometry(width,height,ratio,radius=24,padding={},sourceCorners=null,sizeLimit=1,maxWidthLimit=Infinity,maxHeightLimit=Infinity,align='center'){
+export function imageGeometry(width,height,ratio,radius=24,padding={},sourceCorners=null,sizeLimit=1,maxWidthLimit=Infinity,maxHeightLimit=Infinity,align='center',blockAlign='center'){
  // Clamp opposing insets together, keeping a usable frame at narrow sizes.
  const horizontal=Math.min(1,Math.max(0,width-1)/Math.max(1,(padding.left||0)+(padding.right||0)));
  const vertical=Math.min(1,Math.max(0,height-1)/Math.max(1,(padding.top||0)+(padding.bottom||0)));
@@ -50,7 +50,7 @@ export function imageGeometry(width,height,ratio,radius=24,padding={},sourceCorn
  const maxHeight=widthCapped?Math.min(availableHeight,maxHeightLimit):availableHeight*scale;
  const imageWidth=Math.min(maxWidth,maxHeight*ratio),imageHeight=imageWidth/ratio;
  const sourceRadius=sourceCorners?.width>0?sourceCorners.radius*imageWidth/sourceCorners.width:0;
- return {width:imageWidth,height:imageHeight,left:left+(align==='start'?0:(availableWidth-imageWidth)/2),top:top+(availableHeight-imageHeight)/2,radius:Math.min(imageWidth/2,imageHeight/2,Math.max(0,radius,sourceRadius))};
+ return {width:imageWidth,height:imageHeight,left:left+(align==='start'?0:(availableWidth-imageWidth)/2),top:top+(availableHeight-imageHeight)*(blockAlign==='end'?1:.5),radius:Math.min(imageWidth/2,imageHeight/2,Math.max(0,radius,sourceRadius))};
 }
 export function readImagePadding(el){const style=getComputedStyle(el);return Object.fromEntries(['top','right','bottom','left'].map(side=>[side,Math.max(0,parseFloat(style.getPropertyValue('--image-padding-'+side))||0)]));}
 export function updateImageShade(el){
@@ -115,7 +115,9 @@ export class ImageFrame {
   }
   const src=this.img.dataset?.originalImage||this.img.currentSrc||this.img.src;
   this.sourceCorners={radius:sourceCornerRadius(src),width:declaredWidth||width};this.sourceInset=sourceEdgeInset(src);
-  const rect=imageGeometry(this.el.clientWidth,this.el.clientHeight,this.ratio,this.radius,this.padding,this.sourceCorners,1,this.maxWidth,this.maxHeight,this.align);
+  // Copy placed under the frame sets this, so a letterboxed image sits on the copy instead of floating above it.
+  const blockAlign=getComputedStyle(this.el).getPropertyValue('--image-block-align').trim()==='end'?'end':'center';
+  const rect=imageGeometry(this.el.clientWidth,this.el.clientHeight,this.ratio,this.radius,this.padding,this.sourceCorners,1,this.maxWidth,this.maxHeight,this.align,blockAlign);
   if(this.thumbnail)rect.radius=thumbnailImageRadius(this.radius,rect,this.card.dataset.cardOrientation,this.sourceCorners);
   const geometry={position:'absolute',width:rect.width+'px',height:rect.height+'px',left:rect.left+'px',top:rect.top+'px',borderRadius:rect.radius+'px'};
   Object.assign(this.img.style,geometry);
@@ -124,7 +126,7 @@ export class ImageFrame {
   Object.assign(this.edge.style,{...geometry,width:visible.width+'px',height:visible.height+'px',left:visible.left+'px',top:visible.top+'px'});
   if(this.preview){
    const video=this.preview.video,ratio=video.videoWidth&&video.videoHeight?video.videoWidth/video.videoHeight:this.ratio;
-   const bounds=imageGeometry(this.el.clientWidth,this.el.clientHeight,ratio,this.radius,this.padding,this.sourceCorners,1,this.maxWidth,this.maxHeight,this.align);
+   const bounds=imageGeometry(this.el.clientWidth,this.el.clientHeight,ratio,this.radius,this.padding,this.sourceCorners,1,this.maxWidth,this.maxHeight,this.align,blockAlign);
    Object.assign(video.style,{position:'absolute',width:bounds.width+'px',height:bounds.height+'px',left:bounds.left+'px',top:bounds.top+'px',borderRadius:bounds.radius+'px'});
   }
   this.onResize();

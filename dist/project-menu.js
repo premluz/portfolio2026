@@ -13,6 +13,6 @@ export function projectMenuMarkup(projects,current){
 export function projectMenuProjectsMarkup(projects,current){
  return [['shipped','Shipped'],['lab','Lab']].map(([kind,label])=>{
   const items=projects.filter(project=>(project.projectKind||'shipped')===kind);
-  return `<section class="project-menu-group" aria-label="${label}">${items.map(project=>`<button type="button" data-project-menu-item="${escape(project.id)}"${project.id===current?' class="active" aria-current="page"':''}><span class="project-menu-title">${escape(project.name)}</span>${project.client?`<span class="project-menu-client">${escape(project.client)}</span>`:''}</button>`).join('')}</section>`;
+  return `<section class="project-menu-group" aria-label="${label}">${items.map(project=>`<button type="button" data-project-menu-item="${escape(project.id)}"${project.id===current?' class="active" aria-current="page"':''}>${project.client?`<span class="project-menu-client">${escape(project.client)}</span>`:''}<span class="project-menu-title">${escape(project.name)}</span></button>`).join('')}</section>`;
  }).join('');
 }
