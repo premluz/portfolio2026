@@ -61,6 +61,8 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 .spatial-card-gallery[data-gallery-variant="circular"][data-gallery-reduced="false"] .spatial-gallery-pose{transition:none}
 .spatial-card-gallery[data-gallery-variant="circular"][data-gallery-reduced="false"][data-gallery-axis="vertical"] .spatial-gallery-viewport{touch-action:pan-x pinch-zoom}
 @media(max-width:600px){.spatial-card-gallery{--gallery-landscape-width:calc((var(--app-canvas-width) - 48px) * var(--gallery-card-scale));--gallery-portrait-width:calc((var(--app-canvas-width) - 64px) * var(--gallery-card-scale));--gallery-card-height:calc(360px * var(--gallery-card-scale))}.spatial-gallery-viewport{gap:48px}.home-product-carousel .spatial-gallery-caption{display:block}.home-product-carousel .spatial-gallery-copy{width:100%}[data-gallery-axis="vertical"] .spatial-gallery-viewport{height:640px;padding-block:calc((640px - var(--gallery-card-height))/2)}}
+/* Phones: the frame follows the landscape media instead of a fixed height, so no empty band sits above the image. */
+@media(max-width:600px){.home-product-carousel .spatial-card-gallery[data-description-in-card="true"]{--gallery-landscape-ratio:1.6;--gallery-card-height:calc((var(--gallery-landscape-width) - var(--card-padding-left) - var(--card-padding-right)) / var(--gallery-landscape-ratio) + var(--card-padding-top) + var(--card-padding-bottom))}}
 @media(prefers-reduced-motion:reduce){.spatial-gallery-pose{transition:none}}
 
 /* Titanium side wall. Cached material surfaces move with the card's turn;
