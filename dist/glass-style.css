@@ -1,0 +1,29 @@
+/* Glass style toggle: inner light replaces explicit borders on standalone controls and media cards. */
+:root[data-glass-style="on"] :is(.glass-utility-button,.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back){border:0;background:var(--glass-button-fill);box-shadow:var(--glass-button-edge);backdrop-filter:blur(var(--glass-button-blur));-webkit-backdrop-filter:blur(var(--glass-button-blur))}
+:root[data-glass-style="on"] :is(.card-rail-controls button,.spatial-gallery-controls button){border-radius:50%}
+:root[data-glass-style="on"] :is(.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back){transition:color 180ms ease,transform var(--glass-button-press-duration) var(--glass-button-press-ease)}
+:root[data-glass-style="on"] :is(.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back):active:not(:disabled){transform:scale(var(--glass-button-press-scale))}
+:root[data-glass-style="on"] .detail-media-actions button:hover{background:var(--glass-button-fill)}
+:root[data-glass-style="on"] :is(.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface):is(:hover,:focus-visible){background:linear-gradient(var(--nav-item-hover),var(--nav-item-hover)),var(--glass-button-fill)}
+:root[data-glass-style="on"] .card-bottom .open-symbol{border-color:transparent;box-shadow:var(--glass-button-edge)}
+:root[data-glass-style="on"] .visual>.image-edge{background:var(--glass-card-wash);box-shadow:var(--glass-card-edge)}
+:root[data-glass-style="on"] body:not(.card-background-hidden) .surface>.liquid-skin{box-shadow:var(--glass-card-edge)!important}
+@media(prefers-reduced-motion:reduce){:root[data-glass-style="on"] :is(.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back):active{transform:none}}
+:root[data-animation="off"][data-glass-style="on"] :is(.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back):active{transform:none}
+:root:not([data-glass-style="on"]) #dock .dock-glass-light{display:none}
+:root[data-glass-style="on"] #dock .dock-outline{stroke:transparent}
+:root[data-glass-style="on"] #dock .dock-glass-light{fill:currentColor;stroke:none}
+:root[data-glass-style="on"] #dock .dock-glass-light-rim{flood-color:var(--glass-button-rim-light)}
+:root[data-glass-style="on"] #dock .dock-glass-light-side{flood-color:var(--glass-button-rim-dark)}
+:root[data-glass-style="on"] #dock .dock-glass-light-glow{flood-color:var(--glass-button-glow)}
+/* Ghost variant: controls inside the composer stay clear at rest and only catch the glass light when engaged. */
+:root[data-glass-style="on"] :is(#dock .assistant-composer button,#dock .voice-composer button:not([aria-pressed="false"]),#dock .composer-context-actions :is(button,a)){transition:background var(--nav-hover-out-duration) ease-out,box-shadow var(--nav-hover-out-duration) ease-out,color 160ms ease,transform var(--glass-button-press-duration) var(--glass-button-press-ease)}
+:root[data-glass-style="on"] :is(#dock .assistant-composer button,#dock .voice-composer button:not([aria-pressed="false"]),#dock .composer-context-actions :is(button,a)):is(:hover,:focus-visible):not(:disabled),:root[data-glass-style="on"] #dock .assistant-composer button[aria-pressed=true]{background:var(--glass-ghost-fill);box-shadow:var(--glass-button-edge);transition-duration:var(--nav-hover-in-duration),var(--nav-hover-in-duration),160ms,var(--glass-button-press-duration)}
+:root[data-glass-style="on"] :is(#dock .assistant-composer button,#dock .voice-composer button,#dock .composer-context-actions :is(button,a)):active:not(:disabled){transform:scale(var(--glass-button-press-scale))}
+:root[data-animation="off"][data-glass-style="on"] :is(#dock .assistant-composer button,#dock .voice-composer button,#dock .composer-context-actions :is(button,a)):active{transform:none}
+@media(prefers-reduced-motion:reduce){:root[data-glass-style="on"] :is(#dock .assistant-composer button,#dock .voice-composer button,#dock .composer-context-actions :is(button,a)):active{transform:none}}
+/* A lone action owns its whole pill, so its hover light fills the pill instead of sitting inset within it. */
+:root[data-glass-style="on"] #dock .composer-context-slot[data-group-solo="true"] :is(button,a){position:relative;isolation:isolate}
+:root[data-glass-style="on"] #dock .composer-context-slot[data-group-solo="true"] :is(button,a)::before{content:"";position:absolute;inset:calc(-1 * var(--context-action-padding));z-index:-1;border-radius:calc(var(--context-control-height) / 2 + var(--context-action-padding));background:var(--glass-ghost-fill);box-shadow:var(--glass-button-edge);opacity:0;pointer-events:none;transition:opacity var(--nav-hover-out-duration) ease-out}
+:root[data-glass-style="on"] #dock .composer-context-slot[data-group-solo="true"] :is(button,a):is(:hover,:focus-visible):not(:disabled){background:transparent;box-shadow:none}
+:root[data-glass-style="on"] #dock .composer-context-slot[data-group-solo="true"] :is(button,a):is(:hover,:focus-visible):not(:disabled)::before{opacity:1;transition-duration:var(--nav-hover-in-duration)}

@@ -119,18 +119,17 @@ for(const interruption of ['none','opening','closing']){
 }
 console.log('Homepage carousel lifecycle passed: exact source card, live gallery/controller/image retention, original scroll, and Escape while opening or closing.');
 
-// About and Contact have no home card: they never morph back, they fade up or (from the menu) slide right.
+// About and Contact have no home card: About returns by reversing the same slide used by the menu.
 {
  const entry=fixture(),x=entry.env;let fadeCount=0,aboutSlide=null;x.fadeUpIn=()=>{fadeCount++;};x.slideCards=async(old,direction)=>{aboutSlide={direction,route:x.current};};x.informationCards=[{id:'about'}];x.render('work');x.location.hash='#about';await x.navigate();assert.deepEqual(aboutSlide,{direction:1,route:'about'});assert.equal(fadeCount,0,'About entrance does not replay a second fade after its route transition');
- const f=fixture(),e=f.env;let faded=0;e.informationCards=[{id:'about'}];
- e.returnHomeFromInformation=()=>{faded++;e.current='work';};
+ const f=fixture(),e=f.env,returnSlides=[];e.informationCards=[{id:'about'}];e.slideCards=async(old,direction)=>{returnSlides.push(direction);};
  e.render('about');e.location.hash='#work';await e.navigate();
- assert.equal(faded,1,'Back or a hash change from About fades the homepage up');assert.equal(f.morphs.length,0,'No title morph runs without an About card in the grid');
+ assert.deepEqual(returnSlides,[-1],'Go Back from About reverses the entrance slide');assert.equal(f.morphs.length,0,'No title morph runs without an About card in the grid');
  const slides=[],g=fixture(),h=g.env;h.informationCards=[{id:'about'}];h.slideCards=async(old,direction)=>{slides.push(direction);};h.returnHomeFromInformation=()=>{throw Error('Menu Home must slide, not fade');};
  h.render('about');h.navSlideTarget='work';h.travelDirection=-1;h.location.hash='#work';await h.navigate();
  assert.deepEqual(slides,[-1],'Menu Home from About slides the homepage in from the left');assert.equal(g.morphs.length,0);
 }
-console.log('Information return passed: fade-up for Back/hash changes, rightward slide for the menu Home, and no title morph.');
+console.log('Information return passed: About entrance and reverse slide, matching menu Home direction, and no title morph.');
 
 // About's incoming slide combines opacity and upward motion in one animation.
 {

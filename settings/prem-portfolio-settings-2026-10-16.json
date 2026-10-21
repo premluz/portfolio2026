@@ -1,7 +1,7 @@
 {
   "format": "prem-portfolio-settings",
   "version": 1,
-  "exportedAt": "2026-10-16T11:28:31.751Z",
+  "exportedAt": "2026-10-21T07:15:32.912Z",
   "settings": {
     "homeContentWidth": "small",
     "contentPageWidth": "small",
@@ -21,6 +21,7 @@
     "aboutGalleryVariant": "circular",
     "aboutGalleryOrientation": "horizontal",
     "carouselDescriptionInCard": true,
+    "carouselNativeSnap": false,
     "carousel.tilt": 0,
     "carousel.spread": 60,
     "carousel.depth": 200,
@@ -49,7 +50,7 @@
     "cardTitleScale": 3,
     "cardBackground": false,
     "hideCardColor": false,
-    "hideCardHover": true,
+    "hideCardHover": false,
     "cardHoverEffect": "glow",
     "cardPaddingSame": true,
     "cardPaddingAll": 32,
@@ -62,7 +63,7 @@
     "ambientLightMovement": true,
     "ambientHoverSpeed": 65,
     "ambientDetailGlow": true,
-    "showComposerGlow": false,
+    "showComposerGlow": true,
     "fullBleed": false,
     "bleedTop": 28,
     "bleedSide": 0,
@@ -80,7 +81,7 @@
     "dockLiquidBlend": 28,
     "dockLiquidPinch": 60,
     "splitProjectControls": true,
-    "contextualButtons": "composer",
+    "contextualButtons": "inline",
     "contextualComposerPreference": true,
     "alwaysDarkGlassPreference": true,
     "showGestureControl": false,
@@ -109,6 +110,7 @@
     "edgeShadeRight": false,
     "edgeShadeRetreat": false,
     "edgeShadeDepth": 70,
+    "glassStyle": true,
     "design.typeSize": "small",
     "design.spaceSize": "large",
     "design.headingWeight": "bold",
@@ -117,6 +119,6 @@
     "design.typeLeading": "medium",
     "sound": true,
     "animation": true,
-    "theme": "light"
+    "theme": "dark"
   }
 }

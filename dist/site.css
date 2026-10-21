@@ -70,6 +70,30 @@
   --card-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.18);
   --card-shade: oklch(0.24036760 0.04137380 305.37990 / 0.06);
   --glass-edge: inset 0 1px 0 var(--card-highlight), inset 0 -1px 0 var(--card-shade);
+  /* Glass button: lit top/bottom rims, darker side rims and an inner glow instead of a drop shadow. */
+  --glass-button-sheen: oklch(1 0 0 / .35);
+  --glass-button-body-top: oklch(1 0 0 / .45);
+  --glass-button-body-bottom: oklch(0.9499 0.0243 280.86 / .55);
+  --glass-button-rim-light: oklch(1 0 0 / .9);
+  --glass-button-rim-dark: oklch(0.2404 0.0414 305.38 / .08);
+  --glass-button-glow: oklch(1 0 0 / .25);
+  --glass-dark-button-sheen: oklch(0.9499 0.0243 280.86 / .08);
+  --glass-dark-button-body-top: oklch(0 0 0 / .3);
+  --glass-dark-button-body-bottom: oklch(0 0 0 / .7);
+  --glass-dark-button-rim-light: oklch(0.9499 0.0243 280.86 / .2);
+  --glass-dark-button-rim-dark: oklch(0 0 0 / .2);
+  --glass-dark-button-glow: oklch(0.9499 0.0243 280.86 / .04);
+  --glass-button-blur: 10px;
+  --glass-button-press-scale: .96;
+  --glass-button-press-duration: 300ms;
+  --glass-button-press-ease: cubic-bezier(.2, .8, .2, 1);
+  /* Glass card: inner light replaces the hairline; the broad top glow reads as light inside curved glass. */
+  --glass-card-wash: oklch(0 0 0 / .012);
+  --glass-card-rim-top: oklch(1 0 0 / .7);
+  --glass-card-rim-bottom: oklch(0.2404 0.0414 305.38 / .06);
+  --glass-card-glow-low: oklch(1 0 0 / .12);
+  --glass-card-glow-top: oklch(1 0 0 / .22);
+  --glass-card-edge: inset 0 -1px 1px var(--glass-card-rim-bottom), inset 0 1px 1px var(--glass-card-rim-top), inset 0 -4px 4px var(--glass-card-glow-low), inset 0 28px 40px var(--glass-card-glow-top);
   --room-blur: 12px;
   --room-shade: .18;
   --text-shadow: none;
@@ -219,7 +243,29 @@
   --card-rim: oklch(0.99999999 0.00000004 0.00000 / 0.02);
   --card-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.04);
   --card-shade: oklch(0.00000000 0.00000000 0.00000 / 0.16);
+  --glass-card-rim-top: oklch(0.9499 0.0243 280.86 / .2);
+  --glass-card-rim-bottom: oklch(0.9499 0.0243 280.86 / .1);
+  --glass-card-glow-low: oklch(0.9499 0.0243 280.86 / .08);
+  --glass-card-glow-top: oklch(0.9499 0.0243 280.86 / .08);
   --text-shadow: 0 1px 4px oklch(0 0 0 / .25);
+}
+
+/* The dock can stay dark in the light theme, so button glass re-resolves the dark palette there too. */
+:root[data-theme="dark"],
+#dock.always-dark-glass {
+  --glass-button-sheen: var(--glass-dark-button-sheen);
+  --glass-button-body-top: var(--glass-dark-button-body-top);
+  --glass-button-body-bottom: var(--glass-dark-button-body-bottom);
+  --glass-button-rim-light: var(--glass-dark-button-rim-light);
+  --glass-button-rim-dark: var(--glass-dark-button-rim-dark);
+  --glass-button-glow: var(--glass-dark-button-glow);
+}
+
+:root,
+#dock.always-dark-glass {
+  --glass-ghost-fill: linear-gradient(var(--glass-button-sheen), var(--glass-button-sheen));
+  --glass-button-fill: linear-gradient(90deg, var(--glass-button-sheen), var(--glass-button-sheen)), linear-gradient(var(--glass-button-body-top), var(--glass-button-body-bottom));
+  --glass-button-edge: inset -1px 0 1px var(--glass-button-rim-dark), inset 1px 0 1px var(--glass-button-rim-dark), inset 0 -1px 1px var(--glass-button-rim-light), inset 0 1px 1px var(--glass-button-rim-light), inset 0 -4px 4px var(--glass-button-glow), inset 0 4px 4px var(--glass-button-glow);
 }
 
 @media (max-width: 1000px) {
@@ -1900,6 +1946,37 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 .contextual-popover a{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em}
 .contextual-popover a:hover{opacity:.75}
 @media(prefers-reduced-motion:reduce){.context-marker-text{transition:none}}
+
+/* glass-style.css */
+/* Glass style toggle: inner light replaces explicit borders on standalone controls and media cards. */
+:root[data-glass-style="on"] :is(.glass-utility-button,.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back){border:0;background:var(--glass-button-fill);box-shadow:var(--glass-button-edge);backdrop-filter:blur(var(--glass-button-blur));-webkit-backdrop-filter:blur(var(--glass-button-blur))}
+:root[data-glass-style="on"] :is(.card-rail-controls button,.spatial-gallery-controls button){border-radius:50%}
+:root[data-glass-style="on"] :is(.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back){transition:color 180ms ease,transform var(--glass-button-press-duration) var(--glass-button-press-ease)}
+:root[data-glass-style="on"] :is(.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back):active:not(:disabled){transform:scale(var(--glass-button-press-scale))}
+:root[data-glass-style="on"] .detail-media-actions button:hover{background:var(--glass-button-fill)}
+:root[data-glass-style="on"] :is(.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface):is(:hover,:focus-visible){background:linear-gradient(var(--nav-item-hover),var(--nav-item-hover)),var(--glass-button-fill)}
+:root[data-glass-style="on"] .card-bottom .open-symbol{border-color:transparent;box-shadow:var(--glass-button-edge)}
+:root[data-glass-style="on"] .visual>.image-edge{background:var(--glass-card-wash);box-shadow:var(--glass-card-edge)}
+:root[data-glass-style="on"] body:not(.card-background-hidden) .surface>.liquid-skin{box-shadow:var(--glass-card-edge)!important}
+@media(prefers-reduced-motion:reduce){:root[data-glass-style="on"] :is(.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back):active{transform:none}}
+:root[data-animation="off"][data-glass-style="on"] :is(.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back):active{transform:none}
+:root:not([data-glass-style="on"]) #dock .dock-glass-light{display:none}
+:root[data-glass-style="on"] #dock .dock-outline{stroke:transparent}
+:root[data-glass-style="on"] #dock .dock-glass-light{fill:currentColor;stroke:none}
+:root[data-glass-style="on"] #dock .dock-glass-light-rim{flood-color:var(--glass-button-rim-light)}
+:root[data-glass-style="on"] #dock .dock-glass-light-side{flood-color:var(--glass-button-rim-dark)}
+:root[data-glass-style="on"] #dock .dock-glass-light-glow{flood-color:var(--glass-button-glow)}
+/* Ghost variant: controls inside the composer stay clear at rest and only catch the glass light when engaged. */
+:root[data-glass-style="on"] :is(#dock .assistant-composer button,#dock .voice-composer button:not([aria-pressed="false"]),#dock .composer-context-actions :is(button,a)){transition:background var(--nav-hover-out-duration) ease-out,box-shadow var(--nav-hover-out-duration) ease-out,color 160ms ease,transform var(--glass-button-press-duration) var(--glass-button-press-ease)}
+:root[data-glass-style="on"] :is(#dock .assistant-composer button,#dock .voice-composer button:not([aria-pressed="false"]),#dock .composer-context-actions :is(button,a)):is(:hover,:focus-visible):not(:disabled),:root[data-glass-style="on"] #dock .assistant-composer button[aria-pressed=true]{background:var(--glass-ghost-fill);box-shadow:var(--glass-button-edge);transition-duration:var(--nav-hover-in-duration),var(--nav-hover-in-duration),160ms,var(--glass-button-press-duration)}
+:root[data-glass-style="on"] :is(#dock .assistant-composer button,#dock .voice-composer button,#dock .composer-context-actions :is(button,a)):active:not(:disabled){transform:scale(var(--glass-button-press-scale))}
+:root[data-animation="off"][data-glass-style="on"] :is(#dock .assistant-composer button,#dock .voice-composer button,#dock .composer-context-actions :is(button,a)):active{transform:none}
+@media(prefers-reduced-motion:reduce){:root[data-glass-style="on"] :is(#dock .assistant-composer button,#dock .voice-composer button,#dock .composer-context-actions :is(button,a)):active{transform:none}}
+/* A lone action owns its whole pill, so its hover light fills the pill instead of sitting inset within it. */
+:root[data-glass-style="on"] #dock .composer-context-slot[data-group-solo="true"] :is(button,a){position:relative;isolation:isolate}
+:root[data-glass-style="on"] #dock .composer-context-slot[data-group-solo="true"] :is(button,a)::before{content:"";position:absolute;inset:calc(-1 * var(--context-action-padding));z-index:-1;border-radius:calc(var(--context-control-height) / 2 + var(--context-action-padding));background:var(--glass-ghost-fill);box-shadow:var(--glass-button-edge);opacity:0;pointer-events:none;transition:opacity var(--nav-hover-out-duration) ease-out}
+:root[data-glass-style="on"] #dock .composer-context-slot[data-group-solo="true"] :is(button,a):is(:hover,:focus-visible):not(:disabled){background:transparent;box-shadow:none}
+:root[data-glass-style="on"] #dock .composer-context-slot[data-group-solo="true"] :is(button,a):is(:hover,:focus-visible):not(:disabled)::before{opacity:1;transition-duration:var(--nav-hover-in-duration)}
 
 /* mobile.css */
 /* Keep editable text large enough to avoid Safari's automatic input zoom.

@@ -904,7 +904,7 @@ export const catalog={
               "type": "text",
               "title": "Define the model",
               "paragraphs": [
-                "Turn needs & constraints into a clear product structure."
+                "Turn user needs & constraints into a clear product structure."
               ]
             },
             {

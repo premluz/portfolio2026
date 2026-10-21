@@ -1,6 +1,7 @@
 import {splitPopover} from './dock-segments.js';
 import {liquidOutline} from './liquid-contour.js';
 import {dockLiquidShapes,LIQUID_DEFAULTS} from './dock-liquid.js';
+import {createGlassLight} from './dock-glass-light.js';
 const clamp=value=>Math.max(0,Math.min(1,value));
 const smooth=(a,b,value)=>{const t=clamp((value-a)/(b-a));return t*t*(3-2*t);};
 const k=.55228475;
@@ -106,7 +107,7 @@ export class DockMorph {
   this.glass=document.createElement('div');this.glass.className='dock-glass glass-surface';this.glass.setAttribute('aria-hidden','true');
   const ns='http://www.w3.org/2000/svg';this.rim=document.createElementNS(ns,'svg');this.rim.classList.add('dock-outline');this.rim.setAttribute('aria-hidden','true');
   this.path=document.createElementNS(ns,'path');this.rim.append(this.path);el.prepend(this.glass,this.content,this.rim);el.classList.add('dock-morph');
-  this.clipId=(el.id||'dock')+'-liquid-popover-clip';this.defs=document.createElementNS(ns,'defs');this.clip=document.createElementNS(ns,'clipPath');this.clip.setAttribute('id',this.clipId);this.clip.setAttribute('clipPathUnits','userSpaceOnUse');this.clipPath=document.createElementNS(ns,'path');this.clip.append(this.clipPath);this.defs.append(this.clip);this.rim.append(this.defs);
+  this.clipId=(el.id||'dock')+'-liquid-popover-clip';this.defs=document.createElementNS(ns,'defs');this.clip=document.createElementNS(ns,'clipPath');this.clip.setAttribute('id',this.clipId);this.clip.setAttribute('clipPathUnits','userSpaceOnUse');this.clipPath=document.createElementNS(ns,'path');this.clip.append(this.clipPath);this.defs.append(this.clip);this.rim.append(this.defs);this.light=createGlassLight(this.rim,this.defs,(el.id||'dock')+'-glass-light');
   this.resize=()=>this.refresh();addEventListener('resize',this.resize);this.refresh();
  }
  refresh(){
@@ -197,7 +198,7 @@ export class DockMorph {
   for(const node of [this.glass,this.rim])Object.assign(node.style,{left:left+'px',top:top+'px',width:width+'px',height:height+'px'});
   this.clipPath.setAttribute('d',outline);this.clipPath.setAttribute('clip-rule',liquid?'evenodd':'nonzero');this.clipPath.setAttribute('transform',`translate(${-left} ${-top})`);
   this.glass.style.clipPath=branch||back?`url(#${this.clipId})`:clip;
-  this.rim.setAttribute('viewBox',`${left} ${top} ${width} ${height}`);this.path.setAttribute('d',outline);
+  this.rim.setAttribute('viewBox',`${left} ${top} ${width} ${height}`);this.path.setAttribute('d',outline);this.light.setAttribute('d',outline);this.light.setAttribute('fill-rule',liquid?'evenodd':'nonzero');
   this.context.style.opacity=String(shape.reveal);this.context.style.visibility=shape.reveal>.001?'visible':'hidden';this.context.inert=this.target===0||shape.reveal<.7;this.context.setAttribute('aria-hidden',String(this.context.inert));
  }
  setPopover(popover){this.popover=popover;this.paint();}

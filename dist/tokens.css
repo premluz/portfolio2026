@@ -69,6 +69,30 @@
   --card-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.18);
   --card-shade: oklch(0.24036760 0.04137380 305.37990 / 0.06);
   --glass-edge: inset 0 1px 0 var(--card-highlight), inset 0 -1px 0 var(--card-shade);
+  /* Glass button: lit top/bottom rims, darker side rims and an inner glow instead of a drop shadow. */
+  --glass-button-sheen: oklch(1 0 0 / .35);
+  --glass-button-body-top: oklch(1 0 0 / .45);
+  --glass-button-body-bottom: oklch(0.9499 0.0243 280.86 / .55);
+  --glass-button-rim-light: oklch(1 0 0 / .9);
+  --glass-button-rim-dark: oklch(0.2404 0.0414 305.38 / .08);
+  --glass-button-glow: oklch(1 0 0 / .25);
+  --glass-dark-button-sheen: oklch(0.9499 0.0243 280.86 / .08);
+  --glass-dark-button-body-top: oklch(0 0 0 / .3);
+  --glass-dark-button-body-bottom: oklch(0 0 0 / .7);
+  --glass-dark-button-rim-light: oklch(0.9499 0.0243 280.86 / .2);
+  --glass-dark-button-rim-dark: oklch(0 0 0 / .2);
+  --glass-dark-button-glow: oklch(0.9499 0.0243 280.86 / .04);
+  --glass-button-blur: 10px;
+  --glass-button-press-scale: .96;
+  --glass-button-press-duration: 300ms;
+  --glass-button-press-ease: cubic-bezier(.2, .8, .2, 1);
+  /* Glass card: inner light replaces the hairline; the broad top glow reads as light inside curved glass. */
+  --glass-card-wash: oklch(0 0 0 / .012);
+  --glass-card-rim-top: oklch(1 0 0 / .7);
+  --glass-card-rim-bottom: oklch(0.2404 0.0414 305.38 / .06);
+  --glass-card-glow-low: oklch(1 0 0 / .12);
+  --glass-card-glow-top: oklch(1 0 0 / .22);
+  --glass-card-edge: inset 0 -1px 1px var(--glass-card-rim-bottom), inset 0 1px 1px var(--glass-card-rim-top), inset 0 -4px 4px var(--glass-card-glow-low), inset 0 28px 40px var(--glass-card-glow-top);
   --room-blur: 12px;
   --room-shade: .18;
   --text-shadow: none;
@@ -218,7 +242,29 @@
   --card-rim: oklch(0.99999999 0.00000004 0.00000 / 0.02);
   --card-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.04);
   --card-shade: oklch(0.00000000 0.00000000 0.00000 / 0.16);
+  --glass-card-rim-top: oklch(0.9499 0.0243 280.86 / .2);
+  --glass-card-rim-bottom: oklch(0.9499 0.0243 280.86 / .1);
+  --glass-card-glow-low: oklch(0.9499 0.0243 280.86 / .08);
+  --glass-card-glow-top: oklch(0.9499 0.0243 280.86 / .08);
   --text-shadow: 0 1px 4px oklch(0 0 0 / .25);
+}
+
+/* The dock can stay dark in the light theme, so button glass re-resolves the dark palette there too. */
+:root[data-theme="dark"],
+#dock.always-dark-glass {
+  --glass-button-sheen: var(--glass-dark-button-sheen);
+  --glass-button-body-top: var(--glass-dark-button-body-top);
+  --glass-button-body-bottom: var(--glass-dark-button-body-bottom);
+  --glass-button-rim-light: var(--glass-dark-button-rim-light);
+  --glass-button-rim-dark: var(--glass-dark-button-rim-dark);
+  --glass-button-glow: var(--glass-dark-button-glow);
+}
+
+:root,
+#dock.always-dark-glass {
+  --glass-ghost-fill: linear-gradient(var(--glass-button-sheen), var(--glass-button-sheen));
+  --glass-button-fill: linear-gradient(90deg, var(--glass-button-sheen), var(--glass-button-sheen)), linear-gradient(var(--glass-button-body-top), var(--glass-button-body-bottom));
+  --glass-button-edge: inset -1px 0 1px var(--glass-button-rim-dark), inset 1px 0 1px var(--glass-button-rim-dark), inset 0 -1px 1px var(--glass-button-rim-light), inset 0 1px 1px var(--glass-button-rim-light), inset 0 -4px 4px var(--glass-button-glow), inset 0 4px 4px var(--glass-button-glow);
 }
 
 @media (max-width: 1000px) {

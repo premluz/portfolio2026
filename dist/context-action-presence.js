@@ -37,6 +37,7 @@ export class ContextActionPresence {
    if(action.href){item.button.setAttribute('href',action.href);if(action.external){item.button.setAttribute('target','_blank');item.button.setAttribute('rel','noopener noreferrer');}}
    const next=actions[index+1],margin=next&&next.group!==action.group?(action.group==='primary'?'18px':'14px'):'';if(item.slot.style.marginRight!==margin){changed=true;item.slot.style.marginRight=margin;}
    item.slot.dataset.groupEnd=String(!!margin);
+   const previous=actions[index-1];item.slot.dataset.groupSolo=String(previous?.group!==action.group&&next?.group!==action.group);
    // insertBefore leaves retained buttons mounted, focused and in identity.
    const reference=this.row.children[index];if(reference!==item.slot){changed=true;this.row.insertBefore(item.slot,reference||null);}
    if(instant){item.position=1;item.velocity=0;}
