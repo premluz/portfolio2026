@@ -1,7 +1,7 @@
 {
   "format": "prem-portfolio-settings",
   "version": 1,
-  "exportedAt": "2026-10-21T07:15:32.912Z",
+  "exportedAt": "2026-10-21T07:18:01.956Z",
   "settings": {
     "homeContentWidth": "small",
     "contentPageWidth": "small",
@@ -81,7 +81,7 @@
     "dockLiquidBlend": 28,
     "dockLiquidPinch": 60,
     "splitProjectControls": true,
-    "contextualButtons": "inline",
+    "contextualButtons": "composer",
     "contextualComposerPreference": true,
     "alwaysDarkGlassPreference": true,
     "showGestureControl": false,
