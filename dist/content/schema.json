@@ -721,6 +721,25 @@
             "information"
           ]
         },
+        "badge": {
+          "type": "object",
+          "properties": {
+            "label": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "tone": {
+              "enum": [
+                "success",
+                "error"
+              ]
+            }
+          },
+          "required": [
+            "label"
+          ],
+          "additionalProperties": false
+        },
         "type": {
           "const": "page"
         }

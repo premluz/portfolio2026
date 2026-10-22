@@ -13,7 +13,7 @@ const blockBase={id,title:short,label:short,layout:object({columns:{enum:[1,2]},
 const common={id,status:{enum:['published','draft','archived']},slug:id,title:{...short,minLength:1},summary:text,name:short,aliases:strings,domains:strings,capabilities:strings,tags:strings,category:short,revision:{type:'integer',minimum:1},updatedAt:{type:'string'},links:list(link),evidence:list(ref('evidence')),blocks:{...list(ref('block')),maxItems:CONTENT_LIMITS.blocks}};
 export const documentTypeDefinitions=Object.freeze({
  'portfolio-item':{label:'Portfolio item',properties:{prototype:object({url:short,label:short}),watchPrototype:object({url:short,label:short},['url','label']),qrCodeMediaId:id,qrCodeLabel:short,client:short,kind:{enum:['shipped','lab']},featured:{type:'boolean'},listOnly:{type:'boolean'},pageTitle:short,intro:text,context:text,challenge:text,role:text,highlights:text,keyWork:text,impact:text,aftermath:text,lesson:text,heroMediaId:id,hoverVideoId:id},required:['slug','name','kind','context','role','keyWork']},
- page:{label:'Page',properties:{template:{enum:['home','information']}},required:['slug']},
+ page:{label:'Page',properties:{template:{enum:['home','information']},badge:object({label:short,tone:{enum:['success','error']}},['label'])},required:['slug']},
  news:{label:'News',properties:{publishedAt:short},required:['slug']},
  article:{label:'Article',properties:{publishedAt:{type:'string',pattern:'^\\d{4}-\\d{2}-\\d{2}$'},author:short,series:object({id,title:short,part:{type:'integer',minimum:1},of:{type:'integer',minimum:1}},['id','part','of']),sources:list(object({label:short,publisher:short,date:short,url:short},['label']))},required:['slug','publishedAt','author']},
  component:{label:'Reusable component',properties:{}}

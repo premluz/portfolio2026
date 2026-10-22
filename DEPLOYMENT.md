@@ -61,11 +61,33 @@ dev panel (`?dev=1` → Content) switches it for every visitor without a
 redeploy. A write can only name a set that shipped; nothing is uploaded or
 deleted. The choice lives in Vercel Global Config:
 
-1. In the Vercel dashboard, create a Global Config store (Storage) and note its ID.
-2. Create a Global Config read access token for it.
-3. Create a Vercel REST API token that can update that Global Config.
-4. Set `GLOBAL_CONFIG_ID`, `GLOBAL_CONFIG_READ_TOKEN` and `VERCEL_API_TOKEN`
-   (plus `VERCEL_TEAM_ID` if the store belongs to a team) and redeploy.
+1. In the Vercel dashboard, create a Global Config store (Storage) and connect it
+   to the project. Connecting adds a `GLOBAL_CONFIG` connection string holding the
+   store ID and a read token (`GLOBAL_CONFIG_ID` and `GLOBAL_CONFIG_READ_TOKEN`
+   can be set explicitly instead).
+2. Create a Vercel REST API token that can update that Global Config and set it
+   as `VERCEL_API_TOKEN`, plus `VERCEL_TEAM_ID` when the project belongs to a team.
+3. Redeploy.
+
+#### Publishing settings (dev panel)
+
+With `?dev=1`, the developer settings panel has **Publish to this site** and
+**Use built-in**. Settings change live in your own browser as you edit them.
+Publish saves the same profile that Export produces on the server, so every
+visitor of this domain gets it on their next page load (within about a minute,
+because answers are cached for a few seconds) without a deploy. Use built-in
+removes the published profile, and the newest export in `settings/` applies
+again. The server checks structure and size; every browser re-checks each value
+against its controls and falls back to the built-in settings, logging an error,
+if a published profile cannot be applied. Publishing changes settings only, not
+content, media or code.
+
+Several Vercel projects can serve this one codebase with different content.
+Connect the same store to each and give each project its own `CONTENT_SET_KEY`
+(for example `contentSet-main` and `contentSet-second`, up to 50 characters); the
+default key is `contentSet`. Published settings are saved under the same key with
+`-settings` added. Each project then keeps an independent choice, and deploys
+ship the same code and every set.
 
 Without them the site serves `catalog` and the picker is read-only. Locally,
 `npm run dev` keeps the choice in memory. To add a set, create

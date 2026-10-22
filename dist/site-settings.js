@@ -1,7 +1,16 @@
 import {publishedSettings,settingsRevision} from './published-settings.js';
 import {settingsSchema,parseSettings,importSettings} from './settings-transfer.js';
 
-const revisionKey='prem-site-settings-revision';
+export const revisionKey='prem-site-settings-revision';
+
+// A published profile replaces the built-in one; if it cannot be applied the built-in settings still load, loudly.
+export function applyActiveSettings(published,options={}){
+ if(published){
+  try{return applySiteSettings({...options,preset:published.export,revision:published.revision});}
+  catch(error){console.error('Published site settings could not be applied; using the built-in settings.',error);}
+ }
+ return applySiteSettings(options);
+}
 
 export function applySiteSettings({root=document,storage=globalThis.localStorage,preset=publishedSettings,revision=settingsRevision}={}){
  if(!storage)throw Error('Published site settings require browser storage.');

@@ -1,0 +1,8 @@
+/* Status badge: the tone supplies the functional status colour; the fill fades it out to the right like the reference. */
+.badge{--badge-accent:var(--status-success-accent);--badge-dot-size:6px;display:inline-flex;align-items:center;gap:var(--space-2);margin:0 0 var(--space-4);padding:var(--space-1) var(--space-3) var(--space-1) var(--space-2);border-radius:999px;background:linear-gradient(90deg,color-mix(in oklch,var(--badge-accent) 22%,transparent),color-mix(in oklch,var(--badge-accent) 4%,transparent) 70%,transparent);box-shadow:inset 0 0 0 1px color-mix(in oklch,var(--badge-accent) 18%,transparent);color:var(--body-ink);font-size:var(--font-size-small);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body)}
+.badge[data-badge-tone="error"]{--badge-accent:var(--status-error-accent)}
+.badge-dot{position:relative;flex:none;width:var(--badge-dot-size);height:var(--badge-dot-size);border-radius:50%;background:var(--badge-accent);box-shadow:0 0 8px 1px color-mix(in oklch,var(--badge-accent) 70%,transparent)}
+.badge-dot::after{content:"";position:absolute;inset:0;border-radius:inherit;background:var(--badge-accent);animation:badge-pulse 2400ms ease-out infinite}
+@keyframes badge-pulse{from{transform:scale(1);opacity:.5}to{transform:scale(3);opacity:0}}
+@media(prefers-reduced-motion:reduce){.badge-dot::after{animation:none;opacity:0}}
+:root[data-animation="off"] .badge-dot::after{animation:none;opacity:0}

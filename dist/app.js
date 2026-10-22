@@ -1,5 +1,6 @@
 import {applyDefaultSettings} from './default-settings.js';
-import {applySiteSettings} from './site-settings.js';
+import {applyActiveSettings} from './site-settings.js';
+import {siteConfig} from './content/site-config-client.js';
 import {mountDevMode} from './dev-mode.js';
 import {revealPage} from './page-ready.js';
 import {previewMorphProxy,previewReturnProxy,visiblePreviewImage,fadeOutProxy} from './preview-morph.js';
@@ -62,6 +63,7 @@ import {homeMarkup,HomeLayout} from './home-layout.js';
 import {HeroTimeline} from './hero-timeline.js';
 import {initHomeSectionSettings} from './home-sections.js';
 import {mountSettingsTransfer} from './settings-transfer.js';
+import {mountSettingsPublish} from './settings-publish-control.js';
 import {APP_MAX_WIDTH,CONTENT_WIDTHS,pageTemplateForRoute,readContentWidth,normaliseContentWidth,contentRail,responsiveContentGutter} from './content-widths.js';
 import {hydrateFooter} from './home-content.js';
 import {handleEscapeKey} from './escape-key.js';
@@ -71,7 +73,7 @@ import {ProjectEntryMemory} from './project-entry-memory.js';
 import {MediaLoader} from './media-loading.js';
 import {presentedImage,clearImageHandoffs} from './image-handoff.js';
 applyDefaultSettings();
-applySiteSettings();
+applyActiveSettings(siteConfig.settings);
 mountProjectRouteAliases(window);
 const $=s=>document.querySelector(s), main=$('#main'), systemReduce=matchMedia('(prefers-reduced-motion: reduce)'), desktopLabelMode=matchMedia('(min-width:601px)');
 const mediaLoader=new MediaLoader();
@@ -538,4 +540,5 @@ $('#carouselNativeSnap').onchange=e=>{if(busy||navigationPreparing){e.target.che
 if(mountDevMode($('.corner-controls'),location.search))void mountContentSetControl($('#contentSet'),$('#contentSetStatus'));$('#settingsToggle').onclick=()=>{$('#settings').hidden=!$('#settings').hidden};$('#settingsClose').onclick=()=>$('#settings').hidden=true;$('#intensity').oninput=e=>{intensity=e.target.value/100;$('#intensityValue').value=e.target.value+'%'};$('#duration').oninput=e=>{duration=+e.target.value;$('#durationValue').value=(duration/1000).toFixed(2)+'s'};$('#slow').onchange=e=>slow=e.target.checked;$('#replay').onclick=async()=>{if(busy)return;busy=true;const el=document.querySelector('.surface'),snap=snapshot(el);if(snap){const old=snap.rect;const ratio=Math.min(innerWidth*.3/old.width,innerHeight*.4/old.height);snap.rect={...old.toJSON(),left:innerWidth*.35,top:innerHeight*.3,width:old.width*ratio,height:old.height*ratio};for(const part of Object.values(snap.shared||{})){const sr=part.rect;part.rect={left:snap.rect.left+(sr.left-old.left)*ratio,top:snap.rect.top+(sr.top-old.top)*ratio,width:sr.width*ratio,height:sr.height*ratio};part.fontSize*=ratio;part.letterSpacing*=ratio;}if(snap.image){const ir=snap.image.rect;snap.image.rect={left:snap.rect.left+(ir.left-old.left)*ratio,top:snap.rect.top+(ir.top-old.top)*ratio,width:ir.width*ratio,height:ir.height*ratio};}await morph(snap,el)}busy=false;};addEventListener('keydown',e=>handleEscapeKey(e,()=>dispatchCommand({id:'navigation.back',source:'keyboard'})),{capture:true});addEventListener('keydown',e=>handleProjectArrowKey(e,{canNavigate:()=>!busy&&(current==='work'||projectIds.includes(current))&&!mediaFocus.active&&!projectPopover.active&&!portfolioAssistant.active&&!document.activeElement?.closest('[data-hero-timeline],[data-card-gallery]')&&!document.querySelector('dialog[open]')&&$('#settings').hidden,move:direction=>dispatchCommand({id:direction<0?'project.previous':'project.next',source:'keyboard'})}),{capture:true});addEventListener('hashchange',navigate);const projectDrag=new ProjectDrag(main,{canStart:()=>!mediaFocus.active&&!busy&&!reduce.matches&&projectIds.includes(current),motion:motionMaterial,settleDuration:()=>duration*(slow?2.5:1),prepareSkin,createRipple:el=>reduce.matches?null:new LiquidImage(el,()=>intensity),onStart:()=>{busy=true;if(ambientMovementEnabled())ambientLight.hold(main.querySelector('.detail'));},onStage:layers=>{for(const {node,side} of layers){const paragraph=node.querySelector('.detail>.project-summary');if(side){dragReveals.set(side,new SummaryStream(paragraph,{mode:'fade',paused:true}));if(ambientDetailGlow&&cardHoverEffect==='glow'&&!hideCardHover&&!ambientMovementEnabled()){const detail=node.querySelector('.detail');detail.dataset.hoverEffect='glow';detail.setAttribute('data-hover-persistent','');dragAmbientEffects.push(mountSurfaceRenderer(detail,createLiquidReveal));}}else detachDragSummary=attachSummaryStream(main.querySelector('.detail>.project-summary'),paragraph);}if(ambientMovementEnabled())ambientLight.beginDrag(layers);},onMove:state=>ambientLight.drag(state),onCommit:direction=>dragReveals.get(direction)?.start(),neighbour:side=>{const p=adjacentCard(projects,canonicalProjectRoute(current),side);const html=cardDetail(p,layout,{headingBesideImage:detailHeadingBeside});return wideHero?html.replace('surface detail','surface detail wide-hero-card'):html;},onFinish:direction=>{detachDragSummary?.();detachDragSummary=null;if(direction){const route=adjacentCard(projects,canonicalProjectRoute(current),direction).id;render(route,{reveal:'fade',progress:dragReveals.get(direction)?.position||0,direction});history.pushState(null,'','#'+route);syncGalleryOrigin(route);}for(const reveal of dragReveals.values())reveal.destroy();dragReveals.clear();dragAmbientEffects.forEach(dispose=>dispose());dragAmbientEffects=[];if(ambientMovementEnabled())ambientLight.finishNavigation(main.querySelector('.detail'));if(!reduce.matches)pulseImages(main,1.3);busy=false;if(location.hash.slice(1)!==current&&location.hash)navigate();}});initEnvironment({onThemeChange:theme=>siteToast.show(theme==='system'?'System theme':`${theme==='light'?'Light':'Dark'} mode`,{key:'theme'})});applyEdgeShades();applyImageRounding();applyGeometryTokens();applyCardPadding();render(location.hash.slice(1)||'work');
 revealPage().then(()=>{if((current==='work'||current==='about')&&!busy)fadeUpIn(main);});
 
-mountSettingsTransfer($('#settings'),{canChange:()=>!busy&&!navigationPreparing});
+const settingsTransfer=mountSettingsTransfer($('#settings'),{canChange:()=>!busy&&!navigationPreparing});
+mountSettingsPublish($('#settings'),{schema:settingsTransfer.schema,writable:siteConfig.writable,canChange:()=>!busy&&!navigationPreparing});

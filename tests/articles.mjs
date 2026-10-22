@@ -1,11 +1,12 @@
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {contentModel} from '../dist/content/model.js';
-import {cardIds,informationCards,getDocument} from '../dist/documents.js';
+import {cardIds,informationCards,getDocument,cards} from '../dist/documents.js';
 import {cardDetail} from '../dist/card-renderer.js';
 import {articleDate} from '../dist/article-page.js';
 import {homeWritingMarkup} from '../dist/home-writing.js';
 import {HOME_SECTION_DEFAULTS} from '../dist/home-sections.js';
+import {homeMarkup} from '../dist/home-layout.js';
 
 const catalog=JSON.parse(await readFile(new URL('../content/catalog.json',import.meta.url),'utf8'));
 assert.doesNotThrow(()=>contentModel.assert(catalog),'Both articles and the table block validate');
@@ -30,5 +31,7 @@ const home=homeWritingMarkup();
 assert(home.includes('data-home-section="writing"')&&home.includes('>Writing and opinions</h2>'),'Home shows the writing section');
 assert(home.indexOf('#desire-and-lived-experience')<home.indexOf('#design-after-the-screen'),'Writing follows the authored order');
 assert.equal(HOME_SECTION_DEFAULTS.writing,true,'Writing can be toggled and starts visible');
+const page=homeMarkup(cards,'masonry'),at=name=>page.indexOf(`data-home-section="${name}"`);
+assert(at('about')<at('writing')&&at('writing')<at('testimonials'),'Writing sits after About and before Testimonials');
 const styles=await readFile(new URL('../scripts/client-styles.mjs',import.meta.url),'utf8');assert(styles.includes("'article.css'"),'Article styles ship in the bundle');
 console.log('Articles passed: schema, ISO dates, routes, byline, series links, table, sources, one-column reading and home writing section.');

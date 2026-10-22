@@ -711,6 +711,10 @@ export const catalog={
     {
       "id": "home",
       "type": "page",
+      "badge": {
+        "label": "Available",
+        "tone": "success"
+      },
       "template": "home",
       "status": "published",
       "slug": "work",
