@@ -1,0 +1,34 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {contentModel} from '../dist/content/model.js';
+import {cardIds,informationCards,getDocument} from '../dist/documents.js';
+import {cardDetail} from '../dist/card-renderer.js';
+import {articleDate} from '../dist/article-page.js';
+import {homeWritingMarkup} from '../dist/home-writing.js';
+import {HOME_SECTION_DEFAULTS} from '../dist/home-sections.js';
+
+const catalog=JSON.parse(await readFile(new URL('../content/catalog.json',import.meta.url),'utf8'));
+assert.doesNotThrow(()=>contentModel.assert(catalog),'Both articles and the table block validate');
+const broken=structuredClone(catalog);broken.documents.find(doc=>doc.id==='desire-and-lived-experience').publishedAt='14 Oct';
+assert.throws(()=>contentModel.assert(broken),'Article dates must be ISO calendar days');
+
+for(const id of ['desire-and-lived-experience','design-after-the-screen']){
+ assert(cardIds.includes(id),id+' is a route');assert(informationCards.some(card=>card.id===id),id+' returns home like an information page');
+}
+assert.equal(articleDate('2026-10-14'),'Oct 14, 2026','Dates keep the authored calendar day');
+
+const first=cardDetail(getDocument('desire-and-lived-experience')),second=cardDetail(getDocument('design-after-the-screen'));
+assert(first.includes('<time datetime="2026-10-14">Oct 14, 2026</time> · @Prem'),'Byline shows date and author');
+assert(first.includes('Part 1 of 2. <a href="#design-after-the-screen">Part 2: Design after the screen</a>.'),'Part 1 links to Part 2');
+assert(second.includes('Part 2 of 2. <a href="#desire-and-lived-experience">Part 1: The distance between desire and lived experience</a>.'),'Part 2 links back to Part 1');
+assert(second.includes('<th scope="col">Product decides</th><th scope="col">Design shapes</th>')&&(second.match(/<tr>/g)||[]).length===5,'The decisions table renders a header and four rows');
+assert(first.includes('<h2>The same evening, every era</h2>')&&first.includes('Nielsen Norman Group')&&second.includes('September 1991'),'Section headings and sources render');
+assert(!first.includes('class="story content-grid"'),'Articles read in one column, not the information card grid');
+assert(!/<(header|footer)\b/.test(first+second),'Article markup avoids header and footer tags, which carry fixed site chrome styles');
+
+const home=homeWritingMarkup();
+assert(home.includes('data-home-section="writing"')&&home.includes('>Writing and opinions</h2>'),'Home shows the writing section');
+assert(home.indexOf('#desire-and-lived-experience')<home.indexOf('#design-after-the-screen'),'Writing follows the authored order');
+assert.equal(HOME_SECTION_DEFAULTS.writing,true,'Writing can be toggled and starts visible');
+const styles=await readFile(new URL('../scripts/client-styles.mjs',import.meta.url),'utf8');assert(styles.includes("'article.css'"),'Article styles ship in the bundle');
+console.log('Articles passed: schema, ISO dates, routes, byline, series links, table, sources, one-column reading and home writing section.');

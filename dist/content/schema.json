@@ -539,6 +539,14 @@
           "type": "string",
           "maxLength": 100000
         },
+        "aftermath": {
+          "type": "string",
+          "maxLength": 100000
+        },
+        "lesson": {
+          "type": "string",
+          "maxLength": 100000
+        },
         "heroMediaId": {
           "type": "string",
           "pattern": "^[a-z][a-z0-9-]*$",
@@ -864,6 +872,209 @@
         "title",
         "blocks",
         "slug"
+      ],
+      "additionalProperties": false
+    },
+    "document-article": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "maxLength": 120
+        },
+        "status": {
+          "enum": [
+            "published",
+            "draft",
+            "archived"
+          ]
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "maxLength": 120
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 500,
+          "minLength": 1
+        },
+        "summary": {
+          "type": "string",
+          "maxLength": 100000
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "maxItems": 1000,
+          "uniqueItems": true
+        },
+        "domains": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "maxItems": 1000,
+          "uniqueItems": true
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "maxItems": 1000,
+          "uniqueItems": true
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "maxItems": 1000,
+          "uniqueItems": true
+        },
+        "category": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$",
+                "maxLength": 120
+              },
+              "label": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "url": {
+                "type": "string",
+                "maxLength": 500
+              }
+            },
+            "required": [
+              "id",
+              "label",
+              "url"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 1000
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "maxItems": 1000
+        },
+        "blocks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/block"
+          },
+          "maxItems": 1000
+        },
+        "publishedAt": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "author": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "series": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]*$",
+              "maxLength": 120
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "part": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "of": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "id",
+            "part",
+            "of"
+          ],
+          "additionalProperties": false
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "publisher": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "date": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "url": {
+                "type": "string",
+                "maxLength": 500
+              }
+            },
+            "required": [
+              "label"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 1000
+        },
+        "type": {
+          "const": "article"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "status",
+        "title",
+        "blocks",
+        "slug",
+        "publishedAt",
+        "author"
       ],
       "additionalProperties": false
     },
@@ -1834,6 +2045,107 @@
       ],
       "additionalProperties": false
     },
+    "block-table": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "maxLength": 120
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "label": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "layout": {
+          "type": "object",
+          "properties": {
+            "columns": {
+              "enum": [
+                1,
+                2
+              ]
+            },
+            "mediaFit": {
+              "enum": [
+                "max-side",
+                "contain",
+                "full-bleed"
+              ]
+            },
+            "span": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 4
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "appearance": {
+          "type": "object",
+          "properties": {
+            "surface": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^#[0-9a-fA-F]{6}$"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "maxItems": 1000,
+          "uniqueItems": true
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "maxItems": 6,
+          "minItems": 2
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 100000
+            },
+            "maxItems": 6,
+            "minItems": 2
+          },
+          "maxItems": 1000,
+          "minItems": 1
+        },
+        "type": {
+          "const": "table"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "columns",
+        "rows"
+      ],
+      "additionalProperties": false
+    },
     "block-quote": {
       "type": "object",
       "properties": {
@@ -1934,6 +2246,9 @@
           "$ref": "#/$defs/document-news"
         },
         {
+          "$ref": "#/$defs/document-article"
+        },
+        {
           "$ref": "#/$defs/document-component"
         }
       ]
@@ -1966,6 +2281,9 @@
         },
         {
           "$ref": "#/$defs/block-metric"
+        },
+        {
+          "$ref": "#/$defs/block-table"
         },
         {
           "$ref": "#/$defs/block-quote"

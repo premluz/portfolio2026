@@ -3,7 +3,7 @@ import {createCommandCatalog,parseVoiceCommand,isVoiceNavigationRequest,CommandB
 import {homeProjects,projects as allProjects} from '../dist/documents.js';
 
 const catalog=createCommandCatalog([...homeProjects,allProjects.find(project=>project.id==='porter')]);
-assert.equal(catalog.version,1);assert.equal(catalog.projects.length,8);
+assert.equal(catalog.version,1);assert.equal(catalog.projects.length,9);
 for(const [phrase,id,target] of [
   ['Open PlayStation','project.open','playstation'],['open play station','project.open','playstation'],
   ['Please open the Sony project.','project.open','playstation'],['Open Tracer','project.open','tracr'],

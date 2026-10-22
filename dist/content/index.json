@@ -378,6 +378,72 @@
       "kind": null,
       "client": null,
       "evidenceIds": []
+    },
+    {
+      "id": "desire-and-lived-experience",
+      "type": "article",
+      "title": "The distance between desire and lived experience",
+      "pageTitle": "The distance between desire and lived experience",
+      "summary": "The evening itself has barely changed in thirty-five years. The distance to it keeps changing shape.",
+      "domains": [],
+      "capabilities": [],
+      "tags": [],
+      "kind": null,
+      "client": null,
+      "evidenceIds": []
+    },
+    {
+      "id": "design-after-the-screen",
+      "type": "article",
+      "title": "Design after the screen",
+      "pageTitle": "Design after the screen",
+      "summary": "The screen is shrinking as a place to design. The surface for design is growing everywhere else.",
+      "domains": [],
+      "capabilities": [],
+      "tags": [],
+      "kind": null,
+      "client": null,
+      "evidenceIds": []
+    },
+    {
+      "id": "home-writing",
+      "type": "component",
+      "title": "Writing and opinions",
+      "pageTitle": "Writing and opinions",
+      "summary": "",
+      "domains": [],
+      "capabilities": [],
+      "tags": [],
+      "kind": null,
+      "client": null,
+      "evidenceIds": []
+    },
+    {
+      "id": "gala-defi",
+      "type": "portfolio-item",
+      "title": "Brought coherence to a DeFi stack that launched fast, outsourced and stitched together",
+      "pageTitle": "Designing for trust and ease of use in a DeFi stack that launched without design.",
+      "summary": "Senior product designer • North Star • Easy mode",
+      "domains": [
+        "DeFi",
+        "Web3",
+        "Finance",
+        "Trading"
+      ],
+      "capabilities": [
+        "Product design",
+        "Design systems",
+        "Conversational UI",
+        "AI-assisted delivery",
+        "Front-end prototyping"
+      ],
+      "tags": [],
+      "kind": "shipped",
+      "client": "Gala",
+      "evidenceIds": [
+        "highlights",
+        "impact"
+      ]
     }
   ]
 }

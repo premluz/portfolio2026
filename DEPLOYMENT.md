@@ -53,6 +53,26 @@ Production environment variables. The Vercel adapter defaults
 explicit environment variables override those values. `AI_VOICE_ID` overrides
 the shared voice handler's default. Redeploy after changing variables.
 
+#### Content sets (dev panel)
+
+Every `content/catalog*.json` is built into the deploy as a content set; all
+share the same media. `api/site-config.js` records which set is live, and the
+dev panel (`?dev=1` → Content) switches it for every visitor without a
+redeploy. A write can only name a set that shipped; nothing is uploaded or
+deleted. The choice lives in Vercel Global Config:
+
+1. In the Vercel dashboard, create a Global Config store (Storage) and note its ID.
+2. Create a Global Config read access token for it.
+3. Create a Vercel REST API token that can update that Global Config.
+4. Set `GLOBAL_CONFIG_ID`, `GLOBAL_CONFIG_READ_TOKEN` and `VERCEL_API_TOKEN`
+   (plus `VERCEL_TEAM_ID` if the store belongs to a team) and redeploy.
+
+Without them the site serves `catalog` and the picker is read-only. Locally,
+`npm run dev` keeps the choice in memory. To add a set, create
+`content/catalog2.json` (or `catalog-<name>.json`), rebuild and deploy once;
+after that only the dropdown changes which set is served. Run
+`node tests/site-config.mjs` to check the endpoint.
+
 Run `node tests/vercel-api.mjs` to check both entry points, provider configuration,
 signed playback, origin validation, bounded bodies and client IP normalization.
 

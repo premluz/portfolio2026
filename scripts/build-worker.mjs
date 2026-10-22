@@ -2,6 +2,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {buildClientStyles} from './client-styles.mjs';
+import {contentSets} from '../dist/content/sets.js';
+import {DEFAULT_CONTENT_SET} from '../dist/content/content-set.js';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 await buildClientStyles();
@@ -17,11 +19,14 @@ for(const entry of await fs.readdir(dist,{withFileTypes:true})){
  await fs.cp(path.join(dist,entry.name),path.join(client,entry.name),{recursive:true});
 }
 await fs.mkdir(server,{recursive:true});
-const catalog=JSON.parse(await fs.readFile(path.join(dist,'content/catalog.json'),'utf8'));
-const publishedAssistantDocuments=catalog.documents
+// Each content set gets its own assistant documents so answers follow whichever set is live.
+const assistantDocuments=catalog=>catalog.documents
  .filter(document=>document.status==='published'&&['portfolio-item','component','page'].includes(document.type))
  .map(({id,type,status,title,pageTitle,intro,name,client,prototype,aliases,kind,category,domains,capabilities,tags,summary,context,challenge,role,highlights,keyWork,impact,blocks,evidence})=>({id,type,status,title,pageTitle,intro,name,client,prototype,aliases,kind,category,domains,capabilities,tags,summary,context,challenge,role,highlights,keyWork,impact,blocks,evidence}));
-await fs.writeFile(path.join(server,'content.js'),`// Generated from the published content catalog.\nexport const publishedAssistantDocuments=${JSON.stringify(publishedAssistantDocuments)};\n`);
+const assistantDocumentSets={};
+for(const set of contentSets)assistantDocumentSets[set]=assistantDocuments(JSON.parse(await fs.readFile(path.join(dist,`content/${set}.json`),'utf8')));
+const publishedAssistantDocuments=assistantDocumentSets[DEFAULT_CONTENT_SET];
+await fs.writeFile(path.join(server,'content.js'),`// Generated from the published content catalogs.\nexport const assistantDocumentSets=${JSON.stringify(assistantDocumentSets)};\nexport const publishedAssistantDocuments=assistantDocumentSets[${JSON.stringify(DEFAULT_CONTENT_SET)}];\n`);
 await fs.copyFile(path.join(root,'worker/index.js'),path.join(server,'index.js'));
 const assistantCore=await fs.readFile(path.join(root,'worker/assistant-core.mjs'),'utf8');
 await fs.writeFile(path.join(server,'assistant-core.mjs'),assistantCore.replaceAll("'../dist/","'./"));

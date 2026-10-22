@@ -109,7 +109,7 @@
 <label class="check"><input type="checkbox" data-home-section-control="about-timeline" checked> About timeline</label>
 <label class="check"><input type="checkbox" data-home-section-control="experience" checked> Experience &amp; side projects</label>
 <label>Experience width <select data-home-span-control="experience"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
-<label class="check"><input type="checkbox" data-home-section-control="testimonials" checked> Testimonials</label>
+<label class="check"><input type="checkbox" data-home-section-control="testimonials" checked> Testimonials</label><label class="check"><input type="checkbox" data-home-section-control="writing" checked> Writing and opinions</label>
 
 </div></details>
 <details class="developer-settings-group">
@@ -214,6 +214,9 @@
 <label class="check"><input id="edgeShadeRetreat" type="checkbox" checked> Move edge shades away on details</label>
 <label>Edge shade depth <output id="edgeShadeDepthValue">100%</output><input id="edgeShadeDepth" type="range" min="0" max="200" step="10" value="100"></label>
 </div></details>
+<details class="developer-settings-group">
+<summary>Content</summary><div class="developer-settings-content"><label>Content set <select id="contentSet" data-settings-scope="server" aria-describedby="contentSetStatus"><option value="catalog" selected>catalog</option></select></label><p id="contentSetStatus" class="content-set-status" aria-live="polite"></p></div>
+</details>
 <details class="developer-settings-group">
 <summary>Design system</summary><div class="developer-settings-content" data-settings-slot="design-system"><label class="check"><input id="glassStyle" type="checkbox" checked> Glass buttons &amp; cards</label></div>
 </details>

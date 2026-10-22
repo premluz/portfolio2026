@@ -15,6 +15,9 @@ for asset in json.loads((root / "content/catalog.json").read_text())["assets"]:
     source = root / "dist" / asset["url"]
     if not source.is_file():
         continue
+    # Vectors scale without raster variants, and Pillow cannot decode them.
+    if source.suffix.lower() == ".svg":
+        continue
     with Image.open(source) as raw:
         source_image = ImageOps.exif_transpose(raw)
         has_alpha = "A" in source_image.getbands() and source_image.getchannel("A").getextrema() != (255, 255)

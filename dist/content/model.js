@@ -12,9 +12,10 @@ const surface={type:'array',items:{type:'string',pattern:'^#[0-9a-fA-F]{6}$'},mi
 const blockBase={id,title:short,label:short,layout:object({columns:{enum:[1,2]},mediaFit:{enum:['max-side','contain','full-bleed']},span:{type:'integer',minimum:1,maximum:4}}),appearance:object({surface}),evidenceIds:strings};
 const common={id,status:{enum:['published','draft','archived']},slug:id,title:{...short,minLength:1},summary:text,name:short,aliases:strings,domains:strings,capabilities:strings,tags:strings,category:short,revision:{type:'integer',minimum:1},updatedAt:{type:'string'},links:list(link),evidence:list(ref('evidence')),blocks:{...list(ref('block')),maxItems:CONTENT_LIMITS.blocks}};
 export const documentTypeDefinitions=Object.freeze({
- 'portfolio-item':{label:'Portfolio item',properties:{prototype:object({url:short,label:short}),watchPrototype:object({url:short,label:short},['url','label']),qrCodeMediaId:id,qrCodeLabel:short,client:short,kind:{enum:['shipped','lab']},featured:{type:'boolean'},listOnly:{type:'boolean'},pageTitle:short,intro:text,context:text,challenge:text,role:text,highlights:text,keyWork:text,impact:text,heroMediaId:id,hoverVideoId:id},required:['slug','name','kind','context','role','keyWork']},
+ 'portfolio-item':{label:'Portfolio item',properties:{prototype:object({url:short,label:short}),watchPrototype:object({url:short,label:short},['url','label']),qrCodeMediaId:id,qrCodeLabel:short,client:short,kind:{enum:['shipped','lab']},featured:{type:'boolean'},listOnly:{type:'boolean'},pageTitle:short,intro:text,context:text,challenge:text,role:text,highlights:text,keyWork:text,impact:text,aftermath:text,lesson:text,heroMediaId:id,hoverVideoId:id},required:['slug','name','kind','context','role','keyWork']},
  page:{label:'Page',properties:{template:{enum:['home','information']}},required:['slug']},
  news:{label:'News',properties:{publishedAt:short},required:['slug']},
+ article:{label:'Article',properties:{publishedAt:{type:'string',pattern:'^\\d{4}-\\d{2}-\\d{2}$'},author:short,series:object({id,title:short,part:{type:'integer',minimum:1},of:{type:'integer',minimum:1}},['id','part','of']),sources:list(object({label:short,publisher:short,date:short,url:short},['label']))},required:['slug','publishedAt','author']},
  component:{label:'Reusable component',properties:{}}
 });
 export const blockTypeDefinitions=Object.freeze({
@@ -27,6 +28,7 @@ export const blockTypeDefinitions=Object.freeze({
  carousel:{label:'Carousel',properties:{items:{...list(ref('block')),minItems:1,maxItems:100},description:text},required:['items']},
  reference:{label:'Document reference',properties:{documentId:id,presentation:{enum:['card','inline']}},required:['documentId','presentation']},
  metric:{label:'Metric',properties:{value:short,description:text,evidenceIds:{...strings,minItems:1}},required:['value','label','evidenceIds']},
+ table:{label:'Table',properties:{columns:{...list(short),minItems:2,maxItems:6},rows:{...list({...list(text),minItems:2,maxItems:6}),minItems:1}},required:['columns','rows']},
  quote:{label:'Quote',properties:{text,attribution:short,evidenceIds:{...strings,minItems:1}},required:['text','attribution','evidenceIds']}
 });
 const provenance={anyOf:[object({kind:{const:'author-provided'},label:short},['kind']),object({kind:{const:'source-linked'},source:object({url:short,label:short,locator:short},['url','label'])},['kind','source'])]};

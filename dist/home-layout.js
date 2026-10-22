@@ -3,6 +3,7 @@ import {homeAboutMarkup} from './home-about.js';
 import {homeApproachMarkup} from './home-approach.js';
 import {homeServicesMarkup} from './home-services.js';
 import {homeTestimonialsMarkup} from './home-testimonials.js';
+import {homeWritingMarkup} from './home-writing.js';
 import {fitHeroToViewport} from './hero-viewport.js';
 import {HeroTimeline} from './hero-timeline.js';
 import {HeroCarousel} from './hero-carousel.js';
@@ -26,7 +27,7 @@ export function homeMarkup(documents,layout,{heroContent='timeline'}={}){
  <div class="gallery-grid" data-gallery>${projects.map((doc,index)=>slot(doc,index)).join('')}</div>
  <div class="grid info-grid" data-information hidden></div>
  </div>
- ${homeApproachMarkup()}${homeServicesMarkup()}${homeAboutMarkup()}${homeTestimonialsMarkup()}<nav class="flip-index" aria-label="Project spotlight">${projects.map((doc,index)=>`<button data-spotlight="${escapeText(doc.id)}" aria-label="Show ${escapeText(doc.name)}" title="${escapeText(doc.name)}"><span aria-hidden="true"></span></button>`).join('')}</nav></div>`;
+ ${homeApproachMarkup()}${homeServicesMarkup()}${homeAboutMarkup()}${homeTestimonialsMarkup()}${homeWritingMarkup()}<nav class="flip-index" aria-label="Project spotlight">${projects.map((doc,index)=>`<button data-spotlight="${escapeText(doc.id)}" aria-label="Show ${escapeText(doc.name)}" title="${escapeText(doc.name)}"><span aria-hidden="true"></span></button>`).join('')}</nav></div>`;
 }
 
 // The three adapters own placement and shared spotlight selection. Documents, DOM cards, image contexts and

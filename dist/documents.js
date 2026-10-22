@@ -3,7 +3,9 @@ import {content} from './content/local.js';
 // authored once in content/catalog.json; card placements keep their own DOM IDs.
 const homeCards=content.getLayoutCards('home');
 const textOnlyProjects=content.list({type:'portfolio-item'}).filter(document=>document.listOnly===true).map(document=>content.getCard(document.id));
-export const cards=[...homeCards,...textOnlyProjects];
+// Articles have no home grid placement; they are routes reached from the writing section.
+const articles=content.list({type:'article'}).map(document=>content.getCard(document.id));
+export const cards=[...homeCards,...textOnlyProjects,...articles];
 export const homeProjects=homeCards.filter(card=>card._type==='portfolio');
 export const projects=[...homeProjects.filter(card=>!card.sourceProjectId),...textOnlyProjects];
 export const informationCards=cards.filter(card=>card._type==='information');

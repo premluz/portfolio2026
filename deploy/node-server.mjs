@@ -5,12 +5,17 @@ import path from 'node:path';
 import {Readable} from 'node:stream';
 import {fileURLToPath} from 'node:url';
 import {readPublishedSettings,publishedSettingsModule} from '../scripts/site-settings.mjs';
-import {readDevelopmentCatalog,developmentResponse} from './development.mjs';
+import {readDevelopmentCatalog,developmentResponse,developmentContentSets} from './development.mjs';
+import {activeContentSet,globalConfigStore,handleSiteConfigRequest,memoryStore} from '../worker/site-config-core.mjs';
 
 const development=process.argv.includes('--dev');
 const {handleAssistantRequest}=await import(development?'../worker/assistant-core.mjs':'../dist/server/assistant-core.mjs');
 const {handleVoiceRequest}=await import(development?'../worker/voice-core.mjs':'../dist/server/voice-core.mjs');
-const publishedAssistantDocuments=development?null:(await import('../dist/server/content.js')).publishedAssistantDocuments;
+const assistantDocumentSets=development?null:(await import('../dist/server/content.js')).assistantDocumentSets;
+const builtContentSets=development?null:(await import('../dist/content/sets.js')).contentSets;
+// Without Global Config, development keeps the choice in memory so the dev panel still works locally.
+const siteConfigStore=globalConfigStore(process.env)||(development?memoryStore():null);
+const contentSetNames=()=>development?developmentContentSets():builtContentSets;
 const publicDirectory=path.resolve(fileURLToPath(new URL(development?'../dist/':'../dist/client/',import.meta.url)));
 const trustedProxy=process.env.TRUST_PROXY==='true';
 const environment={
@@ -66,11 +71,18 @@ function fetchRequest(incoming,url){
 }
 
 async function serveApi(incoming,response,url){
- const handler=url.pathname==='/api/assistant'?handleAssistantRequest:url.pathname==='/api/voice'?handleVoiceRequest:null;
+ const siteConfig=url.pathname==='/api/site-config';
+ const handler=url.pathname==='/api/assistant'?handleAssistantRequest:url.pathname==='/api/voice'?handleVoiceRequest:siteConfig?handleSiteConfigRequest:null;
  if(!handler)return sendJson(response,404,{error:'not_found'});
  try{
-  const documents=development&&url.pathname==='/api/assistant'?(await readDevelopmentCatalog()).documents.filter(doc=>['portfolio-item','component','page'].includes(doc.type)):publishedAssistantDocuments;
-  const result=await handler(fetchRequest(incoming,url),environment,{documents});
+  const sets=await contentSetNames();
+  let result;
+  if(siteConfig)result=await handleSiteConfigRequest(fetchRequest(incoming,url),siteConfigStore,{sets});
+  else{
+   const set=url.pathname==='/api/assistant'?await activeContentSet(siteConfigStore,sets):null;
+   const documents=set===null?null:development?(await readDevelopmentCatalog(new URL(`../content/${set}.json`,import.meta.url))).documents.filter(doc=>['portfolio-item','component','page'].includes(doc.type)):assistantDocumentSets[set];
+   result=await handler(fetchRequest(incoming,url),environment,{documents});
+  }
   response.statusCode=result.status;
   for(const [name,value] of result.headers)response.setHeader(name,value);
   if(!result.body){response.end();return;}

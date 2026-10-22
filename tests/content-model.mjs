@@ -10,8 +10,8 @@ const copy=()=>structuredClone(catalog);
 const invalid=(mutate,pattern)=>{const c=copy();mutate(c);assert.throws(()=>contentModel.assert(c),error=>error instanceof ContentValidationError&&pattern.test(error.message));};
 assert.deepEqual(contentModel.validate(catalog),[]);
 assert.deepEqual(JSON.parse(await fs.readFile(new URL('../dist/content/schema.json',import.meta.url))),contentModel.schema);
-assert.equal(content.list({type:'portfolio-item'}).length,8);
-assert.equal(cards.length,catalog.layouts.find(layout=>layout.id==='home').items.length+catalog.documents.filter(doc=>doc.listOnly===true&&doc.status==='published').length,'Every layout placement and list-only project is a route card');assert.equal(projects.length,8,'Project navigation includes authored projects and text-only list entries');
+assert.equal(content.list({type:'portfolio-item'}).length,9);
+assert.equal(cards.length,catalog.layouts.find(layout=>layout.id==='home').items.length+catalog.documents.filter(doc=>doc.listOnly===true&&doc.status==='published').length+catalog.documents.filter(doc=>doc.type==='article'&&doc.status==='published').length,'Every layout placement, list-only project and article is a route card');assert.equal(projects.length,9,'Project navigation includes authored projects and text-only list entries');
 for(const id of ['merlin','rios','playstation','vodafone-iot','tracr','galachain','bastion','porter'])assert(content.get(id),`The published portfolio includes ${id}`);
 assert.equal(content.get('planner'),null,'Rios has one canonical document, not an old-ID duplicate');
 assert.equal(content.get('rios').slug,'rios');
@@ -66,7 +66,7 @@ assert.equal(content.search({query:'workflow',type:'portfolio-item'}).items[0].d
 assert.equal(content.search({kind:'lab',type:'portfolio-item'}).total,3);
 assert.equal(content.search({query:'Mac switchboard AI agents',type:'portfolio-item'}).items[0].documentId,'porter');
 assert.equal(content.search({domain:'Enterprise',type:'portfolio-item'}).total,3);
-assert.equal(content.search({capability:'Product design',type:'portfolio-item'}).total,4);
+assert.equal(content.search({capability:'Product design',type:'portfolio-item'}).total,5);
 assert.equal(content.search({type:'portfolio-item',limit:2,offset:4}).items.length,2);
 assert.throws(()=>content.search({limit:200}),RangeError);assert.throws(()=>content.search({domainz:'Enterprise'}),/Invalid content filter/);
 const resolved=content.resolveAnswer({type:'mixed',text:'Publishing experience.',documentIds:['playstation'],citations:[{documentId:'playstation',evidenceId:'highlights'}]});
@@ -82,8 +82,9 @@ source=copy();const abort=new AbortController();abort.abort();await assert.rejec
 const http=createHttpContentProvider('/cms',{fetch:async()=>({ok:true,json:async()=>({payload:catalog})}),adapt:r=>r.payload});assert.equal((await http.load()).get('tracr').id,'tracr');
 await assert.rejects(createHttpContentProvider('/cms',{fetch:async()=>({ok:false,status:503})}).load(),/503/);
 // Additional document and block schemas plug into the same boundary.
-const extended=createContentModel({documentTypes:{article:{properties:{author:{type:'string'}},required:['author']}},blockTypes:{callout:{properties:{tone:{enum:['quiet','accent']}},required:['tone']}}});
-const ext=copy();ext.documents.push({id:'article',type:'article',status:'published',title:'Article',author:'Prem',blocks:[{id:'callout',type:'callout',tone:'quiet'}]});assert.deepEqual(extended.validate(ext),[]);assert.equal(createContentStore(ext,{model:extended}).get('article').author,'Prem');
+const extended=createContentModel({documentTypes:{podcast:{properties:{host:{type:'string'}},required:['host']}},blockTypes:{callout:{properties:{tone:{enum:['quiet','accent']}},required:['tone']}}});
+const ext=copy();ext.documents.push({id:'episode',type:'podcast',status:'published',title:'Episode',host:'Prem',blocks:[{id:'callout',type:'callout',tone:'quiet'}]});assert.deepEqual(extended.validate(ext),[]);assert.equal(createContentStore(ext,{model:extended}).get('episode').host,'Prem');
+assert.throws(()=>createContentModel({documentTypes:{article:{properties:{}}}}),/schema migration/,'Built-in article cannot be redefined by an extension');
 assert.throws(()=>createContentModel({blockTypes:{custom:{properties:{id:{type:'string'}}}}}),/shared content fields/);
 assert.throws(()=>createContentModel({blockTypes:{custom:{properties:{value:{type:'string',format:'unknown'}}}}}),/Unsupported schema keyword/);
 console.log('Content model passed: canonical identity, schema and reference integrity, draft isolation, safe URLs, evidence, bounded nesting, retrieval, typed answers, immutable snapshots, CMS refresh and extension contracts.');

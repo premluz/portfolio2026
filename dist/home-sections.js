@@ -1,5 +1,5 @@
 import {normaliseSectionSpan} from './content-widths.js';
-export const HOME_SECTION_DEFAULTS=Object.freeze({approach:true,services:true,about:true,'about-timeline':true,experience:true,testimonials:true});
+export const HOME_SECTION_DEFAULTS=Object.freeze({approach:true,services:true,about:true,'about-timeline':true,experience:true,testimonials:true,writing:true});
 const storageKey='prem-home-content';
 const spansKey='prem-home-section-spans';
 

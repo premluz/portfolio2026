@@ -28,7 +28,11 @@ const root={documentElement:{dataset:{themePreference:'system'}},querySelector:s
 const map=new Map([['prem-assistant-session','keep conversation'],['unrelated-key','keep'],['prem-card-padding-left','24']]);
 const storage={getItem:key=>map.get(key)??null,setItem:(key,value)=>map.set(key,String(value)),removeItem:key=>map.delete(key)};
 const schema=settingsSchema(panel,root);
-assert.equal(schema.size,controls.length+3,'Every developer control is covered, including hidden and generated controls');
+// Server-scoped controls (the live content set) save to the site, never to a visitor's exported settings.
+const serverControls=controls.filter(input=>input.dataset.settingsScope==='server');
+assert.deepEqual(serverControls.map(input=>input.id),['contentSet'],'Only the content set picker is server-scoped');
+assert(![...schema.values()].some(field=>field.input?.id==='contentSet'),'The content set is not part of exported settings');
+assert.equal(schema.size,controls.length-serverControls.length+3,'Every other developer control is covered, including hidden and generated controls');
 const preset=exportSettings(schema,storage,new Date('2026-10-12T12:00:00Z'));
 assert.equal(preset.settings.theme,'system');assert.equal(preset.settings.cardPaddingRight,null,'Automatic design-system padding stays automatic');assert.equal(preset.settings.cardPaddingLeft,40);
 assert.equal(preset.settings.cardShowClient,true);assert.equal(preset.settings.cardShowTitle,true);assert.equal(preset.settings.cardShowDescription,true,'Card text visibility controls are included in exported settings');

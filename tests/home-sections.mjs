@@ -12,7 +12,7 @@ const storage={getItem:()=>saved,setItem:(key,value)=>{assert.equal(key,'prem-ho
 assert.deepEqual(readHomeSections(storage),HOME_SECTION_DEFAULTS);
 saved='{broken';assert.deepEqual(readHomeSections(storage),HOME_SECTION_DEFAULTS);
 saved=JSON.stringify({about:false,experience:'false',services:0,unknown:false});
-assert.deepEqual(readHomeSections(storage),{approach:true,services:true,about:false,'about-timeline':true,experience:true,testimonials:true});
+assert.deepEqual(readHomeSections(storage),{approach:true,services:true,about:false,'about-timeline':true,experience:true,testimonials:true,writing:true});
 assert.deepEqual(readHomeSections({getItem(){throw new Error('Unavailable storage');}}),HOME_SECTION_DEFAULTS);
 saved=null;
 

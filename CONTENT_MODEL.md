@@ -194,6 +194,20 @@ raw markup. Existing readers receive only public validated snapshots by default.
 
 The homepage document includes a `timeline` block with an ordered `items` array of typed content blocks. Add, remove or reorder those items in `content/catalog.json`, keeping each item ID stable. Text items use `paragraphs`; info cards can also supply a safe `link`. The hero renderer displays this sequence on a horizontal rail. Interaction preferences belong to the presentation layer, not the content document. Run `node scripts/build-content.mjs` after content edits.
 
+## Articles
+
+`article` documents are blog posts. They need `slug`, `title`, `publishedAt`
+(an ISO calendar day, `YYYY-MM-DD`) and `author`; `summary` is the excerpt on the
+home list. Optional `series` (`id`, `part`, `of`) links every part with the same
+series `id`, and `sources` lists citations (`label`, plus optional `publisher`,
+`date` and `url`). Body sections are `text` blocks whose `title` becomes the
+section heading; a `table` block (`columns`, `rows`) renders a comparison grid.
+
+Articles are routes (`#<id>`) that slide in and fade back like information
+pages, but render in one reading column (`article-page.js`). The
+`home-writing` component lists them on the home page in its reference order,
+under the `writing` home-section toggle.
+
 ## Project prototype metadata
 
 Each portfolio document separates `title` (the card headline) from `pageTitle`

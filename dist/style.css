@@ -38,6 +38,8 @@ header .theme-toggle{margin-left:auto;padding:10px 16px;border-radius:18px;backg
 .layout-control{background:var(--chrome)}.layout-control button{color:var(--muted)}.layout-control button.active{background:rgba(var(--glass-rgb),.8);color:var(--ink)}
 .dock-shapes i{background:var(--chrome);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}.dock nav a,.context-nav span{color:var(--muted)}.dock nav a.active{color:var(--ink);background:rgba(var(--glass-rgb),.5)}
 #settings{background:var(--panel);color:var(--ink);border-color:#ffffff29}#settings label,#settings p{color:var(--muted)}#replay{background:var(--chrome);color:var(--ink)}.setting-section{font-size:12px;text-transform:uppercase;letter-spacing:1.2px;margin:22px 0 14px;color:var(--muted)}.theme-choices{display:flex;padding:4px;border-radius:16px;background:var(--chrome);gap:4px}.theme-choices button{width:50%;padding:10px;border-radius:12px;background:none;color:var(--muted)}.theme-choices button.active{background:rgba(var(--glass-rgb),.8);color:var(--ink)}
+.content-set-status{margin:var(--space-1) 0 0;color:var(--muted);font-size:var(--font-size-caption);line-height:var(--line-height-label)}
+.content-set-status:empty{display:none}
 .room-upload{border:1px dashed #938aab88;border-radius:18px;padding:8px;margin-top:18px}.room-upload #chooseRoom{display:flex;flex-direction:column;align-items:center;gap:8px;background:none;width:100%;padding:18px 8px;font-size:14px;color:var(--ink)}.room-upload small{font-size:var(--font-size-note);color:var(--muted)}#roomName{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#removeRoom{background:var(--chrome);padding:9px;border-radius:11px;width:100%;font-size:12px;color:var(--ink)}#roomStatus:empty{display:none}
 .room-drop-overlay{position:fixed;inset:18px;z-index:90;border:2px dashed #c1a3ff;border-radius:30px;background:#171322a6;pointer-events:none;align-items:center;justify-content:center;color:white;font-size:30px}.room-drop-overlay:not([hidden]){display:flex}.room-drop-overlay span{padding:22px 30px;background:#ffffff14;border-radius:24px}
 @media(max-width:600px){header{gap:12px}.discipline{display:none}.room-drop-overlay{font-size:22px}.has-room .intro h1{font-size:28px}}
@@ -226,6 +228,7 @@ body.edge-shade-top .page-edge-shades .top,body.edge-shade-bottom .page-edge-sha
 /* Fit source imagery inside its visual frame without cropping or changing its ratio. */
 .visual{background:transparent}
 .visual img,.flow-picture img{object-fit:contain;object-position:center}
+.flow-picture[data-block-align="end"]{--image-block-align:end}
 .flow-picture[data-block-align="end"] img{object-position:center bottom}
 .flow-picture.visual{background:transparent}
 .visual canvas,.flow-picture canvas{object-fit:fill}

@@ -25,6 +25,7 @@ export const blockRenderers=Object.freeze({
   return header(doc)+paragraphs(doc.summary?[doc.summary]:[])+doc.blocks.map(item=>ctx.render(item,true)).join('');
  },
  metric:b=>header(b)+`<p class="content-metric">${escapeText(b.value)}</p>`+paragraphs(b.description?[b.description]:[]),
+ table:b=>header(b)+`<div class="content-table-scroll"><table class="content-table"><thead><tr>${b.columns.map(column=>`<th scope="col">${escapeText(column)}</th>`).join('')}</tr></thead><tbody>${b.rows.map(row=>`<tr>${row.map(cell=>`<td>${escapeText(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`,
  quote:b=>header(b)+`<figure class="content-quote"><blockquote><p>${escapeText(b.text)}</p></blockquote><figcaption>${escapeText(b.attribution)}</figcaption></figure>`
 });
 /** A new block type registers a schema and a renderer, without changing layout. */

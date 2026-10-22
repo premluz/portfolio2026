@@ -450,7 +450,11 @@
       "pageTitle": "Designed Web3 film platform rewarding creators and fans.",
       "intro": "I designed a decentralised entertainment platform where fans could watch, collect and earn while creators could publish and monetise directly.",
       "challenge": "Make unfamiliar Web3 concepts disappear into familiar consumer and creator workflows while inventing ownership, monetisation and distribution models from scratch.",
-      "hoverVideoId": "gala-walkthrough"
+      "hoverVideoId": "gala-walkthrough",
+      "watchPrototype": {
+        "label": "Launch reel",
+        "url": "https://www.youtube.com/watch?v=SZioWD7iLxQ"
+      }
     },
     {
       "id": "bastion",
@@ -836,6 +840,12 @@
               "id": "home-project-galachain",
               "type": "reference",
               "documentId": "galachain",
+              "presentation": "card"
+            },
+            {
+              "id": "home-project-gala-defi",
+              "type": "reference",
+              "documentId": "gala-defi",
               "presentation": "card"
             },
             {
@@ -1533,6 +1543,312 @@
           ]
         }
       ]
+    },
+    {
+      "id": "desire-and-lived-experience",
+      "type": "article",
+      "status": "published",
+      "slug": "desire-and-lived-experience",
+      "title": "The distance between desire and lived experience",
+      "summary": "The evening itself has barely changed in thirty-five years. The distance to it keeps changing shape.",
+      "publishedAt": "2026-10-14",
+      "author": "@Prem",
+      "series": {
+        "id": "design-and-distance",
+        "part": 1,
+        "of": 2
+      },
+      "blocks": [
+        {
+          "id": "distance-opening",
+          "type": "text",
+          "paragraphs": [
+            "You want an evening with Ana. A table somewhere, a long conversation, the kind of laugh that only happens in person. A desire sparks, and a lived experience waits at the other end.",
+            "Everything in between is distance: calls, messages, forms, maps, waiting. For as long as there have been designers, they have worked in that space. Designers were designing the distance between desire and lived experience.",
+            "The evening itself has barely changed in thirty-five years. The distance to it keeps changing shape."
+          ]
+        },
+        {
+          "id": "distance-eras",
+          "type": "text",
+          "title": "The same evening, every era",
+          "paragraphs": [
+            "Around 1990, you ring Ana on a landline and check a paper diary. Then you find the restaurant in the phone book and ring again. Designers shaped the keypad, the diary page and the directory listing.",
+            "Around 2000, a desktop computer joins the phone. You email Ana, look up the restaurant's website and print a map for the journey. Designers made the machine legible with windows, icons and a pointer.",
+            "Around 2005, you book online through a web form: fields, dropdowns, a captcha, a pop-up offering a newsletter, a confirmation email. The interface sits at its peak, and so does the friction.",
+            "Around 2012, the smartphone puts it all in your pocket. You message Ana through instant messaging, \"does Thursday work?\", book in an app and follow a map app to the door. Designers spend a decade removing steps on purpose.",
+            "Today, the pieces are connected into systems. Calendars sync across phone, watch and laptop, notifications follow you, and AI assistants can suggest a place. Arranging the evening still means moving between a messenger, a calendar, a booking app and a map.",
+            "Next, you think dinner with Ana next week, and an agent does the rest. What reaches you is one line: Thursday, 19:30. Confirmed. This part has started to arrive, and it isn't everyday life yet.",
+            "The evening at the end of every row stays the same. Only the row gets shorter."
+          ]
+        },
+        {
+          "id": "distance-map",
+          "type": "text",
+          "title": "The interface was a map of the distance",
+          "paragraphs": [
+            "Read the eras side by side and the interface looks like a map of the distance at each moment: every keypad, window, form and app marks where the gap between wanting and having stood that year.",
+            "Design research named this gap long ago. In 1986, Ed Hutchins, Jim Hollan and Don Norman described the gulf of execution, the effort of turning a goal into actions a system accepts, and the gulf of evaluation, the effort of understanding what the system did (NN/g). Every era since has been narrowing those gulfs."
+          ]
+        },
+        {
+          "id": "distance-agents",
+          "type": "text",
+          "title": "Agents will nearly close it",
+          "paragraphs": [
+            "With an agent, the gulf of execution shrinks to a single thought. Your agent checks your calendar, asks Ana's agent about hers, books the table and plans the route.",
+            "The people who built the screen era are already working toward this. Sam Altman has said he wants OpenAI's devices to break the \"unquestioned assumptions\" of smart devices, starting with screens (Inc.)."
+          ]
+        },
+        {
+          "id": "distance-mistake",
+          "type": "text",
+          "title": "When the distance hides a mistake",
+          "paragraphs": [
+            "Now imagine that future Thursday arrives and Ana isn't there. The agent booked the right restaurant for the wrong week, or picked the place she quietly dislikes. Every step happened out of sight, so the mistake did too.",
+            "The gulf of evaluation has just widened. You can no longer see how the evening was arranged, only whether it went well."
+          ]
+        },
+        {
+          "id": "distance-question",
+          "type": "text",
+          "title": "So what's left for designers?",
+          "paragraphs": [
+            "The distance between desire and lived experience is closing faster than ever. Designers have spent decades shortening it, one keypad, window, form and app at a time. When it reaches almost nothing, and the few moments that remain happen out of sight, what is left for a designer to do?",
+            "That's Part 2."
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "The two UX gulfs: evaluation and execution",
+          "publisher": "Nielsen Norman Group"
+        },
+        {
+          "label": "Sam Altman hints at the radical design choices behind OpenAI's upcoming devices",
+          "publisher": "Inc.",
+          "date": "22 Dec 2025"
+        }
+      ]
+    },
+    {
+      "id": "design-after-the-screen",
+      "type": "article",
+      "status": "published",
+      "slug": "design-after-the-screen",
+      "title": "Design after the screen",
+      "summary": "The screen is shrinking as a place to design. The surface for design is growing everywhere else.",
+      "publishedAt": "2026-10-21",
+      "author": "@Prem",
+      "series": {
+        "id": "design-and-distance",
+        "part": 2,
+        "of": 2
+      },
+      "blocks": [
+        {
+          "id": "screen-opening",
+          "type": "text",
+          "paragraphs": [
+            "It's a Thursday a few years from now. A week ago you thought dinner with Ana, and an agent handled the rest: two calendars, one table, one route. You never opened an app.",
+            "The distance between your desire and the evening has nearly closed. Part 1 ended with a question: when it does, what's left for designers to do?",
+            "The answer starts with this Thursday. A lot still happens between the thought and the table. Almost none of it happens on a screen."
+          ]
+        },
+        {
+          "id": "screen-surface",
+          "type": "text",
+          "title": "Less screen, more surface",
+          "paragraphs": [
+            "The screen is shrinking as a place to design. The surface for design is growing everywhere else.",
+            "That Thursday touches a phone, a watch, earbuds, a car, maybe glasses, the restaurant's own systems and Ana's agent. Several models talk to each other along the way. Each device is a moment where the system meets you, and most of those moments have no screen at all.",
+            "Mark Weiser saw this coming in 1991: \"The most profound technologies are those that disappear\" (Scientific American). The technology disappears. The moments where it meets a person multiply, and each one is designed."
+          ]
+        },
+        {
+          "id": "screen-senses",
+          "type": "text",
+          "title": "Designing for the senses",
+          "paragraphs": [
+            "At 18:40 a soft tone in your earbuds says it's time to leave. A line of light in your glasses points left at the corner. Your watch taps twice as you reach the door. Each of these lasts a second or two, then it's gone.",
+            "This is the new material: sound, light, touch, voice and a glance, arriving for a moment and leaving no trace. Designers now shape transient moments across the senses. That calls for the same craft as before, applied to timing, tone, rhythm and restraint, with a screen as one option among many."
+          ]
+        },
+        {
+          "id": "screen-handled",
+          "type": "text",
+          "title": "The delight of \"it's handled\"",
+          "paragraphs": [
+            "Screens spent years telling people they were on the right track: progress bars, step counters, green ticks. In a world with fewer steps, delight moves to affirmation itself, the small pleasure of knowing something is taken care of. Ana's on her way. Your table is by the window. Three words at the right moment can feel better than any confirmation screen.",
+            "The rest of the time, the system stays quiet. It's present in the background, carried from device to device as you move through your evening, and it speaks only when speaking helps. Deciding when to stay silent is now one of the most important design calls there is."
+          ]
+        },
+        {
+          "id": "screen-behaviour",
+          "type": "text",
+          "title": "Behaviour is the new material",
+          "paragraphs": [
+            "When an agent acts for someone, two kinds of decision shape it. Product sets what the system may do. Design shapes how that feels to the person on the receiving end."
+          ]
+        },
+        {
+          "id": "screen-decisions",
+          "type": "table",
+          "columns": [
+            "Product decides",
+            "Design shapes"
+          ],
+          "rows": [
+            [
+              "Ask when a request is ambiguous",
+              "The question itself: one line, one tap, at a moment that doesn't break your day"
+            ],
+            [
+              "Confirm before committing your evening",
+              "How the confirmation sounds in an earbud, looks in glasses, feels on a wrist"
+            ],
+            [
+              "Allow undo for ten minutes",
+              "How undo is offered so it feels safe and calm"
+            ],
+            [
+              "Keep a record of what the agent did",
+              "How you see what happened, and why, at a glance"
+            ]
+          ]
+        },
+        {
+          "id": "screen-pixels",
+          "type": "text",
+          "paragraphs": [
+            "Pixels were the material of the screen era. Behaviour is the material of this one: timing, tone, interruption and presence."
+          ]
+        },
+        {
+          "id": "screen-destination",
+          "type": "text",
+          "title": "Design moves to the destination",
+          "paragraphs": [
+            "When getting to the evening takes no effort, the evening itself carries all the weight. The welcome at the door, the table, the way the bill arrives, the walk home. The lived experience at the end of the distance becomes the main stage for design.",
+            "That is a far bigger field than screens ever were: services, spaces, objects and real-world moments, joined up by systems nobody sees. Designers who spent twenty years shortening the path now get to shape what's waiting at the end of it."
+          ]
+        },
+        {
+          "id": "screen-brief",
+          "type": "text",
+          "title": "Same brief, new canvas",
+          "paragraphs": [
+            "The brief stays the one designers have always had: bring a person from what they desire to what they live. The canvas has moved from the screen to the senses, from the path to the destination, from pixels to behaviour.",
+            "On Thursday you'll sit down across from Ana, and the evening will feel effortless. Every part of that effortlessness was designed."
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "The Computer for the 21st Century",
+          "publisher": "Mark Weiser, Scientific American",
+          "date": "September 1991"
+        }
+      ]
+    },
+    {
+      "id": "home-writing",
+      "type": "component",
+      "status": "published",
+      "title": "Writing and opinions",
+      "blocks": [
+        {
+          "id": "writing-desire",
+          "type": "reference",
+          "documentId": "desire-and-lived-experience",
+          "presentation": "inline"
+        },
+        {
+          "id": "writing-screen",
+          "type": "reference",
+          "documentId": "design-after-the-screen",
+          "presentation": "inline"
+        }
+      ]
+    },
+    {
+      "id": "gala-defi",
+      "type": "portfolio-item",
+      "status": "published",
+      "slug": "gala-defi",
+      "title": "Brought coherence to a DeFi stack that launched fast, outsourced and stitched together",
+      "name": "DeFi swap, pools and wallet",
+      "summary": "Senior product designer • North Star • Easy mode",
+      "category": "Decentralised finance",
+      "aliases": [
+        "Gala DeFi",
+        "GalaSwap",
+        "Gala Swap",
+        "Ollie",
+        "Gala liquidity pools",
+        "Gala wallet"
+      ],
+      "domains": [
+        "DeFi",
+        "Web3",
+        "Finance",
+        "Trading"
+      ],
+      "capabilities": [
+        "Product design",
+        "Design systems",
+        "Conversational UI",
+        "AI-assisted delivery",
+        "Front-end prototyping"
+      ],
+      "kind": "shipped",
+      "client": "Gala",
+      "pageTitle": "Designing for trust and ease of use in a DeFi stack that launched without design.",
+      "intro": "GalaSwap launched fast: outsourced, inconsistent, no shared system. I joined the CEO’s “A-team” squad for priority projects when coherence and ease of use started to define trust.",
+      "context": "Gala’s DeFi ecosystem: swap, liquidity pools and wallet, used by first-timers and experienced traders alike.",
+      "challenge": "Swap, wallet and pools were built by different teams with no shared system. In DeFi that costs trust, because people are putting in real money. Novices and traders needed opposite things. It was a live product with no design system, a small squad and restructuring throughout.",
+      "role": "Senior product designer leading the redesign. I owned the North Star, swap, liquidity pools, wallet onboarding and the conversational UI explorations. I also brought AI-assisted workflows into delivery and built straight into the production repo.",
+      "highlights": "Senior product designer • North Star • Easy mode",
+      "keyWork": "Redesigned incrementally alongside delivery, with a North Star so every tactical call pointed the same way.\nReplaced the raw price-range inputs with a visual chart and named risk postures (Wide, Stable, Upper side, Lower side), so users see where they sit in the market before committing.\nSplit the experience in two after the CEO’s “would your mum get it?” review. Easy mode, with Ollie as a conversational guide, was for first-timers, and Advanced was for speed. I argued against the split, as it meant maintaining two products.\nExplored intent-driven UI (“$100 of GALA” generates the confirmation). It didn’t reach production.",
+      "impact": "North Star aligned design, product and engineering • Easy mode and Ollie shipped • GalaSwap passed $40M+ trading volume, 250,000+ swaps and ~200 liquidity pools",
+      "aftermath": "Gala restructured and eliminated the design function. Ollie launched publicly, then was withdrawn. The vision was handed to product and engineering, but with no designers left to hold the line, the live product drifted from it.",
+      "lesson": "Fast AI-assisted delivery needs a boundary between exploration and production before scale, not after.",
+      "heroMediaId": "gala-defi-cover",
+      "hoverVideoId": "gala-defi-walkthrough",
+      "featured": false,
+      "evidence": [
+        {
+          "id": "highlights",
+          "kind": "statement",
+          "text": "Senior product designer • North Star • Easy mode",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        },
+        {
+          "id": "impact",
+          "kind": "statement",
+          "text": "North Star aligned design, product and engineering • Easy mode and Ollie shipped • GalaSwap passed $40M+ trading volume, 250,000+ swaps and ~200 liquidity pools",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        }
+      ],
+      "blocks": [
+        {
+          "id": "gala-defi-walkthrough",
+          "type": "video",
+          "label": "Project walkthrough",
+          "title": "Product in motion",
+          "mediaId": "gala-defi-walkthrough",
+          "posterMediaId": "gala-defi-cover",
+          "caption": "Walkthrough video",
+          "layout": {
+            "columns": 2,
+            "mediaFit": "contain"
+          }
+        }
+      ]
     }
   ],
   "assets": [
@@ -1774,6 +2090,20 @@
       "status": "published",
       "url": "assets/hipnotherapy.jpg",
       "alt": "Prem seated beside a hypnotherapy teacher in a wood-panelled room"
+    },
+    {
+      "id": "gala-defi-cover",
+      "type": "image",
+      "status": "published",
+      "url": "assets/gala-defi.png",
+      "alt": "GalaSwap decentralised exchange interface with swap, liquidity pool and wallet views"
+    },
+    {
+      "id": "gala-defi-walkthrough",
+      "type": "video",
+      "status": "published",
+      "url": "assets/gala-defi.mp4",
+      "alt": ""
     }
   ],
   "presentations": [
@@ -1919,6 +2249,19 @@
       "detail": {
         "columns": 1
       }
+    },
+    {
+      "documentId": "gala-defi",
+      "card": {
+        "orientation": "landscape",
+        "surface": [
+          "#f1e5f5",
+          "#e1e5f8"
+        ]
+      },
+      "detail": {
+        "columns": 2
+      }
     }
   ],
   "layouts": [
@@ -1953,6 +2296,11 @@
         {
           "id": "galachain",
           "documentId": "galachain",
+          "featured": false
+        },
+        {
+          "id": "gala-defi",
+          "documentId": "gala-defi",
           "featured": false
         },
         {
