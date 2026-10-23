@@ -59,10 +59,10 @@ try{
   assert.equal(options.headers['xi-api-key'],'test-only-voice-key');
   return new Response(new Uint8Array([73,68,51]),{headers:{'content-type':'audio/mpeg'}});
  };
- const spoken=await voice.fetch(request('voice',{text:answer.text,sessionId:'vercel-curated',speechToken:answer.speechToken}));
+ const spoken=await voice.fetch(request('voice',{text:answer.spoken,sessionId:'vercel-curated',speechToken:answer.speechToken}));
  assert.equal(spoken.status,200);assert.equal(spoken.headers.get('content-type'),'audio/mpeg');
  assert.deepEqual([...new Uint8Array(await spoken.arrayBuffer())],[73,68,51]);
- assert.equal((await voice.fetch(request('voice',{text:answer.text,sessionId:'wrong-session',speechToken:answer.speechToken}))).status,403);
+ assert.equal((await voice.fetch(request('voice',{text:answer.spoken,sessionId:'wrong-session',speechToken:answer.speechToken}))).status,403);
  assert.equal((await voice.fetch(new Request(origin+'/api/voice'))).status,405);
 
  globalThis.fetch=async()=>Response.json({error:{code:'insufficient_quota',message:'Private provider details'}},{status:429});
@@ -70,7 +70,7 @@ try{
  assert.equal(exhausted.status,502);
  const quota=await exhausted.json();assert.equal(quota.providerCode,'insufficient_quota');assert(!JSON.stringify(quota).includes('Private provider details'));
  globalThis.fetch=async()=>Response.json({detail:{status:'voice_not_found',message:'Private voice details'}},{status:400});
- const absentVoice=await voice.fetch(request('voice',{text:answer.text,sessionId:'vercel-curated',speechToken:answer.speechToken}));
+ const absentVoice=await voice.fetch(request('voice',{text:answer.spoken,sessionId:'vercel-curated',speechToken:answer.speechToken}));
  const voiceFailure=await absentVoice.json();assert.equal(voiceFailure.providerCode,'voice_not_found');assert(!JSON.stringify(voiceFailure).includes('Private voice details'));
  assert.equal(await providerErrorCode(Response.json({error:{code:'unrecognized-private-value'}})),'unknown_provider_error');
  assert.equal(await providerErrorCode(new Response('not JSON')),'invalid_provider_error');

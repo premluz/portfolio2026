@@ -1,7 +1,7 @@
 export const assistantLimits=Object.freeze({
  questionCharacters:12000,answerCharacters:8000,outputTokens:2200,
  historyTurns:12,historyCharacters:48000,historyAnswerCharacters:8000,
- sourceCount:8,requestBytes:256000,requestTimeout:30000,clientTimeout:32000,speechCharacters:1000,offlineQuestionCharacters:240,noticeCharacters:500,
+ sourceCount:8,requestBytes:256000,requestTimeout:30000,clientTimeout:32000,speechCharacters:1000,spokenCharacters:240,offlineQuestionCharacters:240,noticeCharacters:500,
 });
 
 export function assistantHistory(entries=[]){

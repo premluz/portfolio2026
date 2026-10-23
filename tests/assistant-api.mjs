@@ -17,7 +17,7 @@ const fetcher=async(url,options)=>{captured={url,options,body:JSON.parse(options
 resetAssistantRateLimitsForTests();
 const response=await handleAssistantRequest(makeRequest(),env,{documents,fetcher});
 assert.equal(response.status,200);
-assert.deepEqual(await response.json(),{text:'Tracr reduced navigation from ten areas to three.',kind:'grounded',documentIds:['tracr'],knowledgeSources:[],suggestions:['What changed at Tracr?','What did Prem do there?'],speechToken:null});
+assert.deepEqual(await response.json(),{text:'Tracr reduced navigation from ten areas to three.',spoken:'Tracr reduced navigation from ten areas to three. The details are in the chat.',kind:'grounded',documentIds:['tracr'],knowledgeSources:[],suggestions:['What changed at Tracr?','What did Prem do there?'],speechToken:null});
 assert.equal(captured.url,'https://models.example/v1/chat/completions');
 assert.equal(captured.options.headers.authorization,'Bearer test-only-secret');
 assert.equal(captured.body.model,'small-model');

@@ -21,7 +21,7 @@ function speechState(r,state,button){
  r.speechStatus.textContent=state==='error'?'Voice is unavailable right now. Try the Listen button again.':state==='blocked'?'Tap Listen beside the answer to play it.':state==='playing'?'Reading answer aloud.':'';
 }
 export function mountAssistantAudio(r){
- r.speechStatus=statusNode(r.page);r.speech=new AssistantSpeech({onStart:r.options.onSpeechStart,onEnd:r.options.onSpeechEnd,onState:(state,button)=>speechState(r,state,button)});
+ r.speechStatus=statusNode(r.page);r.speech=new AssistantSpeech({onStart:r.options.onSpeechStart,onEnd:r.options.onSpeechEnd,onWorking:r.options.onSpeechWorking,onState:(state,button)=>speechState(r,state,button)});
  r.soundToggle=r.root.querySelector('#soundPreference');
  r.setSound=(on,announce=true)=>{
   r.soundEnabled=on;try{r.preferences?.setItem('prem-assistant-sound',String(on));}catch(error){r.options.onInputError('Sound preference could not be saved: '+error.name);}

@@ -25,7 +25,8 @@ function answerSpeech(r,answer,lead,auto){
  if(!answer.speechToken)return;
  const button=document.createElement('button');button.type='button';button.className='ask-speech-button';button.dataset.speechState='idle';button.setAttribute('aria-label','Read answer aloud');
  button.innerHTML='<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4ZM16 9a4 4 0 0 1 0 6M18 6a8 8 0 0 1 0 12"/></svg><span class="ask-speech-label" aria-hidden="true">Listen</span>';
- const play=()=>{if(r.voiceMode&&r.soundEnabled)void r.speech.play({text:answer.text,speechToken:answer.speechToken,sessionId:r.sessionId()},button);};
+ // The token authorizes the short spoken line; older saved answers without one were authorized for their text.
+ const play=()=>{if(r.voiceMode&&r.soundEnabled)void r.speech.play({text:answer.spoken||answer.text,speechToken:answer.speechToken,sessionId:r.sessionId()},button);};
  button.onclick=play;lead.prepend(button);if(auto)requestAnimationFrame(()=>{if(!r.page.hidden)play();});
 }
 export function addAssistantAnswer(r,answer,{auto=false,animateCards=false}={}){
@@ -49,6 +50,6 @@ export function mountAssistantView(r){
  r.append=(role,text)=>{const p=document.createElement('p');p.className='ask-message ask-'+role;p.textContent=text;r.messages.append(p);r.scrollEnd();return p;};
  r.suggestionsEl=document.createElement('div');r.showSuggestions=prompts=>{renderSuggestionChips(r.suggestionsEl,prompts,{onSelect:prompt=>{r.input.value=prompt;r.sync();r.form.requestSubmit();}});r.messages.append(r.suggestionsEl);};
  r.addAnswer=(answer,options)=>addAssistantAnswer(r,answer,options);
- for(const entry of r.transcript){if(entry.role==='user')r.append('user',entry.text);else r.addAnswer({...resolvedAnswer(r.store,entry.text,entry.documentIds,entry.knowledgeSourceIds,entry.suggestions),speechToken:entry.speechToken,notice:entry.notice});}
+ for(const entry of r.transcript){if(entry.role==='user')r.append('user',entry.text);else r.addAnswer({...resolvedAnswer(r.store,entry.text,entry.documentIds,entry.knowledgeSourceIds,entry.suggestions),speechToken:entry.speechToken,spoken:entry.spoken,notice:entry.notice});}
  if(!r.transcript.length)r.showSuggestions(assistantKnowledge.suggestedQuestions);
 }

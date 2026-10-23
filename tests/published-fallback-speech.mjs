@@ -11,7 +11,7 @@ assert.equal(publishedFallbackAnswer(question,documents).text,expected.text,'The
 for(const fetcher of [async()=>new Response('Provider failed',{status:502}),async()=>{throw Error('Timed out');},async()=>new Response(JSON.stringify({choices:[{message:{content:'broken json'}}]}))]){
  resetAssistantRateLimitsForTests();
  const response=await handleAssistantRequest(req(),{AI_API_KEY:'test-only',AI_API_BASE_URL:'https://models.example/v1',AI_MODEL:'small-model',AI_VOICE_KEY:secret},{documents,fetcher,now});
- assert.equal(response.status,502);const reply=await response.json();assert.equal(reply.text,expected.text);assert.equal(reply.responseMode,'published-fallback');assert.deepEqual(reply.documentIds,['tracr']);assert(await verifySpeech(reply.text,sessionId,reply.speechToken,secret,now),'Provider errors, timeouts and invalid JSON still authorize this exact fallback for ElevenLabs');
+ assert.equal(response.status,502);const reply=await response.json();assert.equal(reply.text,expected.text);assert.equal(reply.responseMode,'published-fallback');assert.deepEqual(reply.documentIds,['tracr']);assert(await verifySpeech(reply.spoken,sessionId,reply.speechToken,secret,now),'Provider errors, timeouts and invalid JSON still authorize this fallback\'s spoken line for ElevenLabs');
 }
 const draft={...documents.find(d=>d.id==='tracr'),status:'draft',highlights:'SECRET DRAFT CLAIM'};
 assert(!publishedFallbackAnswer(question,[draft,...documents.filter(d=>d.id!=='tracr')]).text.includes('SECRET'),'Unpublished fields cannot enter a signed response');

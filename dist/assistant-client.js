@@ -16,7 +16,7 @@ export async function requestAssistant(question,history,{store,sessionId,fetcher
   const knowledgeIds=(Array.isArray(result.knowledgeSources)?result.knowledgeSources:[]).map(source=>source?.id).filter(id=>knowledgeById.has(id));
   const notice=!response.ok||result.error?'AI is temporarily unavailable; this is a published-content fallback, not a new AI evaluation.':'';
   return {...resolvedAnswer(store,result.text,documentIds,knowledgeIds,Array.isArray(result.suggestions)?result.suggestions:suggestionsFor(documentIds)),
-   speechToken:typeof result.speechToken==='string'?result.speechToken:null,responseMode:result.responseMode||'model',kind:result.kind||'grounded',notice};
+   speechToken:typeof result.speechToken==='string'?result.speechToken:null,spoken:typeof result.spoken==='string'&&result.spoken.length<=assistantLimits.spokenCharacters?result.spoken:null,responseMode:result.responseMode||'model',kind:result.kind||'grounded',notice};
  }catch(error){
   return {...offlineAssistantAnswer(question,store,history),responseMode:'local-fallback',notice:`AI could not connect (${error.name}); showing available published content only.`};
  }

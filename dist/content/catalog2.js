@@ -11,23 +11,6 @@ export const catalog={
       "client": "Merlin",
       "summary": "R&D • AI assistant • Generative UI • Prototype",
       "category": "Financial intelligence · R&D",
-      "aliases": [
-        "Merlin",
-        "Merlin AI",
-        "Financial intelligence workspace",
-        "AI analyst"
-      ],
-      "domains": [
-        "AI",
-        "Financial intelligence",
-        "Generative interfaces"
-      ],
-      "capabilities": [
-        "Product strategy",
-        "Interaction design",
-        "Prototyping",
-        "Front-end development"
-      ],
       "kind": "lab",
       "intro": "Wwhen an agent does the analysis, the interface should become part of the answer.",
       "context": "Financial intelligence platform where users ask questions, follow the reasoning and work with interfaces generated around the answer.",
@@ -40,24 +23,6 @@ export const catalog={
       "type": "portfolio-item",
       "status": "published",
       "featured": false,
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "0→1 prototype • Desktop + mobile • Solo designer/builder",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "0→1 prototype • Agent-assembled interfaces • Multi-pane workbench • 5 themes from one component system",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ],
       "blocks": [
         {
           "id": "merlin-walkthrough",
@@ -76,7 +41,42 @@ export const catalog={
       "prototype": {
         "label": "View prototype",
         "url": "https://merlin-sazb.vercel.app/"
-      }
+      },
+      "aliases": [
+        "Merlin",
+        "Merlin AI",
+        "Financial intelligence workspace",
+        "AI analyst"
+      ],
+      "domains": [
+        "AI",
+        "Financial intelligence",
+        "Generative interfaces"
+      ],
+      "capabilities": [
+        "Product strategy",
+        "Interaction design",
+        "Prototyping",
+        "Front-end development"
+      ],
+      "evidence": [
+        {
+          "id": "highlights",
+          "kind": "statement",
+          "text": "0→1 prototype • Desktop + mobile • Solo designer/builder",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        },
+        {
+          "id": "impact",
+          "kind": "statement",
+          "text": "0→1 prototype • Agent-assembled interfaces • Multi-pane workbench • 5 themes from one component system",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        }
+      ]
     },
     {
       "id": "rios",
@@ -87,23 +87,6 @@ export const catalog={
       "name": "Life-first planner",
       "summary": "0→1 product • Solo designer/builder",
       "category": "Life-first planner · Independent product",
-      "aliases": [
-        "Rios",
-        "Amble",
-        "Planner",
-        "Life-first planner"
-      ],
-      "domains": [
-        "Planning",
-        "Independent product",
-        "Mobile"
-      ],
-      "capabilities": [
-        "Product strategy",
-        "Interaction design",
-        "Product design",
-        "Implementation"
-      ],
       "kind": "shipped",
       "context": "Cross-platform planner combining daily planning, unscheduled Things, recurring Patterns and calendar import and sync.",
       "role": "Sole product designer and builder. Owned product strategy, interaction model, IA, visual identity, motion and implementation across mobile and desktop.",
@@ -111,24 +94,6 @@ export const catalog={
       "keyWork": "Designed a spatial timeline with direct manipulation, readable overlaps and cascading schedule changes, supported by Zones, What Matters and a unified Things → Days → Patterns model.",
       "impact": "0→1 product • Mobile + desktop • Unified product + brand system • New spatial planning model",
       "heroMediaId": "rios-cover",
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "0→1 product • Solo designer/builder",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "0→1 product • Mobile + desktop • Unified product + brand system • New spatial planning model",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ],
       "blocks": [
         {
           "id": "rios-walkthrough",
@@ -149,7 +114,42 @@ export const catalog={
       "pageTitle": "A spatial planner designed around life changing the plan",
       "intro": "I created Rios around a simple idea: planning is easy; reshaping the day when reality changes is the harder problem.",
       "challenge": "Traditional calendars make adding events easy but make busy days increasingly difficult to reorganise. I wanted replanning to feel direct, spatial and readable.",
-      "hoverVideoId": "rios-walkthrough"
+      "hoverVideoId": "rios-walkthrough",
+      "aliases": [
+        "Rios",
+        "Amble",
+        "Planner",
+        "Life-first planner"
+      ],
+      "domains": [
+        "Planning",
+        "Independent product",
+        "Mobile"
+      ],
+      "capabilities": [
+        "Product strategy",
+        "Interaction design",
+        "Product design",
+        "Implementation"
+      ],
+      "evidence": [
+        {
+          "id": "highlights",
+          "kind": "statement",
+          "text": "0 → 1 product · design · build",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        },
+        {
+          "id": "impact",
+          "kind": "statement",
+          "text": "0→1 product • Mobile + desktop • Unified product + brand system • New spatial planning model",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        }
+      ]
     },
     {
       "id": "playstation",
@@ -160,24 +160,6 @@ export const catalog={
       "name": "Publishing pipeline",
       "summary": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 • 4 teams aligned",
       "category": "Publishing pipeline · PlayStation Network",
-      "aliases": [
-        "PlayStation",
-        "Play Station",
-        "Sony",
-        "PlayStation content",
-        "PlayStation Content Pipeline"
-      ],
-      "domains": [
-        "Enterprise",
-        "Publishing platforms",
-        "PlayStation Network"
-      ],
-      "capabilities": [
-        "Product design",
-        "Workflow strategy",
-        "Team leadership",
-        "Research"
-      ],
       "kind": "shipped",
       "context": "Self-service content pipeline for developers and publishers managing product details, regional rules and publishing across PlayStation Network.",
       "role": "First designer. Led end-to-end design across discovery, research, prototyping, testing and implementation support through launch, while helping align four product teams.",
@@ -186,24 +168,6 @@ export const catalog={
       "impact": "3 systems → 1 workflow • 4 teams aligned • Hundreds of hours saved across partner and internal workflows",
       "heroMediaId": "playstation-cover",
       "hoverVideoId": "playstation-walkthrough",
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "1st designer • 3 systems → 1 workflow",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "3 systems → 1 workflow • 4 teams aligned • Hundreds of hours saved across partner and internal workflows",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ],
       "blocks": [
         {
           "id": "playstation-walkthrough",
@@ -223,7 +187,43 @@ export const catalog={
       "client": "PlayStation",
       "pageTitle": "Transformation saving hundreds of hours for developers and publishers",
       "intro": "I joined as the first designer on a programme that had already failed twice and was later described as the largest IT transformation in PlayStation history.",
-      "challenge": "Three ageing regional systems created duplicated work, inconsistent workflows and operational overhead, while three organisations had to align around a programme with little inherited trust."
+      "challenge": "Three ageing regional systems created duplicated work, inconsistent workflows and operational overhead, while three organisations had to align around a programme with little inherited trust.",
+      "aliases": [
+        "PlayStation",
+        "Play Station",
+        "Sony",
+        "PlayStation content",
+        "PlayStation Content Pipeline"
+      ],
+      "domains": [
+        "Enterprise",
+        "Publishing platforms",
+        "PlayStation Network"
+      ],
+      "capabilities": [
+        "Product design",
+        "Workflow strategy",
+        "Team leadership",
+        "Research"
+      ],
+      "evidence": [
+        {
+          "id": "highlights",
+          "kind": "statement",
+          "text": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 • 4 teams aligned",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        },
+        {
+          "id": "impact",
+          "kind": "statement",
+          "text": "3 systems → 1 workflow • 4 teams aligned • Hundreds of hours saved across partner and internal workflows",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        }
+      ]
     },
     {
       "id": "vodafone-iot",
@@ -234,24 +234,6 @@ export const catalog={
       "name": "IoT connectivity",
       "summary": "180+ regions · 240M+ devices · NPS –33 → +62 · Operations time reduced to under 10 seconds",
       "category": "IoT connectivity · Enterprise",
-      "aliases": [
-        "Vodafone",
-        "Voda phone",
-        "Vodaphone",
-        "Vodafone IoT",
-        "Vodafone IoT Connectivity"
-      ],
-      "domains": [
-        "Enterprise",
-        "Connectivity",
-        "Internet of Things"
-      ],
-      "capabilities": [
-        "Product design",
-        "Research",
-        "Information architecture",
-        "Interaction design"
-      ],
       "kind": "shipped",
       "context": "Enterprise self-service platform for managing IoT connectivity and SIM operations at scale.",
       "role": "Senior product designer, one of three alongside a design manager. Owned research, IA, interaction design, UI, prototyping, testing and delivery support.",
@@ -260,24 +242,6 @@ export const catalog={
       "impact": "NPS −33 → +62 • Operations reduced from ~1 minute to under 10 seconds • Complex workflows opened to non-technical users without losing specialist depth",
       "heroMediaId": "vodafone-cover",
       "hoverVideoId": "vodafone-walkthrough",
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "Senior product designer • NPS −33 → +62",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "NPS −33 → +62 • Operations reduced from ~1 minute to under 10 seconds • Complex workflows opened to non-technical users without losing specialist depth",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ],
       "blocks": [
         {
           "id": "vodafone-iot-walkthrough",
@@ -297,7 +261,43 @@ export const catalog={
       "client": "Vodafone",
       "pageTitle": "Redesigned a fragmented IoT platform around one scalable interaction model",
       "intro": "I redesigned an operational platform serving users with very different levels of expertise, frequency of use and operational needs.",
-      "challenge": "Years of feature additions had created fragmented workflows, inconsistent patterns and screens shared by experts and occasional operators alike. High-volume anomalies were hard to spot and no suitable design system existed."
+      "challenge": "Years of feature additions had created fragmented workflows, inconsistent patterns and screens shared by experts and occasional operators alike. High-volume anomalies were hard to spot and no suitable design system existed.",
+      "aliases": [
+        "Vodafone",
+        "Voda phone",
+        "Vodaphone",
+        "Vodafone IoT",
+        "Vodafone IoT Connectivity"
+      ],
+      "domains": [
+        "Enterprise",
+        "Connectivity",
+        "Internet of Things"
+      ],
+      "capabilities": [
+        "Product design",
+        "Research",
+        "Information architecture",
+        "Interaction design"
+      ],
+      "evidence": [
+        {
+          "id": "highlights",
+          "kind": "statement",
+          "text": "NPS –33 → +62 · Operations time reduced to under 10 seconds · 240M+ devices",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        },
+        {
+          "id": "impact",
+          "kind": "statement",
+          "text": "NPS −33 → +62 • Operations reduced from ~1 minute to under 10 seconds • Complex workflows opened to non-technical users without losing specialist depth",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        }
+      ]
     },
     {
       "id": "tracr",
@@ -308,23 +308,6 @@ export const catalog={
       "name": "Blockchain traceability",
       "summary": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
       "category": "Blockchain traceability · Regulated supply chain",
-      "aliases": [
-        "Tracr",
-        "Tracker",
-        "Tracer",
-        "Tracr Regulated Supply Chain"
-      ],
-      "domains": [
-        "Enterprise",
-        "Supply chain",
-        "Blockchain traceability"
-      ],
-      "capabilities": [
-        "Product design",
-        "Design systems ",
-        "Product architecture",
-        "Incremental redesign"
-      ],
       "kind": "shipped",
       "context": "Blockchain-based provenance and traceability across the regulated global diamond supply chain, including complex statuses, exceptions and conflict management.",
       "role": "IC lead product designer. Owned the design system, governance and adoption, product architecture, North Star and strategic design direction while supporting leadership and mentoring.",
@@ -333,24 +316,6 @@ export const catalog={
       "impact": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
       "heroMediaId": "tracr-cover",
       "hoverVideoId": "tracr-walkthrough",
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "IC lead product designer • Architecture 10 → 3",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "~2× design, dev and QA velocity • 3× workflow efficiency • Architecture simplified 10 → 3",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ],
       "blocks": [
         {
           "id": "tracr-walkthrough",
@@ -374,7 +339,42 @@ export const catalog={
       "prototype": {
         "label": "View prototype",
         "url": "https://tracr-beryl.vercel.app/"
-      }
+      },
+      "aliases": [
+        "Tracr",
+        "Tracker",
+        "Tracer",
+        "Tracr Regulated Supply Chain"
+      ],
+      "domains": [
+        "Enterprise",
+        "Supply chain",
+        "Blockchain traceability"
+      ],
+      "capabilities": [
+        "Product design",
+        "Design systems ",
+        "Product architecture",
+        "Incremental redesign"
+      ],
+      "evidence": [
+        {
+          "id": "highlights",
+          "kind": "statement",
+          "text": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        },
+        {
+          "id": "impact",
+          "kind": "statement",
+          "text": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        }
+      ]
     },
     {
       "id": "galachain",
@@ -385,27 +385,6 @@ export const catalog={
       "name": "Web3 film platform",
       "summary": "End-to-end design across 0 → 1 → Growth and continous improvements",
       "category": "Web3 entertainment · Film and music",
-      "aliases": [
-        "Gala",
-        "Gala Film",
-        "GalaChain",
-        "Gala Chain",
-        "Gala Web3",
-        "Gala Web3 Ecosystem"
-      ],
-      "domains": [
-        "Web3",
-        "Entertainment",
-        "Creator economy",
-        "Film",
-        "Music"
-      ],
-      "capabilities": [
-        "Product design",
-        "UX and UI",
-        "Motion design",
-        "Front-end prototyping"
-      ],
       "kind": "shipped",
       "context": "Film and music ecosystem where creators monetise their work directly and reward participating fans.",
       "role": "Product designer dedicated to Gala Film from 0→1, with supporting work across Gala Music and the broader ecosystem. Worked across UX, UI, motion and front-end as priorities shifted.",
@@ -413,24 +392,6 @@ export const catalog={
       "keyWork": "Designed retention mechanics and creator publishing, validated key concepts with users and maintained a live architecture spanning 15+ interconnected flows across design, product and engineering.",
       "impact": "MVP launched across film and music • Blockchain mechanics surfaced without Web3 terminology • Reward concepts validated • Creator publishing moved toward self-service",
       "heroMediaId": "gala-cover",
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "Product designer • Gala Film 0→1",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "MVP launched across film and music • Blockchain mechanics surfaced without Web3 terminology • Reward concepts validated • Creator publishing moved toward self-service",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ],
       "blocks": [
         {
           "id": "galachain-walkthrough",
@@ -455,7 +416,46 @@ export const catalog={
       "watchPrototype": {
         "label": "Launch reel",
         "url": "https://www.youtube.com/watch?v=SZioWD7iLxQ"
-      }
+      },
+      "aliases": [
+        "Gala",
+        "Gala Film",
+        "GalaChain",
+        "Gala Chain",
+        "Gala Web3",
+        "Gala Web3 Ecosystem"
+      ],
+      "domains": [
+        "Web3",
+        "Entertainment",
+        "Creator economy",
+        "Film",
+        "Music"
+      ],
+      "capabilities": [
+        "Product design",
+        "UX and UI",
+        "Motion design",
+        "Front-end prototyping"
+      ],
+      "evidence": [
+        {
+          "id": "highlights",
+          "kind": "statement",
+          "text": "End-to-end design across 0 → 1 → Growth and continuous improvements",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        },
+        {
+          "id": "impact",
+          "kind": "statement",
+          "text": "MVP launched across film and music • Blockchain mechanics surfaced without Web3 terminology • Reward concepts validated • Creator publishing moved toward self-service",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        }
+      ]
     },
     {
       "id": "bastion",
@@ -466,24 +466,6 @@ export const catalog={
       "client": "Bastion",
       "summary": "R&D • AI assistant • Generative UI • Prototype",
       "category": "AI wallet · R&D",
-      "aliases": [
-        "Bastion",
-        "Bastion wallet",
-        "AI wallet",
-        "AI crypto wallet"
-      ],
-      "domains": [
-        "AI",
-        "Wallet",
-        "Financial technology",
-        "Generative interfaces"
-      ],
-      "capabilities": [
-        "Product strategy",
-        "Interaction design",
-        "Prototyping",
-        "Front-end development"
-      ],
       "kind": "lab",
       "intro": "I designed and built Bastion around a simple idea: the assistant shouldn’t be a feature you visit. It should be available from anywhere in the product.",
       "context": "Mobile prototype of a simulated crypto wallet combining holdings, markets and an AI assistant that can guide and perform financial tasks.",
@@ -496,24 +478,6 @@ export const catalog={
       "type": "portfolio-item",
       "status": "published",
       "featured": false,
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "0→1 prototype • Mobile • Solo designer/builder",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "Assistant one gesture from every screen • Text + voice in one thread • Trust-aware financial flows • Dark + light themes from one component system",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ],
       "blocks": [
         {
           "id": "bastion-walkthrough",
@@ -534,7 +498,43 @@ export const catalog={
         "url": "https://www.youtube.com/watch?v=ipIZ0LvNj7c"
       },
       "qrCodeMediaId": "bastion-qr",
-      "qrCodeLabel": "TestFlight (iOS)"
+      "qrCodeLabel": "TestFlight (iOS)",
+      "aliases": [
+        "Bastion",
+        "Bastion wallet",
+        "AI wallet",
+        "AI crypto wallet"
+      ],
+      "domains": [
+        "AI",
+        "Wallet",
+        "Financial technology",
+        "Generative interfaces"
+      ],
+      "capabilities": [
+        "Product strategy",
+        "Interaction design",
+        "Prototyping",
+        "Front-end development"
+      ],
+      "evidence": [
+        {
+          "id": "highlights",
+          "kind": "statement",
+          "text": "0→1 prototype • Mobile • Solo designer/builder",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        },
+        {
+          "id": "impact",
+          "kind": "statement",
+          "text": "Assistant one gesture from every screen • Text + voice in one thread • Trust-aware financial flows • Dark + light themes from one component system",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        }
+      ]
     },
     {
       "id": "porter",
@@ -547,6 +547,18 @@ export const catalog={
       "client": "Porter",
       "summary": "0→1 product • Solo designer/builder",
       "category": "Agent switchboard · R&D",
+      "kind": "lab",
+      "listOnly": true,
+      "heroMediaId": "porter-cover",
+      "hoverVideoId": "porter-walkthrough",
+      "intro": "People now work with several AI agents at once, and the real bottleneck is knowing which one needs attention and switching between multiple windows they operate in.",
+      "context": "A native Mac utility that lists conversations from Claude, ChatGPT, Codex and Claude Code, wherever they live, and takes you to the exact tab or window in one click.",
+      "challenge": "Agents are scattered across browser tabs, editor windows, desktop apps and terminals, and none of them can see the others. You can't tell which one is working, which has finished, or which is waiting for you, so an agent sits idle while you look in the wrong place. The tool also had to earn trust: it could not read conversations, send anything off the Mac, or claim a status it couldn't know.",
+      "role": "Sole product designer and builder. I defined the interaction model, information architecture, status language, character, motion and the native implementation.",
+      "keyWork": "• Designed a panel that lives at the screen edge in three states: a black docked tab, a capsule of status dots on hover, and an expanded pane. The shape morphs between them as one liquid form.\n• Built the status model around honesty. Waiting questions outrank working agents, and when Porter can't see a state it shows nothing, never a guess.\n• Replaced a dashboard of badges with one small face that carries the state of every agent at once. It follows your pointer, blinks, and turns amber when something needs you.\n• Treated privacy as a design constraint: only titles and status signals are read, and nothing leaves the Mac.",
+      "impact": "0→1 product • 7 sources → 1 list • 3 panel states",
+      "featured": false,
+      "blocks": [],
       "aliases": [
         "Porter",
         "Agent switchboard",
@@ -565,17 +577,6 @@ export const catalog={
         "Native app design",
         "Implementation"
       ],
-      "kind": "lab",
-      "listOnly": true,
-      "heroMediaId": "porter-cover",
-      "hoverVideoId": "porter-walkthrough",
-      "intro": "People now work with several AI agents at once, and the real bottleneck is knowing which one needs attention and switching between multiple windows they operate in.",
-      "context": "A native Mac utility that lists conversations from Claude, ChatGPT, Codex and Claude Code, wherever they live, and takes you to the exact tab or window in one click.",
-      "challenge": "Agents are scattered across browser tabs, editor windows, desktop apps and terminals, and none of them can see the others. You can't tell which one is working, which has finished, or which is waiting for you, so an agent sits idle while you look in the wrong place. The tool also had to earn trust: it could not read conversations, send anything off the Mac, or claim a status it couldn't know.",
-      "role": "Sole product designer and builder. I defined the interaction model, information architecture, status language, character, motion and the native implementation.",
-      "keyWork": "• Designed a panel that lives at the screen edge in three states: a black docked tab, a capsule of status dots on hover, and an expanded pane. The shape morphs between them as one liquid form.\n• Built the status model around honesty. Waiting questions outrank working agents, and when Porter can't see a state it shows nothing, never a guess.\n• Replaced a dashboard of badges with one small face that carries the state of every agent at once. It follows your pointer, blinks, and turns amber when something needs you.\n• Treated privacy as a design constraint: only titles and status signals are read, and nothing leaves the Mac.",
-      "impact": "0→1 product • 7 sources → 1 list • 3 panel states",
-      "featured": false,
       "evidence": [
         {
           "id": "highlights",
@@ -593,8 +594,7 @@ export const catalog={
             "kind": "author-provided"
           }
         }
-      ],
-      "blocks": []
+      ]
     },
     {
       "id": "about",
@@ -606,9 +606,6 @@ export const catalog={
       "name": "About",
       "summary": "Product designer with a technical and entrepreneurial background, 10+ years across Web3, DeFi, blockchain, IoT & Telco, 0→1 through growth and scale.",
       "category": "Prem / Designer + creative technologist",
-      "aliases": [],
-      "domains": [],
-      "capabilities": [],
       "links": [],
       "blocks": [
         {
@@ -676,7 +673,10 @@ export const catalog={
             "columns": 2
           }
         }
-      ]
+      ],
+      "aliases": [],
+      "domains": [],
+      "capabilities": []
     },
     {
       "id": "contact",
@@ -688,9 +688,6 @@ export const catalog={
       "name": "Contact",
       "summary": "Have a complex product or an interesting idea?",
       "category": "Let’s connect",
-      "aliases": [],
-      "domains": [],
-      "capabilities": [],
       "links": [
         {
           "id": "primary",
@@ -706,7 +703,10 @@ export const catalog={
             "Have a complex product or an interesting idea?"
           ]
         }
-      ]
+      ],
+      "aliases": [],
+      "domains": [],
+      "capabilities": []
     },
     {
       "id": "home",
@@ -1145,44 +1145,6 @@ export const catalog={
       "title": "Testimonials",
       "summary": "Feedback from collaborators at PlayStation, Tracr, Vodafone and Gala.",
       "revision": 1,
-      "evidence": [
-        {
-          "id": "testimonial-gabriele",
-          "kind": "quote",
-          "text": "His ability to communicate ideas and win people over gives him an edge.",
-          "provenance": {
-            "kind": "author-provided",
-            "label": "Testimonial supplied by Prem"
-          }
-        },
-        {
-          "id": "testimonial-matt",
-          "kind": "quote",
-          "text": "Exceptional technical depth. He designs with implementation in mind, anticipating edge cases and system constraints.",
-          "provenance": {
-            "kind": "author-provided",
-            "label": "Testimonial supplied by Prem"
-          }
-        },
-        {
-          "id": "testimonial-venessa",
-          "kind": "quote",
-          "text": "He always seeks to validate his designs with the team, and stakeholders and conducts User Testing sessions.",
-          "provenance": {
-            "kind": "author-provided",
-            "label": "Testimonial supplied by Prem"
-          }
-        },
-        {
-          "id": "testimonial-jonathan",
-          "kind": "quote",
-          "text": "He brought AI workflows into our design-to-dev process in ways that genuinely sped things up.",
-          "provenance": {
-            "kind": "author-provided",
-            "label": "Testimonial supplied by Prem"
-          }
-        }
-      ],
       "blocks": [
         {
           "id": "quote-gabriele",
@@ -1191,7 +1153,7 @@ export const catalog={
           "attribution": "Paul Wilsher",
           "label": "Product Manager at Gala",
           "evidenceIds": [
-            "testimonial-gabriele"
+            "quote-gabriele"
           ]
         },
         {
@@ -1201,7 +1163,7 @@ export const catalog={
           "attribution": "Matt Bindoff",
           "label": "Lead Engineer at Tracr",
           "evidenceIds": [
-            "testimonial-matt"
+            "quote-matt"
           ]
         },
         {
@@ -1211,7 +1173,7 @@ export const catalog={
           "attribution": "Santiago Jaramillo",
           "label": "Head of Product at Gala",
           "evidenceIds": [
-            "testimonial-venessa"
+            "quote-santiago"
           ]
         },
         {
@@ -1221,8 +1183,46 @@ export const catalog={
           "attribution": "Jonathan Burk",
           "label": "Lead AI Engineer at Gala",
           "evidenceIds": [
-            "testimonial-jonathan"
+            "quote-jonathan"
           ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "quote-gabriele",
+          "kind": "quote",
+          "text": "His work is strongly informed by data and user research, and he’s especially good at tackling complex, trust-sensitive problems with very little steer, input or guidance.",
+          "provenance": {
+            "kind": "author-provided",
+            "label": "Testimonial supplied by Prem"
+          }
+        },
+        {
+          "id": "quote-matt",
+          "kind": "quote",
+          "text": "Exceptional technical depth. He designs with implementation in mind, anticipating edge cases and system constraints.",
+          "provenance": {
+            "kind": "author-provided",
+            "label": "Testimonial supplied by Prem"
+          }
+        },
+        {
+          "id": "quote-santiago",
+          "kind": "quote",
+          "text": "He challenged our approach and the results showed in our KPIs. He ramped up incredibly quickly and made a meaningful impact within his first month.",
+          "provenance": {
+            "kind": "author-provided",
+            "label": "Testimonial supplied by Prem"
+          }
+        },
+        {
+          "id": "quote-jonathan",
+          "kind": "quote",
+          "text": "He brought AI workflows into our design-to-dev process in ways that genuinely sped things up. He's creative and sharp, but always grounded in actual constraints, adapting quickly when things shift.",
+          "provenance": {
+            "kind": "author-provided",
+            "label": "Testimonial supplied by Prem"
+          }
         }
       ]
     },
@@ -1484,9 +1484,6 @@ export const catalog={
       "name": "About lab",
       "summary": "An experimental view of the portfolio: every card in one spiral that unwinds into a grid as you scroll.",
       "category": "Prem / Experiments",
-      "aliases": [],
-      "domains": [],
-      "capabilities": [],
       "links": [],
       "blocks": [
         {
@@ -1496,7 +1493,10 @@ export const catalog={
             "An experimental view of the portfolio: every card in one spiral that unwinds into a grid as you scroll. Pick any card to open it."
           ]
         }
-      ]
+      ],
+      "aliases": [],
+      "domains": [],
+      "capabilities": []
     },
     {
       "id": "about-infinite",
@@ -1508,9 +1508,6 @@ export const catalog={
       "name": "About infinite",
       "summary": "An experimental view of the portfolio: every card in an endless space you can fly through.",
       "category": "Prem / Experiments",
-      "aliases": [],
-      "domains": [],
-      "capabilities": [],
       "links": [],
       "blocks": [
         {
@@ -1520,7 +1517,10 @@ export const catalog={
             "An experimental view of the portfolio: every card in an endless space. Drag to move, scroll to fly, and pick any project card to open it."
           ]
         }
-      ]
+      ],
+      "aliases": [],
+      "domains": [],
+      "capabilities": []
     },
     {
       "id": "desire-and-lived-experience",
@@ -1758,6 +1758,36 @@ export const catalog={
       "name": "DeFi swap, pools and wallet",
       "summary": "0 → 1 • North Star • Easy mode",
       "category": "Decentralised finance",
+      "kind": "shipped",
+      "client": "Gala",
+      "pageTitle": "Designing for trust and ease of use in a DeFi stack that launched without design.",
+      "intro": "GalaSwap launched fast: outsourced, inconsistent, no shared system. I joined the CEO’s “A-team” squad for priority projects when coherence and ease of use started to define trust.",
+      "context": "Gala’s DeFi ecosystem: swap, liquidity pools and wallet, used by first-timers and experienced traders alike.",
+      "challenge": "Swap, wallet and pools were built by different teams with no shared system. In DeFi that costs trust, because people are putting in real money. Novices and traders needed opposite things. It was a live product with no design system, a small squad and restructuring throughout.",
+      "role": "Senior product designer leading the redesign. I owned the North Star, swap, liquidity pools, wallet onboarding and the conversational UI explorations. I also brought AI-assisted workflows into delivery and built straight into the production repo.",
+      "highlights": "0 → 1 • North Star • Easy mode",
+      "keyWork": "Redesigned incrementally alongside delivery, with a North Star so every tactical call pointed the same way.\nReplaced the raw price-range inputs with a visual chart and named risk postures (Wide, Stable, Upper side, Lower side), so users see where they sit in the market before committing.\nSplit the experience in two after the CEO’s “would your mum get it?” review. Easy mode, with Ollie as a conversational guide, was for first-timers, and Advanced was for speed. I argued against the split, as it meant maintaining two products.\nExplored intent-driven UI (“$100 of GALA” generates the confirmation). It didn’t reach production.",
+      "impact": "North Star aligned design, product and engineering • Easy mode and Ollie shipped • GalaSwap passed $40M+ trading volume, 250,000+ swaps and ~200 liquidity pools",
+      "aftermath": "Gala restructured and eliminated the design function. Ollie launched publicly, then was withdrawn. The vision was handed to product and engineering, but with no designers left to hold the line, the live product drifted from it.",
+      "lesson": "Fast AI-assisted delivery needs a boundary between exploration and production before scale, not after.",
+      "heroMediaId": "gala-defi-cover",
+      "hoverVideoId": "gala-defi-walkthrough",
+      "featured": false,
+      "blocks": [
+        {
+          "id": "gala-defi-walkthrough",
+          "type": "video",
+          "label": "Project walkthrough",
+          "title": "Product in motion",
+          "mediaId": "gala-defi-walkthrough",
+          "posterMediaId": "gala-defi-cover",
+          "caption": "Walkthrough video",
+          "layout": {
+            "columns": 2,
+            "mediaFit": "contain"
+          }
+        }
+      ],
       "aliases": [
         "Gala DeFi",
         "GalaSwap",
@@ -1779,21 +1809,6 @@ export const catalog={
         "AI-assisted delivery",
         "Front-end prototyping"
       ],
-      "kind": "shipped",
-      "client": "Gala",
-      "pageTitle": "Designing for trust and ease of use in a DeFi stack that launched without design.",
-      "intro": "GalaSwap launched fast: outsourced, inconsistent, no shared system. I joined the CEO’s “A-team” squad for priority projects when coherence and ease of use started to define trust.",
-      "context": "Gala’s DeFi ecosystem: swap, liquidity pools and wallet, used by first-timers and experienced traders alike.",
-      "challenge": "Swap, wallet and pools were built by different teams with no shared system. In DeFi that costs trust, because people are putting in real money. Novices and traders needed opposite things. It was a live product with no design system, a small squad and restructuring throughout.",
-      "role": "Senior product designer leading the redesign. I owned the North Star, swap, liquidity pools, wallet onboarding and the conversational UI explorations. I also brought AI-assisted workflows into delivery and built straight into the production repo.",
-      "highlights": "0 → 1 • North Star • Easy mode",
-      "keyWork": "Redesigned incrementally alongside delivery, with a North Star so every tactical call pointed the same way.\nReplaced the raw price-range inputs with a visual chart and named risk postures (Wide, Stable, Upper side, Lower side), so users see where they sit in the market before committing.\nSplit the experience in two after the CEO’s “would your mum get it?” review. Easy mode, with Ollie as a conversational guide, was for first-timers, and Advanced was for speed. I argued against the split, as it meant maintaining two products.\nExplored intent-driven UI (“$100 of GALA” generates the confirmation). It didn’t reach production.",
-      "impact": "North Star aligned design, product and engineering • Easy mode and Ollie shipped • GalaSwap passed $40M+ trading volume, 250,000+ swaps and ~200 liquidity pools",
-      "aftermath": "Gala restructured and eliminated the design function. Ollie launched publicly, then was withdrawn. The vision was handed to product and engineering, but with no designers left to hold the line, the live product drifted from it.",
-      "lesson": "Fast AI-assisted delivery needs a boundary between exploration and production before scale, not after.",
-      "heroMediaId": "gala-defi-cover",
-      "hoverVideoId": "gala-defi-walkthrough",
-      "featured": false,
       "evidence": [
         {
           "id": "highlights",
@@ -1809,21 +1824,6 @@ export const catalog={
           "text": "North Star aligned design, product and engineering • Easy mode and Ollie shipped • GalaSwap passed $40M+ trading volume, 250,000+ swaps and ~200 liquidity pools",
           "provenance": {
             "kind": "author-provided"
-          }
-        }
-      ],
-      "blocks": [
-        {
-          "id": "gala-defi-walkthrough",
-          "type": "video",
-          "label": "Project walkthrough",
-          "title": "Product in motion",
-          "mediaId": "gala-defi-walkthrough",
-          "posterMediaId": "gala-defi-cover",
-          "caption": "Walkthrough video",
-          "layout": {
-            "columns": 2,
-            "mediaFit": "contain"
           }
         }
       ]

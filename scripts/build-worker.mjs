@@ -39,7 +39,8 @@ await fs.mkdir(path.join(server,'knowledge'),{recursive:true});
 await fs.copyFile(path.join(dist,'knowledge/profile.js'),path.join(server,'knowledge/profile.js'));
 await fs.copyFile(path.join(dist,'assistant-knowledge.js'),path.join(server,'assistant-knowledge.js'));
 await fs.copyFile(path.join(dist,'assistant-answer.js'),path.join(server,'assistant-answer.js'));
-await fs.copyFile(path.join(root,'worker/voice-core.mjs'),path.join(server,'voice-core.mjs'));
+await fs.writeFile(path.join(server,'voice-core.mjs'),(await fs.readFile(path.join(root,'worker/voice-core.mjs'),'utf8')).replaceAll("'../dist/","'./"));
+await fs.copyFile(path.join(dist,'assistant-acknowledgements.js'),path.join(server,'assistant-acknowledgements.js'));
 await fs.copyFile(path.join(root,'worker/provider-error.mjs'),path.join(server,'provider-error.mjs'));
 let hosting=null;
 try{hosting=JSON.parse(await fs.readFile(path.join(root,'.openai/hosting.json'),'utf8'));}

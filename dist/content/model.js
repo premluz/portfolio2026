@@ -29,7 +29,8 @@ export const blockTypeDefinitions=Object.freeze({
  reference:{label:'Document reference',properties:{documentId:id,presentation:{enum:['card','inline']}},required:['documentId','presentation']},
  metric:{label:'Metric',properties:{value:short,description:text,evidenceIds:{...strings,minItems:1}},required:['value','label','evidenceIds']},
  table:{label:'Table',properties:{columns:{...list(short),minItems:2,maxItems:6},rows:{...list({...list(text),minItems:2,maxItems:6}),minItems:1}},required:['columns','rows']},
- quote:{label:'Quote',properties:{text,attribution:short,evidenceIds:{...strings,minItems:1}},required:['text','attribution','evidenceIds']}
+ // Quotes cite themselves: the build generates their evidence from the quote text (content/assistant-data.js).
+ quote:{label:'Quote',properties:{text,attribution:short,evidenceIds:{...strings,minItems:1}},required:['text','attribution']}
 });
 const provenance={anyOf:[object({kind:{const:'author-provided'},label:short},['kind']),object({kind:{const:'source-linked'},source:object({url:short,label:short,locator:short},['url','label'])},['kind','source'])]};
 export function createContentModel({documentTypes={},blockTypes={}}={}){

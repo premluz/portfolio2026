@@ -10,23 +10,6 @@
       "client": "Merlin",
       "summary": "R&D • AI assistant • Generative UI • Prototype",
       "category": "Financial intelligence · R&D",
-      "aliases": [
-        "Merlin",
-        "Merlin AI",
-        "Financial intelligence workspace",
-        "AI analyst"
-      ],
-      "domains": [
-        "AI",
-        "Financial intelligence",
-        "Generative interfaces"
-      ],
-      "capabilities": [
-        "Product strategy",
-        "Interaction design",
-        "Prototyping",
-        "Front-end development"
-      ],
       "kind": "lab",
       "intro": "Wwhen an agent does the analysis, the interface should become part of the answer.",
       "context": "Financial intelligence platform where users ask questions, follow the reasoning and work with interfaces generated around the answer.",
@@ -39,24 +22,6 @@
       "type": "portfolio-item",
       "status": "published",
       "featured": false,
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "0→1 prototype • Desktop + mobile • Solo designer/builder",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "0→1 prototype • Agent-assembled interfaces • Multi-pane workbench • 5 themes from one component system",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ],
       "blocks": [
         {
           "id": "merlin-walkthrough",
@@ -86,23 +51,6 @@
       "name": "Life-first planner",
       "summary": "0→1 product • Solo designer/builder",
       "category": "Life-first planner · Independent product",
-      "aliases": [
-        "Rios",
-        "Amble",
-        "Planner",
-        "Life-first planner"
-      ],
-      "domains": [
-        "Planning",
-        "Independent product",
-        "Mobile"
-      ],
-      "capabilities": [
-        "Product strategy",
-        "Interaction design",
-        "Product design",
-        "Implementation"
-      ],
       "kind": "shipped",
       "context": "Cross-platform planner combining daily planning, unscheduled Things, recurring Patterns and calendar import and sync.",
       "role": "Sole product designer and builder. Owned product strategy, interaction model, IA, visual identity, motion and implementation across mobile and desktop.",
@@ -110,24 +58,6 @@
       "keyWork": "Designed a spatial timeline with direct manipulation, readable overlaps and cascading schedule changes, supported by Zones, What Matters and a unified Things → Days → Patterns model.",
       "impact": "0→1 product • Mobile + desktop • Unified product + brand system • New spatial planning model",
       "heroMediaId": "rios-cover",
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "0→1 product • Solo designer/builder",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "0→1 product • Mobile + desktop • Unified product + brand system • New spatial planning model",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ],
       "blocks": [
         {
           "id": "rios-walkthrough",
@@ -159,24 +89,6 @@
       "name": "Publishing pipeline",
       "summary": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 • 4 teams aligned",
       "category": "Publishing pipeline · PlayStation Network",
-      "aliases": [
-        "PlayStation",
-        "Play Station",
-        "Sony",
-        "PlayStation content",
-        "PlayStation Content Pipeline"
-      ],
-      "domains": [
-        "Enterprise",
-        "Publishing platforms",
-        "PlayStation Network"
-      ],
-      "capabilities": [
-        "Product design",
-        "Workflow strategy",
-        "Team leadership",
-        "Research"
-      ],
       "kind": "shipped",
       "context": "Self-service content pipeline for developers and publishers managing product details, regional rules and publishing across PlayStation Network.",
       "role": "First designer. Led end-to-end design across discovery, research, prototyping, testing and implementation support through launch, while helping align four product teams.",
@@ -185,24 +97,6 @@
       "impact": "3 systems → 1 workflow • 4 teams aligned • Hundreds of hours saved across partner and internal workflows",
       "heroMediaId": "playstation-cover",
       "hoverVideoId": "playstation-walkthrough",
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "1st designer • 3 systems → 1 workflow",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "3 systems → 1 workflow • 4 teams aligned • Hundreds of hours saved across partner and internal workflows",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ],
       "blocks": [
         {
           "id": "playstation-walkthrough",
@@ -233,24 +127,6 @@
       "name": "IoT connectivity",
       "summary": "180+ regions · 240M+ devices · NPS –33 → +62 · Operations time reduced to under 10 seconds",
       "category": "IoT connectivity · Enterprise",
-      "aliases": [
-        "Vodafone",
-        "Voda phone",
-        "Vodaphone",
-        "Vodafone IoT",
-        "Vodafone IoT Connectivity"
-      ],
-      "domains": [
-        "Enterprise",
-        "Connectivity",
-        "Internet of Things"
-      ],
-      "capabilities": [
-        "Product design",
-        "Research",
-        "Information architecture",
-        "Interaction design"
-      ],
       "kind": "shipped",
       "context": "Enterprise self-service platform for managing IoT connectivity and SIM operations at scale.",
       "role": "Senior product designer, one of three alongside a design manager. Owned research, IA, interaction design, UI, prototyping, testing and delivery support.",
@@ -259,24 +135,6 @@
       "impact": "NPS −33 → +62 • Operations reduced from ~1 minute to under 10 seconds • Complex workflows opened to non-technical users without losing specialist depth",
       "heroMediaId": "vodafone-cover",
       "hoverVideoId": "vodafone-walkthrough",
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "Senior product designer • NPS −33 → +62",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "NPS −33 → +62 • Operations reduced from ~1 minute to under 10 seconds • Complex workflows opened to non-technical users without losing specialist depth",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ],
       "blocks": [
         {
           "id": "vodafone-iot-walkthrough",
@@ -307,23 +165,6 @@
       "name": "Blockchain traceability",
       "summary": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
       "category": "Blockchain traceability · Regulated supply chain",
-      "aliases": [
-        "Tracr",
-        "Tracker",
-        "Tracer",
-        "Tracr Regulated Supply Chain"
-      ],
-      "domains": [
-        "Enterprise",
-        "Supply chain",
-        "Blockchain traceability"
-      ],
-      "capabilities": [
-        "Product design",
-        "Design systems ",
-        "Product architecture",
-        "Incremental redesign"
-      ],
       "kind": "shipped",
       "context": "Blockchain-based provenance and traceability across the regulated global diamond supply chain, including complex statuses, exceptions and conflict management.",
       "role": "IC lead product designer. Owned the design system, governance and adoption, product architecture, North Star and strategic design direction while supporting leadership and mentoring.",
@@ -332,24 +173,6 @@
       "impact": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
       "heroMediaId": "tracr-cover",
       "hoverVideoId": "tracr-walkthrough",
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "IC lead product designer • Architecture 10 → 3",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "~2× design, dev and QA velocity • 3× workflow efficiency • Architecture simplified 10 → 3",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ],
       "blocks": [
         {
           "id": "tracr-walkthrough",
@@ -384,27 +207,6 @@
       "name": "Web3 film platform",
       "summary": "End-to-end design across 0 → 1 → Growth and continous improvements",
       "category": "Web3 entertainment · Film and music",
-      "aliases": [
-        "Gala",
-        "Gala Film",
-        "GalaChain",
-        "Gala Chain",
-        "Gala Web3",
-        "Gala Web3 Ecosystem"
-      ],
-      "domains": [
-        "Web3",
-        "Entertainment",
-        "Creator economy",
-        "Film",
-        "Music"
-      ],
-      "capabilities": [
-        "Product design",
-        "UX and UI",
-        "Motion design",
-        "Front-end prototyping"
-      ],
       "kind": "shipped",
       "context": "Film and music ecosystem where creators monetise their work directly and reward participating fans.",
       "role": "Product designer dedicated to Gala Film from 0→1, with supporting work across Gala Music and the broader ecosystem. Worked across UX, UI, motion and front-end as priorities shifted.",
@@ -412,24 +214,6 @@
       "keyWork": "Designed retention mechanics and creator publishing, validated key concepts with users and maintained a live architecture spanning 15+ interconnected flows across design, product and engineering.",
       "impact": "MVP launched across film and music • Blockchain mechanics surfaced without Web3 terminology • Reward concepts validated • Creator publishing moved toward self-service",
       "heroMediaId": "gala-cover",
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "Product designer • Gala Film 0→1",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "MVP launched across film and music • Blockchain mechanics surfaced without Web3 terminology • Reward concepts validated • Creator publishing moved toward self-service",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ],
       "blocks": [
         {
           "id": "galachain-walkthrough",
@@ -465,24 +249,6 @@
       "client": "Bastion",
       "summary": "R&D • AI assistant • Generative UI • Prototype",
       "category": "AI wallet · R&D",
-      "aliases": [
-        "Bastion",
-        "Bastion wallet",
-        "AI wallet",
-        "AI crypto wallet"
-      ],
-      "domains": [
-        "AI",
-        "Wallet",
-        "Financial technology",
-        "Generative interfaces"
-      ],
-      "capabilities": [
-        "Product strategy",
-        "Interaction design",
-        "Prototyping",
-        "Front-end development"
-      ],
       "kind": "lab",
       "intro": "I designed and built Bastion around a simple idea: the assistant shouldn’t be a feature you visit. It should be available from anywhere in the product.",
       "context": "Mobile prototype of a simulated crypto wallet combining holdings, markets and an AI assistant that can guide and perform financial tasks.",
@@ -495,24 +261,6 @@
       "type": "portfolio-item",
       "status": "published",
       "featured": false,
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "0→1 prototype • Mobile • Solo designer/builder",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "Assistant one gesture from every screen • Text + voice in one thread • Trust-aware financial flows • Dark + light themes from one component system",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ],
       "blocks": [
         {
           "id": "bastion-walkthrough",
@@ -546,24 +294,6 @@
       "client": "Porter",
       "summary": "0→1 product • Solo designer/builder",
       "category": "Agent switchboard · R&D",
-      "aliases": [
-        "Porter",
-        "Agent switchboard",
-        "AI agents",
-        "Mac agent manager"
-      ],
-      "domains": [
-        "AI",
-        "Mac apps",
-        "Agent workflows",
-        "Independent product"
-      ],
-      "capabilities": [
-        "Product strategy",
-        "Interaction design",
-        "Native app design",
-        "Implementation"
-      ],
       "kind": "lab",
       "listOnly": true,
       "heroMediaId": "porter-cover",
@@ -575,24 +305,6 @@
       "keyWork": "• Designed a panel that lives at the screen edge in three states: a black docked tab, a capsule of status dots on hover, and an expanded pane. The shape morphs between them as one liquid form.\n• Built the status model around honesty. Waiting questions outrank working agents, and when Porter can't see a state it shows nothing, never a guess.\n• Replaced a dashboard of badges with one small face that carries the state of every agent at once. It follows your pointer, blinks, and turns amber when something needs you.\n• Treated privacy as a design constraint: only titles and status signals are read, and nothing leaves the Mac.",
       "impact": "0→1 product • 7 sources → 1 list • 3 panel states",
       "featured": false,
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "0→1 product • Mac native • Solo designer/builder",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "0→1 product • 7 sources → 1 list • 3 panel states",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ],
       "blocks": []
     },
     {
@@ -605,9 +317,6 @@
       "name": "About",
       "summary": "Product designer with a technical and entrepreneurial background, 10+ years across Web3, DeFi, blockchain, IoT & Telco, 0→1 through growth and scale.",
       "category": "Prem / Designer + creative technologist",
-      "aliases": [],
-      "domains": [],
-      "capabilities": [],
       "links": [],
       "blocks": [
         {
@@ -687,9 +396,6 @@
       "name": "Contact",
       "summary": "Have a complex product or an interesting idea?",
       "category": "Let’s connect",
-      "aliases": [],
-      "domains": [],
-      "capabilities": [],
       "links": [
         {
           "id": "primary",
@@ -816,7 +522,7 @@
             "columns": 2
           },
           "items": [
-           {
+            {
               "id": "home-project-merlin",
               "type": "reference",
               "documentId": "merlin",
@@ -1064,7 +770,7 @@
             ""
           ]
         },
-            {
+        {
           "id": "approach-principles",
           "type": "info-card",
           "title": "First principles",
@@ -1171,84 +877,34 @@
       "title": "Testimonials",
       "summary": "Feedback from collaborators at PlayStation, Tracr, Vodafone and Gala.",
       "revision": 1,
-      "evidence": [
-        {
-          "id": "testimonial-gabriele",
-          "kind": "quote",
-          "text": "His ability to communicate ideas and win people over gives him an edge.",
-          "provenance": {
-            "kind": "author-provided",
-            "label": "Testimonial supplied by Prem"
-          }
-        },
-        {
-          "id": "testimonial-matt",
-          "kind": "quote",
-          "text": "Exceptional technical depth. He designs with implementation in mind, anticipating edge cases and system constraints.",
-          "provenance": {
-            "kind": "author-provided",
-            "label": "Testimonial supplied by Prem"
-          }
-        },
-        {
-          "id": "testimonial-venessa",
-          "kind": "quote",
-          "text": "He always seeks to validate his designs with the team, and stakeholders and conducts User Testing sessions.",
-          "provenance": {
-            "kind": "author-provided",
-            "label": "Testimonial supplied by Prem"
-          }
-        },
-        {
-          "id": "testimonial-jonathan",
-          "kind": "quote",
-          "text": "He brought AI workflows into our design-to-dev process in ways that genuinely sped things up.",
-          "provenance": {
-            "kind": "author-provided",
-            "label": "Testimonial supplied by Prem"
-          }
-        }
-      ],
       "blocks": [
         {
           "id": "quote-gabriele",
           "type": "quote",
           "text": "His work is strongly informed by data and user research, and he’s especially good at tackling complex, trust-sensitive problems with very little steer, input or guidance.",
           "attribution": "Paul Wilsher",
-          "label": "Product Manager at Gala",
-          "evidenceIds": [
-            "testimonial-gabriele"
-          ]
+          "label": "Product Manager at Gala"
         },
         {
           "id": "quote-matt",
           "type": "quote",
           "text": "Exceptional technical depth. He designs with implementation in mind, anticipating edge cases and system constraints.",
           "attribution": "Matt Bindoff",
-          "label": "Lead Engineer at Tracr",
-          "evidenceIds": [
-            "testimonial-matt"
-          ]
+          "label": "Lead Engineer at Tracr"
         },
         {
           "id": "quote-santiago",
           "type": "quote",
           "text": "He challenged our approach and the results showed in our KPIs. He ramped up incredibly quickly and made a meaningful impact within his first month.",
           "attribution": "Santiago Jaramillo",
-          "label": "Head of Product at Gala",
-          "evidenceIds": [
-            "testimonial-venessa"
-          ]
+          "label": "Head of Product at Gala"
         },
         {
           "id": "quote-jonathan",
           "type": "quote",
           "text": "He brought AI workflows into our design-to-dev process in ways that genuinely sped things up. He's creative and sharp, but always grounded in actual constraints, adapting quickly when things shift.",
           "attribution": "Jonathan Burk",
-          "label": "Lead AI Engineer at Gala",
-          "evidenceIds": [
-            "testimonial-jonathan"
-          ]
+          "label": "Lead AI Engineer at Gala"
         }
       ]
     },
@@ -1510,9 +1166,6 @@
       "name": "About lab",
       "summary": "An experimental view of the portfolio: every card in one spiral that unwinds into a grid as you scroll.",
       "category": "Prem / Experiments",
-      "aliases": [],
-      "domains": [],
-      "capabilities": [],
       "links": [],
       "blocks": [
         {
@@ -1534,9 +1187,6 @@
       "name": "About infinite",
       "summary": "An experimental view of the portfolio: every card in an endless space you can fly through.",
       "category": "Prem / Experiments",
-      "aliases": [],
-      "domains": [],
-      "capabilities": [],
       "links": [],
       "blocks": [
         {
@@ -1784,27 +1434,6 @@
       "name": "DeFi swap, pools and wallet",
       "summary": "0 → 1 • North Star • Easy mode",
       "category": "Decentralised finance",
-      "aliases": [
-        "Gala DeFi",
-        "GalaSwap",
-        "Gala Swap",
-        "Ollie",
-        "Gala liquidity pools",
-        "Gala wallet"
-      ],
-      "domains": [
-        "DeFi",
-        "Web3",
-        "Finance",
-        "Trading"
-      ],
-      "capabilities": [
-        "Product design",
-        "Design systems",
-        "Conversational UI",
-        "AI-assisted delivery",
-        "Front-end prototyping"
-      ],
       "kind": "shipped",
       "client": "Gala",
       "pageTitle": "Designing for trust and ease of use in a DeFi stack that launched without design.",
@@ -1820,24 +1449,6 @@
       "heroMediaId": "gala-defi-cover",
       "hoverVideoId": "gala-defi-walkthrough",
       "featured": false,
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "0 → 1 • North Star • Easy mode",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "North Star aligned design, product and engineering • Easy mode and Ollie shipped • GalaSwap passed $40M+ trading volume, 250,000+ swaps and ~200 liquidity pools",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ],
       "blocks": [
         {
           "id": "gala-defi-walkthrough",

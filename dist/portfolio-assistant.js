@@ -18,6 +18,7 @@ export function readSessionTranscript(storage,store=content){
    knowledgeSourceIds:[...new Set(Array.isArray(item.knowledgeSourceIds)?item.knowledgeSourceIds:[])].filter(id=>knowledgeById.has(id)).slice(0,3),
    suggestions:(Array.isArray(item.suggestions)?item.suggestions:[]).filter(value=>typeof value==='string').map(value=>value.slice(0,100)).slice(0,3),
    speechToken:typeof item.speechToken==='string'&&/^\d{10}\.[A-Za-z0-9_-]{43}$/.test(item.speechToken)?item.speechToken:null,
+   spoken:typeof item.spoken==='string'&&item.spoken.length<=assistantLimits.spokenCharacters?item.spoken:null,
    notice:typeof item.notice==='string'?item.notice.slice(0,assistantLimits.noticeCharacters):''}));
 }
 

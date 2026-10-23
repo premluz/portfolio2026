@@ -14,14 +14,15 @@ assert.equal(await verifySpeech(text+' More',sessionId,token,secret,now),false,'
 assert.equal(await verifySpeech(text,'other-session',token,secret,now),false);
 resetAssistantRateLimitsForTests();
 const unsupported=await handleAssistantRequest(new Request(origin+'/api/assistant',{method:'POST',headers:{origin,'content-type':'application/json'},body:JSON.stringify({question:'A question outside the portfolio',sessionId})}),{AI_API_KEY:'test-only',AI_API_BASE_URL:'https://model.example/v1',AI_MODEL:'small-model',AI_VOICE_KEY:secret},{documents,now,fetcher:async()=>new Response(JSON.stringify({choices:[{message:{content:JSON.stringify({answer:'An unsupported answer',sourceIds:[]})}}]}))});
-const unsupportedAnswer=await unsupported.json();assert.equal(unsupported.status,200);assert.equal(unsupportedAnswer.documentIds.length,0);assert(await verifySpeech(unsupportedAnswer.text,sessionId,unsupportedAnswer.speechToken,secret,now),'The grounded fallback is also authorized for voice, so later answers do not silently stop speaking');
+const unsupportedAnswer=await unsupported.json();assert.equal(unsupported.status,200);assert.equal(unsupportedAnswer.documentIds.length,0);assert(await verifySpeech(unsupportedAnswer.spoken,sessionId,unsupportedAnswer.speechToken,secret,now),'The grounded fallback is also authorized for voice, so later answers do not silently stop speaking');
 assert.equal(await verifySpeech(text,sessionId,token,secret,now+13*60*60*1000),false,'Speech authorization expires.');
 
 resetAssistantRateLimitsForTests();
 const curated=await handleAssistantRequest(new Request(origin+'/api/assistant',{method:'POST',headers:{origin,'content-type':'application/json'},body:JSON.stringify({question:'Who is Prem?',sessionId})}),{AI_VOICE_KEY:secret},{documents,now});
 const answer=await curated.json();
 assert.equal(curated.status,200);
-assert(await verifySpeech(answer.text,sessionId,answer.speechToken,secret,now),'Approved answers receive playback tokens without calling the language model.');
+assert(await verifySpeech(answer.spoken,sessionId,answer.speechToken,secret,now),'Approved answers receive playback tokens for their short spoken line without calling the language model.');
+assert.equal(answer.text===answer.spoken||await verifySpeech(answer.text,sessionId,answer.speechToken,secret,now),answer.text===answer.spoken,'The full written answer is not authorized for speech');
 
 let captured;
 const fetcher=async(url,options)=>{captured={url,options};return new Response(new Uint8Array([0x49,0x44,0x33,0x03]),{headers:{'content-type':'audio/mpeg'}});};

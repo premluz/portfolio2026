@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import {exportPublishedCatalog} from '../dist/content/model.js';
+import {prepareCatalog} from '../dist/content/assistant-data.js';
 import {clientStyles} from '../scripts/client-styles.mjs';
 import {DEFAULT_CONTENT_SET,isContentSetName} from '../dist/content/content-set.js';
 
@@ -14,7 +15,13 @@ export async function readDevelopmentCatalog(filename=new URL(DEFAULT_CONTENT_SE
  let catalog;
  try{catalog=JSON.parse(await fs.readFile(filename,'utf8'));}
  catch(error){throw new Error(`Cannot read development catalog: ${filename}`,{cause:error});}
- return exportPublishedCatalog(catalog);
+ return exportPublishedCatalog(prepareCatalog(catalog,await readDevelopmentAssistantData()));
+}
+
+// Read on every request in development, so edits to content/assistant.json show without a restart.
+export async function readDevelopmentAssistantData(){
+ try{return JSON.parse(await fs.readFile(new URL('assistant.json',contentDirectory),'utf8'));}
+ catch(error){if(error.code==='ENOENT')return undefined;throw new Error('Cannot read content/assistant.json',{cause:error});}
 }
 
 export async function developmentResponse(pathname){

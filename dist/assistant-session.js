@@ -2,11 +2,13 @@ import {assistantLimits,assistantHistory} from './assistant-limits.js';
 import {requestAssistant} from './assistant-client.js';
 import {knowledgeById} from './assistant-answer.js';
 import {mountThinkingIndicator,playSendWave} from './iconiq-chat-effects.js';
+import {acknowledgementFor} from './assistant-acknowledgements.js';
 
 async function submitQuestion(r,value,{spoken=false}={}){
  const question=value.trim();if(!question||r.pending||r.count>=r.limit)return {ok:false,message:'Finish the current question first.'};
  if(question.length>assistantLimits.questionCharacters)return {ok:false,message:`Please keep the question or job description under ${assistantLimits.questionCharacters} characters.`};
  const readAloud=r.voiceMode&&r.soundEnabled;r.speech.stop();r.options.onStatus('answer','');r.hideComposerSuggestions();
+ if(readAloud)r.speech.acknowledge({id:acknowledgementFor(question,r.count),sessionId:r.sessionId()});
  r.input.value='';r.page.classList.remove('assistant-empty');r.count++;r.save('prem-ask-count',String(r.count));
  r.persist({role:'user',text:question,documentIds:[]});r.suggestionsEl.remove();r.append('user',question);
  r.pending=true;r.sync();r.dock.classList.add('assistant-working');r.page.setAttribute('aria-busy','true');
@@ -14,12 +16,13 @@ async function submitQuestion(r,value,{spoken=false}={}){
  try{
   const answer=await requestAssistant(question,assistantHistory(r.transcript.slice(0,-1)),{store:r.store,sessionId:r.sessionId()});waiting.remove();
   if(answer.notice)r.options.onInputError(answer.notice);
-  else if(readAloud&&!answer.speechToken)r.options.onInputError(answer.text.length>assistantLimits.speechCharacters?'This detailed answer is text-only.':'Showing a text answer. Voice could not connect.');
+  else if(readAloud&&!answer.speechToken)r.options.onInputError('Showing a text answer. Voice could not connect.');
+  if(!readAloud||!answer.speechToken)r.speech.release();
   r.addAnswer(answer,{auto:readAloud,spoken,animateCards:true});
   const documentIds=[...new Set([...(answer.cards||[]).map(item=>item.documentId),...(answer.sources||[]).map(item=>item.documentId)])].filter(id=>typeof id==='string'&&r.store.get(id));
   const knowledgeSourceIds=(answer.sources||[]).map(source=>source.documentId).filter(id=>knowledgeById.has(id));
-  r.persist({role:'assistant',text:answer.text||'',documentIds,knowledgeSourceIds,suggestions:answer.suggestions||[],speechToken:answer.speechToken||null,notice:answer.notice||''});
- }catch(error){waiting.remove();const text='I couldn’t check the portfolio just now. Please try again.';r.options.onInputError('Assistant rendering failed: '+error.name);r.append('assistant',text);r.persist({role:'assistant',text,documentIds:[]});}
+  r.persist({role:'assistant',text:answer.text||'',documentIds,knowledgeSourceIds,suggestions:answer.suggestions||[],speechToken:answer.speechToken||null,spoken:answer.spoken||null,notice:answer.notice||''});
+ }catch(error){waiting.remove();r.speech.release();const text='I couldn’t check the portfolio just now. Please try again.';r.options.onInputError('Assistant rendering failed: '+error.name);r.append('assistant',text);r.persist({role:'assistant',text,documentIds:[]});}
  finally{r.pending=false;r.sync();r.dock.classList.remove('assistant-working');r.page.removeAttribute('aria-busy');}
  return {ok:true,message:'Answered'};
 }

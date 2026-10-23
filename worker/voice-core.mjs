@@ -1,4 +1,5 @@
 import {providerErrorCode} from './provider-error.mjs';
+import {acknowledgementText} from '../dist/assistant-acknowledgements.js';
 const voiceId='JBFqnCBsd6RMkjVDRZzb'; // George; override with AI_VOICE_ID.
 const maxSpeech=1000;
 const windowMs=60*60*1000;
@@ -45,11 +46,14 @@ export async function handleVoiceRequest(request,env,{fetcher=globalThis.fetch,n
  const origin=request.headers.get('origin');if(origin&&origin!==url.origin)return json({error:'origin_not_allowed'},403);
  if(!request.headers.get('content-type')?.toLowerCase().includes('application/json'))return json({error:'json_required'},415);
  let payload;try{payload=await boundedJson(request);}catch{return json({error:'invalid_request'},400);}
- const text=typeof payload?.text==='string'?payload.text.trim():'';
+ // An acknowledgement names a fixed phrase, so it needs no answer token; any other text must carry one.
+ const acknowledgement=payload?.ack===undefined?null:acknowledgementText(payload.ack);
+ if(payload?.ack!==undefined&&!acknowledgement)return json({error:'unknown_acknowledgement'},400);
+ const text=acknowledgement||(typeof payload?.text==='string'?payload.text.trim():'');
  const sessionId=typeof payload?.sessionId==='string'?payload.sessionId:'';
  if(!text||text.length>maxSpeech||!sessionId||sessionId.length>100)return json({error:'invalid_speech'},400);
  if(!env?.AI_VOICE_KEY)return json({error:'voice_not_configured'},503);
- if(!await verifySpeech(text,sessionId,payload?.speechToken,env.AI_VOICE_KEY,now))return json({error:'unauthorized_speech'},403);
+ if(!acknowledgement&&!await verifySpeech(text,sessionId,payload?.speechToken,env.AI_VOICE_KEY,now))return json({error:'unauthorized_speech'},403);
  const ip=request.headers.get('cf-connecting-ip')||'unknown';
  if(!consume(sessionHits,`${ip}:${sessionId}`,12,now)||!consume(ipHits,ip,40,now))return json({error:'voice_rate_limited'},429);
  const selected=selectedVoice(env);

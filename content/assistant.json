@@ -1,0 +1,239 @@
+{
+  "format": "prem-assistant-data",
+  "version": 1,
+  "documents": {
+    "merlin": {
+      "aliases": [
+        "Merlin",
+        "Merlin AI",
+        "Financial intelligence workspace",
+        "AI analyst"
+      ],
+      "domains": [
+        "AI",
+        "Financial intelligence",
+        "Generative interfaces"
+      ],
+      "capabilities": [
+        "Product strategy",
+        "Interaction design",
+        "Prototyping",
+        "Front-end development"
+      ],
+      "evidence": [
+        {
+          "id": "highlights",
+          "kind": "statement",
+          "text": "0→1 prototype • Desktop + mobile • Solo designer/builder",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        }
+      ]
+    },
+    "rios": {
+      "aliases": [
+        "Rios",
+        "Amble",
+        "Planner",
+        "Life-first planner"
+      ],
+      "domains": [
+        "Planning",
+        "Independent product",
+        "Mobile"
+      ],
+      "capabilities": [
+        "Product strategy",
+        "Interaction design",
+        "Product design",
+        "Implementation"
+      ]
+    },
+    "playstation": {
+      "aliases": [
+        "PlayStation",
+        "Play Station",
+        "Sony",
+        "PlayStation content",
+        "PlayStation Content Pipeline"
+      ],
+      "domains": [
+        "Enterprise",
+        "Publishing platforms",
+        "PlayStation Network"
+      ],
+      "capabilities": [
+        "Product design",
+        "Workflow strategy",
+        "Team leadership",
+        "Research"
+      ]
+    },
+    "vodafone-iot": {
+      "aliases": [
+        "Vodafone",
+        "Voda phone",
+        "Vodaphone",
+        "Vodafone IoT",
+        "Vodafone IoT Connectivity"
+      ],
+      "domains": [
+        "Enterprise",
+        "Connectivity",
+        "Internet of Things"
+      ],
+      "capabilities": [
+        "Product design",
+        "Research",
+        "Information architecture",
+        "Interaction design"
+      ]
+    },
+    "tracr": {
+      "aliases": [
+        "Tracr",
+        "Tracker",
+        "Tracer",
+        "Tracr Regulated Supply Chain"
+      ],
+      "domains": [
+        "Enterprise",
+        "Supply chain",
+        "Blockchain traceability"
+      ],
+      "capabilities": [
+        "Product design",
+        "Design systems ",
+        "Product architecture",
+        "Incremental redesign"
+      ]
+    },
+    "galachain": {
+      "aliases": [
+        "Gala",
+        "Gala Film",
+        "GalaChain",
+        "Gala Chain",
+        "Gala Web3",
+        "Gala Web3 Ecosystem"
+      ],
+      "domains": [
+        "Web3",
+        "Entertainment",
+        "Creator economy",
+        "Film",
+        "Music"
+      ],
+      "capabilities": [
+        "Product design",
+        "UX and UI",
+        "Motion design",
+        "Front-end prototyping"
+      ]
+    },
+    "bastion": {
+      "aliases": [
+        "Bastion",
+        "Bastion wallet",
+        "AI wallet",
+        "AI crypto wallet"
+      ],
+      "domains": [
+        "AI",
+        "Wallet",
+        "Financial technology",
+        "Generative interfaces"
+      ],
+      "capabilities": [
+        "Product strategy",
+        "Interaction design",
+        "Prototyping",
+        "Front-end development"
+      ],
+      "evidence": [
+        {
+          "id": "highlights",
+          "kind": "statement",
+          "text": "0→1 prototype • Mobile • Solo designer/builder",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        }
+      ]
+    },
+    "porter": {
+      "aliases": [
+        "Porter",
+        "Agent switchboard",
+        "AI agents",
+        "Mac agent manager"
+      ],
+      "domains": [
+        "AI",
+        "Mac apps",
+        "Agent workflows",
+        "Independent product"
+      ],
+      "capabilities": [
+        "Product strategy",
+        "Interaction design",
+        "Native app design",
+        "Implementation"
+      ],
+      "evidence": [
+        {
+          "id": "highlights",
+          "kind": "statement",
+          "text": "0→1 product • Mac native • Solo designer/builder",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        }
+      ]
+    },
+    "about": {
+      "aliases": [],
+      "domains": [],
+      "capabilities": []
+    },
+    "contact": {
+      "aliases": [],
+      "domains": [],
+      "capabilities": []
+    },
+    "about-lab": {
+      "aliases": [],
+      "domains": [],
+      "capabilities": []
+    },
+    "about-infinite": {
+      "aliases": [],
+      "domains": [],
+      "capabilities": []
+    },
+    "gala-defi": {
+      "aliases": [
+        "Gala DeFi",
+        "GalaSwap",
+        "Gala Swap",
+        "Ollie",
+        "Gala liquidity pools",
+        "Gala wallet"
+      ],
+      "domains": [
+        "DeFi",
+        "Web3",
+        "Finance",
+        "Trading"
+      ],
+      "capabilities": [
+        "Product design",
+        "Design systems",
+        "Conversational UI",
+        "AI-assisted delivery",
+        "Front-end prototyping"
+      ]
+    }
+  }
+}

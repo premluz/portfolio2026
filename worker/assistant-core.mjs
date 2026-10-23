@@ -3,6 +3,7 @@ import {assistantKnowledge,findCuratedAnswer,suggestionsFor} from '../dist/assis
 import {signSpeech} from './voice-core.mjs';
 import {assistantLimits,assistantHistory} from '../dist/assistant-limits.js';
 import {requestModel} from './assistant-model.mjs';
+import {spokenLine} from './assistant-policy.mjs';
 
 const maxBodyBytes=assistantLimits.requestBytes;
 const sessionLimit=20;
@@ -103,12 +104,13 @@ function requestPayload(payload){
 
 async function recoverAnswer(error,status,context,details={}){
  const {question,documents,history,sessionId,env,now}=context;
- const answer=publishedFallbackAnswer(question,documents,history);
- return json({...details,error,...answer,knowledgeSources:[],suggestions:suggestionsFor(answer.documentIds),responseMode:'published-fallback',speechToken:await answerSpeech(answer.text,sessionId,env,now)},status);
+ const answer=publishedFallbackAnswer(question,documents,history),spoken=spokenLine(answer.text,{shown:answer.documentIds?.length>0});
+ return json({...details,error,...answer,spoken,knowledgeSources:[],suggestions:suggestionsFor(answer.documentIds),responseMode:'published-fallback',speechToken:await answerSpeech(spoken,sessionId,env,now)},status);
 }
 
-async function answerSpeech(answer,sessionId,env,now){
- return answer.length<=assistantLimits.speechCharacters?signSpeech(answer,sessionId,env?.AI_VOICE_KEY,now):null;
+// Voice reads the short spoken line, never the full written answer; the token binds speech to exactly that line.
+async function answerSpeech(spoken,sessionId,env,now){
+ return spoken&&spoken.length<=assistantLimits.speechCharacters?signSpeech(spoken,sessionId,env?.AI_VOICE_KEY,now):null;
 }
 
 function sourceCorpus(published){
@@ -126,7 +128,7 @@ async function answerRequest(context,fetcher){
  const apiKey=env?.AI_API_KEY||env?.OPENAI_API_KEY,baseUrl=env?.AI_API_BASE_URL,model=env?.AI_MODEL;
  if(!apiKey||!baseUrl||!model){
   const curated=findCuratedAnswer(question);
-  if(curated)return json({text:curated.text,documentIds:curated.sourceIds.filter(id=>published.some(record=>record.id===id)),knowledgeSources:[],suggestions:curated.followUps,speechToken:await answerSpeech(curated.text,sessionId,env,now)});
+  if(curated){const documentIds=curated.sourceIds.filter(id=>published.some(record=>record.id===id)),spoken=curated.spoken||spokenLine(curated.text,{shown:documentIds.length>0});return json({text:curated.text,spoken,documentIds,knowledgeSources:[],suggestions:curated.followUps,speechToken:await answerSpeech(spoken,sessionId,env,now)});}
   return recoverAnswer('ai_not_configured',503,context);
  }
  if(!published.length)return recoverAnswer('content_unavailable',503,context);
@@ -140,7 +142,7 @@ async function answerRequest(context,fetcher){
   const knowledgeSources=assistantKnowledge.facts.filter(fact=>sourceIds.has(fact.id)).map(({id,title,route})=>({id,title,route:route||null}));
   for(const fact of assistantKnowledge.facts)if(sourceIds.has(fact.id))for(const id of fact.sourceIds)sourceIds.add(id);
   const documentIds=published.filter(record=>sourceIds.has(record.id)).map(record=>record.id);
-  return json({text:answer.answer,kind:answer.kind,documentIds,knowledgeSources,suggestions:suggestionsFor(documentIds),speechToken:await answerSpeech(answer.answer,sessionId,env,now)});
+  return json({text:answer.answer,spoken:answer.spoken,kind:answer.kind,documentIds,knowledgeSources,suggestions:suggestionsFor(documentIds),speechToken:await answerSpeech(answer.spoken,sessionId,env,now)});
  }catch(error){return recoverAnswer(error.message.startsWith('Assistant')?'invalid_model_response':'model_unavailable',502,context);}
 }
 

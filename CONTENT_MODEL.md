@@ -194,6 +194,30 @@ raw markup. Existing readers receive only public validated snapshots by default.
 
 The homepage document includes a `timeline` block with an ordered `items` array of typed content blocks. Add, remove or reorder those items in `content/catalog.json`, keeping each item ID stable. Text items use `paragraphs`; info cards can also supply a safe `link`. The hero renderer displays this sequence on a horizontal rail. Interaction preferences belong to the presentation layer, not the content document. Run `node scripts/build-content.mjs` after content edits.
 
+## Content files and assistant data
+
+`content/catalog*.json` holds only what visitors see. Assistant-only data lives in
+`content/assistant.json`, keyed by document id and shared by every content set:
+
+```json
+{ "format": "prem-assistant-data", "version": 1,
+  "documents": { "merlin": { "aliases": [], "domains": [], "capabilities": [], "tags": [], "evidence": [] } } }
+```
+
+- `aliases`, `domains`, `capabilities` and `tags` are search keywords. Aliases also
+  let voice commands and the menu recognise other names for a project.
+- `evidence` is only for cited facts the page does not show (for example a metric
+  with its source).
+- Facts the page shows are written once. The build generates their evidence from
+  the page text: a project's `highlights` and `impact`, and every testimonial
+  `quote` block, which cites itself. The assistant therefore always quotes what is
+  on the site.
+- A field set in both a content file and `assistant.json` fails the build, as does
+  an entry for a document no content set has.
+
+The build merges both files before validating, so the published catalog keeps the
+same shape for the site and the assistant.
+
 ## Articles
 
 `article` documents are blog posts. They need `slug`, `title`, `publishedAt`
