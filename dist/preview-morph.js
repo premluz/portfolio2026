@@ -2,6 +2,7 @@ import {imageSource} from './media-loading.js';
 import {imageVariants} from './image-variants.js';
 import {menuPreviewPosition,PROJECT_PREVIEW_SIZE,PROJECT_PREVIEW_GAP} from './project-menu-preview.js';
 import {TEXT_LIST_PREVIEW_ANCHOR} from './text-list-hover.js';
+import {EASE} from './motion-tokens.js';
 
 const PREVIEW_ROWS='.home-about-list-content [data-project-menu-item],.home-product-text [data-project-menu-item]';
 const PROXY_FADE_MS=220;
@@ -46,5 +47,5 @@ export function previewReturnProxy(root,project){
 export function fadeOutProxy(proxy,reduced=false){
  if(!proxy)return;
  if(reduced||!proxy.animate){proxy.remove();return;}
- proxy.animate([{opacity:1},{opacity:0}],{duration:PROXY_FADE_MS,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'}).finished.then(()=>proxy.remove(),()=>proxy.remove());
+ proxy.animate([{opacity:1},{opacity:0}],{duration:PROXY_FADE_MS,easing:EASE.leave,fill:'forwards'}).finished.then(()=>proxy.remove(),()=>proxy.remove());
 }

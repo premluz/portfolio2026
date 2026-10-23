@@ -1,4 +1,5 @@
 import {stepDockSpring} from './dock-morph.js';
+import {EASE} from './motion-tokens.js';
 
 // Closed-form damped spring: a small overshoot for emergence, no frame-rate
 // dependent integration. Exit uses the dock's monotone spring instead.
@@ -43,7 +44,7 @@ export class ContextActionPresence {
    if(instant){item.position=1;item.velocity=0;}
   });
   if(changed&&!instant){
-   for(const action of actions){const item=this.items.get(action.id),before=old.get(action.id);if(!before)continue;item.layout?.cancel();const x=before.left-item.slot.offsetLeft,y=before.top-item.slot.offsetTop;if(Math.abs(x)+Math.abs(y)>.1)item.layout=item.slot.animate([{transform:`translate(${x}px,${y}px)`},{transform:'translate(0,0)'}],{duration:200,easing:'cubic-bezier(.2,0,0,1)'});}
+   for(const action of actions){const item=this.items.get(action.id),before=old.get(action.id);if(!before)continue;item.layout?.cancel();const x=before.left-item.slot.offsetLeft,y=before.top-item.slot.offsetTop;if(Math.abs(x)+Math.abs(y)>.1)item.layout=item.slot.animate([{transform:`translate(${x}px,${y}px)`},{transform:'translate(0,0)'}],{duration:200,easing:EASE.settle});}
    this.layoutUntil=now+200;
   }else if(instant){this.layoutUntil=0;for(const item of this.items.values()){item.layout?.cancel();item.layout=null;}}
   if(focusedId&&this.items.get(focusedId)?.target===1&&document.activeElement!==this.items.get(focusedId).button&&!this.row.inert)this.items.get(focusedId).button.focus({preventScroll:true});

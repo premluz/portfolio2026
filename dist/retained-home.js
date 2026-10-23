@@ -4,10 +4,11 @@ import {stageMotion} from './motion-viewport.js';
 export function fadeHomeChrome(layer,control,duration){
  const promises=[],fade=(node,delay=0)=>promises.push(control.track(node.animate([{opacity:getComputedStyle(node).opacity||'1'},{opacity:0}],{duration:duration*.4,delay,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'})).finished);
  for(const hero of layer.querySelectorAll('.home-hero')){
-  const heading=hero.querySelector('h1'),copy=hero.querySelector('[data-hero-copy]');
-  if(copy)fade(copy);
-  if(heading)fade(heading,copy?duration*.12:0);
-  if(!copy&&!heading)fade(hero);
+  const heading=hero.querySelector('h1'),copy=hero.querySelector('[data-hero-copy]'),badge=hero.querySelector('.badge');
+  // The hero leaves bottom-up: description, then heading, then the badge above it, each one step later.
+  let delay=0;const step=duration*.12;
+  for(const node of [copy,heading,badge])if(node){fade(node,delay);delay+=step;}
+  if(!copy&&!heading&&!badge)fade(hero);
  }
  for(const node of layer.querySelectorAll('.gallery-toolbar,.spatial-gallery-primary-action,.footer-note,[data-home-news],.home-about,.home-content-section'))fade(node);
  return promises;

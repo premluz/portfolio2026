@@ -708,33 +708,6 @@
       ]
     },
     {
-      "id": "rios-brand-studio",
-      "type": "news",
-      "status": "archived",
-      "slug": "rios-brand-studio",
-      "title": "A new brand studio for Rios",
-      "summary": "",
-      "blocks": []
-    },
-    {
-      "id": "building-rios",
-      "type": "news",
-      "status": "archived",
-      "slug": "building-rios",
-      "title": "Building Rios, a life-first planner",
-      "summary": "",
-      "blocks": []
-    },
-    {
-      "id": "prototyping-in-code",
-      "type": "news",
-      "status": "archived",
-      "slug": "prototyping-in-code",
-      "title": "Prototyping in code",
-      "summary": "",
-      "blocks": []
-    },
-    {
       "id": "home",
       "type": "page",
       "badge": {
@@ -816,7 +789,7 @@
             "columns": 2
           },
           "items": [
-           {
+            {
               "id": "home-project-merlin",
               "type": "reference",
               "documentId": "merlin",
@@ -844,12 +817,6 @@
               "id": "home-project-galachain",
               "type": "reference",
               "documentId": "galachain",
-              "presentation": "card"
-            },
-            {
-              "id": "home-project-gala-defi",
-              "type": "reference",
-              "documentId": "gala-defi",
               "presentation": "card"
             },
             {
@@ -1064,7 +1031,7 @@
             ""
           ]
         },
-            {
+        {
           "id": "approach-principles",
           "type": "info-card",
           "title": "First principles",
@@ -1774,85 +1741,6 @@
           "presentation": "inline"
         }
       ]
-    },
-    {
-      "id": "gala-defi",
-      "type": "portfolio-item",
-      "status": "published",
-      "slug": "gala-defi",
-      "title": "Brought coherence to a DeFi stack that launched fast, outsourced and stitched together",
-      "name": "DeFi swap, pools and wallet",
-      "summary": "Senior product designer • North Star • Easy mode",
-      "category": "Decentralised finance",
-      "aliases": [
-        "Gala DeFi",
-        "GalaSwap",
-        "Gala Swap",
-        "Ollie",
-        "Gala liquidity pools",
-        "Gala wallet"
-      ],
-      "domains": [
-        "DeFi",
-        "Web3",
-        "Finance",
-        "Trading"
-      ],
-      "capabilities": [
-        "Product design",
-        "Design systems",
-        "Conversational UI",
-        "AI-assisted delivery",
-        "Front-end prototyping"
-      ],
-      "kind": "shipped",
-      "client": "Gala",
-      "pageTitle": "Designing for trust and ease of use in a DeFi stack that launched without design.",
-      "intro": "GalaSwap launched fast: outsourced, inconsistent, no shared system. I joined the CEO’s “A-team” squad for priority projects when coherence and ease of use started to define trust.",
-      "context": "Gala’s DeFi ecosystem: swap, liquidity pools and wallet, used by first-timers and experienced traders alike.",
-      "challenge": "Swap, wallet and pools were built by different teams with no shared system. In DeFi that costs trust, because people are putting in real money. Novices and traders needed opposite things. It was a live product with no design system, a small squad and restructuring throughout.",
-      "role": "Senior product designer leading the redesign. I owned the North Star, swap, liquidity pools, wallet onboarding and the conversational UI explorations. I also brought AI-assisted workflows into delivery and built straight into the production repo.",
-      "highlights": "Senior product designer • North Star • Easy mode",
-      "keyWork": "Redesigned incrementally alongside delivery, with a North Star so every tactical call pointed the same way.\nReplaced the raw price-range inputs with a visual chart and named risk postures (Wide, Stable, Upper side, Lower side), so users see where they sit in the market before committing.\nSplit the experience in two after the CEO’s “would your mum get it?” review. Easy mode, with Ollie as a conversational guide, was for first-timers, and Advanced was for speed. I argued against the split, as it meant maintaining two products.\nExplored intent-driven UI (“$100 of GALA” generates the confirmation). It didn’t reach production.",
-      "impact": "North Star aligned design, product and engineering • Easy mode and Ollie shipped • GalaSwap passed $40M+ trading volume, 250,000+ swaps and ~200 liquidity pools",
-      "aftermath": "Gala restructured and eliminated the design function. Ollie launched publicly, then was withdrawn. The vision was handed to product and engineering, but with no designers left to hold the line, the live product drifted from it.",
-      "lesson": "Fast AI-assisted delivery needs a boundary between exploration and production before scale, not after.",
-      "heroMediaId": "gala-defi-cover",
-      "hoverVideoId": "gala-defi-walkthrough",
-      "featured": false,
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "Senior product designer • North Star • Easy mode",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "North Star aligned design, product and engineering • Easy mode and Ollie shipped • GalaSwap passed $40M+ trading volume, 250,000+ swaps and ~200 liquidity pools",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ],
-      "blocks": [
-        {
-          "id": "gala-defi-walkthrough",
-          "type": "video",
-          "label": "Project walkthrough",
-          "title": "Product in motion",
-          "mediaId": "gala-defi-walkthrough",
-          "posterMediaId": "gala-defi-cover",
-          "caption": "Walkthrough video",
-          "layout": {
-            "columns": 2,
-            "mediaFit": "contain"
-          }
-        }
-      ]
     }
   ],
   "assets": [
@@ -2057,7 +1945,7 @@
       "id": "about-portrait",
       "type": "image",
       "status": "published",
-      "url": "assets/prem.jpg",
+      "url": "assets/prem.png",
       "alt": "Portrait of Prem in a black sweater against a white background"
     },
     {
@@ -2094,20 +1982,6 @@
       "status": "published",
       "url": "assets/hipnotherapy.jpg",
       "alt": "Prem seated beside a hypnotherapy teacher in a wood-panelled room"
-    },
-    {
-      "id": "gala-defi-cover",
-      "type": "image",
-      "status": "published",
-      "url": "assets/gala-defi.png",
-      "alt": "GalaSwap decentralised exchange interface with swap, liquidity pool and wallet views"
-    },
-    {
-      "id": "gala-defi-walkthrough",
-      "type": "video",
-      "status": "published",
-      "url": "assets/gala-defi.mp4",
-      "alt": ""
     }
   ],
   "presentations": [
@@ -2253,19 +2127,6 @@
       "detail": {
         "columns": 1
       }
-    },
-    {
-      "documentId": "gala-defi",
-      "card": {
-        "orientation": "landscape",
-        "surface": [
-          "#f1e5f5",
-          "#e1e5f8"
-        ]
-      },
-      "detail": {
-        "columns": 2
-      }
     }
   ],
   "layouts": [
@@ -2300,11 +2161,6 @@
         {
           "id": "galachain",
           "documentId": "galachain",
-          "featured": false
-        },
-        {
-          "id": "gala-defi",
-          "documentId": "gala-defi",
           "featured": false
         },
         {

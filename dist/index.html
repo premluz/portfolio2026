@@ -62,6 +62,11 @@
 <div class="setting-subsection">Homepage</div>
 <label>Product display <select id="homeProductDisplay"><option value="cards">Cards</option><option value="carousel" selected>Carousel</option><option value="text">Text</option></select></label>
 <label class="check" id="heroCarouselSetting"><input id="heroCarousel" type="checkbox"> Hero carousel · scroll into grid</label>
+<div id="heroCarouselKnobs" hidden>
+<label>Card size <output data-hero-carousel-output="size">100%</output><input id="heroCarouselSize" data-hero-carousel-control="size" type="range" min="50" max="180" step="5" value="100"></label>
+<label>Gap below intro <output data-hero-carousel-output="gap">64px</output><input id="heroCarouselGap" data-hero-carousel-control="gap" type="range" min="0" max="200" step="4" value="64"></label>
+<label class="check"><input id="heroCarouselCopy" data-hero-carousel-control="copy" type="checkbox" checked> Show description under cards</label>
+</div>
 <label class="check"><input id="heroTimelineEnabled" type="checkbox" checked> Show hero timeline</label>
 <label class="check"><input id="heroTimelineTextEnabled" type="checkbox" checked> Show timeline text</label>
 <label class="check"><input id="heroDescriptionEnabled" type="checkbox"> Show hero description</label>
@@ -178,6 +183,9 @@
 </div></details>
 <details class="developer-settings-group">
 <summary>Motion</summary><div class="developer-settings-content">
+<div class="setting-subsection">Page changes</div>
+<label class="check"><input id="simpleTransitions" type="checkbox"> Simple fade and slide for every page</label>
+<label class="check"><input id="simpleTransitionsSkipExit" type="checkbox"> No fade out: the new page appears, then fades in</label>
 <div class="setting-subsection">Card movement</div>
 <label>Liquid intensity <output id="intensityValue">70%</output><input id="intensity" type="range" min="0" max="100" value="70"></label>
 <label>Transition duration <output id="durationValue">0.4s</output><input id="duration" type="range" min="100" max="2400" step="50" value="400"></label>

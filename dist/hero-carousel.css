@@ -1,6 +1,6 @@
 /* Only the optional lower hero strip changes; the introduction keeps its layout. */
 .hero-carousel-stage[hidden]{display:none}
-.hero-carousel-stage{position:relative;height:clamp(220px,32svh,340px);margin-bottom:clamp(80px,12vh,140px);touch-action:pan-y}
+.hero-carousel-stage{position:relative;height:calc(clamp(220px,32svh,340px) * var(--hero-carousel-size,1));margin-top:var(--hero-carousel-gap,64px);margin-bottom:clamp(80px,12vh,140px);touch-action:pan-y}
 .hero-carousel-controls{position:absolute;inset:auto 0 -48px;display:flex;align-items:center;justify-content:center;gap:14px;color:var(--muted);font-size:12px;z-index:2}
 .hero-carousel-controls span{margin-inline:6px}
 .hero-carousel-controls button{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;background:var(--chrome);color:var(--ink);font-size:17px}
@@ -9,8 +9,9 @@
 .home-carousel-active .image-card[data-image-mode="bleed"]{display:flex;flex-direction:column;height:auto!important;min-height:0!important;padding:0!important}
 .home-carousel-active .image-card[data-image-mode="bleed"]>.visual{position:relative;inset:auto;order:0;flex:none;width:100%!important;height:auto!important;aspect-ratio:var(--image-source-ratio,var(--image-frame-regular-aspect));margin:0!important;border-radius:inherit}
 .home-carousel-active .image-card[data-image-mode="bleed"]>.card-copy{position:relative;inset:auto;order:1;z-index:2;display:grid;grid-template-columns:minmax(0,1fr);width:100%;max-width:none;margin:var(--space-text-media) 0 0;padding:0 var(--card-padding-right,var(--space-card-inset)) var(--card-padding-bottom) var(--card-padding-left,var(--space-card-inset));color:var(--ink);text-shadow:none}
+.home-carousel-active .image-card>.card-copy{opacity:var(--hero-carousel-copy,1)}
 .home-carousel-active .image-card[data-image-mode="bleed"]>.card-copy>.card-client{grid-column:1;grid-row:1}
 .home-carousel-active .image-card[data-image-mode="bleed"]>.card-copy>h2{grid-column:1;grid-row:2;width:100%;max-width:none}
 .home-carousel-active .image-card[data-image-mode="bleed"]>.card-copy>.project-summary{grid-column:1;grid-row:3;width:100%;max-width:none}
 body:has(.home-carousel-active){overflow-x:clip}
-@media(max-width:600px){.hero-carousel-stage{height:clamp(220px,34svh,300px);margin-bottom:80px}.hero-carousel-controls{font-size:11px;gap:8px}}
+@media(max-width:600px){.hero-carousel-stage{height:calc(clamp(220px,34svh,300px) * var(--hero-carousel-size,1));margin-bottom:80px}.hero-carousel-controls{font-size:11px;gap:8px}}

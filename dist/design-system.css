@@ -127,10 +127,10 @@ main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:var(--space-pa
 
 /* Hover-only titles remains in the card's layout and streams in word by word. */
 @media(min-width:751px) and (hover:hover) and (pointer:fine){
- .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-copy-hover="true"]>.card-copy>h2{opacity:0;pointer-events:none;transition:opacity 180ms cubic-bezier(.22,1,.36,1)}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-copy-hover="true"]>.card-copy>h2{opacity:0;pointer-events:none;transition:opacity 180ms var(--ease-settle)}
  .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-copy-hover="true"]>.card-copy>h2 [data-card-copy-word]{opacity:0;transition:opacity 150ms ease-out}
  .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-copy-hover="true"]:is(:hover,:focus-visible,.gesture-hover)>.card-copy>h2{opacity:1;pointer-events:auto;transition-duration:90ms}
- .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-copy-hover="true"]:is(:hover,:focus-visible,.gesture-hover)>.card-copy>h2 [data-card-copy-word]{animation:card-copy-stream 190ms cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--card-copy-word-index,0) * 14ms)}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-copy-hover="true"]:is(:hover,:focus-visible,.gesture-hover)>.card-copy>h2 [data-card-copy-word]{animation:card-copy-stream 190ms var(--ease-settle) both;animation-delay:calc(var(--card-copy-word-index,0) * 14ms)}
 }
 @keyframes card-copy-stream{from{opacity:0}to{opacity:1}}
 html[data-animation="off"] .image-card[data-copy-hover="true"]>.card-copy{transition:none!important}
@@ -166,9 +166,9 @@ html[data-animation="off"] .image-card[data-copy-hover="true"]:is(:hover,:focus-
 .dock-morph .project-menu button:not(.active):is(:hover,:focus-visible,.hover-trail){background:var(--nav-item-hover);color:var(--ink)}
 .dock-morph .project-menu-group h2{color:var(--eyebrow-ink)}
 .dock-morph .project-menu{isolation:isolate}
-.dock-morph .project-menu::before{content:"";position:absolute;z-index:0;left:8px;right:8px;top:0;height:var(--project-menu-hover-height,36px);border-radius:14px;background:var(--nav-item-hover);opacity:0;pointer-events:none;transform:translate3d(0,var(--project-menu-hover-y,0px),0);transition:transform 110ms cubic-bezier(.2,.8,.2,1),height 130ms cubic-bezier(.2,.8,.2,1),opacity 180ms ease;will-change:transform,height}
+.dock-morph .project-menu::before{content:"";position:absolute;z-index:0;left:8px;right:8px;top:0;height:var(--project-menu-hover-height,36px);border-radius:14px;background:var(--nav-item-hover);opacity:0;pointer-events:none;transform:translate3d(0,var(--project-menu-hover-y,0px),0);transition:transform 110ms var(--ease-press),height 130ms var(--ease-press),opacity 180ms ease;will-change:transform,height}
 .dock-morph .project-menu[data-cursor-tracking="true"]::before{opacity:1}
-.dock-morph .project-menu[data-cursor-motion="snap"]::before{transition-duration:210ms,160ms,160ms;transition-timing-function:cubic-bezier(.16,1,.3,1)}
+.dock-morph .project-menu[data-cursor-motion="snap"]::before{transition-duration:210ms,160ms,160ms;transition-timing-function:var(--ease-settle)}
 .dock-morph .project-menu[data-cursor-motion="none"]::before{transition-duration:0ms}
 .dock-morph .project-menu-group{position:relative;z-index:1}
 .dock-morph .project-menu[data-cursor-tracking="true"] button:not(.active):is(:hover,:focus-visible,.hover-trail){background:transparent}

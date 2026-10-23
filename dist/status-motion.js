@@ -1,3 +1,4 @@
+import {EASE} from './motion-tokens.js';
 // Shared presence motion for live input states and transient notifications.
 export function createStatusMotion(node,{reduced=()=>false}={}){
  let animation=null,epoch=0,visible=!node.hidden;
@@ -10,7 +11,7 @@ export function createStatusMotion(node,{reduced=()=>false}={}){
   cancel();
   if(immediate||reduced()||!node.animate){node.hidden=!show;if(!show)onHidden();return;}
   node.hidden=false;
-  animation=node.animate([from,{opacity:show?1:0,transform:show?'translateY(0)':'translateY(8px)'}],{duration:show?240:200,easing:show?'cubic-bezier(.22,1,.36,1)':'cubic-bezier(.4,0,.2,1)',fill:'both'});
+  animation=node.animate([from,{opacity:show?1:0,transform:show?'translateY(0)':'translateY(8px)'}],{duration:show?240:200,easing:show?EASE.settle:EASE.leave,fill:'both'});
   const playing=animation;
   playing.finished.then(()=>{if(generation!==epoch)return;node.hidden=!show;cancel();if(!show)onHidden();},()=>{});
  };

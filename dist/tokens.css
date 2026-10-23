@@ -69,6 +69,12 @@
   --card-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.18);
   --card-shade: oklch(0.24036760 0.04137380 305.37990 / 0.06);
   --glass-edge: inset 0 1px 0 var(--card-highlight), inset 0 -1px 0 var(--card-shade);
+  /* Motion easing by role (MOTION.md, dist/motion-tokens.js). */
+  --ease-settle: cubic-bezier(.22,1,.36,1);
+  --ease-gentle: cubic-bezier(.33,1,.68,1);
+  --ease-leave: cubic-bezier(.4,0,1,1);
+  --ease-press: cubic-bezier(.2,.8,.2,1);
+  --ease-standard: cubic-bezier(.4,0,.2,1);
   /* Glass button: lit top/bottom rims, darker side rims and an inner glow instead of a drop shadow. */
   --glass-button-sheen: oklch(1 0 0 / .35);
   --glass-button-body-top: oklch(1 0 0 / .45);
@@ -83,9 +89,10 @@
   --glass-dark-button-rim-dark: oklch(0 0 0 / .2);
   --glass-dark-button-glow: oklch(0.9499 0.0243 280.86 / .04);
   --glass-button-blur: 10px;
-  --glass-button-press-scale: .96;
+  --glass-button-press-scale: .92;
+  --glass-button-press-in-duration: 90ms;
   --glass-button-press-duration: 300ms;
-  --glass-button-press-ease: cubic-bezier(.2, .8, .2, 1);
+  --glass-button-press-ease: var(--ease-press);
   /* Glass card: inner light replaces the hairline; the broad top glow reads as light inside curved glass. */
   --glass-card-wash: oklch(0 0 0 / .012);
   --glass-card-rim-top: oklch(1 0 0 / .7);

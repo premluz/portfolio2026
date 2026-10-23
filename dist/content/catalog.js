@@ -232,7 +232,7 @@ export const catalog={
       "slug": "vodafone-iot",
       "title": "Redesigned platform around research-informed IA and interaction model for technical users and occasional operators",
       "name": "IoT connectivity",
-      "summary": "NPS –33 → +62 · Operations time reduced to under 10 seconds · 240M+ devices ",
+      "summary": "180+ regions · 240M+ devices · NPS –33 → +62 · Operations time reduced to under 10 seconds",
       "category": "IoT connectivity · Enterprise",
       "aliases": [
         "Vodafone",
@@ -247,7 +247,7 @@ export const catalog={
         "Internet of Things"
       ],
       "capabilities": [
-        "Senior product design",
+        "Product design",
         "Research",
         "Information architecture",
         "Interaction design"
@@ -821,6 +821,12 @@ export const catalog={
               "presentation": "card"
             },
             {
+              "id": "home-project-bastion",
+              "type": "reference",
+              "documentId": "bastion",
+              "presentation": "card"
+            },
+            {
               "id": "home-project-gala-defi",
               "type": "reference",
               "documentId": "gala-defi",
@@ -836,12 +842,6 @@ export const catalog={
               "id": "home-project-rios",
               "type": "reference",
               "documentId": "rios",
-              "presentation": "card"
-            },
-            {
-              "id": "home-project-bastion",
-              "type": "reference",
-              "documentId": "bastion",
               "presentation": "card"
             }
           ],
@@ -1756,7 +1756,7 @@ export const catalog={
       "slug": "gala-defi",
       "title": "Brought coherence to a DeFi stack that launched fast, outsourced and stitched together",
       "name": "DeFi swap, pools and wallet",
-      "summary": "Senior product designer • North Star • Easy mode",
+      "summary": "0 → 1 • North Star • Easy mode",
       "category": "Decentralised finance",
       "aliases": [
         "Gala DeFi",
@@ -1786,7 +1786,7 @@ export const catalog={
       "context": "Gala’s DeFi ecosystem: swap, liquidity pools and wallet, used by first-timers and experienced traders alike.",
       "challenge": "Swap, wallet and pools were built by different teams with no shared system. In DeFi that costs trust, because people are putting in real money. Novices and traders needed opposite things. It was a live product with no design system, a small squad and restructuring throughout.",
       "role": "Senior product designer leading the redesign. I owned the North Star, swap, liquidity pools, wallet onboarding and the conversational UI explorations. I also brought AI-assisted workflows into delivery and built straight into the production repo.",
-      "highlights": "Senior product designer • North Star • Easy mode",
+      "highlights": "0 → 1 • North Star • Easy mode",
       "keyWork": "Redesigned incrementally alongside delivery, with a North Star so every tactical call pointed the same way.\nReplaced the raw price-range inputs with a visual chart and named risk postures (Wide, Stable, Upper side, Lower side), so users see where they sit in the market before committing.\nSplit the experience in two after the CEO’s “would your mum get it?” review. Easy mode, with Ollie as a conversational guide, was for first-timers, and Advanced was for speed. I argued against the split, as it meant maintaining two products.\nExplored intent-driven UI (“$100 of GALA” generates the confirmation). It didn’t reach production.",
       "impact": "North Star aligned design, product and engineering • Easy mode and Ollie shipped • GalaSwap passed $40M+ trading volume, 250,000+ swaps and ~200 liquidity pools",
       "aftermath": "Gala restructured and eliminated the design function. Ollie launched publicly, then was withdrawn. The vision was handed to product and engineering, but with no designers left to hold the line, the live product drifted from it.",
@@ -1798,7 +1798,7 @@ export const catalog={
         {
           "id": "highlights",
           "kind": "statement",
-          "text": "Senior product designer • North Star • Easy mode",
+          "text": "0 → 1 • North Star • Easy mode",
           "provenance": {
             "kind": "author-provided"
           }
@@ -2031,7 +2031,7 @@ export const catalog={
       "id": "about-portrait",
       "type": "image",
       "status": "published",
-      "url": "assets/prem.png",
+      "url": "assets/prem.jpg",
       "alt": "Portrait of Prem in a black sweater against a white background"
     },
     {
@@ -2252,8 +2252,23 @@ export const catalog={
           "featured": false
         },
         {
-          "id": "rios",
-          "documentId": "rios",
+          "id": "bastion",
+          "documentId": "bastion",
+          "featured": false
+        },
+        {
+          "id": "tracr",
+          "documentId": "tracr",
+          "featured": false
+        },
+        {
+          "id": "vodafone-iot",
+          "documentId": "vodafone-iot",
+          "featured": true
+        },
+        {
+          "id": "gala-defi",
+          "documentId": "gala-defi",
           "featured": false
         },
         {
@@ -2262,48 +2277,13 @@ export const catalog={
           "featured": true
         },
         {
-          "id": "vodafone-iot",
-          "documentId": "vodafone-iot",
-          "featured": true
-        },
-        {
-          "id": "tracr",
-          "documentId": "tracr",
+          "id": "rios",
+          "documentId": "rios",
           "featured": false
         },
         {
           "id": "galachain",
           "documentId": "galachain",
-          "featured": false
-        },
-        {
-          "id": "gala-defi",
-          "documentId": "gala-defi",
-          "featured": false
-        },
-        {
-          "id": "bastion",
-          "documentId": "bastion",
-          "featured": false
-        },
-        {
-          "id": "playstation-02",
-          "documentId": "playstation",
-          "featured": false
-        },
-        {
-          "id": "galachain-02",
-          "documentId": "galachain",
-          "featured": false
-        },
-        {
-          "id": "tracr-02",
-          "documentId": "tracr",
-          "featured": false
-        },
-        {
-          "id": "rios-02",
-          "documentId": "rios",
           "featured": false
         },
         {

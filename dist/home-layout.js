@@ -33,11 +33,11 @@ export function homeMarkup(documents,layout,{heroContent='timeline'}={}){
 // The three adapters own placement and shared spotlight selection. Documents, DOM cards, image contexts and
 // navigation remain shared when the arrangement changes.
 export class HomeLayout {
- constructor(root,documents,{mode='current',layout='masonry',columns=2,oneColumnPosition='top',multiColumnPosition='top',showCopyOnHover=false,productDisplay='cards',heroContent='timeline',timelineMode='cursor',heroCarousel=false,carouselState={},reduced=()=>false,onMotion=()=>{}}={}){
+ constructor(root,documents,{mode='current',layout='masonry',columns=2,oneColumnPosition='top',multiColumnPosition='top',showCopyOnHover=false,productDisplay='cards',heroContent='timeline',timelineMode='cursor',heroCarousel=false,carouselState={},heroCarouselSettings=()=>({}),reduced=()=>false,onMotion=()=>{}}={}){
   this.root=root;this.heroContent=normalizeHeroContent(heroContent);this.timelineMode=timelineMode;this.documents=documents;this.reduced=reduced;this.onMotion=onMotion;
   this.gallery=root.querySelector('[data-gallery]');this.information=root.querySelector('[data-information]');
   this.slots=new Map([...root.querySelectorAll('[data-slot]')].map(slot=>[slot.dataset.slot,slot]));
-  this.heroCarousel=!!heroCarousel;this.carousel=new HeroCarousel(root,this.slots,{reduced,state:carouselState});
+  this.heroCarousel=!!heroCarousel;this.carousel=new HeroCarousel(root,this.slots,{reduced,state:carouselState,settings:heroCarouselSettings});
   this.heroGreeting=root.querySelector('[data-hero-greeting]');this.heroAbout=root.querySelector('.hero-about');this.heroTitle=root.querySelector('[data-hero-title]');this.heroCopy=root.querySelector('[data-hero-copy]');
   this.introduction={title:this.heroTitle.textContent,titleHTML:this.heroTitle.innerHTML,copy:this.heroCopy.innerHTML};
   this.poses=new Map();this.activeId=documents[0]?.id;this.paused=false;this.dead=false;

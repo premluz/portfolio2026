@@ -9,11 +9,13 @@ export const carouselProgress=(scroll,start,span,reduced=false)=>{
 export function carouselPose(grid,tile,p){
  return {x:mix(tile.left-grid.left,0,p),y:mix(tile.top-grid.top,0,p),scale:mix(tile.scale,1,p)};
 }
-export function carouselRow(items,{width,height,top,gap=24,offset=0}){
+// With the description hidden only the picture takes part in sizing and centring, so the strip stays balanced.
+export function carouselRow(items,{width,height,top,gap=24,offset=0,size=1,copy=true}){
  let x=-Math.min(120,width*.08);
  const tiles=items.map(item=>{
-  const scale=Math.min(Math.min(460,width<600?width*.72:width*.30)/Math.max(1,item.width),height/Math.max(1,item.height));
-  const tile={left:x,top:top+(height-item.height*scale)/2,width:item.width*scale,height:item.height*scale,scale};
+  const itemHeight=copy?item.height:item.visualHeight||item.height;
+  const scale=Math.min(Math.min(Math.min(460,width<600?width*.72:width*.30)*size,width*.92)/Math.max(1,item.width),height/Math.max(1,itemHeight));
+  const tile={left:x,top:top+(height-itemHeight*scale)/2,width:item.width*scale,height:itemHeight*scale,scale};
   x+=tile.width+gap;return tile;
  });
  const period=tiles.reduce((n,t)=>n+t.width+gap,0);
@@ -21,8 +23,8 @@ export function carouselRow(items,{width,height,top,gap=24,offset=0}){
  return tiles.map(tile=>({...tile,left:period>width?((tile.left+offset+tile.width+gap)%period+period)%period-tile.width-gap:tile.left+Math.min(120,width*.08)+(width-period+gap)/2}));
 }
 export class HeroCarousel {
- constructor(root,slots,{reduced=()=>false,state={}}={}){
-  this.root=root;this.slots=slots;this.reduced=reduced;this.stage=root.querySelector('[data-hero-carousel]');
+ constructor(root,slots,{reduced=()=>false,state={},settings=()=>({})}={}){
+  this.root=root;this.settings=settings;this.slots=slots;this.reduced=reduced;this.stage=root.querySelector('[data-hero-carousel]');
   this.state=state;this.enabled=false;this.paused=true;this.dead=false;this.progress=1;this.cleanups=[];
   if(!this.stage)return;
   this.listen=(node,type,fn,options)=>{node.addEventListener(type,fn,options);this.cleanups.push(()=>node.removeEventListener(type,fn,options));};
@@ -74,7 +76,7 @@ export class HeroCarousel {
   this.start=Math.max(0,this.band.top-innerHeight*.80);this.span=Math.max(360,innerHeight*.95);
   this.items=[...this.slots.values()].filter(slot=>slot.parentElement?.matches('[data-gallery]')).map(slot=>{
    const carrier=slot.firstElementChild,card=slot.querySelector('[data-card]'),rect=slot.getBoundingClientRect();
-   return {slot,carrier,card,left:rect.left,top:rect.top+pageY,width:card.offsetWidth||rect.width,height:card.offsetHeight||rect.height};
+   return {slot,carrier,card,left:rect.left,top:rect.top+pageY,width:card.offsetWidth||rect.width,height:card.offsetHeight||rect.height,visualHeight:card.querySelector?.('.visual')?.offsetHeight||0};
   });
   this.frozen=null;this.render(0);this.schedule();
  }
@@ -84,7 +86,9 @@ export class HeroCarousel {
   if(old===0&&p>0)this.frozen=this.tiles;
   const visible=this.band.top-scrollY<innerHeight&&this.band.top+this.band.height-scrollY>0;
   const focused=this.items.some(item=>item.card.contains(document.activeElement))||this.stage.contains(document.activeElement);
-  const row=carouselRow(this.items,{width:innerWidth,height:this.band.height,top:this.band.top});
+  const {size=100,copy=true}=this.settings(),layout={size:size/100,copy};
+  const copyOpacity=copy?'1':String(p);if(this.copyOpacity!==copyOpacity){this.root.style?.setProperty?.('--hero-carousel-copy',copyOpacity);this.copyOpacity=copyOpacity;}
+  const row=carouselRow(this.items,{width:innerWidth,height:this.band.height,top:this.band.top,...layout});
   const overflowing=row.reduce((n,t)=>n+t.width+24,0)>innerWidth;
   const playing=overflowing&&p===0&&visible&&!this.reduced()&&!this.userPaused&&!this.hover&&!this.drag&&!focused&&!document.hidden;
   let sliding=false;
@@ -92,7 +96,7 @@ export class HeroCarousel {
   if(p===0&&this.aim!=null){const delta=this.aim-this.offset;this.offset+=this.reduced()?delta:delta*(1-Math.exp(-Math.max(0,dt)/100));sliding=Math.abs(delta)>.1;if(!sliding){this.offset=this.aim;this.aim=null;}}
   if(playing)this.offset-=Math.min(40,dt)*.022;
   if(p===0)this.frozen=null;
-  this.tiles=this.frozen||carouselRow(this.items,{width:innerWidth,height:this.band.height,top:this.band.top,gap:24,offset:this.offset});
+  this.tiles=this.frozen||carouselRow(this.items,{width:innerWidth,height:this.band.height,top:this.band.top,gap:24,offset:this.offset,...layout});
   this.items.forEach((item,i)=>{
    if(p===1){item.carrier.style.transform='';item.carrier.style.zIndex='';item.carrier.style.willChange='';return;}
    const pose=carouselPose(item,this.tiles[i],p);
@@ -128,7 +132,7 @@ export class HeroCarousel {
   if(this.drag&&this.root.hasPointerCapture?.(this.drag.id))this.root.releasePointerCapture(this.drag.id);this.drag=null;
  }
  resume(){this.paused=false;this.schedule();}
- reset(){cancelAnimationFrame(this.raf);this.raf=0;this.lastFrame=0;this.frozen=null;this.aim=null;this.drag=null;
+ reset(){cancelAnimationFrame(this.raf);this.raf=0;this.lastFrame=0;this.frozen=null;this.aim=null;this.drag=null;this.root.style?.removeProperty?.('--hero-carousel-copy');this.copyOpacity=null;
   for(const slot of this.slots.values()){const s=slot.firstElementChild.style;s.transform='';s.zIndex='';s.willChange='';}
  }
  destroy(){this.dead=true;this.pause();this.reset();this.root.classList.remove('home-carousel-active');this.cleanups.forEach(fn=>fn());this.cleanups=[];}

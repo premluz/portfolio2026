@@ -1,3 +1,4 @@
+import {EASE} from './motion-tokens.js';
 // Native adapters of Iconiq (MIT, Edwin Vakayil). Attribution: vendor/iconiq/.
 let glyphId=0;const waves=new WeakMap();
 export function mountThinkingIndicator(element,{reduced=false}={}){
@@ -10,7 +11,7 @@ export function playSendWave(host,{reduced=false}={}){
  if(reduced)return ()=>{};
  waves.get(host)?.();
  const layer=document.createElement('span'),wash=document.createElement('span');layer.className='iconiq-send-wave';wash.className='iconiq-send-wash';layer.setAttribute('aria-hidden','true');layer.append(wash);host.append(layer);
- const movement=wash.animate([{transform:'translateY(55%)'},{transform:'translateY(-105%)'}],{duration:700,easing:'cubic-bezier(0,0,.58,1)',fill:'both'});
+ const movement=wash.animate([{transform:'translateY(55%)'},{transform:'translateY(-105%)'}],{duration:700,easing:EASE.settle,fill:'both'});
  const fade=layer.animate([{opacity:1},{opacity:1,offset:.75},{opacity:0}],{duration:1000,easing:'ease-out',fill:'both'});
  const cleanup=()=>{fade.onfinish=null;movement.cancel();fade.cancel();layer.remove();if(waves.get(host)===cleanup)waves.delete(host);};waves.set(host,cleanup);fade.onfinish=cleanup;return cleanup;
 }

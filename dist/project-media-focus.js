@@ -1,3 +1,4 @@
+import {EASE} from './motion-tokens.js';
 // One reversible image-to-focus transition for prototype and full-screen actions.
 export function focusedImageRect({width,height},{width:vw,height:vh},portrait=false){
  const scale=Math.min((portrait?vw-48:Math.min(1440,vw-48))/width,(portrait?vh*.85:vh-96)/height);
@@ -38,7 +39,7 @@ export class ProjectMediaFocus{
   this.trapFocus=e=>{if(e.key==='Tab'){e.preventDefault();(this.frame&&document.activeElement===this.closeButton?this.frame:this.closeButton).focus();}};document.addEventListener('keydown',this.trapFocus);
   const duration=this.reduced()?0:Math.max(80,this.duration());
   this.imageAnimation=this.image.animate([{transform},{transform:'none'}],{duration,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'});this.animations.push(this.imageAnimation);
-  descriptionExitTargets(this.root).forEach((node,index)=>this.animations.push(node.animate(mediaExitKeyframes(node,getComputedStyle(node).opacity),{duration:duration*.55,delay:Math.min(index*24,duration*.4),easing:'cubic-bezier(.4,0,.2,1)',fill:'both'})));
+  descriptionExitTargets(this.root).forEach((node,index)=>this.animations.push(node.animate(mediaExitKeyframes(node,getComputedStyle(node).opacity),{duration:duration*.55,delay:Math.min(index*24,duration*.4),easing:EASE.leave,fill:'both'})));
   this.dock().setMediaFocus(true,{duration});
   for(const node of detail.querySelectorAll(':scope>.liquid-skin,:scope>.surface-effect-layer'))this.animations.push(node.animate([{opacity:getComputedStyle(node).opacity},{opacity:0}],{duration,easing:'ease',fill:'both'}));
   this.closeButton.focus({preventScroll:true});this.prototypeUrl=prototypeUrl;this.prototypeTitle=prototypeTitle||'Interactive project prototype';this.awaitEnd();
