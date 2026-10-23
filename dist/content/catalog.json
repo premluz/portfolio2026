@@ -1186,9 +1186,9 @@
         {
           "id": "quote-gabriele",
           "type": "quote",
-          "text": "His ability to communicate ideas and win people over gives him an edge.",
-          "attribution": "Gabriele Ciaccasassi",
-          "label": "Programme Manager at PlayStation",
+          "text": "His work is strongly informed by data and user research, and he’s especially good at tackling complex, trust-sensitive problems with very little steer, input or guidance.",
+          "attribution": "Paul Wilsher",
+          "label": "Product Manager at Gala",
           "evidenceIds": [
             "testimonial-gabriele"
           ]
@@ -1204,11 +1204,11 @@
           ]
         },
         {
-          "id": "quote-venessa",
+          "id": "quote-santiago",
           "type": "quote",
-          "text": "He always seeks to validate his designs with the team, and stakeholders and conducts User Testing sessions.",
-          "attribution": "Venessa Benett",
-          "label": "UX Manager at Vodafone",
+          "text": "He challenged our approach and the results showed in our KPIs. He ramped up incredibly quickly and made a meaningful impact within his first month.",
+          "attribution": "Santiago Jaramillo",
+          "label": "Head of Product at Gala",
           "evidenceIds": [
             "testimonial-venessa"
           ]
@@ -1216,7 +1216,7 @@
         {
           "id": "quote-jonathan",
           "type": "quote",
-          "text": "He brought AI workflows into our design-to-dev process in ways that genuinely sped things up.",
+          "text": "He brought AI workflows into our design-to-dev process in ways that genuinely sped things up. He's creative and sharp, but always grounded in actual constraints, adapting quickly when things shift.",
           "attribution": "Jonathan Burk",
           "label": "Lead AI Engineer at Gala",
           "evidenceIds": [

@@ -232,7 +232,7 @@ export const catalog={
       "slug": "vodafone-iot",
       "title": "Redesigned platform around research-informed IA and interaction model for technical users and occasional operators",
       "name": "IoT connectivity",
-      "summary": "NPS –33 → +62 · Operations time reduced to under 10 seconds · 240M+ devices ",
+      "summary": "180+ regions · 240M+ devices · NPS –33 → +62 · Operations time reduced to under 10 seconds",
       "category": "IoT connectivity · Enterprise",
       "aliases": [
         "Vodafone",
@@ -247,7 +247,7 @@ export const catalog={
         "Internet of Things"
       ],
       "capabilities": [
-        "Senior product design",
+        "Product design",
         "Research",
         "Information architecture",
         "Interaction design"
@@ -821,6 +821,18 @@ export const catalog={
               "presentation": "card"
             },
             {
+              "id": "home-project-bastion",
+              "type": "reference",
+              "documentId": "bastion",
+              "presentation": "card"
+            },
+            {
+              "id": "home-project-gala-defi",
+              "type": "reference",
+              "documentId": "gala-defi",
+              "presentation": "card"
+            },
+            {
               "id": "home-project-playstation",
               "type": "reference",
               "documentId": "playstation",
@@ -830,12 +842,6 @@ export const catalog={
               "id": "home-project-rios",
               "type": "reference",
               "documentId": "rios",
-              "presentation": "card"
-            },
-            {
-              "id": "home-project-bastion",
-              "type": "reference",
-              "documentId": "bastion",
               "presentation": "card"
             }
           ],
@@ -1181,9 +1187,9 @@ export const catalog={
         {
           "id": "quote-gabriele",
           "type": "quote",
-          "text": "His ability to communicate ideas and win people over gives him an edge.",
-          "attribution": "Gabriele Ciaccasassi",
-          "label": "Programme Manager at PlayStation",
+          "text": "His work is strongly informed by data and user research, and he’s especially good at tackling complex, trust-sensitive problems with very little steer, input or guidance.",
+          "attribution": "Paul Wilsher",
+          "label": "Product Manager at Gala",
           "evidenceIds": [
             "testimonial-gabriele"
           ]
@@ -1199,11 +1205,11 @@ export const catalog={
           ]
         },
         {
-          "id": "quote-venessa",
+          "id": "quote-santiago",
           "type": "quote",
-          "text": "He always seeks to validate his designs with the team, and stakeholders and conducts User Testing sessions.",
-          "attribution": "Venessa Benett",
-          "label": "UX Manager at Vodafone",
+          "text": "He challenged our approach and the results showed in our KPIs. He ramped up incredibly quickly and made a meaningful impact within his first month.",
+          "attribution": "Santiago Jaramillo",
+          "label": "Head of Product at Gala",
           "evidenceIds": [
             "testimonial-venessa"
           ]
@@ -1211,7 +1217,7 @@ export const catalog={
         {
           "id": "quote-jonathan",
           "type": "quote",
-          "text": "He brought AI workflows into our design-to-dev process in ways that genuinely sped things up.",
+          "text": "He brought AI workflows into our design-to-dev process in ways that genuinely sped things up. He's creative and sharp, but always grounded in actual constraints, adapting quickly when things shift.",
           "attribution": "Jonathan Burk",
           "label": "Lead AI Engineer at Gala",
           "evidenceIds": [
@@ -1742,6 +1748,85 @@ export const catalog={
           "presentation": "inline"
         }
       ]
+    },
+    {
+      "id": "gala-defi",
+      "type": "portfolio-item",
+      "status": "published",
+      "slug": "gala-defi",
+      "title": "Brought coherence to a DeFi stack that launched fast, outsourced and stitched together",
+      "name": "DeFi swap, pools and wallet",
+      "summary": "0 → 1 • North Star • Easy mode",
+      "category": "Decentralised finance",
+      "aliases": [
+        "Gala DeFi",
+        "GalaSwap",
+        "Gala Swap",
+        "Ollie",
+        "Gala liquidity pools",
+        "Gala wallet"
+      ],
+      "domains": [
+        "DeFi",
+        "Web3",
+        "Finance",
+        "Trading"
+      ],
+      "capabilities": [
+        "Product design",
+        "Design systems",
+        "Conversational UI",
+        "AI-assisted delivery",
+        "Front-end prototyping"
+      ],
+      "kind": "shipped",
+      "client": "Gala",
+      "pageTitle": "Designing for trust and ease of use in a DeFi stack that launched without design.",
+      "intro": "GalaSwap launched fast: outsourced, inconsistent, no shared system. I joined the CEO’s “A-team” squad for priority projects when coherence and ease of use started to define trust.",
+      "context": "Gala’s DeFi ecosystem: swap, liquidity pools and wallet, used by first-timers and experienced traders alike.",
+      "challenge": "Swap, wallet and pools were built by different teams with no shared system. In DeFi that costs trust, because people are putting in real money. Novices and traders needed opposite things. It was a live product with no design system, a small squad and restructuring throughout.",
+      "role": "Senior product designer leading the redesign. I owned the North Star, swap, liquidity pools, wallet onboarding and the conversational UI explorations. I also brought AI-assisted workflows into delivery and built straight into the production repo.",
+      "highlights": "0 → 1 • North Star • Easy mode",
+      "keyWork": "Redesigned incrementally alongside delivery, with a North Star so every tactical call pointed the same way.\nReplaced the raw price-range inputs with a visual chart and named risk postures (Wide, Stable, Upper side, Lower side), so users see where they sit in the market before committing.\nSplit the experience in two after the CEO’s “would your mum get it?” review. Easy mode, with Ollie as a conversational guide, was for first-timers, and Advanced was for speed. I argued against the split, as it meant maintaining two products.\nExplored intent-driven UI (“$100 of GALA” generates the confirmation). It didn’t reach production.",
+      "impact": "North Star aligned design, product and engineering • Easy mode and Ollie shipped • GalaSwap passed $40M+ trading volume, 250,000+ swaps and ~200 liquidity pools",
+      "aftermath": "Gala restructured and eliminated the design function. Ollie launched publicly, then was withdrawn. The vision was handed to product and engineering, but with no designers left to hold the line, the live product drifted from it.",
+      "lesson": "Fast AI-assisted delivery needs a boundary between exploration and production before scale, not after.",
+      "heroMediaId": "gala-defi-cover",
+      "hoverVideoId": "gala-defi-walkthrough",
+      "featured": false,
+      "evidence": [
+        {
+          "id": "highlights",
+          "kind": "statement",
+          "text": "0 → 1 • North Star • Easy mode",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        },
+        {
+          "id": "impact",
+          "kind": "statement",
+          "text": "North Star aligned design, product and engineering • Easy mode and Ollie shipped • GalaSwap passed $40M+ trading volume, 250,000+ swaps and ~200 liquidity pools",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        }
+      ],
+      "blocks": [
+        {
+          "id": "gala-defi-walkthrough",
+          "type": "video",
+          "label": "Project walkthrough",
+          "title": "Product in motion",
+          "mediaId": "gala-defi-walkthrough",
+          "posterMediaId": "gala-defi-cover",
+          "caption": "Walkthrough video",
+          "layout": {
+            "columns": 2,
+            "mediaFit": "contain"
+          }
+        }
+      ]
     }
   ],
   "assets": [
@@ -1946,7 +2031,7 @@ export const catalog={
       "id": "about-portrait",
       "type": "image",
       "status": "published",
-      "url": "assets/prem.png",
+      "url": "assets/prem.jpg",
       "alt": "Portrait of Prem in a black sweater against a white background"
     },
     {
@@ -1983,6 +2068,20 @@ export const catalog={
       "status": "published",
       "url": "assets/hipnotherapy.jpg",
       "alt": "Prem seated beside a hypnotherapy teacher in a wood-panelled room"
+    },
+    {
+      "id": "gala-defi-cover",
+      "type": "image",
+      "status": "published",
+      "url": "assets/gala-defi.png",
+      "alt": "GalaSwap decentralised exchange interface with swap, liquidity pool and wallet views"
+    },
+    {
+      "id": "gala-defi-walkthrough",
+      "type": "video",
+      "status": "published",
+      "url": "assets/gala-defi.mp4",
+      "alt": ""
     }
   ],
   "presentations": [
@@ -2128,6 +2227,19 @@ export const catalog={
       "detail": {
         "columns": 1
       }
+    },
+    {
+      "documentId": "gala-defi",
+      "card": {
+        "orientation": "landscape",
+        "surface": [
+          "#f1e5f5",
+          "#e1e5f8"
+        ]
+      },
+      "detail": {
+        "columns": 2
+      }
     }
   ],
   "layouts": [
@@ -2140,8 +2252,23 @@ export const catalog={
           "featured": false
         },
         {
-          "id": "rios",
-          "documentId": "rios",
+          "id": "bastion",
+          "documentId": "bastion",
+          "featured": false
+        },
+        {
+          "id": "tracr",
+          "documentId": "tracr",
+          "featured": false
+        },
+        {
+          "id": "vodafone-iot",
+          "documentId": "vodafone-iot",
+          "featured": true
+        },
+        {
+          "id": "gala-defi",
+          "documentId": "gala-defi",
           "featured": false
         },
         {
@@ -2150,43 +2277,13 @@ export const catalog={
           "featured": true
         },
         {
-          "id": "vodafone-iot",
-          "documentId": "vodafone-iot",
-          "featured": true
-        },
-        {
-          "id": "tracr",
-          "documentId": "tracr",
+          "id": "rios",
+          "documentId": "rios",
           "featured": false
         },
         {
           "id": "galachain",
           "documentId": "galachain",
-          "featured": false
-        },
-        {
-          "id": "bastion",
-          "documentId": "bastion",
-          "featured": false
-        },
-        {
-          "id": "playstation-02",
-          "documentId": "playstation",
-          "featured": false
-        },
-        {
-          "id": "galachain-02",
-          "documentId": "galachain",
-          "featured": false
-        },
-        {
-          "id": "tracr-02",
-          "documentId": "tracr",
-          "featured": false
-        },
-        {
-          "id": "rios-02",
-          "documentId": "rios",
           "featured": false
         },
         {
