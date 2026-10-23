@@ -1,10 +1,10 @@
 // Spoken the moment a voice question is sent, while the answer is worked out. Audio only, never printed.
 // The voice route only speaks phrases from this list, so it cannot be used to voice arbitrary text.
 export const acknowledgements=Object.freeze({
- projects:Object.freeze(['Let me pull up the right projects.','Good one. Let me look through the work.','Let me find the best examples.']),
- experience:Object.freeze(['Let me check his experience on that.','One moment, I’ll look at his background.','Let me see where he’s done that.']),
- contact:Object.freeze(['Sure, one second.','Let me find that for you.']),
- general:Object.freeze(['Let me think about that.','Good question. One moment.','Let me look into that.'])
+ projects:Object.freeze(['Let me check his projects.','Good question. Let me look through the work.','Sure, let me pull those up.','One sec, checking the work.']),
+ experience:Object.freeze(['Let me check.','Good question. Let me look at his background.','Checking his experience now.','Sure, let me check that.']),
+ contact:Object.freeze(['Sure, one sec.','Let me check that for you.','Good question. One moment.']),
+ general:Object.freeze(['Let me check.','Good question.','Checking now.','Good one. Let me look.','One sec, let me check.'])
 });
 const categories=[
  ['contact',/\b(contact|email|e-mail|hire|hiring|availab|rate|reach|call|book|meet|linkedin)/i],

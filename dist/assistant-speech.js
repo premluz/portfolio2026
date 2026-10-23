@@ -24,9 +24,9 @@ export class AssistantSpeech {
  }
  // Lane one: a short phrase the moment a voice question is sent. Output stays active afterwards (the microphone
  // stays quiet) in a working phase until the spoken answer plays or release() says none is coming.
- acknowledge({id,sessionId}){
+ acknowledge({id,sessionId,text=''}){
   if(!this.AudioClass||!id)return;
-  this.stop();const epoch=this.epoch;this.awaiting=true;this.speaking=true;try{this.onStart();}catch(error){console.error('Speech start handler failed.',error);}
+  this.stop();const epoch=this.epoch;this.awaiting=true;this.speaking=true;try{this.onStart(text);}catch(error){console.error('Speech start handler failed.',error);}
   this.cue=(async()=>{
    try{
     const key='ack:'+id;let url=this.cache.get(key);
@@ -48,7 +48,7 @@ export class AssistantSpeech {
   this.stop();const epoch=this.epoch;this.current=button;this.state='loading';
   try{
    try{this.onState('loading',button);}catch{}
-   this.speaking=true;try{this.onStart();}catch{}
+   this.speaking=true;try{this.onStart(text);}catch(error){console.error('Speech start handler failed.',error);}
    let url=this.cache.get(speechToken);
    if(!url){
     const controller=new AbortController();this.abort=controller;

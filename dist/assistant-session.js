@@ -2,13 +2,13 @@ import {assistantLimits,assistantHistory} from './assistant-limits.js';
 import {requestAssistant} from './assistant-client.js';
 import {knowledgeById} from './assistant-answer.js';
 import {mountThinkingIndicator,playSendWave} from './iconiq-chat-effects.js';
-import {acknowledgementFor} from './assistant-acknowledgements.js';
+import {acknowledgementFor,acknowledgementText} from './assistant-acknowledgements.js';
 
 async function submitQuestion(r,value,{spoken=false}={}){
  const question=value.trim();if(!question||r.pending||r.count>=r.limit)return {ok:false,message:'Finish the current question first.'};
  if(question.length>assistantLimits.questionCharacters)return {ok:false,message:`Please keep the question or job description under ${assistantLimits.questionCharacters} characters.`};
  const readAloud=r.voiceMode&&r.soundEnabled;r.speech.stop();r.options.onStatus('answer','');r.hideComposerSuggestions();
- if(readAloud)r.speech.acknowledge({id:acknowledgementFor(question,r.count),sessionId:r.sessionId()});
+ if(readAloud){const id=acknowledgementFor(question,r.count);r.speech.acknowledge({id,text:acknowledgementText(id),sessionId:r.sessionId()});}
  r.input.value='';r.page.classList.remove('assistant-empty');r.count++;r.save('prem-ask-count',String(r.count));
  r.persist({role:'user',text:question,documentIds:[]});r.suggestionsEl.remove();r.append('user',question);
  r.pending=true;r.sync();r.dock.classList.add('assistant-working');r.page.setAttribute('aria-busy','true');

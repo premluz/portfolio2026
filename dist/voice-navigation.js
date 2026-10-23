@@ -8,6 +8,14 @@ const messages={
   'network':'The browser’s speech service could not connect. Check your connection and try again.'
 };
 const outputCommands=new Set(['assistant.speech.stop','assistant.ask','route.assistant','input.voice.stop']);
+// Barge-in without a live speech service: while the reply plays, a finished phrase interrupts it unless it is the
+// reply's own echo (the microphone hearing the speaker), judged by how many of its words are in the line being spoken.
+const words=text=>String(text||'').toLowerCase().replace(/[^\p{L}\p{N}\s]/gu,' ').split(/\s+/).filter(Boolean);
+export function isInterruption(heard,speaking,{minWords=2,echoShare=.6}={}){
+ const said=words(heard);if(said.length<minWords)return false;
+ const spoken=new Set(words(speaking));if(!spoken.size)return true;
+ return said.filter(word=>spoken.has(word)).length/said.length<echoShare;
+}
 const recognitionStartRetry=120;
 export class VoiceNavigation {
   constructor(catalog,{onCommand=()=>{},onUtterance=()=>{},canAsk=()=>false,onStatus=()=>{},onChange=()=>{},environment=globalThis}={}) {
@@ -39,7 +47,7 @@ export class VoiceNavigation {
     recognition.continuous=this.outputActive;recognition.interimResults=true;recognition.maxAlternatives=1;
     const valid=()=>this.enabled&&!this.paused&&generation===this.generation&&this.recognition===recognition;
     this.recognition=recognition;this.transcript='';this.executed=false;
-    recognition.onstart=()=>{if(!valid())return;this.status(this.outputActive?'Say “Stop” to interrupt':'Listening',this.outputActive?'output':'listening');this.retries=0;clearTimeout(this.startTimer);this.startup?.resolve(true);this.startup=null;};
+    recognition.onstart=()=>{if(!valid())return;this.status(this.outputActive?'Speak or say “Stop” to interrupt':'Listening',this.outputActive?'output':'listening');this.retries=0;clearTimeout(this.startTimer);this.startup?.resolve(true);this.startup=null;};
     recognition.onspeechstart=()=>{if(valid()&&!this.outputActive)this.status('Listening…','hearing');};
     recognition.onresult=event=>{
       if(!valid()||this.executed)return;
@@ -49,8 +57,9 @@ export class VoiceNavigation {
       // question fragments as commands. Commands always take priority.
       const command=parseVoiceCommand(text,this.catalog,{final});
       if(this.outputActive){
-        if(final&&command&&outputCommands.has(command.id))this.execute(command,recognition,generation);
-        // Ignore reply audio and other utterances while output is active.
+        if(final&&command&&outputCommands.has(command.id)){this.execute(command,recognition,generation);return;}
+        // Anything else that is not the reply's own echo interrupts it and becomes the next question.
+        if(final&&!command&&!isVoiceNavigationRequest(text)&&(this.conversation||this.canAsk())&&isInterruption(text,this.outputText))this.execute({id:'assistant.utterance',text},recognition,generation);
         return;
       }
       if(command&&(!this.conversation||final)){this.execute(command,recognition,generation);return;}
@@ -100,7 +109,7 @@ export class VoiceNavigation {
     finally{if(generation===this.generation&&execution===this.execution){this.pending=false;this.schedule(interrupt?0:550);}}
   }
   schedule(delay) {clearTimeout(this.timer);if(this.enabled&&!this.paused&&(!this.pending||this.outputActive))this.timer=setTimeout(()=>this.listen(),delay);}
-  setOutputActive(on){this.outputActive=Boolean(on);this.abort();if(this.enabled&&!this.paused)this.schedule(0);}
+  setOutputActive(on,text=''){this.outputActive=Boolean(on);this.outputText=this.outputActive?String(text||''):'';this.abort();if(this.enabled&&!this.paused)this.schedule(0);}
   pause() {this.paused=true;this.abort();this.status('Voice paused','paused');}
   resume() {if(!this.enabled)return;this.paused=false;this.schedule(150);}
   abort() {
