@@ -2004,7 +2004,7 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 
 /* glass-style.css */
 /* Glass style toggle: inner light replaces explicit borders on standalone controls and media cards. */
-:root[data-glass-style="on"] :is(.glass-utility-button,.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back){border:0;background:var(--glass-button-fill);box-shadow:var(--glass-button-edge);backdrop-filter:blur(var(--glass-button-blur));-webkit-backdrop-filter:blur(var(--glass-button-blur))}
+:root[data-glass-style="on"] :is(.glass-utility-button,.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back,#dock>.assistant-launcher){border:0;background:var(--glass-button-fill);box-shadow:var(--glass-button-edge);backdrop-filter:blur(var(--glass-button-blur));-webkit-backdrop-filter:blur(var(--glass-button-blur))}
 :root[data-glass-style="on"] :is(.card-rail-controls button,.spatial-gallery-controls button){border-radius:50%}
 :root[data-glass-style="on"] :is(.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back){transition:color 180ms ease,transform var(--glass-button-press-duration) var(--glass-button-press-ease)}
 :root[data-glass-style="on"] :is(.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back):active:not(:disabled){transform:scale(var(--glass-button-press-scale));transition-duration:160ms,var(--glass-button-press-in-duration)}
@@ -2032,6 +2032,62 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 :root[data-glass-style="on"] #dock .composer-context-slot[data-group-solo="true"] :is(button,a)::before{content:"";position:absolute;inset:calc(-1 * var(--context-action-padding));z-index:-1;border-radius:calc(var(--context-control-height) / 2 + var(--context-action-padding));background:var(--glass-ghost-fill);box-shadow:var(--glass-button-edge);opacity:0;pointer-events:none;transition:opacity var(--nav-hover-out-duration) ease-out}
 :root[data-glass-style="on"] #dock .composer-context-slot[data-group-solo="true"] :is(button,a):is(:hover,:focus-visible):not(:disabled){background:transparent;box-shadow:none}
 :root[data-glass-style="on"] #dock .composer-context-slot[data-group-solo="true"] :is(button,a):is(:hover,:focus-visible):not(:disabled)::before{opacity:1;transition-duration:var(--nav-hover-in-duration)}
+
+/* assistant-floating.css */
+/* Assistant launcher: its own glass pill beside the dock, not an item of the menu. */
+#dock>.assistant-launcher{position:absolute;left:calc(100% + var(--nav-section-gap));bottom:0;display:inline-flex;align-items:center;gap:var(--space-2);height:var(--nav-height);padding:0 var(--space-4) 0 var(--space-3);border:1px solid var(--dock-outline);border-radius:var(--nav-rounding);background:linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));-webkit-backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));box-shadow:inset 0 1px 0 var(--nav-highlight);color:var(--nav-item-ink,var(--muted));font:inherit;font-size:var(--nav-item-font-size);line-height:16px;white-space:nowrap;cursor:pointer;pointer-events:auto;z-index:5;transition:color 160ms ease,opacity var(--nav-hover-out-duration) ease-out}
+#dock>.assistant-launcher[hidden]{display:none}
+#dock>.assistant-launcher:is(:hover,:focus-visible,[aria-expanded="true"]){color:var(--ink)}
+#dock>.assistant-launcher:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+#dock>.assistant-launcher svg{display:block;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round}
+#dock.is-composer>.assistant-launcher{opacity:0;visibility:hidden;pointer-events:none}
+@media(max-width:600px){#dock>.assistant-launcher{padding:0 var(--space-3)}#dock>.assistant-launcher .assistant-launcher-label{display:none}}
+
+/* Floating panel: the chat page's own conversation, shown above the dock while the current page stays put. */
+#askPage.assistant-floating{position:fixed;z-index:29;left:50%;bottom:calc(var(--dock-bottom,32px) + var(--nav-height) + var(--space-4));width:min(var(--composer-max-width),calc(100vw - 32px));min-height:0;max-height:min(62svh,600px);overflow:auto;overscroll-behavior:contain;contain:none;transform:translateX(-50%);padding:0 var(--space-5) var(--space-5);border:1px solid var(--dock-outline);border-radius:24px;background:linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));-webkit-backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));box-shadow:inset 0 1px 0 var(--nav-highlight),0 12px 40px var(--nav-shadow);animation:assistant-floating-in 220ms var(--ease-settle) both}
+@keyframes assistant-floating-in{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+#askPage.assistant-floating .assistant-thread{min-height:0;display:block}
+#askPage.assistant-floating .assistant-welcome{margin-bottom:var(--space-5)}
+#askPage.assistant-floating .assistant-welcome h1{font-size:var(--font-size-section-heading);line-height:var(--line-height-heading)}
+#askPage.assistant-floating .ask-cards{grid-template-columns:1fr}
+.assistant-floating-bar{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:var(--space-1);margin:0 calc(-1 * var(--space-5)) var(--space-3);padding:var(--space-3) var(--space-4) var(--space-2) var(--space-5);background:rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .5));box-shadow:0 1px 0 var(--dock-outline)}
+.assistant-floating-bar[hidden]{display:none}
+.assistant-floating-title{flex:1;color:var(--eyebrow-ink);font-size:var(--font-size-caption);letter-spacing:var(--eyebrow-tracking);text-transform:uppercase}
+.assistant-floating-bar button{display:grid;place-items:center;width:32px;height:32px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--muted);cursor:pointer;transition:background-color var(--nav-hover-out-duration) ease-out,color 160ms ease}
+.assistant-floating-bar button:is(:hover,:focus-visible){background:var(--nav-item-hover);color:var(--ink);transition-duration:var(--nav-hover-in-duration)}
+.assistant-floating-bar svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+/* The composer's floating extras would sit over the panel; its suggestions already show inside the conversation. */
+#dock.assistant-floating-open :is(.composer-context-actions,.composer-suggestions){display:none}
+@media(prefers-reduced-motion:reduce){#askPage.assistant-floating{animation:none}}
+:root[data-animation="off"] #askPage.assistant-floating{animation:none}
+
+/* assistant-fit.css */
+/* Role brief answers: one row per requirement, its fit and its evidence. "Not shown" is neutral, not an error:
+   the portfolio not showing something is not proof it is missing. */
+.ask-fit{--fit-covered:var(--status-success-accent);--fit-partial:color-mix(in oklch,var(--status-success-accent) 55%,var(--muted));--fit-missing:var(--eyebrow-ink);width:100%;max-width:750px;margin:var(--space-4) 0 0}
+.ask-fit-summary{margin:0 0 var(--space-3);color:var(--eyebrow-ink);font-size:var(--font-size-caption);letter-spacing:var(--eyebrow-tracking);text-transform:uppercase}
+.ask-fit-table{width:100%;border-collapse:collapse;font-size:var(--font-size-small);line-height:var(--line-height-body)}
+.ask-fit-table th{padding:0 var(--space-3) var(--space-2) 0;text-align:left;font-weight:var(--font-weight-body);color:var(--eyebrow-ink);font-size:var(--font-size-caption)}
+.ask-fit-table td{padding:var(--space-3) var(--space-3) var(--space-3) 0;vertical-align:top;border-top:1px solid var(--dock-outline)}
+.ask-fit-name{display:block;color:var(--ink)}
+.ask-fit-note{display:block;margin-top:var(--space-1);color:var(--muted);font-size:var(--font-size-caption)}
+.ask-fit-status{white-space:nowrap;color:var(--fit-missing)}
+.ask-fit-status>span:last-child{vertical-align:middle}
+.ask-fit-icon{display:inline-block;width:16px;height:16px;margin-right:var(--space-2);vertical-align:middle}
+.ask-fit-icon svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+tr[data-fit-status="covered"] .ask-fit-status{color:var(--fit-covered)}
+tr[data-fit-status="partial"] .ask-fit-status{color:var(--fit-partial)}
+.ask-fit-evidence{display:flex;flex-wrap:wrap;gap:var(--space-1) var(--space-2)}
+.ask-fit-table td.ask-fit-evidence{display:table-cell}
+.ask-fit-source{display:inline-block;margin:0 var(--space-2) var(--space-1) 0;color:var(--body-ink);text-decoration:underline;text-decoration-color:var(--dock-outline);text-underline-offset:.2em}
+a.ask-fit-source:is(:hover,:focus-visible){color:var(--ink);text-decoration-color:currentColor}
+@media(max-width:600px){
+ .ask-fit-table thead{display:none}
+ .ask-fit-table,.ask-fit-table tbody,.ask-fit-table tr,.ask-fit-table td,.ask-fit-table td.ask-fit-evidence{display:block}
+ .ask-fit-table tr{padding:var(--space-3) 0;border-top:1px solid var(--dock-outline)}
+ .ask-fit-table td{padding:0;border-top:0}
+ .ask-fit-table td+td{margin-top:var(--space-2)}
+}
 
 /* mobile.css */
 /* Keep editable text large enough to avoid Safari's automatic input zoom.

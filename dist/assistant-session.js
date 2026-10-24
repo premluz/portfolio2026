@@ -21,7 +21,7 @@ async function submitQuestion(r,value,{spoken=false}={}){
   r.addAnswer(answer,{auto:readAloud,spoken,animateCards:true});
   const documentIds=[...new Set([...(answer.cards||[]).map(item=>item.documentId),...(answer.sources||[]).map(item=>item.documentId)])].filter(id=>typeof id==='string'&&r.store.get(id));
   const knowledgeSourceIds=(answer.sources||[]).map(source=>source.documentId).filter(id=>knowledgeById.has(id));
-  r.persist({role:'assistant',text:answer.text||'',documentIds,knowledgeSourceIds,suggestions:answer.suggestions||[],speechToken:answer.speechToken||null,spoken:answer.spoken||null,notice:answer.notice||''});
+  r.persist({role:'assistant',text:answer.text||'',documentIds,knowledgeSourceIds,suggestions:answer.suggestions||[],speechToken:answer.speechToken||null,spoken:answer.spoken||null,requirements:answer.requirements||[],notice:answer.notice||''});
  }catch(error){waiting.remove();r.speech.release();const text='I couldn’t check the portfolio just now. Please try again.';r.options.onInputError('Assistant rendering failed: '+error.name);r.append('assistant',text);r.persist({role:'assistant',text,documentIds:[]});}
  finally{r.pending=false;r.sync();r.dock.classList.remove('assistant-working');r.page.removeAttribute('aria-busy');}
  return {ok:true,message:'Answered'};

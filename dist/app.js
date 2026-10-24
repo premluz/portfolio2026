@@ -39,6 +39,9 @@ import {installProjectMenuHover} from './project-menu-hover.js';
 import {initDesignSystem} from './design-system.js';
 import {mountGlassStyle} from './glass-style.js';
 import {mountSimpleTransitions} from './simple-transitions.js';
+import {mountAssistantPresentation,setAssistantFloating} from './assistant-floating.js';
+import {mountAssistantUpload} from './assistant-upload.js';
+import {assistantLimits} from './assistant-limits.js';
 import {heroImageEntrance} from './hero-image-entrance.js';
 import {projectPageExit,pageFadeExit} from './project-page-exit.js';
 import {mountHeroCarouselSettings,readHeroCarouselSettings,applyHeroCarouselSettings} from './hero-carousel-settings.js';
@@ -127,11 +130,14 @@ $('#dockLiquidPinch').oninput=e=>{dockLiquidPinch=+e.target.value;applyDockLiqui
 let voiceDock=null;
 let composerContext=null,contextualButtons=readContextualButtons(localStorage),splitProjectControls=false;try{splitProjectControls=localStorage.getItem('prem-split-project-controls')==='true';}catch{}
 let contextualComposer=true,alwaysDarkGlass=false;try{const savedComposer=localStorage.getItem('prem-contextual-composer');contextualComposer=savedComposer===null?true:savedComposer==='true';alwaysDarkGlass=localStorage.getItem('prem-always-dark-glass')==='true';}catch{}
+let assistantFloating=false;const assistantLauncher=document.getElementById('assistantLauncher');
+// The dock shows the composer on the chat page, when the composer is always on, or while the floating assistant is open.
+const composerShown=route=>route==='assistant'||contextualComposer||contextualButtons==='composer'||assistantFloating;
 function applyDockPreferences(){dockMorph.el.classList.toggle('contextual-composer',contextualComposer);dockMorph.el.classList.toggle('always-dark-glass',alwaysDarkGlass);$('#contextualComposerPreference').setAttribute('aria-checked',String(contextualComposer));$('#alwaysDarkGlassPreference').setAttribute('aria-checked',String(alwaysDarkGlass));}
 applyDockPreferences();
 const showProjectControls=route=>projectIds.includes(route);
 const showBackControl=route=>route==='assistant'||route==='about'||route==='contact'||projectIds.includes(route);
-function syncDockActions(route,options={}){const composer=route==='assistant'||contextualComposer||contextualButtons==='composer';dockMorph.setBack(!composer&&showBackControl(route),options);dockMorph.setSplit(!composer&&contextualButtons==='inline'&&showProjectControls(route),options);composerContext?.refresh();}
+function syncDockActions(route,options={}){const composer=composerShown(route);dockMorph.setBack(!composer&&showBackControl(route),options);dockMorph.setSplit(!composer&&contextualButtons==='inline'&&showProjectControls(route),options);composerContext?.refresh();}
 installHoverTrail($('#dock'),{reduced:()=>reduce.matches});
 const edgeShades=new EdgeShades($('.page-edge-shades'),{reduced:()=>reduce.matches});
 try{layout=localStorage.getItem('prem-home-layout')==='regular'?'regular':'masonry';}catch{}
@@ -261,6 +267,7 @@ function navigateAssistant(route){
  chromeTransition=true;render(route,{stream:false});chromeTransition=false;
  scrollPage(route==='work'?homeScroll:0);
  fadeUpIn(route==='assistant'?$('#askPage'):main);
+ globalThis.dispatchEvent?.(new Event('portfolio-route-settled'));
 }
 // About and Contact have no card in the home grid, so there is nothing to morph back into.
 function returnHomeFromInformation(){
@@ -309,7 +316,7 @@ function recoverNavigation(error){
 }
 const pageEntranceLift=14;
 async function navigate(){if(location.hash==='#about'&&current!=='about'&&current!=='assistant'&&projectEntry.route!=='about'&&galleryProjectOrigin?.route!=='about'){navSlideTarget='about';travelDirection=travelDirection||1;}else if(location.hash==='#work'&&current==='about'){navSlideTarget='work';travelDirection=-1;}try{await runNavigation();}catch(error){recoverNavigation(error);}}
-async function runNavigation(){if(busy||navigationPreparing)return;mediaFocus.destroy();let route=location.hash.slice(1)||'work';if(!['work','assistant',...cardIds].includes(route))route='work';if(route===current)return;if(route!=='assistant'){navigationPreparing=true;try{await portfolioAssistant.prepareNavigation();}finally{navigationPreparing=false;}const latestHash=location.hash.slice(1)||'work',latest=['work','assistant',...cardIds].includes(latestHash)?latestHash:'work';if(latest!==route){void navigate();return;}}if(simpleTransitions.enabled){await simplePageTransition(route);return;}const entryHistory=projectEntry.snapshot(),galleryHistory=galleryProjectOrigin;const galleryProjectSource=galleryProjectTarget&&projectIds.includes(route)?galleryProjectTarget:null,galleryProject=!!galleryProjectSource,galleryReturn=!!(galleryProjectOrigin&&route===galleryProjectOrigin.route&&projectIds.includes(current));if(galleryProject){galleryProjectOrigin={route:current,project:route,element:galleryProjectSource,scroll:scrollY,galleryId:galleryProjectSource.closest('[data-card-gallery]')?.dataset.cardGallery,index:Number(galleryProjectSource.closest('[data-card-gallery]')?.dataset.galleryIndex)||0,scene:null,galleries:[]};projectEntry.capture(current);}const previewProjectSource=previewProjectTarget&&!projectIds.includes(current)&&current!=='assistant'&&projectIds.includes(route)?previewProjectTarget:null,previewProject=!!previewProjectSource,previewReturn=!!(previewProjectOrigin&&route==='work'&&projectIds.includes(current)&&!galleryReturn);if(previewProjectTarget&&!previewProject)previewProjectTarget.remove();previewProjectTarget=null;if(previewProject){previewProjectOrigin={project:route};if(current!=='work')projectEntry.capture(current);}const assistantProjectSource=current==='assistant'&&projectIds.includes(route)?assistantProjectTarget||document.querySelector(`#askMessages [data-content-card="${route}"]`):null,assistantProject=Boolean(assistantProjectSource),assistantReturnTarget=route==='assistant'&&projectIds.includes(current)&&assistantProjectOrigin?(assistantProjectOrigin.project===current&&assistantProjectOrigin.element.isConnected?assistantProjectOrigin.element:document.querySelector(`#askMessages [data-content-card="${current}"]`)):null,assistantHistory={...assistantNavigation};if(assistantProject){assistantProjectOrigin={project:route,element:assistantProjectSource,scroll:scrollY};projectEntry.capture('assistant');}if(current==='work'&&homeOpenTarget===route)projectEntry.capture('work');assistantNavigation.beforeNavigate(current,route);if(route==='assistant'&&!assistantReturnTarget||current==='assistant'&&!assistantProject){navSlideTarget=null;homeOpenTarget=null;travelDirection=0;navigateAssistant(route);return;}const navSlide=navSlideTarget===route;navSlideTarget=null;homeOpenTarget=null;if(route===current){travelDirection=0;return;}if(route==='work'&&!navSlide&&informationCards.some(card=>card.id===current)){travelDirection=0;returnHomeFromInformation();return;}if(route==='work'&&!navSlide&&projectIds.includes(current)&&!homeScene&&!projectEntry.route&&!galleryProjectOrigin&&!previewProjectOrigin){await simplePageTransition('work');return;}busy=true;document.documentElement.classList.add('route-transition');activeTransition=new TransitionControl();document.body.classList.add('in-motion');motionMaterial.start();const previousScroll=scrollY;const currentBefore=current;activeTransition.register(()=>{const options={duration:duration*(slow?2.5:1)};syncDockActions(currentBefore,options);});const previousCard=current,wasHome=current==='work',wasCard=cardIds.includes(current),isCard=cardIds.includes(route);const navigation=cardNavigation(current,route,projectIds,{slide:navSlide||homeProductDisplay==='text'&&!previewProject&&!previewReturn&&(current==='work'||route==='work'),direction:travelDirection}),sliding=navigation.kind==='slide';if(ambientMovementEnabled()&&!reduce.matches)ambientLight.hold(wasHome?main.querySelector(`[data-card="${route}"]`):main.querySelector('.detail'));const oldMain=sliding?freeze(main):null;const direction=navigation.direction;travelDirection=0;
+async function runNavigation(){if(busy||navigationPreparing)return;mediaFocus.destroy();if(assistantFloating)closeAssistantFloating({focus:false});let route=location.hash.slice(1)||'work';if(!['work','assistant',...cardIds].includes(route))route='work';if(route===current)return;if(route!=='assistant'){navigationPreparing=true;try{await portfolioAssistant.prepareNavigation();}finally{navigationPreparing=false;}const latestHash=location.hash.slice(1)||'work',latest=['work','assistant',...cardIds].includes(latestHash)?latestHash:'work';if(latest!==route){void navigate();return;}}if(simpleTransitions.enabled){await simplePageTransition(route);return;}const entryHistory=projectEntry.snapshot(),galleryHistory=galleryProjectOrigin;const galleryProjectSource=galleryProjectTarget&&projectIds.includes(route)?galleryProjectTarget:null,galleryProject=!!galleryProjectSource,galleryReturn=!!(galleryProjectOrigin&&route===galleryProjectOrigin.route&&projectIds.includes(current));if(galleryProject){galleryProjectOrigin={route:current,project:route,element:galleryProjectSource,scroll:scrollY,galleryId:galleryProjectSource.closest('[data-card-gallery]')?.dataset.cardGallery,index:Number(galleryProjectSource.closest('[data-card-gallery]')?.dataset.galleryIndex)||0,scene:null,galleries:[]};projectEntry.capture(current);}const previewProjectSource=previewProjectTarget&&!projectIds.includes(current)&&current!=='assistant'&&projectIds.includes(route)?previewProjectTarget:null,previewProject=!!previewProjectSource,previewReturn=!!(previewProjectOrigin&&route==='work'&&projectIds.includes(current)&&!galleryReturn);if(previewProjectTarget&&!previewProject)previewProjectTarget.remove();previewProjectTarget=null;if(previewProject){previewProjectOrigin={project:route};if(current!=='work')projectEntry.capture(current);}const assistantProjectSource=current==='assistant'&&projectIds.includes(route)?assistantProjectTarget||document.querySelector(`#askMessages [data-content-card="${route}"]`):null,assistantProject=Boolean(assistantProjectSource),assistantReturnTarget=route==='assistant'&&projectIds.includes(current)&&assistantProjectOrigin?(assistantProjectOrigin.project===current&&assistantProjectOrigin.element.isConnected?assistantProjectOrigin.element:document.querySelector(`#askMessages [data-content-card="${current}"]`)):null,assistantHistory={...assistantNavigation};if(assistantProject){assistantProjectOrigin={project:route,element:assistantProjectSource,scroll:scrollY};projectEntry.capture('assistant');}if(current==='work'&&homeOpenTarget===route)projectEntry.capture('work');assistantNavigation.beforeNavigate(current,route);if(route==='assistant'&&!assistantReturnTarget||current==='assistant'&&!assistantProject){navSlideTarget=null;homeOpenTarget=null;travelDirection=0;navigateAssistant(route);return;}const navSlide=navSlideTarget===route;navSlideTarget=null;homeOpenTarget=null;if(route===current){travelDirection=0;return;}if(route==='work'&&!navSlide&&informationCards.some(card=>card.id===current)){travelDirection=0;returnHomeFromInformation();return;}if(route==='work'&&!navSlide&&projectIds.includes(current)&&!homeScene&&!projectEntry.route&&!galleryProjectOrigin&&!previewProjectOrigin){await simplePageTransition('work');return;}busy=true;document.documentElement.classList.add('route-transition');activeTransition=new TransitionControl();document.body.classList.add('in-motion');motionMaterial.start();const previousScroll=scrollY;const currentBefore=current;activeTransition.register(()=>{const options={duration:duration*(slow?2.5:1)};syncDockActions(currentBefore,options);});const previousCard=current,wasHome=current==='work',wasCard=cardIds.includes(current),isCard=cardIds.includes(route);const navigation=cardNavigation(current,route,projectIds,{slide:navSlide||homeProductDisplay==='text'&&!previewProject&&!previewReturn&&(current==='work'||route==='work'),direction:travelDirection}),sliding=navigation.kind==='slide';if(ambientMovementEnabled()&&!reduce.matches)ambientLight.hold(wasHome?main.querySelector(`[data-card="${route}"]`):main.querySelector('.detail'));const oldMain=sliding?freeze(main):null;const direction=navigation.direction;travelDirection=0;
  if(wasHome){homeScroll=scrollY;homeLayout?.pause();}const selected=sliding?null:galleryProject?galleryProjectSource:previewProject?previewProjectSource:assistantProject?assistantProjectSource:wasHome?main.querySelector(`[data-card="${route}"]`):main.querySelector('.surface');assistantProjectTarget=null;galleryProjectTarget=null;const source=snapshot(selected);if(previewProjectSource)previewProjectSource.style.visibility='hidden';const outgoing=wasHome&&isCard&&!sliding?(galleryProject?[...galleryProjectSource.closest('[data-card-gallery]').querySelectorAll('[data-gallery-item]')].filter(el=>!el.contains(selected)):previewProject?[]:[...document.querySelectorAll('[data-card]')].filter(el=>el!==selected)).map(el=>({el,rect:el.getBoundingClientRect(),live:true})):[];
  const retainedHome=wasHome&&isCard&&!sliding&&!reduce.matches?retainHome(main,instances):null;const retainedLayout=retainedHome?homeLayout:null;if(retainedHome){retainedHome.galleries=cardGalleries;cardGalleries=[];instances=[];homeLayout=null;}const retainedDetail=wasCard&&!sliding&&!reduce.matches&&source?retainHome(main,instances):null;if(retainedDetail){if(galleryProject){retainedDetail.galleries=cardGalleries;galleryProjectOrigin.galleries=cardGalleries;cardGalleries=[];}retainedDetail.summary=summaryStream;retainedDetail.reveal=detailContentReveal;summaryStream?.pause();detailContentReveal?.pause();summaryStream=null;detailContentReveal=null;instances=[];}
  render(route,{reveal:projectRevealMode(),direction});scrollPage(route==='work'?homeScroll:galleryReturn?galleryProjectOrigin.scroll:assistantReturnTarget?assistantProjectOrigin.scroll:0);if(galleryReturn&&!galleryProjectOrigin.element.isConnected){galleryProjectOrigin.element=main.querySelector(`[data-content-card="${galleryProjectOrigin.project}"]`);const gallery=cardGalleries.find(g=>g.root.dataset.cardGallery===galleryProjectOrigin.galleryId);gallery?.go(galleryProjectOrigin.index,false);gallery?.paint();}if(route==='work'){homeLayout?.flush(true);homeLayout?.holdCard(previousCard);homeLayout?.pause();scrollPage(homeScroll);}const restoreReturningHome=route==='work'&&wasCard&&!reduce.matches?stageHomeReturn(main):null;
@@ -426,13 +433,55 @@ const statusStack=mountStatusStack({dock:$('#dock'),hud:$('#interactionHud'),mes
 const menuPreview=new ProjectMenuPreview(projectMenu,projects,{reduced:()=>reduce.matches});
 installProjectMenuHover(projectMenu,{reduced:()=>reduce.matches,onHover:row=>menuPreview.show(row),onLeave:()=>menuPreview.hide()});
 function renderProjectMenu(){const focusId=projectMenu.contains(document.activeElement)?document.activeElement?.dataset?.projectMenuItem:null;menuPreview.hide();projectMenu.querySelector('.project-menu-projects').innerHTML=projectMenuProjectsMarkup(projects,canonicalProjectRoute(current));projectMenu.querySelectorAll('[data-project-menu-item]').forEach(button=>button.onclick=()=>dispatchCommand({id:'project.open',target:button.dataset.projectMenuItem,source:'pointer'}));projectMenu.querySelectorAll('[data-page-menu-item]').forEach(button=>button.onclick=()=>dispatchCommand({id:'route.'+button.dataset.pageMenuItem,source:'pointer'}));projectMenu.querySelectorAll('[data-page-menu-item]').forEach(button=>{const active=button.dataset.pageMenuItem===current;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current','page');});if(projectPopover.active){projectPopover.measure();projectPopover.paint();if(focusId)projectMenu.querySelector(`[data-project-menu-item="${focusId}"]`)?.focus({preventScroll:true});}}
-const projectPopover=new LiquidPopover(dockMorph,projectMenu,projectMenuToggle,{reduced:()=>reduce.matches,duration:()=>duration*(slow?2.5:1),beforeOpen:()=>{void composerContext?.setBlocked(true);void portfolioAssistant.dismissSuggestions();},onClosed:()=>composerContext?.setBlocked(false),onClose:()=>menuPreview.hide(),returnFocus:()=>current==='assistant'||contextualComposer||contextualButtons==='composer'?$('#assistantIndexToggle'):showProjectControls(current)?projectMenuToggle:document.querySelector('#dock [data-nav=work]')});
+const projectPopover=new LiquidPopover(dockMorph,projectMenu,projectMenuToggle,{reduced:()=>reduce.matches,duration:()=>duration*(slow?2.5:1),beforeOpen:()=>{void composerContext?.setBlocked(true);void portfolioAssistant.dismissSuggestions();},onClosed:()=>composerContext?.setBlocked(false),onClose:()=>menuPreview.hide(),returnFocus:()=>composerShown(current)?$('#assistantIndexToggle'):showProjectControls(current)?projectMenuToggle:document.querySelector('#dock [data-nav=work]')});
 
 function syncDockComposer(options={}){
- const active=current==='assistant'||contextualComposer||contextualButtons==='composer';
+ syncAssistantLauncher();
+ const active=composerShown(current);
  projectPopover.setTrigger(active?$('#assistantIndexToggle'):projectMenuToggle);projectPopover.anchor=active?'main-start':'main';
  dockMorph.setComposer(active,options);portfolioAssistant.setComposerAvailable(active);composerContext?.refresh();
 }
+// The Assistant button sits beside the dock, and only when the menu, not the composer, fills the dock.
+const assistantPresentation=mountAssistantPresentation($('#assistantPresentation'),{onChange:value=>{if(value==='page')closeAssistantFloating({focus:false});}});
+function syncAssistantLauncher(){
+ const shown=!contextualComposer&&contextualButtons!=='composer';
+ if(assistantLauncher.hidden===shown){assistantLauncher.hidden=!shown;dockMorph.refresh();}
+ if(!shown)closeAssistantFloating({focus:false});
+}
+function syncFloatingDock(){const options={duration:duration*(slow?2.5:1)};syncDockActions(current,options);syncDockComposer(options);}
+function openAssistantFloating(){
+ if(assistantFloating||busy)return;
+ assistantFloating=true;setAssistantFloating($('#askPage'),true);$('#dock').classList.add('assistant-floating-open');void composerContext?.setBlocked(true);assistantLauncher.setAttribute('aria-expanded','true');
+ syncFloatingDock();portfolioAssistant.setActive(true,{focus:true});
+ // The dock reveals the composer over its transition, and a hidden field cannot take focus, so keep offering
+ // focus each frame until the field accepts it or the transition is over.
+ const input=$('#askInput'),deadline=performance.now()+duration*(slow?2.5:1)+200;
+ const focusInput=()=>{if(!assistantFloating||document.activeElement===input)return;input.focus({preventScroll:true});if(document.activeElement!==input&&performance.now()<deadline)requestAnimationFrame(focusInput);};
+ requestAnimationFrame(focusInput);
+}
+function closeAssistantFloating({focus=true}={}){
+ if(!assistantFloating)return;
+ assistantFloating=false;setAssistantFloating($('#askPage'),false);$('#dock').classList.remove('assistant-floating-open');void composerContext?.setBlocked(false);assistantLauncher.setAttribute('aria-expanded','false');
+ portfolioAssistant.setActive(false);syncFloatingDock();
+ if(focus&&!assistantLauncher.hidden)assistantLauncher.focus({preventScroll:true});
+}
+assistantLauncher.onclick=()=>{if(assistantPresentation.value==='floating')openAssistantFloating();else dispatchCommand({id:'route.assistant',source:'pointer'});};
+$('#assistantMaximize').onclick=()=>{closeAssistantFloating({focus:false});dispatchCommand({id:'route.assistant',source:'pointer'});};
+$('#assistantFloatingClose').onclick=()=>closeAssistantFloating();
+mountAssistantUpload({button:$('#assistantAttach'),picker:$('#assistantAttachFile'),input:$('#askInput'),form:$('#askForm'),maxCharacters:assistantLimits.questionCharacters,onError:message=>siteToast.show(message,{tone:'error'})});
+// Evidence that points at a home section (a testimonial, the approach) lands on that section, not the top of home.
+let pendingHomeSection=null;
+function scrollToHomeSection(){
+ const id=pendingHomeSection;pendingHomeSection=null;
+ const section=id&&main.querySelector(`[data-home-section="${CSS.escape(id)}"]`);
+ if(section&&!section.hidden)section.scrollIntoView({behavior:reduce.matches?'auto':'smooth',block:'start'});
+}
+document.addEventListener('click',event=>{
+ const link=event.target.closest?.('a[data-scroll-section]');if(!link)return;
+ pendingHomeSection=link.dataset.scrollSection;
+ if(current==='work'&&!busy){event.preventDefault();if(assistantFloating)closeAssistantFloating({focus:false});scrollToHomeSection();}
+},true);
+addEventListener('portfolio-route-settled',()=>{if(pendingHomeSection&&current==='work')requestAnimationFrame(scrollToHomeSection);});
 // One command gateway for pointer, voice and gestures. These adapters keep the
 // established card-opening, route, swipe and reversible liquid transitions.
 const commandCatalog=createCommandCatalog([...homeProjects,...projects.filter(project=>project.listOnly)]);
@@ -486,6 +535,7 @@ async function openAssistantProject(documentId,element){
 async function activateBack(){
  spatialNavigation.cancelScroll();
  if(portfolioAssistant.dictating){portfolioAssistant.stopDictation();return {ok:true,message:'Dictation stopped'};}
+ if(assistantFloating){closeAssistantFloating();return {ok:true,message:'Assistant closed'};}
  if(mediaFocus.active){mediaFocus.close();return {ok:true,message:'Returning to project details'};}
  if(projectDrag.active){projectDrag.cancel();return {ok:true,message:'Returning to the current project'};}
  if(activeTransition){activeTransition.reverse();await activeTransition.wait();return {ok:true,message:'Transition reversed'};}
@@ -495,7 +545,7 @@ async function activateBack(){
  const returnRoute=assistantNavigation.backTarget(current);if(returnRoute)return activateRoute(returnRoute);
  return activateRoute('work');
 }
-function openSiteIndex(command){spatialNavigation.cancelScroll();projectPopover.anchor=current==='assistant'||contextualComposer||contextualButtons==='composer'?'main-start':'main';const open=command.source==='voice'?true:!(projectPopover.target||projectPopover.opening);projectPopover.setOpen(open);return {ok:true,message:open?'Site index':'Closed index'};}
+function openSiteIndex(command){spatialNavigation.cancelScroll();projectPopover.anchor=composerShown(current)?'main-start':'main';const open=command.source==='voice'?true:!(projectPopover.target||projectPopover.opening);projectPopover.setOpen(open);return {ok:true,message:open?'Site index':'Closed index'};}
 const commandBus=new CommandBus(commandCatalog,{
  'project.open':command=>activateProject(command.target),
  'project.next':async()=>{spatialNavigation.cancelScroll();moveCard(1);await navigate();return {ok:true,message:'Next project'};},

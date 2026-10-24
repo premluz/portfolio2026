@@ -1,5 +1,5 @@
 import {assistantLimits} from '../dist/assistant-limits.js';
-import {assistantInstructions,answerSchema,parseModelAnswer} from './assistant-policy.mjs';
+import {assistantInstructions,answerSchema,parseModelAnswer,quoteIds} from './assistant-policy.mjs';
 import {providerErrorCode,providerRateLimits} from './provider-error.mjs';
 
 export function modelRequest(model,question,history,corpus,openAI){
@@ -29,5 +29,5 @@ export async function requestModel({endpoint,apiKey,model,question,history,corpu
  if(!response.ok)return {error:'model_unavailable',providerStatus:response.status,providerCode:await providerErrorCode(response),providerLimits:providerRateLimits(response)};
  const result=await response.json(),message=result?.choices?.[0]?.message;
  if(message?.refusal)throw new Error('Assistant provider declined this request');
- return {answer:parseModelAnswer(message?.content,new Set(corpus.map(record=>record.id)))};
+ return {answer:parseModelAnswer(message?.content,new Set(corpus.map(record=>record.id)),new Set(quoteIds(corpus)))};
 }

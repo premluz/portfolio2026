@@ -121,7 +121,9 @@ export class DockMorph {
   const viewportWidth=Number(globalThis.innerWidth)||1024;
   const shape=dockGeometry(this.position,this.baseMetrics);
   const back=this.back&&this.backPosition>0?backGeometry(shape,this.backPosition,this.baseMetrics):null;
-  this.settingsSpace=this.el.dataset?.separateSettings==='true'?this.baseMetrics.height+10:0;
+  // A control beside the dock on the right (separate settings, or the Assistant button) is centred with it.
+  const launcher=this.el.querySelector?.(':scope > .assistant-launcher');
+  this.settingsSpace=this.el.dataset?.separateSettings==='true'?this.baseMetrics.height+10:launcher&&!launcher.hidden?launcher.offsetWidth+this.baseMetrics.gap:0;
   const backSpace=back?.space||0,stretch=shape.mainWidth-this.baseMetrics.main;
   const available=Math.max(80,viewportWidth-32-shape.mainLeft-this.settingsSpace-backSpace-stretch);
   this.layoutMain=Math.min(this.baseMetrics.main,available);

@@ -4,6 +4,7 @@ import {assistantKnowledge} from './assistant-knowledge.js';
 import {renderSuggestionChips} from './suggestion-chips.js';
 import {resolvedAnswer} from './assistant-answer.js';
 import {chatEndScrollTarget} from './composer-viewport.js';
+import {fitTable,readRequirements} from './assistant-fit-table.js';
 
 function answerCards(r,answer,animate){
  const list=document.createElement('div');list.className='ask-cards';
@@ -35,6 +36,7 @@ export function addAssistantAnswer(r,answer,{auto=false,animateCards=false}={}){
  let finish;finish=streamText(p,text,{reduced:r.options.reducedMotion()||!animateCards,onComplete:()=>r.textStreams.delete(finish)});
  if(animateCards&&!r.options.reducedMotion())r.textStreams.add(finish);
  answerSpeech(r,answer,lead,auto);group.append(lead);
+ if(answer.requirements?.length)group.append(fitTable(answer.requirements,{store:r.store}));
  if(answer.notice){const notice=document.createElement('p');notice.className='ask-sources ask-service-notice';notice.setAttribute('role','status');notice.textContent=answer.notice;group.append(notice);}
  if(answer.cards?.length)group.append(answerCards(r,answer,animateCards));
  const refs=answerSources(answer);if(refs.childNodes.length)group.append(refs);
@@ -43,13 +45,15 @@ export function addAssistantAnswer(r,answer,{auto=false,animateCards=false}={}){
 }
 export function mountAssistantView(r){
  r.scrollEnd=({instant=false}={})=>{if(!r.page.hidden)requestAnimationFrame(()=>{
-  const last=r.messages.lastElementChild;if(r.page.hidden||!last)return;const viewport=globalThis.visualViewport;
+  const last=r.messages.lastElementChild;if(r.page.hidden||!last)return;
+  // In the floating panel the conversation scrolls inside the panel, never the page behind it.
+  if(r.page.dataset.floating==='true'){r.page.scrollTo({top:r.page.scrollHeight,behavior:instant||r.options.reducedMotion()?'instant':'smooth'});return;}const viewport=globalThis.visualViewport;
   const top=chatEndScrollTarget(last.getBoundingClientRect(),r.dock.getBoundingClientRect(),{scroll:scrollY,visibleBottom:viewport?viewport.offsetTop+viewport.height:innerHeight});
   window.scrollTo({top,behavior:instant||r.options.reducedMotion()?'instant':'smooth'});
  });};
  r.append=(role,text)=>{const p=document.createElement('p');p.className='ask-message ask-'+role;p.textContent=text;r.messages.append(p);r.scrollEnd();return p;};
  r.suggestionsEl=document.createElement('div');r.showSuggestions=prompts=>{renderSuggestionChips(r.suggestionsEl,prompts,{onSelect:prompt=>{r.input.value=prompt;r.sync();r.form.requestSubmit();}});r.messages.append(r.suggestionsEl);};
  r.addAnswer=(answer,options)=>addAssistantAnswer(r,answer,options);
- for(const entry of r.transcript){if(entry.role==='user')r.append('user',entry.text);else r.addAnswer({...resolvedAnswer(r.store,entry.text,entry.documentIds,entry.knowledgeSourceIds,entry.suggestions),speechToken:entry.speechToken,spoken:entry.spoken,notice:entry.notice});}
+ for(const entry of r.transcript){if(entry.role==='user')r.append('user',entry.text);else r.addAnswer({...resolvedAnswer(r.store,entry.text,entry.documentIds,entry.knowledgeSourceIds,entry.suggestions),speechToken:entry.speechToken,spoken:entry.spoken,requirements:readRequirements(entry.requirements,r.store),notice:entry.notice});}
  if(!r.transcript.length)r.showSuggestions(assistantKnowledge.suggestedQuestions);
 }

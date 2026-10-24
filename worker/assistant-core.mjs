@@ -142,7 +142,7 @@ async function answerRequest(context,fetcher){
   const knowledgeSources=assistantKnowledge.facts.filter(fact=>sourceIds.has(fact.id)).map(({id,title,route})=>({id,title,route:route||null}));
   for(const fact of assistantKnowledge.facts)if(sourceIds.has(fact.id))for(const id of fact.sourceIds)sourceIds.add(id);
   const documentIds=published.filter(record=>sourceIds.has(record.id)).map(record=>record.id);
-  return json({text:answer.answer,spoken:answer.spoken,kind:answer.kind,documentIds,knowledgeSources,suggestions:suggestionsFor(documentIds),speechToken:await answerSpeech(answer.spoken,sessionId,env,now)});
+  return json({text:answer.answer,spoken:answer.spoken,kind:answer.kind,...(answer.requirements?.length?{requirements:answer.requirements}:{}),documentIds,knowledgeSources,suggestions:suggestionsFor(documentIds),speechToken:await answerSpeech(answer.spoken,sessionId,env,now)});
  }catch(error){return recoverAnswer(error.message.startsWith('Assistant')?'invalid_model_response':'model_unavailable',502,context);}
 }
 

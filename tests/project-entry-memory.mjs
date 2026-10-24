@@ -15,7 +15,7 @@ const normal={querySelector:selector=>selector};assert.equal(sharedCopyNode(norm
 // explicit project entry must win over that older history.
 const app=await readFile(new URL('../dist/app.js',import.meta.url),'utf8'),code=app.slice(app.indexOf('async function activateBack(){'),app.indexOf('function openSiteIndex('));
 const back=new Function('env',`with(env){return (${code})();}`),calls=[];
-const env={current:'one',projectIds:projects,projectEntry:memory,spatialNavigation:{cancelScroll(){}},portfolioAssistant:{dictating:false},mediaFocus:{active:false},projectDrag:{active:false},activeTransition:null,projectPopover:{target:null},$:()=>({hidden:true}),assistantNavigation:{backTarget:()=> 'assistant'},activateRoute:route=>calls.push(route)};
+const env={assistantFloating:false,current:'one',projectIds:projects,projectEntry:memory,spatialNavigation:{cancelScroll(){}},portfolioAssistant:{dictating:false},mediaFocus:{active:false},projectDrag:{active:false},activeTransition:null,projectPopover:{target:null},$:()=>({hidden:true}),assistantNavigation:{backTarget:()=> 'assistant'},activateRoute:route=>calls.push(route)};
 memory.capture('work');await back(env);assert.equal(calls.pop(),'work');memory.capture('about');await back(env);assert.equal(calls.pop(),'about');memory.capture('assistant');await back(env);assert.equal(calls.pop(),'assistant');
 console.log('Project entry passed: source-specific Back, next/previous continuity, Escape rollback, stale Chat history priority and visible caption slots.');
 
