@@ -240,11 +240,11 @@
   --card-tags-gap: var(--space-6);
   /* Note cards (Featured stage): the row of cards under each project's copy and screenshot. */
   --note-cards-offset: var(--space-12);
-  --note-cards-gap: var(--space-6);
+  --note-cards-gap: var(--space-3);
   --note-card-aspect: 4 / 3;
   --note-card-padding: clamp(24px, 3vw, 56px);
   --note-card-radius: var(--radius-card);
-  --note-card-fill: color-mix(in oklab, var(--ink) 4%, transparent);
+  --note-card-fill: color-mix(in oklab, var(--ink) 1.5%, transparent);
   --note-card-media-width: 72%;
   /* The same breathing room above the hero (from the header's content) and below it (to At a glance). */
   --hero-gap: var(--space-12);
