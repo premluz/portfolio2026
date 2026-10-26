@@ -88,7 +88,7 @@
         "FRAMEWORK.md",
         "MEDIA_ASSETS.md"
       ],
-      "hash": "4ef03ae47eb2b323770742e0b790c78e9f09173f",
+      "hash": "043900665a0127065d466f513478a453399c14d0",
       "items": []
     },
     {
@@ -138,7 +138,7 @@
         "FRAMEWORK.md",
         "MOTION.md"
       ],
-      "hash": "1941e11e4da0b4173815005616635aa9f2eedc1b",
+      "hash": "73f39ee626c3a2e6d110d3f9fec40f5001cb988d",
       "items": []
     },
     {
@@ -161,7 +161,7 @@
         "MOTION.md",
         "DESIGN_SYSTEM.md"
       ],
-      "hash": "aa9a3aea07ed72e302d420be82c03d4499a7ccf5",
+      "hash": "903cacb5f971d2e5d0ae544e8e4fe73b40b5a450",
       "items": []
     },
     {
@@ -253,7 +253,7 @@
         "TASKS.md",
         "PROJECT_STATE.md"
       ],
-      "hash": "6c3577ffe2fe0ee0ba458ba0c5f34adf6b490d09",
+      "hash": "a316ea71e204832367edbc98b55c31075d15a02a",
       "items": []
     },
     {
@@ -273,12 +273,12 @@
         "PROGRESS.md",
         "HANDOFF.md"
       ],
-      "hash": "7ee9be1ab0474e34d467d874fbda9e71fde0a547",
+      "hash": "d8a258c2984f786985f69a1e1a622f96ce0d2957",
       "items": [
         {
           "id": "Q-001",
           "title": "Should the project status (Launched, Building, R&D) be shown on cards and detail pages?",
-          "status": "open",
+          "status": "answered",
           "tags": [
             "area/home",
             "area/content"
@@ -287,7 +287,7 @@
         {
           "id": "Q-002",
           "title": "Where and when should the Lab page be linked?",
-          "status": "open",
+          "status": "answered",
           "tags": [
             "area/lab"
           ]
@@ -295,7 +295,7 @@
         {
           "id": "Q-003",
           "title": "Should the Available badge move next to the name in the header?",
-          "status": "open",
+          "status": "answered",
           "tags": [
             "area/home"
           ]
@@ -333,7 +333,7 @@
         "PROJECT_STATE.md",
         "PROGRESS.md"
       ],
-      "hash": "d8788cf1f29e75af6fd620d6e3bc1a2cf578c5e6",
+      "hash": "217ac41f645224ac4e8a911855535764c18025d4",
       "items": [
         {
           "id": "TASK-001",
@@ -369,6 +369,14 @@
           "tags": [
             "area/tests",
             "kind/debt"
+          ]
+        },
+        {
+          "id": "TASK-013",
+          "title": "Review the drafted discipline tags",
+          "status": "todo",
+          "tags": [
+            "area/content"
           ]
         },
         {
@@ -440,6 +448,15 @@
           "status": "dropped",
           "tags": [
             "area/tooling"
+          ]
+        },
+        {
+          "id": "TASK-014",
+          "title": "Card details: client above, status, results and tags",
+          "status": "done",
+          "tags": [
+            "area/home",
+            "area/design-system"
           ]
         }
       ]
@@ -587,7 +604,7 @@
         "MOTION.md",
         "CONTENT_MODEL.md"
       ],
-      "hash": "36314f3e3a2fdf265bc8ce9e2095cc832556231b",
+      "hash": "d3882eb30506bfbc32e0128649e442e3d28f5111",
       "items": [
         {
           "id": "REQ-001",
@@ -700,6 +717,15 @@
           "status": "implemented",
           "tags": [
             "area/content"
+          ]
+        },
+        {
+          "id": "REQ-015",
+          "title": "Cards can show the client above the title and a details stack of status, results and tags",
+          "status": "implemented",
+          "tags": [
+            "area/home",
+            "area/design-system"
           ]
         },
         {
@@ -854,6 +880,28 @@
         "docs/MEMORY_MCP.md"
       ],
       "hash": "439c346872051a2a6075635a8106de688e9caa13",
+      "items": []
+    },
+    {
+      "path": "docs/decisions/ADR-008-card-detail-copy-is-opt-in-and-stacked.md",
+      "id": "ADR-008",
+      "title": "Card detail copy is opt-in, stacked, and drawn from existing fields plus disciplines",
+      "type": "decision",
+      "status": "accepted",
+      "updated": "2026-10-26",
+      "summary": "Client position and card details are two off-by-default switches that stack the card copy; the gradient is one reusable class.",
+      "tags": [
+        "area/home",
+        "area/design-system",
+        "kind/decision"
+      ],
+      "related": [
+        "FRAMEWORK.md",
+        "DESIGN_SYSTEM.md",
+        "ADR-005",
+        "REQ-015"
+      ],
+      "hash": "950d42fe9fc2884ff832696832fecbd318bd7b87",
       "items": []
     }
   ]

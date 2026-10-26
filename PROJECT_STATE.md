@@ -29,6 +29,7 @@ A buildless native-module portfolio for Prem Luczak: authored HTML, CSS and ES m
 | Featured stage (Layout) | off | One project per row with a full-viewport backdrop |
 | Project backdrop image (Project details) | off | Backdrop behind detail pages |
 | Strapline, At a glance (Content Home) | off | Hero additions |
+| Card details, Client above (Cards) | off | Status pill, gradient results and tag row; client on top in wide tracking |
 | Navigation position | bottom | Top is a preview; see TASK-002 |
 | Ambient colour | automatic | Glow strength 100% |
 | Text size | Medium | Headings and body scale separately (ADR-006) |
@@ -44,25 +45,27 @@ Nine test files fail, each tied to a task. Run one with `node tests/<name>.mjs`.
 
 `npm run check` stops at the first failing test, so use the loop in [AGENTS.md](AGENTS.md) to see them all.
 
-## Open questions
+## Questions
+
+None open. The owner answered these on 2026-10-26.
 
 ### Q-001 Should the project status (Launched, Building, R&D) be shown on cards and detail pages?
-- Status: open
+- Status: answered
 - Tags: area/home, area/content
 
-The data exists on every project (REQ-013); nothing displays it yet.
+Yes, as a pill above the client, through Card details on cards ([ADR-008](docs/decisions/ADR-008-card-detail-copy-is-opt-in-and-stacked.md), REQ-015). Not yet on detail pages.
 
 ### Q-002 Where and when should the Lab page be linked?
-- Status: open
+- Status: answered
 - Tags: area/lab
 
-The dock and site-menu links are hidden. The page and transition work (REQ-006).
+Not linked yet. The links stay hidden; the page and transition remain in place (REQ-006).
 
 ### Q-003 Should the Available badge move next to the name in the header?
-- Status: open
+- Status: answered
 - Tags: area/home
 
-It sits above the hero heading today.
+No. It stays above the hero heading.
 
 ## Next action
 

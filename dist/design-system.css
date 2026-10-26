@@ -64,6 +64,8 @@ button,input,select,textarea{font-family:var(--font-family-sans)}
 .layout-control button,.gallery-toolbar .layout-control button,header .theme-toggle{font-size:var(--font-size-small);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body)}
 .brand{font-weight:var(--font-weight-strong);letter-spacing:var(--letter-spacing-heading)}
 /* The logo is the About portrait as a round avatar; the tagline beside it is the name. */
+/* Gradient text role: a reusable tint. .about-highlight is the About page's use; card results use it when Card details is on. */
+.text-gradient,.about-highlight,body.card-details .project-card.image-card>.card-copy>.project-summary{background:linear-gradient(90deg,var(--text-gradient-from),var(--text-gradient-to));-webkit-background-clip:text;background-clip:text;color:transparent;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 /* Mono text role: labels, lists and metadata set in uppercase monospace. */
 .text-mono{font-family:var(--font-family-mono);font-size:var(--font-size-mono);font-weight:var(--font-weight-body);letter-spacing:var(--eyebrow-tracking);text-transform:uppercase;line-height:var(--line-height-label)}
 .brand-avatar{display:block;width:var(--brand-avatar-size);height:var(--brand-avatar-size);border-radius:50%;object-fit:cover;object-position:50% 30%}

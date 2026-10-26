@@ -254,6 +254,8 @@
   --card-label-rest-strength: 48%;
   --card-summary-rest-strength: 72%;
   --card-reflection-scale: .25;
+  --text-gradient-from: oklch(.78 .1 295);
+  --text-gradient-to: oklch(.82 .08 195);
   --card-glow-rgb: 13, 13, 15;
   --card-glow-scale: .3;
   --ink: oklch(0.97184305 0.01472839 294.47299);

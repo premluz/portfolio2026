@@ -84,6 +84,12 @@ related: [FRAMEWORK.md, MOTION.md, CONTENT_MODEL.md]
 - Verifies: tests/assistant-data.mjs
 - Tags: area/content
 
+## REQ-015 Cards can show the client above the title and a details stack of status, results and tags
+- Status: implemented
+- Verifies: tests/card-details.mjs; manual: stacked order and gradient measured in a browser, defaults unchanged, 2026-10-26
+- Tags: area/home, area/design-system
+- Related: ADR-008
+
 ## REQ-014 Navigation can sit at the top or bottom
 - Status: accepted
 - Tags: area/dock, area/settings

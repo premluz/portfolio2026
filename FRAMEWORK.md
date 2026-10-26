@@ -45,6 +45,14 @@ Two developer settings (both off by default, saved locally and included in setti
 - **Project backdrop image** (Project details → Project backdrop image, `prem-project-backdrop`) shows the project's photo behind its detail page. `project-backdrop.js` owns one fixed layer behind the page. It fades in from 1.06 scale, crossfades when Next/Previous changes project, leaves on the exit timing, and drifts with scroll (0.08×, capped at 8% of the viewport) while a backdrop is showing. A wash of the page colour keeps copy legible in both themes. It always loads the largest copy, because covering a viewport crops a wide panorama to about three viewport-heights.
 - **Data and files.** A project links a backdrop with `presentations[].card.backgroundMediaId` (an image asset id); projects without one use the `generic-bg` asset. See [CONTENT_MODEL.md](CONTENT_MODEL.md) and [MEDIA_ASSETS.md](MEDIA_ASSETS.md) for the asset rules and the copy pipeline.
 
+## Card copy: client position and card details
+
+Settings → Cards has two switches beside the existing "Client leads the title" (all default off, saved and exported).
+
+- **Client above the title** (`prem-card-client-above`, `body.card-client-above`): the client sits on top in capitals with wide tracking (`--client-eyebrow-tracking`). It wins over Inline because its rules come later at equal weight and it hides the inline prefix.
+- **Card details** (`prem-card-details`, `body.card-details`): adds a status pill (the project's `projectStatus`) above the client, turns the results line (the card's `summary`) into gradient text, and adds a discipline tag row (`disciplines`) at the bottom in the mono role.
+- Both stack the copy in one column (`display:flex`); the default layout is unchanged. The pill and tags are always in the markup (`card-renderer.js`) and hidden by CSS until Card details is on. Rules live in `card-details.css`.
+
 ## Home hero, header and navigation
 
 - **Header.** The logo link is the About portrait (`assets/prem.jpg`) as a round avatar (`.brand-avatar`, `--brand-avatar-size`), and the tagline beside it is the name. Settings → Navigation → Hide logo & tagline hides both; the markup is otherwise unchanged.

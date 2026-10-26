@@ -522,6 +522,15 @@
             "R&D"
           ]
         },
+        "disciplines": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "maxItems": 1000,
+          "uniqueItems": true
+        },
         "featured": {
           "type": "boolean"
         },

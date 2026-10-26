@@ -13,6 +13,12 @@ export const catalog={
       "category": "Financial intelligence · R&D",
       "kind": "lab",
       "projectStatus": "R&D",
+      "disciplines": [
+        "Product",
+        "Interaction",
+        "Design system",
+        "Motion"
+      ],
       "intro": "Wwhen an agent does the analysis, the interface should become part of the answer.",
       "context": "Financial intelligence platform where users ask questions, follow the reasoning and work with interfaces generated around the answer.",
       "challenge": "Generative interfaces often feel like chat with a chart attached. I wanted something analysts could trust, inspect and continue working in rather than a disposable response.",
@@ -90,6 +96,12 @@ export const catalog={
       "category": "Life-first planner · Independent product",
       "kind": "shipped",
       "projectStatus": "Launched",
+      "disciplines": [
+        "Product",
+        "Interaction",
+        "Brand",
+        "Motion"
+      ],
       "context": "Cross-platform planner combining daily planning, unscheduled Things, recurring Patterns and calendar import and sync.",
       "role": "Sole product designer and builder. Owned product strategy, interaction model, IA, visual identity, motion and implementation across mobile and desktop.",
       "highlights": "0 → 1 product · design · build",
@@ -164,6 +176,11 @@ export const catalog={
       "category": "Publishing pipeline · PlayStation Network",
       "kind": "shipped",
       "projectStatus": "Launched",
+      "disciplines": [
+        "Research",
+        "Interaction",
+        "Prototyping"
+      ],
       "context": "Self-service content pipeline for developers and publishers managing product details, regional rules and publishing across PlayStation Network.",
       "role": "First designer. Led end-to-end design across discovery, research, prototyping, testing and implementation support through launch, while helping align four product teams.",
       "highlights": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 • 4 teams aligned",
@@ -239,6 +256,11 @@ export const catalog={
       "category": "IoT connectivity · Enterprise",
       "kind": "shipped",
       "projectStatus": "Launched",
+      "disciplines": [
+        "Research",
+        "Interaction",
+        "Prototyping"
+      ],
       "context": "Enterprise self-service platform for managing IoT connectivity and SIM operations at scale.",
       "role": "Senior product designer, one of three alongside a design manager. Owned research, IA, interaction design, UI, prototyping, testing and delivery support.",
       "highlights": "NPS –33 → +62 · Operations time reduced to under 10 seconds · 240M+ devices",
@@ -314,6 +336,11 @@ export const catalog={
       "category": "Blockchain traceability · Regulated supply chain",
       "kind": "shipped",
       "projectStatus": "Launched",
+      "disciplines": [
+        "Design system",
+        "Product",
+        "Brand"
+      ],
       "context": "Blockchain-based provenance and traceability across the regulated global diamond supply chain, including complex statuses, exceptions and conflict management.",
       "role": "IC lead product designer. Owned the design system, governance and adoption, product architecture, North Star and strategic design direction while supporting leadership and mentoring.",
       "highlights": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
@@ -392,6 +419,11 @@ export const catalog={
       "category": "Web3 entertainment · Film and music",
       "kind": "shipped",
       "projectStatus": "Launched",
+      "disciplines": [
+        "UX",
+        "UI",
+        "Motion"
+      ],
       "context": "Film and music ecosystem where creators monetise their work directly and reward participating fans.",
       "role": "Product designer dedicated to Gala Film from 0→1, with supporting work across Gala Music and the broader ecosystem. Worked across UX, UI, motion and front-end as priorities shifted.",
       "highlights": "End-to-end design across 0 → 1 → Growth and continuous improvements",
@@ -474,6 +506,11 @@ export const catalog={
       "category": "AI wallet · R&D",
       "kind": "lab",
       "projectStatus": "R&D",
+      "disciplines": [
+        "Interaction",
+        "Visual language",
+        "Motion"
+      ],
       "intro": "I designed and built Bastion around a simple idea: the assistant shouldn’t be a feature you visit. It should be available from anywhere in the product.",
       "context": "Mobile prototype of a simulated crypto wallet combining holdings, markets and an AI assistant that can guide and perform financial tasks.",
       "challenge": "Wallets are dense, while AI is often bolted on as a separate chat tab. I wanted the assistant to feel native without losing the calm, glanceable product people expect from a financial app.",
@@ -556,6 +593,11 @@ export const catalog={
       "category": "Agent switchboard · R&D",
       "kind": "lab",
       "projectStatus": "Building",
+      "disciplines": [
+        "Interaction",
+        "Character",
+        "Motion"
+      ],
       "listOnly": true,
       "heroMediaId": "porter-cover",
       "hoverVideoId": "porter-walkthrough",
@@ -1879,6 +1921,10 @@ export const catalog={
       "category": "Decentralised finance",
       "kind": "shipped",
       "projectStatus": "Launched",
+      "disciplines": [
+        "Product",
+        "Conversational UI"
+      ],
       "client": "Gala",
       "pageTitle": "Designing for trust and ease of use in a DeFi stack that launched without design.",
       "intro": "GalaSwap launched fast: outsourced, inconsistent, no shared system. I joined the CEO’s “A-team” squad for priority projects when coherence and ease of use started to define trust.",

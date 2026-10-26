@@ -335,6 +335,7 @@ Services carousel alignment is independent of its section width. Full bleed star
 ## Backdrops, home overview and strapline
 
 - **Backdrops.** `presentations[].card.backgroundMediaId` names an image asset used as the project's featured-stage and detail-page backdrop. An id that is missing or not an image fails validation. Projects without one use the asset with id `generic-bg`. An asset whose id ends in `-bg` is a backdrop: it is skipped by the thumbnail generator and processed by the backdrop script instead (see [MEDIA_ASSETS.md](MEDIA_ASSETS.md)). The projected card carries the resolved path as `background`.
+- **Disciplines.** `disciplines` (optional list of short strings) on a portfolio item feeds the tag row on cards when Card details is on. Tracr's three are the owner's wording; the others were drafted from each project's `role` text and are for the owner to edit. They are not the assistant's `tags`.
 - **At a glance.** The `home-overview` component document holds three `timeline` blocks (Recently, Experience, Writing). Items are `reference` blocks (taking their text and link from the referenced project or article) or `text` blocks (a `label` plus paragraphs makes a labelled row). `home-overview.js` renders them.
 - **Strapline.** A text block with id `home-strapline` on the `home` document is the line under the hero heading.
 - **Section switches.** `strapline` and `overview` are Content Home sections (default off) alongside the existing ones in `home-sections.js`.

@@ -1,7 +1,6 @@
 [data-about-section][hidden]{display:none!important}
-:root{--about-highlight-from:oklch(.58 .13 295);--about-highlight-to:oklch(.62 .09 200);--about-unusual-zoom:1.03;--about-unusual-duration:600ms}
-:root[data-theme="dark"]{--about-highlight-from:oklch(.78 .1 295);--about-highlight-to:oklch(.82 .08 195)}
-.about-highlight{background:linear-gradient(90deg,var(--about-highlight-from),var(--about-highlight-to));-webkit-background-clip:text;background-clip:text;color:transparent;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+:root{--about-unusual-zoom:1.03;--about-unusual-duration:600ms}
+/* .about-highlight is a .text-gradient (design-system.css). */
 .about-hero{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-page-rhythm-sm);align-items:start}
 .about-hero-copy{min-width:0}
 .about-hero-copy .info-body{margin-top:var(--space-hero-heading-content);max-width:var(--measure-body)}

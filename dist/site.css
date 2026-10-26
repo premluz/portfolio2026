@@ -255,6 +255,8 @@
   --card-label-rest-strength: 48%;
   --card-summary-rest-strength: 72%;
   --card-reflection-scale: .25;
+  --text-gradient-from: oklch(.78 .1 295);
+  --text-gradient-to: oklch(.82 .08 195);
   --card-glow-rgb: 13, 13, 15;
   --card-glow-scale: .3;
   --ink: oklch(0.97184305 0.01472839 294.47299);
@@ -1078,6 +1080,8 @@ button,input,select,textarea{font-family:var(--font-family-sans)}
 @media(max-width:1000px){.home-hero{padding-block:calc(var(--space-unit) * 20)}.home-view-split .home-hero{padding-block:0;margin-top:calc(var(--space-unit) * 16)}}
 @media(max-width:850px){.project-card{padding-inline:var(--space-card-inset-compact-x)}}
 @media(max-width:750px){.detail.heading-beside-image{column-gap:0}.detail.heading-beside-image>.detail-layout>.description{margin-top:var(--space-text-media)}}
+/* Gradient text role: a reusable tint. .about-highlight is the About page's use; card results use it when Card details is on. */
+.text-gradient,.about-highlight,body.card-details .project-card.image-card>.card-copy>.project-summary{background:linear-gradient(90deg,var(--text-gradient-from),var(--text-gradient-to));-webkit-background-clip:text;background-clip:text;color:transparent;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 @media(max-width:600px){.home-hero{padding-block:calc(var(--space-unit) * 14) calc(var(--space-unit) * 18)}.home-view-split .home-hero{padding-block:0;margin-top:var(--space-12)}.hero-news li{padding-block:var(--space-5)}}
 @media(max-width:380px){.dock nav a{padding-inline:6px}}
 @media(hover:none){.project-menu button{min-height:44px}}
@@ -1362,9 +1366,8 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 
 /* about-page.css */
 [data-about-section][hidden]{display:none!important}
-:root{--about-highlight-from:oklch(.58 .13 295);--about-highlight-to:oklch(.62 .09 200);--about-unusual-zoom:1.03;--about-unusual-duration:600ms}
-:root[data-theme="dark"]{--about-highlight-from:oklch(.78 .1 295);--about-highlight-to:oklch(.82 .08 195)}
-.about-highlight{background:linear-gradient(90deg,var(--about-highlight-from),var(--about-highlight-to));-webkit-background-clip:text;background-clip:text;color:transparent;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+:root{--about-unusual-zoom:1.03;--about-unusual-duration:600ms}
+/* .about-highlight is a .text-gradient (design-system.css). */
 .about-hero{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-page-rhythm-sm);align-items:start}
 .about-hero-copy{min-width:0}
 .about-hero-copy .info-body{margin-top:var(--space-hero-heading-content);max-width:var(--measure-body)}
@@ -2243,6 +2246,21 @@ a.ask-fit-source:is(:hover,:focus-visible){color:var(--ink);text-decoration-colo
  :root{--nav-icon-size:var(--touch-icon-size)}
  #dock{--nav-height:calc(var(--touch-icon-size) + 2 * var(--control-glass-inset))}
  #dock .voice-composer button{flex-basis:var(--touch-icon-size);width:var(--touch-icon-size);height:var(--touch-icon-size)}
+/* card-details.css */
+/* Card client position "above" and Card details (Settings → Cards). Both stack the card copy in one column:
+   status pill, client, title, results (gradient, see .text-gradient) and discipline tags. */
+.project-card.image-card>.card-copy>:is(.card-status,.card-tags){display:none}
+body:is(.card-client-above,.card-details) .project-card.image-card>.card-copy{display:flex;flex-direction:column;align-items:flex-start}
+body:is(.card-client-above,.card-details) .project-card.image-card>.card-copy>:is(h2,.project-summary){width:100%}
+
+/* Client above: capitals with wide tracking on top. Wins over "client leads the title" (it comes later at equal weight). */
+body.card-client-above:not(.card-client-hidden) .project-card.image-card>.card-copy>.card-client{display:block;margin:0 0 var(--space-4);font-size:var(--font-size-body);letter-spacing:var(--client-eyebrow-tracking);text-transform:uppercase}
+body.card-client-above:not(.card-client-hidden) .project-card.image-card>.card-copy>h2>.card-title-client{display:none}
+
+body.card-details .project-card.image-card>.card-copy>.card-status{display:inline-flex;align-items:center;margin:0 0 var(--space-5);padding:var(--space-1) var(--space-3);border:1px solid var(--card-status-border);border-radius:999px;color:var(--eyebrow-ink);font-size:var(--font-size-small);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body)}
+body.card-details .project-card.image-card>.card-copy>.card-tags{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--card-tags-gap);margin:var(--space-6) 0 0;color:var(--muted)}
+body.card-details.card-description-hidden .project-card.image-card>.card-copy>.card-tags{margin-top:0}
+
  #dock .project-menu{--menu-inset:var(--space-4);--menu-section-gap:var(--space-4);--menu-client-max-width:50%}
  #dock .project-menu-actions{gap:var(--space-3)}
  #dock .project-menu-actions>div{gap:var(--space-2)}

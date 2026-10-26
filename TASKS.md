@@ -35,6 +35,11 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 - Tags: area/tests, kind/debt
 - Acceptance: content-model, home-about, home-layout, home-sections, interaction-commands and project-media-focus pass, either against the current catalog or by using fixtures that no longer depend on live content. Decide which, per test, with the owner.
 
+### TASK-013 Review the drafted discipline tags
+- Status: todo
+- Tags: area/content
+- Acceptance: the owner confirms or edits `disciplines` for each project in both catalogs (Tracr's three are the owner's wording; the other eight were drafted from each project's role text), then rebuilds content.
+
 ### TASK-005 Fix the two tests affected by card-sphere work
 - Status: blocked
 - Tags: area/tests
@@ -83,3 +88,9 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 - Depends: TASK-009
 - Tags: area/tooling
 - Evidence: the owner decided on 2026-10-26 not to register the server and to maintain the Markdown memory directly. The server stays in the repository, unregistered (docs/MEMORY_MCP.md).
+
+### TASK-014 Card details: client above, status, results and tags
+- Status: done
+- Tags: area/home, area/design-system
+- Related: REQ-015, ADR-008
+- Evidence: tests/card-details.mjs passes; browser check of the stacked order, default-off behaviour, Above over Inline, and the About gradient, 2026-10-26.
