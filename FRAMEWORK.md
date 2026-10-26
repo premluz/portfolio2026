@@ -1,3 +1,13 @@
+---
+title: Liquid portfolio framework
+type: spec
+status: active
+owner: Prem
+updated: 2026-10-26
+summary: Cards, placement, featured stage, backdrops, hero and navigation, geometry, motion, Lab page and media loading.
+tags: [area/home, area/dock, area/motion, area/lab, area/ambient]
+related: [CONTENT_MODEL.md, MOTION.md, DESIGN_SYSTEM.md]
+---
 # Liquid portfolio framework
 
 Content, card rendering, placement, navigation, and material motion have separate owners.
@@ -25,6 +35,34 @@ Gallery project links enter the same shared-element morph as homepage and Chat c
 - **Flat:** the same sticky left hero and spotlight selection, beside one natural column of Current cards. Desktop column proportions favour cards: `--flat-text-column` is .88fr and `--flat-card-column` is 1.12fr. Regular and Masonry image proportions remain available. This mode applies no perspective, scaling or opacity poses, and does not start the scroll material animation loop.
 
 The Homepage layout dropdown in Glass studio settings switches between Current grid, Flip and Two columns · Flat cards. Current and Flat also have a Regular/Masonry switch. Grid columns are in Glass studio settings. View, arrangement, and column preferences persist locally. In Current grid with one column, the card composition control places the existing description above, below, left, right, or alternates left/right across projects. Side compositions use equal image and copy tracks; on narrow screens they fall back to a stacked card. The same project nodes and image contexts are retained when switching compositions. `dist/tokens.css` is the shared source for semantic colours, glass values, spacing, type, card radii, gaps, and page layout. `dist/style.css` consumes these tokens, while studio controls can override card radius and gap; those choices persist locally. Glass studio also offers full-bleed home card images, a switch to show only content on home and detail cards (including full-bleed cards; the complete shell, reflections, rim, shadow, and afterglow are hidden), independent top, bottom, left, and right page-edge shades, a shared shade-depth control, and a switch to hide the logo and tagline. Edge shades fade content into the active light or dark page colour, and all shade controls persist locally. The default-on “Move edge shades away on details” toggle hides the overlay on detail routes without changing saved side switches or depth. `dist/edge-shades.js` fades the overlay and translates each edge outward by its own depth (top up, bottom down, left left, right right). Opening and returning share the card morph clock; Escape reverses the same animations, and the final route state is committed before cancelling animation fills. Direct links and reduced motion apply the destination immediately. Turning this toggle off keeps configured shades on every page. Full-bleed mode changes image placement on the existing cards, preserving their image contexts; the image shade and shared text colours interpolate into the detail view. These appearance preferences persist locally.
+
+## Featured stage and project backdrops
+
+Two developer settings (both off by default, saved locally and included in settings export) add a photographic backdrop per project.
+
+- **Featured stage** (Layout → Featured stage, `prem-feature-stage`) applies to Current layout in Cards mode above 700px. It forces one column and suspends Alternating rows. Each featured project (`featured: true` on its home placement; every home project is currently featured) becomes a full-viewport row: its backdrop bleeds to both screen edges, outside the content rail, with the copy on the left and the product screenshot on the right at `--image-max-width-landscape`, the same width as a single wide Alternating card. The card shell, glass skin and image backing are dropped so only the screenshot floats, and each backdrop fades at its top and bottom edges (`--feature-stage-fade`) so consecutive stages blend. Stages are at least one viewport tall with `--feature-stage-padding-block` above and below. `HomeLayout.setFeatureStage()` owns the mode; `card-renderer.js` always writes a `.card-backdrop` and CSS shows it only for staged cards, so hidden backdrops are never fetched.
+- **Stage reveal.** `feature-stage-reveal.js` observes the staged cards. When a card is a quarter in view it gets `data-stage-in-view` and its photo settles from 1.06 scale while the screenshot rises 14px and grows from 0.94 (see [MOTION.md](MOTION.md)). A card that has fully left the screen resets instantly, so the reveal replays on every scroll down. The hidden start state applies only while the gallery carries `data-stage-reveal`, so a failed script leaves every stage visible. Reduced motion and Animation Off show stages at rest.
+- **Project backdrop image** (Project details → Project backdrop image, `prem-project-backdrop`) shows the project's photo behind its detail page. `project-backdrop.js` owns one fixed layer behind the page. It fades in from 1.06 scale, crossfades when Next/Previous changes project, leaves on the exit timing, and drifts with scroll (0.08×, capped at 8% of the viewport) while a backdrop is showing. A wash of the page colour keeps copy legible in both themes. It always loads the largest copy, because covering a viewport crops a wide panorama to about three viewport-heights.
+- **Data and files.** A project links a backdrop with `presentations[].card.backgroundMediaId` (an image asset id); projects without one use the `generic-bg` asset. See [CONTENT_MODEL.md](CONTENT_MODEL.md) and [MEDIA_ASSETS.md](MEDIA_ASSETS.md) for the asset rules and the copy pipeline.
+
+## Home hero, header and navigation
+
+- **Header.** The logo link is the About portrait (`assets/prem.jpg`) as a round avatar (`.brand-avatar`, `--brand-avatar-size`), and the tagline beside it is the name. Settings → Navigation → Hide logo & tagline hides both; the markup is otherwise unchanged.
+- **Strapline.** A one-line `home-strapline` text block on the `home` document renders as `.hero-strapline` under the hero heading. The Content Home switch **Strapline** shows it (default off). While it is visible the heading gives up its bottom margin so the strapline sits close beneath it.
+- **At a glance.** The `home-overview` component document renders three columns (Recently, Experience, Writing) under the hero through `home-overview.js`. References take their wording and links from the referenced project or article. The Content Home switch **At a glance** shows it (default off). Its type is the `.text-mono` role ([DESIGN_SYSTEM.md](DESIGN_SYSTEM.md)).
+- **Hero spacing.** `--hero-gap` is the one value for the gap from the header's content to the hero and from the hero to At a glance.
+- **Navigation position.** Settings → Navigation → Position (`prem-nav-position`, `data-nav-position` on the root) places the dock at the bottom or centred in the header row at the top. At the top, the dock's attached menus still open upward and are largely off screen; treat Top as a preview until the menus open downward.
+- **Dock glass.** Outside composer mode the dock pill uses the glass-button fill and blur of the Assistant button beside it (`glass-style.css`); composer mode keeps the darker dock glass.
+- **Back button outline.** `backGeometry()` in `dock-morph.js` splices the back pill into the dock outline by matching the left edge's path text. The match must start at a number boundary (a leading space): with fully round ends and a pill width ending in 0 (for example 260px), the left-edge text also matched the right edge and drew a sliver across the dock during Back. `tests/dock-morph.mjs` covers it.
+
+## Lab page
+
+`lab.html` is a copy of the home page that always shows the Cards grid (`data-page-product-display="cards"`, `data-lab-page`). `app.js` wires controls by id, so a control added to one page and not the other crashes that page's start; `tests/lab-page.mjs` requires both pages to expose the same ids. Links marked `data-lab-transition="enter"` or `"exit"` travel through a single ripple:
+
+- `lab-transition.js` plays one expanding ring from the click point and stores `{x, y, progress}` in `sessionStorage` (`prem-lab-handoff`). The page changes when the ring is 42% across; the destination resumes the same ring from that point.
+- `lab-filter.js` builds the ring as an SVG displacement map (rendered once on a canvas, scaled each frame) and displaces the red, green and blue channels by slightly different amounts, so the colour fringe appears only along the ring. Three filters (`#main`, header, footer) are attached only while the ring is moving.
+- The destination shortens the boot cover's fade (`.lab-arriving`) so the cover does not hide the rest of the ring. Reduced motion navigates directly. Timings are `LAB_RIPPLE` in `motion-tokens.js`.
+- The Lab links (dock navigation in `index.html`, site menu in `project-menu.js`) currently carry `hidden`; remove the attribute to show them. The composer's attach button (`#assistantAttach`) is hidden the same way, with a `[hidden]` rule in `portfolio-assistant.css` because the composer's own styles force its buttons visible.
 
 ## Geometry and motion
 
@@ -78,6 +116,8 @@ The Glass studio's **Card hover effect** dropdown offers four persistent recipes
 **Glow strength** (`prem-ambient-glow-strength`, 25–400%, default 100%) scales every glow layer's colour-mix amounts through `--ambient-glow-strength`, capped at 100% mix.
 
 **Ambient colour** (`prem-ambient-color-source`, default `auto`) picks the glow hues. `dist/ambient-palette.js` downsamples the card image, or the frame of a playing hover video every 480ms, and averages each half's hue weighted by chroma, so it behaves like YouTube's ambient mode. `project` uses the card `surface` hues. A project's authored `card.ambient` pair always wins.
+
+A light that appears from nothing starts just below the viewport (`ENTRY_CLEARANCE` in `ambient-light.js`) and rises into the image; a light that is still fading keeps its position and momentum when the cursor returns. **Glow strength** (`prem-ambient-glow-strength`) scales the glow layers' colour mix; see above.
 
 **Ambient light movement** is on by default for the Glow recipe and persists as `prem-ambient-light-movement`. `dist/ambient-light.js` owns one shared field, reparenting it below the receiving image. Hover transfers cancel the previous leave fade, retain spring momentum and blend project hues along the shortest OKLCH arc. The field uses the card’s `EdgeSpring` and the live Liquid motion controls: transition duration (including Slow motion), intensity, stretch, trailing lag, stiffness, damping and overshoot. Duration scales its independent spring/colour clock with bounded integration substeps; zero intensity or zero overshoot removes bounce, and zero stretch/lag removes the respective velocity deformation. Hover transfers have a separate saved **Ambient hover speed** slider (`prem-ambient-hover-speed`, 20–150%, default 60%) and more damping for calmer movement. This hover speed never changes route or drag timing, including the remaining settle after a handoff. Opening sends the aura toward the detail image immediately, independently of the image’s morph clock; Escape redirects the same spring to its original position. Arrows give the light a directional impulse scaled by intensity and stretch while the page slides, and dragging blends the aura toward the adjacent project. The field is detached before page snapshots and never duplicated in transition or swipe copies. Keep ambient light on details controls persistence after arrival; movement off restores the image-anchored version. The shared loop stops at rest, reduced motion snaps to the destination, and the theme uses the same `--ambient-lightness`/`--ambient-chroma` tokens as the static glow.
 
@@ -134,3 +174,5 @@ At docking, `image-handoff.js` adopts that already-painted bitmap as a temporary
 cover until the receiving responsive candidate has decoded and its GPU pass is
 ready. Decode completions are tied to the current candidate and navigation;
 Escape, another route, or disposal invalidates stale work.
+
+Simple page transitions rebuild the home page, creating new `<img>` elements. `MediaLoader` therefore keeps one live `Image` for every URL that has finished loading, so a rebuilt image reuses the in-memory bitmap instead of revalidating over the network (Vercel serves static files with `max-age=0, must-revalidate`) and is ready before the page fades in. Failed loads are not kept, and `destroy()` releases them.

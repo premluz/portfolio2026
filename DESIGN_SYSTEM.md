@@ -1,3 +1,13 @@
+---
+title: Design system
+type: spec
+status: active
+owner: Prem
+updated: 2026-10-26
+summary: Tokens, type scale, mono text, glass surfaces and card/media rules.
+tags: [area/design-system]
+related: [FRAMEWORK.md, MOTION.md]
+---
 # Portfolio design system
 
 `dist/tokens.css` owns the foundation tokens. `dist/design-system.css` maps them
@@ -89,3 +99,19 @@ share image padding and rounding. Leaving the card restores the image; entering
 again restarts the preview. Navigation, dragging, hidden tabs and disposal pause
 playback. Motion snapshots omit video elements, and reduced-motion preferences
 keep the still image. Only one hover preview plays at a time.
+
+## Type scale, mono text and spacing tokens
+
+**Text size** (Small / Medium / Large in Type and spacing) sets two root variables. `--type-scale` scales body and small text; `--heading-scale` scales hero, section and footer headings, so headings can be much smaller than body proportions alone would make them. Medium is the default.
+
+| Text size | `--type-scale` | `--heading-scale` | Body | Hero heading at 1440px |
+| --- | --- | --- | --- | --- |
+| Small | .82 | .6 | 13.1px | 24.7px |
+| Medium | .9 | .68 | 14.4px | 28px |
+| Large | 1 | .78 | 16px | 32.1px |
+
+The body floor is 13px. The project detail and footer headings share the hero size.
+
+**Mono text role.** Monospace glyphs are wider than sans at the same size, so mono has its own step: `--font-size-mono` is 0.85× body (minimum 11px) and follows Text size. The `.text-mono` class applies the role (`--font-family-mono`, uppercase, label tracking and line height); the At a glance columns use it. The family is the system monospace stack, so the face differs by browser (SF Mono in Safari, Menlo in Chromium on macOS, Consolas on Windows).
+
+**Other tokens added in `tokens.css`:** `--hero-gap`; `--brand-avatar-size`; `--dock-top`; `--overview-column-gap`, `--overview-list-gap` and `--overview-label-width`; `--feature-stage-padding-block` and `--feature-stage-fade`; `--stage-reveal-card-duration` and `--stage-reveal-backdrop-duration`. `--motion-lift`, `--hero-entrance-scale` and `--backdrop-enter-scale` are CSS twins of values in `motion-tokens.js`; `tests/motion-tokens.mjs` fails if they drift apart.

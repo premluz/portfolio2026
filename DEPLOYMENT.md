@@ -1,3 +1,12 @@
+---
+title: Deployment
+type: ops
+status: active
+owner: Prem
+updated: 2026-10-22
+summary: Node, static-host and Worker deployment steps.
+tags: [area/deploy]
+---
 # Deployment guide
 
 ## 1. Prepare the project

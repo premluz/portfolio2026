@@ -1,3 +1,13 @@
+---
+title: Content model
+type: spec
+status: active
+owner: Prem
+updated: 2026-10-26
+summary: Content schema, source and public export, authoring workflow, backdrops and home sections.
+tags: [area/content]
+related: [FRAMEWORK.md, MEDIA_ASSETS.md]
+---
 # Content model
 
 The model is independent of CMS, storage, interaction and layout. The live site
@@ -321,3 +331,11 @@ Dev settings → Content exposes the three section modes for Services, About, Ex
 Home, project details and content pages (About / Contact) each have an independent Small (1200px), Medium (1440px) or Large (1760px) content width. These are grouped under Developer settings → Layout → Page template widths. Storage keys are `prem-home-content-width`, `prem-detail-content-width`, and `prem-content-page-width`. Every template shares the 1920px app cap and responsive global side gutter. `pageTemplateForRoute()` selects the template; `--content-rail-width` exposes the resolved content size.
 
 Services carousel alignment is independent of its section width. Full bleed starts the first card at the global side gutter; Content alignment starts it at the current template’s content edge. Both keep an app-wide scrolling track. The selection persists under `prem-services-carousel-alignment` and travels in settings exports. A standalone `servicesMarkup` instance accepts `carouselAlignment: "full-bleed" | "content"`.
+
+## Backdrops, home overview and strapline
+
+- **Backdrops.** `presentations[].card.backgroundMediaId` names an image asset used as the project's featured-stage and detail-page backdrop. An id that is missing or not an image fails validation. Projects without one use the asset with id `generic-bg`. An asset whose id ends in `-bg` is a backdrop: it is skipped by the thumbnail generator and processed by the backdrop script instead (see [MEDIA_ASSETS.md](MEDIA_ASSETS.md)). The projected card carries the resolved path as `background`.
+- **At a glance.** The `home-overview` component document holds three `timeline` blocks (Recently, Experience, Writing). Items are `reference` blocks (taking their text and link from the referenced project or article) or `text` blocks (a `label` plus paragraphs makes a labelled row). `home-overview.js` renders them.
+- **Strapline.** A text block with id `home-strapline` on the `home` document is the line under the hero heading.
+- **Section switches.** `strapline` and `overview` are Content Home sections (default off) alongside the existing ones in `home-sections.js`.
+- **A typo stops the whole build.** `scripts/build-content.mjs` validates every catalog and every referenced local file. An invalid value (for example a card orientation other than `portrait` or `landscape`) or a missing file stops it, and the site keeps serving the last good build; `npm run dev` reads the catalog directly and may look correct meanwhile. Both content sets (`catalog.json`, `catalog2.json`) are validated, so rename or remove an asset in both.

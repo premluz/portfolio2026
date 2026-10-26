@@ -1,3 +1,12 @@
+---
+title: Voice and gesture navigation
+type: spec
+status: active
+owner: Prem
+updated: 2026-10-13
+summary: Voice and gesture navigation lifetime, performance, onboarding and shutdown.
+tags: [area/assistant, area/motion]
+---
 # Voice and gesture navigation
 
 The input architecture separates recognition, intention and presentation.

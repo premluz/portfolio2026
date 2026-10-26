@@ -1,0 +1,812 @@
+{
+  "format": "project-memory-index",
+  "version": 1,
+  "documents": [
+    {
+      "path": "AGENTS.md",
+      "id": null,
+      "title": "Agent working rules",
+      "type": "guide",
+      "status": "active",
+      "updated": "2026-10-26",
+      "summary": "How any coding agent works in this repository: where things live, commands, rules, and how to leave memory for the next session.",
+      "tags": [
+        "area/docs",
+        "kind/process"
+      ],
+      "related": [
+        "PROJECT_STATE.md",
+        "TASKS.md",
+        "docs/CONSTITUTION.md"
+      ],
+      "hash": "fab61dbb76167416fb5050c9a0ce05942ebfff90",
+      "items": []
+    },
+    {
+      "path": "API_CONNECTIONS.md",
+      "id": null,
+      "title": "API connections",
+      "type": "ops",
+      "status": "active",
+      "updated": "2026-10-14",
+      "summary": "Provider flows, environment variables and data handling for the assistant and speech APIs.",
+      "tags": [
+        "area/assistant",
+        "area/deploy"
+      ],
+      "related": [],
+      "hash": "7842a1e3d45fcdbb2e28f7775077dbdff05a730a",
+      "items": []
+    },
+    {
+      "path": "ASSISTANT.md",
+      "id": null,
+      "title": "Assistant",
+      "type": "spec",
+      "status": "active",
+      "updated": "2026-10-16",
+      "summary": "Assistant behaviour, curated knowledge and grounded answers.",
+      "tags": [
+        "area/assistant"
+      ],
+      "related": [
+        "CONTENT_MODEL.md"
+      ],
+      "hash": "1f889c25a852e8ee18ad50b9ec04985e4324b7f5",
+      "items": []
+    },
+    {
+      "path": "CLAUDE.md",
+      "id": null,
+      "title": "Claude Code instructions",
+      "type": "guide",
+      "status": "active",
+      "updated": "2026-10-26",
+      "summary": "Claude Code entry point; imports AGENTS.md so every agent shares one set of rules.",
+      "tags": [
+        "area/docs",
+        "kind/process"
+      ],
+      "related": [
+        "AGENTS.md"
+      ],
+      "hash": "8163b51652505c9a04715bf53eeecd7d250c9f13",
+      "items": []
+    },
+    {
+      "path": "CONTENT_MODEL.md",
+      "id": null,
+      "title": "Content model",
+      "type": "spec",
+      "status": "active",
+      "updated": "2026-10-26",
+      "summary": "Content schema, source and public export, authoring workflow, backdrops and home sections.",
+      "tags": [
+        "area/content"
+      ],
+      "related": [
+        "FRAMEWORK.md",
+        "MEDIA_ASSETS.md"
+      ],
+      "hash": "4ef03ae47eb2b323770742e0b790c78e9f09173f",
+      "items": []
+    },
+    {
+      "path": "DEPLOY-NODE-READY.md",
+      "id": null,
+      "title": "Node-ready deployment package",
+      "type": "ops",
+      "status": "active",
+      "updated": "2026-10-14",
+      "summary": "What the prebuilt Node deployment ZIP contains and how to run it.",
+      "tags": [
+        "area/deploy"
+      ],
+      "related": [
+        "DEPLOYMENT.md"
+      ],
+      "hash": "760d804ed2de03cc581de86ee3d824a38c409b33",
+      "items": []
+    },
+    {
+      "path": "DEPLOYMENT.md",
+      "id": null,
+      "title": "Deployment",
+      "type": "ops",
+      "status": "active",
+      "updated": "2026-10-22",
+      "summary": "Node, static-host and Worker deployment steps.",
+      "tags": [
+        "area/deploy"
+      ],
+      "related": [],
+      "hash": "43d85290a59c06f45c5332b07c065f700057ff44",
+      "items": []
+    },
+    {
+      "path": "DESIGN_SYSTEM.md",
+      "id": null,
+      "title": "Design system",
+      "type": "spec",
+      "status": "active",
+      "updated": "2026-10-26",
+      "summary": "Tokens, type scale, mono text, glass surfaces and card/media rules.",
+      "tags": [
+        "area/design-system"
+      ],
+      "related": [
+        "FRAMEWORK.md",
+        "MOTION.md"
+      ],
+      "hash": "1941e11e4da0b4173815005616635aa9f2eedc1b",
+      "items": []
+    },
+    {
+      "path": "FRAMEWORK.md",
+      "id": null,
+      "title": "Liquid portfolio framework",
+      "type": "spec",
+      "status": "active",
+      "updated": "2026-10-26",
+      "summary": "Cards, placement, featured stage, backdrops, hero and navigation, geometry, motion, Lab page and media loading.",
+      "tags": [
+        "area/home",
+        "area/dock",
+        "area/motion",
+        "area/lab",
+        "area/ambient"
+      ],
+      "related": [
+        "CONTENT_MODEL.md",
+        "MOTION.md",
+        "DESIGN_SYSTEM.md"
+      ],
+      "hash": "aa9a3aea07ed72e302d420be82c03d4499a7ccf5",
+      "items": []
+    },
+    {
+      "path": "HANDOFF.md",
+      "id": null,
+      "title": "Project handoff",
+      "type": "guide",
+      "status": "active",
+      "updated": "2026-10-26",
+      "summary": "Architecture map, build and content workflow, open items and the transfer checklist.",
+      "tags": [
+        "area/docs",
+        "area/deploy"
+      ],
+      "related": [
+        "PROJECT_STATE.md",
+        "DEPLOYMENT.md"
+      ],
+      "hash": "5f43503d44698ce6db89692f41d8a480ef3d83a0",
+      "items": []
+    },
+    {
+      "path": "INTERACTIONS.md",
+      "id": null,
+      "title": "Voice and gesture navigation",
+      "type": "spec",
+      "status": "active",
+      "updated": "2026-10-13",
+      "summary": "Voice and gesture navigation lifetime, performance, onboarding and shutdown.",
+      "tags": [
+        "area/assistant",
+        "area/motion"
+      ],
+      "related": [],
+      "hash": "5a2b77ee33066737480529f421242e3a3ceb6cbe",
+      "items": []
+    },
+    {
+      "path": "MEDIA_ASSETS.md",
+      "id": null,
+      "title": "Media and image assets",
+      "type": "ops",
+      "status": "active",
+      "updated": "2026-10-26",
+      "summary": "How to add or replace images and video, regenerate copies, backdrops, and why an old image can still show.",
+      "tags": [
+        "area/images",
+        "area/content"
+      ],
+      "related": [
+        "CONTENT_MODEL.md",
+        "ADR-001",
+        "ADR-002"
+      ],
+      "hash": "17eae9d70ccdda8ef98dc197ed1a6b171d3f0cdb",
+      "items": []
+    },
+    {
+      "path": "MOTION.md",
+      "id": null,
+      "title": "Motion language",
+      "type": "spec",
+      "status": "active",
+      "updated": "2026-10-26",
+      "summary": "Motion principles, easing and duration tokens, and choreography for routes, chrome and feedback.",
+      "tags": [
+        "area/motion"
+      ],
+      "related": [
+        "FRAMEWORK.md",
+        "DESIGN_SYSTEM.md"
+      ],
+      "hash": "cfa5746da310600905dad393561255708bf293c1",
+      "items": []
+    },
+    {
+      "path": "PROGRESS.md",
+      "id": null,
+      "title": "Progress log",
+      "type": "log",
+      "status": "active",
+      "updated": "2026-10-26",
+      "summary": "Append-only record of meaningful work, what was verified, and what is left, newest first.",
+      "tags": [
+        "area/docs",
+        "kind/process"
+      ],
+      "related": [
+        "TASKS.md",
+        "PROJECT_STATE.md"
+      ],
+      "hash": "7e25822f3d1a05a768b9191b7ce0a6e1b724f703",
+      "items": []
+    },
+    {
+      "path": "PROJECT_STATE.md",
+      "id": null,
+      "title": "Project state",
+      "type": "state",
+      "status": "active",
+      "updated": "2026-10-26",
+      "summary": "Where the project is right now: what runs, what is switched on, what is failing, open questions and the next action.",
+      "tags": [
+        "area/docs",
+        "kind/process"
+      ],
+      "related": [
+        "TASKS.md",
+        "PROGRESS.md",
+        "HANDOFF.md"
+      ],
+      "hash": "7cef5e099c370dc78b75ad9b94d64488472cee9e",
+      "items": [
+        {
+          "id": "Q-001",
+          "title": "Should the project status (Launched, Building, R&D) be shown on cards and detail pages?",
+          "status": "open",
+          "tags": [
+            "area/home",
+            "area/content"
+          ]
+        },
+        {
+          "id": "Q-002",
+          "title": "Where and when should the Lab page be linked?",
+          "status": "open",
+          "tags": [
+            "area/lab"
+          ]
+        },
+        {
+          "id": "Q-003",
+          "title": "Should the Available badge move next to the name in the header?",
+          "status": "open",
+          "tags": [
+            "area/home"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "README.md",
+      "id": null,
+      "title": "Prem — liquid portfolio",
+      "type": "guide",
+      "status": "active",
+      "updated": "2026-10-26",
+      "summary": "Overview, quick start, commands and the documentation index.",
+      "tags": [
+        "area/docs"
+      ],
+      "related": [],
+      "hash": "1835b5d6e63232d45b6b38779b18c305e2adedcd",
+      "items": []
+    },
+    {
+      "path": "TASKS.md",
+      "id": null,
+      "title": "Tasks",
+      "type": "tasks",
+      "status": "active",
+      "updated": "2026-10-26",
+      "summary": "The only place task status lives; open work, blockers and completed work with evidence.",
+      "tags": [
+        "area/docs",
+        "kind/process"
+      ],
+      "related": [
+        "PROJECT_STATE.md",
+        "PROGRESS.md"
+      ],
+      "hash": "76c0bb2fe0f5898b247395c49b5cd017db553d39",
+      "items": [
+        {
+          "id": "TASK-001",
+          "title": "Fix placement of featured portrait cards in 3+ column grids",
+          "status": "todo",
+          "tags": [
+            "area/home",
+            "kind/bug"
+          ]
+        },
+        {
+          "id": "TASK-002",
+          "title": "Open the dock's attached menus downward when navigation is at the top",
+          "status": "todo",
+          "tags": [
+            "area/dock",
+            "kind/feature"
+          ]
+        },
+        {
+          "id": "TASK-003",
+          "title": "Re-encode bastion.mp4",
+          "status": "todo",
+          "tags": [
+            "area/images",
+            "kind/debt"
+          ]
+        },
+        {
+          "id": "TASK-004",
+          "title": "Repair the six tests that assert old catalog contents",
+          "status": "todo",
+          "tags": [
+            "area/tests",
+            "kind/debt"
+          ]
+        },
+        {
+          "id": "TASK-005",
+          "title": "Fix the two tests affected by card-sphere work",
+          "status": "blocked",
+          "tags": [
+            "area/tests"
+          ]
+        },
+        {
+          "id": "TASK-006",
+          "title": "Align catalog2.json with catalog.json for Bastion",
+          "status": "todo",
+          "tags": [
+            "area/content",
+            "kind/debt"
+          ]
+        },
+        {
+          "id": "TASK-007",
+          "title": "Give Porter its own backdrop",
+          "status": "todo",
+          "tags": [
+            "area/images",
+            "area/content"
+          ]
+        },
+        {
+          "id": "TASK-008",
+          "title": "Commit the working tree",
+          "status": "todo",
+          "tags": [
+            "area/deploy",
+            "kind/process"
+          ]
+        },
+        {
+          "id": "TASK-009",
+          "title": "Expose project memory through a read-only MCP server",
+          "status": "todo",
+          "tags": [
+            "area/tooling",
+            "kind/feature"
+          ]
+        },
+        {
+          "id": "TASK-010",
+          "title": "Project memory structure and tooling",
+          "status": "done",
+          "tags": [
+            "area/docs",
+            "area/tooling",
+            "kind/process"
+          ]
+        },
+        {
+          "id": "TASK-011",
+          "title": "Image freshness check and one-command regeneration",
+          "status": "done",
+          "tags": [
+            "area/images",
+            "area/tooling"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "docs/CONSTITUTION.md",
+      "id": null,
+      "title": "Project constitution",
+      "type": "constitution",
+      "status": "active",
+      "updated": "2026-10-26",
+      "summary": "The principles every change follows; specifications, tasks and decisions must not contradict them.",
+      "tags": [
+        "area/docs",
+        "kind/process"
+      ],
+      "related": [
+        "MOTION.md",
+        "FRAMEWORK.md",
+        "MEDIA_ASSETS.md"
+      ],
+      "hash": "aff17ca7c69ee0e651240ee925dedf117f46b76a",
+      "items": []
+    },
+    {
+      "path": "docs/FACTS.md",
+      "id": null,
+      "title": "Verified facts",
+      "type": "facts",
+      "status": "active",
+      "updated": "2026-10-26",
+      "summary": "Findings measured or observed in this project, with their source and date; they are evidence, not requirements.",
+      "tags": [
+        "area/docs",
+        "area/images",
+        "area/tooling"
+      ],
+      "related": [
+        "MEDIA_ASSETS.md"
+      ],
+      "hash": "c6f0d8e354fbbb83da4a8492613ae52915019910",
+      "items": [
+        {
+          "id": "FACT-001",
+          "title": "Chromium cannot decode images above about 55 megapixels",
+          "status": "verified",
+          "tags": [
+            "area/images",
+            "area/tooling"
+          ]
+        },
+        {
+          "id": "FACT-002",
+          "title": "macOS `sips` ignores `--cropOffset`",
+          "status": "verified",
+          "tags": [
+            "area/images",
+            "area/tooling"
+          ]
+        },
+        {
+          "id": "FACT-003",
+          "title": "A file moved in Finder keeps its old modified date",
+          "status": "verified",
+          "tags": [
+            "area/images"
+          ]
+        },
+        {
+          "id": "FACT-004",
+          "title": "The local server never caches; production caching was not verified",
+          "status": "verified",
+          "tags": [
+            "area/deploy",
+            "area/images"
+          ]
+        },
+        {
+          "id": "FACT-005",
+          "title": "A CSS scroll-driven animation overrides a transition on the same property",
+          "status": "verified",
+          "tags": [
+            "area/motion",
+            "area/home"
+          ]
+        },
+        {
+          "id": "FACT-006",
+          "title": "One invalid catalog value stops the whole content build",
+          "status": "verified",
+          "tags": [
+            "area/content",
+            "area/deploy"
+          ]
+        },
+        {
+          "id": "FACT-007",
+          "title": "Simple transitions rebuild the home page, so images were fetched again",
+          "status": "verified",
+          "tags": [
+            "area/home",
+            "area/images",
+            "area/motion"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "docs/REQUIREMENTS.md",
+      "id": null,
+      "title": "Requirements",
+      "type": "requirements",
+      "status": "active",
+      "updated": "2026-10-26",
+      "summary": "Intended behaviours of the features added in October 2026, each with how it is verified.",
+      "tags": [
+        "area/home",
+        "area/docs",
+        "area/motion",
+        "area/images",
+        "area/lab",
+        "area/dock"
+      ],
+      "related": [
+        "FRAMEWORK.md",
+        "MOTION.md",
+        "CONTENT_MODEL.md"
+      ],
+      "hash": "36314f3e3a2fdf265bc8ce9e2095cc832556231b",
+      "items": [
+        {
+          "id": "REQ-001",
+          "title": "Generated image copies always match their originals",
+          "status": "implemented",
+          "tags": [
+            "area/images",
+            "area/tooling"
+          ]
+        },
+        {
+          "id": "REQ-002",
+          "title": "A project can have its own backdrop, with a generic fallback",
+          "status": "implemented",
+          "tags": [
+            "area/images",
+            "area/content"
+          ]
+        },
+        {
+          "id": "REQ-003",
+          "title": "Featured stage: one project per row, full-viewport backdrop, copy left and screenshot right",
+          "status": "implemented",
+          "tags": [
+            "area/home"
+          ]
+        },
+        {
+          "id": "REQ-004",
+          "title": "The stage reveal plays each time a stage scrolls into view and is safe without script or motion",
+          "status": "implemented",
+          "tags": [
+            "area/home",
+            "area/motion"
+          ]
+        },
+        {
+          "id": "REQ-005",
+          "title": "The project detail page can show its project's backdrop",
+          "status": "implemented",
+          "tags": [
+            "area/project-detail",
+            "area/motion"
+          ]
+        },
+        {
+          "id": "REQ-006",
+          "title": "Entering or leaving the Lab sends one colour-split ripple across the page",
+          "status": "implemented",
+          "tags": [
+            "area/lab",
+            "area/motion"
+          ]
+        },
+        {
+          "id": "REQ-007",
+          "title": "Ambient glow colour is manual, automatic or project-based, in that order of precedence",
+          "status": "implemented",
+          "tags": [
+            "area/ambient"
+          ]
+        },
+        {
+          "id": "REQ-008",
+          "title": "New home sections and options start off",
+          "status": "implemented",
+          "tags": [
+            "area/home",
+            "area/settings"
+          ]
+        },
+        {
+          "id": "REQ-009",
+          "title": "Headings scale separately from body text, and mono text sits below body size",
+          "status": "implemented",
+          "tags": [
+            "area/design-system"
+          ]
+        },
+        {
+          "id": "REQ-010",
+          "title": "The dock's outline stays within its pill during Back at any pill width",
+          "status": "implemented",
+          "tags": [
+            "area/dock",
+            "area/tests"
+          ]
+        },
+        {
+          "id": "REQ-011",
+          "title": "The home and Lab pages expose the same controls",
+          "status": "implemented",
+          "tags": [
+            "area/lab",
+            "area/settings"
+          ]
+        },
+        {
+          "id": "REQ-012",
+          "title": "Home images are ready before the page fades back in under simple transitions",
+          "status": "implemented",
+          "tags": [
+            "area/home",
+            "area/images"
+          ]
+        },
+        {
+          "id": "REQ-013",
+          "title": "Every portfolio item has a project status",
+          "status": "implemented",
+          "tags": [
+            "area/content"
+          ]
+        },
+        {
+          "id": "REQ-014",
+          "title": "Navigation can sit at the top or bottom",
+          "status": "accepted",
+          "tags": [
+            "area/dock",
+            "area/settings"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "docs/decisions/ADR-001-generated-images-are-committed-and-checked.md",
+      "id": "ADR-001",
+      "title": "Generated image copies are made locally, committed, and checked at build time",
+      "type": "decision",
+      "status": "accepted",
+      "updated": "2026-10-26",
+      "summary": "Thumbnails and backdrop copies are produced by a local command and committed; the build only verifies them by checksum.",
+      "tags": [
+        "area/images",
+        "area/tooling",
+        "kind/decision"
+      ],
+      "related": [
+        "MEDIA_ASSETS.md"
+      ],
+      "hash": "07f325edb905a57828a7ce7266ddf6a10099b556",
+      "items": []
+    },
+    {
+      "path": "docs/decisions/ADR-002-backdrops-link-by-asset-id.md",
+      "id": "ADR-002",
+      "title": "Backdrops are linked by asset id, fall back to a generic one, and are cropped at build time",
+      "type": "decision",
+      "status": "accepted",
+      "updated": "2026-10-26",
+      "summary": "A presentation names its backdrop asset; the build crops whole-canvas exports to the photo frame and writes web copies.",
+      "tags": [
+        "area/images",
+        "area/content",
+        "area/home",
+        "kind/decision"
+      ],
+      "related": [
+        "MEDIA_ASSETS.md",
+        "CONTENT_MODEL.md",
+        "ADR-001"
+      ],
+      "hash": "5a8368af25a2af83075193328a2d238a82165ba5",
+      "items": []
+    },
+    {
+      "path": "docs/decisions/ADR-003-stage-reveal-uses-an-observer.md",
+      "id": "ADR-003",
+      "title": "The featured stage reveal is a timed, observer-driven transition, not a scroll-linked animation",
+      "type": "decision",
+      "status": "accepted",
+      "updated": "2026-10-26",
+      "summary": "Each stage plays a timed reveal when it enters view and resets when it leaves, using IntersectionObserver and CSS transitions.",
+      "tags": [
+        "area/motion",
+        "area/home",
+        "kind/decision"
+      ],
+      "related": [
+        "MOTION.md",
+        "FRAMEWORK.md",
+        "FACT-005"
+      ],
+      "hash": "a7e202eb912146b2a5fc649570e4153f2b6001b1",
+      "items": []
+    },
+    {
+      "path": "docs/decisions/ADR-004-lab-transition-is-one-ripple.md",
+      "id": "ADR-004",
+      "title": "The Lab transition is a single colour-split ripple",
+      "type": "decision",
+      "status": "accepted",
+      "updated": "2026-10-26",
+      "summary": "Entering and leaving the Lab sends one ring across the page; the earlier whole-page noise warp was rejected.",
+      "tags": [
+        "area/lab",
+        "area/motion",
+        "kind/decision"
+      ],
+      "related": [
+        "FRAMEWORK.md",
+        "MOTION.md",
+        "REQ-006"
+      ],
+      "hash": "cc076faa347a03bd628bdf05f04b80ece7dfb615",
+      "items": []
+    },
+    {
+      "path": "docs/decisions/ADR-005-new-home-sections-start-off.md",
+      "id": "ADR-005",
+      "title": "New home hero sections ship off by default",
+      "type": "decision",
+      "status": "accepted",
+      "updated": "2026-10-26",
+      "summary": "The strapline, At a glance, Featured stage and Project backdrop options all start off so the live site changes only when switched on.",
+      "tags": [
+        "area/settings",
+        "area/home",
+        "kind/decision"
+      ],
+      "related": [
+        "FRAMEWORK.md",
+        "CONTENT_MODEL.md"
+      ],
+      "hash": "b03b3b8c815ee5915e3e27db335f7936370fe37a",
+      "items": []
+    },
+    {
+      "path": "docs/decisions/ADR-006-heading-and-body-type-scales-are-separate.md",
+      "id": "ADR-006",
+      "title": "Heading and body type scales are separate variables",
+      "type": "decision",
+      "status": "accepted",
+      "updated": "2026-10-26",
+      "summary": "Text size sets --type-scale for body and --heading-scale for headings so headings can be much smaller; mono text has its own step.",
+      "tags": [
+        "area/design-system",
+        "area/home",
+        "kind/decision"
+      ],
+      "related": [
+        "DESIGN_SYSTEM.md"
+      ],
+      "hash": "a35cfc64cc28780e6efddd3e883305fbcf8f4f7d",
+      "items": []
+    }
+  ]
+}

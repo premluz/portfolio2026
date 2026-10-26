@@ -1,3 +1,13 @@
+---
+title: Project handoff
+type: guide
+status: active
+owner: Prem
+updated: 2026-10-26
+summary: Architecture map, build and content workflow, open items and the transfer checklist.
+tags: [area/docs, area/deploy]
+related: [PROJECT_STATE.md, DEPLOYMENT.md]
+---
 # Project handoff
 
 ## Overview
@@ -24,7 +34,7 @@ This is a modular portfolio frontend and content framework, not a CMS-dependent 
 
 1. Edit the source record in `content/catalog.json`; do not edit generated content exports by hand.
 2. Add or update media under `dist/assets/`, and point the catalog media entry to its local path or a deliberate external URL.
-3. Run `npm run build`. `scripts/build-content.mjs` validates and generates catalog indexes/schemas. `scripts/build-worker.mjs` copies browser files into `dist/client/` and creates `dist/server/` with published assistant documents and server modules.
+3. Run `npm run images` after adding or replacing any image (thumbnails and backdrop copies; see `MEDIA_ASSETS.md`). Then run `npm run build`. `scripts/build-content.mjs` validates and generates catalog indexes/schemas. `scripts/build-worker.mjs` copies browser files into `dist/client/` and creates `dist/server/` with published assistant documents and server modules.
 4. Run `npm run check` before handoff or deployment.
 
 The existing content model is CMS-agnostic: an eventual CMS or API can provide records that satisfy the schemas in `dist/content/`. The current source of truth remains the checked-in JSON catalog; no database is required.
@@ -46,6 +56,16 @@ The existing content model is CMS-agnostic: an eventual CMS or API can provide r
 - The API routes enforce same-origin checks and input-size limits. Keep them behind HTTPS and avoid logging request bodies.
 - Project prototypes for Merlin, Tracr and Bastion are external URLs defined in `content/catalog.json`. They need to remain reachable and permit iframe embedding, or be replaced with new URLs.
 - Local videos are large files; preserve HTTP byte-range support on hosts so browser video playback can seek efficiently. The included Node adapter supports range requests.
+
+## Open items (as of 2026-10-26)
+
+The live list is in [TASKS.md](TASKS.md) and [PROJECT_STATE.md](PROJECT_STATE.md); this section is a snapshot for people who start here.
+
+- **Failing tests.** Six tests assert catalog contents that have since changed (`content-model`, `home-about`, `home-layout`, `home-sections`, `interaction-commands`, `project-media-focus`). `project-entry-memory` (card-sphere code reads `document` in a Node sandbox) and `text-list-hover` (a Porter fixture assertion) relate to in-progress card-sphere work. `masonry-placement` fails because Bastion is now a portrait card and also featured, which breaks the rule that portrait cards sit in the right-hand columns of a 3+ column grid.
+- **Navigation at the top.** The dock's attached menus still open upward, so the site index menu is mostly off screen; see `FRAMEWORK.md`.
+- **Bastion media.** `bastion.mp4` (portrait) is about 31MB against roughly 2MB for the other videos. `catalog2.json` still points Bastion at the landscape `bastion2.mp4`.
+- **Hidden controls.** The Lab links and the composer's attach button are hidden, not removed; see `FRAMEWORK.md`.
+- **Duplicate docs.** The parent folder holds older copies of `README.md` and `DEPLOYMENT.md` that differ from the ones in `portfolio2026/`. The `portfolio2026/` copies are current.
 
 ## Handoff checklist
 

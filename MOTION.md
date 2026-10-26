@@ -1,3 +1,13 @@
+---
+title: Motion language
+type: spec
+status: active
+owner: Prem
+updated: 2026-10-26
+summary: Motion principles, easing and duration tokens, and choreography for routes, chrome and feedback.
+tags: [area/motion]
+related: [FRAMEWORK.md, DESIGN_SYSTEM.md]
+---
 # Motion language
 
 Motion on this site is restrained and directed. It explains where things came
@@ -27,7 +37,8 @@ checks the two agree and that stylesheets use roles, not literal curves.
    softly. Exits accelerate away. Nothing uses a slow start on arrival.
 5. **Small distances, consistent direction.** Motion suggests direction; it
    does not carry content across the screen. Lifts and drops are around 8–14px
-   and scales stay above 0.92. Pages rise in and drop out.
+   and scales stay above 0.92. Pages rise in and drop out. The one exception is
+   the agent, a character rather than content; see Character below.
 6. **One lead, then support.** In any moment one thing leads (the shared image,
    the dock shape) and the rest follows in a short, ordered stagger. Text
    reveals top-down and leaves bottom-up, so the title is first in and last out.
@@ -67,6 +78,7 @@ one deliberate overshoot curve; nothing else uses a literal.
 | Project page exit | `duration × 0.5`, 160–240ms | Recede; see below. |
 | Hero image entrance | `duration × 1.225` | About a quarter longer than the page, `gentle`. |
 | Project backdrop entrance | `duration × 2.2` (`BACKDROP.enterShare`) | Fades in from scale 1.06 on `gentle`; leaves on the page exit timing on `leave`; drifts 0.08× scroll, capped at 8% of the viewport. Featured-stage backdrops arrive the same way as their bytes land (900ms fade, 1400ms scale). |
+| Lab ripple | 1400ms; the page changes at 42% (`LAB_RIPPLE`) | One ring from the click point, colour-split by displacing each channel differently; the destination resumes the same ring. Reduced motion skips it. |
 | Featured stage reveal | card 490ms, photo 1400ms | Each time a stage is a quarter in view: the photo settles from 1.06 and the card rises 14px and grows from 0.94 (the simple-transition entrance), both on `gentle`. A stage that fully leaves resets instantly, so it replays on the next pass. |
 | Detail text reveal | 220ms each, 44ms step, 240ms cap | Facts and actions after the title and summary. |
 | Summary and title fade | 620ms | Fade mode of the summary stream. |
@@ -130,8 +142,29 @@ items. Order is top-down on entry and bottom-up on exit.
 - **Tooltips:** wait 350ms so passing over controls stays quiet; once one is
   open, neighbours show at once. A tooltip dismissed by a click stays hidden
   until the pointer leaves.
-- **Ambient:** the Available badge's pulse is the only loop on the page. Loops
-  stay rare and slow (2.4s) and stop under reduced motion.
+- **Ambient:** the Available badge's pulse and the resting agent's breath are
+  the only loops on the page. Loops stay rare and slow (2.4s) and stop under
+  reduced motion.
+
+### Character
+
+The agent (`dist/agent*.js`, tokens in `AGENT`) is a body, not content, so it
+alone may cross the screen and overshoot its scale (approved 26 October 2026).
+Everything else keeps principle 5. It still follows the other principles: it
+leads only while it moves, exits are faster than entrances, every move is
+interruptible, and reduced motion places it at once.
+
+| Moment | Value | Notes |
+|---|---|---|
+| Travel | 380–900ms, +0.45ms per px | Cubic Hermite from the current velocity to rest, so it eases in and out and a redirect continues the motion. A sideways arc (at most 40px, 12% of the trip) and a 0–6px wobble vanish at both ends. |
+| Teleport | collapse 200ms on `leave`, 80ms gap, emerge 520ms | Trips over 55% of the viewport diagonal teleport; from 30% they do 35% of the time. Collapse swells to 1.06 and sinks to 0.5 with a 4px blur; emerge goes 0.6 → 1.14 → 0.94 → 1.03 → 1 from a 6px blur, each bounce on `settle`. |
+| Landing | 280ms on `settle` | Squash to 1.06 × 0.94, rebound, rest. Without it the body reads as a widget sliding. |
+| Linger | 1200ms | After the visitor leaves, it waits, then goes home. A new target during the wait sends it straight there. |
+| Breath | 2400ms alternate, 2px, 1.02 | Only at rest (home or perched). |
+
+Home is just right of the composer, or the Assistant button when the composer
+is hidden. Seats are chosen beside what the visitor is reading (the popover,
+the sentence around the marker), never over it, the pointer or other content.
 
 ## When not to animate
 

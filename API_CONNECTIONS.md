@@ -1,3 +1,12 @@
+---
+title: API connections
+type: ops
+status: active
+owner: Prem
+updated: 2026-10-14
+summary: Provider flows, environment variables and data handling for the assistant and speech APIs.
+tags: [area/assistant, area/deploy]
+---
 # API connections and data flow
 
 ## At a glance

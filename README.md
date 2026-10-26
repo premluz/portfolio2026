@@ -1,3 +1,12 @@
+---
+title: Prem — liquid portfolio
+type: guide
+status: active
+owner: Prem
+updated: 2026-10-26
+summary: Overview, quick start, commands and the documentation index.
+tags: [area/docs]
+---
 # Prem — liquid portfolio
 
 A buildless, modular portfolio site for Prem Luczak. The browser interface is authored as native HTML, CSS and ES modules. Structured portfolio content is stored separately from the presentation layer, and a small API worker powers grounded assistant answers and optional ElevenLabs speech.
@@ -50,6 +59,7 @@ For production, configure variables in the hosting provider's secret manager, th
 
 ## Documentation
 
+- Agents and new sessions start with [AGENTS.md](AGENTS.md), then [PROJECT_STATE.md](PROJECT_STATE.md) and [TASKS.md](TASKS.md). [PROGRESS.md](PROGRESS.md) is the history, `docs/` holds the constitution, requirements, facts and decisions, and `npm run memory:search -- words` finds the right document.
 - Start with [HANDOFF.md](HANDOFF.md) for the architecture and transfer checklist.
 - Use [DEPLOYMENT.md](DEPLOYMENT.md) for Node, static-host and Worker deployment steps.
 - Use [DEPLOY-NODE-READY.md](DEPLOY-NODE-READY.md) for the prebuilt Node deployment ZIP.
@@ -57,15 +67,19 @@ For production, configure variables in the hosting provider's secret manager, th
 - See [CONTENT_MODEL.md](CONTENT_MODEL.md) for the content schema and authoring workflow.
 - Use [MEDIA_ASSETS.md](MEDIA_ASSETS.md) when replacing project images/videos or changing their orientation.
 - See [ASSISTANT.md](ASSISTANT.md) for assistant behavior and curated knowledge.
-- See [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md), [FRAMEWORK.md](FRAMEWORK.md), and [INTERACTIONS.md](INTERACTIONS.md) for the UI system.
+- See [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md), [FRAMEWORK.md](FRAMEWORK.md), and [INTERACTIONS.md](INTERACTIONS.md) for the UI system, plus [MOTION.md](MOTION.md) for timings and easing.
 
 ## Common commands
 
 ```sh
 npm run dev     # source files and catalog served directly; save and reload
-npm run build   # refresh generated content and Node/Worker output
-npm run check   # generated-content validation and test suite
+npm run images  # after adding or replacing any image: thumbnails and backdrop copies
+npm run build   # refresh generated content and Node/Worker output; stops if images are stale
+npm run check   # generated-content validation, image freshness, project memory and the test suite
+npm run memory:index && npm run memory:check   # after editing a memory document
 npm start       # run with environment variables already set by the host
 ```
+
+Open the site with `?dev=1` (for example `http://localhost:3000/?dev=1`) to show the developer settings button. Most newer options (Featured stage, Project backdrop image, Strapline, At a glance, Navigation position) live there.
 
 The download package intentionally excludes `.git/`, the Sites-specific `.openai/` project identity, generated duplicate `dist/client/`, local `.env` files and any credentials. `npm run build` regenerates the deployment output.

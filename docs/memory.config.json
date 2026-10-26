@@ -1,0 +1,16 @@
+{
+ "types": ["constitution", "guide", "spec", "ops", "state", "log", "tasks", "requirements", "facts", "decision"],
+ "statuses": {
+  "document": ["draft", "active", "archived"],
+  "decision": ["proposed", "accepted", "superseded"],
+  "task": ["todo", "in-progress", "blocked", "done", "dropped"],
+  "requirement": ["proposed", "accepted", "implemented", "dropped"],
+  "fact": ["verified", "stale"],
+  "question": ["open", "answered"]
+ },
+ "tags": [
+  "area/home", "area/project-detail", "area/dock", "area/motion", "area/content", "area/images", "area/ambient",
+  "area/lab", "area/settings", "area/assistant", "area/deploy", "area/design-system", "area/tooling", "area/docs", "area/tests",
+  "kind/feature", "kind/bug", "kind/decision", "kind/process", "kind/debt"
+ ]
+}

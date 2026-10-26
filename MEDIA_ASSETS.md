@@ -1,3 +1,13 @@
+---
+title: Media and image assets
+type: ops
+status: active
+owner: Prem
+updated: 2026-10-26
+summary: How to add or replace images and video, regenerate copies, backdrops, and why an old image can still show.
+tags: [area/images, area/content]
+related: [CONTENT_MODEL.md, ADR-001, ADR-002]
+---
 # Replacing project images and videos
 
 Run commands from the `portfolio2026` repository root. The authored catalog is
@@ -48,39 +58,64 @@ share this presentation setting, including the duplicate `rios-02` card.
 ## 3. Regenerate images, then build and test
 
 ```sh
-python3 scripts/optimise-images.py &&
+npm run images &&
 npm run build &&
 npm run check
 ```
 
-The image generator uses the project's existing Python/Pillow tooling. It
-regenerates responsive WebP files in `dist/assets/optimised/`, verifies each
-encoded image, and rewrites `dist/image-variants.js` with source dimensions and
-variant URLs. Run it after image replacements, including replacements that keep
-the same filename. Image URLs should be plain local paths for this generator;
-use versioned filenames instead of query strings for images.
+`npm run images` runs two generators, locally, with the project's Python/Pillow
+tooling and macOS `sips`:
 
-`npm run build` validates catalog references and required local assets, then
+- `scripts/optimise-images.py` regenerates responsive WebP files in
+  `dist/assets/optimised/`, verifies each encoded image, and rewrites
+  `dist/image-variants.js` with source dimensions, a checksum of the original and
+  the variant URLs.
+- `scripts/build-backgrounds.mjs` makes web copies of project backdrops (every
+  asset whose id ends in `-bg`) in `dist/assets/backgrounds/`, cropping a whole
+  design-canvas export to its photo frame first, and records each original's
+  checksum in `dist/assets/backgrounds/sources.json`.
+
+Run it after any image replacement, including one that keeps the same filename.
+Image URLs should be plain local paths; use versioned filenames instead of query
+strings for images.
+
+`npm run build` and `npm run check` first run `npm run check:images`, which
+compares every catalog image's checksum with the one recorded when its copies
+were made. A replaced original, a new image nobody processed, or a missing copy
+stops the build and names the image. The check is plain Node, so it also runs on
+the deployment build, where the generators themselves cannot. Checksums are used
+because a file moved in Finder keeps its old modified date.
+
+`npm run build` then validates catalog references and required local assets and
 regenerates the browser catalog, assistant content and served `dist/client/`
-directory. It does **not** run the image optimizer. Stop on a failed command;
-do not treat a failed build or check as a successful release.
+directory. It does **not** run the generators. Stop on a failed command; do not
+treat a failed build or check as a successful release.
 
 ## 4. Publish the complete change
 
 Include the catalog changes, new originals, generated WebP copies,
-`dist/image-variants.js`, and relevant tracked build output in the same release.
+`dist/image-variants.js`, the backdrop copies and `dist/assets/backgrounds/sources.json`,
+and relevant tracked build output in the same release.
 Do not include unrelated local edits. Push the reviewed commit to `main` for the
 connected Vercel deployment; a local build alone does not update the live site.
 Do not remove old originals or generated files as part of this process unless
 their deletion is separately intended and approved.
 
-## Why an image can still look portrait or inset
+## Project backdrops
+
+A backdrop is an image asset whose id ends in `-bg` (for example `merlin-bg`, `generic-bg`). Put the original in `dist/assets/` and run `npm run images`. Link it from the project's presentation with `card.backgroundMediaId`; projects without a link use `generic-bg`.
+
+- **Export just the photo.** The script writes 1920px and 3840px copies to `dist/assets/backgrounds/` (it never overwrites originals). If an export is a whole design canvas, with the photo at the top-left of a large white board, the script finds the photo frame and crops to it, trimming a few pixels from every edge. A photo-only export is detected as such and used whole. Larger exports give sharper full-screen backgrounds: copies are never upscaled beyond the photo's own width.
+- **The filename must match the catalog.** `scripts/build-content.mjs` stops on any missing local file, so a typo such as `plastation-bg.jpg` blocks the whole build.
+- **Originals are large.** Canvas exports can be 16,000px wide; Chromium cannot decode images above roughly 55 megapixels, so the script scales those down before cropping.
+- **Copies are committed.** Commit `dist/assets/backgrounds/` (including `sources.json`, which records each original's checksum) with the originals.## Why an image can still look portrait or inset
 
 - **Orientation still reads `portrait`:** the saved canonical catalog controls
   the result; edits to generated copies are overwritten by the next build.
 - **New original, old image on screen:** `imageMarkup` and `posterSource` select
   responsive WebP copies through `dist/image-variants.js`. Rebuilding without
-  regenerating those copies can still serve the previous portrait image.
+  running `npm run images` used to serve the previous image silently; the build
+  now stops and names the stale image instead.
 - **Old playback at the same URL:** replacing a video without changing its URL
   can reuse cached media. A new filename gives the replacement a fresh URL.
 - **Landscape card with empty space:** images and videos preserve their source

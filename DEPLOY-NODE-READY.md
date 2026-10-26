@@ -1,3 +1,13 @@
+---
+title: Node-ready deployment package
+type: ops
+status: active
+owner: Prem
+updated: 2026-10-14
+summary: What the prebuilt Node deployment ZIP contains and how to run it.
+tags: [area/deploy]
+related: [DEPLOYMENT.md]
+---
 # Ready-to-run Node deployment bundle
 
 The separate `prem-liquid-portfolio-deploy-node.zip` contains prebuilt site assets and generated API modules. It does not contain the authoring scripts or source catalog; use the source handoff ZIP to edit content or rebuild.

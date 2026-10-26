@@ -1,3 +1,13 @@
+---
+title: Assistant
+type: spec
+status: active
+owner: Prem
+updated: 2026-10-16
+summary: Assistant behaviour, curated knowledge and grounded answers.
+tags: [area/assistant]
+related: [CONTENT_MODEL.md]
+---
 # Portfolio assistant
 
 The assistant is a dedicated `#assistant` page. Its composer grows from the site's bottom liquid navigation, with a site index on the left and Send on the right. The index groups Home, About, Contact, Shipped and Lab. The page keeps its conversation in browser `sessionStorage` for the current web session, including restored portfolio cards, citations and suggested questions after reload. The server-side answer route is `POST /api/assistant`: the Worker sends the visitor's question, the site's **published** project and profile records, and approved knowledge facts to an OpenAI-compatible model API. Configured AI requests synthesize answers rather than short-circuiting common prompts to canned text. Authored answers remain available for offline recovery.
