@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-26 Note cards made subtler
+Owner asked for less gap and super-subtle cards: the gap between note cards went from 24px to 12px (`--note-cards-gap`) and the fill from 4% to 1.5% of the text colour (`--note-card-fill`). Measured 14px gaps and the new fill in a browser.
+
 ## 2026-10-26 Footer switch
 Added Settings → Content → Show footer (default on). The app re-showed the footer on every route change, so that line now follows the switch. Evidence: tests/footer-switch.mjs passes; in a browser the footer hid, stayed hidden through About and a project, survived a reload, and returned when switched back on.
 
