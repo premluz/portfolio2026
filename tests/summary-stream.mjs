@@ -17,7 +17,7 @@ for(const project of projects){
  assert(!paragraph.includes(escapeText(parts.lead)),'Card results are not prepended to the longer description');
  assert(!detail.includes('data-summary-lead'),'The full introduction streams; no card lead remains visible');
  assert(detail.includes(`<h1 tabindex="-1">${escapeText(project.pageTitle||project.title)}</h1>`),'Details use the project-page thesis, while the card keeps its own headline');
- assert(detail.indexOf('</p>')<detail.indexOf('<dt>Context</dt>'));
+ assert(detail.indexOf('</p>')<detail.indexOf('<dt class="text-eyebrow">Context</dt>'));
 }
 assert(detailSummaryMarkup({summary:'First.',context:'Safe <text> & content.'}).includes('Safe '));
 assert(detailSummaryMarkup({summary:'First.',context:'Safe <text> & content.'}).includes('&lt;text&gt;'));

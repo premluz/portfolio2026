@@ -27,7 +27,7 @@ assert(detailHtml.includes('class="detail-media-column"')&&detailHtml.includes('
 assert(!detailHtml.includes('Project walkthrough')&&!detailHtml.includes('Product in motion')&&!detailHtml.includes('Walkthrough video'),'Project detail content blocks stay hidden below the hero');
 assert(!detailHtml.includes('detail-footer')&&!detailHtml.includes('id="back"')&&!detailHtml.includes('All projects'),'Project details do not append a secondary footer below the hero');
 assert.equal((detailHtml.match(/data-detail-fact/g)||[]).length,5,'Context, Challenge, Role, Key work and Impact have independently staggerable groups');
-const labels=['Context','Challenge','My role','Key work','Impact'].map(label=>detailHtml.indexOf(`<dt>${label}</dt>`));
+const labels=['Context','Challenge','My role','Key work','Impact'].map(label=>detailHtml.indexOf(`<dt class="text-eyebrow">${label}</dt>`));
 assert(labels.every((position,index)=>position>=0&&(!index||position>labels[index-1])),'Project pages preserve the requested case-study section order');
 const authoredDetail=cardDetail(createContentStore(catalog).getCard('playstation'));
 assert(authoredDetail.includes('<h1 tabindex="-1">Transformation saving hundreds of hours for developers and publishers</h1>'),'The page thesis is separate from the outcome-led card headline');

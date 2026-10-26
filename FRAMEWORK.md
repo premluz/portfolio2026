@@ -50,7 +50,7 @@ Two developer settings (both off by default, saved locally and included in setti
 Settings → Cards has two switches beside the existing "Client leads the title" (all default off, saved and exported).
 
 - **Client above the title** (`prem-card-client-above`, `body.card-client-above`): the client sits on top in capitals with wide tracking (`--client-eyebrow-tracking`). It wins over Inline because its rules come later at equal weight and it hides the inline prefix.
-- **Card details** (`prem-card-details`, `body.card-details`): adds a status pill (the project's `projectStatus`) above the client, turns the results line (the card's `summary`) into gradient text, and adds a discipline tag row (`disciplines`) at the bottom in the mono role.
+- **Card details** (`prem-card-details`, `body.card-details`): adds a status pill (the project's `projectStatus`) above the client, turns the results line (the card's `summary`) into gradient text, and adds a discipline tag row (`disciplines`) at the bottom in the eyebrow role (`.text-eyebrow`).
 - Both stack the copy in one column (`display:flex`); the default layout is unchanged. The pill and tags are always in the markup (`card-renderer.js`) and hidden by CSS until Card details is on. Rules live in `card-details.css`.
 
 ## Home hero, header and navigation

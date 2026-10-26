@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-26 Eyebrow text role
+Added a global `.text-eyebrow` role (caption size, light weight, label tracking, eyebrow ink, uppercase) and used it for the detail-page fact labels and the card tag row, replacing the tags' mono styling. Evidence: computed label styles identical before and after in light and dark; tests/card-details.mjs extended. The request's last line was cut off, so any further uses are open.
+
 ## 2026-10-26 Card details layout
 Questions Q-001 to Q-003 resolved by the owner (status shown on cards; Lab page not linked yet; Available badge stays). Added two Cards settings: **Client above the title** (wide-tracked capitals, wins over Inline) and **Card details** (status pill, gradient results line, discipline tag row), plus a `disciplines` field per project, a reusable `.text-gradient` class shared with the About page, and `card-details.css` (ADR-008). Evidence: tests/card-details.mjs passes; in a browser the copy stacks status, client, title, results, tags, defaults leave the layout unchanged, Above wins over Inline, and the About highlight still renders its gradient. Committed as c6eea1b, 93f19e3 and b91f2eb; a clean worktree of the first caught that it had committed only half of a tokens.css change and a mismatched site.css, fixed by the next two (FACT-008). Left: the discipline tags other than Tracr's are drafts (TASK-013); the status reads Launched where the mockup says Shipped.
 

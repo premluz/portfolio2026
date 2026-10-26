@@ -112,6 +112,8 @@ keep the still image. Only one hover preview plays at a time.
 
 The body floor is 13px. The project detail and footer headings share the hero size.
 
+**Eyebrow text role.** `.text-eyebrow` is the small uppercase label above a value: caption size, light weight, label tracking and the eyebrow ink (`--eyebrow-ink`, with a dark value). Detail-page fact labels (`[data-detail-fact] dt`) and the card tag row use it. The older `.eyebrow` class and the `.description dt` rules still exist and give the same look; new labels should use `.text-eyebrow`.
+
 **Gradient text role.** `.text-gradient` is a reusable two-stop tint (`--text-gradient-from` / `--text-gradient-to`, with light and dark values in `tokens.css`). The About page's `.about-highlight` and the card results line (when Card details is on) use it; the declarations live once in `design-system.css`.
 
 **Mono text role.** Monospace glyphs are wider than sans at the same size, so mono has its own step: `--font-size-mono` is 0.85× body (minimum 11px) and follows Text size. The `.text-mono` class applies the role (`--font-family-mono`, uppercase, label tracking and line height); the At a glance columns use it. The family is the system monospace stack, so the face differs by browser (SF Mono in Safari, Menlo in Chromium on macOS, Consolas on Windows).
