@@ -18,7 +18,7 @@ export function heroCopyMarkup(mode='timeline'){
 const straplineMarkup=hero=>{const text=hero.blocks.find(block=>block.id==='home-strapline')?.paragraphs?.join(' ');return text?`<p class="hero-strapline" data-home-section="strapline">${escapeText(text)}</p>`:'';};
 export function homeHero({heroContent='timeline'}={}){const hero=content.get('home'),intro=hero.blocks.find(b=>b.id==='home-introduction'),selection=normalizeHeroContent(heroContent);return `<section class="home-hero" aria-label="Introduction">
  <div class="hero-about" data-hero-combined-content="${(selection.timeline||selection.timelineText)&&selection.description}">
-  ${badgeMarkup(hero.badge)}<h1 data-hero-title><span class="hero-greeting">${headingText(hero.title)}</span> ${headingText(intro?.title||'')}</h1>${straplineMarkup(hero)}
+  ${badgeMarkup(hero.badge,{section:'available'})}<h1 data-hero-title><span class="hero-greeting">${headingText(hero.title)}</span> ${headingText(intro?.title||'')}</h1>${straplineMarkup(hero)}
   <div class="hero-copy" data-hero-copy>${heroCopyMarkup(heroContent)}</div>
  </div>
  </section>`;}

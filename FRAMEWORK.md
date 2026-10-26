@@ -57,6 +57,7 @@ Settings → Cards has two switches beside the existing "Client leads the title"
 ## Home hero, header and navigation
 
 - **Header.** The logo link is the About portrait (`assets/prem.jpg`) as a round avatar (`.brand-avatar`, `--brand-avatar-size`), and the tagline beside it is the name. Settings → Navigation → Hide logo & tagline hides both; the markup is otherwise unchanged.
+- **Available badge.** The hero's status pill (`home.badge`) has a Content Home switch, **Available badge** (default on, since it is shown today; saved with the other section choices). It hides through `data-home-section="available"`.
 - **Strapline.** A one-line `home-strapline` text block on the `home` document renders as `.hero-strapline` under the hero heading. The Content Home switch **Strapline** shows it (default off). While it is visible the heading gives up its bottom margin so the strapline sits close beneath it.
 - **At a glance.** The `home-overview` component document renders three columns (Recently, Experience, Writing) under the hero through `home-overview.js`. References take their wording and links from the referenced project or article. The Content Home switch **At a glance** shows it (default off). Its type is the `.text-mono` role ([DESIGN_SYSTEM.md](DESIGN_SYSTEM.md)).
 - **Hero spacing.** `--hero-gap` is the one value for the gap from the header's content to the hero and from the hero to At a glance.

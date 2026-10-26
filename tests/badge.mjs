@@ -23,4 +23,7 @@ assert(css.includes('var(--status-success-accent)')&&css.includes('var(--status-
 assert(!/#[0-9a-f]{3,8}\b/i.test(css),'Badge styles use no literal colours');
 assert(css.includes('prefers-reduced-motion')&&css.includes('data-animation="off"'),'The pulse stops for reduced motion and animation off');
 const styles=await readFile(new URL('../scripts/client-styles.mjs',import.meta.url),'utf8');assert(styles.includes("'badge.css'"),'Badge styles ship in the bundle');
+// The Content Home switch hides the badge through data-home-section; without a section there is no hook.
+assert.match(badgeMarkup({label:'Available'},{section:'available'}),/<p class="badge" data-home-section="available" data-badge-tone="success">/);
+assert(!badgeMarkup({label:'Available'}).includes('data-home-section'),'No section, no attribute');
 console.log('Badge passed: markup, escaping, tones, hero placement, content-driven label, schema, status tokens and reduced motion.');

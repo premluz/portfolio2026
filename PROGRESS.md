@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-26 Available badge switch
+Added a Content Home switch for the hero's Available badge, on by default so the live site is unchanged. Evidence: tests/badge.mjs extended and passing; in a browser it showed by default, hid when switched off and stayed hidden after a reload.
+
 ## 2026-10-26 Note cards under featured projects
 Each project now has `homeCards` and `detailCards` (one shared card structure: media, optional title and description), validated and projected with resolved media; three placeholder home cards on each project's cover image render under every staged project, with the backdrop confined to the first row (ADR-009, REQ-016). Evidence: tests/note-cards.mjs passes; measured in a browser. Two lessons recorded: a stale dev server rejected the new schema (FACT-009), and an absolutely positioned grid child needs both row lines (FACT-010). Left: the detail page does not render `detailCards` yet (TASK-015) and the cards hold placeholders (TASK-016).
 

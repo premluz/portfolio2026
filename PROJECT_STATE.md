@@ -28,6 +28,7 @@ A buildless native-module portfolio for Prem Luczak: authored HTML, CSS and ES m
 | --- | --- | --- |
 | Featured stage (Layout) | off | One project per row with a full-viewport backdrop |
 | Project backdrop image (Project details) | off | Backdrop behind detail pages |
+| Available badge (Content Home) | on | The hero status pill; switch it off there |
 | Strapline, At a glance (Content Home) | off | Hero additions |
 | Card details, Client above (Cards) | off | Status pill, gradient results and tag row; client on top in wide tracking |
 | Navigation position | bottom | Top is a preview; see TASK-002 |
