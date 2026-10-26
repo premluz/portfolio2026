@@ -82,6 +82,14 @@ A missing local file (for example a misspelled `playstation-bg.jpg`) fails the s
 
 For an abspos item, an `auto` end line means the container's padding edge, not "span one track". Give both lines.
 
+## FACT-011 A time-only cache-busting query can return a stale module
+- Status: verified
+- Source: `scripts/image-freshness.mjs` imported `image-variants.js?<Date.now()>`; two imports within the same millisecond reused the first module, and tests/image-freshness.mjs failed intermittently (3 of 25 runs before the fix, 0 of 25 after adding a counter)
+- Verified: 2026-10-26
+- Tags: area/tooling, area/tests
+
+When code re-imports a rewritten file, make each URL unique with a counter as well as the time.
+
 ## FACT-008 Hunk-staging a file shared with unfinished work can commit half of a change
 - Status: verified
 - Source: committing the card-details work while the owner's agent feature touched the same files; a moved pair of lines in tokens.css staged only its removal (the dark gradient values vanished from HEAD), and a hand-staged site.css no longer matched its sources. A clean `git worktree` of HEAD running the tests caught both

@@ -9,6 +9,7 @@ import {BACKDROP_WIDTHS,backdropCopy} from '../dist/backdrop-sources.js';
 import {isContentSetName} from '../dist/content/content-set.js';
 
 const FIX='npm run images';
+let reads=0; // a counter, not just the time: two reads in one millisecond must not share a module URL
 const sha1=async file=>createHash('sha1').update(await fs.readFile(file)).digest('hex');
 const exists=file=>fs.access(file).then(()=>true,()=>false);
 const readJson=async file=>{try{return JSON.parse(await fs.readFile(file,'utf8'));}catch(error){if(error.code==='ENOENT')return null;throw new Error(`Cannot read ${file}`,{cause:error});}};
@@ -28,7 +29,7 @@ async function catalogImages(root){
 export async function staleImages(root){
  const dist=path.join(root,'dist'),stale=[];
  const variantsFile=path.join(dist,'image-variants.js');
- const {imageVariants}=await import(pathToFileURL(variantsFile).href+'?'+Date.now());
+ const {imageVariants}=await import(pathToFileURL(variantsFile).href+`?read=${Date.now()}-${reads++}`);
  const sources=await readJson(path.join(dist,'assets/backgrounds/sources.json'))||{};
  for(const asset of await catalogImages(root)){
   const original=path.join(dist,asset.url);if(!await exists(original))continue;

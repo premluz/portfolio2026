@@ -161,7 +161,7 @@
         "MOTION.md",
         "DESIGN_SYSTEM.md"
       ],
-      "hash": "7f8786f62de25ae7093a622bb3cbf0b9bb55eae7",
+      "hash": "213b05a33e367d88a6061ed3e6a1f0bea1d4ed9e",
       "items": []
     },
     {
@@ -253,7 +253,7 @@
         "TASKS.md",
         "PROJECT_STATE.md"
       ],
-      "hash": "cfc8d70ef1453de4bea9479b429ee1c237ba7f9d",
+      "hash": "54d30e3f1560b6027ba0847adbb0405aa5215b35",
       "items": []
     },
     {
@@ -273,7 +273,7 @@
         "PROGRESS.md",
         "HANDOFF.md"
       ],
-      "hash": "b2324dab0a6afb6e34b35b64a221bb5d23a67896",
+      "hash": "d1a895a5740764554cf79b6bdf93b2752d79172d",
       "items": [
         {
           "id": "Q-001",
@@ -523,7 +523,7 @@
       "related": [
         "MEDIA_ASSETS.md"
       ],
-      "hash": "f122225fa48b5255007eed0afda36de7f33c0262",
+      "hash": "2f4a3536c71fa7fb3505bc753582a0008e0e1bef",
       "items": [
         {
           "id": "FACT-001",
@@ -603,6 +603,15 @@
           "status": "verified",
           "tags": [
             "area/home"
+          ]
+        },
+        {
+          "id": "FACT-011",
+          "title": "A time-only cache-busting query can return a stale module",
+          "status": "verified",
+          "tags": [
+            "area/tooling",
+            "area/tests"
           ]
         },
         {

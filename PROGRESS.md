@@ -12,6 +12,12 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-26 Freshness check made reliable
+The image freshness module cache-busted its import of image-variants.js with `Date.now()` alone, so two reads in the same millisecond could return a stale module and tests/image-freshness.mjs failed intermittently (about 1 run in 3 under load). It now adds a counter; 25 of 25 runs pass. Found while running the full suite for the heading switch.
+
+## 2026-10-26 Hero heading switch
+Added a Content Home switch for the hero h1 (default on), applying to the Current layout only because Flip and Flat reuse the h1 for the active project. Evidence: tests/hero-heading-switch.mjs passes; in a browser the heading hid in Current and stayed in Flat and Flip, and the choice persisted across a reload. A first attempt failed in Flat because an `!important` hidden rule beat the override, fixed by exempting the heading in that rule.
+
 ## 2026-10-26 Available badge switch
 Added a Content Home switch for the hero's Available badge, on by default so the live site is unchanged. Evidence: tests/badge.mjs extended and passing; in a browser it showed by default, hid when switched off and stayed hidden after a reload.
 

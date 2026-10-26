@@ -23,6 +23,9 @@ button,input,select,textarea{font-family:var(--font-family-sans)}
 .hero-copy p+p{margin-top:var(--space-paragraph)}
 /* The strapline reads with the heading: a tight gap above, and it takes over the heading's space before the copy. */
 .hero-about h1:has(+ .hero-strapline:not([hidden])){margin-bottom:0}
+.hero-about h1[hidden]{display:none}
+/* Flip and Flat write the active project's name into this h1, so the Content Home switch does not hide it there. */
+.home-view-split .hero-about h1[hidden]{display:block}
 .hero-strapline{margin:var(--space-2) 0 var(--space-hero-heading-content);font-size:var(--font-size-hero-support);font-weight:var(--font-weight-body);line-height:var(--line-height-body);color:var(--muted)}
 .hero-strapline[hidden]{display:none}
 .home-hero{padding-block:var(--space-page-rhythm)}
