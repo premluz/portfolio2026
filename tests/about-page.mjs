@@ -29,7 +29,11 @@ for(const block of items){const asset=content.getAsset(block.mediaId);assert(ass
 assert(list.includes('data-original-image="assets/hipnotherapy.jpg"')&&list.includes('data-media-srcset'),'Photos use responsive variants');
 
 const detail=cardDetail(card);
-assert(detail.includes('about-detail')&&detail.includes('about-traits')&&!detail.includes('data-timeline-item'),'The About page renders the new sections; the timeline stays catalog data for Home');
+assert(detail.includes('about-detail')&&detail.includes('about-traits'),'The About page renders its own sections');
+const aboutIds=[...detail.matchAll(/data-about-section="([^"]+)"/g)].map(match=>match[1]);
+assert.deepEqual(aboutIds,['hero','traits','unusual','approach','services','about','about-timeline','experience','writing','testimonials'],'Every About component, including the Home ones, is addressable by the About settings in page order');
+assert(!detail.includes('data-home-section'),'Home components on About answer to the About settings, never the Home ones');
+assert(!new RegExp('id="([^"]+)"[\\s\\S]*id="\\1"').test(detail),'Reusing Home components adds no duplicate ids');
 const css=await readFile(new URL('../dist/about-page.css',import.meta.url),'utf8'),styles=await readFile(new URL('../scripts/client-styles.mjs',import.meta.url),'utf8');
 assert(styles.includes("'about-page.css'")&&styles.includes("'about-illustrations.css'"),'About stylesheets ship in the client bundle');
 assert(css.includes('.surface.detail.about-detail{padding-inline:0}'),'About content spans the page content width');
@@ -38,3 +42,17 @@ const sections=await readFile(new URL('../dist/home-sections.css',import.meta.ur
 assert(sections.includes('.home-service-card h3{margin:0 0 var(--space-3);font-size:var(--font-size-body)'),'Card titles are body-size text');
 assert(sections.includes('.home-services[data-card-background="false"] .home-service-card{padding:0;background:transparent;border:0;border-radius:0}'),'Show card off removes the card surface');
 console.log('About page passed: authored order, escaped highlights, six drawn traits in the shared card section, body-size text, full content width, five responsive photos and bundled styles.');
+
+const {ABOUT_SECTION_DEFAULTS,initAboutSectionSettings}=await import('../dist/about-sections.js');
+const store=new Map(),aboutStorage={getItem:key=>store.get(key)??null,setItem:(key,value)=>store.set(key,value)};
+const aboutNodes=Object.fromEntries(Object.keys(ABOUT_SECTION_DEFAULTS).map(id=>[id,{dataset:{aboutSection:id},hidden:false}]));
+const aboutRoot={querySelectorAll:selector=>selector==='[data-about-section]'?Object.values(aboutNodes):[],querySelector:()=>null};
+const aboutControls=Object.fromEntries(Object.keys(ABOUT_SECTION_DEFAULTS).map(id=>[id,{dataset:{aboutSectionControl:id},checked:false,addEventListener(type,listener){this[type]=listener;}}]));
+const aboutPanel={querySelectorAll:selector=>selector==='[data-about-section-control]'?Object.values(aboutControls):[]};
+const aboutSettings=initAboutSectionSettings(aboutPanel,{storage:aboutStorage,getRoot:()=>aboutRoot});
+assert.deepEqual(['hero','traits','unusual'].filter(id=>!aboutNodes[id].hidden),['hero','traits','unusual'],'About keeps its own components on by default');
+assert(Object.keys(aboutNodes).filter(id=>!['hero','traits','unusual'].includes(id)).every(id=>aboutNodes[id].hidden),'Home components start hidden on About');
+aboutControls.testimonials.checked=true;aboutControls.testimonials.change();
+assert(!aboutNodes.testimonials.hidden&&JSON.parse(store.get('prem-about-content')).testimonials===true,'A Home component can be shown on About and the choice persists under its own key');
+assert(!store.has('prem-home-content'),'Changing About never writes the Home settings');
+assert.equal(aboutSettings.value.hero,true);

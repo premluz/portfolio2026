@@ -1,3 +1,4 @@
+import {EASE} from './motion-tokens.js';
 import {content} from './content/local.js';
 import {escapeText,headingText,safeHref} from './content/html.js';
 
@@ -43,7 +44,7 @@ export function mountContextualPopovers({root=document,reduced=()=>false,onRoute
    {opacity:1,transform:'translateY(0) scale(.99)',clipPath:'inset(0% 0% 0% 0% round 24px)',offset:.83},
    {opacity:1,transform:'translateY(0) scale(1)',clipPath:'inset(0% 0% 0% 0% round 24px)',offset:1}
   ]:[from,{opacity:0,transform:'translateY(7px) scale(.985)',clipPath:'inset(12% 6% 12% 6% round 24px)'}];
-  animation=panel.animate(frames,{duration:open?340:180,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'});
+  animation=panel.animate(frames,{duration:open?340:180,easing:open?EASE.settle:EASE.leave,fill:'both'});
   animation.finished.then(()=>{if(generation!==epoch)return;animation?.cancel();animation=null;done();},()=>{});
  };
  const close=(immediate=false)=>{clearTimeout(timer);pinned=false;closing=true;if(!trigger&&panel.hidden)return;trigger?.setAttribute('aria-expanded','false');trigger=null;delete document.documentElement.dataset.contextPopoverOpen;if(immediate){++epoch;animation?.cancel();animation=null;panel.hidden=true;}else animate(false,()=>{panel.hidden=true;});};

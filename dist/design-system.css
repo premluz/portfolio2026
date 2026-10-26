@@ -98,22 +98,23 @@ main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:var(--space-pa
 
 .detail.heading-beside-image>.detail-layout>.description{margin-top:var(--space-detail-context)}
 
-/* One-column project compositions keep the shared card and media nodes. */
+/* One-column project compositions keep the shared card and media nodes; the wide
+   row of the Alternating arrangement uses the same composition. */
 #singleColumnCardPositionSetting[hidden]{display:none}
 #singleColumnCardPosition{display:block;width:100%;font:inherit;color:var(--ink);background:var(--chrome);border:1px solid var(--card-rim);padding:10px;border-radius:12px;margin-top:12px}
-.homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-card-copy-position="bottom"]{display:flex;flex-direction:column;height:auto;min-height:0}
-.homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-card-copy-position="bottom"]>.visual{position:relative;inset:auto;order:0;flex:none;margin:0 auto 0 0;height:var(--card-image-frame-height,auto);max-width:100%;border-radius:var(--radius-visual)}
-.homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-card-copy-position="bottom"]>.card-copy{position:relative;order:1;margin-top:var(--space-text-media);color:var(--ink);text-shadow:none}
-.homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-card-copy-position="bottom"]>.visual::after{display:none}
-.homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"][data-layout="regular"] .image-card[data-card-copy-position="bottom"]{height:auto;min-height:0}
+.homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"] .image-card,.image-card[data-card-span="full"])[data-card-copy-position="bottom"]{display:flex;flex-direction:column;height:auto;min-height:0}
+.homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"] .image-card,.image-card[data-card-span="full"])[data-card-copy-position="bottom"]>.visual{position:relative;inset:auto;order:0;flex:none;margin:0 auto 0 0;height:var(--card-image-frame-height,auto);max-width:100%;border-radius:var(--radius-visual)}
+.homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"] .image-card,.image-card[data-card-span="full"])[data-card-copy-position="bottom"]>.card-copy{position:relative;order:1;margin-top:var(--space-text-media);color:var(--ink);text-shadow:none}
+.homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"] .image-card,.image-card[data-card-span="full"])[data-card-copy-position="bottom"]>.visual::after{display:none}
+.homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"][data-layout="regular"] .image-card,.gallery-grid[data-layout="regular"] .image-card[data-card-span="full"])[data-card-copy-position="bottom"]{height:auto;min-height:0}
 @media(min-width:701px){
- .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card:is([data-card-copy-position="left"],[data-card-copy-position="right"]){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-detail-columns);align-items:center;height:auto;min-height:0}
- .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card:is([data-card-copy-position="left"],[data-card-copy-position="right"])>.card-copy{position:relative;grid-row:1;grid-column:1;align-self:center;min-width:0;color:var(--ink);text-shadow:none}
- .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card:is([data-card-copy-position="left"],[data-card-copy-position="right"])>.visual{position:relative;inset:auto;grid-row:1;grid-column:2;align-self:center;width:100%!important;height:var(--card-image-frame-height,auto);min-width:0;max-width:none;margin:0;border-radius:var(--radius-visual)}
- .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-card-copy-position="right"]>.card-copy{grid-column:2}
- .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-card-copy-position="right"]>.visual{grid-column:1}
- .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card:is([data-card-copy-position="left"],[data-card-copy-position="right"])>.visual::after{display:none}
- .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"][data-layout="regular"] .image-card:is([data-card-copy-position="left"],[data-card-copy-position="right"]){height:auto;min-height:0}
+ .homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"] .image-card,.image-card[data-card-span="full"]):is([data-card-copy-position="left"],[data-card-copy-position="right"]){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-detail-columns);align-items:center;height:auto;min-height:0}
+ .homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"] .image-card,.image-card[data-card-span="full"]):is([data-card-copy-position="left"],[data-card-copy-position="right"])>.card-copy{position:relative;grid-row:1;grid-column:1;align-self:center;min-width:0;color:var(--ink);text-shadow:none}
+ .homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"] .image-card,.image-card[data-card-span="full"]):is([data-card-copy-position="left"],[data-card-copy-position="right"])>.visual{position:relative;inset:auto;grid-row:1;grid-column:2;align-self:center;width:100%!important;height:var(--card-image-frame-height,auto);min-width:0;max-width:none;margin:0;border-radius:var(--radius-visual)}
+ .homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"] .image-card,.image-card[data-card-span="full"])[data-card-copy-position="right"]>.card-copy{grid-column:2}
+ .homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"] .image-card,.image-card[data-card-span="full"])[data-card-copy-position="right"]>.visual{grid-column:1}
+ .homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"] .image-card,.image-card[data-card-span="full"]):is([data-card-copy-position="left"],[data-card-copy-position="right"])>.visual::after{display:none}
+ .homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"][data-layout="regular"] .image-card,.gallery-grid[data-layout="regular"] .image-card[data-card-span="full"]):is([data-card-copy-position="left"],[data-card-copy-position="right"]){height:auto;min-height:0}
 }
 
 /* Multi-column cards can move their text block above or below the image while
@@ -122,6 +123,7 @@ main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:var(--space-pa
 #multiColumnCardPosition{display:block;width:100%;font:inherit;color:var(--ink);background:var(--chrome);border:1px solid var(--card-rim);padding:10px;border-radius:12px;margin-top:12px}
 .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-card-copy-position="bottom"]:not([data-image-mode="bleed"]){display:flex;flex-direction:column}
 .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-card-copy-position="bottom"]:not([data-image-mode="bleed"])>.visual{position:relative;inset:auto;order:0;flex:none;margin:0 auto var(--space-text-media);height:var(--card-image-frame-height,auto);max-width:100%}
+.homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-card-span="full"][data-card-copy-position="bottom"]:not([data-image-mode="bleed"])>.visual{margin-inline:0}
 .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-card-copy-position="bottom"]:not([data-image-mode="bleed"])>.card-copy{position:relative;order:1;margin:0;color:var(--ink);text-shadow:none}
 .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-image-mode="bleed"][data-card-copy-position="bottom"]>.card-copy{margin-top:auto}
 
@@ -194,13 +196,21 @@ main.home-canvas:not(.home-view-split) .home-hero{--hero-padding:min(var(--space
 .project-card.image-card>.card-copy:not(:has(.card-client))>h2,.project-card.image-card>.card-copy:not(:has(.card-client))>.project-summary{grid-column:1}
 @media(max-width:600px){.project-card.image-card>.card-copy>.card-client{font-size:var(--font-size-small);line-height:var(--line-height-body)}}
 
+/* Client inline: the client leads the title ("Bastion. Title") instead of sitting in its own column. Hiding the client wins. */
+.project-card.image-card>.card-copy>h2>.card-title-client{display:none}
+body.card-client-inline:not(.card-client-hidden) .project-card.image-card>.card-copy{grid-template-columns:minmax(0,1fr)}
+body.card-client-inline:not(.card-client-hidden) .project-card.image-card>.card-copy>:is(h2,.project-summary){grid-column:1}
+body.card-client-inline:not(.card-client-hidden).card-title-hidden .project-card.image-card>.card-copy>.project-summary{grid-row:1}
+body.card-client-inline:not(.card-client-hidden) .project-card.image-card>.card-copy>.card-client{display:none}
+body.card-client-inline:not(.card-client-hidden) .project-card.image-card>.card-copy>h2>.card-title-client{display:inline}
+
 body.card-client-hidden .project-card.image-card>.card-copy{grid-template-columns:minmax(0,1fr)}
 body.card-client-hidden .project-card.image-card>.card-copy>h2,body.card-client-hidden .project-card.image-card>.card-copy>.project-summary{grid-column:1}
 body.card-client-hidden.card-title-hidden .project-card.image-card>.card-copy>.project-summary,body.card-client-hidden .project-card.image-card>.card-copy:not(:has(.card-client))>.project-summary{grid-row:1}
 body.card-client-hidden .project-card.image-card>.card-copy>.card-client,body.card-title-hidden .project-card.image-card>.card-copy>h2,body.card-description-hidden .project-card.image-card>.card-copy>.project-summary{display:none}
 
 /* Align customer and the first visible line on one shared baseline. */
-.project-card.image-card>.card-copy>h2{margin:0}
+.project-card.image-card>.card-copy>h2{margin:0;line-height:var(--line-height-reading)}
 #projectMenuToggle{display:none}
 #dock .project-menu:not(.site-settings-menu) button{font-size:var(--composer-font-size);color:var(--composer-text-ink);letter-spacing:var(--letter-spacing-body);font-weight:var(--font-weight-body)}
 

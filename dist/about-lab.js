@@ -9,7 +9,7 @@ export function spiralItems(store=content){
  return [...projects,...about];
 }
 
-const ARRANGEMENT_LABELS={spiral:'All cards, as a spiral',infinite:'All cards, in an endless space: drag to move, scroll to fly, W A S D and Q E to move with the keyboard'};
+const ARRANGEMENT_LABELS={spiral:'All cards, as a spiral',infinite:'All cards, in an endless space: drag to move, scroll to fly, W A S D and Q E to move with the keyboard',sphere:'All cards, on a sphere: drag or scroll to rotate, arrow keys to turn, click a card to bring it closer'};
 
 /** An experiment page: heading, then the card world in one arrangement ('spiral' scrolls a tall section,
  * 'infinite' fills the viewport). The list of links is the accessible way to every card. */

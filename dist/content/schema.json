@@ -252,6 +252,15 @@
               },
               "minItems": 2,
               "maxItems": 2
+            },
+            "ambient": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^#[0-9a-fA-F]{6}$"
+              },
+              "minItems": 2,
+              "maxItems": 2
             }
           },
           "required": [
@@ -501,6 +510,13 @@
             "lab"
           ]
         },
+        "projectStatus": {
+          "enum": [
+            "Launched",
+            "Building",
+            "R&D"
+          ]
+        },
         "featured": {
           "type": "boolean"
         },
@@ -570,6 +586,7 @@
         "slug",
         "name",
         "kind",
+        "projectStatus",
         "context",
         "role",
         "keyWork"

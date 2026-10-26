@@ -1,3 +1,4 @@
+import {EASE} from './motion-tokens.js';
 import {morphProgress} from './transition-control.js';
 
 const outward={top:'translate3d(0,-100%,0)',bottom:'translate3d(0,100%,0)',left:'translate3d(-100%,0,0)',right:'translate3d(100%,0,0)'};
@@ -18,7 +19,7 @@ export class EdgeShades {
  animateTo(details,control,duration){
   const from=this.hidden,to=this.retreat&&details;
   if(from===to||this.reduced()||!control){this.sync(details);return;}
-  const options={duration,easing:control.timeline?'linear':'cubic-bezier(.22,1,.36,1)',fill:'both'};
+  const options={duration,easing:control.timeline?'linear':EASE.settle,fill:'both'};
   control.track(this.root.animate([{opacity:from?0:1},{opacity:to?0:1}],options),morphProgress);
   for(const {node,side} of this.edges){
    if(!side)continue;

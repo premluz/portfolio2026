@@ -15,4 +15,10 @@ for(const file of (await readdir(dist)).filter(name=>name.endsWith('.css')&&name
 const css=(await Promise.all((await readdir(dist)).filter(name=>name.endsWith('.css')&&name!=='site.css').map(file=>readFile(new URL(file,dist),'utf8')))).join('\n');
 for(const [,name] of css.matchAll(/var\(--ease-([a-z]+)\)/g)){assert(name in EASE,`--ease-${name} is a defined role`);}
 assert(!/\.about-detail\{--ease-standard/.test(css),'--ease-standard is defined once for the whole site, not only on About');
-console.log('Motion tokens passed: CSS and JS curves agree, stylesheets use roles, every role is defined.');
+// Scripts name roles too: a literal curve outside the token module is a new, unnamed curve.
+for(const file of (await readdir(dist)).filter(name=>name.endsWith('.js')&&name!=='motion-tokens.js')){
+ assert(!(await readFile(new URL(file,dist),'utf8')).includes('cubic-bezier('),`${file} uses EASE roles, not literal curves`);
+}
+const tooltip=(await readFile(new URL('style.css',dist),'utf8')).match(/site-tooltip-arrive (\d+)ms/);
+assert(tooltip&&Number(tooltip[1])<=250,'Tooltips are high-frequency, so their arrival stays at or under 250ms');
+console.log('Motion tokens passed: CSS and JS curves agree, stylesheets and scripts use roles, every role is defined.');

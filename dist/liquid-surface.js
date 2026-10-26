@@ -31,7 +31,9 @@ export function returnExitBlocks(root){
 }
 const captionEase=value=>{const q=Math.max(0,Math.min(1,value));return q*q*(3-2*q);};
 export async function flow(from,to,{duration,intensity,control,ambientGlow=false,ambientLight=null}){
- const galleryEntry=!!from.copyRoot,galleryReturn=!!to.morphCopyRoot,chatEntry=!!from.element?.closest?.('.ask-cards'),chatReturn=!!to.closest?.('.ask-cards'),independentEntry=galleryEntry||chatEntry,independentReturn=galleryReturn||chatReturn,independentCopy=independentEntry||independentReturn;
+ // Card and page copy are separate content (a card's outcome line is not the page's thesis), so text never
+ // travels between them: the leaving copy staggers out bottom-up and the arriving copy staggers in top-down.
+ const galleryEntry=!!from.copyRoot,galleryReturn=!!to.morphCopyRoot,chatEntry=!!from.element?.closest?.('.ask-cards'),chatReturn=!!to.closest?.('.ask-cards'),cardEntry=!!from.element?.matches?.('.project-card'),cardReturn=!!to.matches?.('.project-card'),independentEntry=galleryEntry||chatEntry||cardEntry,independentReturn=galleryReturn||chatReturn||cardReturn,independentCopy=independentEntry||independentReturn;
  const newDetailHeading=!!to.querySelector('h1')&&(independentEntry||!!from.shared?.title?.node?.textContent?.trim()&&!hasSharedHeading(from,to));
  if(!independentCopy&&hasSharedHeading(from,to))preserveSharedHeading(to.querySelector('.project-summary'));
  if(!independentCopy&&hasSharedLead(from,to))preserveSharedLead(to.querySelector('.project-summary'));
@@ -52,7 +54,7 @@ export async function flow(from,to,{duration,intensity,control,ambientGlow=false
  // their internal card copy. The visible caption is its sole text source.
  for(const [external,clone] of [[from.copyRoot,outgoing],[to.morphCopyRoot,incoming]])if(external){const copy=clone.querySelector('.card-copy');if(copy)copy.style.display='none';}
  if(chatEntry){const copy=outgoing.querySelector('.card-copy');if(copy)copy.style.visibility='hidden';}
- if(chatReturn){const copy=incoming.querySelector('.card-copy');if(copy)copy.style.visibility='hidden';}
+ if(chatReturn||cardReturn){const copy=incoming.querySelector('.card-copy');if(copy)copy.style.visibility='hidden';}
  const captionKeys=['client','title','summary'],sourceCaptions=[],targetCaptions=[];
  if(independentCopy)for(const [index,key] of captionKeys.entries()){
   // A settled detail returns exactly as its entry reverses: its own heading and copy stay

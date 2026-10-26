@@ -1,8 +1,9 @@
 // Keep the live homepage, including its image contexts and event handlers,
 // available until an opening transition commits or reverses.
+import {EASE} from './motion-tokens.js';
 import {stageMotion} from './motion-viewport.js';
 export function fadeHomeChrome(layer,control,duration){
- const promises=[],fade=(node,delay=0)=>promises.push(control.track(node.animate([{opacity:getComputedStyle(node).opacity||'1'},{opacity:0}],{duration:duration*.4,delay,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'})).finished);
+ const promises=[],fade=(node,delay=0)=>promises.push(control.track(node.animate([{opacity:getComputedStyle(node).opacity||'1'},{opacity:0}],{duration:duration*.4,delay,easing:EASE.leave,fill:'both'})).finished);
  for(const hero of layer.querySelectorAll('.home-hero')){
   const heading=hero.querySelector('h1'),copy=hero.querySelector('[data-hero-copy]'),badge=hero.querySelector('.badge');
   // The hero leaves bottom-up: description, then heading, then the badge above it, each one step later.

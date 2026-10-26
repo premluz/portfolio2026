@@ -29,9 +29,9 @@
     {
       "id": "rios",
       "type": "portfolio-item",
-      "title": "Designed and built a spatial planner for days that change",
+      "title": "Life-first planner that makes your day a canvas",
       "pageTitle": "A spatial planner designed around life changing the plan",
-      "summary": "0→1 product • Solo designer/builder",
+      "summary": "0→1 • Everything solo",
       "domains": [
         "Planning",
         "Independent product",
@@ -54,9 +54,9 @@
     {
       "id": "playstation",
       "type": "portfolio-item",
-      "title": "Designed a unified workflow saving developers and publishers hundreds of hours",
+      "title": "Designed a unified workflow for developers and publishers",
       "pageTitle": "Transformation saving hundreds of hours for developers and publishers",
-      "summary": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 • 4 teams aligned",
+      "summary": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 ",
       "domains": [
         "Enterprise",
         "Publishing platforms",
@@ -79,9 +79,9 @@
     {
       "id": "vodafone-iot",
       "type": "portfolio-item",
-      "title": "Redesigned platform around research-informed IA and interaction model for technical users and occasional operators",
+      "title": "Research-informed revamp of IoT connectivity platform for technical users",
       "pageTitle": "Redesigned a fragmented IoT platform around one scalable interaction model",
-      "summary": "180+ regions · 240M+ devices · NPS –33 → +62 · Operations time reduced to under 10 seconds",
+      "summary": "180+ regions · 240M+ devices · NPS –33 → +62",
       "domains": [
         "Enterprise",
         "Connectivity",
@@ -104,9 +104,9 @@
     {
       "id": "tracr",
       "type": "portfolio-item",
-      "title": "Created a design system as a vehicle to fix fragmented platform",
+      "title": "Strategic redesign of fragmented blockchain platform",
       "pageTitle": "Turned a design-system brief into a broader platform redesign",
-      "summary": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
+      "summary": "Design System 0→1 + platform redesign • ~2× faster dev & QA",
       "domains": [
         "Enterprise",
         "Supply chain",
@@ -129,9 +129,9 @@
     {
       "id": "galachain",
       "type": "portfolio-item",
-      "title": "Made Web3 wiring invisible for fans and creators on a decentralised entertainment platform",
+      "title": "Made Web3 wiring invisible for fans and creators on a greenfield platform",
       "pageTitle": "Designed Web3 film platform rewarding creators and fans.",
-      "summary": "End-to-end design across 0 → 1 → Growth and continous improvements",
+      "summary": "End-to-end 0 → 1 → Growth and continous improvements",
       "domains": [
         "Web3",
         "Entertainment",
@@ -156,9 +156,9 @@
     {
       "id": "bastion",
       "type": "portfolio-item",
-      "title": "Designed and built prototype of mobile wallet with AI assistant and generative UI",
+      "title": "Mobile wallet with AI assistant and generative UI",
       "pageTitle": "A wallet where you can ask, speak or tap and the interface adapts around the task",
-      "summary": "R&D • AI assistant • Generative UI • Prototype",
+      "summary": "R&D • Design • Build",
       "domains": [
         "AI",
         "Wallet",
@@ -182,9 +182,9 @@
     {
       "id": "porter",
       "type": "portfolio-item",
-      "title": "Designed and built switchboard for the AI agents",
+      "title": "Created switchboard for the AI agents",
       "pageTitle": "I designed and built a Mac app that keeps track of your AI agents, so you never lose one or keep one waiting.",
-      "summary": "0→1 product • Solo designer/builder",
+      "summary": "Everything solo",
       "domains": [
         "AI",
         "Mac apps",
@@ -380,6 +380,19 @@
       "evidenceIds": []
     },
     {
+      "id": "about-sphere",
+      "type": "page",
+      "title": "A world of cards",
+      "pageTitle": "A world of cards",
+      "summary": "The portfolio cards arranged on a sphere you can turn in any direction.",
+      "domains": [],
+      "capabilities": [],
+      "tags": [],
+      "kind": null,
+      "client": null,
+      "evidenceIds": []
+    },
+    {
       "id": "desire-and-lived-experience",
       "type": "article",
       "title": "The distance between desire and lived experience",
@@ -421,9 +434,9 @@
     {
       "id": "gala-defi",
       "type": "portfolio-item",
-      "title": "Brought coherence to a DeFi stack that launched fast, outsourced and stitched together",
+      "title": "Brought coherence to a DeFi ecosystem",
       "pageTitle": "Designing for trust and ease of use in a DeFi stack that launched without design.",
-      "summary": "0 → 1 • North Star • Easy mode",
+      "summary": "0 → 1 • North Star",
       "domains": [
         "DeFi",
         "Web3",

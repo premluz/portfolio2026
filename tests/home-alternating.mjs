@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import {alternatingSpan,readHomeLayout} from '../dist/home-layout.js';
+const spans=count=>Array.from({length:count},(_,index)=>alternatingSpan(index,count)).join(' ');
+assert.equal(spans(6),'full half half full half half','One wide card, then two side by side');
+assert.equal(spans(5),'full half half full full','A lone trailing half card takes the whole row instead of leaving a gap');
+assert.equal(spans(4),'full half half full');
+assert.equal(readHomeLayout('alternating'),'alternating');
+assert.equal(readHomeLayout('regular'),'regular');
+assert.equal(readHomeLayout('unknown'),'masonry','Unknown stored values fall back to masonry');
+const html=await fs.readFile(new URL('../dist/index.html',import.meta.url),'utf8');
+assert.match(html,/<option value="alternating">/,'Card arrangement offers Alternating');
+const css=await fs.readFile(new URL('../dist/style.css',import.meta.url),'utf8');
+assert.match(css,/\[data-arrangement="alternating"\] \.card-slot\[data-card-span="full"\]\{grid-column:1 \/ -1!important\}/);
+console.log('home alternating ok');

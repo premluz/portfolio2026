@@ -2,11 +2,11 @@
    the portfolio not showing something is not proof it is missing. */
 .ask-fit{--fit-covered:var(--status-success-accent);--fit-partial:color-mix(in oklch,var(--status-success-accent) 55%,var(--muted));--fit-missing:var(--eyebrow-ink);width:100%;max-width:750px;margin:var(--space-4) 0 0}
 .ask-fit-summary{margin:0 0 var(--space-3);color:var(--eyebrow-ink);font-size:var(--font-size-caption);letter-spacing:var(--eyebrow-tracking);text-transform:uppercase}
-.ask-fit-table{width:100%;border-collapse:collapse;font-size:var(--font-size-small);line-height:var(--line-height-body)}
+.ask-fit-table{width:100%;border-collapse:collapse;font-size:var(--font-size-body);line-height:var(--line-height-body)}
 .ask-fit-table th{padding:0 var(--space-3) var(--space-2) 0;text-align:left;font-weight:var(--font-weight-body);color:var(--eyebrow-ink);font-size:var(--font-size-caption)}
 .ask-fit-table td{padding:var(--space-3) var(--space-3) var(--space-3) 0;vertical-align:top;border-top:1px solid var(--dock-outline)}
 .ask-fit-name{display:block;color:var(--ink)}
-.ask-fit-note{display:block;margin-top:var(--space-1);color:var(--muted);font-size:var(--font-size-caption)}
+.ask-fit-note{display:block;margin-top:var(--space-1);color:var(--muted);font-size:var(--font-size-small)}
 .ask-fit-status{white-space:nowrap;color:var(--fit-missing)}
 .ask-fit-status>span:last-child{vertical-align:middle}
 .ask-fit-icon{display:inline-block;width:16px;height:16px;margin-right:var(--space-2);vertical-align:middle}

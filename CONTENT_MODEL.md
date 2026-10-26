@@ -16,6 +16,14 @@ currently uses an embedded public snapshot; no external CMS or AI service is con
 | Presentation | Display preferences separate from authored copy | Card orientation/colours and 1–4 detail columns |
 | Placement | A document reference in a particular layout | A featured card or another appearance of the same project |
 
+Every `portfolio-item` has a required `projectStatus`: `Launched`, `Building` or `R&D`. It is separate from `status` (published/draft/archived), which is publication state, and from `kind` (shipped/lab).
+
+`presentations[].card.surface` (required) is the card's two-stop background. `presentations[].card.ambient` (optional, two `#rrggbb` stops) is the project's manual ambient-glow pair; when present it wins over both ambient colour sources. Without it, the Glow recipe follows Developer settings → Ambient → Ambient colour: **Automatic** samples the card image, or the frame of a playing hover video, and **Project colours** uses the `surface` hues.
+
+```json
+{ "documentId": "tracr", "card": { "orientation": "landscape", "surface": ["#e5eee9", "#e7eaf1"], "ambient": ["#3fa36b", "#4f6fd8"] }, "detail": { "columns": 2 } }
+```
+
 “Content type” is often an umbrella term. Here, document types and block types
 are explicit: a carousel is usually a block. Save it as a `component` document
 when several documents need to share the same authored carousel, then embed it

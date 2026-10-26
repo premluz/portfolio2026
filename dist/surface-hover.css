@@ -62,7 +62,7 @@ body.card-background-hidden [data-hover-effect~="glow"][data-image-mode="bleed"]
  height:calc(var(--ambient-height,100%) + var(--ambient-spread) + var(--ambient-spread));
  z-index:0;pointer-events:none;
  border-radius:0;overflow:visible;opacity:0;-webkit-mask:none;mask:none;
- background:radial-gradient(ellipse 70% 72% at 50% 52%,color-mix(in oklab,var(--liquid-glow-b) 11%,transparent) 0%,color-mix(in oklab,var(--liquid-glow-b) 6.5%,transparent) 42%,transparent 84%);
+ background:radial-gradient(ellipse 70% 72% at 50% 52%,color-mix(in oklab,var(--liquid-glow-b) min(100%,calc(11% * var(--ambient-glow-strength,1))),transparent) 0%,color-mix(in oklab,var(--liquid-glow-b) min(100%,calc(6.5% * var(--ambient-glow-strength,1))),transparent) 42%,transparent 84%);
  transition:opacity var(--surface-hover-out-duration) ease;
 }
 [data-hover-effect~="glow"]>.surface-effect-layer::before,
@@ -73,12 +73,12 @@ body.card-background-hidden [data-hover-effect~="glow"][data-image-mode="bleed"]
 }
 [data-hover-effect~="glow"]>.surface-effect-layer::before{
  left:1%;top:2%;width:91%;height:96%;
- background:radial-gradient(ellipse 68% 70% at 51% 52%,color-mix(in oklab,var(--liquid-glow-a) 24%,transparent) 0%,color-mix(in oklab,var(--liquid-glow-a) 10.5%,transparent) 42%,transparent 82%);
+ background:radial-gradient(ellipse 68% 70% at 51% 52%,color-mix(in oklab,var(--liquid-glow-a) min(100%,calc(24% * var(--ambient-glow-strength,1))),transparent) 0%,color-mix(in oklab,var(--liquid-glow-a) min(100%,calc(10.5% * var(--ambient-glow-strength,1))),transparent) 42%,transparent 82%);
  transform:translate(10%,7%) scale(.76,.82) rotate(-4deg);
 }
 [data-hover-effect~="glow"]>.surface-effect-layer::after{
  right:0;bottom:0;width:94%;height:98%;
- background:radial-gradient(ellipse 66% 72% at 49% 50%,color-mix(in oklab,var(--liquid-glow-b) 21%,transparent) 0%,color-mix(in oklab,var(--liquid-glow-b) 9%,transparent) 44%,transparent 83%);
+ background:radial-gradient(ellipse 66% 72% at 49% 50%,color-mix(in oklab,var(--liquid-glow-b) min(100%,calc(21% * var(--ambient-glow-strength,1))),transparent) 0%,color-mix(in oklab,var(--liquid-glow-b) min(100%,calc(9% * var(--ambient-glow-strength,1))),transparent) 44%,transparent 83%);
  transform:translate(-9%,-7%) scale(.78,.84) rotate(4deg);
 }
 [data-hover-effect~="glow"]:not([data-hover-disabled])>.surface-effect-layer.is-active{opacity:1;transition-duration:var(--surface-hover-in-duration)}

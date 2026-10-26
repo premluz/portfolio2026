@@ -81,7 +81,9 @@ export function backGeometry(shape,phase,{height=48,radius=24,backWidth=78}={}){
  const branch=popoverGeometry(phase,{baseWidth:h,rootX:0,width:height,height:backWidth,left:-height/2,gap:10,radius});
  const edge=rotateBranchPath(branch.edge,left,height/2),path=rotateBranchPath(branch.path,left,height/2);
  let outline=shape.path;
- if(branch.connected){const marker=point(left,top+h-r)+' V '+(top+r);outline=outline.replace(marker,point(left,top+h-r)+edge+' V '+(top+r));}
+ // The leading space anchors the match to a whole number: unanchored, the left edge "0.000 28.000 V 28"
+ // also matched the tail of a right edge such as "260.000 28.000 V 28" and spliced the back pill there.
+ if(branch.connected){const marker=' '+point(left,top+h-r)+' V '+(top+r);outline=outline.replace(marker,' '+point(left,top+h-r)+edge+' V '+(top+r));}
  else if(path)outline+=' '+path;
  // Neck strain belongs to the glass; the menu's layout moves without that wobble.
  const space=backWidth*smooth(0,.78,phase)+10*smooth(.12,.90,phase);

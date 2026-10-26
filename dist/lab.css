@@ -1,0 +1,6 @@
+/* Lab transition: lab-transition.js toggles .lab-rippling while one ring crosses the page. */
+.lab-rippling #main{filter:url(#lab-ripple-main)}
+.lab-rippling body > header{filter:url(#lab-ripple-header)}
+.lab-rippling .site-footer{filter:url(#lab-ripple-footer)}
+/* Arriving mid-ripple: lift the dark boot cover quickly so it does not hide the rest of the ring. */
+:root.lab-arriving{--page-boot-fade:140ms}

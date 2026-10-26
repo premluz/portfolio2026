@@ -8,7 +8,7 @@
 .card-world[data-card-world="spiral"]{height:var(--card-spiral-scroll)}
 .card-world-stage{position:relative;height:100vh;height:100svh;overflow:hidden}
 .card-world[data-card-world="spiral"] .card-world-stage{position:sticky;top:0}
-.card-world[data-card-world="infinite"] .card-world-stage{touch-action:none;user-select:none;outline-offset:-3px}
+.card-world:is([data-card-world="infinite"],[data-card-world="sphere"]) .card-world-stage{touch-action:none;user-select:none;outline-offset:-3px}
 .card-world-canvas{position:absolute;inset:0;display:block;width:100%;height:100%}
 /* With WebGL the links stay for keyboard and screen readers, and appear when focused. */
 .card-world[data-card-world-state="ready"] .card-world-list{position:absolute;bottom:var(--space-6);left:var(--content-gutter);width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}

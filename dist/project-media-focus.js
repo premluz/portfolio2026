@@ -38,7 +38,7 @@ export class ProjectMediaFocus{
   this.visual=detail.querySelector('.visual');this.visualVisibility=this.visual.style.visibility;this.visual.style.visibility='hidden';this.root.inert=true;document.body.style.overflow='hidden';
   this.trapFocus=e=>{if(e.key==='Tab'){e.preventDefault();(this.frame&&document.activeElement===this.closeButton?this.frame:this.closeButton).focus();}};document.addEventListener('keydown',this.trapFocus);
   const duration=this.reduced()?0:Math.max(80,this.duration());
-  this.imageAnimation=this.image.animate([{transform},{transform:'none'}],{duration,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'});this.animations.push(this.imageAnimation);
+  this.imageAnimation=this.image.animate([{transform},{transform:'none'}],{duration,easing:EASE.settle,fill:'both'});this.animations.push(this.imageAnimation);
   descriptionExitTargets(this.root).forEach((node,index)=>this.animations.push(node.animate(mediaExitKeyframes(node,getComputedStyle(node).opacity),{duration:duration*.55,delay:Math.min(index*24,duration*.4),easing:EASE.leave,fill:'both'})));
   this.dock().setMediaFocus(true,{duration});
   for(const node of detail.querySelectorAll(':scope>.liquid-skin,:scope>.surface-effect-layer'))this.animations.push(node.animate([{opacity:getComputedStyle(node).opacity},{opacity:0}],{duration,easing:'ease',fill:'both'}));

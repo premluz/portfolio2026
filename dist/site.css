@@ -536,6 +536,7 @@ body.edge-shade-top .page-edge-shades .top,body.edge-shade-bottom .page-edge-sha
 .gallery-grid[data-layout="regular"] .card-placement>.project-card{width:100%;height:100%;min-height:clamp(440px,43vw,650px)}
 .gallery-grid[data-layout="regular"] .card-placement>.project-card:not([data-image-mode="bleed"]){min-height:0}
 .gallery-grid[data-layout="regular"] .card-slot{grid-row:auto!important;grid-column:auto!important}
+.gallery-grid[data-arrangement="alternating"] .card-slot[data-card-span="full"]{grid-column:1 / -1!important}
 .image-card[data-image-mode="bleed"][data-card-orientation="portrait"]{min-height:650px}
 @media(max-width:600px){.image-card[data-image-mode="bleed"][data-card-orientation="portrait"]{min-height:520px}}
 @media(max-width:1000px){.home-view-flip .gallery-grid[data-layout="regular"] .card-slot{display:grid}.home-view-flip .gallery-grid[data-layout="regular"] .card-placement{display:block;flex:initial}.home-view-flip .gallery-grid[data-layout="regular"] .card-placement>.project-card{height:auto}}
@@ -741,7 +742,7 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 .site-tooltip{position:fixed;z-index:100;max-width:min(280px,calc(100vw - 24px));padding:8px 11px;border-radius:10px;background:var(--chrome);color:var(--ink);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 4px 24px #00000012;font-size:12px;line-height:1.5;pointer-events:none}
 .site-tooltip[hidden]{display:none}
 @keyframes site-tooltip-arrive{0%{opacity:0;transform:translateY(2px) scale(.96)}64%{opacity:1;transform:translateY(-1px) scale(1.025)}83%{opacity:1;transform:translateY(0) scale(.99)}100%{opacity:1;transform:translateY(0) scale(1)}}
-.site-tooltip:not([hidden]){animation:site-tooltip-arrive 340ms var(--ease-settle) both}
+.site-tooltip:not([hidden]){animation:site-tooltip-arrive 240ms var(--ease-settle) both}
 :root[data-animation="off"] .site-tooltip:not([hidden]){animation:none!important}
 @media(prefers-reduced-motion:reduce){.site-tooltip:not([hidden]){animation:none!important}}
 :root[data-animation="off"]{scroll-behavior:auto}
@@ -903,7 +904,7 @@ body.card-background-hidden [data-hover-effect~="glow"][data-image-mode="bleed"]
  height:calc(var(--ambient-height,100%) + var(--ambient-spread) + var(--ambient-spread));
  z-index:0;pointer-events:none;
  border-radius:0;overflow:visible;opacity:0;-webkit-mask:none;mask:none;
- background:radial-gradient(ellipse 70% 72% at 50% 52%,color-mix(in oklab,var(--liquid-glow-b) 11%,transparent) 0%,color-mix(in oklab,var(--liquid-glow-b) 6.5%,transparent) 42%,transparent 84%);
+ background:radial-gradient(ellipse 70% 72% at 50% 52%,color-mix(in oklab,var(--liquid-glow-b) min(100%,calc(11% * var(--ambient-glow-strength,1))),transparent) 0%,color-mix(in oklab,var(--liquid-glow-b) min(100%,calc(6.5% * var(--ambient-glow-strength,1))),transparent) 42%,transparent 84%);
  transition:opacity var(--surface-hover-out-duration) ease;
 }
 [data-hover-effect~="glow"]>.surface-effect-layer::before,
@@ -914,12 +915,12 @@ body.card-background-hidden [data-hover-effect~="glow"][data-image-mode="bleed"]
 }
 [data-hover-effect~="glow"]>.surface-effect-layer::before{
  left:1%;top:2%;width:91%;height:96%;
- background:radial-gradient(ellipse 68% 70% at 51% 52%,color-mix(in oklab,var(--liquid-glow-a) 24%,transparent) 0%,color-mix(in oklab,var(--liquid-glow-a) 10.5%,transparent) 42%,transparent 82%);
+ background:radial-gradient(ellipse 68% 70% at 51% 52%,color-mix(in oklab,var(--liquid-glow-a) min(100%,calc(24% * var(--ambient-glow-strength,1))),transparent) 0%,color-mix(in oklab,var(--liquid-glow-a) min(100%,calc(10.5% * var(--ambient-glow-strength,1))),transparent) 42%,transparent 82%);
  transform:translate(10%,7%) scale(.76,.82) rotate(-4deg);
 }
 [data-hover-effect~="glow"]>.surface-effect-layer::after{
  right:0;bottom:0;width:94%;height:98%;
- background:radial-gradient(ellipse 66% 72% at 49% 50%,color-mix(in oklab,var(--liquid-glow-b) 21%,transparent) 0%,color-mix(in oklab,var(--liquid-glow-b) 9%,transparent) 44%,transparent 83%);
+ background:radial-gradient(ellipse 66% 72% at 49% 50%,color-mix(in oklab,var(--liquid-glow-b) min(100%,calc(21% * var(--ambient-glow-strength,1))),transparent) 0%,color-mix(in oklab,var(--liquid-glow-b) min(100%,calc(9% * var(--ambient-glow-strength,1))),transparent) 44%,transparent 83%);
  transform:translate(-9%,-7%) scale(.78,.84) rotate(4deg);
 }
 [data-hover-effect~="glow"]:not([data-hover-disabled])>.surface-effect-layer.is-active{opacity:1;transition-duration:var(--surface-hover-in-duration)}
@@ -1068,22 +1069,23 @@ main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:var(--space-pa
 
 .detail.heading-beside-image>.detail-layout>.description{margin-top:var(--space-detail-context)}
 
-/* One-column project compositions keep the shared card and media nodes. */
+/* One-column project compositions keep the shared card and media nodes; the wide
+   row of the Alternating arrangement uses the same composition. */
 #singleColumnCardPositionSetting[hidden]{display:none}
 #singleColumnCardPosition{display:block;width:100%;font:inherit;color:var(--ink);background:var(--chrome);border:1px solid var(--card-rim);padding:10px;border-radius:12px;margin-top:12px}
-.homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-card-copy-position="bottom"]{display:flex;flex-direction:column;height:auto;min-height:0}
-.homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-card-copy-position="bottom"]>.visual{position:relative;inset:auto;order:0;flex:none;margin:0 auto 0 0;height:var(--card-image-frame-height,auto);max-width:100%;border-radius:var(--radius-visual)}
-.homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-card-copy-position="bottom"]>.card-copy{position:relative;order:1;margin-top:var(--space-text-media);color:var(--ink);text-shadow:none}
-.homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-card-copy-position="bottom"]>.visual::after{display:none}
-.homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"][data-layout="regular"] .image-card[data-card-copy-position="bottom"]{height:auto;min-height:0}
+.homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"] .image-card,.image-card[data-card-span="full"])[data-card-copy-position="bottom"]{display:flex;flex-direction:column;height:auto;min-height:0}
+.homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"] .image-card,.image-card[data-card-span="full"])[data-card-copy-position="bottom"]>.visual{position:relative;inset:auto;order:0;flex:none;margin:0 auto 0 0;height:var(--card-image-frame-height,auto);max-width:100%;border-radius:var(--radius-visual)}
+.homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"] .image-card,.image-card[data-card-span="full"])[data-card-copy-position="bottom"]>.card-copy{position:relative;order:1;margin-top:var(--space-text-media);color:var(--ink);text-shadow:none}
+.homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"] .image-card,.image-card[data-card-span="full"])[data-card-copy-position="bottom"]>.visual::after{display:none}
+.homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"][data-layout="regular"] .image-card,.gallery-grid[data-layout="regular"] .image-card[data-card-span="full"])[data-card-copy-position="bottom"]{height:auto;min-height:0}
 @media(min-width:701px){
- .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card:is([data-card-copy-position="left"],[data-card-copy-position="right"]){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-detail-columns);align-items:center;height:auto;min-height:0}
- .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card:is([data-card-copy-position="left"],[data-card-copy-position="right"])>.card-copy{position:relative;grid-row:1;grid-column:1;align-self:center;min-width:0;color:var(--ink);text-shadow:none}
- .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card:is([data-card-copy-position="left"],[data-card-copy-position="right"])>.visual{position:relative;inset:auto;grid-row:1;grid-column:2;align-self:center;width:100%!important;height:var(--card-image-frame-height,auto);min-width:0;max-width:none;margin:0;border-radius:var(--radius-visual)}
- .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-card-copy-position="right"]>.card-copy{grid-column:2}
- .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-card-copy-position="right"]>.visual{grid-column:1}
- .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card:is([data-card-copy-position="left"],[data-card-copy-position="right"])>.visual::after{display:none}
- .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"][data-layout="regular"] .image-card:is([data-card-copy-position="left"],[data-card-copy-position="right"]){height:auto;min-height:0}
+ .homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"] .image-card,.image-card[data-card-span="full"]):is([data-card-copy-position="left"],[data-card-copy-position="right"]){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-detail-columns);align-items:center;height:auto;min-height:0}
+ .homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"] .image-card,.image-card[data-card-span="full"]):is([data-card-copy-position="left"],[data-card-copy-position="right"])>.card-copy{position:relative;grid-row:1;grid-column:1;align-self:center;min-width:0;color:var(--ink);text-shadow:none}
+ .homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"] .image-card,.image-card[data-card-span="full"]):is([data-card-copy-position="left"],[data-card-copy-position="right"])>.visual{position:relative;inset:auto;grid-row:1;grid-column:2;align-self:center;width:100%!important;height:var(--card-image-frame-height,auto);min-width:0;max-width:none;margin:0;border-radius:var(--radius-visual)}
+ .homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"] .image-card,.image-card[data-card-span="full"])[data-card-copy-position="right"]>.card-copy{grid-column:2}
+ .homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"] .image-card,.image-card[data-card-span="full"])[data-card-copy-position="right"]>.visual{grid-column:1}
+ .homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"] .image-card,.image-card[data-card-span="full"]):is([data-card-copy-position="left"],[data-card-copy-position="right"])>.visual::after{display:none}
+ .homepage-layout:not(.home-view-split) :is(.gallery-grid[data-columns="1"][data-layout="regular"] .image-card,.gallery-grid[data-layout="regular"] .image-card[data-card-span="full"]):is([data-card-copy-position="left"],[data-card-copy-position="right"]){height:auto;min-height:0}
 }
 
 /* Multi-column cards can move their text block above or below the image while
@@ -1092,6 +1094,7 @@ main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:var(--space-pa
 #multiColumnCardPosition{display:block;width:100%;font:inherit;color:var(--ink);background:var(--chrome);border:1px solid var(--card-rim);padding:10px;border-radius:12px;margin-top:12px}
 .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-card-copy-position="bottom"]:not([data-image-mode="bleed"]){display:flex;flex-direction:column}
 .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-card-copy-position="bottom"]:not([data-image-mode="bleed"])>.visual{position:relative;inset:auto;order:0;flex:none;margin:0 auto var(--space-text-media);height:var(--card-image-frame-height,auto);max-width:100%}
+.homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-card-span="full"][data-card-copy-position="bottom"]:not([data-image-mode="bleed"])>.visual{margin-inline:0}
 .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-card-copy-position="bottom"]:not([data-image-mode="bleed"])>.card-copy{position:relative;order:1;margin:0;color:var(--ink);text-shadow:none}
 .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-image-mode="bleed"][data-card-copy-position="bottom"]>.card-copy{margin-top:auto}
 
@@ -1164,13 +1167,21 @@ main.home-canvas:not(.home-view-split) .home-hero{--hero-padding:min(var(--space
 .project-card.image-card>.card-copy:not(:has(.card-client))>h2,.project-card.image-card>.card-copy:not(:has(.card-client))>.project-summary{grid-column:1}
 @media(max-width:600px){.project-card.image-card>.card-copy>.card-client{font-size:var(--font-size-small);line-height:var(--line-height-body)}}
 
+/* Client inline: the client leads the title ("Bastion. Title") instead of sitting in its own column. Hiding the client wins. */
+.project-card.image-card>.card-copy>h2>.card-title-client{display:none}
+body.card-client-inline:not(.card-client-hidden) .project-card.image-card>.card-copy{grid-template-columns:minmax(0,1fr)}
+body.card-client-inline:not(.card-client-hidden) .project-card.image-card>.card-copy>:is(h2,.project-summary){grid-column:1}
+body.card-client-inline:not(.card-client-hidden).card-title-hidden .project-card.image-card>.card-copy>.project-summary{grid-row:1}
+body.card-client-inline:not(.card-client-hidden) .project-card.image-card>.card-copy>.card-client{display:none}
+body.card-client-inline:not(.card-client-hidden) .project-card.image-card>.card-copy>h2>.card-title-client{display:inline}
+
 body.card-client-hidden .project-card.image-card>.card-copy{grid-template-columns:minmax(0,1fr)}
 body.card-client-hidden .project-card.image-card>.card-copy>h2,body.card-client-hidden .project-card.image-card>.card-copy>.project-summary{grid-column:1}
 body.card-client-hidden.card-title-hidden .project-card.image-card>.card-copy>.project-summary,body.card-client-hidden .project-card.image-card>.card-copy:not(:has(.card-client))>.project-summary{grid-row:1}
 body.card-client-hidden .project-card.image-card>.card-copy>.card-client,body.card-title-hidden .project-card.image-card>.card-copy>h2,body.card-description-hidden .project-card.image-card>.card-copy>.project-summary{display:none}
 
 /* Align customer and the first visible line on one shared baseline. */
-.project-card.image-card>.card-copy>h2{margin:0}
+.project-card.image-card>.card-copy>h2{margin:0;line-height:var(--line-height-reading)}
 #projectMenuToggle{display:none}
 #dock .project-menu:not(.site-settings-menu) button{font-size:var(--composer-font-size);color:var(--composer-text-ink);letter-spacing:var(--letter-spacing-body);font-weight:var(--font-weight-body)}
 
@@ -1312,6 +1323,7 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 @media(max-width:600px){.home-about-copy,.home-about-lists,.home-about-how{grid-template-columns:1fr}.home-about-copy{row-gap:var(--space-6)}.home-about-copy p,.home-about-copy p+p{grid-column:1;max-width:none}.home-about-how h3,.home-about-how ul{grid-column:1}.home-about-how li{grid-template-columns:minmax(0,1fr) minmax(0,2fr)}.home-about-list-content{grid-column:1;grid-template-columns:1fr}.home-about{margin-top:var(--space-page-rhythm-md)}.home-about-path{margin-top:var(--space-page-rhythm-md);padding-block:20px}.home-about-path .hero-timeline{--timeline-text-gap:32px}.home-about-path .timeline-track ol{padding-inline:28px}}
 
 /* about-page.css */
+[data-about-section][hidden]{display:none!important}
 :root{--about-highlight-from:oklch(.58 .13 295);--about-highlight-to:oklch(.62 .09 200);--about-unusual-zoom:1.03;--about-unusual-duration:600ms}
 :root[data-theme="dark"]{--about-highlight-from:oklch(.78 .1 295);--about-highlight-to:oklch(.82 .08 195)}
 .about-highlight{background:linear-gradient(90deg,var(--about-highlight-from),var(--about-highlight-to));-webkit-background-clip:text;background-clip:text;color:transparent;box-decoration-break:clone;-webkit-box-decoration-break:clone}
@@ -1422,7 +1434,7 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 .home-product-carousel .spatial-gallery-caption{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6)}
 .home-product-carousel .spatial-gallery-copy{grid-column:2 / span 2;grid-template-columns:minmax(0,1fr);width:100%}
 .spatial-gallery-copy{display:grid;grid-template-columns:fit-content(35%) minmax(0,1fr);column-gap:24px;row-gap:var(--space-title-eyebrow);flex:1;min-width:0;cursor:default;user-select:none}.spatial-gallery-copy[href]{cursor:pointer}
-.spatial-gallery-copy h3{grid-column:1;grid-row:2;width:100%;max-width:none;min-width:0;margin:0;color:var(--ink);font-size:var(--font-size-body);font-weight:var(--font-weight-heading);line-height:var(--line-height-card);letter-spacing:var(--letter-spacing-card)}
+.spatial-gallery-copy h3{grid-column:1;grid-row:2;width:100%;max-width:none;min-width:0;margin:0;color:var(--ink);font-size:var(--font-size-body);font-weight:var(--font-weight-heading);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-card)}
 .spatial-gallery-copy .spatial-gallery-description{grid-column:1;grid-row:3;margin:0;max-width:none;color:var(--muted);font-size:var(--font-size-project-summary);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body)}
 .spatial-gallery-copy .spatial-gallery-client{grid-column:1;grid-row:1;align-self:baseline;margin:0;color:var(--eyebrow-ink);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-body);text-wrap:pretty;overflow-wrap:anywhere}
 .spatial-gallery-copy:not(:has(.spatial-gallery-client:not([hidden]))){grid-template-columns:minmax(0,1fr)}
@@ -1489,7 +1501,7 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 .card-world[data-card-world="spiral"]{height:var(--card-spiral-scroll)}
 .card-world-stage{position:relative;height:100vh;height:100svh;overflow:hidden}
 .card-world[data-card-world="spiral"] .card-world-stage{position:sticky;top:0}
-.card-world[data-card-world="infinite"] .card-world-stage{touch-action:none;user-select:none;outline-offset:-3px}
+.card-world:is([data-card-world="infinite"],[data-card-world="sphere"]) .card-world-stage{touch-action:none;user-select:none;outline-offset:-3px}
 .card-world-canvas{position:absolute;inset:0;display:block;width:100%;height:100%}
 /* With WebGL the links stay for keyboard and screen readers, and appear when focused. */
 .card-world[data-card-world-state="ready"] .card-world-list{position:absolute;bottom:var(--space-6);left:var(--content-gutter);width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
@@ -1500,6 +1512,17 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 .card-world[data-card-world-state="fallback"] .card-world-stage{display:none}
 .card-world[data-card-world-state="fallback"] .card-world-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:var(--space-6);padding:var(--space-6) var(--content-gutter)}
 .card-world[data-card-world-state="fallback"] .card-world-list img{display:block;width:100%;border-radius:var(--radius-visual)}
+
+/* card-sphere.css */
+:root{--sphere-viewer-width:80vw;--sphere-viewer-height:72svh}
+.sphere-viewer{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;background:transparent;color:var(--ink);overflow:hidden}
+.sphere-viewer[open]{display:grid;place-items:center}
+.sphere-viewer::backdrop{background:transparent}
+.sphere-viewer-shade{position:absolute;inset:0;background:var(--chrome);backdrop-filter:blur(var(--dock-glass-blur))}
+.sphere-viewer-media{position:relative;display:block;width:auto;height:auto;max-width:var(--sphere-viewer-width);max-height:var(--sphere-viewer-height);border-radius:var(--image-rounding);transform-origin:0 0}
+.sphere-viewer-actions{position:absolute;inset-inline:0;bottom:var(--space-6);display:flex;justify-content:center;gap:var(--space-3)}
+.sphere-viewer-actions .glass-utility-button{width:auto;padding-inline:var(--space-4);text-decoration:none;font:inherit;gap:var(--space-3)}
+.sphere-viewer-actions [hidden]{display:none}
 
 /* home-sections.css */
 :root{--radius-home-content-card:20px;--home-content-card-padding:clamp(24px,2.6vw,40px);--font-size-testimonial:clamp(calc(22px * var(--type-scale)),calc(2.1vw * var(--type-scale)),calc(32px * var(--type-scale)))}
@@ -1712,6 +1735,7 @@ body:has(.home-carousel-active){overflow-x:clip}
 #dock .assistant-composer{position:absolute;inset:0;display:flex;align-items:center;gap:4px;width:100%;padding:var(--composer-control-inset);margin:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .24s ease,visibility .24s}
 #dock.is-composer .assistant-composer{opacity:1;visibility:visible;pointer-events:auto;transition-delay:.1s}
 #dock .assistant-composer button{flex:0 0 var(--nav-icon-size);width:var(--nav-icon-size);height:var(--nav-icon-size);display:grid;place-items:center;border-radius:var(--radius-icon-control);padding:0;background:transparent;color:var(--nav-item-ink);transition:background-color .2s,color .2s}
+#dock .assistant-composer button[hidden]{display:none}
 #dock .assistant-composer button:hover,#dock .assistant-composer button:focus-visible{background:var(--nav-item-hover);color:var(--ink)}
 #dock .assistant-composer button[aria-pressed=true]{color:var(--ink);background:var(--nav-active)}
 #dock .assistant-composer button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
@@ -2016,6 +2040,8 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 @media(prefers-reduced-motion:reduce){:root[data-glass-style="on"] :is(.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back):active{transform:none}}
 :root[data-animation="off"][data-glass-style="on"] :is(.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back):active{transform:none}
 :root:not([data-glass-style="on"]) #dock .dock-glass-light{display:none}
+/* Links-mode menu wears the same glass as the Assistant button beside it; the composer keeps the dock glass. */
+:root[data-glass-style="on"] #dock:not(.is-composer) .dock-glass{background:var(--glass-button-fill);backdrop-filter:blur(var(--glass-button-blur));-webkit-backdrop-filter:blur(var(--glass-button-blur))}
 :root[data-glass-style="on"] #dock .dock-outline{stroke:transparent}
 :root[data-glass-style="on"] #dock .dock-glass-light{fill:currentColor;stroke:none}
 :root[data-glass-style="on"] #dock .dock-glass-light-rim{flood-color:var(--glass-button-rim-light)}
@@ -2066,11 +2092,11 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
    the portfolio not showing something is not proof it is missing. */
 .ask-fit{--fit-covered:var(--status-success-accent);--fit-partial:color-mix(in oklch,var(--status-success-accent) 55%,var(--muted));--fit-missing:var(--eyebrow-ink);width:100%;max-width:750px;margin:var(--space-4) 0 0}
 .ask-fit-summary{margin:0 0 var(--space-3);color:var(--eyebrow-ink);font-size:var(--font-size-caption);letter-spacing:var(--eyebrow-tracking);text-transform:uppercase}
-.ask-fit-table{width:100%;border-collapse:collapse;font-size:var(--font-size-small);line-height:var(--line-height-body)}
+.ask-fit-table{width:100%;border-collapse:collapse;font-size:var(--font-size-body);line-height:var(--line-height-body)}
 .ask-fit-table th{padding:0 var(--space-3) var(--space-2) 0;text-align:left;font-weight:var(--font-weight-body);color:var(--eyebrow-ink);font-size:var(--font-size-caption)}
 .ask-fit-table td{padding:var(--space-3) var(--space-3) var(--space-3) 0;vertical-align:top;border-top:1px solid var(--dock-outline)}
 .ask-fit-name{display:block;color:var(--ink)}
-.ask-fit-note{display:block;margin-top:var(--space-1);color:var(--muted);font-size:var(--font-size-caption)}
+.ask-fit-note{display:block;margin-top:var(--space-1);color:var(--muted);font-size:var(--font-size-small)}
 .ask-fit-status{white-space:nowrap;color:var(--fit-missing)}
 .ask-fit-status>span:last-child{vertical-align:middle}
 .ask-fit-icon{display:inline-block;width:16px;height:16px;margin-right:var(--space-2);vertical-align:middle}
@@ -2088,6 +2114,14 @@ a.ask-fit-source:is(:hover,:focus-visible){color:var(--ink);text-decoration-colo
  .ask-fit-table td{padding:0;border-top:0}
  .ask-fit-table td+td{margin-top:var(--space-2)}
 }
+
+/* lab.css */
+/* Lab transition: lab-transition.js toggles .lab-rippling while one ring crosses the page. */
+.lab-rippling #main{filter:url(#lab-ripple-main)}
+.lab-rippling body > header{filter:url(#lab-ripple-header)}
+.lab-rippling .site-footer{filter:url(#lab-ripple-footer)}
+/* Arriving mid-ripple: lift the dark boot cover quickly so it does not hide the rest of the ring. */
+:root.lab-arriving{--page-boot-fade:140ms}
 
 /* mobile.css */
 /* Keep editable text large enough to avoid Safari's automatic input zoom.

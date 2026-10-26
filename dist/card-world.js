@@ -36,7 +36,7 @@ export class CardWorld{
   const entry={texture:null,aspect:1,ready:false,users:new Set()};this.textures.set(src,entry);
   // No colour-space tag: the shader writes the sampled pixels as they are, so cards show the original
   // image colours (tagging sRGB would linearise them and, with no conversion back, darken every card).
-  entry.texture=new THREE.TextureLoader().load(src,texture=>{texture.anisotropy=this.renderer.capabilities.getMaxAnisotropy();texture.needsUpdate=true;entry.aspect=texture.image.width/texture.image.height;entry.ready=true;for(const card of entry.users)this.fit(card);},undefined,error=>console.warn('Card world: image could not load: '+src,error));
+  entry.texture=new THREE.TextureLoader().load(src,texture=>{texture.anisotropy=this.renderer.capabilities.getMaxAnisotropy();texture.needsUpdate=true;entry.aspect=texture.image.width/texture.image.height;entry.ready=true;for(const card of entry.users)this.fit(card);if(this.arrangement.isMoving)this.invalidate();},undefined,error=>console.warn('Card world: image could not load: '+src,error));
   return entry;
  }
  /** A card: `fit` 'cover' crops to width x height; 'natural' keeps the image's own shape at that height. */
@@ -58,11 +58,11 @@ export class CardWorld{
  bind(){
   const on=(target,type,handler,options)=>{target.addEventListener(type,handler,options);this.listeners.push(()=>target.removeEventListener(type,handler,options));};
   on(this.env,'resize',()=>this.resize());
-  on(this.root,'pointermove',event=>{this.pointer={x:event.clientX,y:event.clientY};});
-  on(this.root,'pointerleave',()=>{this.pointer=null;});
+  on(this.root,'pointermove',event=>{this.pointer={x:event.clientX,y:event.clientY};if(this.arrangement.isMoving)this.invalidate();});
+  on(this.root,'pointerleave',()=>{this.pointer=null;if(this.arrangement.isMoving)this.invalidate();});
   on(this.env.document,'visibilitychange',()=>this.schedule());
   this.arrangement.bind?.(this,on);
-  this.styleObserver=new this.env.MutationObserver(()=>this.readRounding());this.styleObserver.observe(document.documentElement,{attributes:true,attributeFilter:['style']});
+  this.styleObserver=new this.env.MutationObserver(()=>{this.readRounding();if(this.arrangement.isMoving)this.invalidate();});this.styleObserver.observe(document.documentElement,{attributes:true,attributeFilter:['style']});
   this.observer=new this.env.IntersectionObserver(entries=>{this.visible=entries.some(entry=>entry.isIntersecting);this.schedule();});this.observer.observe(this.root);
  }
  resize(){
@@ -74,12 +74,13 @@ export class CardWorld{
   this.readRounding();this.arrangement.resize(this);this.camera.updateProjectionMatrix();this.renderFrame(0);
  }
  schedule(){
-  const running=this.visible&&!this.env.document.hidden&&!this.dead;
+  const running=this.visible&&!this.env.document.hidden&&!this.dead&&(this.arrangement.isMoving?.()??true);
   // The frame clock restarts only when the loop resumes after a pause, never between frames.
   if(running&&!this.frame){if(!this.running)this.last=0;this.frame=requestAnimationFrame(now=>this.tick(now));}
   if(!running&&this.frame){cancelAnimationFrame(this.frame);this.frame=0;}
   this.running=running;
  }
+ invalidate(){this.renderFrame(0);this.schedule();}
  tick(now){this.frame=0;const dt=this.last?Math.min(MAX_DT,(now-this.last)/1000):0;this.last=now;this.renderFrame(dt);this.schedule();}
  renderFrame(dt){
   if(!this.renderer||this.dead)return;

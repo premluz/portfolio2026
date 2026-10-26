@@ -1,10 +1,14 @@
 import {EdgeSpring,materialSettings,springParameters} from './material-settings.js';
 import {ambientLayerParent,trackAmbientGallery} from './ambient-layer.js';
+import {sampleAmbientColors,ambientMediaSource,VIDEO_SAMPLE_MS} from './ambient-palette.js';
 
 const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
 const mix=(a,b,t)=>a+(b-a)*t;
 const hueDelta=(a,b)=>((b-a)%360+540)%360-180;
 const geometry=rect=>({x:rect.left+rect.width/2,y:rect.top+rect.height/2,width:rect.width,height:rect.height});
+// Clears the field's widest CSS spread (clamp(120px,17vw,230px)) so the rising glow starts fully off screen.
+const ENTRY_CLEARANCE=240;
+const belowViewport=rect=>({left:rect.left,top:(Number(globalThis.innerHeight)||0)+ENTRY_CLEARANCE,width:rect.width,height:rect.height});
 export function blendAmbientPalette(a,b,t){return {a:a.a.map((v,i)=>i===2?v+hueDelta(v,b.a[i])*t:mix(v,b.a[i],t)),b:a.b.map((v,i)=>i===2?v+hueDelta(v,b.b[i])*t:mix(v,b.b[i],t))};}
 export function blendAmbientRect(a,b,t){return Object.fromEntries(['left','top','width','height'].map(key=>[key,mix(a[key],b[key],t)]));}
 export function ambientMotionSpeed({duration=400,hoverSpeed=60,context='route'}={}){return context==='hover'?clamp(hoverSpeed,20,150)/100:400/Math.max(100,duration);}
@@ -20,6 +24,11 @@ export class AmbientLightMotion {
  aim(rect,palette,opacity=1){
   this.target=geometry(rect);this.targetPalette=palette;this.targetOpacity=opacity;
   if(!this.initialized){for(const key in this.axes)this.axes[key].position=this.target[key];this.palette=blendAmbientPalette(palette,palette,0);this.initialized=true;}
+ }
+ // Places the light without motion, e.g. off screen before it rises into a card.
+ seed(rect,palette){
+  const start=geometry(rect);for(const key in this.axes){this.axes[key].position=start[key];this.axes[key].velocity=0;}
+  if(!this.initialized){this.palette=blendAmbientPalette(palette,palette,0);this.initialized=true;}
  }
  // Native scrolling changes the coordinate frame, not the card's physical motion.
  rebase(dx,dy){
@@ -54,10 +63,15 @@ export function ambientImageRect(host){
  const rect=image?.getBoundingClientRect();
  return rect?.width>4&&rect?.height>4?rect:frame?.getBoundingClientRect();
 }
-function paletteFor(host){
+// Precedence: a project's authored ambient pair (manual), then colours sampled
+// from its media when the source is 'auto', then the card surface hues.
+export function paletteFor(host,source='auto'){
  const style=getComputedStyle(host),dark=document.documentElement.dataset.theme==='dark';
  const lightness=parseFloat(style.getPropertyValue('--ambient-lightness'))||(dark ? .48 : .82),chroma=parseFloat(style.getPropertyValue('--ambient-chroma'))||(dark ? .032 : .055);
  const color=key=>[lightness,chroma,parseFloat(style.getPropertyValue(key))||0];
+ if(style.getPropertyValue('--ambient-manual-start').trim())return {a:color('--ambient-manual-start'),b:color('--ambient-manual-end')};
+ const sampled=source==='auto'&&host.querySelector?.('.visual')?sampleAmbientColors(host):null;
+ if(sampled?.a.hue!=null)return {a:[lightness,chroma*sampled.a.chromaScale,sampled.a.hue],b:[lightness,chroma*sampled.b.chromaScale,sampled.b.hue]};
  return {a:color('--project-hue-start'),b:color('--project-hue-end')};
 }
 
@@ -67,6 +81,7 @@ export class AmbientLight {
  constructor({reduced=()=>false,controls=()=>({})}={}){
   this.reduced=reduced;this.controls=controls;this.context='hover';this.motion=new AmbientLightMotion();this.hosts=new Map();this.enabled=false;this.frame=0;this.last=0;this.locked=false;
   this.refresh=()=>{if(this.enabled&&this.owner?.isConnected&&!this.locked)this.target(this.owner,this.motion.targetOpacity);};
+  this.videoStarted=()=>{this.lastVideoSample=0;this.wake();};
   this.scroll=()=>{
    if(!this.enabled||!this.owner?.isConnected||this.locked||!this.motion.initialized)return;
    const origin={x:Number(globalThis.scrollX)||0,y:Number(globalThis.scrollY)||0},previous=this.viewportOrigin||origin;
@@ -78,10 +93,17 @@ export class AmbientLight {
   this.resizeObserver=typeof ResizeObserver==='undefined'?null:new ResizeObserver(this.refresh);
   this.themeObserver=typeof MutationObserver==='undefined'?null:new MutationObserver(()=>{
    if(!this.enabled||!this.motion.initialized)return;
-   const values=paletteFor(this.owner||this.parent),palette=this.motion.targetPalette;
+   const values=this.paletteFor(this.owner||this.parent),palette=this.motion.targetPalette;
    this.motion.targetPalette={a:[...values.a.slice(0,2),palette.a[2]],b:[...values.b.slice(0,2),palette.b[2]]};this.wake();
   });
   this.themeObserver?.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+ }
+ paletteFor(host){return paletteFor(host,this.controls().colorSource);}
+ // A playing hover video keeps re-sampling, so the glow follows the footage.
+ followVideo(now){
+  if(this.locked||!this.owner?.isConnected||this.motion.targetOpacity<=0||this.controls().colorSource!=='auto'||!ambientMediaSource(this.owner)?.live)return false;
+  if(now-(this.lastVideoSample||0)>=VIDEO_SAMPLE_MS){this.lastVideoSample=now;this.motion.targetPalette=this.paletteFor(this.owner);}
+  return true;
  }
  setEnabled(on){
   if(on===this.enabled)return;this.enabled=on;
@@ -105,7 +127,11 @@ export class AmbientLight {
  }
  target(host,opacity=1){
   if(!this.enabled)return;const rect=ambientImageRect(host);if(!rect)return;
-  clearTimeout(this.leaveTimer);this.owner=host;this.viewportOrigin={x:Number(globalThis.scrollX)||0,y:Number(globalThis.scrollY)||0};this.attach(ambientLayerParent(host));this.motion.aim(rect,paletteFor(host),opacity);this.wake();
+  clearTimeout(this.leaveTimer);this.owner=host;this.viewportOrigin={x:Number(globalThis.scrollX)||0,y:Number(globalThis.scrollY)||0};this.attach(ambientLayerParent(host));const palette=this.paletteFor(host);
+  // A light appearing from nothing rises from below the viewport; a fading one keeps its momentum.
+  if(opacity>0&&(!this.motion.initialized||this.motion.opacity<.01))this.motion.seed(belowViewport(rect),palette);
+  this.motion.aim(rect,palette,opacity);this.wake();
+  const video=host.querySelector('.visual video');if(video!==this.observedVideo){this.observedVideo?.removeEventListener('playing',this.videoStarted);video?.addEventListener('playing',this.videoStarted);this.observedVideo=video;}
   const image=host.querySelector('.visual img');if(image&&image!==this.observedImage){this.resizeObserver?.disconnect();this.resizeObserver?.observe(image);this.resizeObserver?.observe(host);this.observedImage=image;}
  }
  hold(source,sourceRect){
@@ -113,14 +139,14 @@ export class AmbientLight {
   this.context='route';
   this.resizeObserver?.disconnect();this.observedImage=null;
   const rect=sourceRect||ambientImageRect(source);
-  if(rect&&(!this.motion.initialized||this.motion.opacity<.01)){this.motion=new AmbientLightMotion();this.motion.aim(rect,paletteFor(source),1);}
+  if(rect&&(!this.motion.initialized||this.motion.opacity<.01)){this.motion=new AmbientLightMotion();this.motion.aim(rect,this.paletteFor(source),1);}
   this.source=source;this.owner=null;this.locked=true;this.attach(this.stage);this.wake();
  }
  beginMorph(shell,from,to){
   if(!this.enabled||!from.image||!ambientImageRect(to))return null;
   if(!this.locked)this.hold(from.element,from.image.contentRect||from.image.rect);
   const start=this.motion.initialized?this.motion.rect:from.image.contentRect||from.image.rect;
-  const startPalette=this.motion.initialized?this.motion.palette:paletteFor(to),end=ambientImageRect(to),endPalette=paletteFor(to);
+  const startPalette=this.motion.initialized?this.motion.palette:this.paletteFor(to),end=ambientImageRect(to),endPalette=this.paletteFor(to);
   // The morph supplies display ticks after positioning its shell. Driving our
   // independent springs there avoids two RAF writers or a one-frame offset.
   this.external=true;cancelAnimationFrame(this.frame);this.frame=0;
@@ -142,7 +168,7 @@ export class AmbientLight {
   const center=layers.find(item=>!item.side)?.node.querySelector('.detail'),neighbor=layers.find(item=>item.side===(offset<0?1:-1))?.node.querySelector('.detail');
   const a=ambientImageRect(center),b=ambientImageRect(neighbor);if(!a||!b)return;
   const {intensity=.7}=this.controls(),progress=clamp(Math.abs(offset)/distance*(1+materialSettings.lag/100*.28*intensity),0,1);
-  this.motion.aim(blendAmbientRect(a,b,progress),blendAmbientPalette(paletteFor(center),paletteFor(neighbor),progress),1);this.wake();
+  this.motion.aim(blendAmbientRect(a,b,progress),blendAmbientPalette(this.paletteFor(center),this.paletteFor(neighbor),progress),1);this.wake();
  }
  finishNavigation(host){
   if(!this.enabled)return;this.locked=false;this.external=false;this.dragLayers=null;clearTimeout(this.leaveTimer);
@@ -165,6 +191,6 @@ export class AmbientLight {
   this.field.style.setProperty('--ambient-drift-x',deformation.driftX+'%');this.field.style.setProperty('--ambient-drift-y',deformation.driftY+'%');
   this.field.style.setProperty('--ambient-stretch-x',String(deformation.stretchX));this.field.style.setProperty('--ambient-stretch-y',String(deformation.stretchY));
   this.field.style.opacity=String(this.motion.opacity);
-  if(moving||this.locked)this.wake();else{this.last=0;if(!this.motion.opacity){this.field.remove();this.stage.hidden=true;}}
+  if(moving||this.locked||this.followVideo(now))this.wake();else{this.last=0;if(!this.motion.opacity){this.field.remove();this.stage.hidden=true;}}
  }
 }

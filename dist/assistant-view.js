@@ -36,11 +36,13 @@ export function addAssistantAnswer(r,answer,{auto=false,animateCards=false}={}){
  let finish;finish=streamText(p,text,{reduced:r.options.reducedMotion()||!animateCards,onComplete:()=>r.textStreams.delete(finish)});
  if(animateCards&&!r.options.reducedMotion())r.textStreams.add(finish);
  answerSpeech(r,answer,lead,auto);group.append(lead);
- if(answer.requirements?.length)group.append(fitTable(answer.requirements,{store:r.store}));
+ // A fit table is the whole deliverable: its evidence column already links every source, so no cards or source list follow.
+ const fit=!!answer.requirements?.length,cards=!fit&&!!answer.cards?.length;
+ if(fit)group.append(fitTable(answer.requirements,{store:r.store}));
  if(answer.notice){const notice=document.createElement('p');notice.className='ask-sources ask-service-notice';notice.setAttribute('role','status');notice.textContent=answer.notice;group.append(notice);}
- if(answer.cards?.length)group.append(answerCards(r,answer,animateCards));
- const refs=answerSources(answer);if(refs.childNodes.length)group.append(refs);
- r.messages.append(group);if(answer.cards?.length)r.options.onCardsAdded(group.querySelectorAll('.ask-cards .project-card'));
+ if(cards)group.append(answerCards(r,answer,animateCards));
+ const refs=fit?null:answerSources(answer);if(refs?.childNodes.length)group.append(refs);
+ r.messages.append(group);if(cards)r.options.onCardsAdded(group.querySelectorAll('.ask-cards .project-card'));
  r.showSuggestions(answer.suggestions?.length?answer.suggestions:assistantKnowledge.suggestedQuestions);r.scrollEnd();
 }
 export function mountAssistantView(r){

@@ -176,4 +176,16 @@ for(const contextPhase of [0,.2,.6,1])for(const phase of [.1,.4,.7,.99,1]){
  else assert.equal((back.path.match(/M /g)||[]).length,(shape.path.match(/M /g)||[]).length+1,'Back separates into its own glass surface');
 }
 
+// Fully round ends make the left and right edges read "x 28.000 V 28"; a main width ending in 0
+// once let the left-edge splice match the right edge's tail and draw the back pill across the dock.
+let attachedFrames=0;
+for(const main of [252,260,270,300,320])for(const [height,radius] of [[56,28],[48,24]])for(const phase of [.05,.1,.2,.3,.4]){
+ const shape=dockGeometry(0,{main,context:120,gap:12,height,radius}),back=backGeometry(shape,phase,{height,radius});
+ if(!back.connected)continue;attachedFrames++;
+ const edge=(x,y,v)=>` ${x.toFixed(3)} ${y.toFixed(3)} V ${v}`;
+ assert(back.path.includes(edge(main,radius,height-radius)+' C'),`Right edge stays intact at main width ${main}, height ${height}`);
+ assert(!back.path.includes(edge(0,height-radius,radius)+' C'),`Back pill splices into the left edge at main width ${main}, height ${height}`);
+}
+assert(attachedFrames>=10,'The splice check covered attached back-pill frames');
+
 const wideGroups=dockGeometry(0,{main:520,context:88,gap:12,height:48,radius:24},{anchor:'main',position:1,left:0,width:520,height:48,gap:12,radius:24,split:1,splitAts:[.5],splitGaps:[180]});assert.equal(wideGroups.popover.segments.length,2);assert.equal(wideGroups.popover.segments[1].left-(wideGroups.popover.segments[0].left+wideGroups.popover.segments[0].width),180,'Split alignment leaves open space between independent glass controls');

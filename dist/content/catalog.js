@@ -12,6 +12,7 @@ export const catalog={
       "summary": "R&D • AI assistant • Generative UI • Prototype",
       "category": "Financial intelligence · R&D",
       "kind": "lab",
+      "projectStatus": "R&D",
       "intro": "Wwhen an agent does the analysis, the interface should become part of the answer.",
       "context": "Financial intelligence platform where users ask questions, follow the reasoning and work with interfaces generated around the answer.",
       "challenge": "Generative interfaces often feel like chat with a chart attached. I wanted something analysts could trust, inspect and continue working in rather than a disposable response.",
@@ -83,11 +84,12 @@ export const catalog={
       "type": "portfolio-item",
       "status": "published",
       "slug": "rios",
-      "title": "Designed and built a spatial planner for days that change",
+      "title": "Life-first planner that makes your day a canvas",
       "name": "Life-first planner",
-      "summary": "0→1 product • Solo designer/builder",
+      "summary": "0→1 • Everything solo",
       "category": "Life-first planner · Independent product",
       "kind": "shipped",
+      "projectStatus": "Launched",
       "context": "Cross-platform planner combining daily planning, unscheduled Things, recurring Patterns and calendar import and sync.",
       "role": "Sole product designer and builder. Owned product strategy, interaction model, IA, visual identity, motion and implementation across mobile and desktop.",
       "highlights": "0 → 1 product · design · build",
@@ -156,11 +158,12 @@ export const catalog={
       "type": "portfolio-item",
       "status": "published",
       "slug": "playstation",
-      "title": "Designed a unified workflow saving developers and publishers hundreds of hours",
+      "title": "Designed a unified workflow for developers and publishers",
       "name": "Publishing pipeline",
-      "summary": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 • 4 teams aligned",
+      "summary": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 ",
       "category": "Publishing pipeline · PlayStation Network",
       "kind": "shipped",
+      "projectStatus": "Launched",
       "context": "Self-service content pipeline for developers and publishers managing product details, regional rules and publishing across PlayStation Network.",
       "role": "First designer. Led end-to-end design across discovery, research, prototyping, testing and implementation support through launch, while helping align four product teams.",
       "highlights": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 • 4 teams aligned",
@@ -230,11 +233,12 @@ export const catalog={
       "type": "portfolio-item",
       "status": "published",
       "slug": "vodafone-iot",
-      "title": "Redesigned platform around research-informed IA and interaction model for technical users and occasional operators",
+      "title": "Research-informed revamp of IoT connectivity platform for technical users",
       "name": "IoT connectivity",
-      "summary": "180+ regions · 240M+ devices · NPS –33 → +62 · Operations time reduced to under 10 seconds",
+      "summary": "180+ regions · 240M+ devices · NPS –33 → +62",
       "category": "IoT connectivity · Enterprise",
       "kind": "shipped",
+      "projectStatus": "Launched",
       "context": "Enterprise self-service platform for managing IoT connectivity and SIM operations at scale.",
       "role": "Senior product designer, one of three alongside a design manager. Owned research, IA, interaction design, UI, prototyping, testing and delivery support.",
       "highlights": "NPS –33 → +62 · Operations time reduced to under 10 seconds · 240M+ devices",
@@ -304,11 +308,12 @@ export const catalog={
       "type": "portfolio-item",
       "status": "published",
       "slug": "tracr",
-      "title": "Created a design system as a vehicle to fix fragmented platform",
+      "title": "Strategic redesign of fragmented blockchain platform",
       "name": "Blockchain traceability",
-      "summary": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
+      "summary": "Design System 0→1 + platform redesign • ~2× faster dev & QA",
       "category": "Blockchain traceability · Regulated supply chain",
       "kind": "shipped",
+      "projectStatus": "Launched",
       "context": "Blockchain-based provenance and traceability across the regulated global diamond supply chain, including complex statuses, exceptions and conflict management.",
       "role": "IC lead product designer. Owned the design system, governance and adoption, product architecture, North Star and strategic design direction while supporting leadership and mentoring.",
       "highlights": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
@@ -381,11 +386,12 @@ export const catalog={
       "type": "portfolio-item",
       "status": "published",
       "slug": "galachain",
-      "title": "Made Web3 wiring invisible for fans and creators on a decentralised entertainment platform",
+      "title": "Made Web3 wiring invisible for fans and creators on a greenfield platform",
       "name": "Web3 film platform",
-      "summary": "End-to-end design across 0 → 1 → Growth and continous improvements",
+      "summary": "End-to-end 0 → 1 → Growth and continous improvements",
       "category": "Web3 entertainment · Film and music",
       "kind": "shipped",
+      "projectStatus": "Launched",
       "context": "Film and music ecosystem where creators monetise their work directly and reward participating fans.",
       "role": "Product designer dedicated to Gala Film from 0→1, with supporting work across Gala Music and the broader ecosystem. Worked across UX, UI, motion and front-end as priorities shifted.",
       "highlights": "End-to-end design across 0 → 1 → Growth and continuous improvements",
@@ -460,13 +466,14 @@ export const catalog={
     {
       "id": "bastion",
       "slug": "bastion",
-      "title": "Designed and built prototype of mobile wallet with AI assistant and generative UI",
+      "title": "Mobile wallet with AI assistant and generative UI",
       "pageTitle": "A wallet where you can ask, speak or tap and the interface adapts around the task",
       "name": "Digital wallet with AI assistant",
       "client": "Bastion",
-      "summary": "R&D • AI assistant • Generative UI • Prototype",
+      "summary": "R&D • Design • Build",
       "category": "AI wallet · R&D",
       "kind": "lab",
+      "projectStatus": "R&D",
       "intro": "I designed and built Bastion around a simple idea: the assistant shouldn’t be a feature you visit. It should be available from anywhere in the product.",
       "context": "Mobile prototype of a simulated crypto wallet combining holdings, markets and an AI assistant that can guide and perform financial tasks.",
       "challenge": "Wallets are dense, while AI is often bolted on as a separate chat tab. I wanted the assistant to feel native without losing the calm, glanceable product people expect from a financial app.",
@@ -541,14 +548,15 @@ export const catalog={
       "type": "portfolio-item",
       "status": "published",
       "slug": "porter",
-      "title": "Designed and built switchboard for the AI agents",
+      "title": "Created switchboard for the AI agents",
       "pageTitle": "I designed and built a Mac app that keeps track of your AI agents, so you never lose one or keep one waiting.",
       "name": "AI agent switchboard",
       "client": "Porter",
-      "summary": "0→1 product • Solo designer/builder",
+      "summary": "Everything solo",
       "category": "Agent switchboard · R&D",
       "kind": "lab",
-      "listOnly": true,
+      "projectStatus": "Building",
+      "listOnly": false,
       "heroMediaId": "porter-cover",
       "hoverVideoId": "porter-walkthrough",
       "intro": "People now work with several AI agents at once, and the real bottleneck is knowing which one needs attention and switching between multiple windows they operate in.",
@@ -1523,6 +1531,26 @@ export const catalog={
       "capabilities": []
     },
     {
+      "id": "about-sphere",
+      "type": "page",
+      "template": "information",
+      "status": "published",
+      "slug": "about-sphere",
+      "title": "A world of cards",
+      "name": "Card sphere",
+      "summary": "The portfolio cards arranged on a sphere you can turn in any direction.",
+      "category": "Prem / Experiments",
+      "blocks": [
+        {
+          "id": "about-sphere-body",
+          "type": "text",
+          "paragraphs": [
+            "Drag to turn. Scroll to explore. Pick a card to bring it closer."
+          ]
+        }
+      ]
+    },
+    {
       "id": "desire-and-lived-experience",
       "type": "article",
       "status": "published",
@@ -1754,11 +1782,12 @@ export const catalog={
       "type": "portfolio-item",
       "status": "published",
       "slug": "gala-defi",
-      "title": "Brought coherence to a DeFi stack that launched fast, outsourced and stitched together",
+      "title": "Brought coherence to a DeFi ecosystem",
       "name": "DeFi swap, pools and wallet",
-      "summary": "0 → 1 • North Star • Easy mode",
+      "summary": "0 → 1 • North Star",
       "category": "Decentralised finance",
       "kind": "shipped",
+      "projectStatus": "Launched",
       "client": "Gala",
       "pageTitle": "Designing for trust and ease of use in a DeFi stack that launched without design.",
       "intro": "GalaSwap launched fast: outsourced, inconsistent, no shared system. I joined the CEO’s “A-team” squad for priority projects when coherence and ease of use started to define trust.",
@@ -2249,21 +2278,11 @@ export const catalog={
         {
           "id": "merlin",
           "documentId": "merlin",
-          "featured": false
+          "featured": true
         },
         {
           "id": "bastion",
           "documentId": "bastion",
-          "featured": false
-        },
-        {
-          "id": "tracr",
-          "documentId": "tracr",
-          "featured": false
-        },
-        {
-          "id": "vodafone-iot",
-          "documentId": "vodafone-iot",
           "featured": true
         },
         {
@@ -2272,14 +2291,29 @@ export const catalog={
           "featured": false
         },
         {
+          "id": "tracr",
+          "documentId": "tracr",
+          "featured": true
+        },
+        {
+          "id": "vodafone-iot",
+          "documentId": "vodafone-iot",
+          "featured": true
+        },
+        {
           "id": "playstation",
           "documentId": "playstation",
           "featured": true
         },
         {
+          "id": "porter",
+          "documentId": "porter",
+          "featured": true
+        },
+        {
           "id": "rios",
           "documentId": "rios",
-          "featured": false
+          "featured": true
         },
         {
           "id": "galachain",
@@ -2289,7 +2323,7 @@ export const catalog={
         {
           "id": "about",
           "documentId": "about",
-          "featured": false
+          "featured": true
         },
         {
           "id": "about-lab",
@@ -2298,6 +2332,10 @@ export const catalog={
         {
           "id": "about-infinite",
           "documentId": "about-infinite"
+        },
+        {
+          "id": "about-sphere",
+          "documentId": "about-sphere"
         },
         {
           "id": "contact",

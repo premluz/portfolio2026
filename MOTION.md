@@ -70,11 +70,11 @@ one deliberate overshoot curve; nothing else uses a literal.
 | Summary and title fade | 620ms | Fade mode of the summary stream. |
 | Home hero exit | `duration × 0.4`, 12% steps | Description, heading, then badge. |
 | Card content | in 220ms, out 180ms | Hover copy. |
-| Toast | in 240ms, out 200ms | Rises and drops 8px. |
+| Toast | in 240ms, out 200ms | Rises 8px, settling 1px past rest; drops 8px on `leave`. |
 | Hover (nav, list) | in 70ms, out 420ms | Fast in, lingering out. |
 | Hover (surface glow) | in 240ms, out 1000ms | |
 | Press | in 90ms, out 300ms | |
-| Tooltip | 350ms hover delay, 600ms warm window, 340ms arrival | Instant on keyboard focus and between neighbours. |
+| Tooltip | 350ms hover delay, 600ms warm window, 240ms arrival | Small overshoot. Instant on keyboard focus and between neighbours. |
 
 ### Distance (`DISTANCE`)
 
@@ -83,6 +83,7 @@ one deliberate overshoot curve; nothing else uses a literal.
 | `lift` | 14px | Pages rise this far on entry. |
 | `exitDrop` | 8px | Pages drop this far on exit. |
 | `exitScale` | 0.965 | A receding page's final scale. |
+| `settlePast` | 1px | Toasts and status messages land a pixel past rest, then settle back. |
 | Press scale | 0.92 | Glass buttons. Deliberately firmer than the usual 0.97, at the author's request. |
 | Hero image scale | 0.94 → 1 | |
 
@@ -115,8 +116,9 @@ items. Order is top-down on entry and bottom-up on exit.
   shape; nothing appears from nowhere. Its springs are tuned in Motion settings
   (stiffness, damping, overshoot).
 - **Popovers** grow from the dock as part of the same outline.
-- **Toasts** rise 8px over 240ms on `settle` and leave in 200ms, dropping back
-  the same 8px. Their colour comes from an inner glow, not motion.
+- **Toasts** rise 8px over 240ms on `settle`, landing a pixel past rest and
+  settling back so they read as arriving, and leave in 200ms on `leave`,
+  dropping the same 8px. Their colour comes from an inner glow, not motion.
 
 ### Feedback
 
@@ -151,14 +153,24 @@ Done on 23 October 2026:
 - Every simple page exit shares one timing (about 200ms on `leave`); projects
   recede, other pages fade.
 
-Still open:
+Done on 25 October 2026, after a review against the awwwards-motion skill:
 
-1. **JavaScript literals.** Many modules still write the `settle` curve as a
-   string (it is the correct curve, just not named). They move to `EASE` as they
-   are touched; durations follow the same path.
-2. **Tooltip arrival** uses a 340ms keyframe with a small overshoot. It reads
-   well, but it is the slowest high-frequency motion here; 200–250ms would
-   match the frequency principle.
+- Every script names its curve through `EASE`; no literal curves remain
+  outside `motion-tokens.js`, and the test guards it. Three exits that used
+  `settle` (the home hero fade, popover close, suggestions hiding) now use
+  `leave`.
+- Tooltip arrival is 240ms, down from 340ms, keeping its overshoot.
+- Toasts settle a pixel past rest (`settlePast`). The skill argues springs
+  without overshoot feel dead; small, occasional feedback is where that holds
+  here.
+- Considered and declined: springs for everything (exits need exact, short
+  timing), its 1.05 overshoot and 300/30 constants (too lively for this site;
+  the dock keeps its tuned springs), dark-only glass (the site has a light
+  theme), and shader effects such as grain, chromatic aberration and particles
+  (decoration, and a new dependency).
+
+Still open: durations are still written as numbers in many modules; they move
+to `DURATION` as they are touched.
 
 ## Verification
 

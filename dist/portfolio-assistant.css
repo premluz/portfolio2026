@@ -39,6 +39,7 @@
 #dock .assistant-composer{position:absolute;inset:0;display:flex;align-items:center;gap:4px;width:100%;padding:var(--composer-control-inset);margin:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .24s ease,visibility .24s}
 #dock.is-composer .assistant-composer{opacity:1;visibility:visible;pointer-events:auto;transition-delay:.1s}
 #dock .assistant-composer button{flex:0 0 var(--nav-icon-size);width:var(--nav-icon-size);height:var(--nav-icon-size);display:grid;place-items:center;border-radius:var(--radius-icon-control);padding:0;background:transparent;color:var(--nav-item-ink);transition:background-color .2s,color .2s}
+#dock .assistant-composer button[hidden]{display:none}
 #dock .assistant-composer button:hover,#dock .assistant-composer button:focus-visible{background:var(--nav-item-hover);color:var(--ink)}
 #dock .assistant-composer button[aria-pressed=true]{color:var(--ink);background:var(--nav-active)}
 #dock .assistant-composer button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}

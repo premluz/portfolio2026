@@ -1,3 +1,4 @@
+import {EASE} from './motion-tokens.js';
 import {imageSource} from './media-loading.js';
 import {ProjectPreviewVideo} from './project-preview-video.js';
 export const PROJECT_PREVIEW_SIZE=Object.freeze({width:360,height:260});
@@ -55,8 +56,8 @@ export class ProjectMenuPreview{
   this.image=image;this.el.append(image);this.el.classList.add('is-visible');
   this.video.start(project);
   const duration=this.reduced()?0:220;
-  for(const node of old){const animation=node.animate([{opacity:node.style.opacity},{opacity:0}],{duration,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'});this.animations.set(node,animation);animation.onfinish=()=>{if(this.animations.get(node)!==animation)return;this.removeImage(node);};}
-  const animation=image.animate([{opacity:old.length?0:1},{opacity:1}],{duration,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'});this.animations.set(image,animation);animation.onfinish=()=>{if(this.animations.get(image)!==animation)return;image.style.opacity='1';animation.onfinish=null;animation.cancel();this.animations.delete(image);if(this.image===image)for(const node of [...this.el.children])if(node!==image&&node!==this.video.video)this.removeImage(node);};
+  for(const node of old){const animation=node.animate([{opacity:node.style.opacity},{opacity:0}],{duration,easing:EASE.settle,fill:'both'});this.animations.set(node,animation);animation.onfinish=()=>{if(this.animations.get(node)!==animation)return;this.removeImage(node);};}
+  const animation=image.animate([{opacity:old.length?0:1},{opacity:1}],{duration,easing:EASE.settle,fill:'both'});this.animations.set(image,animation);animation.onfinish=()=>{if(this.animations.get(image)!==animation)return;image.style.opacity='1';animation.onfinish=null;animation.cancel();this.animations.delete(image);if(this.image===image)for(const node of [...this.el.children])if(node!==image&&node!==this.video.video)this.removeImage(node);};
   // Bound rapid scrubbing, then retain exactly one image when the swap settles.
   while(this.el.children.length>3)this.removeImage(this.el.firstElementChild);
  }

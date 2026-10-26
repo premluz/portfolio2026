@@ -3,7 +3,7 @@ import {readFile} from 'node:fs/promises';
 import {prepareCatalog,deriveEvidence,mergeAssistantData,readAssistantData,ASSISTANT_FIELDS} from '../dist/content/assistant-data.js';
 import {contentModel} from '../dist/content/model.js';
 
-const doc=(extra={})=>({id:'one',type:'portfolio-item',status:'published',slug:'one',title:'One',name:'One',kind:'shipped',context:'c',role:'r',keyWork:'k',heroMediaId:'img',highlights:'Lead • 0→1',impact:'Faster • Clearer',blocks:[],...extra});
+const doc=(extra={})=>({id:'one',type:'portfolio-item',status:'published',slug:'one',title:'One',name:'One',kind:'shipped',projectStatus:'Launched',context:'c',role:'r',keyWork:'k',heroMediaId:'img',highlights:'Lead • 0→1',impact:'Faster • Clearer',blocks:[],...extra});
 const catalog=docs=>({schemaVersion:1,documents:docs,assets:[{id:'img',type:'image',status:'published',url:'https://example.com/a.png',alt:''}],presentations:[],layouts:[]});
 
 // Facts shown on the page become evidence automatically, worded exactly as shown.

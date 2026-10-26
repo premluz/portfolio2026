@@ -1,4 +1,5 @@
-const easing='cubic-bezier(.22,1,.36,1)';
+import {EASE} from './motion-tokens.js';
+const easing=EASE.settle;
 
 function revealTargets(root){
  const targets=[],detail=root?.matches?.('.detail:not(.info-detail)')?root:root?.querySelector?.('.detail:not(.info-detail)'),description=detail?.querySelector?.('.description');

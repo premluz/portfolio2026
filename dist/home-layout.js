@@ -1,3 +1,4 @@
+import {EASE} from './motion-tokens.js';
 import {mountTextListHover} from './text-list-hover.js';
 import {homeAboutMarkup} from './home-about.js';
 import {homeApproachMarkup} from './home-approach.js';
@@ -32,6 +33,10 @@ export function homeMarkup(documents,layout,{heroContent='timeline'}={}){
 
 // The three adapters own placement and shared spotlight selection. Documents, DOM cards, image contexts and
 // navigation remain shared when the arrangement changes.
+// Alternating rows one full-width card, shown like the one-column composition, then two side by side.
+export const HOME_LAYOUTS=Object.freeze(['masonry','regular','alternating']);
+export const readHomeLayout=value=>HOME_LAYOUTS.includes(value)?value:'masonry';
+export function alternatingSpan(index,count){return index%3===0||index===count-1&&index%3===1?'full':'half';}
 export class HomeLayout {
  constructor(root,documents,{mode='current',layout='masonry',columns=2,oneColumnPosition='top',multiColumnPosition='top',showCopyOnHover=false,productDisplay='cards',heroContent='timeline',timelineMode='cursor',heroCarousel=false,carouselState={},heroCarouselSettings=()=>({}),reduced=()=>false,onMotion=()=>{}}={}){
   this.root=root;this.heroContent=normalizeHeroContent(heroContent);this.timelineMode=timelineMode;this.documents=documents;this.reduced=reduced;this.onMotion=onMotion;
@@ -53,13 +58,13 @@ export class HomeLayout {
  setProductDisplay(value){this.textListHover?.hide();this.productDisplay=['carousel','text'].includes(value)?value:'cards';const page=this.root.querySelector('.homepage-layout');if(page)page.dataset.productDisplay=this.productDisplay;const carousel=this.root.querySelector('[data-home-product-gallery]');if(carousel)carousel.hidden=this.productDisplay!=='carousel';const text=this.root.querySelector('[data-home-product-text]');if(text)text.hidden=this.productDisplay!=='text';const work=this.root.querySelector('.home-work');if(work)work.hidden=this.productDisplay!=='cards';}
  apply({mode=this.mode,layout=this.layout,columns=this.columns,oneColumnPosition=this.oneColumnPosition,multiColumnPosition=this.multiColumnPosition,showCopyOnHover=this.showCopyOnHover}={}){
   this.carousel.setEnabled(false);
-  this.pause();this.mode=this.productDisplay!=='cards'?'current':['flip','flat'].includes(mode)?mode:'current';this.layout=layout==='regular'?'regular':'masonry';this.columns=clamp(Number(columns)||2,1,4);
+  this.pause();this.mode=this.productDisplay!=='cards'?'current':['flip','flat'].includes(mode)?mode:'current';this.layout=readHomeLayout(layout);this.columns=clamp(Number(columns)||2,1,4);
   this.oneColumnPosition=['top','bottom','left','right','alternating'].includes(oneColumnPosition)?oneColumnPosition:'top';
   this.multiColumnPosition=['top','bottom'].includes(multiColumnPosition)?multiColumnPosition:'top';this.showCopyOnHover=!!showCopyOnHover;
   this.root.classList.toggle('home-view-split',this.mode!=='current');this.root.classList.toggle('home-view-flip',this.mode==='flip');this.root.classList.toggle('home-view-flat',this.mode==='flat');this.gallery.style.setProperty('--gallery-columns',this.columns);
-  this.gallery.dataset.layout=this.layout;this.syncCardComposition();
+  this.gallery.dataset.layout=this.layout==='masonry'?'masonry':'regular';this.gallery.dataset.arrangement=this.layout;this.syncCardComposition();
   for(const doc of this.documents){const slot=this.slots.get(doc.id),carrier=slot.firstElementChild,element=slot.querySelector('[data-card]');
-   element.dataset.cardLayout=this.layout;element.dataset.cardOrientation=doc.cardAspect||'landscape';element.dataset.cardPresentation=this.mode==='flip'?'flip':'current';
+   element.dataset.cardLayout=this.gallery.dataset.layout;element.dataset.cardOrientation=doc.cardAspect||'landscape';element.dataset.cardPresentation=this.mode==='flip'?'flip':'current';
    slot.style.gridRow='';slot.style.gridColumn='';slot.style.removeProperty('--masonry-card-height');carrier.style.transform='';carrier.style.opacity='';carrier.style.zIndex='';
    (this.mode!=='current'||!doc.body?this.gallery:this.information).append(slot);
   }
@@ -70,17 +75,20 @@ export class HomeLayout {
  }
  syncCardComposition(){
   if(!this.gallery)return;
-  const multi=this.mode==='current'&&this.columns>1;this.gallery.dataset.copyLayout=multi?'multiple':'single';let projectIndex=0;
-  for(const doc of this.documents){if(doc.body)continue;const element=this.slots.get(doc.id)?.querySelector('[data-card]');if(!element)continue;
-   const oneColumn=this.oneColumnPosition==='alternating'?(projectIndex%2?'right':'left'):this.oneColumnPosition;
-   element.dataset.cardCopyPosition=multi?this.multiColumnPosition:oneColumn;element.dataset.copyHover=String(multi&&this.showCopyOnHover);projectIndex++;
-  }
+  const alternating=this.mode==='current'&&this.layout==='alternating',multi=alternating||this.mode==='current'&&this.columns>1;this.gallery.dataset.copyLayout=multi?'multiple':'single';
+  const projects=this.documents.filter(doc=>!doc.body&&this.slots.get(doc.id)?.querySelector('[data-card]'));let wideIndex=0;
+  projects.forEach((doc,index)=>{const slot=this.slots.get(doc.id),element=slot.querySelector('[data-card]'),span=alternating?alternatingSpan(index,projects.length):null,wide=!multi||span==='full';
+   // The wide row is a larger, left-aligned image with its description underneath.
+   const oneColumn=alternating?'bottom':this.oneColumnPosition==='alternating'?(wideIndex%2?'right':'left'):this.oneColumnPosition;if(wide)wideIndex++;
+   if(span){slot.dataset.cardSpan=span;element.dataset.cardSpan=span;}else{delete slot.dataset.cardSpan;delete element.dataset.cardSpan;}
+   element.dataset.cardCopyPosition=wide?oneColumn:this.multiColumnPosition;element.dataset.copyHover=String(!wide&&this.showCopyOnHover);
+  });
  }
  setCopyHover(enabled){this.showCopyOnHover=!!enabled;this.syncCardComposition();}
  flush(immediate=false,dt=1){
   if(this.dead)return;
   if(this.mode==='current'){
-   const count=Math.min(this.columns,innerWidth<=600?1:innerWidth<=1000?2:4);this.gallery.style.setProperty('--effective-columns',count);this.gallery.dataset.columns=count;
+   const count=Math.min(this.layout==='alternating'?2:this.columns,innerWidth<=600?1:innerWidth<=1000?2:4);this.gallery.style.setProperty('--effective-columns',count);this.gallery.dataset.columns=count;
    if(this.layout==='masonry'){
     this.placeMasonry(count);
    }else for(const slot of this.gallery.children){slot.style.gridRow='';slot.style.gridColumn='';}
@@ -157,7 +165,7 @@ export class HomeLayout {
  async prepareOpen(id,control,duration){
   if(this.mode!=='flip')return;
   this.pause();const carrier=this.slots.get(id)?.firstElementChild;if(!carrier)return;
-  const animation=carrier.animate([{transform:getComputedStyle(carrier).transform,opacity:getComputedStyle(carrier).opacity},{transform:'perspective(1500px) rotateX(0deg) scale(1)',opacity:1}],{duration:this.reduced()?0:Math.min(220,duration*.2),easing:'cubic-bezier(.22,1,.36,1)',fill:'both'});
+  const animation=carrier.animate([{transform:getComputedStyle(carrier).transform,opacity:getComputedStyle(carrier).opacity},{transform:'perspective(1500px) rotateX(0deg) scale(1)',opacity:1}],{duration:this.reduced()?0:Math.min(220,duration*.2),easing:EASE.settle,fill:'both'});
   control.track(animation);await animation.finished;
   if(!control.reversed){carrier.style.transform='perspective(1500px) rotateX(0deg) scale(1)';carrier.style.opacity='1';this.poses.set(id,{angle:0,scale:1,opacity:1});}
  }
