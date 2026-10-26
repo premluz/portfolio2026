@@ -66,4 +66,4 @@ It sits above the hero heading today.
 
 ## Next action
 
-Run `npm run memory:next`. On 2026-10-26 it listed TASK-001, TASK-002, TASK-003, TASK-004, TASK-006, TASK-007 and TASK-012 (register the memory MCP server, which needs the owner's decision); TASK-005 is blocked. The deploy-critical work (committed image copies and content exports) is done.
+Run `npm run memory:next`. On 2026-10-26 it listed TASK-001, TASK-002, TASK-003, TASK-004, TASK-006, TASK-007; TASK-005 is blocked. The memory MCP server is not used: the owner maintains Markdown memory only. The deploy-critical work (committed image copies and content exports) is done.

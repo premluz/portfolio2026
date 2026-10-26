@@ -52,12 +52,6 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 - Related: REQ-002
 - Acceptance: a `porter-bg.jpg` (photo-only export) is added to dist/assets, linked with `backgroundMediaId` in both catalogs, `npm run images` run, and Porter shows it in the featured stage. Needs the image from the owner.
 
-### TASK-012 Register the memory server with the owner's MCP client
-- Status: todo
-- Depends: TASK-009
-- Tags: area/tooling
-- Acceptance: the owner decides which client(s) (for example a project `.mcp.json` for Claude Code) and approves the configuration change; the client then lists the four `memory_*` tools. See docs/MEMORY_MCP.md. Nothing is registered today.
-
 ## Done
 
 ### TASK-010 Project memory structure and tooling
@@ -83,3 +77,9 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 - Status: done
 - Tags: area/deploy, kind/process
 - Evidence: commits 83dbce2, 17fc2ba and 1ee57a1 (2026-10-26); a clean worktree of HEAD passes `build-content --check`, `check-images` and `memory check`. The owner's `agent*` feature (7 modules, 3 tests, 2 images and hunks in app.js, site.css, tokens.css, motion-tokens.js and client-styles.mjs) was left uncommitted on purpose.
+
+### TASK-012 Register the memory server with the owner's MCP client
+- Status: dropped
+- Depends: TASK-009
+- Tags: area/tooling
+- Evidence: the owner decided on 2026-10-26 not to register the server and to maintain the Markdown memory directly. The server stays in the repository, unregistered (docs/MEMORY_MCP.md).

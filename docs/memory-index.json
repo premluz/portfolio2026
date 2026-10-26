@@ -253,7 +253,7 @@
         "TASKS.md",
         "PROJECT_STATE.md"
       ],
-      "hash": "ac005de8be28665969476d9bbfce2ffb37c2783b",
+      "hash": "6c3577ffe2fe0ee0ba458ba0c5f34adf6b490d09",
       "items": []
     },
     {
@@ -273,7 +273,7 @@
         "PROGRESS.md",
         "HANDOFF.md"
       ],
-      "hash": "043c4d27184f12cde50697bded099315d4db5cd0",
+      "hash": "7ee9be1ab0474e34d467d874fbda9e71fde0a547",
       "items": [
         {
           "id": "Q-001",
@@ -333,7 +333,7 @@
         "PROJECT_STATE.md",
         "PROGRESS.md"
       ],
-      "hash": "14509d6b544ef65cc627982554b13e6e96e9a98a",
+      "hash": "d8788cf1f29e75af6fd620d6e3bc1a2cf578c5e6",
       "items": [
         {
           "id": "TASK-001",
@@ -398,14 +398,6 @@
           ]
         },
         {
-          "id": "TASK-012",
-          "title": "Register the memory server with the owner's MCP client",
-          "status": "todo",
-          "tags": [
-            "area/tooling"
-          ]
-        },
-        {
           "id": "TASK-010",
           "title": "Project memory structure and tooling",
           "status": "done",
@@ -440,6 +432,14 @@
           "tags": [
             "area/deploy",
             "kind/process"
+          ]
+        },
+        {
+          "id": "TASK-012",
+          "title": "Register the memory server with the owner's MCP client",
+          "status": "dropped",
+          "tags": [
+            "area/tooling"
           ]
         }
       ]
