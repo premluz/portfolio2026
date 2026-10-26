@@ -1117,6 +1117,7 @@ main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:var(--space-pa
 .home-view-split .home-hero{margin-top:var(--space-page-rhythm-lg)}
 .home-view-split .home-work{padding-top:var(--space-page-rhythm)}
 .site-footer{padding-block:var(--space-page-rhythm-lg)}
+.site-footer[hidden]{display:none}
 
 /* Footer follows the same type ladder as the header and page heroes. */
 .site-footer h2{font-size:var(--font-size-home-heading);max-width:var(--measure-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading)}
