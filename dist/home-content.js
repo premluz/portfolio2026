@@ -1,7 +1,7 @@
 import {contextualText} from './contextual-popovers.js';
 import {timelineMarkup} from './hero-timeline.js';
 import {content} from './content/local.js';
-import {headingText} from './content/html.js';
+import {escapeText,headingText} from './content/html.js';
 import {badgeMarkup} from './badge.js';
 export function normalizeHeroContent(value='timeline'){
  if(value&&typeof value==='object')return {timeline:value.timeline!==false,timelineText:value.timelineText??value.timeline!==false,description:value.description===true};
@@ -14,9 +14,11 @@ export function heroCopyMarkup(mode='timeline'){
  if((selection.timeline||selection.timelineText)&&timeline)parts.push(timelineMarkup(timeline,{graphic:selection.timeline,text:selection.timelineText}));
  return parts.join('');
 }
+// Strapline: one line under the hero heading; the Content Home "Strapline" switch shows it.
+const straplineMarkup=hero=>{const text=hero.blocks.find(block=>block.id==='home-strapline')?.paragraphs?.join(' ');return text?`<p class="hero-strapline" data-home-section="strapline">${escapeText(text)}</p>`:'';};
 export function homeHero({heroContent='timeline'}={}){const hero=content.get('home'),intro=hero.blocks.find(b=>b.id==='home-introduction'),selection=normalizeHeroContent(heroContent);return `<section class="home-hero" aria-label="Introduction">
  <div class="hero-about" data-hero-combined-content="${(selection.timeline||selection.timelineText)&&selection.description}">
-  ${badgeMarkup(hero.badge)}<h1 data-hero-title><span class="hero-greeting">${headingText(hero.title)}</span> ${headingText(intro?.title||'')}</h1>
+  ${badgeMarkup(hero.badge)}<h1 data-hero-title><span class="hero-greeting">${headingText(hero.title)}</span> ${headingText(intro?.title||'')}</h1>${straplineMarkup(hero)}
   <div class="hero-copy" data-hero-copy>${heroCopyMarkup(heroContent)}</div>
  </div>
  </section>`;}

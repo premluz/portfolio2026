@@ -737,6 +737,13 @@ export const catalog={
           "paragraphs": []
         },
         {
+          "id": "home-strapline",
+          "type": "text",
+          "paragraphs": [
+            "Product designer and builder. From technical platforms to AI-native experiences."
+          ]
+        },
+        {
           "id": "home-description",
           "type": "text",
           "paragraphs": [
@@ -1778,6 +1785,90 @@ export const catalog={
       ]
     },
     {
+      "id": "home-overview",
+      "type": "component",
+      "status": "published",
+      "title": "At a glance",
+      "summary": "Recent products, experience in brief and recent writing.",
+      "blocks": [
+        {
+          "id": "overview-recently",
+          "type": "timeline",
+          "title": "Recently",
+          "items": [
+            {
+              "id": "overview-rios",
+              "type": "reference",
+              "documentId": "rios",
+              "presentation": "inline"
+            },
+            {
+              "id": "overview-porter",
+              "type": "reference",
+              "documentId": "porter",
+              "presentation": "inline"
+            },
+            {
+              "id": "overview-snapper",
+              "type": "text",
+              "title": "Snapper bookmark enrichment",
+              "paragraphs": []
+            }
+          ]
+        },
+        {
+          "id": "overview-experience",
+          "type": "timeline",
+          "title": "Experience",
+          "items": [
+            {
+              "id": "overview-today",
+              "type": "text",
+              "label": "Today",
+              "paragraphs": [
+                "AI and genUI experiences."
+              ]
+            },
+            {
+              "id": "overview-decade",
+              "type": "text",
+              "label": "Last 10 years",
+              "paragraphs": [
+                "Products for technical users and creators."
+              ]
+            },
+            {
+              "id": "overview-roles",
+              "type": "text",
+              "label": "Roles",
+              "paragraphs": [
+                "Vodafone, Tracr, Gala, PlayStation"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "overview-writing",
+          "type": "timeline",
+          "title": "Writing",
+          "items": [
+            {
+              "id": "overview-desire",
+              "type": "reference",
+              "documentId": "desire-and-lived-experience",
+              "presentation": "inline"
+            },
+            {
+              "id": "overview-screen",
+              "type": "reference",
+              "documentId": "design-after-the-screen",
+              "presentation": "inline"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "gala-defi",
       "type": "portfolio-item",
       "status": "published",
@@ -1933,14 +2024,14 @@ export const catalog={
       "id": "merlin-cover",
       "type": "image",
       "status": "published",
-      "url": "assets/merlin2.png",
+      "url": "assets/merlin.png",
       "alt": "Merlin financial intelligence workspace with an AI agent assembling research and analysis panels"
     },
     {
       "id": "merlin-walkthrough",
       "type": "video",
       "status": "published",
-      "url": "assets/merlin2.mp4",
+      "url": "assets/merlin.mp4",
       "alt": ""
     },
     {
@@ -2019,8 +2110,8 @@ export const catalog={
       "status": "published",
       "url": "assets/bastion.png",
       "alt": "Bastion AI wallet prototype with a persistent assistant and financial interface",
-      "width": 1440,
-      "height": 900
+      "width": 786,
+      "height": 1706
     },
     {
       "id": "bastion-qr",
@@ -2111,6 +2202,55 @@ export const catalog={
       "status": "published",
       "url": "assets/gala-defi.mp4",
       "alt": ""
+    },
+    {
+      "id": "merlin-bg",
+      "type": "image",
+      "status": "published",
+      "url": "assets/merlin-bg.jpg",
+      "alt": ""
+    },
+    {
+      "id": "bastion-bg",
+      "type": "image",
+      "status": "published",
+      "url": "assets/bastion-bg.jpg",
+      "alt": ""
+    },
+    {
+      "id": "rios-bg",
+      "type": "image",
+      "status": "published",
+      "url": "assets/rios-bg.jpg",
+      "alt": ""
+    },
+    {
+      "id": "tracr-bg",
+      "type": "image",
+      "status": "published",
+      "url": "assets/tracr-bg.jpg",
+      "alt": ""
+    },
+    {
+      "id": "vodafone-bg",
+      "type": "image",
+      "status": "published",
+      "url": "assets/vodafone-bg.jpg",
+      "alt": ""
+    },
+    {
+      "id": "playstation-bg",
+      "type": "image",
+      "status": "published",
+      "url": "assets/playstation-bg.jpg",
+      "alt": ""
+    },
+    {
+      "id": "generic-bg",
+      "type": "image",
+      "status": "published",
+      "url": "assets/generic-bg.jpg",
+      "alt": ""
     }
   ],
   "presentations": [
@@ -2121,7 +2261,8 @@ export const catalog={
         "surface": [
           "#e7eefb",
           "#e6e0f6"
-        ]
+        ],
+        "backgroundMediaId": "playstation-bg"
       },
       "detail": {
         "columns": 2
@@ -2147,7 +2288,8 @@ export const catalog={
         "surface": [
           "#e5eee9",
           "#e7eaf1"
-        ]
+        ],
+        "backgroundMediaId": "tracr-bg"
       },
       "detail": {
         "columns": 2
@@ -2160,7 +2302,8 @@ export const catalog={
         "surface": [
           "#f5e5ee",
           "#e3ddf5"
-        ]
+        ],
+        "backgroundMediaId": "rios-bg"
       },
       "detail": {
         "columns": 2
@@ -2173,7 +2316,8 @@ export const catalog={
         "surface": [
           "#e2f0eb",
           "#e5eaf3"
-        ]
+        ],
+        "backgroundMediaId": "vodafone-bg"
       },
       "detail": {
         "columns": 2
@@ -2212,7 +2356,8 @@ export const catalog={
         "surface": [
           "#e8eaf3",
           "#e1e8f2"
-        ]
+        ],
+        "backgroundMediaId": "merlin-bg"
       },
       "detail": {
         "columns": 2
@@ -2225,7 +2370,8 @@ export const catalog={
         "surface": [
           "#e6e9f4",
           "#e5e7ef"
-        ]
+        ],
+        "backgroundMediaId": "bastion-bg"
       },
       "detail": {
         "columns": 2
@@ -2278,17 +2424,17 @@ export const catalog={
         {
           "id": "merlin",
           "documentId": "merlin",
-          "featured": false
+          "featured": true
         },
         {
           "id": "bastion",
           "documentId": "bastion",
-          "featured": false
+          "featured": true
         },
         {
           "id": "tracr",
           "documentId": "tracr",
-          "featured": false
+          "featured": true
         },
         {
           "id": "vodafone-iot",
@@ -2298,7 +2444,7 @@ export const catalog={
         {
           "id": "gala-defi",
           "documentId": "gala-defi",
-          "featured": false
+          "featured": true
         },
         {
           "id": "playstation",
@@ -2308,12 +2454,12 @@ export const catalog={
         {
           "id": "rios",
           "documentId": "rios",
-          "featured": false
+          "featured": true
         },
         {
           "id": "galachain",
           "documentId": "galachain",
-          "featured": false
+          "featured": true
         },
         {
           "id": "about",

@@ -10,7 +10,7 @@
 </script>
 <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Prem — technically fluent designer. A fluid collection of work and experiments."><title>Prem — Selected work</title><link rel="modulepreload" href="app.js"><link rel="modulepreload" href="content/catalog.js"><link rel="stylesheet" href="site.css"></head><body class="branding-hidden edge-shade-top edge-shade-bottom edge-shade-left edge-shade-right"><div id="roomBackdrop" class="room-backdrop" aria-hidden="true"></div><div class="room-shade" aria-hidden="true"></div><div class="page-edge-shades" aria-hidden="true"><i class="top"></i><i class="bottom"></i><i class="left"></i><i class="right"></i></div><div id="roomDropOverlay" class="room-drop-overlay" hidden><span>Drop your room image</span></div>
 <svg class="filters" aria-hidden="true"><defs id="filters"><filter id="goo" x="-30%" y="-100%" width="160%" height="300%"><feGaussianBlur in="SourceGraphic" stdDeviation="9"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 24 -10"/><feComposite in="SourceGraphic" operator="atop"/></filter></defs></svg>
-<header><a href="#work" class="brand">prem<span>®</span></a><span class="discipline">Design + technology</span></header>
+<header><a href="#work" class="brand" aria-label="Prem Luczak, home"><img class="brand-avatar" src="assets/prem.jpg" alt="" width="600" height="750" decoding="async"></a><span class="discipline">Prem Luczak</span></header>
 <div class="corner-controls" hidden role="group" aria-label="Site utilities"><button id="settingsToggle" class="glass-utility-button" data-tooltip="Developer settings" aria-label="Open developer settings">⚙</button><button id="askToggle" class="glass-utility-button" aria-label="Open assistant page" data-tooltip="Ask about the work" aria-pressed="false" aria-controls="askPage"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 11.5a8 8 0 0 1-8 8 8.5 8.5 0 0 1-3-.5L4 20l1.4-4A8 8 0 1 1 20 11.5Z"/><path d="M8 11.5h8"/></svg></button></div>
 <main id="main"></main><main id="askPage" class="assistant-page" hidden aria-labelledby="askTitle"><div class="assistant-floating-bar" hidden><span class="assistant-floating-title">Assistant</span><button id="assistantMaximize" type="button" aria-label="Open full chat" data-tooltip="Open full chat"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg></button><button id="assistantFloatingClose" type="button" aria-label="Close assistant" data-tooltip="Close [Esc]"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><div class="assistant-thread"><div class="assistant-welcome"><h1 id="askTitle">What would you like to know?</h1><p>I’m Prem’s custom-built assistant, powered by ChatGPT and ElevenLabs.</p></div><div id="askMessages" class="ask-messages" role="log" aria-live="polite" aria-relevant="additions"></div></div></main><footer class="site-footer" hidden aria-labelledby="footer-title">
 <h2 id="footer-title">Building something<br>complex?</h2>
@@ -61,6 +61,7 @@
 
 <div class="setting-subsection">Homepage</div>
 <label>Product display <select id="homeProductDisplay"><option value="cards">Cards</option><option value="carousel" selected>Carousel</option><option value="text">Text</option></select></label>
+<label class="check"><input id="featureStage" type="checkbox"> Featured stage · one per row, backdrop behind featured cards</label>
 <label class="check" id="heroCarouselSetting"><input id="heroCarousel" type="checkbox"> Hero carousel · scroll into grid</label>
 <div id="heroCarouselKnobs" hidden>
 <label>Card size <output data-hero-carousel-output="size">100%</output><input id="heroCarouselSize" data-hero-carousel-control="size" type="range" min="50" max="180" step="5" value="100"></label>
@@ -107,6 +108,8 @@
 </div></details>
 <details class="developer-settings-group">
 <summary>Content Home</summary><div class="developer-settings-content">
+<label class="check"><input type="checkbox" data-home-section-control="strapline"> Strapline · one line under the hero heading</label>
+<label class="check"><input type="checkbox" data-home-section-control="overview"> At a glance · three columns under the hero</label>
 <label class="check"><input type="checkbox" data-home-section-control="approach" checked> How I work</label>
 <label>How I work width <select data-home-span-control="approach"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
 <label class="check"><input type="checkbox" data-home-section-control="services" checked> Services</label>
@@ -181,9 +184,11 @@
 <label class="check"><input id="showFullScreenOption" type="checkbox" checked> Show full screen option</label>
 <label class="check"><input id="detailHeadingBeside" type="checkbox"> Details title beside image</label>
 <label class="check"><input id="wideHero" type="checkbox" checked> Wide hero card</label>
+<label class="check"><input id="projectBackdrop" type="checkbox"> Project backdrop image</label>
 </div></details>
 <details class="developer-settings-group">
 <summary>Navigation</summary><div class="developer-settings-content">
+<label>Position <select id="navPosition"><option value="bottom">Bottom</option><option value="top">Top · in the header row</option></select></label>
 <div class="setting-subsection">Header</div>
 <label class="check"><input id="hideBranding" type="checkbox" checked> Hide logo &amp; tagline</label>
 <div class="setting-subsection">Floating dock</div>

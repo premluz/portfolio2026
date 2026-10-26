@@ -14,8 +14,15 @@ export function imageMarkup(url,alt,{eager=false}={}){
 // Observe the actual transformed cards so carousel neighbours load as they approach.
 export class MediaLoader{
  constructor({environment=globalThis}={}){
-  this.env=environment;this.pending=new Set();
-  this.ready=event=>{if(event.target?.tagName==='IMG')event.target.removeAttribute('data-media-pending');};
+  this.env=environment;this.pending=new Set();this.decoded=new Map();
+  // Pages that rebuild their markup (simple transitions) create fresh <img> elements. Holding one live
+  // image per loaded URL lets the browser reuse it from memory instead of revalidating it over the network
+  // (Vercel serves max-age=0, must-revalidate), so returning images are ready before the page fades in.
+  this.ready=event=>{
+   const node=event.target;if(node?.tagName!=='IMG')return;node.removeAttribute('data-media-pending');
+   const url=event.type==='load'&&node.currentSrc;
+   if(url&&!this.decoded.has(url)&&environment.Image){const keep=new environment.Image();keep.src=url;this.decoded.set(url,keep);}
+  };
   for(const event of ['load','error'])environment.document?.addEventListener?.(event,this.ready,true);
   this.observer=environment.IntersectionObserver?new environment.IntersectionObserver(entries=>{
    for(const entry of entries.filter(entry=>entry.isIntersecting&&this.visible(entry.target)).sort((a,b)=>Number(this.primary(b.target))-Number(this.primary(a.target))))this.load(entry.target,this.primary(entry.target));
@@ -43,5 +50,5 @@ export class MediaLoader{
   for(const node of root?.querySelectorAll('img[data-media-pending]')||[])if(node.complete&&node.naturalWidth)node.removeAttribute('data-media-pending');
   this.queue();
  }
- destroy(){this.observer?.disconnect();this.env.cancelAnimationFrame(this.frame);for(const event of ['load','error'])this.env.document?.removeEventListener?.(event,this.ready,true);if(!this.observer)for(const event of ['scroll','resize'])this.env.removeEventListener(event,this.queue);this.pending.clear();}
+ destroy(){this.observer?.disconnect();this.env.cancelAnimationFrame(this.frame);for(const event of ['load','error'])this.env.document?.removeEventListener?.(event,this.ready,true);if(!this.observer)for(const event of ['scroll','resize'])this.env.removeEventListener(event,this.queue);this.pending.clear();this.decoded.clear();}
 }

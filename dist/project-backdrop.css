@@ -1,0 +1,40 @@
+/* Project detail backdrop (project-backdrop.js) and the Home "Featured stage" card backdrop. */
+.project-backdrop{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.project-backdrop[hidden]{display:none}
+/* The track is taller than the viewport so scroll drift never uncovers an edge. */
+.project-backdrop-track{position:absolute;inset:0 0 calc(-100% * .08) 0;will-change:transform}
+.project-backdrop-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:left center}
+/* Legibility: the page colour gathers towards the content so detail copy reads in either theme. */
+.project-backdrop::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,color-mix(in oklab,var(--page) 30%,transparent) 0%,color-mix(in oklab,var(--page) 62%,transparent) 55%,color-mix(in oklab,var(--page) 88%,transparent) 100%)}
+
+.card-backdrop{display:none}
+/* A staged project owns a full viewport: its photo bleeds to both screen edges, out of the content rail,
+   while the copy (left) and the product screenshot (right) stay on the rail. The card shell is dropped so
+   only the screenshot floats; consecutive stages blend through the soft top and bottom fades. */
+@media(min-width:701px){
+ /* [data-card-copy-position] outranks the side-composition rule that resets min-height and splits the row
+    50/50. The screenshot gets the same width as a single wide card in Alternating; the copy takes the rest. */
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-feature-stage="true"][data-card-copy-position]{position:relative;isolation:isolate;overflow:visible;min-height:100svh;padding-block:var(--feature-stage-padding-block);background:transparent!important;box-shadow:none!important;border-color:transparent;grid-template-columns:minmax(0,1fr) minmax(0,var(--image-max-width-landscape))}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-feature-stage="true"]>.liquid-skin{display:none!important}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-feature-stage="true"]>:is(.card-copy,.visual){z-index:1}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-feature-stage="true"]>.visual{background:transparent}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-feature-stage="true"]>.card-copy{align-self:end}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-feature-stage="true"]>.card-backdrop{display:block;position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;z-index:0;overflow:hidden;border-radius:0;-webkit-mask-image:linear-gradient(180deg,transparent 0,black var(--feature-stage-fade),black calc(100% - var(--feature-stage-fade)),transparent 100%);mask-image:linear-gradient(180deg,transparent 0,black var(--feature-stage-fade),black calc(100% - var(--feature-stage-fade)),transparent 100%)}
+}
+.card-backdrop>img{display:block;width:100%;height:100%;object-fit:cover;object-position:left center;transition:opacity 900ms var(--ease-gentle),transform var(--stage-reveal-backdrop-duration) var(--ease-gentle)}
+/* Arrives like the detail backdrop: from a slightly larger scale as its bytes land. */
+.card-backdrop>img[data-media-pending]{opacity:0;transform:scale(1.06)}
+@media(prefers-reduced-motion:reduce){.card-backdrop>img{transition:none}}
+:root[data-animation="off"] .card-backdrop>img{transition:none}
+
+/* Reveal (feature-stage-reveal.js): each time a stage scrolls into view, its photo settles from the
+   backdrop's arrival scale and the product card rises and grows into place, the simple-transition entrance
+   (page lift, hero image scale) on `gentle`. Transitions live only on the in-view state, so a stage that has
+   left the screen resets instantly while unseen. The hidden starting state needs the observer's
+   [data-stage-reveal] opt-in, and reduced motion or Animation Off always show stages at rest. */
+@media(min-width:701px) and (prefers-reduced-motion:no-preference){
+ :root:not([data-animation="off"]) .homepage-layout:not(.home-view-split) .gallery-grid[data-stage-reveal][data-columns="1"] .image-card[data-feature-stage="true"]>.visual{opacity:0;transform:translateY(var(--motion-lift)) scale(var(--hero-entrance-scale))}
+ :root:not([data-animation="off"]) .homepage-layout:not(.home-view-split) .gallery-grid[data-stage-reveal][data-columns="1"] .image-card[data-feature-stage="true"]>.card-backdrop>img{transform:scale(var(--backdrop-enter-scale));transition:opacity 900ms var(--ease-gentle)}
+ :root:not([data-animation="off"]) .homepage-layout:not(.home-view-split) .gallery-grid[data-stage-reveal][data-columns="1"] .image-card[data-feature-stage="true"][data-stage-in-view]>.visual{opacity:1;transform:none;transition:opacity var(--stage-reveal-card-duration) var(--ease-gentle),transform var(--stage-reveal-card-duration) var(--ease-gentle)}
+ :root:not([data-animation="off"]) .homepage-layout:not(.home-view-split) .gallery-grid[data-stage-reveal][data-columns="1"] .image-card[data-feature-stage="true"][data-stage-in-view]>.card-backdrop>img{transform:none;transition:opacity 900ms var(--ease-gentle),transform var(--stage-reveal-backdrop-duration) var(--ease-gentle)}
+}

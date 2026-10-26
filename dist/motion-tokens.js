@@ -26,3 +26,6 @@ export const DISTANCE=Object.freeze({
 });
 // Lab: a single ring from the click, colour-split by dispersion. The page changes at `handoff`.
 export const LAB_RIPPLE=Object.freeze({durationMs:1400,handoff:.42,ringRadius:.82,ringWidth:.07,maxWarpPx:64,dispersion:.35,swell:12,fade:1.6,restAmplitude:.004});
+// Backdrop: a once-per-page surface, so it may be richer. It arrives on `gentle` from a slightly larger
+// scale (a camera settling, not a zoom), leaves on the exit timing, and drifts behind the content with scroll.
+export const BACKDROP=Object.freeze({enterShare:2.2,enterScale:1.06,parallax:.08,parallaxMax:.08});

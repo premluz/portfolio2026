@@ -1,10 +1,14 @@
 import assert from 'node:assert/strict';
 import {readFile,readdir} from 'node:fs/promises';
-import {EASE} from '../dist/motion-tokens.js';
+import {EASE,DISTANCE,BACKDROP} from '../dist/motion-tokens.js';
+import {HERO_IMAGE_ENTRANCE_SCALE} from '../dist/hero-image-entrance.js';
 
 const dist=new URL('../dist/',import.meta.url);
 const tokens=await readFile(new URL('tokens.css',dist),'utf8');
 for(const [role,curve] of Object.entries(EASE))assert(tokens.includes(`--ease-${role}: ${curve};`),`CSS --ease-${role} matches the JS token`);
+// Scroll-driven motion lives in CSS, so its distances and scales are mirrored there and must stay equal.
+for(const [name,value] of [['motion-lift',DISTANCE.lift+'px'],['hero-entrance-scale',String(HERO_IMAGE_ENTRANCE_SCALE).replace(/^0/,'')],['backdrop-enter-scale',String(BACKDROP.enterScale)]])
+ assert(tokens.includes(`--${name}: ${value};`),`CSS --${name} matches its JS token (${value})`);
 // Stylesheets name a role instead of repeating a curve. Only the tokens themselves and the About illustrations'
 // deliberate overshoot keep a literal curve.
 const allowed={'tokens.css':Object.keys(EASE).length,'about-illustrations.css':1};

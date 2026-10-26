@@ -44,7 +44,7 @@ export function createContentModel({documentTypes={},blockTypes={}}={}){
  const defs={
   evidence:object({id,kind:{enum:['statement','metric','quote']},text,provenance},['id','kind','text','provenance']),
   asset:{anyOf:['image','video'].map(type=>object({id,type:{const:type},status:{enum:['published','draft','archived']},url:short,alt:text,width:{type:'integer',minimum:1},height:{type:'integer',minimum:1},credit:text},['id','type','status','url',...(type==='image'?['alt']:[])]))},
-  presentation:object({documentId:id,card:object({orientation:{enum:['portrait','landscape']},surface,ambient:surface},['orientation','surface']),detail:object({columns:{type:'integer',minimum:1,maximum:4}},['columns'])},['documentId','card','detail']),
+  presentation:object({documentId:id,card:object({orientation:{enum:['portrait','landscape']},surface,ambient:surface,backgroundMediaId:id},['orientation','surface']),detail:object({columns:{type:'integer',minimum:1,maximum:4}},['columns'])},['documentId','card','detail']),
   placement:object({id,documentId:id,featured:{type:'boolean'}},['id','documentId']),
   layout:object({id,items:list(ref('placement'))},['id','items'])
  };
@@ -112,7 +112,7 @@ function validateCatalog(catalog,model){
  const active=new Set();
  const cycle=(docId,depth=0)=>{if(active.has(docId)){issues.push('Inline document reference cycle at '+docId);return;}if(depth>CONTENT_LIMITS.depth){issues.push('Inline document reference depth exceeded at '+docId);return;}active.add(docId);for(const next of inlineEdges.get(docId)||[])cycle(next,depth+1);active.delete(docId);};
  for(const docId of documents.keys())cycle(docId);
- const shown=new Set();for(const p of catalog.presentations){if(shown.has(p.documentId))issues.push('Duplicate presentation for '+p.documentId);shown.add(p.documentId);if(!documents.has(p.documentId))issues.push('Presentation refers to missing document '+p.documentId);}
+ const shown=new Set();for(const p of catalog.presentations){if(shown.has(p.documentId))issues.push('Duplicate presentation for '+p.documentId);shown.add(p.documentId);if(!documents.has(p.documentId))issues.push('Presentation refers to missing document '+p.documentId);const backdrop=p.card?.backgroundMediaId;if(backdrop&&assets.get(backdrop)?.type!=='image')issues.push('Presentation '+p.documentId+'.card.backgroundMediaId requires an image asset');}
  const layoutIds=new Set();for(const l of catalog.layouts){if(layoutIds.has(l.id))issues.push('Duplicate layout '+l.id);layoutIds.add(l.id);const ids=new Set();for(const p of l.items){if(ids.has(p.id))issues.push(l.id+' has duplicate placement '+p.id);ids.add(p.id);const target=documents.get(p.documentId);if(!target)issues.push(l.id+' has missing document '+p.documentId);if(documents.has(p.id)&&p.id!==p.documentId)issues.push('Placement '+p.id+' collides with another document identity');}}
  return issues;
 }

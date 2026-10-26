@@ -107,7 +107,11 @@
 
   /* Type */
   --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  --type-scale: 1;
+  --font-family-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  /* Text size (Small / Medium / Large) sets these two; the defaults here are Medium. Body text and headings
+     scale separately so headings can be much smaller than body proportions alone would make them. */
+  --type-scale: .9;
+  --heading-scale: .68;
   --space-density: 1;
   --font-weight-body: 400;
   --font-weight-heading: 400;
@@ -124,10 +128,12 @@
   --font-size-note: max(11px, calc(12px * var(--type-scale)));
   --font-size-small: max(12px, calc(13px * var(--type-scale)));
   --font-size-project-summary: clamp(14px, calc(15px * var(--type-scale)), 16px);
-  --font-size-body: max(14px, calc(16px * var(--type-scale)));
+  --font-size-body: max(13px, calc(16px * var(--type-scale)));
+  /* Monospace reads larger than sans at the same size (wider glyphs), so the mono role sits below body. */
+  --font-size-mono: max(11px, calc(var(--font-size-body) * .85));
   --font-size-reading: var(--font-size-body);
-  --font-size-home-heading: clamp(calc(31px * var(--type-scale)), calc(2.86vw * var(--type-scale)), calc(44px * var(--type-scale)));
-  --font-size-section-heading: clamp(calc(20px * var(--type-scale)), calc(1.6vw * var(--type-scale)), calc(26px * var(--type-scale)));
+  --font-size-home-heading: clamp(calc(31px * var(--heading-scale)), calc(2.86vw * var(--heading-scale)), calc(44px * var(--heading-scale)));
+  --font-size-section-heading: clamp(calc(20px * var(--heading-scale)), calc(1.6vw * var(--heading-scale)), calc(26px * var(--heading-scale)));
   --font-size-footer-heading: var(--font-size-home-heading);
   --font-size-hero-support: var(--font-size-body);
   --measure-body: 66ch;
@@ -209,6 +215,30 @@
   --edge-shade-top-depth: 23vh;
   --edge-shade-bottom-depth: 31vh;
   --edge-shade-side-depth: 18vw;
+  /* A soft slope at both ends avoids a visible seam where content enters the shade. */
+  --edge-shade-stops: color-mix(in srgb,var(--page) 100%,transparent) 0%, color-mix(in srgb,var(--page) 95.7%,transparent) 12.5%, color-mix(in srgb,var(--page) 84.4%,transparent) 25%, color-mix(in srgb,var(--page) 68.4%,transparent) 37.5%, color-mix(in srgb,var(--page) 50%,transparent) 50%, color-mix(in srgb,var(--page) 31.6%,transparent) 62.5%, color-mix(in srgb,var(--page) 15.6%,transparent) 75%, color-mix(in srgb,var(--page) 4.3%,transparent) 87.5%, color-mix(in srgb,var(--page) 0%,transparent) 100%;
+  /* Featured stage: breathing room above and below each full-viewport stage, and the height of the
+     fade that blends one stage's photo into the page and the next. */
+  --feature-stage-padding-block: clamp(64px, 10vh, 160px);
+  --feature-stage-fade: clamp(80px, 14vh, 200px);
+  /* CSS twins of motion-tokens.js values for scroll-driven motion (tests/motion-tokens.mjs keeps them equal):
+     the page entrance lift, the simple-transition hero image scale, and the backdrop's arrival scale. */
+  --motion-lift: 14px;
+  --hero-entrance-scale: .94;
+  --backdrop-enter-scale: 1.06;
+  /* Hero image entrance timing at the default 400ms transition (duration × 1.225). */
+  --stage-reveal-card-duration: 490ms;
+  /* The stage photo settles slower than the card: it is the larger, calmer surface. */
+  --stage-reveal-backdrop-duration: 1400ms;
+  --brand-avatar-size: 40px;
+  /* The same breathing room above the hero (from the header's content) and below it (to At a glance). */
+  --hero-gap: var(--space-12);
+  /* Navigation at the top sits centred in the header row. */
+  --dock-top: calc((var(--header-height) - var(--nav-height)) / 2);
+  /* At a glance: the three columns under the hero, and the gap between a heading and its list. */
+  --overview-column-gap: clamp(32px, 4vw, 72px);
+  --overview-list-gap: 18px;
+  --overview-label-width: 14ch;
 }
 
 :root[data-theme="dark"] {
@@ -276,11 +306,11 @@
 }
 
 @media (max-width: 1000px) {
-  :root { --font-size-home-heading: clamp(calc(24.5px * var(--type-scale)), calc(3.1vw * var(--type-scale)), calc(34.5px * var(--type-scale))); }
+  :root { --font-size-home-heading: clamp(calc(24.5px * var(--heading-scale)), calc(3.1vw * var(--heading-scale)), calc(34.5px * var(--heading-scale))); }
 }
 
 @media (max-width: 600px) {
-  :root { --font-size-home-heading: clamp(calc(22px * var(--type-scale)), calc(5.5vw * var(--type-scale)), calc(30px * var(--type-scale))); }
+  :root { --font-size-home-heading: clamp(calc(22px * var(--heading-scale)), calc(5.5vw * var(--heading-scale)), calc(30px * var(--heading-scale))); }
   :root { --card-gap: var(--card-gap-mobile); }
 }
 
@@ -519,10 +549,10 @@ body.card-background-hidden.card-hover-hidden .surface.project-card>.liquid-skin
 .page-edge-shades[data-retreated="true"] .left{transform:translate3d(-100%,0,0)}
 .page-edge-shades[data-retreated="true"] .right{transform:translate3d(100%,0,0)}
 .page-edge-shades i{position:absolute;display:block;opacity:0;transition:opacity .3s ease}
-.page-edge-shades .top{top:0;left:0;right:0;height:var(--edge-shade-top-depth);background:linear-gradient(to bottom,rgba(var(--page-rgb),1) 0%,rgba(var(--page-rgb),.94) 24%,rgba(var(--page-rgb),.68) 55%,rgba(var(--page-rgb),0) 100%)}
-.page-edge-shades .bottom{bottom:0;left:0;right:0;height:var(--edge-shade-bottom-depth);background:linear-gradient(to top,rgba(var(--page-rgb),1) 0%,rgba(var(--page-rgb),.96) 27%,rgba(var(--page-rgb),.72) 57%,rgba(var(--page-rgb),0) 100%)}
-.page-edge-shades .left{top:0;bottom:0;left:0;width:var(--edge-shade-side-depth);background:linear-gradient(to right,rgba(var(--page-rgb),1) 0%,rgba(var(--page-rgb),.94) 24%,rgba(var(--page-rgb),.68) 55%,rgba(var(--page-rgb),0) 100%)}
-.page-edge-shades .right{top:0;bottom:0;right:0;width:var(--edge-shade-side-depth);background:linear-gradient(to left,rgba(var(--page-rgb),1) 0%,rgba(var(--page-rgb),.94) 24%,rgba(var(--page-rgb),.68) 55%,rgba(var(--page-rgb),0) 100%)}
+.page-edge-shades .top{top:0;left:0;right:0;height:var(--edge-shade-top-depth);background:linear-gradient(to bottom,var(--edge-shade-stops))}
+.page-edge-shades .bottom{bottom:0;left:0;right:0;height:var(--edge-shade-bottom-depth);background:linear-gradient(to top,var(--edge-shade-stops))}
+.page-edge-shades .left{top:0;bottom:0;left:0;width:var(--edge-shade-side-depth);background:linear-gradient(to right,var(--edge-shade-stops))}
+.page-edge-shades .right{top:0;bottom:0;right:0;width:var(--edge-shade-side-depth);background:linear-gradient(to left,var(--edge-shade-stops))}
 body.edge-shade-top .page-edge-shades .top,body.edge-shade-bottom .page-edge-shades .bottom,body.edge-shade-left .page-edge-shades .left,body.edge-shade-right .page-edge-shades .right{opacity:1}
 @media(prefers-reduced-motion:reduce){.page-edge-shades i{transition:none}}
 
@@ -971,8 +1001,8 @@ body.card-background-hidden [data-hover-effect~="glow"][data-image-mode="bleed"]
 /* design-system.css */
 /* Five independent three-step presets. Tokens remain the source of truth;
    the existing image/card geometry controls are separate fine adjustments. */
-:root[data-type-size="small"]{--type-scale:.9}
-:root[data-type-size="large"]{--type-scale:1.125}
+:root[data-type-size="small"]{--type-scale:.82;--heading-scale:.6}
+:root[data-type-size="large"]{--type-scale:1;--heading-scale:.78}
 :root[data-space-size="small"]{--space-density:.8}
 :root[data-space-size="large"]{--space-density:1.2}
 :root[data-heading-weight="thin"]{--font-weight-heading:300}
@@ -992,6 +1022,10 @@ button,input,select,textarea{font-family:var(--font-family-sans)}
 .hero-about h1,.home-view-split .hero-about h1{margin:0 0 var(--space-hero-heading-content)}
 .hero-copy,.home-view-split .hero-copy{font-size:var(--font-size-hero-support);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);max-width:var(--measure-body)}
 .hero-copy p+p{margin-top:var(--space-paragraph)}
+/* The strapline reads with the heading: a tight gap above, and it takes over the heading's space before the copy. */
+.hero-about h1:has(+ .hero-strapline:not([hidden])){margin-bottom:0}
+.hero-strapline{margin:var(--space-2) 0 var(--space-hero-heading-content);font-size:var(--font-size-hero-support);font-weight:var(--font-weight-body);line-height:var(--line-height-body);color:var(--muted)}
+.hero-strapline[hidden]{display:none}
 .home-hero{padding-block:var(--space-page-rhythm)}
 .home-view-split .home-hero{padding-block:0;top:calc(var(--header-height) + var(--space-10));margin-top:var(--space-hero-top)}
 .home-view-split .homepage-layout{gap:var(--space-detail-columns)}
@@ -1030,6 +1064,10 @@ button,input,select,textarea{font-family:var(--font-family-sans)}
 .project-menu-group+.project-menu-group{margin-top:var(--space-3)}
 .layout-control button,.gallery-toolbar .layout-control button,header .theme-toggle{font-size:var(--font-size-small);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body)}
 .brand{font-weight:var(--font-weight-strong);letter-spacing:var(--letter-spacing-heading)}
+/* The logo is the About portrait as a round avatar; the tagline beside it is the name. */
+/* Mono text role: labels, lists and metadata set in uppercase monospace. */
+.text-mono{font-family:var(--font-family-mono);font-size:var(--font-size-mono);font-weight:var(--font-weight-body);letter-spacing:var(--eyebrow-tracking);text-transform:uppercase;line-height:var(--line-height-label)}
+.brand-avatar{display:block;width:var(--brand-avatar-size);height:var(--brand-avatar-size);border-radius:50%;object-fit:cover;object-position:50% 30%}
 .discipline{font-size:var(--font-size-small);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body)}
 .design-system-controls{border:0;padding:0;margin:0 0 24px;min-width:0}
 .design-system-controls legend{padding:0;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
@@ -1155,7 +1193,7 @@ html[data-animation="off"] .image-card[data-copy-hover="true"]:is(:hover,:focus-
 @media(max-width:380px){#dock nav a{font-size:min(var(--nav-item-font-size),14px);padding-inline:min(calc(var(--nav-item-padding) + 5px),6px)}}
 
 /* Reserve a glimpse of work as the window becomes shorter, using measured hero content. */
-main.home-canvas:not(.home-view-split) .home-hero{--hero-padding:min(var(--space-page-rhythm-lg),var(--hero-viewport-space,var(--space-page-rhythm-lg)));--hero-top-bias:min(32px,var(--hero-padding));padding-top:108px;padding-bottom:0}
+main.home-canvas:not(.home-view-split) .home-hero{--hero-padding:min(var(--space-page-rhythm-lg),var(--hero-viewport-space,var(--space-page-rhythm-lg)));--hero-top-bias:min(32px,var(--hero-padding));padding-top:calc((var(--header-height) + var(--brand-avatar-size)) / 2 + var(--hero-gap));padding-bottom:0}
 .home-view-split .home-hero{margin-top:calc(var(--space-page-rhythm-lg) + 32px)}
 
 /* Client, project title and summary are independently visible card fields. */
@@ -1784,6 +1822,8 @@ body:has(.home-carousel-active){overflow-x:clip}
 #askPage .ask-cards .project-card>.visual{--image-padding-top:0px;--image-padding-right:0px;--image-padding-bottom:0px;--image-padding-left:0px;border-radius:0;background:transparent;overflow:visible}
 
 #dock{bottom:calc(var(--dock-bottom) + var(--composer-keyboard-inset,0px))}
+/* Navigation position (Settings → Navigation): top moves the dock into the header row. */
+:root[data-nav-position="top"] #dock{top:var(--dock-top);bottom:auto}
 @media(max-width:750px) and (pointer:coarse){#dock .assistant-composer input{font-size:max(16px,var(--composer-font-size))}}
 
 .corner-controls{position:fixed;right:max(24px,env(safe-area-inset-right));bottom:max(24px,env(safe-area-inset-bottom));z-index:44;display:flex;align-items:center;gap:8px}.corner-controls[hidden]{display:none!important}
@@ -2122,6 +2162,61 @@ a.ask-fit-source:is(:hover,:focus-visible){color:var(--ink);text-decoration-colo
 .lab-rippling .site-footer{filter:url(#lab-ripple-footer)}
 /* Arriving mid-ripple: lift the dark boot cover quickly so it does not hide the rest of the ring. */
 :root.lab-arriving{--page-boot-fade:140ms}
+
+/* project-backdrop.css */
+/* Project detail backdrop (project-backdrop.js) and the Home "Featured stage" card backdrop. */
+.project-backdrop{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.project-backdrop[hidden]{display:none}
+/* The track is taller than the viewport so scroll drift never uncovers an edge. */
+.project-backdrop-track{position:absolute;inset:0 0 calc(-100% * .08) 0;will-change:transform}
+.project-backdrop-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:left center}
+/* Legibility: the page colour gathers towards the content so detail copy reads in either theme. */
+.project-backdrop::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,color-mix(in oklab,var(--page) 30%,transparent) 0%,color-mix(in oklab,var(--page) 62%,transparent) 55%,color-mix(in oklab,var(--page) 88%,transparent) 100%)}
+
+.card-backdrop{display:none}
+/* A staged project owns a full viewport: its photo bleeds to both screen edges, out of the content rail,
+   while the copy (left) and the product screenshot (right) stay on the rail. The card shell is dropped so
+   only the screenshot floats; consecutive stages blend through the soft top and bottom fades. */
+@media(min-width:701px){
+ /* [data-card-copy-position] outranks the side-composition rule that resets min-height and splits the row
+    50/50. The screenshot gets the same width as a single wide card in Alternating; the copy takes the rest. */
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-feature-stage="true"][data-card-copy-position]{position:relative;isolation:isolate;overflow:visible;min-height:100svh;padding-block:var(--feature-stage-padding-block);background:transparent!important;box-shadow:none!important;border-color:transparent;grid-template-columns:minmax(0,1fr) minmax(0,var(--image-max-width-landscape))}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-feature-stage="true"]>.liquid-skin{display:none!important}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-feature-stage="true"]>:is(.card-copy,.visual){z-index:1}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-feature-stage="true"]>.visual{background:transparent}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-feature-stage="true"]>.card-copy{align-self:end}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-feature-stage="true"]>.card-backdrop{display:block;position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;z-index:0;overflow:hidden;border-radius:0;-webkit-mask-image:linear-gradient(180deg,transparent 0,black var(--feature-stage-fade),black calc(100% - var(--feature-stage-fade)),transparent 100%);mask-image:linear-gradient(180deg,transparent 0,black var(--feature-stage-fade),black calc(100% - var(--feature-stage-fade)),transparent 100%)}
+}
+.card-backdrop>img{display:block;width:100%;height:100%;object-fit:cover;object-position:left center;transition:opacity 900ms var(--ease-gentle),transform var(--stage-reveal-backdrop-duration) var(--ease-gentle)}
+/* Arrives like the detail backdrop: from a slightly larger scale as its bytes land. */
+.card-backdrop>img[data-media-pending]{opacity:0;transform:scale(1.06)}
+@media(prefers-reduced-motion:reduce){.card-backdrop>img{transition:none}}
+:root[data-animation="off"] .card-backdrop>img{transition:none}
+
+/* Reveal (feature-stage-reveal.js): each time a stage scrolls into view, its photo settles from the
+   backdrop's arrival scale and the product card rises and grows into place, the simple-transition entrance
+   (page lift, hero image scale) on `gentle`. Transitions live only on the in-view state, so a stage that has
+   left the screen resets instantly while unseen. The hidden starting state needs the observer's
+   [data-stage-reveal] opt-in, and reduced motion or Animation Off always show stages at rest. */
+@media(min-width:701px) and (prefers-reduced-motion:no-preference){
+ :root:not([data-animation="off"]) .homepage-layout:not(.home-view-split) .gallery-grid[data-stage-reveal][data-columns="1"] .image-card[data-feature-stage="true"]>.visual{opacity:0;transform:translateY(var(--motion-lift)) scale(var(--hero-entrance-scale))}
+ :root:not([data-animation="off"]) .homepage-layout:not(.home-view-split) .gallery-grid[data-stage-reveal][data-columns="1"] .image-card[data-feature-stage="true"]>.card-backdrop>img{transform:scale(var(--backdrop-enter-scale));transition:opacity 900ms var(--ease-gentle)}
+ :root:not([data-animation="off"]) .homepage-layout:not(.home-view-split) .gallery-grid[data-stage-reveal][data-columns="1"] .image-card[data-feature-stage="true"][data-stage-in-view]>.visual{opacity:1;transform:none;transition:opacity var(--stage-reveal-card-duration) var(--ease-gentle),transform var(--stage-reveal-card-duration) var(--ease-gentle)}
+ :root:not([data-animation="off"]) .homepage-layout:not(.home-view-split) .gallery-grid[data-stage-reveal][data-columns="1"] .image-card[data-feature-stage="true"][data-stage-in-view]>.card-backdrop>img{transform:none;transition:opacity 900ms var(--ease-gentle),transform var(--stage-reveal-backdrop-duration) var(--ease-gentle)}
+}
+
+/* home-overview.css */
+/* At a glance (home-overview.js): three quiet columns under the hero. Type comes from .text-mono. */
+.home-overview{margin-block:var(--hero-gap) 0}
+.home-overview[hidden]{display:none}
+.home-overview-columns{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr) minmax(0,1fr);column-gap:var(--overview-column-gap);row-gap:calc(var(--overview-column-gap) * .75)}
+.home-overview-title{margin:0 0 var(--overview-list-gap);color:var(--muted)}
+.home-overview-list{display:grid;gap:calc(var(--overview-list-gap) * .6);margin:0;padding:0;list-style:none;color:var(--body-ink)}
+.home-overview-list a{color:inherit;text-decoration:none}
+.home-overview-list a:is(:hover,:focus-visible){color:var(--ink)}
+.home-overview-row{display:grid;grid-template-columns:var(--overview-label-width) minmax(0,1fr);column-gap:var(--overview-list-gap)}
+.home-overview-label{color:var(--muted)}
+@media(max-width:700px){.home-overview-columns{grid-template-columns:minmax(0,1fr)}}
 
 /* mobile.css */
 /* Keep editable text large enough to avoid Safari's automatic input zoom.

@@ -66,6 +66,8 @@ one deliberate overshoot curve; nothing else uses a literal.
 | Page exit (simple) | `duration × 0.5`, 160–240ms | Fade in place on `leave`; the same timing as the project exit. |
 | Project page exit | `duration × 0.5`, 160–240ms | Recede; see below. |
 | Hero image entrance | `duration × 1.225` | About a quarter longer than the page, `gentle`. |
+| Project backdrop entrance | `duration × 2.2` (`BACKDROP.enterShare`) | Fades in from scale 1.06 on `gentle`; leaves on the page exit timing on `leave`; drifts 0.08× scroll, capped at 8% of the viewport. Featured-stage backdrops arrive the same way as their bytes land (900ms fade, 1400ms scale). |
+| Featured stage reveal | card 490ms, photo 1400ms | Each time a stage is a quarter in view: the photo settles from 1.06 and the card rises 14px and grows from 0.94 (the simple-transition entrance), both on `gentle`. A stage that fully leaves resets instantly, so it replays on the next pass. |
 | Detail text reveal | 220ms each, 44ms step, 240ms cap | Facts and actions after the title and summary. |
 | Summary and title fade | 620ms | Fade mode of the summary stream. |
 | Home hero exit | `duration × 0.4`, 12% steps | Description, heading, then badge. |

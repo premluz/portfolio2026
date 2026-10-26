@@ -31,6 +31,14 @@ hidden.hidden=false;loader.refresh(root);step();assert.equal(hidden.src,'hidden.
 const count=requests.length;loader.refresh(root);step();assert.equal(requests.length,count,'Refresh and gallery selection never issue duplicate requests');
 loader.destroy();assert.equal(observer.observed.size,0);assert.equal(documentListeners.size,0);assert.equal(frames.size,0);
 
+// A rebuilt page (simple transitions) gets fresh <img> elements; one live image per loaded URL keeps them in memory.
+const kept=[];class KeptImage{set src(value){this.url=value;kept.push(value);}}
+const pooling=new MediaLoader({environment:{...env,Image:KeptImage}}),loaded=url=>({tagName:'IMG',currentSrc:url,removeAttribute(){}});
+documentListeners.get('load')({type:'load',target:loaded('card-960.webp')});documentListeners.get('load')({type:'load',target:loaded('card-960.webp')});
+documentListeners.get('error')({type:'error',target:loaded('broken.webp')});
+assert.deepEqual(kept,['card-960.webp'],'Each loaded URL is held once; failed loads are not held');
+pooling.destroy();assert.equal(pooling.decoded.size,0,'Destroy releases held images');
+
 // Older browsers use the same bounds check on scroll rather than loading every image.
 const fallbackNode=media('fallback',{top:2000}),fallbackRoot={querySelectorAll:()=>[fallbackNode]},fallback=new MediaLoader({environment:{...env,IntersectionObserver:null}});fallback.refresh(fallbackRoot);step();assert(!fallbackNode.src);fallbackNode.top=400;listeners.get('scroll')();step();assert.equal(fallbackNode.src,'fallback.webp');fallback.destroy();assert.equal(listeners.size,0);
 

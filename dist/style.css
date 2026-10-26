@@ -206,10 +206,10 @@ body.card-background-hidden.card-hover-hidden .surface.project-card>.liquid-skin
 .page-edge-shades[data-retreated="true"] .left{transform:translate3d(-100%,0,0)}
 .page-edge-shades[data-retreated="true"] .right{transform:translate3d(100%,0,0)}
 .page-edge-shades i{position:absolute;display:block;opacity:0;transition:opacity .3s ease}
-.page-edge-shades .top{top:0;left:0;right:0;height:var(--edge-shade-top-depth);background:linear-gradient(to bottom,rgba(var(--page-rgb),1) 0%,rgba(var(--page-rgb),.94) 24%,rgba(var(--page-rgb),.68) 55%,rgba(var(--page-rgb),0) 100%)}
-.page-edge-shades .bottom{bottom:0;left:0;right:0;height:var(--edge-shade-bottom-depth);background:linear-gradient(to top,rgba(var(--page-rgb),1) 0%,rgba(var(--page-rgb),.96) 27%,rgba(var(--page-rgb),.72) 57%,rgba(var(--page-rgb),0) 100%)}
-.page-edge-shades .left{top:0;bottom:0;left:0;width:var(--edge-shade-side-depth);background:linear-gradient(to right,rgba(var(--page-rgb),1) 0%,rgba(var(--page-rgb),.94) 24%,rgba(var(--page-rgb),.68) 55%,rgba(var(--page-rgb),0) 100%)}
-.page-edge-shades .right{top:0;bottom:0;right:0;width:var(--edge-shade-side-depth);background:linear-gradient(to left,rgba(var(--page-rgb),1) 0%,rgba(var(--page-rgb),.94) 24%,rgba(var(--page-rgb),.68) 55%,rgba(var(--page-rgb),0) 100%)}
+.page-edge-shades .top{top:0;left:0;right:0;height:var(--edge-shade-top-depth);background:linear-gradient(to bottom,var(--edge-shade-stops))}
+.page-edge-shades .bottom{bottom:0;left:0;right:0;height:var(--edge-shade-bottom-depth);background:linear-gradient(to top,var(--edge-shade-stops))}
+.page-edge-shades .left{top:0;bottom:0;left:0;width:var(--edge-shade-side-depth);background:linear-gradient(to right,var(--edge-shade-stops))}
+.page-edge-shades .right{top:0;bottom:0;right:0;width:var(--edge-shade-side-depth);background:linear-gradient(to left,var(--edge-shade-stops))}
 body.edge-shade-top .page-edge-shades .top,body.edge-shade-bottom .page-edge-shades .bottom,body.edge-shade-left .page-edge-shades .left,body.edge-shade-right .page-edge-shades .right{opacity:1}
 @media(prefers-reduced-motion:reduce){.page-edge-shades i{transition:none}}
 

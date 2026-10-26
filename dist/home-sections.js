@@ -1,5 +1,6 @@
 import {normaliseSectionSpan} from './content-widths.js';
-export const HOME_SECTION_DEFAULTS=Object.freeze({approach:true,services:true,about:true,'about-timeline':true,experience:true,testimonials:true,writing:true});
+// strapline and overview (At a glance) start off so the live site only changes once they are switched on.
+export const HOME_SECTION_DEFAULTS=Object.freeze({strapline:false,overview:false,approach:true,services:true,about:true,'about-timeline':true,experience:true,testimonials:true,writing:true});
 
 // A scope names one page's sections: where its choices persist and which attributes tie its markup to the dev panel.
 // Home and About share this machinery; only the scope differs.

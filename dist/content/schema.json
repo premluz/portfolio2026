@@ -261,6 +261,11 @@
               },
               "minItems": 2,
               "maxItems": 2
+            },
+            "backgroundMediaId": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]*$",
+              "maxLength": 120
             }
           },
           "required": [

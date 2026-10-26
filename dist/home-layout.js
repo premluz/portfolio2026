@@ -14,6 +14,8 @@ import {contentBlocks} from './content-blocks.js';
 import {content} from './content/local.js';
 import {escapeText} from './content/html.js';
 import {flipPose,masonryMinimumHeight,masonryPlan,clamp} from './placement.js';
+import {createStageReveal} from './feature-stage-reveal.js';
+import {homeOverviewMarkup} from './home-overview.js';
 
 export function homeProductText(documents){
  const independent=['rios','bastion','merlin','porter'],unique=documents.filter(doc=>!doc.body&&!doc.sourceProjectId),groups=[['Projects',unique.filter(doc=>!independent.includes(doc.id))],['Independent and R&D',independent.map(id=>unique.find(doc=>doc.id===id)).filter(Boolean)]];
@@ -23,7 +25,7 @@ export function homeMarkup(documents,layout,{heroContent='timeline'}={}){
  const projects=documents.filter(doc=>!doc.body&&!doc.listOnly);
  const slot=(doc,index)=>`<div class="card-slot" data-slot="${doc.id}"><div class="card-placement">${card(doc,index,layout)}</div></div>`;
  const gallery=content.get('home')?.blocks.find(block=>block.id==='home-projects');
- return `<div class="homepage-layout">${homeHero({heroContent})}${homeProductText(documents)}<div class="home-product-carousel" data-home-product-gallery hidden>${gallery?contentBlocks([gallery],2):''}</div><section class="hero-carousel-stage" data-hero-carousel aria-label="Selected projects carousel" hidden><div class="hero-carousel-controls" data-carousel-controls><button type="button" data-carousel-previous aria-label="Previous projects">←</button><span>Drag to browse · Scroll to explore</span><button type="button" data-carousel-pause aria-label="Pause carousel" aria-pressed="false">Ⅱ</button><button type="button" data-carousel-next aria-label="Next projects">→</button></div></section><div class="home-work">
+ return `<div class="homepage-layout">${homeHero({heroContent})}${homeOverviewMarkup()}${homeProductText(documents)}<div class="home-product-carousel" data-home-product-gallery hidden>${gallery?contentBlocks([gallery],2):''}</div><section class="hero-carousel-stage" data-hero-carousel aria-label="Selected projects carousel" hidden><div class="hero-carousel-controls" data-carousel-controls><button type="button" data-carousel-previous aria-label="Previous projects">←</button><span>Drag to browse · Scroll to explore</span><button type="button" data-carousel-pause aria-label="Pause carousel" aria-pressed="false">Ⅱ</button><button type="button" data-carousel-next aria-label="Next projects">→</button></div></section><div class="home-work">
  <div class="gallery-toolbar"><h2 class="sr">Selected work & explorations</h2></div>
  <div class="gallery-grid" data-gallery>${projects.map((doc,index)=>slot(doc,index)).join('')}</div>
  <div class="grid info-grid" data-information hidden></div>
@@ -53,6 +55,7 @@ export class HomeLayout {
   for(const slot of this.slots.values())this.observer.observe(slot.querySelector('[data-card]'));
   for(const button of root.querySelectorAll('[data-spotlight]'))button.onclick=()=>this.focus(button.dataset.spotlight,'smooth');
   this.textListHover=mountTextListHover(root,documents,{reduced});
+  this.featureStage=false;
   this.setProductDisplay(productDisplay);this.apply({mode,layout,columns,oneColumnPosition,multiColumnPosition,showCopyOnHover});this.resume();
  }
  setProductDisplay(value){this.textListHover?.hide();this.productDisplay=['carousel','text'].includes(value)?value:'cards';const page=this.root.querySelector('.homepage-layout');if(page)page.dataset.productDisplay=this.productDisplay;const carousel=this.root.querySelector('[data-home-product-gallery]');if(carousel)carousel.hidden=this.productDisplay!=='carousel';const text=this.root.querySelector('[data-home-product-text]');if(text)text.hidden=this.productDisplay!=='text';const work=this.root.querySelector('.home-work');if(work)work.hidden=this.productDisplay!=='cards';}
@@ -75,20 +78,22 @@ export class HomeLayout {
  }
  syncCardComposition(){
   if(!this.gallery)return;
-  const alternating=this.mode==='current'&&this.layout==='alternating',multi=alternating||this.mode==='current'&&this.columns>1;this.gallery.dataset.copyLayout=multi?'multiple':'single';
+  // The featured stage owns the whole row, so it forces one column over both the column count and alternating rows.
+  const alternating=this.mode==='current'&&this.layout==='alternating'&&!this.featureStage,multi=alternating||this.mode==='current'&&this.columns>1&&!this.featureStage;this.gallery.dataset.copyLayout=multi?'multiple':'single';
   const projects=this.documents.filter(doc=>!doc.body&&this.slots.get(doc.id)?.querySelector('[data-card]'));let wideIndex=0;
   projects.forEach((doc,index)=>{const slot=this.slots.get(doc.id),element=slot.querySelector('[data-card]'),span=alternating?alternatingSpan(index,projects.length):null,wide=!multi||span==='full';
    // The wide row is a larger, left-aligned image with its description underneath.
    const oneColumn=alternating?'bottom':this.oneColumnPosition==='alternating'?(wideIndex%2?'right':'left'):this.oneColumnPosition;if(wide)wideIndex++;
    if(span){slot.dataset.cardSpan=span;element.dataset.cardSpan=span;}else{delete slot.dataset.cardSpan;delete element.dataset.cardSpan;}
-   element.dataset.cardCopyPosition=wide?oneColumn:this.multiColumnPosition;element.dataset.copyHover=String(!wide&&this.showCopyOnHover);
+   const staged=this.featureStage&&doc.featured===true;if(staged)element.dataset.featureStage='true';else delete element.dataset.featureStage;
+   element.dataset.cardCopyPosition=staged?'left':wide?oneColumn:this.multiColumnPosition;element.dataset.copyHover=String(!wide&&this.showCopyOnHover);
   });
  }
  setCopyHover(enabled){this.showCopyOnHover=!!enabled;this.syncCardComposition();}
  flush(immediate=false,dt=1){
   if(this.dead)return;
   if(this.mode==='current'){
-   const count=Math.min(this.layout==='alternating'?2:this.columns,innerWidth<=600?1:innerWidth<=1000?2:4);this.gallery.style.setProperty('--effective-columns',count);this.gallery.dataset.columns=count;
+   const count=this.featureStage?1:Math.min(this.layout==='alternating'?2:this.columns,innerWidth<=600?1:innerWidth<=1000?2:4);this.gallery.style.setProperty('--effective-columns',count);this.gallery.dataset.columns=count;
    if(this.layout==='masonry'){
     this.placeMasonry(count);
    }else for(const slot of this.gallery.children){slot.style.gridRow='';slot.style.gridColumn='';}
@@ -172,8 +177,10 @@ export class HomeLayout {
  holdCard(id){if(this.mode!=='flip')return;this.pause();const carrier=this.slots.get(id)?.firstElementChild;if(carrier){carrier.style.transform='perspective(1500px) rotateX(0deg) scale(1)';carrier.style.opacity='1';this.poses.set(id,{angle:0,scale:1,opacity:1});}}
  setHeroContent(mode){this.heroContent=normalizeHeroContent(mode);this.introduction.copy=heroCopyMarkup(this.heroContent);this.lastDescription=null;this.updateDescription();this.schedule();}
  setTimelineMode(mode){this.timelineMode=mode==='drag'?'drag':'cursor';this.timeline?.setMode(this.timelineMode);}
+ setFeatureStage(enabled){enabled=!!enabled;if(enabled===this.featureStage)return;this.featureStage=enabled;this.syncCardComposition();this.flush(true);
+  this.stageReveal?.destroy();this.stageReveal=enabled?createStageReveal(this.gallery):null;}
  setHeroCarousel(enabled){this.heroCarousel=!!enabled;this.carousel.setEnabled(this.mode==='current'&&this.heroCarousel&&this.productDisplay==='cards');this.flush(true);}
  pause(){this.textListHover?.hide();this.timeline?.stop();this.carousel?.pause();this.paused=true;cancelAnimationFrame(this.raf);this.raf=0;}
  resume(){if(this.dead)return;this.paused=false;this.carousel.resume();this.schedule();}
- destroy(){this.textListHover?.destroy();this.timeline?.destroy();this.carousel.destroy();this.dead=true;this.pause();clearTimeout(this.motionTimer);this.observer.disconnect();removeEventListener('scroll',this.scroll);removeEventListener('resize',this.resize);}
+ destroy(){this.stageReveal?.destroy();this.textListHover?.destroy();this.timeline?.destroy();this.carousel.destroy();this.dead=true;this.pause();clearTimeout(this.motionTimer);this.observer.disconnect();removeEventListener('scroll',this.scroll);removeEventListener('resize',this.resize);}
 }

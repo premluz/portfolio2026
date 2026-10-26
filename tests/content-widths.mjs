@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {APP_MAX_WIDTH,CONTENT_WIDTHS,pageTemplateForRoute,readContentWidth,contentRail,sectionRail,responsiveContentGutter} from '../dist/content-widths.js';
-import {readHomeSectionSpans,initHomeSectionSettings} from '../dist/home-sections.js';
+import {readHomeSectionSpans,initHomeSectionSettings,HOME_SECTION_DEFAULTS} from '../dist/home-sections.js';
 
 assert.equal(APP_MAX_WIDTH,1920);assert.equal(Object.keys(CONTENT_WIDTHS).length,3);
 const values=new Map(),storage={getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,value)};
@@ -27,7 +27,7 @@ assert.equal(sectionRail(contentRail(2560,'small',64),'edge').width,1920);
 assert.equal(contentRail(320,'large',24).content,272,'Mobile fitting wins over a desktop maximum');
 
 values.set('prem-home-section-spans',JSON.stringify({services:'edge',about:'app',experience:'invalid'}));
-assert.deepEqual(readHomeSectionSpans(storage),{approach:'content',services:'edge',about:'app','about-timeline':'content',experience:'content',testimonials:'content',writing:'content'});
+assert.deepEqual(readHomeSectionSpans(storage),{strapline:'content',overview:'content',approach:'content',services:'edge',about:'app','about-timeline':'content',experience:'content',testimonials:'content',writing:'content'});
 const nodes=Object.fromEntries(['services','about','experience','testimonials'].map(id=>[id,{dataset:{homeSection:id},hidden:false}]));
 const root={querySelectorAll:()=>Object.values(nodes),querySelector:()=>({querySelectorAll:()=>[nodes.about,nodes.experience]})};
 const selects=Object.entries(nodes).map(([id])=>({dataset:{homeSpanControl:id},value:'content',addEventListener(type,fn){this[type]=fn;}}));
@@ -36,7 +36,7 @@ let allowed=true,changes=0;
 const controller=initHomeSectionSettings(panel,{storage,getRoot:()=>root,canChange:()=>allowed,onChange:()=>changes++});
 assert.equal(nodes.services.dataset.contentSpan,'edge');assert.equal(nodes.about.dataset.contentSpan,'app');
 selects[2].value='edge';selects[2].change();assert.equal(nodes.experience.dataset.contentSpan,'edge');assert.equal(changes,1);
-assert(Object.values(controller.value).every(Boolean),'A bleed setting does not hide sections');
+assert.deepEqual(controller.value,{...HOME_SECTION_DEFAULTS},'A bleed setting does not change which sections show');
 assert.equal(readHomeSectionSpans(storage).experience,'edge','Breakout choices survive reload');
 allowed=false;selects[2].value='content';selects[2].change();assert.equal(selects[2].value,'edge');assert.equal(changes,1,'In-flight route transitions retain their layout');
 console.log('Content widths passed: independent presets, legacy migration, mobile fitting, 1920px app cap, gutter and edge breakouts, centring, persistence and transition guards.');

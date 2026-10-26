@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
 import {EdgeShades} from '../dist/edge-shades.js';
 import {TransitionControl,morphProgress} from '../dist/transition-control.js';
 
@@ -55,4 +56,22 @@ for(const fromDetails of [false,true])for(const reverseAt of [null,0,.16,.6,.94]
  shades.animateTo(true,new TransitionControl(),400);
  assert(animations.every(animation=>animation.options.easing==='cubic-bezier(.22,1,.36,1)'),'Slide navigation uses the same native easing as its cards');
 }
-console.log('Edge shades passed: four outward directions, direct links, disabled setting, reduced motion, synchronized return and Escape at four phases.');
+{
+ const tokens=await readFile(new URL('../dist/tokens.css',import.meta.url),'utf8');
+ const css=await readFile(new URL('../dist/style.css',import.meta.url),'utf8');
+ const profile=tokens.match(/--edge-shade-stops:([^;]+);/)[1];
+ const stops=[...profile.matchAll(/color-mix\(in srgb,var\(--page\) ([\d.]+)%,transparent\) ([\d.]+)%/g)].map(([,alpha,position])=>({alpha:Number(alpha)/100,position:Number(position)}));
+ assert(!profile.includes('--page-rgb'),'Fade colours come from the actual page token, including neutral dark mode');
+ assert.equal(stops[0].alpha,1,'The outer edge fully meets the page colour');
+ assert.equal(stops.at(-1).alpha,0,'The inner edge leaves the content untouched');
+ for(let index=1;index<stops.length;index++){
+  assert(stops[index].position>stops[index-1].position&&stops[index].alpha<stops[index-1].alpha,'Opacity tapers continuously towards content');
+ }
+ assert(stops[0].alpha-stops[1].alpha<.05&&stops.at(-2).alpha<.05,'Both ends ease gently into their neighbouring surface');
+ assert(stops.find(stop=>stop.position===50).alpha<=.5,'The midpoint no longer carries the old nearly opaque plateau');
+ for(const [side,direction] of Object.entries({top:'bottom',bottom:'top',left:'right',right:'left'})){
+  const rule=css.match(new RegExp('\\.page-edge-shades \\.'+side+'\\{([^}]+)\\}'))[1];
+  assert(rule.includes(`linear-gradient(to ${direction},var(--edge-shade-stops))`),'Every edge uses the same theme-aware profile');
+ }
+}
+console.log('Edge shades passed: gentle shared gradient endpoints and midpoint, four outward directions, direct links, disabled setting, reduced motion, synchronized return and Escape at four phases.');

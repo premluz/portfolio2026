@@ -1,5 +1,6 @@
 import {contentModel,exportPublishedCatalog,CONTENT_LIMITS,ContentValidationError,walkBlocks} from './model.js';
 import {validateSchema} from './schema-validator.js';
+import {GENERIC_BACKDROP_ID} from '../backdrop-sources.js';
 
 const clone=value=>JSON.parse(JSON.stringify(value));
 function freeze(value){if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value);}return value;}
@@ -35,7 +36,7 @@ export function createContentStore(catalog,{model=contentModel,includeUnpublishe
  const card=documentId=>{
   const d=documents.get(documentId);if(!d||!(d.type==='portfolio-item'||d.type==='article'||d.type==='page'&&d.template==='information'))return null;
   const p=presentations.get(d.id),image=assets.get(d.heroMediaId),video=assets.get(d.hoverVideoId),qrCode=assets.get(d.qrCodeMediaId);
-  const shared={id:d.id,documentId:d.id,title:d.title,name:d.name||d.title,summary:d.summary||'',category:d.category||'',bg:gradient(p?.card.surface||['#ececf0','#ececf0']),ambient:p?.card.ambient||null,blocks:d.blocks,contentColumns:p?.detail.columns||2};
+  const shared={id:d.id,documentId:d.id,title:d.title,name:d.name||d.title,summary:d.summary||'',category:d.category||'',bg:gradient(p?.card.surface||['#ececf0','#ececf0']),ambient:p?.card.ambient||null,background:(assets.get(p?.card.backgroundMediaId)||assets.get(GENERIC_BACKDROP_ID))?.url||null,blocks:d.blocks,contentColumns:p?.detail.columns||2};
   // Articles route like information pages; the series lists every part so each can link its siblings.
   if(d.type==='article'){const parts=d.series?[...documents.values()].filter(doc=>doc.type==='article'&&doc.series?.id===d.series.id).sort((a,b)=>a.series.part-b.series.part).map(doc=>({id:doc.id,title:doc.title,part:doc.series.part})):[];return freeze({...shared,_type:'information',_article:true,body:[d.summary||''],publishedAt:d.publishedAt,author:d.author,series:d.series?{...d.series,parts}:null,sources:d.sources||[]});}
   if(d.type==='page'){const lead=d.blocks.find(b=>b.type==='text');return freeze({...shared,_type:'information',body:lead?.paragraphs||[d.summary||''],blocks:d.blocks.filter(b=>b!==lead),link:d.links?.[0]});}
