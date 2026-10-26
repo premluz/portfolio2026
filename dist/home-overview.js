@@ -13,7 +13,7 @@ function textItem(block){
  if(block.label)return `<li class="home-overview-row"><span class="home-overview-label">${escapeText(block.label)}</span><span>${body}</span></li>`;
  return `<li>${escapeText(block.title||body)}</li>`;
 }
-const column=(block,store)=>`<div class="home-overview-column"><h2 class="home-overview-title text-mono">${escapeText(block.title||'')}</h2><ul class="home-overview-list text-mono">${block.items.map(item=>item.type==='reference'?referenceItem(item,store):textItem(item)).join('')}</ul></div>`;
+const column=(block,store)=>`<div class="home-overview-column"><h2 class="home-overview-title text-eyebrow">${escapeText(block.title||'')}</h2><ul class="home-overview-list">${block.items.map(item=>item.type==='reference'?referenceItem(item,store):textItem(item)).join('')}</ul></div>`;
 
 export function homeOverviewMarkup(doc=content.get('home-overview'),store=content){
  if(!doc)return '';
