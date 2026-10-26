@@ -1041,6 +1041,9 @@ button,input,select,textarea{font-family:var(--font-family-sans)}
 .hero-copy p+p{margin-top:var(--space-paragraph)}
 /* The strapline reads with the heading: a tight gap above, and it takes over the heading's space before the copy. */
 .hero-about h1:has(+ .hero-strapline:not([hidden])){margin-bottom:0}
+.hero-about h1[hidden]{display:none}
+/* Flip and Flat write the active project's name into this h1, so the Content Home switch does not hide it there. */
+.home-view-split .hero-about h1[hidden]{display:block}
 .hero-strapline{margin:var(--space-2) 0 var(--space-hero-heading-content);font-size:var(--font-size-hero-support);font-weight:var(--font-weight-body);line-height:var(--line-height-body);color:var(--muted)}
 .hero-strapline[hidden]{display:none}
 .home-hero{padding-block:var(--space-page-rhythm)}
@@ -1584,7 +1587,8 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 
 /* home-sections.css */
 :root{--radius-home-content-card:20px;--home-content-card-padding:clamp(24px,2.6vw,40px);--font-size-testimonial:clamp(calc(22px * var(--type-scale)),calc(2.1vw * var(--type-scale)),calc(32px * var(--type-scale)))}
-[data-home-section][hidden],.home-about[hidden]{display:none!important}
+/* Flip and Flat reuse the hero h1 for the active project, so the heading switch does not hide it there (design-system.css restores it). */
+[data-home-section][hidden]:not(.home-view-split [data-home-section="heading"]),.home-about[hidden]{display:none!important}
 .home-content-section{grid-column:1 / -1;min-width:0;width:100%;margin-top:var(--space-page-rhythm-lg)}
 .home-content-section>h2{margin:0 0 var(--space-page-rhythm-sm);font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink)}
 .home-services-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-6)}
