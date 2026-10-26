@@ -28,6 +28,7 @@ A buildless native-module portfolio for Prem Luczak: authored HTML, CSS and ES m
 | --- | --- | --- |
 | Featured stage (Layout) | off | One project per row with a full-viewport backdrop |
 | Project backdrop image (Project details) | off | Backdrop behind detail pages |
+| Show footer (Content) | on | Hides the site footer on every route |
 | Hero heading h1 (Content Home) | on | Current layout only; Flip and Flat keep it |
 | Available badge (Content Home) | on | The hero status pill; switch it off there |
 | Strapline, At a glance (Content Home) | off | Hero additions |

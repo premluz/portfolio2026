@@ -57,6 +57,7 @@ Settings → Cards has two switches beside the existing "Client leads the title"
 ## Home hero, header and navigation
 
 - **Header.** The logo link is the About portrait (`assets/prem.jpg`) as a round avatar (`.brand-avatar`, `--brand-avatar-size`), and the tagline beside it is the name. Settings → Navigation → Hide logo & tagline hides both; the markup is otherwise unchanged.
+- **Footer.** Settings → Content has **Show footer** (`prem-show-footer`, default on) beside the existing contact-links switch. It hides the whole site footer on every route. `syncRouteChrome` re-applies it on each navigation, so a route change cannot bring it back.
 - **Hero heading.** The hero `h1` has a Content Home switch, **Hero heading (h1)** (default on). It applies to the Current layout only: Flip and Flat write the active project's name into the same `h1`, so `home-sections.css` and `design-system.css` keep it visible there. Hiding it removes the page's only top-level heading from assistive technology, so use it deliberately.
 - **Available badge.** The hero's status pill (`home.badge`) has a Content Home switch, **Available badge** (default on, since it is shown today; saved with the other section choices). It hides through `data-home-section="available"`.
 - **Strapline.** A one-line `home-strapline` text block on the `home` document renders as `.hero-strapline` under the hero heading. The Content Home switch **Strapline** shows it (default off). While it is visible the heading gives up its bottom margin so the strapline sits close beneath it.
