@@ -554,7 +554,7 @@
       "type": "ops",
       "status": "active",
       "updated": "2026-10-26",
-      "summary": "A read-only MCP server that exposes project memory search, reads and task context with source references; built, not registered.",
+      "summary": "A read-only MCP server over project memory; built and tested but deliberately not registered, since memory is maintained as Markdown.",
       "tags": [
         "area/tooling",
         "area/docs"
@@ -563,7 +563,7 @@
         "AGENTS.md",
         "TASKS.md"
       ],
-      "hash": "79fa35732a59cf5aee9d9b0fbc30e8c118e5ce61",
+      "hash": "13823235376464b1042e519558a7f17b3a36dc34",
       "items": []
     },
     {

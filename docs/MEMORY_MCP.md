@@ -4,7 +4,7 @@ type: ops
 status: active
 owner: Prem
 updated: 2026-10-26
-summary: A read-only MCP server that exposes project memory search, reads and task context with source references; built, not registered.
+summary: A read-only MCP server over project memory; built and tested but deliberately not registered, since memory is maintained as Markdown.
 tags: [area/tooling, area/docs]
 related: [AGENTS.md, TASKS.md]
 ---
@@ -31,7 +31,7 @@ Add it to a client's MCP configuration when you want it, for example Claude Code
 {"mcpServers": {"project-memory": {"command": "node", "args": ["scripts/memory-mcp.mjs"]}}}
 ```
 
-Run it from the project root. Registering is a configuration change to your tools, so it waits for your decision (TASK-012). Without it, the same data is available with `npm run memory:search`, `memory:next` and `memory:task`.
+Run it from the project root. The owner decided on 2026-10-26 not to register it (TASK-012 was dropped): the Markdown files are the memory, and the same data is available with `npm run memory:search`, `memory:next` and `memory:task`.
 
 ## Testing
 
