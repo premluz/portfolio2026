@@ -2232,12 +2232,12 @@ a.ask-fit-source:is(:hover,:focus-visible){color:var(--ink);text-decoration-colo
 }
 
 /* home-overview.css */
-/* At a glance (home-overview.js): three quiet columns under the hero. Type comes from .text-mono. */
+/* At a glance (home-overview.js): three quiet columns under the hero. Titles are the eyebrow role (.text-eyebrow); the items are ordinary body text. */
 .home-overview{margin-block:var(--hero-gap) 0}
 .home-overview[hidden]{display:none}
 .home-overview-columns{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr) minmax(0,1fr);column-gap:var(--overview-column-gap);row-gap:calc(var(--overview-column-gap) * .75)}
-.home-overview-title{margin:0 0 var(--overview-list-gap);color:var(--muted)}
-.home-overview-list{display:grid;gap:calc(var(--overview-list-gap) * .6);margin:0;padding:0;list-style:none;color:var(--body-ink)}
+.home-overview-title{margin:0 0 var(--overview-list-gap)}
+.home-overview-list{display:grid;gap:calc(var(--overview-list-gap) * .6);margin:0;padding:0;list-style:none;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);color:var(--body-ink)}
 .home-overview-list a{color:inherit;text-decoration:none}
 .home-overview-list a:is(:hover,:focus-visible){color:var(--ink)}
 .home-overview-row{display:grid;grid-template-columns:var(--overview-label-width) minmax(0,1fr);column-gap:var(--overview-list-gap)}
