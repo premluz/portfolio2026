@@ -230,6 +230,13 @@
   /* The stage photo settles slower than the card: it is the larger, calmer surface. */
   --stage-reveal-backdrop-duration: 1400ms;
   --brand-avatar-size: 40px;
+  /* Text gradient (.text-gradient): a quiet two-stop tint for phrases worth a little emphasis. */
+  --text-gradient-from: oklch(.58 .13 295);
+  --text-gradient-to: oklch(.62 .09 200);
+  /* Card details: client eyebrow tracking, status pill outline, and the tag row's spacing. */
+  --client-eyebrow-tracking: .6em;
+  --card-status-border: color-mix(in oklab, var(--ink) 14%, transparent);
+  --card-tags-gap: var(--space-6);
   /* The same breathing room above the hero (from the header's content) and below it (to At a glance). */
   --hero-gap: var(--space-12);
   /* Navigation at the top sits centred in the header row. */
@@ -241,6 +248,8 @@
 }
 
 :root[data-theme="dark"] {
+  --text-gradient-from: oklch(.78 .1 295);
+  --text-gradient-to: oklch(.82 .08 195);
   color-scheme: dark;
   --page: oklch(.185 .003 285.9);
   --page-rgb: 19, 19, 21;
@@ -254,8 +263,6 @@
   --card-label-rest-strength: 48%;
   --card-summary-rest-strength: 72%;
   --card-reflection-scale: .25;
-  --text-gradient-from: oklch(.78 .1 295);
-  --text-gradient-to: oklch(.82 .08 195);
   --card-glow-rgb: 13, 13, 15;
   --card-glow-scale: .3;
   --ink: oklch(0.97184305 0.01472839 294.47299);
