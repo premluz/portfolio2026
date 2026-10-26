@@ -2422,13 +2422,13 @@ export const catalog={
       "id": "home",
       "items": [
         {
-          "id": "merlin",
-          "documentId": "merlin",
+          "id": "bastion",
+          "documentId": "bastion",
           "featured": true
         },
         {
-          "id": "bastion",
-          "documentId": "bastion",
+          "id": "merlin",
+          "documentId": "merlin",
           "featured": true
         },
         {
