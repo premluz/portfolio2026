@@ -52,16 +52,11 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 - Related: REQ-002
 - Acceptance: a `porter-bg.jpg` (photo-only export) is added to dist/assets, linked with `backgroundMediaId` in both catalogs, `npm run images` run, and Porter shows it in the featured stage. Needs the image from the owner.
 
-### TASK-008 Commit the working tree
+### TASK-012 Register the memory server with the owner's MCP client
 - Status: todo
-- Tags: area/deploy, kind/process
-- Acceptance: the uncommitted changes (about 36 paths on 2026-10-26) are committed in coherent commits, including the generated image copies, `dist/assets/backgrounds/` and `dist/image-variants.js`, so the deploy check passes. Review before committing: the owner has unrelated in-progress edits (card sphere).
-
-### TASK-009 Expose project memory through a read-only MCP server
-- Status: todo
-- Depends: TASK-010
-- Tags: area/tooling, kind/feature
-- Acceptance: not installed. A read-only interface offering search, reads and task context with source references, kept separate from users' chat content. Propose and get approval before installing anything.
+- Depends: TASK-009
+- Tags: area/tooling
+- Acceptance: the owner decides which client(s) (for example a project `.mcp.json` for Claude Code) and approves the configuration change; the client then lists the four `memory_*` tools. See docs/MEMORY_MCP.md. Nothing is registered today.
 
 ## Done
 
@@ -76,3 +71,15 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 - Tags: area/images, area/tooling
 - Related: ADR-001
 - Evidence: tests/image-freshness.mjs passes; appending a byte to an original made `npm run check:images` exit 1 and `npm run build` stop before any later step, 2026-10-26.
+
+### TASK-009 Expose project memory through a read-only MCP server
+- Status: done
+- Depends: TASK-010
+- Tags: area/tooling, kind/feature
+- Related: ADR-007
+- Evidence: tests/memory-mcp.mjs passes, including a real stdio session, read-only tool annotations, path confinement and unknown-tool rejection, 2026-10-26. Built without a dependency; not registered (TASK-012).
+
+### TASK-008 Commit the working tree
+- Status: done
+- Tags: area/deploy, kind/process
+- Evidence: commits 83dbce2, 17fc2ba and 1ee57a1 (2026-10-26); a clean worktree of HEAD passes `build-content --check`, `check-images` and `memory check`. The owner's `agent*` feature (7 modules, 3 tests, 2 images and hunks in app.js, site.css, tokens.css, motion-tokens.js and client-styles.mjs) was left uncommitted on purpose.

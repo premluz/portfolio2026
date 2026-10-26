@@ -52,4 +52,6 @@ After meaningful work, in this order:
 3. Refresh [PROJECT_STATE.md](PROJECT_STATE.md) and the "Open items" in [HANDOFF.md](HANDOFF.md) if the picture or next action changed. Record a lasting choice as an ADR and a measured finding in [docs/FACTS.md](docs/FACTS.md).
 4. Run `npm run memory:index && npm run memory:check`.
 
+The same memory is available to MCP clients through the read-only server described in [docs/MEMORY_MCP.md](docs/MEMORY_MCP.md); it is not registered by default.
+
 Memory documents carry front matter (`title`, `type`, `status`, `owner`, `updated`, `summary`, `tags`; tags come from `docs/memory.config.json`) and stable IDs: `REQ-nnn`, `TASK-nnn`, `ADR-nnn`, `FACT-nnn`, `Q-nnn`. IDs never change or get reused; supersede instead of rewriting. Never put users' chat content or credentials in memory documents.

@@ -16,6 +16,7 @@
     "memory:search": "node scripts/memory.mjs search",
     "memory:next": "node scripts/memory.mjs next",
     "memory:task": "node scripts/memory.mjs task",
+    "memory:mcp": "node scripts/memory-mcp.mjs",
     "build": "npm run check:images && npm run build:settings && node scripts/build-content.mjs && node scripts/build-worker.mjs",
     "build:settings": "node scripts/build-settings.mjs",
     "check": "node scripts/check.mjs",

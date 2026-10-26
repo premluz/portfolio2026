@@ -77,6 +77,7 @@ npm run images  # after adding or replacing any image: thumbnails and backdrop c
 npm run build   # refresh generated content and Node/Worker output; stops if images are stale
 npm run check   # generated-content validation, image freshness, project memory and the test suite
 npm run memory:index && npm run memory:check   # after editing a memory document
+npm run memory:mcp   # read-only memory MCP server over stdio (see docs/MEMORY_MCP.md; not registered anywhere)
 npm start       # run with environment variables already set by the host
 ```
 

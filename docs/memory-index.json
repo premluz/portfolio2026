@@ -19,7 +19,7 @@
         "TASKS.md",
         "docs/CONSTITUTION.md"
       ],
-      "hash": "fab61dbb76167416fb5050c9a0ce05942ebfff90",
+      "hash": "f06645d3cedeba780313e84aa102a31443184ab3",
       "items": []
     },
     {
@@ -253,7 +253,7 @@
         "TASKS.md",
         "PROJECT_STATE.md"
       ],
-      "hash": "7e25822f3d1a05a768b9191b7ce0a6e1b724f703",
+      "hash": "ac005de8be28665969476d9bbfce2ffb37c2783b",
       "items": []
     },
     {
@@ -273,7 +273,7 @@
         "PROGRESS.md",
         "HANDOFF.md"
       ],
-      "hash": "7cef5e099c370dc78b75ad9b94d64488472cee9e",
+      "hash": "043c4d27184f12cde50697bded099315d4db5cd0",
       "items": [
         {
           "id": "Q-001",
@@ -314,7 +314,7 @@
         "area/docs"
       ],
       "related": [],
-      "hash": "1835b5d6e63232d45b6b38779b18c305e2adedcd",
+      "hash": "8075257533fd6526f25920c6d29aeb016e189d3b",
       "items": []
     },
     {
@@ -333,7 +333,7 @@
         "PROJECT_STATE.md",
         "PROGRESS.md"
       ],
-      "hash": "76c0bb2fe0f5898b247395c49b5cd017db553d39",
+      "hash": "14509d6b544ef65cc627982554b13e6e96e9a98a",
       "items": [
         {
           "id": "TASK-001",
@@ -398,21 +398,11 @@
           ]
         },
         {
-          "id": "TASK-008",
-          "title": "Commit the working tree",
+          "id": "TASK-012",
+          "title": "Register the memory server with the owner's MCP client",
           "status": "todo",
           "tags": [
-            "area/deploy",
-            "kind/process"
-          ]
-        },
-        {
-          "id": "TASK-009",
-          "title": "Expose project memory through a read-only MCP server",
-          "status": "todo",
-          "tags": [
-            "area/tooling",
-            "kind/feature"
+            "area/tooling"
           ]
         },
         {
@@ -432,6 +422,24 @@
           "tags": [
             "area/images",
             "area/tooling"
+          ]
+        },
+        {
+          "id": "TASK-009",
+          "title": "Expose project memory through a read-only MCP server",
+          "status": "done",
+          "tags": [
+            "area/tooling",
+            "kind/feature"
+          ]
+        },
+        {
+          "id": "TASK-008",
+          "title": "Commit the working tree",
+          "status": "done",
+          "tags": [
+            "area/deploy",
+            "kind/process"
           ]
         }
       ]
@@ -538,6 +546,25 @@
           ]
         }
       ]
+    },
+    {
+      "path": "docs/MEMORY_MCP.md",
+      "id": null,
+      "title": "Project memory MCP server",
+      "type": "ops",
+      "status": "active",
+      "updated": "2026-10-26",
+      "summary": "A read-only MCP server that exposes project memory search, reads and task context with source references; built, not registered.",
+      "tags": [
+        "area/tooling",
+        "area/docs"
+      ],
+      "related": [
+        "AGENTS.md",
+        "TASKS.md"
+      ],
+      "hash": "79fa35732a59cf5aee9d9b0fbc30e8c118e5ce61",
+      "items": []
     },
     {
       "path": "docs/REQUIREMENTS.md",
@@ -806,6 +833,27 @@
         "DESIGN_SYSTEM.md"
       ],
       "hash": "a35cfc64cc28780e6efddd3e883305fbcf8f4f7d",
+      "items": []
+    },
+    {
+      "path": "docs/decisions/ADR-007-memory-mcp-is-dependency-free-read-only-and-unregistered.md",
+      "id": "ADR-007",
+      "title": "The memory MCP server is dependency-free, read-only and not registered by default",
+      "type": "decision",
+      "status": "accepted",
+      "updated": "2026-10-26",
+      "summary": "Project memory is exposed through a small stdio MCP server with no SDK dependency, read-only tools, and registration left to the owner.",
+      "tags": [
+        "area/tooling",
+        "area/docs",
+        "kind/decision"
+      ],
+      "related": [
+        "TASK-009",
+        "TASK-012",
+        "docs/MEMORY_MCP.md"
+      ],
+      "hash": "439c346872051a2a6075635a8106de688e9caa13",
       "items": []
     }
   ]

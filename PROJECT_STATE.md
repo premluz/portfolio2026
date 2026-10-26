@@ -10,7 +10,7 @@ related: [TASKS.md, PROGRESS.md, HANDOFF.md]
 ---
 # Project state
 
-Snapshot of 2026-10-26. Git HEAD is `f3a2a2c` with about 36 uncommitted paths (TASK-008). Refresh this file whenever the picture or the next action changes.
+Snapshot of 2026-10-26. Git HEAD is `1ee57a1`. The only uncommitted work is the owner's `agent*` feature (7 modules, 3 tests, 2 images, plus hunks in app.js, site.css, tokens.css, motion-tokens.js and client-styles.mjs), left alone on purpose. Refresh this file whenever the picture or the next action changes.
 
 ## What this is
 
@@ -66,4 +66,4 @@ It sits above the hero heading today.
 
 ## Next action
 
-Run `npm run memory:next`. On 2026-10-26 it listed TASK-001, TASK-002, TASK-003, TASK-004, TASK-006, TASK-007, TASK-008 and TASK-009; TASK-005 is blocked. TASK-008 (commit the working tree) is the most time-sensitive, because the deploy check needs the generated image copies committed.
+Run `npm run memory:next`. On 2026-10-26 it listed TASK-001, TASK-002, TASK-003, TASK-004, TASK-006, TASK-007 and TASK-012 (register the memory MCP server, which needs the owner's decision); TASK-005 is blocked. The deploy-critical work (committed image copies and content exports) is done.
