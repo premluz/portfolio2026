@@ -6,13 +6,16 @@ const text={type:'string',maxLength:100000},short={type:'string',maxLength:500},
 const list=schema=>({type:'array',items:schema,maxItems:1000});
 const strings={...list(short),uniqueItems:true};
 const object=(properties,required=[])=>({type:'object',properties,required,additionalProperties:false});
+// A note card: a media asset in a roomy card, with an optional title and description. Used for a project's home and detail sets.
+const noteCard=object({id,title:short,description:text,mediaId:id},['id','mediaId']);
+const noteCards={...list(noteCard),maxItems:12};
 const ref=name=>({$ref:'#/$defs/'+name});
 const link=object({id,label:short,url:short},['id','label','url']);
 const surface={type:'array',items:{type:'string',pattern:'^#[0-9a-fA-F]{6}$'},minItems:2,maxItems:2};
 const blockBase={id,title:short,label:short,layout:object({columns:{enum:[1,2]},mediaFit:{enum:['max-side','contain','full-bleed']},span:{type:'integer',minimum:1,maximum:4}}),appearance:object({surface}),evidenceIds:strings};
 const common={id,status:{enum:['published','draft','archived']},slug:id,title:{...short,minLength:1},summary:text,name:short,aliases:strings,domains:strings,capabilities:strings,tags:strings,category:short,revision:{type:'integer',minimum:1},updatedAt:{type:'string'},links:list(link),evidence:list(ref('evidence')),blocks:{...list(ref('block')),maxItems:CONTENT_LIMITS.blocks}};
 export const documentTypeDefinitions=Object.freeze({
- 'portfolio-item':{label:'Portfolio item',properties:{prototype:object({url:short,label:short}),watchPrototype:object({url:short,label:short},['url','label']),qrCodeMediaId:id,qrCodeLabel:short,client:short,kind:{enum:['shipped','lab']},projectStatus:{enum:['Launched','Building','R&D']},disciplines:strings,featured:{type:'boolean'},listOnly:{type:'boolean'},pageTitle:short,intro:text,context:text,challenge:text,role:text,highlights:text,keyWork:text,impact:text,aftermath:text,lesson:text,heroMediaId:id,hoverVideoId:id},required:['slug','name','kind','projectStatus','context','role','keyWork']},
+ 'portfolio-item':{label:'Portfolio item',properties:{prototype:object({url:short,label:short}),watchPrototype:object({url:short,label:short},['url','label']),qrCodeMediaId:id,qrCodeLabel:short,client:short,kind:{enum:['shipped','lab']},projectStatus:{enum:['Launched','Building','R&D']},disciplines:strings,homeCards:noteCards,detailCards:noteCards,featured:{type:'boolean'},listOnly:{type:'boolean'},pageTitle:short,intro:text,context:text,challenge:text,role:text,highlights:text,keyWork:text,impact:text,aftermath:text,lesson:text,heroMediaId:id,hoverVideoId:id},required:['slug','name','kind','projectStatus','context','role','keyWork']},
  page:{label:'Page',properties:{template:{enum:['home','information']},badge:object({label:short,tone:{enum:['success','error']}},['label'])},required:['slug']},
  news:{label:'News',properties:{publishedAt:short},required:['slug']},
  article:{label:'Article',properties:{publishedAt:{type:'string',pattern:'^\\d{4}-\\d{2}-\\d{2}$'},author:short,series:object({id,title:short,part:{type:'integer',minimum:1},of:{type:'integer',minimum:1}},['id','part','of']),sources:list(object({label:short,publisher:short,date:short,url:short},['label']))},required:['slug','publishedAt','author']},
@@ -97,6 +100,7 @@ function validateCatalog(catalog,model){
   if(d.watchPrototype?.url){visitLink({url:d.watchPrototype.url},d.id+' watch prototype');if(!/^https?:\/\//.test(d.watchPrototype.url))issues.push(d.id+' watch prototype requires an HTTP(S) URL');}
   const linkIds=new Set();for(const l of d.links||[]){if(linkIds.has(l.id))issues.push(d.id+' has duplicate link ID '+l.id);linkIds.add(l.id);visitLink(l,d.id+' link '+l.id);}
   for(const [field,type] of [['heroMediaId','image'],['hoverVideoId','video'],['qrCodeMediaId','image']])if(d[field]){const a=assets.get(d[field]);related(d,a,'asset',d.id+'.'+field);if(a&&a.type!==type)issues.push(d.id+'.'+field+' requires '+type);}
+  for(const set of ['homeCards','detailCards']){const cardIds=new Set();for(const c of d[set]||[]){if(cardIds.has(c.id))issues.push(d.id+'.'+set+' has duplicate card ID '+c.id);cardIds.add(c.id);const a=assets.get(c.mediaId);related(d,a,'asset',d.id+'.'+set+'.'+c.id);if(a&&!['image','video'].includes(a.type))issues.push(d.id+'.'+set+'.'+c.id+' requires an image or video asset');}}
   let count=0;
   try{walkBlocks(d.blocks,b=>{
    count++;if(blockIds.has(b.id))issues.push(d.id+' has duplicate block ID '+b.id);blockIds.add(b.id);

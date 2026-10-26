@@ -19,6 +19,20 @@ export const catalog={
         "Design system",
         "Motion"
       ],
+      "homeCards": [
+        {
+          "id": "merlin-home-1",
+          "mediaId": "merlin-cover"
+        },
+        {
+          "id": "merlin-home-2",
+          "mediaId": "merlin-cover"
+        },
+        {
+          "id": "merlin-home-3",
+          "mediaId": "merlin-cover"
+        }
+      ],
       "intro": "Wwhen an agent does the analysis, the interface should become part of the answer.",
       "context": "Financial intelligence platform where users ask questions, follow the reasoning and work with interfaces generated around the answer.",
       "challenge": "Generative interfaces often feel like chat with a chart attached. I wanted something analysts could trust, inspect and continue working in rather than a disposable response.",
@@ -102,6 +116,20 @@ export const catalog={
         "Brand",
         "Motion"
       ],
+      "homeCards": [
+        {
+          "id": "rios-home-1",
+          "mediaId": "rios-cover"
+        },
+        {
+          "id": "rios-home-2",
+          "mediaId": "rios-cover"
+        },
+        {
+          "id": "rios-home-3",
+          "mediaId": "rios-cover"
+        }
+      ],
       "context": "Cross-platform planner combining daily planning, unscheduled Things, recurring Patterns and calendar import and sync.",
       "role": "Sole product designer and builder. Owned product strategy, interaction model, IA, visual identity, motion and implementation across mobile and desktop.",
       "highlights": "0 → 1 product · design · build",
@@ -180,6 +208,20 @@ export const catalog={
         "Research",
         "Interaction",
         "Prototyping"
+      ],
+      "homeCards": [
+        {
+          "id": "playstation-home-1",
+          "mediaId": "playstation-cover"
+        },
+        {
+          "id": "playstation-home-2",
+          "mediaId": "playstation-cover"
+        },
+        {
+          "id": "playstation-home-3",
+          "mediaId": "playstation-cover"
+        }
       ],
       "context": "Self-service content pipeline for developers and publishers managing product details, regional rules and publishing across PlayStation Network.",
       "role": "First designer. Led end-to-end design across discovery, research, prototyping, testing and implementation support through launch, while helping align four product teams.",
@@ -261,6 +303,20 @@ export const catalog={
         "Interaction",
         "Prototyping"
       ],
+      "homeCards": [
+        {
+          "id": "vodafone-iot-home-1",
+          "mediaId": "vodafone-cover"
+        },
+        {
+          "id": "vodafone-iot-home-2",
+          "mediaId": "vodafone-cover"
+        },
+        {
+          "id": "vodafone-iot-home-3",
+          "mediaId": "vodafone-cover"
+        }
+      ],
       "context": "Enterprise self-service platform for managing IoT connectivity and SIM operations at scale.",
       "role": "Senior product designer, one of three alongside a design manager. Owned research, IA, interaction design, UI, prototyping, testing and delivery support.",
       "highlights": "NPS –33 → +62 · Operations time reduced to under 10 seconds · 240M+ devices",
@@ -340,6 +396,20 @@ export const catalog={
         "Design system",
         "Product",
         "Brand"
+      ],
+      "homeCards": [
+        {
+          "id": "tracr-home-1",
+          "mediaId": "tracr-cover"
+        },
+        {
+          "id": "tracr-home-2",
+          "mediaId": "tracr-cover"
+        },
+        {
+          "id": "tracr-home-3",
+          "mediaId": "tracr-cover"
+        }
       ],
       "context": "Blockchain-based provenance and traceability across the regulated global diamond supply chain, including complex statuses, exceptions and conflict management.",
       "role": "IC lead product designer. Owned the design system, governance and adoption, product architecture, North Star and strategic design direction while supporting leadership and mentoring.",
@@ -423,6 +493,20 @@ export const catalog={
         "UX",
         "UI",
         "Motion"
+      ],
+      "homeCards": [
+        {
+          "id": "galachain-home-1",
+          "mediaId": "gala-cover"
+        },
+        {
+          "id": "galachain-home-2",
+          "mediaId": "gala-cover"
+        },
+        {
+          "id": "galachain-home-3",
+          "mediaId": "gala-cover"
+        }
       ],
       "context": "Film and music ecosystem where creators monetise their work directly and reward participating fans.",
       "role": "Product designer dedicated to Gala Film from 0→1, with supporting work across Gala Music and the broader ecosystem. Worked across UX, UI, motion and front-end as priorities shifted.",
@@ -511,6 +595,20 @@ export const catalog={
         "Visual language",
         "Motion"
       ],
+      "homeCards": [
+        {
+          "id": "bastion-home-1",
+          "mediaId": "bastion-cover"
+        },
+        {
+          "id": "bastion-home-2",
+          "mediaId": "bastion-cover"
+        },
+        {
+          "id": "bastion-home-3",
+          "mediaId": "bastion-cover"
+        }
+      ],
       "intro": "I designed and built Bastion around a simple idea: the assistant shouldn’t be a feature you visit. It should be available from anywhere in the product.",
       "context": "Mobile prototype of a simulated crypto wallet combining holdings, markets and an AI assistant that can guide and perform financial tasks.",
       "challenge": "Wallets are dense, while AI is often bolted on as a separate chat tab. I wanted the assistant to feel native without losing the calm, glanceable product people expect from a financial app.",
@@ -597,6 +695,20 @@ export const catalog={
         "Interaction",
         "Character",
         "Motion"
+      ],
+      "homeCards": [
+        {
+          "id": "porter-home-1",
+          "mediaId": "porter-cover"
+        },
+        {
+          "id": "porter-home-2",
+          "mediaId": "porter-cover"
+        },
+        {
+          "id": "porter-home-3",
+          "mediaId": "porter-cover"
+        }
       ],
       "listOnly": false,
       "heroMediaId": "porter-cover",
@@ -1924,6 +2036,20 @@ export const catalog={
       "disciplines": [
         "Product",
         "Conversational UI"
+      ],
+      "homeCards": [
+        {
+          "id": "gala-defi-home-1",
+          "mediaId": "gala-defi-cover"
+        },
+        {
+          "id": "gala-defi-home-2",
+          "mediaId": "gala-defi-cover"
+        },
+        {
+          "id": "gala-defi-home-3",
+          "mediaId": "gala-defi-cover"
+        }
       ],
       "client": "Gala",
       "pageTitle": "Designing for trust and ease of use in a DeFi stack that launched without design.",

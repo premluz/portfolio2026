@@ -88,7 +88,7 @@
         "FRAMEWORK.md",
         "MEDIA_ASSETS.md"
       ],
-      "hash": "043900665a0127065d466f513478a453399c14d0",
+      "hash": "8db3c0ae41b2c64fe749e1d638a101c8fee23d20",
       "items": []
     },
     {
@@ -138,7 +138,7 @@
         "FRAMEWORK.md",
         "MOTION.md"
       ],
-      "hash": "af1c6c09c609c923728b6eae5233068c60c423dc",
+      "hash": "0395b0ff859090966bb0823b3933c478bdfa4617",
       "items": []
     },
     {
@@ -161,7 +161,7 @@
         "MOTION.md",
         "DESIGN_SYSTEM.md"
       ],
-      "hash": "3d4601574498029b7a7a1d3d4ff8b3de71d4e4a3",
+      "hash": "afbb4633a138d56d421e761fe09ffc8f08efd843",
       "items": []
     },
     {
@@ -253,7 +253,7 @@
         "TASKS.md",
         "PROJECT_STATE.md"
       ],
-      "hash": "ef615194e9da0d59784735dd262ba97084df3cad",
+      "hash": "ba9fed2221ab240cff3473d4a5284fc65b2dd532",
       "items": []
     },
     {
@@ -333,7 +333,7 @@
         "PROJECT_STATE.md",
         "PROGRESS.md"
       ],
-      "hash": "217ac41f645224ac4e8a911855535764c18025d4",
+      "hash": "1675327dfb621c4c65908cca3f8159e2eb65284b",
       "items": [
         {
           "id": "TASK-001",
@@ -374,6 +374,23 @@
         {
           "id": "TASK-013",
           "title": "Review the drafted discipline tags",
+          "status": "todo",
+          "tags": [
+            "area/content"
+          ]
+        },
+        {
+          "id": "TASK-015",
+          "title": "Build the case-study page from detail cards",
+          "status": "todo",
+          "tags": [
+            "area/project-detail",
+            "area/content"
+          ]
+        },
+        {
+          "id": "TASK-016",
+          "title": "Author real note cards",
           "status": "todo",
           "tags": [
             "area/content"
@@ -458,6 +475,15 @@
             "area/home",
             "area/design-system"
           ]
+        },
+        {
+          "id": "TASK-017",
+          "title": "Note cards under each featured project",
+          "status": "done",
+          "tags": [
+            "area/home",
+            "area/content"
+          ]
         }
       ]
     },
@@ -497,7 +523,7 @@
       "related": [
         "MEDIA_ASSETS.md"
       ],
-      "hash": "ef78a5fc00eecfb677aee2193b169b270d7c1132",
+      "hash": "f122225fa48b5255007eed0afda36de7f33c0262",
       "items": [
         {
           "id": "FACT-001",
@@ -563,6 +589,23 @@
           ]
         },
         {
+          "id": "FACT-009",
+          "title": "A running dev server keeps the old content model after you change it",
+          "status": "verified",
+          "tags": [
+            "area/content",
+            "area/tooling"
+          ]
+        },
+        {
+          "id": "FACT-010",
+          "title": "An absolutely positioned grid child with `grid-row: 1` runs to the container's edge",
+          "status": "verified",
+          "tags": [
+            "area/home"
+          ]
+        },
+        {
           "id": "FACT-008",
           "title": "Hunk-staging a file shared with unfinished work can commit half of a change",
           "status": "verified",
@@ -613,7 +656,7 @@
         "MOTION.md",
         "CONTENT_MODEL.md"
       ],
-      "hash": "d3882eb30506bfbc32e0128649e442e3d28f5111",
+      "hash": "0ff9e6404b78375258e0691eba8ef9229562f367",
       "items": [
         {
           "id": "REQ-001",
@@ -735,6 +778,15 @@
           "tags": [
             "area/home",
             "area/design-system"
+          ]
+        },
+        {
+          "id": "REQ-016",
+          "title": "Each featured project shows a row of note cards under its copy, and projects can hold separate home and detail card sets",
+          "status": "implemented",
+          "tags": [
+            "area/home",
+            "area/content"
           ]
         },
         {
@@ -911,6 +963,28 @@
         "REQ-015"
       ],
       "hash": "950d42fe9fc2884ff832696832fecbd318bd7b87",
+      "items": []
+    },
+    {
+      "path": "docs/decisions/ADR-009-card-sets-are-per-project-and-separate-for-home-and-detail.md",
+      "id": "ADR-009",
+      "title": "Note cards are per-project card sets, separate for the home page and the case-study page",
+      "type": "decision",
+      "status": "accepted",
+      "updated": "2026-10-26",
+      "summary": "Each project has homeCards and detailCards with one shared structure; only the home set renders now, and the detail page will reuse the structure.",
+      "tags": [
+        "area/content",
+        "area/home",
+        "kind/decision"
+      ],
+      "related": [
+        "CONTENT_MODEL.md",
+        "FRAMEWORK.md",
+        "REQ-016",
+        "TASK-015"
+      ],
+      "hash": "7446b656cc00685ea001de2f7bf88495d8f827e2",
       "items": []
     }
   ]

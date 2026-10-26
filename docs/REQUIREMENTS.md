@@ -90,6 +90,12 @@ related: [FRAMEWORK.md, MOTION.md, CONTENT_MODEL.md]
 - Tags: area/home, area/design-system
 - Related: ADR-008
 
+## REQ-016 Each featured project shows a row of note cards under its copy, and projects can hold separate home and detail card sets
+- Status: implemented
+- Verifies: tests/note-cards.mjs; manual: three cards per stage with loaded images, backdrop confined to the first row (810px of a 1274px stage), no horizontal scroll, defaults off, 2026-10-26
+- Tags: area/home, area/content
+- Related: ADR-009
+
 ## REQ-014 Navigation can sit at the top or bottom
 - Status: accepted
 - Tags: area/dock, area/settings

@@ -66,6 +66,22 @@ A missing local file (for example a misspelled `playstation-bg.jpg`) fails the s
 - Verified: 2026-10-26
 - Tags: area/home, area/images, area/motion
 
+## FACT-009 A running dev server keeps the old content model after you change it
+- Status: verified
+- Source: after adding `homeCards` to the schema, a dev server started earlier kept validating with the old model (`additionalProperties: false`), returned 500 for `/content/catalog.js`, and the page rendered nothing. Restarting it fixed it
+- Verified: 2026-10-26
+- Tags: area/content, area/tooling
+
+`npm run dev` reloads the catalog on each request but not the JavaScript modules it validates with. After editing `dist/content/model.js` or `provider.js`, restart the server (and `npm run build` for the :3000 copy).
+
+## FACT-010 An absolutely positioned grid child with `grid-row: 1` runs to the container's edge
+- Status: verified
+- Source: the stage backdrop with `grid-row:1` covered the whole card; probing insets showed its containing block ended at the padding edge; `grid-row:1/2` confined it to the first row
+- Verified: 2026-10-26
+- Tags: area/home
+
+For an abspos item, an `auto` end line means the container's padding edge, not "span one track". Give both lines.
+
 ## FACT-008 Hunk-staging a file shared with unfinished work can commit half of a change
 - Status: verified
 - Source: committing the card-details work while the owner's agent feature touched the same files; a moved pair of lines in tokens.css staged only its removal (the dark gradient values vanished from HEAD), and a hand-staged site.css no longer matched its sources. A clean `git worktree` of HEAD running the tests caught both

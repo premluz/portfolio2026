@@ -1,0 +1,24 @@
+/* Note cards (card-renderer.js notesMarkup): under each featured project in Featured stage mode. They are always in the
+   markup and hidden everywhere else. A project's backdrop covers only the copy and screenshot row above them. */
+.project-card .card-notes{display:none}
+.note-card{margin:0;display:grid;grid-template-rows:minmax(0,1fr) auto;align-items:center;justify-items:center;aspect-ratio:var(--note-card-aspect);padding:var(--note-card-padding);border-radius:var(--note-card-radius);background:var(--note-card-fill);overflow:hidden}
+.note-card-media{width:var(--note-card-media-width);min-height:0}
+.note-card-media :is(img,video){display:block;width:100%;height:auto;border-radius:var(--radius-visual)}
+.note-card-media img[data-media-pending]{opacity:0}
+.note-card-media img{transition:opacity 600ms var(--ease-gentle)}
+.note-card figcaption{align-self:end;justify-self:start;margin-top:var(--space-4);max-width:42ch}
+.note-card-title{margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-heading);color:var(--ink)}
+.note-card-description{margin:var(--space-1) 0 0;font-size:var(--font-size-small);line-height:var(--line-height-body);color:var(--muted)}
+@media(prefers-reduced-motion:reduce){.note-card-media img{transition:none}}
+:root[data-animation="off"] .note-card-media img{transition:none}
+
+@media(min-width:701px){
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-feature-stage="true"] .card-notes{display:grid;grid-row:2;grid-column:1/-1;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--note-cards-gap)}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-feature-stage="true"] .card-notes[data-count="1"]{grid-template-columns:minmax(0,1fr)}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-feature-stage="true"] .card-notes[data-count="2"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+ /* With note cards the stage becomes two rows: the full-viewport copy and screenshot row, then the cards. The backdrop
+    is placed in the first row (an absolutely positioned grid child takes its area as its containing block; the end line must be explicit, because `grid-row:1` alone would run to the container's edge). */
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-feature-stage="true"][data-card-copy-position]:has(.card-notes){min-height:0;grid-template-rows:minmax(calc(100svh - 2 * var(--feature-stage-padding-block)),auto) auto;row-gap:var(--note-cards-offset)}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-feature-stage="true"]:has(.card-notes)>:is(.card-copy,.visual){grid-row:1}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-columns="1"] .image-card[data-feature-stage="true"]:has(.card-notes)>.card-backdrop{grid-row:1/2;grid-column:1/-1;top:calc(-1 * var(--feature-stage-padding-block));bottom:0}
+}

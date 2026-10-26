@@ -40,6 +40,19 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 - Tags: area/content
 - Acceptance: the owner confirms or edits `disciplines` for each project in both catalogs (Tracr's three are the owner's wording; the other eight were drafted from each project's role text), then rebuilds content.
 
+### TASK-015 Build the case-study page from detail cards
+- Status: todo
+- Depends: TASK-016
+- Tags: area/project-detail, area/content
+- Related: ADR-009
+- Acceptance: the project detail page renders `detailCards` down the page, one large card or two in a row, each with generous space and a smaller image or video inside, reusing the note card styling and tokens. The owner decides the maximum width or padding. Verified in a browser on a project with authored cards.
+
+### TASK-016 Author real note cards
+- Status: todo
+- Tags: area/content
+- Related: REQ-016
+- Acceptance: each project's `homeCards` (and later `detailCards`) points at real media with titles and descriptions the owner approves, replacing the three cover-image placeholders. Needs the media and copy from the owner.
+
 ### TASK-005 Fix the two tests affected by card-sphere work
 - Status: blocked
 - Tags: area/tests
@@ -94,3 +107,9 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 - Tags: area/home, area/design-system
 - Related: REQ-015, ADR-008
 - Evidence: tests/card-details.mjs passes; browser check of the stacked order, default-off behaviour, Above over Inline, and the About gradient, 2026-10-26.
+
+### TASK-017 Note cards under each featured project
+- Status: done
+- Tags: area/home, area/content
+- Related: REQ-016, ADR-009
+- Evidence: tests/note-cards.mjs passes; browser check at 1440×900 of three loaded cards per stage and a backdrop confined to the first row, 2026-10-26.
