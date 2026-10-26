@@ -65,3 +65,11 @@ A missing local file (for example a misspelled `playstation-bg.jpg`) fails the s
 - Source: with 250ms simulated latency and Vercel-style `max-age=0, must-revalidate` headers, two of three visible home images were requested again on return and appeared after the fade-in; with `MediaLoader` holding one `Image` per loaded URL, all were ready in about 10ms with no requests
 - Verified: 2026-10-26
 - Tags: area/home, area/images, area/motion
+
+## FACT-008 Hunk-staging a file shared with unfinished work can commit half of a change
+- Status: verified
+- Source: committing the card-details work while the owner's agent feature touched the same files; a moved pair of lines in tokens.css staged only its removal (the dark gradient values vanished from HEAD), and a hand-staged site.css no longer matched its sources. A clean `git worktree` of HEAD running the tests caught both
+- Verified: 2026-10-26
+- Tags: area/tooling, area/deploy
+
+When a file mixes your change with unfinished work, build the staged version from HEAD plus only your lines (or regenerate a generated file from the committed sources), then run the tests in a clean worktree of the new HEAD before calling the commit done.

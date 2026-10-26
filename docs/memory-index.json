@@ -19,7 +19,7 @@
         "TASKS.md",
         "docs/CONSTITUTION.md"
       ],
-      "hash": "f06645d3cedeba780313e84aa102a31443184ab3",
+      "hash": "745cbb1cb361e7555b5a7ab8b4271c803231e43d",
       "items": []
     },
     {
@@ -253,7 +253,7 @@
         "TASKS.md",
         "PROJECT_STATE.md"
       ],
-      "hash": "a316ea71e204832367edbc98b55c31075d15a02a",
+      "hash": "d4aa86ee08a94bc0d1ff94c499c236ab443d2162",
       "items": []
     },
     {
@@ -497,7 +497,7 @@
       "related": [
         "MEDIA_ASSETS.md"
       ],
-      "hash": "c6f0d8e354fbbb83da4a8492613ae52915019910",
+      "hash": "ef78a5fc00eecfb677aee2193b169b270d7c1132",
       "items": [
         {
           "id": "FACT-001",
@@ -560,6 +560,15 @@
             "area/home",
             "area/images",
             "area/motion"
+          ]
+        },
+        {
+          "id": "FACT-008",
+          "title": "Hunk-staging a file shared with unfinished work can commit half of a change",
+          "status": "verified",
+          "tags": [
+            "area/tooling",
+            "area/deploy"
           ]
         }
       ]
