@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Quieter role line
+"Product designer & builder" under the name now uses the eyebrow tone instead of the muted text tone, so it sits one step quieter than "Prem Luczak". Evidence: computed colours compared in the browser (dark theme).
+
 ## 2026-10-27 Details title beside image: caption, wide image, text below
 With the setting on, a project page now shows a short caption (client. short category, then the results line) above the image across the whole page, with the client, long title, summary and facts in a reading-width column below. It used to put the text in a left column beside the image. Evidence: headless browser on Merlin and Bastion (portrait) with the setting on and off; live switching checked.
 

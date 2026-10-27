@@ -103,7 +103,8 @@ header .discipline{--swap-in:1;--swap-out:3}
 .header-detail-nav svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 :root[data-glass-style="on"] .header-detail-nav button:is(:hover,:focus-visible){background:var(--glass-ghost-fill);box-shadow:var(--glass-button-edge)}
 .brand-name,.brand-role{display:block}
-.brand-role{color:var(--muted)}
+/* The role sits one step quieter than the name, on the same tone as eyebrows. */
+.brand-role{color:var(--eyebrow-ink)}
 .brand-avatar{display:block;width:var(--brand-avatar-size);height:var(--brand-avatar-size);border-radius:50%;object-fit:cover;object-position:50% 30%}
 .discipline{font-size:var(--font-size-body);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body)}
 .design-system-controls{border:0;padding:0;margin:0 0 24px;min-width:0}

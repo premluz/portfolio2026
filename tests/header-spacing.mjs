@@ -36,4 +36,5 @@ assert(design.includes('header .brand{--swap-in:0;--swap-out:4}')&&design.includ
 assert(tokens.includes('--header-swap-duration: 240ms;')&&tokens.includes('--header-swap-step: 60ms;'),'Each element takes 240ms, 60ms after the one before');
 assert(design.includes('#dock nav a{display:inline-flex;align-items:center;box-sizing:border-box;height:var(--nav-icon-size);font-size:var(--font-size-body);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);'),'Menu links are body text, like the name in the header');}
 assert(design.includes('.project-card .project-summary,.surface.detail>.project-summary{max-width:58ch;margin:0;'),'A card\'s results line follows its title at regular line spacing');
+assert(design.includes('.brand-role{color:var(--eyebrow-ink)}'),'The role under the name is quieter than the name');
 console.log('Header spacing passed: one offset token for header, nav and hero, role under the name, empty-hero centring scoped and header-aware.');
