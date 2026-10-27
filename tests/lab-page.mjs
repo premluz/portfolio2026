@@ -10,7 +10,8 @@ const [index,lab,app,menu]=await Promise.all(['index.html','lab.html','app.js','
 assert(/<a href="#lab" data-nav="lab">Lab/.test(index),'The Lab link is in the dock and is an in-app route');
 assert(!index.includes('lab-transition.js'),'The page does not load the ripple separately; app.js imports it');
 assert(lab.includes("location.replace('./#lab')")&&lab.includes('url=./#lab')&&!lab.includes('app.js'),'lab.html only redirects to the in-app route');
-assert(app.includes("const LAB_VIEW=Object.freeze({layout:'regular',columns:4,productDisplay:'cards'});"),'The Lab shows four even columns of the cards');
+assert(app.includes("function labView(){return {layout:labSettings.layout,columns:labSettings.columns,productDisplay:'cards',featuredLarger:labSettings.featuredLarger};}"),'The Lab takes its grid from the Lab settings');
+for(const id of ['featuredLarger','labLayout','labColumns','labFeaturedLarger','labCardDetails'])assert(index.includes(`id="${id}"`),`The dev settings have ${id}`);
 assert(app.includes("'route.lab':()=>activateRoute('lab')"),'The Lab has its own route command');
 assert(app.includes('if(ripple)void ripple.click();')&&app.includes('if(ripple&&LAB_RIPPLE.landing)void Promise.resolve(landing?.finished).then(()=>ripple.land());')&&!app.includes('await ripple'),'A short ring answers the click without delaying the transition, and the landing ring is behind LAB_RIPPLE.landing');
 assert.equal(LAB_RIPPLE.landing,false,'Only the click ring runs for now');

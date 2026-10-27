@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Featured-cards switch, Lab settings, portrait fit
+Work and Lab rendered differently because Work used the saved masonry grid (six featured cards two columns wide, all stacked on the left) and Lab a fixed regular grid (rows as tall as the portrait card). Added the global "Featured cards larger (masonry)" switch (on), and a Lab section in the dev settings (`lab-settings.js`: masonry, 4 columns, featured not larger, card details on) that overrides the global card settings on the Lab only; "show card details" off gives an images-only grid. The portrait image is now capped to its masonry card (it spilled 8px, 180px with details hidden). Evidence: headless browser at 1515px: Work 4,704px tall with the switch on and 1,224px with it off; Lab masonry 1,224px with Bastion one column, two rows and the others wrapped; zero overlaps and zero image spill in all four cases; Work keeps its copy after visiting a details-hidden Lab. tests/lab-settings.mjs added; lab-page and card-return-lifecycle updated.
+
 ## 2026-10-27 Article reading column
 Blog articles now span the content page width with text in a centred 600px reading column (`--content-width-reading`), and a new Article images setting (Text width default, or Page width) decides whether images and video match the text or span the page. Evidence: headless browser with the About / content page width at Extra small: article 960px, paragraphs 600px centred; an injected image section was 600px, then 960px with Page width; tests/content-widths.mjs extended. Risk: no article has images yet, so Page width was checked with an injected block.
 

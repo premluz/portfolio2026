@@ -40,7 +40,7 @@ export const HOME_LAYOUTS=Object.freeze(['masonry','regular','alternating']);
 export const readHomeLayout=value=>HOME_LAYOUTS.includes(value)?value:'masonry';
 export function alternatingSpan(index,count){return index%3===0||index===count-1&&index%3===1?'full':'half';}
 export class HomeLayout {
- constructor(root,documents,{mode='current',layout='masonry',columns=2,oneColumnPosition='top',multiColumnPosition='top',showCopyOnHover=false,productDisplay='cards',heroContent='timeline',timelineMode='cursor',heroCarousel=false,carouselState={},heroCarouselSettings=()=>({}),reduced=()=>false,onMotion=()=>{}}={}){
+ constructor(root,documents,{mode='current',layout='masonry',columns=2,oneColumnPosition='top',multiColumnPosition='top',showCopyOnHover=false,productDisplay='cards',heroContent='timeline',timelineMode='cursor',heroCarousel=false,carouselState={},heroCarouselSettings=()=>({}),featuredLarger=true,reduced=()=>false,onMotion=()=>{}}={}){
   this.root=root;this.heroContent=normalizeHeroContent(heroContent);this.timelineMode=timelineMode;this.documents=documents;this.reduced=reduced;this.onMotion=onMotion;
   this.gallery=root.querySelector('[data-gallery]');this.information=root.querySelector('[data-information]');
   this.slots=new Map([...root.querySelectorAll('[data-slot]')].map(slot=>[slot.dataset.slot,slot]));
@@ -55,7 +55,7 @@ export class HomeLayout {
   for(const slot of this.slots.values())this.observer.observe(slot.querySelector('[data-card]'));
   for(const button of root.querySelectorAll('[data-spotlight]'))button.onclick=()=>this.focus(button.dataset.spotlight,'smooth');
   this.textListHover=mountTextListHover(root,documents,{reduced});
-  this.featureStage=false;
+  this.featureStage=false;this.featuredLarger=featuredLarger!==false;
   this.setProductDisplay(productDisplay);this.apply({mode,layout,columns,oneColumnPosition,multiColumnPosition,showCopyOnHover});this.resume();
  }
  setProductDisplay(value){this.textListHover?.hide();this.productDisplay=['carousel','text'].includes(value)?value:'cards';const page=this.root.querySelector('.homepage-layout');if(page)page.dataset.productDisplay=this.productDisplay;const carousel=this.root.querySelector('[data-home-product-gallery]');if(carousel)carousel.hidden=this.productDisplay!=='carousel';const text=this.root.querySelector('[data-home-product-text]');if(text)text.hidden=this.productDisplay!=='text';const work=this.root.querySelector('.home-work');if(work)work.hidden=this.productDisplay!=='cards';}
@@ -119,7 +119,8 @@ export class HomeLayout {
  placeMasonry(count){
   const gap=parseFloat(getComputedStyle(this.gallery).columnGap)||0;
   const width=Math.max(1,(this.gallery.clientWidth-gap*(count-1))/count);
-  const items=[...this.gallery.children].map(slot=>this.documents.find(doc=>doc.id===slot.dataset.slot));
+  // With "Featured cards larger" off, featured cards are placed like any other: one column wide, portraits twice as tall.
+  const items=[...this.gallery.children].map(slot=>this.documents.find(doc=>doc.id===slot.dataset.slot)).map(doc=>this.featuredLarger||doc.featured!==true?doc:{...doc,featured:false});
   // Shared height modules suit multi-column boards; in a single column each
   // card should keep its own measured height instead of doubling portraits.
   const matchHeights=count>2;this.gallery.dataset.masonryRhythm=String(matchHeights);
@@ -179,6 +180,7 @@ export class HomeLayout {
  setTimelineMode(mode){this.timelineMode=mode==='drag'?'drag':'cursor';this.timeline?.setMode(this.timelineMode);}
  setFeatureStage(enabled){enabled=!!enabled;if(enabled===this.featureStage)return;this.featureStage=enabled;this.syncCardComposition();this.flush(true);
   this.stageReveal?.destroy();this.stageReveal=enabled?createStageReveal(this.gallery):null;}
+ setFeaturedLarger(enabled){enabled=!!enabled;if(enabled===this.featuredLarger)return;this.featuredLarger=enabled;this.flush(true);}
  setHeroCarousel(enabled){this.heroCarousel=!!enabled;this.carousel.setEnabled(this.mode==='current'&&this.heroCarousel&&this.productDisplay==='cards');this.flush(true);}
  pause(){this.textListHover?.hide();this.timeline?.stop();this.carousel?.pause();this.paused=true;cancelAnimationFrame(this.raf);this.raf=0;}
  resume(){if(this.dead)return;this.paused=false;this.carousel.resume();this.schedule();}

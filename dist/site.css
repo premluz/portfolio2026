@@ -2234,6 +2234,8 @@ a.ask-fit-source:is(:hover,:focus-visible){color:var(--ink);text-decoration-colo
 .lab-rippling .site-footer{filter:url(#lab-ripple-footer)}
 /* Arriving mid-ripple: lift the dark boot cover quickly so it does not hide the rest of the ring. */
 :root.lab-arriving{--page-boot-fade:140ms}
+/* Lab with "Show card details" off: an images-only grid. */
+:root.lab-card-details-hidden #main .gallery-grid .card-copy{display:none}
 
 /* project-backdrop.css */
 /* Project detail backdrop (project-backdrop.js) and the Home "Featured stage" card backdrop. */

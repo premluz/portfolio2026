@@ -4,3 +4,5 @@
 .lab-rippling .site-footer{filter:url(#lab-ripple-footer)}
 /* Arriving mid-ripple: lift the dark boot cover quickly so it does not hide the rest of the ring. */
 :root.lab-arriving{--page-boot-fade:140ms}
+/* Lab with "Show card details" off: an images-only grid. */
+:root.lab-card-details-hidden #main .gallery-grid .card-copy{display:none}

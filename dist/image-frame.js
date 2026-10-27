@@ -8,6 +8,12 @@ export function thumbnailImageRadius(radius,bounds,orientation='landscape',sourc
  return Math.min(bounds.width/2,bounds.height/2,Math.max(0,radius*scale,source));
 }
 const pixels=value=>Number.isFinite(parseFloat(value))?Math.max(0,parseFloat(value)):0;
+// A masonry board fixes each card's height, so a portrait image may only use the height its siblings leave free.
+function masonryImageRoom(card,frame){
+ const cardStyle=getComputedStyle(card),frameStyle=getComputedStyle(frame);let used=pixels(cardStyle.paddingTop)+pixels(cardStyle.paddingBottom)+pixels(frameStyle.marginTop)+pixels(frameStyle.marginBottom),flow=1;
+ for(const child of card.children){if(child===frame)continue;const style=getComputedStyle(child);if(style.position==='absolute'||style.display==='none')continue;used+=child.offsetHeight+pixels(style.marginTop)+pixels(style.marginBottom);flow++;}
+ return Math.max(1,card.clientHeight-used-pixels(cardStyle.rowGap)*(flow-1));
+}
 const inset=padding=>Math.min(...['top','right','bottom','left'].map(side=>pixels(padding[side])));
 // This JPEG has white matte corners baked into its 1440px-wide source.
 // Mask that matte at its source scale, rather than adding a second outline.
@@ -104,7 +110,8 @@ export class ImageFrame {
    const availableWidth=Math.max(1,side?this.el.clientWidth:this.card.clientWidth-cardSides),portrait=this.card.dataset.cardOrientation==='portrait';
    // Vertical padding adds room around the image instead of reducing its width.
    // Side padding stays inside the frame and continues to reduce image width.
-   const imageWidth=Math.min(Math.max(1,availableWidth-imageSides),this.maxWidth,portrait?this.maxHeight*this.ratio:Infinity);
+   const room=portrait&&this.card.closest?.('.gallery-grid')?.dataset.masonryRhythm==='true'?masonryImageRoom(this.card,this.el)-vertical:Infinity;
+   const imageWidth=Math.min(Math.max(1,availableWidth-imageSides),this.maxWidth,portrait?Math.min(this.maxHeight,room)*this.ratio:Infinity);
    const frameWidth=portrait?imageWidth+imageSides:Math.min(availableWidth,this.maxWidth+imageSides);
    const frameHeight=imageWidth/this.ratio+vertical;
    this.el.style.width=frameWidth+'px';this.el.style.height=frameHeight+'px';
