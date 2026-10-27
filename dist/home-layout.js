@@ -143,7 +143,9 @@ export class HomeLayout {
    const visualSideExpansion=innerWidth>850&&element.dataset.cardOrientation==='landscape'&&element.dataset.imageMode!=='bleed'?Math.max(0,(visual.offsetWidth-Math.max(1,element.clientWidth-padding.left-padding.right))/2):0;
    return masonryMinimumHeight({width,ratio,padding,copyHeight,margin:px(imageStyle.marginTop)+px(imageStyle.marginBottom),bleed:element.dataset.imageMode==='bleed',imagePadding,visualSideExpansion});
   }));
-  for(const pose of masonryPlan(items,count,minimum,gap)){
+  // The row unit comes from the stylesheet (8px; the images-only Lab uses 1px so cards end exactly at their image).
+  const row=parseFloat(getComputedStyle(this.gallery).gridAutoRows)||8;
+  for(const pose of masonryPlan(items,count,minimum,gap,row)){
    const slot=this.slots.get(pose.id),row=`${pose.row} / span ${pose.rowSpan}`,column=`${pose.column} / span ${pose.columnSpan}`,height=pose.height+'px';
    if(slot.style.gridRow!==row)slot.style.gridRow=row;
    if(slot.style.gridColumn!==column)slot.style.gridColumn=column;

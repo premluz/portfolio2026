@@ -6,6 +6,9 @@
 :root.lab-arriving{--page-boot-fade:140ms}
 /* Lab with "Show card details" off: an images-only grid. */
 :root.lab-card-details-hidden #main .gallery-grid .card-copy{display:none}
+/* Without copy the image is the whole card: drop the insets and the caption margin, so rows sit one gap apart like columns. */
+:root.lab-card-details-hidden #main .gallery-grid .project-card>.visual{--image-padding-top:0px;--image-padding-bottom:0px;margin-block:0}
+:root.lab-card-details-hidden #main .gallery-grid[data-masonry-rhythm="true"]{grid-auto-rows:1px}
 /* The Lab is a content page: its own heading, then the card grid, without the home hero or home sections.
    Its body text shares About's rules in about-page.css. */
 main.lab-canvas .homepage-layout>:not(.lab-heading,.home-work){display:none}

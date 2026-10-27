@@ -27,5 +27,7 @@ const about=await read('about-page.css');assert(about.includes(':is(.about-hero-
 assert((await read('design-system.css')).includes('main .lab-heading .info-body p,'),'Its body text takes the shared body-text colour');
 assert(labHeadingMarkup().startsWith('<section class="lab-heading" aria-labelledby="labTitle"><h1 id="labTitle" tabindex="-1">Experiments</h1>'),'The heading is a real page heading');
 assert(css.includes('main.lab-canvas .homepage-layout>:not(.lab-heading,.home-work){display:none}'),'The Lab shows only its heading and the grid, not the home hero or sections');
+assert(css.includes(':root.lab-card-details-hidden #main .gallery-grid .project-card>.visual{--image-padding-top:0px;--image-padding-bottom:0px;margin-block:0}'),'Images-only rows are one gap apart, like the columns');
+assert(css.includes(':root.lab-card-details-hidden #main .gallery-grid[data-masonry-rhythm="true"]{grid-auto-rows:1px}')&&(await read('home-layout.js')).includes('const row=parseFloat(getComputedStyle(this.gallery).gridAutoRows)||8;'),'Images-only masonry rows are 1px, so no rounding gap is added');
 assert(app.includes("if(labMode)main.querySelector('.homepage-layout').insertAdjacentHTML('afterbegin',labHeadingMarkup());"),'The heading is placed above the grid');}
 console.log('Lab route passed: in-app route, four-column cards, dock and menu entries, command, legacy page redirect.');

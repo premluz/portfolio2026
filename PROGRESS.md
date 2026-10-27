@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Lab images-only gaps
+With card details hidden on the Lab, the space between rows was about 83px against a 38px column gap: the image kept its 28px top and 8px bottom insets and the 38px caption margin. Those are now zero there, so the image fills the card. Evidence: headless browser with the owner's 2026-10-27 settings at 1755px: picture-to-picture gap 38px across and down; Work unchanged.
+
 ## 2026-10-27 Lab heading in About's structure
 Removed the "Work in progress" eyebrow. The Lab heading is now About's structure, a title then `.info-body` text, sharing About's rules in about-page.css. Evidence: headless browser: Lab and About title and body text match in position, gap, size, weight, line height and colour.
 
