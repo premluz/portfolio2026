@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Lab show-heading switch
+New Lab setting "show heading" (on; saved and exported): off hides "Experiments" and its line, and the grid starts at the shared content start. Evidence: headless browser: grid top equals the heading top when it is hidden; no heading in the layout.
+
 ## 2026-10-27 Lab grid full width
 New Lab setting "grid full width" (off by default, saved and exported): the grid spans the app canvas less the gutters, capped by the app maximum (1920px), instead of the content rail. Evidence: headless browser at 1440, 1920 and 2560px: grid width with the option off (rail) and on (viewport less gutters, never above 1792px of 1920).
 
