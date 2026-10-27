@@ -41,3 +41,5 @@
  .about-unusual-item:nth-child(n){grid-column:1}
  .about-unusual-item:nth-child(n)>*{grid-column:1;grid-row:auto}
 }
+/* With the About heading switched off, its text starts where the heading did. */
+.about-hero-copy>h1[hidden]+.info-body{margin-top:0}

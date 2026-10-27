@@ -31,7 +31,7 @@ assert(list.includes('data-original-image="assets/hipnotherapy.jpg"')&&list.incl
 const detail=cardDetail(card);
 assert(detail.includes('about-detail')&&detail.includes('about-traits'),'The About page renders its own sections');
 const aboutIds=[...detail.matchAll(/data-about-section="([^"]+)"/g)].map(match=>match[1]);
-assert.deepEqual(aboutIds,['hero','traits','unusual','approach','services','about','about-timeline','experience','writing','testimonials'],'Every About component, including the Home ones, is addressable by the About settings in page order');
+assert.deepEqual(aboutIds,['hero','title','traits','unusual','approach','services','about','about-timeline','experience','writing','testimonials'],'Every About component, including the Home ones, is addressable by the About settings in page order');
 assert(!detail.includes('data-home-section'),'Home components on About answer to the About settings, never the Home ones');
 assert(!new RegExp('id="([^"]+)"[\\s\\S]*id="\\1"').test(detail),'Reusing Home components adds no duplicate ids');
 const css=await readFile(new URL('../dist/about-page.css',import.meta.url),'utf8'),styles=await readFile(new URL('../scripts/client-styles.mjs',import.meta.url),'utf8');
@@ -50,8 +50,9 @@ const aboutRoot={querySelectorAll:selector=>selector==='[data-about-section]'?Ob
 const aboutControls=Object.fromEntries(Object.keys(ABOUT_SECTION_DEFAULTS).map(id=>[id,{dataset:{aboutSectionControl:id},checked:false,addEventListener(type,listener){this[type]=listener;}}]));
 const aboutPanel={querySelectorAll:selector=>selector==='[data-about-section-control]'?Object.values(aboutControls):[]};
 const aboutSettings=initAboutSectionSettings(aboutPanel,{storage:aboutStorage,getRoot:()=>aboutRoot});
-assert.deepEqual(['hero','traits','unusual'].filter(id=>!aboutNodes[id].hidden),['hero','traits','unusual'],'About keeps its own components on by default');
-assert(Object.keys(aboutNodes).filter(id=>!['hero','traits','unusual'].includes(id)).every(id=>aboutNodes[id].hidden),'Home components start hidden on About');
+assert.deepEqual(['hero','title','traits','unusual'].filter(id=>!aboutNodes[id].hidden),['hero','title','traits','unusual'],'About keeps its own components on by default');
+assert(Object.keys(aboutNodes).filter(id=>!['hero','title','traits','unusual'].includes(id)).every(id=>aboutNodes[id].hidden),'Home components start hidden on About');
+aboutControls.title.checked=false;aboutControls.title.change();assert(aboutNodes.title.hidden&&!aboutNodes.hero.hidden,'The About heading switches off on its own, keeping the intro and portrait');aboutControls.title.checked=true;aboutControls.title.change();
 aboutControls.testimonials.checked=true;aboutControls.testimonials.change();
 assert(!aboutNodes.testimonials.hidden&&JSON.parse(store.get('prem-about-content')).testimonials===true,'A Home component can be shown on About and the choice persists under its own key');
 assert(!store.has('prem-home-content'),'Changing About never writes the Home settings');

@@ -1493,6 +1493,8 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
  .about-unusual-item:nth-child(n){grid-column:1}
  .about-unusual-item:nth-child(n)>*{grid-column:1;grid-row:auto}
 }
+/* With the About heading switched off, its text starts where the heading did. */
+.about-hero-copy>h1[hidden]+.info-body{margin-top:0}
 
 /* about-illustrations.css */
 .about-trait-art{--trait-dur-short:180ms;--trait-dur:420ms;--trait-dur-long:600ms;--trait-spring:cubic-bezier(.34,1.56,.64,1);--trait-lift:-3px;--trait-tilt:-2deg;display:block;width:100%;height:auto;aspect-ratio:1;color:color-mix(in oklch,var(--ink) 48%,var(--card-surface))}

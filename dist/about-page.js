@@ -19,7 +19,7 @@ const figure=(asset,className)=>asset?`<figure class="${className}">${imageMarku
 
 export function aboutHeroMarkup(card,store=content){
  const portrait=card.blocks.find(block=>block.type==='image'&&block.id==='about-portrait');
- return `<div class="about-hero" data-about-section="hero"><div class="about-hero-copy"><h1 tabindex="-1">${headingText(card.title)}</h1><div class="info-body">${card.body.map(text=>`<p>${highlightedText(text)}</p>`).join('')}</div></div>${portrait?figure(store.getAsset(portrait.mediaId),'about-portrait'):''}</div>`;
+ return `<div class="about-hero" data-about-section="hero"><div class="about-hero-copy"><h1 tabindex="-1" data-about-section="title">${headingText(card.title)}</h1><div class="info-body">${card.body.map(text=>`<p>${highlightedText(text)}</p>`).join('')}</div></div>${portrait?figure(store.getAsset(portrait.mediaId),'about-portrait'):''}</div>`;
 }
 
 // Traits reuse the global card section, so the Card layout and Show card settings apply here too.

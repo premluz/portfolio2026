@@ -2,9 +2,9 @@ import {HOME_SECTION_DEFAULTS,initSectionSettings} from './home-sections.js';
 
 // The About page's own components come first and stay on, so the page looks as it always did until a
 // Home component is switched on. The Home components reuse the same markup, so each keeps its authored content.
-export const ABOUT_OWN_SECTIONS=Object.freeze(['hero','traits','unusual']);
+export const ABOUT_OWN_SECTIONS=Object.freeze(['hero','title','traits','unusual']);
 export const ABOUT_SECTION_DEFAULTS=Object.freeze({
- hero:true,traits:true,unusual:true,
+ hero:true,title:true,traits:true,unusual:true,
  ...Object.fromEntries(Object.keys(HOME_SECTION_DEFAULTS).map(id=>[id,false]))
 });
 export const ABOUT_SCOPE=Object.freeze({
