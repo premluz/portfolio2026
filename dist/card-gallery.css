@@ -8,6 +8,11 @@
 .spatial-gallery-viewport::-webkit-scrollbar{display:none}
 .spatial-gallery-viewport{cursor:grab;user-select:none}.spatial-card-gallery[data-gallery-dragging="true"] .spatial-gallery-viewport{scroll-snap-type:none;cursor:grabbing}
 .spatial-gallery-item{position:relative;flex:0 0 var(--gallery-card-width);width:var(--gallery-card-width);height:var(--gallery-card-height);scroll-snap-align:center}
+/* Scroll: a plain strip that starts on the content edge and scrolls freely; no snap, no tilt, no shared caption. */
+.spatial-card-gallery[data-gallery-variant="scroll"] .spatial-gallery-viewport{scroll-snap-type:none}
+.spatial-card-gallery[data-gallery-variant="scroll"] .spatial-gallery-item{scroll-snap-align:none}
+.spatial-card-gallery[data-gallery-variant="scroll"][data-gallery-axis="horizontal"] .spatial-gallery-viewport{padding-inline:max(var(--content-gutter),calc((var(--app-canvas-width) - var(--content-rail-width,var(--content-width)))/2))}
+.spatial-card-gallery[data-gallery-variant="scroll"] [data-gallery-details]{display:none}
 .spatial-gallery-item[data-gallery-orientation="portrait"]{--gallery-card-width:var(--gallery-portrait-width)}
 .spatial-gallery-pose{position:relative;width:100%;height:100%;transform-style:preserve-3d;transform-origin:center;transition:transform 120ms ease-out,opacity 120ms ease-out}
 .spatial-gallery-pose>.content-block{position:relative;z-index:1;height:100%;padding:0;background:transparent;border:0}

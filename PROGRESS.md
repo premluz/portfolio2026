@@ -12,6 +12,12 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Simple scroll carousel
+The home carousel gained a Scroll presentation, now the default: free native scrolling with no snap or tilt, starts on the content edge, each card carries its own caption, and clicking any card opens its detail instead of bringing it to the front. Perspective and Circular stay selectable (Presentation select). Evidence: tests/card-gallery.mjs covers it; headless browser showed scroll positions held after scrolling (437 stays 437, wheel +260 lands at 697), first card at the content edge, and a click on a side card opened its detail. Risk: a saved Circular/Perspective choice still wins, so existing browsers must pick Scroll once.
+
+## 2026-10-27 Card title size
+Card titles now use the summary line size (`--font-size-project-summary`), so title and result match at 14px / 22.4px; weights stay 500 and 300.
+
 ## 2026-10-27 Short category and card text switch
 Added optional `shortCategory` to projects (owner's seven phrases in both catalogs; Porter and Gala DeFi have none and fall back to `name`) and a Cards setting "Show category instead of title" (off by default, saved and exported, on both pages). Evidence: tests/card-category.mjs passes; headless browser on the carousel showed all nine captions swap to the category, keep the inline client, persist across reload and switch back. Risk: Porter and Gala DeFi need a phrase from the owner.
 

@@ -51,5 +51,7 @@ assert.equal(items[3].link.morphCopyRoot,title.parentElement,'Changing caption m
 let stopped=false;gallery.onKey({key:'ArrowUp',preventDefault(){},stopPropagation(){stopped=true;}});flush();assert(stopped);assert.equal(gallery.index,2);
 let prevented=false;gallery.onClick({target:{closest:()=>items[1]},preventDefault(){prevented=true;},stopPropagation(){}});flush();assert(prevented);assert.equal(gallery.index,1);
 gallery.onDown({pointerType:'mouse',button:0,pointerId:1,clientX:0,clientY:0});gallery.onMove({pointerId:1,clientY:-264,preventDefault(){}});gallery.onUp({pointerId:1});flush();assert.equal(gallery.index,2);assert.equal(root.dataset.galleryDragging,undefined);
+gallery.suppressClick=false;gallery.setVariant('scroll');flush();assert.equal(root.dataset.galleryVariant,'scroll');assert.equal(root.dataset.descriptionInCard,'true','Scroll shows each card\'s own copy');
+let scrollPrevented=false;gallery.onClick({target:{closest:()=>items[0]},preventDefault(){scrollPrevented=true;},stopPropagation(){}});assert(!scrollPrevented,'In Scroll a click on any card is left to open its detail');
 gallery.destroy();assert(disconnected);assert.equal(viewport.listeners.size,0);assert.equal(frames.size,0);
-console.log('Card gallery passed: generic content, five visible slots, centred face, both axes, captions, retained selection, keys, click selection, mouse drag and cleanup.');
+console.log('Card gallery passed: generic content, five visible slots, centred face, both axes, captions, retained selection, keys, click selection, mouse drag, scroll presentation and cleanup.');

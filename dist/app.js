@@ -232,7 +232,7 @@ let cardGalleries=[],pageTimelines=[];
 let carouselSettings=readCarouselSettings();
 document.documentElement.style.setProperty('--carousel-card-scale',String(carouselSettings.size/100));
 let servicesLayout='carousel',servicesCarouselAlignment='full-bleed',servicesCardBackground=true,testimonialCardBackground=true;try{servicesLayout=localStorage.getItem('prem-services-layout')==='grid'?'grid':'carousel';servicesCardBackground=localStorage.getItem('prem-services-card-background')!=='false';testimonialCardBackground=localStorage.getItem('prem-testimonial-card-background')!=='false';servicesCarouselAlignment=localStorage.getItem('prem-services-carousel-alignment')==='content'?'content':'full-bleed';}catch{}
-let aboutGalleryVariant='circular';try{aboutGalleryVariant=localStorage.getItem('prem-about-gallery-variant')==='perspective'?'perspective':'circular';}catch{}
+let aboutGalleryVariant='scroll';try{const stored=localStorage.getItem('prem-about-gallery-variant');if(['perspective','circular'].includes(stored))aboutGalleryVariant=stored;}catch{}
 let aboutGalleryOrientation='horizontal';try{aboutGalleryOrientation=localStorage.getItem('prem-about-gallery-orientation')==='vertical'?'vertical':'horizontal';}catch{}
 let carouselDescriptionInCard=false;try{carouselDescriptionInCard=localStorage.getItem('prem-carousel-description-in-card')==='true';}catch{}
 let carouselNativeSnap=false;try{carouselNativeSnap=localStorage.getItem('prem-carousel-native-snap')==='true';}catch(error){console.warn('Native snap setting could not be read.',error);}
