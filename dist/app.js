@@ -139,13 +139,15 @@ $('#dockLiquidBlend').oninput=e=>{dockLiquidBlend=+e.target.value;applyDockLiqui
 $('#dockLiquidPinch').oninput=e=>{dockLiquidPinch=+e.target.value;applyDockLiquid();try{localStorage.setItem('prem-dock-liquid-pinch',String(dockLiquidPinch));}catch{}};
 let voiceDock=null;
 let composerContext=null,contextualButtons=readContextualButtons(localStorage),splitProjectControls=false;try{splitProjectControls=localStorage.getItem('prem-split-project-controls')==='true';}catch{}
+// Stored as 'composer' (above the dock) or 'inline' (within the page) for older settings files.
+const contextualPlacement=()=>contextualButtons==='composer'?'above':'page';
 let contextualComposer=true,alwaysDarkGlass=false;try{const savedComposer=localStorage.getItem('prem-contextual-composer');contextualComposer=savedComposer===null?true:savedComposer==='true';alwaysDarkGlass=localStorage.getItem('prem-always-dark-glass')==='true';}catch{}
 let assistantFloating=false;const assistantLauncher=document.getElementById('assistantLauncher');
 // The dock shows the composer on the chat page, when the composer is always on, or while the floating assistant is open.
 // With the menu in the dock, the chat page keeps the menu and takes the composer into the page under the welcome.
 let chatInlineComposer=true;try{chatInlineComposer=localStorage.getItem('prem-chat-inline-composer')!=='false';}catch(error){console.warn('Preference prem-chat-inline-composer unreadable; using on',error);}
-const inlineChat=route=>route==='assistant'&&chatInlineComposer&&!contextualComposer&&contextualButtons!=='composer';
-const composerShown=route=>route==='assistant'&&!inlineChat(route)||contextualComposer||contextualButtons==='composer'||assistantFloating;
+const inlineChat=route=>route==='assistant'&&chatInlineComposer&&!contextualComposer;
+const composerShown=route=>route==='assistant'&&!inlineChat(route)||contextualComposer||assistantFloating;
 const askForm=document.getElementById('askForm'),askFormHome={parent:askForm.parentElement,next:askForm.nextElementSibling};
 function syncInlineComposer(){
  const inline=inlineChat(current),slot=document.getElementById('assistantInlineComposer');
@@ -158,7 +160,7 @@ applyDockPreferences();
 const showProjectControls=route=>projectIds.includes(route);
 // About and Contact are in the dock's own menu, so they get no Back pill morphing in and out of it.
 const showBackControl=route=>route==='assistant'&&!inlineChat(route)||projectIds.includes(route);
-function syncDockActions(route,options={}){const composer=composerShown(route);dockMorph.setBack(!composer&&showBackControl(route),options);dockMorph.setSplit(!composer&&contextualButtons==='inline'&&showProjectControls(route),options);composerContext?.refresh();}
+function syncDockActions(route,options={}){const composer=composerShown(route);dockMorph.setBack(!composer&&showBackControl(route),options);dockMorph.setSplit(!composer&&showProjectControls(route),options);composerContext?.refresh();}
 installHoverTrail($('#dock'),{reduced:()=>reduce.matches});
 const edgeShades=new EdgeShades($('.page-edge-shades'),{reduced:()=>reduce.matches});
 try{layout=readHomeLayout(localStorage.getItem('prem-home-layout'));}catch{}
@@ -510,7 +512,7 @@ const assistantPresentation=mountAssistantPresentation($('#assistantPresentation
 // The sidebar pushes the page aside and takes the dock's composer to its foot; both are root-level states.
 const setAssistantSidebar=on=>{document.documentElement.classList.toggle('assistant-sidebar-open',on);$('#dock').classList.toggle('assistant-sidebar-dock',on);dockMorph.refresh();};
 function syncAssistantLauncher(){
- const shown=!contextualComposer&&contextualButtons!=='composer';
+ const shown=!contextualComposer;
  if(assistantLauncher.hidden===shown){assistantLauncher.hidden=!shown;dockMorph.refresh();}
  if(!shown)closeAssistantFloating({focus:false});
 }
@@ -637,7 +639,7 @@ $('#siteHelp').onclick=()=>spatialNavigation.showGuide('help');
 
 const portfolioAssistant=mountPortfolioAssistant(document,{onOpen:()=>dispatchCommand({id:'route.assistant',source:'pointer'}),onOpenProject:openAssistantProject,onCardsAdded:syncAssistantCardAppearance,onComposerFocus:focused=>composerContext?.setFocused(focused),onVoiceToggle:async()=>{if(spatialNavigation.voice.enabled&&spatialNavigation.voice.conversation){spatialNavigation.disable('voice');return;}void portfolioAssistant.prepareVoice();const opened=await dispatchCommand({id:'route.assistant',source:'pointer'});if(opened?.ok!==false)await spatialNavigation.startConversation();},onDictationStart:()=>spatialNavigation.voice.pause(),onDictationEnd:()=>spatialNavigation.voice.resume(),onInputError:message=>siteToast.show(message,{tone:'error'}),onStatus:(key,message,{tone='neutral'}={})=>{if(message)siteToast.show(message,{key,duration:0,tone});else siteToast.clear(key);statusStack.refresh();},reducedMotion:()=>reduce.matches,onSoundChange:on=>{voiceDock?.sync({paused:spatialNavigation.voice.paused,sound:on});siteToast.clear('sound');},onSpeechStart:text=>{spatialNavigation.voice.setOutputActive(true,text);voiceDock?.sync({paused:spatialNavigation.voice.paused,sound:portfolioAssistant.soundEnabled,phase:'speaking'});},onSpeechWorking:()=>{voiceDock?.sync({paused:spatialNavigation.voice.paused,sound:portfolioAssistant.soundEnabled,phase:'working'});},onSpeechEnd:()=>{spatialNavigation.voice.setOutputActive(false);voiceDock?.sync({paused:spatialNavigation.voice.paused,sound:portfolioAssistant.soundEnabled,phase:'listening'});if(!portfolioAssistant.dictating&&!spatialNavigation.dialog.open&&!spatialNavigation.voice.paused)spatialNavigation.voice.resume();}});
 voiceDock=new VoiceDock(dockMorph,{reduced:()=>reduce.matches,onMic:()=>{const voice=spatialNavigation.voice;if(voice.paused)voice.resume();else voice.pause();voiceDock.sync({paused:voice.paused,sound:portfolioAssistant.soundEnabled,phase:voice.paused?'paused':'listening'});},onSound:()=>portfolioAssistant.setSoundEnabled(!portfolioAssistant.soundEnabled),onClose:()=>{spatialNavigation.disable('voice');requestAnimationFrame(()=>$('#askInput').focus({preventScroll:true}));}});
-composerContext=new ComposerContext(dockMorph,{mode:contextualButtons,splitProjectControls,reduced:()=>reduce.matches,duration:()=>duration*(slow?2.5:1),getScene:()=>({route:current,project:projectIds.includes(current)?cards.find(p=>p.id===current):null,back:showBackControl(current),fullScreen:showFullScreenOption,galleries:cardGalleries.filter(gallery=>gallery instanceof CardGallery&&main.contains(gallery.root)),contextSections:[...main.querySelectorAll('[data-component="testimonials"]')].map(root=>({root,kind:'testimonials',href:'https://www.linkedin.com/in/premluczak/details/recommendations/'})).concat({root:$('.home-about'),kind:'about'},{root:$('.site-footer'),kind:'footer',linkedin:$('.footer-links a:first-child').href,email:$('.footer-links a:nth-child(2)').href})}),onAction:(action,scene,button)=>{
+composerContext=new ComposerContext(dockMorph,{mode:contextualComposer?'composer':'inline',placement:contextualPlacement(),splitProjectControls,reduced:()=>reduce.matches,duration:()=>duration*(slow?2.5:1),getScene:()=>({route:current,project:projectIds.includes(current)?cards.find(p=>p.id===current):null,back:showBackControl(current),fullScreen:showFullScreenOption,galleries:cardGalleries.filter(gallery=>gallery instanceof CardGallery&&main.contains(gallery.root)),contextSections:[...main.querySelectorAll('[data-component="testimonials"]')].map(root=>({root,kind:'testimonials',href:'https://www.linkedin.com/in/premluczak/details/recommendations/'})).concat({root:$('.home-about'),kind:'about'},{root:$('.site-footer'),kind:'footer',linkedin:$('.footer-links a:first-child').href,email:$('.footer-links a:nth-child(2)').href})}),onAction:(action,scene,button)=>{
  if(busy||navigationPreparing||commandBus.pending||mediaFocus.active)return;
  if(action==='view')scene.carousel?.details?.click();
  else if(action==='previous'&&scene.carousel)scene.carousel.previous?.click();
@@ -648,12 +650,12 @@ composerContext=new ComposerContext(dockMorph,{mode:contextualButtons,splitProje
 }});
 $('#chatInlineComposer').checked=chatInlineComposer;$('#chatInlineComposer').onchange=e=>{chatInlineComposer=e.target.checked;saveFlag('prem-chat-inline-composer',chatInlineComposer);syncFloatingDock();};
 $('#splitProjectControls').checked=splitProjectControls;$('#splitProjectControls').onchange=e=>{splitProjectControls=e.target.checked;composerContext.setSplitProjectControls(splitProjectControls);try{localStorage.setItem('prem-split-project-controls',String(splitProjectControls));}catch{}};
-$('#contextualButtons').value=contextualButtons;$('#contextualButtons').onchange=e=>{if(busy){e.target.value=contextualButtons;return;}contextualButtons=e.target.value==='composer'?'composer':'inline';composerContext.setMode(contextualButtons);syncDockActions(current,{duration:duration*(slow?2.5:1)});syncDockComposer({duration:duration*(slow?2.5:1)});try{localStorage.setItem('prem-contextual-buttons',contextualButtons);}catch{}};
+$('#contextualButtons').value=contextualButtons;$('#contextualButtons').onchange=e=>{if(busy){e.target.value=contextualButtons;return;}contextualButtons=e.target.value==='composer'?'composer':'inline';composerContext.setPlacement(contextualPlacement());syncDockActions(current,{duration:duration*(slow?2.5:1)});syncDockComposer({duration:duration*(slow?2.5:1)});try{localStorage.setItem('prem-contextual-buttons',contextualButtons);}catch{}};
 portfolioAssistant.setComposerGlowEnabled(showComposerGlow);$('#showComposerGlow').checked=showComposerGlow;$('#showComposerGlow').onchange=e=>{showComposerGlow=e.target.checked;portfolioAssistant.setComposerGlowEnabled(showComposerGlow);try{localStorage.setItem('prem-composer-glow',String(showComposerGlow));}catch{}};
 mountContextualPopovers({reduced:()=>reduce.matches,onRoute:id=>dispatchCommand({id:'project.open',target:id,source:'pointer'})});
 installTooltips();
 const animationButton=$('#animationPreference');
-$('#contextualComposerPreference').onclick=()=>{contextualComposer=!contextualComposer;applyDockPreferences();try{localStorage.setItem('prem-contextual-composer',String(contextualComposer));}catch{}syncDockComposer({duration:duration*(slow?2.5:1)});};
+$('#contextualComposerPreference').onclick=()=>{contextualComposer=!contextualComposer;applyDockPreferences();composerContext?.setMode(contextualComposer?'composer':'inline');try{localStorage.setItem('prem-contextual-composer',String(contextualComposer));}catch{}syncDockComposer({duration:duration*(slow?2.5:1)});};
 $('#alwaysDarkGlassPreference').onclick=()=>{alwaysDarkGlass=!alwaysDarkGlass;applyDockPreferences();try{localStorage.setItem('prem-always-dark-glass',String(alwaysDarkGlass));}catch{}};
 function syncAnimationPreference(){animationButton.setAttribute('aria-checked',String(animationsEnabled));setIconSwitchState(animationButton,animationsEnabled?'on':'off');document.documentElement.dataset.animation=animationsEnabled?'on':'off';}
 function refreshAnimationPreference(){motionMaterial.reset();render(labMode?'lab':current||'work',{stream:false});syncDockActions(current,{immediate:true});composerContext?.refresh();if(projectPopover.active)projectPopover.setOpen(!!projectPopover.target,{immediate:true,restoreFocus:false});}

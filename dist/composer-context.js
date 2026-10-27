@@ -1,6 +1,8 @@
 import {dockGeometry,stepDockSpring} from './dock-morph.js';
 import {ContextActionPresence} from './context-action-presence.js';
 
+// Actions that have a place in the page as well as above the dock.
+const PAGE_ACTIONS=Object.freeze(['prototype','watch-prototype','fullscreen']);
 export function readContextualButtons(storage){try{return storage?.getItem('prem-contextual-buttons')==='composer'?'composer':'inline';}catch{return 'inline';}}
 export function carouselVisibility(rect,{top=0,bottom}={}){
  if(bottom<=top)return 0;
@@ -20,25 +22,29 @@ const paths={back:'M19 12H5m6-6-6 6 6 6',previous:'m14.5 5-7 7 7 7',next:'m9.5 5
 // Visibility morphs the whole branch. Configuration changes retain the branch
 // and reconcile stable action ids inside it, including across project routes.
 export class ComposerContext {
- constructor(dock,{getScene=()=>({}),onAction=()=>{},reduced=()=>false,duration=()=>400,mode='inline',splitProjectControls=false}={}){
-  Object.assign(this,{dock,getScene,onAction,reduced,duration,splitProjectControls,position:0,velocity:0,target:0,splitPosition:0,splitVelocity:0,splitTarget:0,focused:false,blocked:false,waiters:[]});
+ constructor(dock,{getScene=()=>({}),onAction=()=>{},reduced=()=>false,duration=()=>400,mode='inline',placement='above',splitProjectControls=false}={}){
+  Object.assign(this,{dock,getScene,onAction,reduced,duration,splitProjectControls,placement:'above',position:0,velocity:0,target:0,splitPosition:0,splitVelocity:0,splitTarget:0,focused:false,blocked:false,waiters:[]});
   this.row=document.createElement('div');this.row.className='composer-context-actions';this.row.hidden=true;this.row.inert=true;this.row.setAttribute('role','navigation');this.row.setAttribute('aria-label','Contextual actions');dock.el.append(this.row);
   this.actions=new ContextActionPresence(this.row,{reduced,onAction:(id,button)=>this.onAction(id,this.rendered,button)});this.metricVelocity={left:0,width:0,height:0};
   this.schedule=()=>{if(!this.raf){this.previous=performance.now();this.raf=requestAnimationFrame(now=>this.tick(now));}};
   this.resize=()=>{this.measure();this.refresh();};
   addEventListener('scroll',this.schedule,{passive:true});addEventListener('resize',this.resize);addEventListener('composer-viewport-change',this.resize);addEventListener('gallery-selection-change',this.schedule);
-  this.previousLayout=dock.onLayout;dock.onLayout=()=>{this.previousLayout?.();this.schedule();};this.setMode(mode);
+  this.previousLayout=dock.onLayout;dock.onLayout=()=>{this.previousLayout?.();this.schedule();};this.setMode(mode);this.setPlacement(placement);
  }
  setSplitProjectControls(value){this.splitProjectControls=!!value;this.signature=null;this.refresh();}
+ // `mode` is the nav mode: 'composer' or 'inline' (classic nav, whose dock keeps Back and Previous/Next itself).
  setMode(mode){this.mode=mode==='composer'?'composer':'inline';document.documentElement.dataset.contextualButtons=this.mode;this.refresh();}
+ // `placement` puts the page actions (View project, View prototype, Watch, Full screen) above the dock or in the page.
+ setPlacement(placement){this.placement=placement==='page'?'page':'above';document.documentElement.dataset.contextualPlacement=this.placement;this.refresh();}
+ inRow(actions){return this.placement==='page'?actions.filter(action=>!PAGE_ACTIONS.includes(action.id)):actions;}
  scene(){
   const scene=this.getScene();
   // Chat autofocus must leave Back available: chat has no floating suggestions
   // that need to occupy the contextual controls' space.
   if(this.focused&&scene.route!=='assistant'||this.blocked||this.dock.focusTarget)return null;
-  if(!this.dock.el.classList.contains('is-composer')&&this.mode==='inline'){
-   if(!scene.project)return null;
-   const actions=contextualActions(scene).filter(action=>['prototype','watch-prototype','fullscreen'].includes(action.id));if(!actions.length)return null;
+  const classic=!this.dock.el.classList.contains('is-composer')&&this.mode==='inline';
+  if(classic&&scene.project){
+   const actions=this.inRow(contextualActions(scene).filter(action=>PAGE_ACTIONS.includes(action.id)));if(!actions.length)return null;
    return {...scene,actions,key:JSON.stringify(actions.map(action=>[action.id,action.group]))};
   }
   if(this.dock.position>.001)return null;
@@ -46,9 +52,10 @@ export class ComposerContext {
   let section=null,sectionScore=0;
   if(scene.route!=='assistant')for(const candidate of scene.contextSections||[]){if(!candidate.root?.isConnected||candidate.root.closest('[hidden]'))continue;const next=carouselVisibility(candidate.root.getBoundingClientRect(),{bottom:limit});if(next>sectionScore){sectionScore=next;section=candidate;}}
   let carousel=null,score=0;
-  for(const gallery of scene.galleries||[]){if(!gallery.root?.isConnected||gallery.root.closest('[hidden]')||!gallery.details?.getAttribute('href'))continue;const next=carouselVisibility(gallery.viewport.getBoundingClientRect(),{bottom:limit});if(next>score){score=next;carousel=gallery;}}
+  if(this.placement!=='page')for(const gallery of scene.galleries||[]){if(!gallery.root?.isConnected||gallery.root.closest('[hidden]')||!gallery.details?.getAttribute('href'))continue;const next=carouselVisibility(gallery.viewport.getBoundingClientRect(),{bottom:limit});if(next>score){score=next;carousel=gallery;}}
   const project=section?null:scene.project;
-  const actions=contextualActions({...scene,project,carousel,section});if(project&&this.splitProjectControls){const firstRight=actions.find(action=>action.id==='fullscreen'||action.id==='previous');if(firstRight)firstRight.pushRight=true;}if(!actions.length)return null;
+  // A classic dock shows Go Back itself, so its row never repeats it.
+  const actions=this.inRow(contextualActions({...scene,project,carousel,section})).filter(action=>!classic||action.id!=='back'&&!(action.id==='about-me'&&scene.route==='about'));if(project&&this.splitProjectControls){const firstRight=actions.find(action=>action.id==='fullscreen'||action.id==='previous');if(firstRight)firstRight.pushRight=true;}if(!actions.length)return null;
   return {...scene,project,carousel,section,actions,key:JSON.stringify(actions.map(action=>[action.id,action.label,action.text,action.tooltip,action.group,action.href,action.pushRight]))};
  }
  reconcile(){

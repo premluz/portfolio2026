@@ -2062,9 +2062,9 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 #dock .voice-composer button[aria-pressed="false"]:is(:hover,:focus-visible){background:oklch(.65 .16 25 / .36);color:var(--ink)}
 
 /* composer-context.css */
-:root[data-contextual-buttons="composer"] .spatial-gallery-primary-action{display:none}
-:root[data-contextual-buttons="composer"] .detail-media-actions [data-media-focus="fullscreen"]{display:none}
-:root[data-contextual-buttons="inline"] .detail-media-actions [data-media-focus="fullscreen"]{display:none}
+/* Contextual actions above the dock hide the page's own copies; within the page they show and the row drops them. */
+:root[data-contextual-placement="above"] .spatial-gallery-primary-action{display:none}
+:root[data-contextual-placement="above"] .detail-media-actions [data-media-focus]{display:none}
 #dock .composer-context-actions{--context-control-height:38px;--context-action-padding:var(--control-glass-inset);--context-action-gap:4px;--context-glass-gap:12px;position:absolute;z-index:3;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:var(--context-action-gap);width:max-content;max-width:calc(100vw - 32px);padding:var(--context-action-padding);pointer-events:auto;perspective:600px}
 #dock .composer-context-slot{display:flex;flex:0 0 auto;height:var(--context-control-height);transform-style:preserve-3d}
 #dock .composer-context-slot[data-group-end="true"]{margin-right:calc(var(--context-glass-gap) + 2 * var(--context-action-padding) - var(--context-action-gap))!important}
