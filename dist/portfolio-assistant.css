@@ -36,16 +36,16 @@
 @keyframes assistant-glow-shift{from{--assistant-glow-angle:0deg}to{--assistant-glow-angle:360deg}}
 #dock .dock-content>nav>a{transition:opacity .18s ease,background-color var(--nav-hover-out-duration) ease-out}
 #dock.is-composer .dock-content>nav>a{opacity:0;visibility:hidden;pointer-events:none}
-#dock .assistant-composer{position:absolute;inset:0;display:flex;align-items:center;gap:4px;width:100%;padding:var(--composer-control-inset);margin:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .24s ease,visibility .24s}
-#dock.is-composer .assistant-composer{opacity:1;visibility:visible;pointer-events:auto;transition-delay:.1s}
-#dock .assistant-composer button{flex:0 0 var(--nav-icon-size);width:var(--nav-icon-size);height:var(--nav-icon-size);display:grid;place-items:center;border-radius:var(--radius-icon-control);padding:0;background:transparent;color:var(--nav-item-ink);transition:background-color .2s,color .2s}
-#dock .assistant-composer button[hidden]{display:none}
-#dock .assistant-composer button:hover,#dock .assistant-composer button:focus-visible{background:var(--nav-item-hover);color:var(--ink)}
-#dock .assistant-composer button[aria-pressed=true]{color:var(--ink);background:var(--nav-active)}
-#dock .assistant-composer button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-#dock .assistant-composer input{flex:1 1 auto;min-width:0;width:100%;height:100%;padding:0 2px;border:0;outline:0;background:transparent;color:var(--ink);font:inherit;font-size:var(--composer-font-size)}#dock .assistant-composer input::placeholder{color:var(--muted)}#dock .assistant-composer input:focus-visible{outline:0}#dock .assistant-composer button:disabled{opacity:.3;cursor:default}
-@media(max-width:650px){.assistant-page{padding:24px 22px calc(var(--assistant-scroll-clearance) + 48px + env(safe-area-inset-bottom,0px))}.assistant-welcome{margin-bottom:45px}.ask-messages{gap:26px}.ask-cards{grid-template-columns:1fr}.ask-cards .project-card{min-height:112px;padding:15px}.ask-cards .project-card .visual{height:76px!important}#dock .assistant-composer{gap:2px}#dock .composer-suggestions{max-width:calc(100vw - 20px);gap:6px}#dock .composer-suggestions button{padding:8px 11px;font-size:var(--composer-font-size)}}
-@media(prefers-reduced-motion:reduce){#dock.is-composer .composer-aura-light::before,#dock.is-composer .composer-aura-light::after{animation:none;opacity:.1}#dock .assistant-composer{transition:none}.ask-suggestions button.suggestion-chip{animation:none;opacity:1;transform:none}}
+:is(#dock,.assistant-inline-composer) .assistant-composer{position:absolute;inset:0;display:flex;align-items:center;gap:4px;width:100%;padding:var(--composer-control-inset);margin:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .24s ease,visibility .24s}
+:is(#dock.is-composer,.assistant-inline-composer) .assistant-composer{opacity:1;visibility:visible;pointer-events:auto;transition-delay:.1s}
+:is(#dock,.assistant-inline-composer) .assistant-composer button{flex:0 0 var(--nav-icon-size);width:var(--nav-icon-size);height:var(--nav-icon-size);display:grid;place-items:center;border-radius:var(--radius-icon-control);padding:0;background:transparent;color:var(--nav-item-ink);transition:background-color .2s,color .2s}
+:is(#dock,.assistant-inline-composer) .assistant-composer button[hidden]{display:none}
+:is(#dock,.assistant-inline-composer) .assistant-composer button:hover,:is(#dock,.assistant-inline-composer) .assistant-composer button:focus-visible{background:var(--nav-item-hover);color:var(--ink)}
+:is(#dock,.assistant-inline-composer) .assistant-composer button[aria-pressed=true]{color:var(--ink);background:var(--nav-active)}
+:is(#dock,.assistant-inline-composer) .assistant-composer button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+:is(#dock,.assistant-inline-composer) .assistant-composer input{flex:1 1 auto;min-width:0;width:100%;height:100%;padding:0 2px;border:0;outline:0;background:transparent;color:var(--ink);font:inherit;font-size:var(--composer-font-size)}:is(#dock,.assistant-inline-composer) .assistant-composer input::placeholder{color:var(--muted)}:is(#dock,.assistant-inline-composer) .assistant-composer input:focus-visible{outline:0}:is(#dock,.assistant-inline-composer) .assistant-composer button:disabled{opacity:.3;cursor:default}
+@media(max-width:650px){.assistant-page{padding:24px 22px calc(var(--assistant-scroll-clearance) + 48px + env(safe-area-inset-bottom,0px))}.assistant-welcome{margin-bottom:45px}.ask-messages{gap:26px}.ask-cards{grid-template-columns:1fr}.ask-cards .project-card{min-height:112px;padding:15px}.ask-cards .project-card .visual{height:76px!important}:is(#dock,.assistant-inline-composer) .assistant-composer{gap:2px}#dock .composer-suggestions{max-width:calc(100vw - 20px);gap:6px}#dock .composer-suggestions button{padding:8px 11px;font-size:var(--composer-font-size)}}
+@media(prefers-reduced-motion:reduce){#dock.is-composer .composer-aura-light::before,#dock.is-composer .composer-aura-light::after{animation:none;opacity:.1}:is(#dock,.assistant-inline-composer) .assistant-composer{transition:none}.ask-suggestions button.suggestion-chip{animation:none;opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.ask-cards .project-card.ask-card-enter{animation:none}}
 :root[data-animation="off"] #dock.is-composer .composer-aura-light::before,:root[data-animation="off"] #dock.is-composer .composer-aura-light::after{animation:none;opacity:.1}
 :root[data-animation="off"] .ask-suggestions button.suggestion-chip{animation:none;opacity:1;transform:none}
@@ -90,6 +90,13 @@
 #dock{bottom:calc(var(--dock-bottom) + var(--composer-keyboard-inset,0px))}
 /* Navigation position (Settings → Navigation): top moves the dock into the header row. */
 :root[data-nav-position="top"] #dock{top:var(--dock-top);bottom:auto}
-@media(max-width:750px) and (pointer:coarse){#dock .assistant-composer input{font-size:max(16px,var(--composer-font-size))}}
+@media(max-width:750px) and (pointer:coarse){:is(#dock,.assistant-inline-composer) .assistant-composer input{font-size:max(16px,var(--composer-font-size))}}
 
 .corner-controls{position:fixed;right:max(24px,env(safe-area-inset-right));bottom:max(24px,env(safe-area-inset-bottom));z-index:44;display:flex;align-items:center;gap:8px}.corner-controls[hidden]{display:none!important}
+/* Menu-dock chat page: one centred column, a stage for the mascot above the welcome, and the composer as its own
+   glass pill that follows the conversation and sticks to the bottom once the thread is long. */
+.assistant-mascot{width:var(--assistant-mascot-size);height:var(--assistant-mascot-size);margin:0 auto var(--space-6)}
+.assistant-mascot[hidden],.assistant-inline-composer[hidden]{display:none}
+:root.assistant-inline-open .assistant-page{padding-bottom:var(--space-page-rhythm-md)}
+:root.assistant-inline-open #askPage .assistant-thread{width:min(100%,var(--composer-max-width));min-height:0}
+.assistant-inline-composer{position:sticky;z-index:2;bottom:calc(var(--space-6) + env(safe-area-inset-bottom,0px));width:min(100%,var(--composer-max-width));height:var(--nav-height);margin:var(--space-6) auto 0;border:1px solid var(--dock-outline);border-radius:var(--nav-rounding);background:linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));-webkit-backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));box-shadow:inset 0 1px 0 var(--nav-highlight),0 12px 40px var(--nav-shadow)}

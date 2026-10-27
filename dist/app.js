@@ -140,12 +140,22 @@ let composerContext=null,contextualButtons=readContextualButtons(localStorage),s
 let contextualComposer=true,alwaysDarkGlass=false;try{const savedComposer=localStorage.getItem('prem-contextual-composer');contextualComposer=savedComposer===null?true:savedComposer==='true';alwaysDarkGlass=localStorage.getItem('prem-always-dark-glass')==='true';}catch{}
 let assistantFloating=false;const assistantLauncher=document.getElementById('assistantLauncher');
 // The dock shows the composer on the chat page, when the composer is always on, or while the floating assistant is open.
-const composerShown=route=>route==='assistant'||contextualComposer||contextualButtons==='composer'||assistantFloating;
+// With the menu in the dock, the chat page keeps the menu and takes the composer into the page under the welcome.
+let chatInlineComposer=true;try{chatInlineComposer=localStorage.getItem('prem-chat-inline-composer')!=='false';}catch(error){console.warn('Preference prem-chat-inline-composer unreadable; using on',error);}
+const inlineChat=route=>route==='assistant'&&chatInlineComposer&&!contextualComposer&&contextualButtons!=='composer';
+const composerShown=route=>route==='assistant'&&!inlineChat(route)||contextualComposer||contextualButtons==='composer'||assistantFloating;
+const askForm=document.getElementById('askForm'),askFormHome={parent:askForm.parentElement,next:askForm.nextElementSibling};
+function syncInlineComposer(){
+ const inline=inlineChat(current),slot=document.getElementById('assistantInlineComposer');
+ document.documentElement.classList.toggle('assistant-inline-open',inline);slot.hidden=!inline;document.getElementById('assistantMascot').hidden=!inline;
+ if(inline&&askForm.parentElement!==slot)slot.append(askForm);
+ else if(!inline&&askForm.parentElement===slot)askFormHome.parent.insertBefore(askForm,askFormHome.next);
+}
 function applyDockPreferences(){dockMorph.el.classList.toggle('contextual-composer',contextualComposer);dockMorph.el.classList.toggle('always-dark-glass',alwaysDarkGlass);$('#contextualComposerPreference').setAttribute('aria-checked',String(contextualComposer));$('#alwaysDarkGlassPreference').setAttribute('aria-checked',String(alwaysDarkGlass));}
 applyDockPreferences();
 const showProjectControls=route=>projectIds.includes(route);
 // About and Contact are in the dock's own menu, so they get no Back pill morphing in and out of it.
-const showBackControl=route=>route==='assistant'||projectIds.includes(route);
+const showBackControl=route=>route==='assistant'&&!inlineChat(route)||projectIds.includes(route);
 function syncDockActions(route,options={}){const composer=composerShown(route);dockMorph.setBack(!composer&&showBackControl(route),options);dockMorph.setSplit(!composer&&contextualButtons==='inline'&&showProjectControls(route),options);composerContext?.refresh();}
 installHoverTrail($('#dock'),{reduced:()=>reduce.matches});
 const edgeShades=new EdgeShades($('.page-edge-shades'),{reduced:()=>reduce.matches});
@@ -491,7 +501,7 @@ function syncDockComposer(options={}){
  syncAssistantLauncher();
  const active=composerShown(current);
  projectPopover.setTrigger(active?$('#assistantIndexToggle'):projectMenuToggle);projectPopover.anchor=active?'main-start':'main';
- dockMorph.setComposer(active,options);portfolioAssistant.setComposerAvailable(active);composerContext?.refresh();
+ syncInlineComposer();dockMorph.setComposer(active,options);portfolioAssistant.setComposerAvailable(active||inlineChat(current));composerContext?.refresh();
 }
 // The Assistant button sits beside the dock, and only when the menu, not the composer, fills the dock.
 const assistantPresentation=mountAssistantPresentation($('#assistantPresentation'),{onChange:()=>closeAssistantFloating({focus:false})});
@@ -634,6 +644,7 @@ composerContext=new ComposerContext(dockMorph,{mode:contextualButtons,splitProje
  else if(action==='contact-email')void copyContactEmail(siteToast.show);
  else void dispatchCommand({id:action==='back'?'navigation.back':'project.'+action,source:'pointer'});
 }});
+$('#chatInlineComposer').checked=chatInlineComposer;$('#chatInlineComposer').onchange=e=>{chatInlineComposer=e.target.checked;saveFlag('prem-chat-inline-composer',chatInlineComposer);syncFloatingDock();};
 $('#splitProjectControls').checked=splitProjectControls;$('#splitProjectControls').onchange=e=>{splitProjectControls=e.target.checked;composerContext.setSplitProjectControls(splitProjectControls);try{localStorage.setItem('prem-split-project-controls',String(splitProjectControls));}catch{}};
 $('#contextualButtons').value=contextualButtons;$('#contextualButtons').onchange=e=>{if(busy){e.target.value=contextualButtons;return;}contextualButtons=e.target.value==='composer'?'composer':'inline';composerContext.setMode(contextualButtons);syncDockActions(current,{duration:duration*(slow?2.5:1)});syncDockComposer({duration:duration*(slow?2.5:1)});try{localStorage.setItem('prem-contextual-buttons',contextualButtons);}catch{}};
 portfolioAssistant.setComposerGlowEnabled(showComposerGlow);$('#showComposerGlow').checked=showComposerGlow;$('#showComposerGlow').onchange=e=>{showComposerGlow=e.target.checked;portfolioAssistant.setComposerGlowEnabled(showComposerGlow);try{localStorage.setItem('prem-composer-glow',String(showComposerGlow));}catch{}};

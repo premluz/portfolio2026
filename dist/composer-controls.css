@@ -1,21 +1,21 @@
-#dock .composer-draft{position:relative;display:block;flex:1 1 auto;min-width:0;height:100%}
-#dock .composer-draft input{width:100%;height:100%}
-#dock .assistant-action{position:relative}
-#dock .assistant-action svg{position:absolute;transition:opacity 140ms ease,transform 180ms var(--ease-settle)}
-#dock .assistant-action[data-mode="voice"] .composer-send-icon,#dock .assistant-action[data-mode="send"] .composer-voice-icon{opacity:0;transform:scale(.65);pointer-events:none}
-#dock .assistant-action[data-mode="voice"] .composer-voice-icon,#dock .assistant-action[data-mode="send"] .composer-send-icon{opacity:1;transform:scale(1)}
+:is(#dock,.assistant-inline-composer) .composer-draft{position:relative;display:block;flex:1 1 auto;min-width:0;height:100%}
+:is(#dock,.assistant-inline-composer) .composer-draft input{width:100%;height:100%}
+:is(#dock,.assistant-inline-composer) .assistant-action{position:relative}
+:is(#dock,.assistant-inline-composer) .assistant-action svg{position:absolute;transition:opacity 140ms ease,transform 180ms var(--ease-settle)}
+:is(#dock,.assistant-inline-composer) .assistant-action[data-mode="voice"] .composer-send-icon,:is(#dock,.assistant-inline-composer) .assistant-action[data-mode="send"] .composer-voice-icon{opacity:0;transform:scale(.65);pointer-events:none}
+:is(#dock,.assistant-inline-composer) .assistant-action[data-mode="voice"] .composer-voice-icon,:is(#dock,.assistant-inline-composer) .assistant-action[data-mode="send"] .composer-send-icon{opacity:1;transform:scale(1)}
 .dictation-waveform{position:absolute;inset:0 2px;display:flex;align-items:center;justify-content:space-between;gap:2px;pointer-events:none;overflow:hidden}
 .dictation-waveform i{flex:0 0 2px;min-width:2px;border-radius:999px;height:var(--voice-bar-height,2px);background:currentColor;opacity:var(--voice-bar-opacity,.35);transition:height 70ms linear,opacity 70ms linear}
 .dictation-waveform[hidden]{display:none}
-#dock .assistant-composer.is-dictating input{opacity:0}
-#dock .assistant-composer.is-dictating .dictation-waveform{color:var(--ink)}
-#dock .assistant-composer.is-dictating .assistant-mic{color:var(--ink);background:var(--nav-active)}
-@media(prefers-reduced-motion:reduce){.dictation-waveform i,#dock .assistant-action svg{transition:none}}
-:root[data-animation="off"] .dictation-waveform i,:root[data-animation="off"] #dock .assistant-action svg{transition:none}
+:is(#dock,.assistant-inline-composer) .assistant-composer.is-dictating input{opacity:0}
+:is(#dock,.assistant-inline-composer) .assistant-composer.is-dictating .dictation-waveform{color:var(--ink)}
+:is(#dock,.assistant-inline-composer) .assistant-composer.is-dictating .assistant-mic{color:var(--ink);background:var(--nav-active)}
+@media(prefers-reduced-motion:reduce){.dictation-waveform i,:is(#dock,.assistant-inline-composer) .assistant-action svg{transition:none}}
+:root[data-animation="off"] .dictation-waveform i,:root[data-animation="off"] :is(#dock,.assistant-inline-composer) .assistant-action svg{transition:none}
 
-#dock .assistant-action .composer-stop-icon{opacity:0;transform:scale(.65);pointer-events:none}
-#dock .assistant-action[data-mode="stop"] .composer-stop-icon{opacity:1;transform:scale(1)}
-#dock .assistant-action[data-mode="stop"] :is(.composer-voice-icon,.composer-send-icon){opacity:0;transform:scale(.65);pointer-events:none}
+:is(#dock,.assistant-inline-composer) .assistant-action .composer-stop-icon{opacity:0;transform:scale(.65);pointer-events:none}
+:is(#dock,.assistant-inline-composer) .assistant-action[data-mode="stop"] .composer-stop-icon{opacity:1;transform:scale(1)}
+:is(#dock,.assistant-inline-composer) .assistant-action[data-mode="stop"] :is(.composer-voice-icon,.composer-send-icon){opacity:0;transform:scale(.65);pointer-events:none}
 
 /* The two identical histories meet without a reset, even at zero input level. */
 .dictation-waveform{display:block}

@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Chat page in menu-dock mode
+With the menu in the dock, opening the chat page no longer swaps the menu for the composer: Work, Lab, About and Contact stay, and the composer sits in the page under the welcome as a glass pill that follows the conversation and sticks to the bottom (setting "Chat page: composer under the welcome", on). A mascot stage above the welcome takes the character, larger (that part lives in the uncommitted agent code). Evidence: headless browser with the owner's settings: nav items visible on #assistant, composer under the suggestions and centred, asking a question works, leaving the page returns the composer to the dock. Tests updated.
+
 ## 2026-10-27 Lab images-only gaps
 With card details hidden on the Lab, the space between rows was about 83px against a 38px column gap: the image kept its 28px top and 8px bottom insets and the 38px caption margin. Those are now zero there, so the image fills the card. Evidence: headless browser with the owner's 2026-10-27 settings at 1755px: picture-to-picture gap 38px across and down; Work unchanged.
 

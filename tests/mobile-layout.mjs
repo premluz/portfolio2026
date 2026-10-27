@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {clientStyles} from '../scripts/client-styles.mjs';
 const css=await readFile(new URL('../dist/mobile.css',import.meta.url),'utf8'),html=await readFile(new URL('../dist/index.html',import.meta.url),'utf8');
-assert(css.startsWith('/* Keep editable text'));assert(css.includes('#dock #askInput{font-size:max(16px,var(--composer-font-size))'),'The input floor is independent of viewport width or pointer classification');
+assert(css.startsWith('/* Keep editable text'));assert(css.includes(':is(#dock,.assistant-inline-composer) #askInput{font-size:max(16px,var(--composer-font-size))'),'The input floor is independent of viewport width or pointer classification');
 assert(!/maximum-scale|user-scalable\s*=\s*no/.test(html),'Native zoom remains available for accessibility');
 assert(html.includes('href="site.css"')&&clientStyles.indexOf('mobile.css')>clientStyles.indexOf('composer-controls.css'),'The single CSS bundle keeps mobile corrections after inherited composer styling');
 assert(css.includes('pan-y pinch-zoom')&&css.includes('overflow-wrap:anywhere'));

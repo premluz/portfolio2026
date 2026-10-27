@@ -175,6 +175,8 @@
   --space-page-rhythm-md: calc(var(--space-unit) * 20);
   --space-page-rhythm-lg: calc(var(--space-unit) * 40);
   --space-page-rhythm: var(--space-page-rhythm-sm);
+  /* The chat page mascot stage: twice the dock character, matching its 2x image. */
+  --assistant-mascot-size: 144px;
   /* Where the first line of page content starts: the home hero, About and a project detail all share it. */
   --page-content-top: calc((var(--header-height) + var(--brand-avatar-size)) / 2 + var(--header-top-offset) + var(--hero-gap));
   --image-max-width-landscape: 1000px;

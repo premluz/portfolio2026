@@ -26,7 +26,9 @@ assert(html.includes('id="assistantLauncher"')&&html.includes('class="assistant-
 const navHtml=html.slice(html.indexOf('<nav aria-label="Main navigation">'),html.indexOf('</form></nav>')+13);assert(!navHtml.includes('assistantLauncher'),'The button is its own pill beside the dock, not an item of the menu');
 const morph=await readFile(new URL('../dist/dock-morph.js',import.meta.url),'utf8');assert(morph.includes("launcher&&!launcher.hidden?launcher.offsetWidth+this.baseMetrics.gap:0"),'The dock centres itself together with the button');
 assert(html.includes('id="assistantMaximize"')&&html.includes('id="assistantFloatingClose"')&&html.includes('id="assistantPresentation"'));
-assert(app.includes("const composerShown=route=>route==='assistant'||contextualComposer||contextualButtons==='composer'||assistantFloating;"),'One rule decides when the dock shows the composer, including the open panel');
+assert(app.includes("const composerShown=route=>route==='assistant'&&!inlineChat(route)||contextualComposer||contextualButtons==='composer'||assistantFloating;"),'One rule decides when the dock shows the composer, including the open panel');
+assert(app.includes("const inlineChat=route=>route==='assistant'&&chatInlineComposer&&!contextualComposer&&contextualButtons!=='composer';"),'In menu-dock mode the chat page keeps the menu and puts the composer in the page');
+assert(html.includes('<div class="assistant-inline-composer" id="assistantInlineComposer" hidden></div>')&&html.includes('<div class="assistant-mascot" id="assistantMascot" aria-hidden="true" hidden></div>'),'The chat page has a composer slot and a mascot stage');
 assert(!/current==='assistant'\|\|contextualComposer\|\|contextualButtons==='composer'/.test(app),'No copies of the old rule remain');
 assert(app.includes("const shown=!contextualComposer&&contextualButtons!=='composer';"),'The button appears only when the menu fills the dock');
 assert(app.includes('if(assistantFloating)closeAssistantFloating({focus:false});')&&app.includes("if(assistantFloating){closeAssistantFloating();return {ok:true,message:'Assistant closed'};}"),'Navigation and Escape close the panel');
