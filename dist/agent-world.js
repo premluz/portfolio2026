@@ -8,9 +8,12 @@ export function overlapArea(a,b){
  return width>0&&height>0?width*height:0;
 }
 // Home sits just right of the composer or Assistant button; with no room there, above its right end.
-export function homeSeat(anchor,viewport,size,gap){
- const half=size/2,right={x:anchor.right+gap+half,y:(anchor.top+anchor.bottom)/2};
+// `preferLeft` (nav on top) keeps the menu the rightmost container: the character hangs off its left side first.
+export function homeSeat(anchor,viewport,size,gap,{preferLeft=false}={}){
+ const half=size/2,right={x:anchor.right+gap+half,y:(anchor.top+anchor.bottom)/2},left={x:anchor.left-gap-half,y:right.y};
+ if(preferLeft&&left.x-half>=gap)return left;
  if(right.x+half<=viewport.width-gap)return right;
+ if(left.x-half>=gap)return left;
  return {x:Math.max(gap+half,anchor.right-half),y:Math.max(gap+half,anchor.top-gap-half)};
 }
 // Spots beside, above and below every box that matters (the target, its popover, its paragraph).
@@ -59,7 +62,7 @@ export function createAgentWorld({doc=document,win=window,gap}={}){
   viewport,
   // On the menu-dock chat page the character's home is the stage above the welcome, centred in it.
   // Opacity is ignored here: the chat page fades in, and the stage is already where it will settle.
-  home(size){const stage=doc.getElementById('assistantMascot');if(stage?.isConnected&&!stage.hidden&&stage.getClientRects().length){const box=stage.getBoundingClientRect();return {x:(box.left+box.right)/2,y:(box.top+box.bottom)/2};}const anchor=homeAnchor(doc);return anchor?homeSeat(anchor.getBoundingClientRect(),viewport(),size,gap):{x:viewport().width-gap-size/2,y:viewport().height-gap-size/2};},
+  home(size){const stage=doc.getElementById('assistantMascot');if(stage?.isConnected&&!stage.hidden&&stage.getClientRects().length){const box=stage.getBoundingClientRect();return {x:(box.left+box.right)/2,y:(box.top+box.bottom)/2};}const anchor=homeAnchor(doc);return anchor?homeSeat(anchor.getBoundingClientRect(),viewport(),size,gap,{preferLeft:doc.documentElement.dataset.navPosition==='top'}):{x:viewport().width-gap-size/2,y:viewport().height-gap-size/2};},
   seat(target,obstacles,size){return chooseSeat({target:target.getBoundingClientRect(),obstacles:obstacles.filter(shown).map(node=>node.getBoundingClientRect()),viewport:viewport(),size,gap,probe:box=>probeContent(doc,box,pointer)});},
   destroy(){win.removeEventListener('pointermove',move);}
  };

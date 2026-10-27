@@ -148,6 +148,8 @@
   --font-size-hero-support: var(--font-size-body);
   --measure-body: 66ch;
   --measure-heading: 32ch;
+  /* Every page's title and its text sit in a block this wide (half the content width); full width on small screens. */
+  --page-intro-width: 50%;
   --space-detail-heading: var(--space-2);
   --space-detail-context: var(--space-4);
   --space-detail-sections: var(--space-8);
@@ -1465,9 +1467,9 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 [data-about-section][hidden]{display:none!important}
 :root{--about-unusual-zoom:1.03;--about-unusual-duration:600ms}
 /* .about-highlight is a .text-gradient (design-system.css). */
-.about-hero{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-page-rhythm-sm);align-items:start}
+.about-hero{display:grid;grid-template-columns:minmax(0,var(--page-intro-width)) minmax(0,1fr);column-gap:var(--space-page-rhythm-sm);align-items:start}
 .about-hero-copy{min-width:0}
-:is(.about-hero-copy,.lab-heading) .info-body{margin-top:var(--space-hero-heading-content);max-width:var(--measure-body)}
+:is(.about-hero-copy,.lab-heading) .info-body{margin-top:var(--space-hero-heading-content);max-width:none}
 /* Contact (a plain information page) has the same heading-then-body rhythm, without changing its text colour. */
 .info-detail:not(.about-detail)>h1+.info-body{margin-top:var(--space-hero-heading-content);max-width:var(--measure-body)}
 :is(.about-hero-copy,.lab-heading) .info-body p{margin:0 0 var(--space-6);color:var(--ink);line-height:var(--line-height-body)}
@@ -1507,6 +1509,13 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 }
 /* With the About heading switched off, its text starts where the heading did. */
 .about-hero-copy>h1[hidden]+.info-body{margin-top:0}
+/* The title and text of About, the Lab and Contact share one block width: the About hero's own half column, and half the
+   content width elsewhere. The block governs the width, so the title and text inside are not capped on their own. */
+.surface.detail .about-hero-copy>h1,.surface.detail .lab-heading h1,main .lab-heading h1{max-width:none}
+.surface.detail .about-hero-copy .info-body p,main .lab-heading .info-body p,.info-detail:not(.about-detail)>h1+.info-body p{max-width:none}
+.lab-heading{max-width:var(--page-intro-width)}
+.surface.detail.info-detail:not(.about-detail)>h1,.surface.detail.info-detail:not(.about-detail)>h1+.info-body{max-width:var(--page-intro-width)}
+@media(max-width:1000px){:root{--page-intro-width:100%}}
 
 /* about-illustrations.css */
 .about-trait-art{--trait-dur-short:180ms;--trait-dur:420ms;--trait-dur-long:600ms;--trait-spring:cubic-bezier(.34,1.56,.64,1);--trait-lift:-3px;--trait-tilt:-2deg;display:block;width:100%;height:auto;aspect-ratio:1;color:color-mix(in oklch,var(--ink) 48%,var(--card-surface))}
@@ -1791,7 +1800,7 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 .article-header{margin-bottom:var(--space-page-rhythm-md)}
 /* The title sits where any page's title does (top left); only the text below it is centred in its reading column. */
 .article-header .article-meta{margin:var(--space-4) 0 0;color:var(--eyebrow-ink)}
-.article-header h1{margin:0;font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);max-width:var(--measure-heading)}
+.surface.detail .article-header h1{margin:0;font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);max-width:var(--page-intro-width)}
 :root.article-title-body .article-header h1{font-size:var(--font-size-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
 .article-series{margin:var(--space-4) 0 0;color:var(--muted);font-size:var(--font-size-small);line-height:var(--line-height-body)}
 .article-series a,.article-sources a{color:var(--ink);text-underline-offset:.2em}
@@ -1958,6 +1967,11 @@ body:has(.home-carousel-active){overflow-x:clip}
 #dock{bottom:calc(var(--dock-bottom) + var(--composer-keyboard-inset,0px))}
 /* Navigation position (Settings → Navigation): top moves the dock into the header row. */
 :root[data-nav-position="top"] #dock{top:var(--dock-top);bottom:auto}
+/* Nav on top: the menu is right-aligned to the content edge (where the header ends), and is the rightmost container. */
+:root[data-nav-position="top"] #dock{left:auto;right:calc((100vw - min(100vw, var(--content-shell-width))) / 2 + var(--content-gutter));transform:none}
+:root[data-nav-position="top"] #dock>.assistant-launcher{left:auto;right:calc(100% + var(--nav-section-gap))}
+/* Plain navigation has no visible pill, so the last link's text (not its padding) meets the content edge. */
+:root[data-nav-position="top"][data-plain-nav="on"] #dock:not(.is-composer){right:calc((100vw - min(100vw, var(--content-shell-width))) / 2 + var(--content-gutter) - var(--composer-control-inset) - min(calc(var(--nav-item-padding) + 5px), 16px))}
 @media(max-width:750px) and (pointer:coarse){:is(#dock,.assistant-inline-composer) .assistant-composer input{font-size:max(16px,var(--composer-font-size))}}
 
 .corner-controls{position:fixed;right:max(24px,env(safe-area-inset-right));bottom:max(24px,env(safe-area-inset-bottom));z-index:44;display:flex;align-items:center;gap:8px}.corner-controls[hidden]{display:none!important}
@@ -2027,11 +2041,12 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 :is(#main,.retained-home) .home-testimonials[data-content-span]{width:100%;max-width:100%;margin-inline:0}
 .home-hero .hero-about{max-width:100%;min-width:0}
 .home-hero .hero-about h1{max-width:none;text-wrap:wrap}
-.home-canvas:not(.home-view-split) .hero-about h1{max-width:calc((100% * 2 - var(--space-6)) / 3)}
+.home-canvas:not(.home-view-split) .hero-about h1{max-width:var(--page-intro-width)}
 /* The "start in the first column" setting moves every section's content onto the first column. */
 :root.content-start-first{--content-column-start:1}
-.home-canvas:not(.home-view-split) .hero-copy{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);max-width:none}
-.home-canvas:not(.home-view-split) .hero-copy>[data-hero-description]{grid-column:var(--content-column-start);min-width:0;max-width:none}
+/* Six columns so the text block can be half the width and still start on the first or the second third. */
+.home-canvas:not(.home-view-split) .hero-copy{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));column-gap:var(--space-6);max-width:none}
+.home-canvas:not(.home-view-split) .hero-copy>[data-hero-description]{grid-column:calc(2 * var(--content-column-start) - 1) / span 3;min-width:0;max-width:none}
 .home-canvas:not(.home-view-split) .hero-copy>[data-hero-timeline]{grid-column:1 / -1}
 @media(max-width:1000px){.home-canvas:not(.home-view-split) .hero-about h1{max-width:none}.home-canvas:not(.home-view-split) .hero-copy{grid-template-columns:1fr}.home-canvas:not(.home-view-split) .hero-copy>[data-hero-description]{grid-column:1}}
 .home-product-text{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);row-gap:var(--space-page-rhythm-sm);margin-top:var(--space-6);width:100%;min-width:0;position:relative;isolation:isolate}
@@ -2342,7 +2357,7 @@ a.ask-fit-source:is(:hover,:focus-visible){color:var(--ink);text-decoration-colo
    Its body text shares About's rules in about-page.css. */
 main.lab-canvas .homepage-layout>:not(.lab-heading,.home-work){display:none}
 .lab-heading{padding-top:var(--page-content-top);margin-bottom:var(--space-page-rhythm-md)}
-.lab-heading h1{margin:0;max-width:var(--measure-heading);font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink)}
+.lab-heading h1{margin:0;font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink)}
 /* Lab: grid full width. Same breakout as a section set to "app": the app canvas (never wider than --app-max-width) less the gutters. */
 :root.lab-grid-full main.lab-canvas .gallery-grid{width:calc(var(--app-canvas-width) - 2 * var(--content-gutter));max-width:none;margin-inline:calc((100% - var(--app-canvas-width) + 2 * var(--content-gutter)) / 2)}
 /* Lab with "Show title" off: the title goes, its text stays and starts where the title did. */

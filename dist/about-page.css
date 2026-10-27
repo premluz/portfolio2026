@@ -1,9 +1,9 @@
 [data-about-section][hidden]{display:none!important}
 :root{--about-unusual-zoom:1.03;--about-unusual-duration:600ms}
 /* .about-highlight is a .text-gradient (design-system.css). */
-.about-hero{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-page-rhythm-sm);align-items:start}
+.about-hero{display:grid;grid-template-columns:minmax(0,var(--page-intro-width)) minmax(0,1fr);column-gap:var(--space-page-rhythm-sm);align-items:start}
 .about-hero-copy{min-width:0}
-:is(.about-hero-copy,.lab-heading) .info-body{margin-top:var(--space-hero-heading-content);max-width:var(--measure-body)}
+:is(.about-hero-copy,.lab-heading) .info-body{margin-top:var(--space-hero-heading-content);max-width:none}
 /* Contact (a plain information page) has the same heading-then-body rhythm, without changing its text colour. */
 .info-detail:not(.about-detail)>h1+.info-body{margin-top:var(--space-hero-heading-content);max-width:var(--measure-body)}
 :is(.about-hero-copy,.lab-heading) .info-body p{margin:0 0 var(--space-6);color:var(--ink);line-height:var(--line-height-body)}
@@ -43,3 +43,10 @@
 }
 /* With the About heading switched off, its text starts where the heading did. */
 .about-hero-copy>h1[hidden]+.info-body{margin-top:0}
+/* The title and text of About, the Lab and Contact share one block width: the About hero's own half column, and half the
+   content width elsewhere. The block governs the width, so the title and text inside are not capped on their own. */
+.surface.detail .about-hero-copy>h1,.surface.detail .lab-heading h1,main .lab-heading h1{max-width:none}
+.surface.detail .about-hero-copy .info-body p,main .lab-heading .info-body p,.info-detail:not(.about-detail)>h1+.info-body p{max-width:none}
+.lab-heading{max-width:var(--page-intro-width)}
+.surface.detail.info-detail:not(.about-detail)>h1,.surface.detail.info-detail:not(.about-detail)>h1+.info-body{max-width:var(--page-intro-width)}
+@media(max-width:1000px){:root{--page-intro-width:100%}}

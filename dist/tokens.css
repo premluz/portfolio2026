@@ -147,6 +147,8 @@
   --font-size-hero-support: var(--font-size-body);
   --measure-body: 66ch;
   --measure-heading: 32ch;
+  /* Every page's title and its text sit in a block this wide (half the content width); full width on small screens. */
+  --page-intro-width: 50%;
   --space-detail-heading: var(--space-2);
   --space-detail-context: var(--space-4);
   --space-detail-sections: var(--space-8);

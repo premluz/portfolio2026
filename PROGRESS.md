@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Half-width intro block, menu right-aligned
+Titles and text now share one block width on every page: half the content width (was about a third on Home, 40-45% elsewhere): `--page-intro-width`. With the nav on top the menu dock is right-aligned to the content edge and is the rightmost container; the character hangs off its left side and the Assistant button sits left of it. Evidence: headless browser with the owner's settings: title and text widths 662/648 (Home), 600/600 (About, Contact), 662/662 (Lab) against half the rail; dock right edge on the header content edge at several widths. tests/agent-world.mjs updated.
+
 ## 2026-10-27 Title strength, blog header
 Card titles and the project page caption title are now the strongest text (card title rest strength 100%, caption in full ink); the results line stays quieter. Blog articles: the title is at the page content start, top left, then the date without the author, then the series line; the text stays centred in its column. New setting "Article title: body text size" (off). Evidence: computed colours and positions in the headless browser; tests/articles.mjs extended.
 

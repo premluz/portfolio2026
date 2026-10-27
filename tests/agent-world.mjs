@@ -5,11 +5,14 @@ const viewport={width:1440,height:900},size=40,gap=12;
 const rect=(left,top,width,height)=>({left,top,right:left+width,bottom:top+height,width,height});
 const inside=point=>point.x-size/2>=gap&&point.x+size/2<=viewport.width-gap&&point.y-size/2>=gap&&point.y+size/2<=viewport.height-gap;
 
-// Home sits right of the composer, centred on it; without room there, above its right end.
+// Home sits right of the composer, centred on it; without room there, on its left; with none there either, above its right end.
 const composer=rect(560,820,320,48);
 assert.deepEqual(homeSeat(composer,viewport,size,gap),{x:880+gap+size/2,y:844});
-const edge=homeSeat(rect(1100,820,320,48),viewport,size,gap);
-assert.ok(inside(edge)&&edge.y<820,'with no room on the right, home sits above the anchor');
+const hung=homeSeat(rect(1100,820,320,48),viewport,size,gap);
+assert.deepEqual(hung,{x:1100-gap-size/2,y:844},'with no room on the right, home hangs off the anchor\'s left side');
+assert.deepEqual(homeSeat(composer,viewport,size,gap,{preferLeft:true}),{x:560-gap-size/2,y:844},'with the nav on top the character takes the left side even where the right has room');
+const edge=homeSeat(rect(40,820,1360,48),viewport,size,gap);
+assert.ok(inside(edge)&&edge.y<820,'with no room on either side, home sits above the anchor');
 
 // The hover seat avoids the popover and the paragraph, stays on screen, and stays close to the marker.
 const marker=rect(820,410,170,30),popover=rect(500,130,840,250),paragraph=rect(500,400,700,120);

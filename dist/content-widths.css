@@ -15,11 +15,12 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 :is(#main,.retained-home) .home-testimonials[data-content-span]{width:100%;max-width:100%;margin-inline:0}
 .home-hero .hero-about{max-width:100%;min-width:0}
 .home-hero .hero-about h1{max-width:none;text-wrap:wrap}
-.home-canvas:not(.home-view-split) .hero-about h1{max-width:calc((100% * 2 - var(--space-6)) / 3)}
+.home-canvas:not(.home-view-split) .hero-about h1{max-width:var(--page-intro-width)}
 /* The "start in the first column" setting moves every section's content onto the first column. */
 :root.content-start-first{--content-column-start:1}
-.home-canvas:not(.home-view-split) .hero-copy{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);max-width:none}
-.home-canvas:not(.home-view-split) .hero-copy>[data-hero-description]{grid-column:var(--content-column-start);min-width:0;max-width:none}
+/* Six columns so the text block can be half the width and still start on the first or the second third. */
+.home-canvas:not(.home-view-split) .hero-copy{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));column-gap:var(--space-6);max-width:none}
+.home-canvas:not(.home-view-split) .hero-copy>[data-hero-description]{grid-column:calc(2 * var(--content-column-start) - 1) / span 3;min-width:0;max-width:none}
 .home-canvas:not(.home-view-split) .hero-copy>[data-hero-timeline]{grid-column:1 / -1}
 @media(max-width:1000px){.home-canvas:not(.home-view-split) .hero-about h1{max-width:none}.home-canvas:not(.home-view-split) .hero-copy{grid-template-columns:1fr}.home-canvas:not(.home-view-split) .hero-copy>[data-hero-description]{grid-column:1}}
 .home-product-text{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);row-gap:var(--space-page-rhythm-sm);margin-top:var(--space-6);width:100%;min-width:0;position:relative;isolation:isolate}
