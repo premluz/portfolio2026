@@ -231,6 +231,9 @@
   /* The stage photo settles slower than the card: it is the larger, calmer surface. */
   --stage-reveal-backdrop-duration: 1400ms;
   --brand-avatar-size: 40px;
+  /* The header (logo, name, top navigation and the agent beside it) sits this far lower, so it breathes at the top. */
+  --header-top-offset: clamp(16px, 3.5vh, 44px);
+  --header-total: calc(var(--header-height) + var(--header-top-offset));
   /* Phone carousel (<=600px): side margins and the gap between cards, and the smallest card size the saved
      Carousel size setting may produce there (1 = full width). Desktop keeps the saved setting. */
   --gallery-mobile-inset-landscape: 32px;
@@ -255,7 +258,7 @@
   /* The same breathing room above the hero (from the header's content) and below it (to At a glance). */
   --hero-gap: var(--space-12);
   /* Navigation at the top sits centred in the header row. */
-  --dock-top: calc((var(--header-height) - var(--nav-height)) / 2);
+  --dock-top: calc((var(--header-height) - var(--nav-height)) / 2 + var(--header-top-offset));
   /* At a glance: the three columns under the hero, and the gap between a heading and its list. */
   --overview-column-gap: clamp(32px, 4vw, 72px);
   --overview-list-gap: 18px;
@@ -1055,7 +1058,7 @@ button,input,select,textarea{font-family:var(--font-family-sans)}
 .hero-strapline{margin:var(--space-2) 0 var(--space-hero-heading-content);font-size:var(--font-size-hero-support);font-weight:var(--font-weight-body);line-height:var(--line-height-body);color:var(--muted)}
 .hero-strapline[hidden]{display:none}
 .home-hero{padding-block:var(--space-page-rhythm)}
-.home-view-split .home-hero{padding-block:0;top:calc(var(--header-height) + var(--space-10));margin-top:var(--space-hero-top)}
+.home-view-split .home-hero{padding-block:0;top:calc(var(--header-total) + var(--space-10));margin-top:var(--space-hero-top)}
 .home-view-split .homepage-layout{gap:var(--space-detail-columns)}
 .gallery-toolbar{margin-bottom:var(--space-6)}
 .home-news{margin-top:calc(var(--space-unit) * 24)}
@@ -1099,6 +1102,10 @@ button,input,select,textarea{font-family:var(--font-family-sans)}
 .text-eyebrow{font-size:var(--font-size-caption);font-weight:var(--eyebrow-weight);letter-spacing:var(--eyebrow-tracking);line-height:var(--line-height-label);color:var(--eyebrow-ink);text-transform:uppercase}
 /* Mono text role: labels, lists and metadata set in uppercase monospace. */
 .text-mono{font-family:var(--font-family-mono);font-size:var(--font-size-mono);font-weight:var(--font-weight-body);letter-spacing:var(--eyebrow-tracking);text-transform:uppercase;line-height:var(--line-height-label)}
+/* The header is taller by --header-top-offset, which is padding, so its content (logo, name, top navigation) sits lower. */
+header{height:var(--header-total);padding-top:var(--header-top-offset)}
+.brand-name,.brand-role{display:block}
+.brand-role{margin-top:var(--space-1);font-size:var(--font-size-note);color:var(--muted)}
 .brand-avatar{display:block;width:var(--brand-avatar-size);height:var(--brand-avatar-size);border-radius:50%;object-fit:cover;object-position:50% 30%}
 .discipline{font-size:var(--font-size-small);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body)}
 .design-system-controls{border:0;padding:0;margin:0 0 24px;min-width:0}
@@ -1226,7 +1233,7 @@ html[data-animation="off"] .image-card[data-copy-hover="true"]:is(:hover,:focus-
 @media(max-width:380px){#dock nav a{font-size:min(var(--nav-item-font-size),14px);padding-inline:min(calc(var(--nav-item-padding) + 5px),6px)}}
 
 /* Reserve a glimpse of work as the window becomes shorter, using measured hero content. */
-main.home-canvas:not(.home-view-split) .home-hero{--hero-padding:min(var(--space-page-rhythm-lg),var(--hero-viewport-space,var(--space-page-rhythm-lg)));--hero-top-bias:min(32px,var(--hero-padding));padding-top:calc((var(--header-height) + var(--brand-avatar-size)) / 2 + var(--hero-gap));padding-bottom:0}
+main.home-canvas:not(.home-view-split) .home-hero{--hero-padding:min(var(--space-page-rhythm-lg),var(--hero-viewport-space,var(--space-page-rhythm-lg)));--hero-top-bias:min(32px,var(--hero-padding));padding-top:calc((var(--header-height) + var(--brand-avatar-size)) / 2 + var(--header-top-offset) + var(--hero-gap));padding-bottom:0}
 .home-view-split .home-hero{margin-top:calc(var(--space-page-rhythm-lg) + 32px)}
 
 /* Client, project title and summary are independently visible card fields. */
@@ -2313,6 +2320,13 @@ body.card-details.card-description-hidden .project-card.image-card>.card-copy>.c
 :root[data-plain-cards="on"] .surface{background:none!important;box-shadow:none!important;border-color:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 :root[data-plain-cards="on"] .surface :is(.liquid-skin,.material-reflection,.image-edge,.surface-effect-layer){display:none!important}
 :root[data-plain-cards="on"] .note-card{background:none!important;box-shadow:none!important}
+
+/* empty-hero.css */
+/* Empty hero: when the home page shows no hero heading, badge, strapline, description or At a glance, and the carousel is
+   showing, the hero's padding is dropped and the carousel is centred in the space below the header instead of floating
+   under an invisible hero (the hero's padding used to clear the header, so the carousel takes over that margin). Current layout only: Flip and Flat keep their sticky hero. */
+main:not(.home-view-split) .homepage-layout:has(.home-product-carousel:not([hidden])):not(:has(.hero-about>:is(.badge,h1,.hero-strapline):not([hidden]))):not(:has(.hero-copy>*)):not(:has(.home-overview:not([hidden])))>.home-hero{display:none}
+main:not(.home-view-split) .homepage-layout:has(.home-product-carousel:not([hidden])):not(:has(.hero-about>:is(.badge,h1,.hero-strapline):not([hidden]))):not(:has(.hero-copy>*)):not(:has(.home-overview:not([hidden])))>.home-product-carousel{margin-top:var(--header-total);min-height:calc(100svh - var(--header-total));display:grid;align-content:center}
 
 /* mobile.css */
 /* Keep editable text large enough to avoid Safari's automatic input zoom.
