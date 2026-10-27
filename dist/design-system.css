@@ -99,7 +99,7 @@ main{padding-bottom:var(--space-page-rhythm)}
 main:not(.wide-project-hero){/* padding-top:calc(var(--header-height) + var(--page-top)); */padding-top:0}
 main.wide-project-hero{padding-top:var(--space-page-rhythm-sm)}
 main.home-canvas{padding-top:0}
-main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:var(--space-page-rhythm-sm)}
+main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:0;padding-top:var(--page-content-top);padding-inline:0}
 .home-hero{padding-block:var(--space-page-rhythm-lg)}
 .home-news{margin-top:var(--space-page-rhythm)}
 .home-view-split .home-hero{margin-top:var(--space-page-rhythm-lg)}
@@ -206,7 +206,7 @@ html[data-animation="off"] .image-card[data-copy-hover="true"]:is(:hover,:focus-
 @media(max-width:380px){#dock nav a{font-size:min(var(--nav-item-font-size),14px);padding-inline:min(calc(var(--nav-item-padding) + 5px),6px)}}
 
 /* Reserve a glimpse of work as the window becomes shorter, using measured hero content. */
-main.home-canvas:not(.home-view-split) .home-hero{--hero-padding:min(var(--space-page-rhythm-lg),var(--hero-viewport-space,var(--space-page-rhythm-lg)));--hero-top-bias:min(32px,var(--hero-padding));padding-top:calc((var(--header-height) + var(--brand-avatar-size)) / 2 + var(--header-top-offset) + var(--hero-gap));padding-bottom:0}
+main.home-canvas:not(.home-view-split) .home-hero{--hero-padding:min(var(--space-page-rhythm-lg),var(--hero-viewport-space,var(--space-page-rhythm-lg)));--hero-top-bias:min(32px,var(--hero-padding));padding-top:var(--page-content-top);padding-bottom:0}
 .home-view-split .home-hero{margin-top:calc(var(--space-page-rhythm-lg) + 32px)}
 
 /* Client, project title and summary are independently visible card fields. */

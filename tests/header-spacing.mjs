@@ -9,7 +9,8 @@ assert(/--header-top-offset: clamp\([^;]+\);/.test(tokens),'The offset is a toke
 assert(tokens.includes('--header-total: calc(var(--header-height) + var(--header-top-offset));'),'The total header space includes it');
 assert(tokens.includes('--dock-top: calc((var(--header-height) - var(--nav-height)) / 2 + var(--header-top-offset));'),'The top navigation sits lower by the same amount');
 assert(design.includes('header{height:var(--header-total);padding-top:var(--header-top-offset)}'),'The header is taller by padding, so its content moves down');
-assert(design.includes('+ var(--header-top-offset) + var(--hero-gap))'),'The hero still starts below the header content');
+assert(tokens.includes('--page-content-top: calc((var(--header-height) + var(--brand-avatar-size)) / 2 + var(--header-top-offset) + var(--hero-gap));'),'Page content starts below the header content');
+assert(design.includes('padding-top:var(--page-content-top);padding-bottom:0}')&&design.includes('>.detail{margin-top:0;padding-top:var(--page-content-top);padding-inline:0}'),'The hero, About and a project detail all start at that offset');
 assert(design.includes('top:calc(var(--header-total) + var(--space-10))'),'The sticky split hero clears the taller header');
 
 // The role line sits under the name, in the markup the hide-logo setting already hides.
