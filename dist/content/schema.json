@@ -531,6 +531,10 @@
           "maxItems": 1000,
           "uniqueItems": true
         },
+        "shortCategory": {
+          "type": "string",
+          "maxLength": 500
+        },
         "homeCards": {
           "type": "array",
           "items": {

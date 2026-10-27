@@ -19,6 +19,7 @@ export const catalog={
         "Design system",
         "Motion"
       ],
+      "shortCategory": "AI financial analysis",
       "homeCards": [
         {
           "id": "merlin-home-1",
@@ -116,6 +117,7 @@ export const catalog={
         "Brand",
         "Motion"
       ],
+      "shortCategory": "Life-first planner",
       "homeCards": [
         {
           "id": "rios-home-1",
@@ -209,6 +211,7 @@ export const catalog={
         "Interaction",
         "Prototyping"
       ],
+      "shortCategory": "Publishing pipeline",
       "homeCards": [
         {
           "id": "playstation-home-1",
@@ -303,6 +306,7 @@ export const catalog={
         "Interaction",
         "Prototyping"
       ],
+      "shortCategory": "IoT connectivity",
       "homeCards": [
         {
           "id": "vodafone-iot-home-1",
@@ -397,6 +401,7 @@ export const catalog={
         "Product",
         "Brand"
       ],
+      "shortCategory": "Blockchain traceability",
       "homeCards": [
         {
           "id": "tracr-home-1",
@@ -494,6 +499,7 @@ export const catalog={
         "UI",
         "Motion"
       ],
+      "shortCategory": "Web3 film platform",
       "homeCards": [
         {
           "id": "galachain-home-1",
@@ -595,6 +601,7 @@ export const catalog={
         "Visual language",
         "Motion"
       ],
+      "shortCategory": "AI wallet",
       "homeCards": [
         {
           "id": "bastion-home-1",

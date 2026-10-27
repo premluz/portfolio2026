@@ -18,6 +18,7 @@
         "Design system",
         "Motion"
       ],
+      "shortCategory": "AI financial analysis",
       "homeCards": [
         {
           "id": "merlin-home-1",
@@ -115,6 +116,7 @@
         "Brand",
         "Motion"
       ],
+      "shortCategory": "Life-first planner",
       "homeCards": [
         {
           "id": "rios-home-1",
@@ -208,6 +210,7 @@
         "Interaction",
         "Prototyping"
       ],
+      "shortCategory": "Publishing pipeline",
       "homeCards": [
         {
           "id": "playstation-home-1",
@@ -302,6 +305,7 @@
         "Interaction",
         "Prototyping"
       ],
+      "shortCategory": "IoT connectivity",
       "homeCards": [
         {
           "id": "vodafone-iot-home-1",
@@ -396,6 +400,7 @@
         "Product",
         "Brand"
       ],
+      "shortCategory": "Blockchain traceability",
       "homeCards": [
         {
           "id": "tracr-home-1",
@@ -493,6 +498,7 @@
         "UI",
         "Motion"
       ],
+      "shortCategory": "Web3 film platform",
       "homeCards": [
         {
           "id": "galachain-home-1",
@@ -594,6 +600,7 @@
         "Visual language",
         "Motion"
       ],
+      "shortCategory": "AI wallet",
       "homeCards": [
         {
           "id": "bastion-home-1",

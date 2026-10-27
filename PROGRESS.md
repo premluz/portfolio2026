@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Short category and card text switch
+Added optional `shortCategory` to projects (owner's seven phrases in both catalogs; Porter and Gala DeFi have none and fall back to `name`) and a Cards setting "Show category instead of title" (off by default, saved and exported, on both pages). Evidence: tests/card-category.mjs passes; headless browser on the carousel showed all nine captions swap to the category, keep the inline client, persist across reload and switch back. Risk: Porter and Gala DeFi need a phrase from the owner.
+
 ## 2026-10-27 Role size and carousel lift
 The role line now has the same size as the name (no size of its own). The empty-hero carousel was centred by its box, but the box has empty space above the cards while captions and arrows hang below, so the visible content sat 23px low; a bottom padding of twice `--empty-hero-lift` now centres the visible content and lifts it slightly: 22px above the middle on desktop and phone. tests/header-spacing.mjs updated.
 
