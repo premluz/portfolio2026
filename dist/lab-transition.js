@@ -1,8 +1,7 @@
 import {createLabFilter,RING_RADIUS} from './lab-filter.js';
 import {LAB_RIPPLE} from './motion-tokens.js';
 
-// Entering or leaving the Lab sends a single ring out from the click. The route changes while the ring is
-// mid-flight (`out` runs to the handoff, `in` finishes it on the new page), so it reads as one continuous ripple.
+// Landing on the Lab sends a single ring out from where the visitor pressed, once the page has faded in.
 const clamp=value=>Math.min(1,Math.max(0,value));
 
 // Where the ring starts: the last pointer press, or the focused control for keyboard and command use.
@@ -40,8 +39,8 @@ class LabRipple{
  stop(){cancelAnimationFrame(this.raf);this.raf=0;this.filter.apply({x:0,y:0,radius:0,amplitude:0});}
 }
 
-/** One ripple for the page: `out()` runs it to the handoff, `in()` finishes it once the next route is showing. */
+/** One ripple for the page: `play()` runs the whole ring, `stop()` clears it. */
 export function createLabRipple(){
  const ripple=new LabRipple();
- return {out:()=>ripple.play(0,LAB_RIPPLE.handoff),in:()=>ripple.play(LAB_RIPPLE.handoff,1),stop:()=>ripple.stop()};
+ return {play:()=>ripple.play(0,1),stop:()=>ripple.stop()};
 }

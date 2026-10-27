@@ -282,7 +282,7 @@ function pushCards(items,selected,returning=false){
 }
 async function slideCards(old,direction){pulseImages(main,1.3);const ms=duration*(slow?2.5:1),distance=innerWidth+48;if(ambientMovementEnabled())ambientLight.beginSlide(main.querySelector('.detail'),direction);const removeViewport=stageMotion(old.clone,20);old.clone.style.zIndex='20';const a=old.clone.animate([{transform:'translateX(0)'},{transform:`translateX(${-direction*distance}px)`}],{duration:ms,easing:EASE.settle,fill:'forwards'});const entrance=current==='about'?[{opacity:0,transform:`translate3d(${direction*distance}px,${pageEntranceLift}px,0)`},{opacity:1,transform:'translate3d(0,0,0)'}]:[{transform:`translateX(${direction*distance}px)`},{transform:'translateX(0)'}];const b=main.animate(entrance,{duration:ms,easing:EASE.settle});activeTransition.track(a);activeTransition.track(b);try{await Promise.all([a.finished,b.finished]);}finally{removeViewport();}}
 // The default page transition: the incoming page fades in while sliding up.
-function fadeUpIn(target){if(!reduce.matches)target.animate([{opacity:0,transform:`translateY(${pageEntranceLift}px)`},{opacity:1,transform:'translateY(0)'}],{duration:Math.max(240,duration),easing:EASE.settle});}
+function fadeUpIn(target){if(reduce.matches)return null;return target.animate([{opacity:0,transform:`translateY(${pageEntranceLift}px)`},{opacity:1,transform:'translateY(0)'}],{duration:Math.max(240,duration),easing:EASE.settle});}
 function scrollPage(top){
  const root=document.documentElement,previous=root.style.getPropertyValue('scroll-behavior'),priority=root.style.getPropertyPriority('scroll-behavior');root.style.setProperty('scroll-behavior','auto','important');window.scrollTo({top,behavior:'auto'});
  if(previous)root.style.setProperty('scroll-behavior',previous,priority);else root.style.removeProperty('scroll-behavior');
@@ -308,11 +308,10 @@ async function simplePageTransition(route){
  busy=true;
  try{
   const leaving=current==='assistant'?$('#askPage'):main;
-  // The Lab is entered and left through one colour-split ripple (ADR-004) instead of the fade.
-  const ripple=!reduce.matches&&(route==='lab'||labMode)?(labRipple??=createLabRipple()):null;
+  // The Lab fades in like any page and then lands with one colour-split ripple (ADR-004).
+  const ripple=!reduce.matches&&route==='lab'?(labRipple??=createLabRipple()):null;
   let exit=null;
-  if(ripple)await ripple.out();
-  else if(!reduce.matches&&!simpleTransitions.skipExit){
+  if(!reduce.matches&&!simpleTransitions.skipExit){
    // A project page recedes towards the current view with its visible text stepping out; other pages fade in place.
    exit=projectIds.includes(current)?projectPageExit(main,{duration}):pageFadeExit(leaving,{duration});
    await exit?.finished;
@@ -325,7 +324,8 @@ async function simplePageTransition(route){
   chromeTransition=true;render(route,{stream:true});chromeTransition=false;
   scrollPage(route==='work'?homeScroll:0);
   edgeShades.sync(cardIds.includes(route));if(ambientMovementEnabled())ambientLight.finishNavigation(null);
-  if(ripple)void ripple.in();else fadeUpIn(route==='assistant'?$('#askPage'):main);
+  const landing=fadeUpIn(route==='assistant'?$('#askPage'):main);
+  if(ripple)void Promise.resolve(landing?.finished).then(()=>ripple.play());
   heroImageEntrance(main,{reduced:reduce.matches,duration});
   exit?.cancel();
  }finally{busy=false;globalThis.dispatchEvent?.(new Event('portfolio-route-settled'));}

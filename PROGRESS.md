@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Lab after Work, ripple on landing
+Lab now sits right after Work in the dock and after Home in the site menu. The ripple no longer fires on the click: the old page fades out, the Lab fades in, and then one ring runs across it (`createLabRipple().play()`); leaving the Lab is the ordinary fade. Evidence: headless browser measured the ring starting only after the Lab had finished fading in; dock order Work, Lab, About, Contact. Risk: `LAB_RIPPLE.handoff` is now unused.
+
 ## 2026-10-27 Lab as an in-app route
 Clicking Lab ran the ripple and then loaded a whole new page (about 170 module requests plus the catalog), so the browser loader showed after the ripple. The Lab is now the route `#lab`: the home cards through `HomeLayout` with `LAB_VIEW` (regular, four columns), always entered through the simple page transition with the ripple playing over the swap; `lab.html` only redirects (ADR-011, REQ-011 dropped, command `route.lab`, site menu button). Evidence: headless browser: no document or script requests during the switch; Lab shows 9 cards on 4 columns with the Lab dock item active; Work restores the carousel; About, Contact and Lab again work in sequence; a card opens a project and Escape returns to the Lab; lab.html lands on #lab; no page errors. Tests: lab-page rewritten, six mirrored-page tests now check index.html only, card-return-lifecycle fixture given the Lab helpers. Risks: opening a project from the Lab fades instead of morphing; the first-half ripple duration (about 0.6 s) is unchanged; an old `data-page-product-display` attribute reader remains in app.js unused by any page.
 
