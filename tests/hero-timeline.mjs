@@ -12,7 +12,7 @@ assert(paragraphHero.includes(home.blocks.find(b=>b.id==='home-description').par
 const bothHero=homeHero({heroContent:{timeline:true,description:true}});assert(bothHero.includes('data-hero-timeline')&&bothHero.includes('data-hero-description'),'Timeline and description render as independently selected content');assert(bothHero.includes('data-hero-combined-content="true"'),'The combined hero state is explicit at first paint');
 const emptyHero=homeHero({heroContent:{timeline:false,description:false}});assert(!emptyHero.includes('data-hero-timeline')&&!emptyHero.includes('data-hero-description'),'Both hero content types can be hidden');
 const heroStyles=await (await import('node:fs/promises')).readFile(new URL('../dist/content-widths.css',import.meta.url),'utf8');
-assert(heroStyles.includes('.home-canvas:not(.home-view-split) .hero-copy>[data-hero-description]{grid-column:2;')&&heroStyles.includes('.home-canvas:not(.home-view-split) .hero-copy>[data-hero-timeline]{grid-column:1 / -1}'),'Home lead copy occupies the middle third while the timeline spans the width');
+assert(heroStyles.includes('.home-canvas:not(.home-view-split) .hero-copy>[data-hero-description]{grid-column:var(--content-column-start);')&&heroStyles.includes('.home-canvas:not(.home-view-split) .hero-copy>[data-hero-timeline]{grid-column:1 / -1}'),'Home lead copy occupies the middle third while the timeline spans the width');
 assert.equal(block.items.length,5);assert(homeHero().includes('data-hero-timeline'));
 assert(createBlockRenderer()([block]).includes('data-timeline-item="technical-users"'),'The typed timeline works outside the hero too');
 const more=structuredClone(catalog);more.documents.find(doc=>doc.id==='home').blocks.find(b=>b.type==='timeline').items.push({id:'next-chapter',type:'text',paragraphs:['A new chapter.']});
@@ -56,4 +56,6 @@ const textHero=homeHero({heroContent:{timeline:false,timelineText:true,descripti
 assert(textHero.includes('data-hero-timeline')&&!textHero.includes('data-timeline-handle'),'Text toggle alone renders the timeline without its graphic');
 assert(!noTimelineHero.includes('data-hero-timeline')&&noTimelineHero.includes('data-hero-description'),'Both timeline toggles off leaves only the description');
 assert(homeHero({heroContent:{timeline:true,description:false}}).includes('timeline-rule'),'Objects without timelineText follow the timeline toggle');
+{const tokens=await (await import('node:fs/promises')).readFile(new URL('../dist/tokens.css',import.meta.url),'utf8');
+assert(tokens.includes('--content-column-start: 2;')&&heroStyles.includes(':root.content-start-first{--content-column-start:1}'),'Section content skips the first column unless the setting starts it there');}
 console.log('Hero timeline passed: structured items, safe rendering, cursor/drag modes, grab handle, bounds, keyboard isolation, native touch, reduced motion and cleanup.');

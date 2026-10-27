@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Content column start
+Added "Content starts in the first column" (off by default, saved and exported, both pages). The eleven home placements that skipped the first column now read `--content-column-start`. Evidence: headless browser with every home section on: off, all content at x 509; on, all at x 58 with unchanged widths and no heading overlaps; persists across reload. tests/hero-timeline.mjs and tests/card-gallery.mjs updated for the token.
+
 ## 2026-10-27 Simple scroll carousel
 The home carousel gained a Scroll presentation, now the default: free native scrolling with no snap or tilt, starts on the content edge, each card carries its own caption, and clicking any card opens its detail instead of bringing it to the front. Perspective and Circular stay selectable (Presentation select). Evidence: tests/card-gallery.mjs covers it; headless browser showed scroll positions held after scrolling (437 stays 437, wheel +260 lands at 697), first card at the content edge, and a click on a side card opened its detail. Risk: a saved Circular/Perspective choice still wins, so existing browsers must pick Scroll once.
 

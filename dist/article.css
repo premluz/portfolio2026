@@ -19,7 +19,7 @@
 /* Home writing follows the other home sections: heading across, list in columns two and three, body-size titles. */
 .home-writing{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);min-width:0}
 .home-writing>h2{grid-column:1/-1}
-.home-writing-list{grid-column:2 / span 2;position:relative;isolation:isolate;display:grid;gap:var(--space-6);margin:0;padding:0;list-style:none;min-width:0}
+.home-writing-list{grid-column:var(--content-column-start) / span 2;position:relative;isolation:isolate;display:grid;gap:var(--space-6);margin:0;padding:0;list-style:none;min-width:0}
 .home-writing-list li{position:relative}
 .home-writing-row{position:relative;display:block;color:var(--body-ink);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);text-decoration:none;transition:color 180ms ease}
 .home-writing-row:is(:hover,:focus-visible){color:var(--ink)}

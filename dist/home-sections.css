@@ -6,10 +6,10 @@
 .home-services-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-6)}
 .home-approach{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);align-items:start}
 .home-approach-intro{grid-column:1 / -1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);min-width:0}
-.home-approach-principles{grid-column:2 / span 2;min-width:0}
+.home-approach-principles{grid-column:var(--content-column-start) / span 2;min-width:0}
 .home-approach-intro h2{grid-column:1 / -1;margin:0 0 var(--space-6);font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink);text-wrap:balance}
 .home-approach p{margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink);text-wrap:pretty}
-.home-approach-intro>p{grid-column:2;min-width:0;max-width:38ch}
+.home-approach-intro>p{grid-column:var(--content-column-start);min-width:0;max-width:38ch}
 .home-approach-intro>p+p{grid-column:3}
 .home-approach-principles{display:grid;gap:var(--space-6);margin-top:var(--space-page-rhythm-sm)}
 .home-approach-principles h3{display:inline;margin:0 var(--space-2) 0 0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
@@ -26,7 +26,7 @@
 .home-testimonials-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));--testimonial-gap:var(--space-6);column-gap:0;row-gap:var(--testimonial-gap);min-width:0;width:auto;max-width:100%}
 .home-testimonials{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);min-width:0}
 .home-testimonials>h2{grid-column:1/-1}
-.home-testimonials-grid{grid-column:2 / span 2}
+.home-testimonials-grid{grid-column:var(--content-column-start) / span 2}
 .home-testimonial{grid-column:span 5;display:flex;flex-direction:column;min-height:0}
 .home-testimonial:nth-child(odd){margin-right:calc(var(--testimonial-gap) / 2)}
 .home-testimonial:nth-child(even){margin-left:calc(var(--testimonial-gap) / 2)}

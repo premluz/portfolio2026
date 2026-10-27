@@ -220,6 +220,8 @@ let wideHero=true;try{wideHero=localStorage.getItem('prem-wide-hero')!=='false';
 // Off by default: a project's backdrop photo behind its detail page, and the Home featured stage.
 const readFlag=key=>{try{return localStorage.getItem(key)==='true';}catch(error){console.warn('Preference '+key+' unreadable; using off',error);return false;}};
 const saveFlag=(key,value)=>{try{localStorage.setItem(key,String(value));}catch(error){console.warn('Preference '+key+' not saved',error);}};
+let contentStartFirst=readFlag('prem-content-start-first');document.documentElement.classList.toggle('content-start-first',contentStartFirst);
+$('#contentStartFirst').checked=contentStartFirst;$('#contentStartFirst').onchange=e=>{contentStartFirst=e.target.checked;document.documentElement.classList.toggle('content-start-first',contentStartFirst);saveFlag('prem-content-start-first',contentStartFirst);};
 let projectBackdropEnabled=readFlag('prem-project-backdrop'),featureStage=readFlag('prem-feature-stage');
 let navPosition='bottom';try{navPosition=localStorage.getItem('prem-nav-position')==='top'?'top':'bottom';}catch(error){console.warn('Navigation position unreadable; using bottom',error);}
 document.documentElement.dataset.navPosition=navPosition;

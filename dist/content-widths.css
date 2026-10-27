@@ -16,13 +16,15 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 .home-hero .hero-about{max-width:100%;min-width:0}
 .home-hero .hero-about h1{max-width:none;text-wrap:wrap}
 .home-canvas:not(.home-view-split) .hero-about h1{max-width:calc((100% * 2 - var(--space-6)) / 3)}
+/* The "start in the first column" setting moves every section's content onto the first column. */
+:root.content-start-first{--content-column-start:1}
 .home-canvas:not(.home-view-split) .hero-copy{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);max-width:none}
-.home-canvas:not(.home-view-split) .hero-copy>[data-hero-description]{grid-column:2;min-width:0;max-width:none}
+.home-canvas:not(.home-view-split) .hero-copy>[data-hero-description]{grid-column:var(--content-column-start);min-width:0;max-width:none}
 .home-canvas:not(.home-view-split) .hero-copy>[data-hero-timeline]{grid-column:1 / -1}
 @media(max-width:1000px){.home-canvas:not(.home-view-split) .hero-about h1{max-width:none}.home-canvas:not(.home-view-split) .hero-copy{grid-template-columns:1fr}.home-canvas:not(.home-view-split) .hero-copy>[data-hero-description]{grid-column:1}}
 .home-product-text{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);row-gap:var(--space-page-rhythm-sm);margin-top:var(--space-6);width:100%;min-width:0;position:relative;isolation:isolate}
 .home-product-text[hidden]{display:none}
-.home-product-text-group{grid-column:2 / span 2;min-width:0}
+.home-product-text-group{grid-column:var(--content-column-start) / span 2;min-width:0}
 .home-product-text h2{margin:0 0 var(--space-4);font-size:var(--font-size-caption);font-weight:var(--eyebrow-weight);line-height:var(--line-height-label);color:var(--eyebrow-ink);letter-spacing:var(--eyebrow-tracking);text-transform:uppercase}
 .home-product-text ul{position:relative;isolation:isolate;list-style:none;margin:0;padding:0;display:grid;gap:var(--space-6)}
 .home-product-text a{position:relative;display:block;color:var(--body-ink);transition:color 180ms ease}
