@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Details title beside image: caption, wide image, text below
+With the setting on, a project page now shows a short caption (client. short category, then the results line) above the image across the whole page, with the client, long title, summary and facts in a reading-width column below. It used to put the text in a left column beside the image. Evidence: headless browser on Merlin and Bastion (portrait) with the setting on and off; live switching checked.
+
 ## 2026-10-27 About heading switch
 Content About gained a "Heading" switch (on): off hides only "Hello, I'm Prem"; the intro text and portrait stay and the text moves up to where the heading was. It is one of About's own sections (`title`), so it sits with Intro and portrait, Traits and Unusual things. Evidence: tests/about-page.mjs; headless browser: text top equals the heading top when hidden.
 

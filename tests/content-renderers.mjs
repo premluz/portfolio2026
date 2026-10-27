@@ -47,4 +47,10 @@ const textAnswer=contentAnswer({type:'text',text:'<img src=x onerror=bad()>',cit
 const cardAnswer=contentAnswer({type:'cards',documentIds:['playstation']},{store});assert(cardAnswer.includes('data-content-card="playstation"'));assert(cardAnswer.includes('project-card image-card'));assert.throws(()=>contentAnswer({type:'cards',documentIds:['invented']},{store}));
 const extended=createBlockRenderer({store,renderers:{callout:b=>`<p>${b.tone}</p>`}});assert(extended([{type:'callout',tone:'quiet'}]).includes('<p>quiet</p>'));
 assert(contentBlocks([{type:'constructor'}]).includes('Content type unavailable.'));
+{const merlin=cardDetail(store.getCard('merlin'));
+assert(merlin.includes('<div class="detail-caption"><p class="detail-caption-title">Merlin. AI financial analysis</p><p class="detail-caption-lead">'),'A project page carries a card-style caption: client, short category, then the results line');
+assert(merlin.indexOf('detail-caption')<merlin.indexOf('class="project-client"'),'The caption leads the page');
+const css=await (await import('node:fs/promises')).readFile(new URL('../dist/project-media-focus.css',import.meta.url),'utf8');
+assert(css.includes('.surface.detail.heading-beside-image>.detail-caption{display:block;')&&css.includes('.detail-caption{display:none}'),'The caption shows only with Details title beside image on');
+assert(css.includes('.surface.detail.heading-beside-image[data-card-orientation="landscape"]{--image-max-width-landscape:100000px}'),'A landscape image fills the page width in that layout');}
 console.log('Content renderers passed: typed blocks, reusable project references, carousel accessibility, safe text/media, shared card rendering and validated AI presentation.');

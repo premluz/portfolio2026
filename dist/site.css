@@ -1752,6 +1752,22 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 @media(max-width:750px){.detail-layout>.detail-media-column{grid-column:1;grid-row:1}.detail-layout>.description{grid-column:1;grid-row:2}.detail.heading-beside-image>.detail-layout>.detail-media-column{grid-column:1;grid-row:4}.detail.heading-beside-image>.detail-layout>.description{grid-row:6}}
 
 body:has(.project-media-focus) .site-tooltip{z-index:122}
+/* "Details title beside image" on: a card-style caption, the image across the whole page under it, then the long title,
+   summary and facts in a reading-width column. These rules outrank the older two-column ones above and in style.css. */
+.detail-caption{display:none}
+.surface.detail.heading-beside-image>.detail-caption{display:block;grid-column:1;grid-row:1;margin:0 0 var(--space-8)}
+.detail-caption p{margin:0;font-size:var(--font-size-project-summary);font-weight:var(--font-weight-body);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body)}
+.detail-caption-title{color:var(--body-ink)}
+.detail-caption-lead{color:var(--muted)}
+.surface.detail.heading-beside-image{grid-template-columns:minmax(0,1fr);grid-template-rows:none;column-gap:0;row-gap:0}
+.surface.detail.heading-beside-image>.detail-layout>.detail-media-column{grid-column:1;grid-row:2;margin-top:0}
+.surface.detail.heading-beside-image>.project-client{grid-column:1;grid-row:3;margin-top:var(--space-page-rhythm-md)}
+.surface.detail.heading-beside-image>h1{grid-column:1;grid-row:4}
+.surface.detail.heading-beside-image>.project-summary{grid-column:1;grid-row:5}
+.surface.detail.heading-beside-image>.detail-layout>.description{grid-column:1;grid-row:6}
+.surface.detail.heading-beside-image>:is(.project-client,h1,.project-summary,.detail-layout>.description){max-width:var(--content-width-reading)}
+/* A landscape image fills the page width here instead of stopping at the card's 1000px cap. */
+.surface.detail.heading-beside-image[data-card-orientation="landscape"]{--image-max-width-landscape:100000px}
 
 /* article.css */
 /* Articles: one readable column built from the reading tokens, not the card grid used by information pages. */

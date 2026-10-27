@@ -6,7 +6,7 @@ export function focusedImageRect({width,height},{width:vw,height:vh},portrait=fa
  return {left:(vw-w)/2,top:(vh-h)/2,width:w,height:h};
 }
 export function descriptionExitTargets(root){
- return [...root.querySelectorAll('.detail>.project-client,.detail>h1,.detail>.project-summary,[data-detail-fact],.detail-project-qr,.detail-media-actions,.detail-footer,.story')]
+ return [...root.querySelectorAll('.detail>.detail-caption,.detail>.project-client,.detail>h1,.detail>.project-summary,[data-detail-fact],.detail-project-qr,.detail-media-actions,.detail-footer,.story')]
   .sort((a,b)=>b.getBoundingClientRect().top-a.getBoundingClientRect().top);
 }
 export function mediaExitKeyframes(node,opacity='1'){

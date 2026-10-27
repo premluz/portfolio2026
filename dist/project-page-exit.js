@@ -3,7 +3,7 @@ import {EASE,DURATION,DISTANCE} from './motion-tokens.js';
 // Leaving a project page without a card to morph back into: the page recedes towards the reader's current view,
 // shrinking slightly and dropping as it fades, while any text still on screen steps out bottom-up first.
 // The origin is the middle of the viewport, not the top of the page, so a long, scrolled page shrinks where it is read.
-const TEXT='h1,.project-client,.project-summary,[data-detail-fact],.detail-media-actions';
+const TEXT='h1,.detail-caption,.project-client,.project-summary,[data-detail-fact],.detail-media-actions';
 
 export function exitDuration(duration){
  return Math.round(Math.min(DURATION.exitMax,Math.max(DURATION.exitMin,duration*DURATION.exitShare)));
