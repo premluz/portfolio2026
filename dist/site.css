@@ -1646,6 +1646,12 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 .home-product-carousel .spatial-card-gallery[data-description-in-card="true"][data-gallery-axis="horizontal"] .spatial-gallery-viewport{height:calc(var(--gallery-card-height) + var(--space-8) * 2 + var(--gallery-copy-height,0px));align-items:flex-start;padding-bottom:calc(var(--space-8) + var(--gallery-copy-height,0px))}
 .home-product-carousel .spatial-card-gallery[data-description-in-card="true"][data-gallery-axis="horizontal"][data-gallery-variant="circular"][data-gallery-reduced="false"] .spatial-gallery-item{top:calc(var(--gallery-card-height) / 2 + var(--space-8))}
 .home-product-carousel .spatial-card-gallery[data-description-in-card="true"][data-gallery-axis="vertical"] .spatial-gallery-item{height:calc(var(--gallery-card-height) + var(--gallery-copy-height,0px));flex-basis:calc(var(--gallery-card-height) + var(--gallery-copy-height,0px))}
+/* Carousel arrows sit above the cards at the right edge of the content, in a row of their own at the top of the carousel, and
+   the carousel ends at its captions: the space that held the arrows below is gone, and the section after it moves up. */
+.home-product-carousel .spatial-card-gallery:not([data-gallery-variant="circular"])[data-description-in-card="true"][data-gallery-axis="horizontal"]{--gallery-controls-row:calc(40px + var(--space-4))}
+.home-product-carousel .spatial-card-gallery:not([data-gallery-variant="circular"])[data-description-in-card="true"][data-gallery-axis="horizontal"] .spatial-gallery-primary-action{top:0;bottom:auto;justify-content:flex-end}
+.home-product-carousel .spatial-card-gallery:not([data-gallery-variant="circular"])[data-description-in-card="true"][data-gallery-axis="horizontal"] .spatial-gallery-viewport{padding-top:var(--gallery-controls-row);padding-bottom:calc(var(--space-4) + var(--gallery-copy-height,0px));height:calc(var(--gallery-controls-row) + var(--gallery-card-height) + var(--gallery-copy-height,0px) + var(--space-4) * 2)}
+.home-product-carousel:not([hidden]){margin-bottom:calc(var(--space-page-rhythm-md) - var(--space-page-rhythm-lg))}
 
 /* card-world.css */
 /* Card worlds: the spiral scrolls through a tall section with a pinned stage; the infinite space fills

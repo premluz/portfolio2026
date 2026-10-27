@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Carousel arrows above right, tighter gap
+The home carousel arrows moved from under the carousel (centred) to above it, right-aligned to the content edge, and the empty space below the captions was removed; the section after the carousel now sits one medium rhythm step below instead of a large one. Evidence: headless browser at 1440px: arrows at the content right edge above the cards; carousel bottom to the next section down from 192px plus 45px blank to 96px plus 19px. tests/card-gallery.mjs extended.
+
 ## 2026-10-27 Half-width intro block, menu right-aligned
 Titles and text now share one block width on every page: half the content width (was about a third on Home, 40-45% elsewhere): `--page-intro-width`. With the nav on top the menu dock is right-aligned to the content edge and is the rightmost container; the character hangs off its left side and the Assistant button sits left of it. Evidence: headless browser with the owner's settings: title and text widths 662/648 (Home), 600/600 (About, Contact), 662/662 (Lab) against half the rail; dock right edge on the header content edge at several widths. tests/agent-world.mjs updated.
 
