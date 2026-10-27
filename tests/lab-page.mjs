@@ -9,4 +9,6 @@ const indexIds=ids(index),labIds=ids(lab);
 assert.deepEqual([...indexIds].filter(id=>!labIds.has(id)),[],'lab.html has every id index.html has');
 assert.deepEqual([...labIds].filter(id=>!indexIds.has(id)),[],'lab.html adds no ids of its own');
 assert(lab.includes('data-page-product-display="cards"')&&lab.includes('data-lab-page'),'lab.html keeps its page attributes');
+assert(lab.includes('data-page-columns="4"')&&lab.includes('data-page-layout="regular"'),'The Lab shows four even columns of the same cards');
+assert(/<a href="lab.html" data-lab-transition="enter">Lab/.test(index),'The Lab link is visible in the home dock');
 console.log('Lab page passed: same control ids as the home page, own page attributes kept.');

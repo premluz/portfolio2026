@@ -42,7 +42,7 @@ related: [FRAMEWORK.md, MOTION.md, CONTENT_MODEL.md]
 
 ## REQ-006 Entering or leaving the Lab sends one colour-split ripple across the page
 - Status: implemented
-- Verifies: manual: ring crossed the page change and cleared in under a second in both directions (the Lab links are currently hidden), 2026-10-24
+- Verifies: manual: ring crossed the page change and cleared in under a second in both directions (the Lab links were hidden then and are visible since 2026-10-27), 2026-10-24
 - Tags: area/lab, area/motion
 - Related: ADR-004
 

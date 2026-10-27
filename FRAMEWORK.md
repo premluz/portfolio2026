@@ -82,7 +82,7 @@ Settings → Cards has two switches beside the existing "Client leads the title"
 - `lab-transition.js` plays one expanding ring from the click point and stores `{x, y, progress}` in `sessionStorage` (`prem-lab-handoff`). The page changes when the ring is 42% across; the destination resumes the same ring from that point.
 - `lab-filter.js` builds the ring as an SVG displacement map (rendered once on a canvas, scaled each frame) and displaces the red, green and blue channels by slightly different amounts, so the colour fringe appears only along the ring. Three filters (`#main`, header, footer) are attached only while the ring is moving.
 - The destination shortens the boot cover's fade (`.lab-arriving`) so the cover does not hide the rest of the ring. Reduced motion navigates directly. Timings are `LAB_RIPPLE` in `motion-tokens.js`.
-- The Lab links (dock navigation in `index.html`, site menu in `project-menu.js`) currently carry `hidden`; remove the attribute to show them. The composer's attach button (`#assistantAttach`) is hidden the same way, with a `[hidden]` rule in `portfolio-assistant.css` because the composer's own styles force its buttons visible.
+- The Lab links (dock navigation in `index.html`, site menu in `project-menu.js`) are visible. `lab.html` is the home page with its own page attributes: `data-page-columns="4"` and `data-page-layout="regular"` give it a four-column grid of the same project cards (`app.js` applies them without touching the saved Columns and Layout choices). The composer's attach button (`#assistantAttach`) is hidden the same way, with a `[hidden]` rule in `portfolio-assistant.css` because the composer's own styles force its buttons visible.
 
 ## Geometry and motion
 

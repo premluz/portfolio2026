@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Lab back in the menu, as a card grid
+Un-hid the Lab links (dock and site menu) and gave `lab.html` its own page attributes (`data-page-columns="4"`, `data-page-layout="regular"`) so it shows a four-column grid of the same project cards. Evidence: headless browser: index dock shows Lab, lab.html lays 9 cards on 4 left edges (58, 403, 748, 1093) and the saved Columns choice stays 2; Lab is active in its own dock. tests/lab-page.mjs extended. Risk: "regular" rows follow the tallest card, so the portrait Bastion card leaves a gap in the first row; the Lab hero is still the home hero.
+
 ## 2026-10-27 Assistant sidebar
 New "Assistant opens as → Sidebar" option: the conversation docks to the right, the page and header are pushed aside and the composer sits at the sidebar's foot. Evidence: headless browser at 1440x900 showed the sidebar at x 1008-1440, main 0-1008, header 0-1008, composer 393px wide inside the sidebar, Escape restoring the dock; tests/assistant-floating.mjs extended. Risks: the dock-morph composer cap now reads `--composer-max-width` (was a hard-coded 520); the agent character still homes at the dock and so sits over the sidebar; mobile widths not yet designed.
 

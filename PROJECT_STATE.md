@@ -38,7 +38,8 @@ A buildless native-module portfolio for Prem Luczak: authored HTML, CSS and ES m
 | Navigation position | bottom | Top is a preview; see TASK-002 |
 | Ambient colour | automatic | Glow strength 100% |
 | Text size | Medium | Headings and body scale separately (ADR-006) |
-| Lab links, composer attach button | hidden | In the code, not removed |
+| Composer attach button | hidden | In the code, not removed |
+| Lab links (dock, site menu) | visible | Lab page = four-column grid of the home cards |
 
 ## Tests
 
@@ -63,7 +64,7 @@ Yes, as a pill above the client, through Card details on cards ([ADR-008](docs/d
 - Status: answered
 - Tags: area/lab
 
-Not linked yet. The links stay hidden; the page and transition remain in place (REQ-006).
+Linked from the dock and the site menu since 2026-10-27, as a four-column grid of the same cards (REQ-006).
 
 ### Q-003 Should the Available badge move next to the name in the header?
 - Status: answered

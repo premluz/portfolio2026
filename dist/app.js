@@ -177,6 +177,9 @@ const homeCarouselState={offset:0};
 let homeProductDisplay='carousel';try{homeProductDisplay=['cards','text'].includes(localStorage.getItem('prem-home-product-display'))?localStorage.getItem('prem-home-product-display'):'carousel';}catch{}
 // A page such as Lab can pin its own presentation without changing the saved home preference.
 const pageProductDisplay=document.documentElement.dataset.pageProductDisplay;if(['cards','text','carousel'].includes(pageProductDisplay))homeProductDisplay=pageProductDisplay;
+// A page can fix its own grid (the Lab shows four even columns) without touching the saved choices.
+const pageColumns=Number(document.documentElement.dataset.pageColumns);if(Number.isInteger(pageColumns)&&pageColumns>=1&&pageColumns<=4)homeColumns=pageColumns;
+const pageLayout=document.documentElement.dataset.pageLayout;if(pageLayout)layout=readHomeLayout(pageLayout);
 $('#homeProductDisplay').value=homeProductDisplay;$('#homeProductDisplay').onchange=e=>{if(busy){e.target.value=homeProductDisplay;return;}homeProductDisplay=['cards','text'].includes(e.target.value)?e.target.value:'carousel';homeLayout?.setProductDisplay(homeProductDisplay);homeLayout?.apply({mode:homeView});syncOneColumnPosition();syncCardGalleries();refreshImageFrames();try{localStorage.setItem('prem-home-product-display',homeProductDisplay);}catch{}};
 let heroCarouselEnabled=false;try{heroCarouselEnabled=localStorage.getItem('prem-hero-carousel')==='true';}catch{}
 let heroCarouselSettings=readHeroCarouselSettings();applyHeroCarouselSettings(document.documentElement,heroCarouselSettings);
