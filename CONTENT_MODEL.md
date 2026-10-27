@@ -281,7 +281,7 @@ the focused view before returning from the project page.
 
 ## Content widths and section breakouts
 
-Home and project details have independent Extra small (740px), Small (1200px), Medium (1440px) and Large (1760px) content rails. These are maximum inner content widths. Responsive side gutters are added outside the rail; the entire app canvas, including those gutters, never exceeds 1920px. Medium is the default. All ordinary sections, portfolio cards, detail content and the footer follow the active rail.
+Home and project details have independent Extra small (960px), Small (1200px), Medium (1440px) and Large (1760px) content rails. These are maximum inner content widths. Responsive side gutters are added outside the rail; the entire app canvas, including those gutters, never exceeds 1920px. Medium is the default. All ordinary sections, portfolio cards, detail content and the footer follow the active rail.
 
 The width definitions and migration of previous full-width preferences live in `dist/content-widths.js`. Layout styles live in `dist/content-widths.css`. The active geometry uses the browser client width so a scrollbar cannot create horizontal overflow.
 
@@ -328,7 +328,7 @@ Dev settings → Content exposes the three section modes for Services, About, Ex
 
 ### Page template width presets and carousel alignment
 
-Home, project details and content pages (About / Contact) each have an independent Extra small (740px), Small (1200px), Medium (1440px) or Large (1760px) content width. A blog article spans the content page width; its header, text and sources sit in a centred 600px reading column (`--content-width-reading`). Images and video follow Developer settings → Article images: Text width (600px, default) or Page width (the whole article width). These are grouped under Developer settings → Layout → Page template widths. Storage keys are `prem-home-content-width`, `prem-detail-content-width`, and `prem-content-page-width`. Every template shares the 1920px app cap and responsive global side gutter. `pageTemplateForRoute()` selects the template; `--content-rail-width` exposes the resolved content size.
+Home, project details and content pages (About / Contact) each have an independent Extra small (960px), Small (1200px), Medium (1440px) or Large (1760px) content width. A blog article spans the content page width; its header, text and sources sit in a centred 600px reading column (`--content-width-reading`). Images and video follow Developer settings → Article images: Text width (600px, default) or Page width (the whole article width). These are grouped under Developer settings → Layout → Page template widths. Storage keys are `prem-home-content-width`, `prem-detail-content-width`, and `prem-content-page-width`. Every template shares the 1920px app cap and responsive global side gutter. `pageTemplateForRoute()` selects the template; `--content-rail-width` exposes the resolved content size.
 
 Services carousel alignment is independent of its section width. Full bleed starts the first card at the global side gutter; Content alignment starts it at the current template’s content edge. Both keep an app-wide scrolling track. The selection persists under `prem-services-carousel-alignment` and travels in settings exports. A standalone `servicesMarkup` instance accepts `carouselAlignment: "full-bleed" | "content"`.
 

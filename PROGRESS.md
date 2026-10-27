@@ -12,8 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Extra small back to 960px
+The 740px change was reverted the same day at the owner's request: `CONTENT_WIDTHS.xsmall`, `--content-width-xs`, the dropdown labels, docs and test are back to 960px. Evidence: tests/content-widths.mjs passes.
+
 ## 2026-10-27 Extra small is 740px
-Extra small page width changed from 960px to 740px (`CONTENT_WIDTHS.xsmall`, `--content-width-xs`, the four dropdown labels, docs and test). Saved choices keep the name, so anyone on Extra small gets 740px. Evidence: tests/content-widths.mjs; headless browser measured the About rail and the chat column at Extra small.
+Extra small page width changed from 960px to 740px (`CONTENT_WIDTHS.xsmall`, `--content-width-xs`, the four dropdown labels, docs and test). Saved choices keep the name, so anyone on Extra small gets 740px. Evidence: tests/content-widths.mjs.
 
 ## 2026-10-27 Chat width dropdown
 The chat page has its own width dropdown with the other page widths (Default, Extra small 960, Small 1200, Medium 1440, Large 1760), saved and exported. Default leaves the chat as it was. Evidence: headless browser measured the chat column and, in the menu-dock chat, the composer pill at each width; tests/content-widths.mjs extended.

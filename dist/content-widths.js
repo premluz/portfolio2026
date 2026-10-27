@@ -1,5 +1,5 @@
 export const APP_MAX_WIDTH=1920;
-export const CONTENT_WIDTHS=Object.freeze({xsmall:740,small:1200,medium:1440,large:1760});
+export const CONTENT_WIDTHS=Object.freeze({xsmall:960,small:1200,medium:1440,large:1760});
 export const SECTION_SPANS=Object.freeze(['content','app','edge']);
 export const normaliseContentWidth=value=>Object.hasOwn(CONTENT_WIDTHS,value)?value:'medium';
 export const normaliseSectionSpan=value=>SECTION_SPANS.includes(value)?value:'content';
