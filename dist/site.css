@@ -2236,6 +2236,12 @@ a.ask-fit-source:is(:hover,:focus-visible){color:var(--ink);text-decoration-colo
 :root.lab-arriving{--page-boot-fade:140ms}
 /* Lab with "Show card details" off: an images-only grid. */
 :root.lab-card-details-hidden #main .gallery-grid .card-copy{display:none}
+/* The Lab is a content page: its own heading, then the card grid, without the home hero or home sections. */
+main.lab-canvas .homepage-layout>:not(.lab-heading,.home-work){display:none}
+.lab-heading{padding-top:var(--page-content-top);margin-bottom:var(--space-page-rhythm-md)}
+.lab-heading h1{margin:0;max-width:var(--measure-heading);font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink)}
+.lab-heading .eyebrow{margin:var(--space-detail-heading) 0 0;color:var(--eyebrow-ink);font-weight:var(--eyebrow-weight);letter-spacing:var(--eyebrow-tracking)}
+.lab-heading .lab-summary{margin:var(--space-4) 0 0;max-width:var(--measure-body);color:var(--body-ink);font-size:var(--font-size-body);line-height:var(--line-height-body)}
 
 /* project-backdrop.css */
 /* Project detail backdrop (project-backdrop.js) and the Home "Featured stage" card backdrop. */

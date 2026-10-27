@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Lab as a content page
+The Lab no longer shows the home hero and home sections around its grid. It opens with its own heading like About and Contact: "Experiments", eyebrow "Work in progress", and "Prototypes, R&D and projects that never made it to market." (`lab-page.js`), then the card grid. Evidence: headless browser: heading at the shared content start, grid directly below, no hero or sections; Work unchanged after visiting the Lab. tests/lab-page.mjs extended.
+
 ## 2026-10-27 Featured-cards switch, Lab settings, portrait fit
 Work and Lab rendered differently because Work used the saved masonry grid (six featured cards two columns wide, all stacked on the left) and Lab a fixed regular grid (rows as tall as the portrait card). Added the global "Featured cards larger (masonry)" switch (on), and a Lab section in the dev settings (`lab-settings.js`: masonry, 4 columns, featured not larger, card details on) that overrides the global card settings on the Lab only; "show card details" off gives an images-only grid. The portrait image is now capped to its masonry card (it spilled 8px, 180px with details hidden). Evidence: headless browser at 1515px: Work 4,704px tall with the switch on and 1,224px with it off; Lab masonry 1,224px with Bastion one column, two rows and the others wrapped; zero overlaps and zero image spill in all four cases; Work keeps its copy after visiting a details-hidden Lab. tests/lab-settings.mjs added; lab-page and card-return-lifecycle updated.
 

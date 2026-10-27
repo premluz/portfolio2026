@@ -20,4 +20,9 @@ assert(index.indexOf('data-nav="work"')<index.indexOf('data-nav="lab"')&&index.i
 assert(menu.indexOf("routeButton('work'")<menu.indexOf("routeButton('lab'")&&menu.indexOf("routeButton('lab'")<menu.indexOf("routeButton('about'"),'Lab sits right after Home in the site menu');
 assert(commandDefinitions.some(command=>command.id==='route.lab'),'The Lab command is in the command catalog');
 assert(menu.includes("routeButton('lab','Lab',icons.lab)"),'The site menu opens the Lab in-app');
+{const {LAB_HEADING,labHeadingMarkup}=await import('../dist/lab-page.js');const css=await read('lab.css');
+assert.deepEqual({...LAB_HEADING},{title:'Experiments',eyebrow:'Work in progress',summary:'Prototypes, R&D and projects that never made it to market.'},'The Lab is titled Experiments');
+assert(labHeadingMarkup().startsWith('<section class="lab-heading" aria-labelledby="labTitle"><h1 id="labTitle" tabindex="-1">Experiments</h1>'),'The heading is a real page heading');
+assert(css.includes('main.lab-canvas .homepage-layout>:not(.lab-heading,.home-work){display:none}'),'The Lab shows only its heading and the grid, not the home hero or sections');
+assert(app.includes("if(labMode)main.querySelector('.homepage-layout').insertAdjacentHTML('afterbegin',labHeadingMarkup());"),'The heading is placed above the grid');}
 console.log('Lab route passed: in-app route, four-column cards, dock and menu entries, command, legacy page redirect.');
