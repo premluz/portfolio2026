@@ -41,6 +41,8 @@ button,input,select,textarea{font-family:var(--font-family-sans)}
 .project-card h2,.project-card[data-card-presentation="flip"] h2{font-size:var(--font-size-body);font-weight:var(--font-weight-heading);line-height:var(--line-height-card);letter-spacing:var(--letter-spacing-card)}
 .project-card h2.h2,.spatial-gallery-copy h3.h2{font-size:var(--font-size-section-heading)}
 .project-card h2.h3,.spatial-gallery-copy h3.h3{font-size:var(--font-size-body)}
+/* Card titles share the summary line's size so title and result read as one pair. */
+.project-card.image-card>.card-copy>h2.h3{font-size:var(--font-size-project-summary)}
 .project-card h2.h4,.spatial-gallery-copy h3.h4{font-size:var(--font-size-small)}
 .project-card .eyebrow,.project-card[data-card-presentation="flip"] .eyebrow,.project-card[data-card-presentation="current"]:not([data-image-mode="bleed"])>.card-copy>.eyebrow{font-size:var(--font-size-caption);margin-top:var(--space-title-eyebrow)}
 .surface.detail>.eyebrow,.wide-hero-card>.eyebrow{margin-top:var(--space-detail-heading);font-size:var(--font-size-caption)}
