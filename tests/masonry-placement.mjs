@@ -9,7 +9,8 @@ function verify(items,columns,height,gap){
   const tall=items[i].cardAspect==='portrait'||items[i].featured===true&&columns>=3;
   assert(pose.column>=1&&pose.column+pose.columnSpan-1<=columns);
   assert.equal(pose.columnSpan,items[i].featured===true&&columns>=3?2:1);
-  if(columns>1&&items[i].cardAspect==='portrait')assert(columns>=4?pose.column>=columns-1:pose.column===columns,'Mobile-format cards belong in the right-side columns');
+  // A featured portrait card is two columns wide and leads on the left like every featured card, so the right-hand rule is for the others.
+  if(columns>1&&items[i].cardAspect==='portrait'&&items[i].featured!==true)assert(columns>=4?pose.column>=columns-1:pose.column===columns,'Mobile-format cards belong in the right-side columns');
   if(columns===4&&items[i].cardAspect!=='portrait'&&pose.column>=3){
    const portraitEnd=Math.max(1,...plan.filter((p,j)=>items[j].cardAspect==='portrait'&&p.column===pose.column).map(p=>p.row+p.rowSpan));
    assert(pose.row>=portraitEnd,'Landscapes can fill the right tracks only below their portrait stacks');

@@ -42,11 +42,10 @@ A buildless native-module portfolio for Prem Luczak: authored HTML, CSS and ES m
 
 ## Tests
 
-Nine test files fail, each tied to a task. Run one with `node tests/<name>.mjs`.
+Eight test files fail, each tied to a task. Run one with `node tests/<name>.mjs`.
 
 - Content drift (TASK-004): content-model, home-about, home-layout, home-sections, interaction-commands, project-media-focus.
 - Card-sphere work in progress (TASK-005): project-entry-memory, text-list-hover.
-- masonry-placement (TASK-001): Bastion is portrait and featured.
 
 `npm run check` stops at the first failing test, so use the loop in [AGENTS.md](AGENTS.md) to see them all.
 

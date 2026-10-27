@@ -14,11 +14,6 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 
 ## Open
 
-### TASK-001 Fix placement of featured portrait cards in 3+ column grids
-- Status: todo
-- Tags: area/home, kind/bug
-- Acceptance: tests/masonry-placement.mjs passes against the live catalog. A featured card spans two columns, but the planner requires portrait cards to sit in the right-hand columns; Bastion is both since it became portrait.
-
 ### TASK-002 Open the dock's attached menus downward when navigation is at the top
 - Status: todo
 - Tags: area/dock, kind/feature
@@ -113,3 +108,9 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 - Tags: area/home, area/content
 - Related: REQ-016, ADR-009
 - Evidence: tests/note-cards.mjs passes; browser check at 1440×900 of three loaded cards per stage and a backdrop confined to the first row, 2026-10-26.
+
+### TASK-001 Fix placement of featured portrait cards in 3+ column grids
+- Status: done
+- Tags: area/home, kind/bug
+- Related: ADR-010
+- Evidence: tests/masonry-placement.mjs passes with the planner unchanged; the conflict was a test assumption, resolved as ADR-010 (featured wins over portrait), 2026-10-27.

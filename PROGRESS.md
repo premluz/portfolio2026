@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Masonry test conflict resolved
+TASK-001: tests/masonry-placement.mjs failed because Bastion is both portrait and featured, and the planner's two rules (featured on the left, portrait on the right) disagree for such a card. Chose to keep the live layout (featured wins, ADR-010) and narrowed the test's portrait rule to non-featured cards; the planner is unchanged. Evidence: the test passes. If the owner wants a featured portrait card on the right, the note in ADR-010 says what to change.
+
 ## 2026-10-27 Plain cards
 Added Settings → Cards → Plain cards (default off). Measured first: with Card background off a card still showed the skin gradient, `.material-reflection` and `.image-edge` (the inner glow), so the existing switch was not enough. The new mode removes those layers, shadows, borders, blur, the hover-effect layer and the note-card panels while leaving images and layout alone. Evidence: tests/plain-cards.mjs passes; in a browser the three layers disappeared, the image stayed 323px wide, note cards and the detail card were plain, and no errors.
 

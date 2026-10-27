@@ -253,7 +253,7 @@
         "TASKS.md",
         "PROJECT_STATE.md"
       ],
-      "hash": "713c138a5f6b9c0a2347e92f8873475a9a335ec1",
+      "hash": "3e331bbe1f23aacba2483d68cb39f0187a53207f",
       "items": []
     },
     {
@@ -273,7 +273,7 @@
         "PROGRESS.md",
         "HANDOFF.md"
       ],
-      "hash": "5b4a96d4d82d6e706d09b24afde79cb3dea64475",
+      "hash": "0cb7d5393dc64ea7626e933d666b3882d0b6f22e",
       "items": [
         {
           "id": "Q-001",
@@ -333,17 +333,8 @@
         "PROJECT_STATE.md",
         "PROGRESS.md"
       ],
-      "hash": "1675327dfb621c4c65908cca3f8159e2eb65284b",
+      "hash": "6bcd35ed51017cd08790a2de4e0a73a80a9578fd",
       "items": [
-        {
-          "id": "TASK-001",
-          "title": "Fix placement of featured portrait cards in 3+ column grids",
-          "status": "todo",
-          "tags": [
-            "area/home",
-            "kind/bug"
-          ]
-        },
         {
           "id": "TASK-002",
           "title": "Open the dock's attached menus downward when navigation is at the top",
@@ -483,6 +474,15 @@
           "tags": [
             "area/home",
             "area/content"
+          ]
+        },
+        {
+          "id": "TASK-001",
+          "title": "Fix placement of featured portrait cards in 3+ column grids",
+          "status": "done",
+          "tags": [
+            "area/home",
+            "kind/bug"
           ]
         }
       ]
@@ -994,6 +994,26 @@
         "TASK-015"
       ],
       "hash": "7446b656cc00685ea001de2f7bf88495d8f827e2",
+      "items": []
+    },
+    {
+      "path": "docs/decisions/ADR-010-featured-wins-over-portrait-in-the-masonry-grid.md",
+      "id": "ADR-010",
+      "title": "A featured portrait card leads on the left; the right-hand rule is for other portrait cards",
+      "type": "decision",
+      "status": "accepted",
+      "updated": "2026-10-27",
+      "summary": "When a card is both featured and portrait, featured placement wins in the 3+ column grid, so the live layout is unchanged.",
+      "tags": [
+        "area/home",
+        "area/tests",
+        "kind/decision"
+      ],
+      "related": [
+        "TASK-001",
+        "FRAMEWORK.md"
+      ],
+      "hash": "9da7cf324c99fbd4fcb654b67b7d38f40a97ca41",
       "items": []
     }
   ]

@@ -3,6 +3,7 @@ import {spawn} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {loadDocs} from '../scripts/memory-load.mjs';
 import {TOOLS,handleMessage} from '../scripts/memory-mcp-core.mjs';
+import {nextTasks} from '../scripts/memory-index.mjs';
 
 const root=fileURLToPath(new URL('..',import.meta.url)),docs=await loadDocs(root);
 const call=(name,args={})=>handleMessage({jsonrpc:'2.0',id:1,method:'tools/call',params:{name,arguments:args}},docs).result;
@@ -22,7 +23,8 @@ assert(/docs\/decisions\/ADR-002-[^:]+:\d+\s+ADR-002/.test(search),'Search finds
 const item=textOf(call('memory_read',{id:'FACT-001'}));
 assert(item.startsWith('Source: docs/FACTS.md:')&&item.includes('55 megapixels'),'An item is read by ID with its source');
 assert(textOf(call('memory_read',{id:'ADR-001'})).includes('Source: docs/decisions/ADR-001'),'A decision is read by its front-matter ID');
-assert.match(textOf(call('memory_next')),/TASK-001/,'Ready tasks are listed');
+const ready=nextTasks(docs).map(task=>task.id),listed=textOf(call('memory_next'));
+assert(ready.length>0&&ready.every(id=>listed.includes(id)),'Every ready task is listed (checked against the live memory, not a fixed ID)');
 const task=textOf(call('memory_task',{id:'TASK-009'}));
 assert(task.includes('Depends on:')&&task.includes('TASK-010 [done]'),'Task context includes dependencies');
 
