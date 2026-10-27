@@ -245,6 +245,10 @@ document.documentElement.dataset.articleImages=articleImages;$('#articleImages')
 let featuredLarger=true;try{featuredLarger=localStorage.getItem('prem-featured-larger')!=='false';}catch(error){console.warn('Featured cards preference unreadable; using larger',error);}
 $('#featuredLarger').checked=featuredLarger;$('#featuredLarger').onchange=e=>{featuredLarger=e.target.checked;saveFlag('prem-featured-larger',featuredLarger);if(!labMode)homeLayout?.setFeaturedLarger(featuredLarger);};
 const labSettings=mountLabSettings($('#settings'),{onChange:()=>{if(labMode&&!busy)render('lab',{stream:false});}});
+// The chat page's own width: its default column, or one of the shared page widths.
+let chatWidth='default';try{const saved=localStorage.getItem('prem-chat-width');chatWidth=saved==='default'||Object.hasOwn(CONTENT_WIDTHS,saved)?saved:'default';}catch(error){console.warn('Chat width unreadable; using the default',error);}
+function applyChatWidth(){const root=document.documentElement;if(chatWidth==='default')root.style.removeProperty('--chat-width');else root.style.setProperty('--chat-width',CONTENT_WIDTHS[chatWidth]+'px');$('#chatWidth').value=chatWidth;}
+applyChatWidth();$('#chatWidth').onchange=e=>{chatWidth=e.target.value==='default'||Object.hasOwn(CONTENT_WIDTHS,e.target.value)?e.target.value:'default';applyChatWidth();try{localStorage.setItem('prem-chat-width',chatWidth);}catch(error){console.warn('Chat width not saved',error);}};
 let contentStartFirst=readFlag('prem-content-start-first');document.documentElement.classList.toggle('content-start-first',contentStartFirst);
 $('#contentStartFirst').checked=contentStartFirst;$('#contentStartFirst').onchange=e=>{contentStartFirst=e.target.checked;document.documentElement.classList.toggle('content-start-first',contentStartFirst);saveFlag('prem-content-start-first',contentStartFirst);};
 let projectBackdropEnabled=readFlag('prem-project-backdrop'),featureStage=readFlag('prem-feature-stage');

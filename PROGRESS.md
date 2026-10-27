@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Chat width dropdown
+The chat page has its own width dropdown with the other page widths (Default, Extra small 960, Small 1200, Medium 1440, Large 1760), saved and exported. Default leaves the chat as it was. Evidence: headless browser measured the chat column and, in the menu-dock chat, the composer pill at each width; tests/content-widths.mjs extended.
+
 ## 2026-10-27 Nav mode and contextual placement separated
 Navigation is now Composer or Classic nav, and Contextual actions (Above the dock / Within the page) applies to both, instead of "In composer" also forcing the composer. Previous/Next and Go Back stay with the nav mode. Within the page, project pages gained View prototype and Watch buttons beside Full screen, and carousels keep their own View project controls. Stored values are unchanged (`composer` = above, `inline` = within the page), so older settings files still import. Evidence: headless browser on Merlin and the home carousel for all four combinations; composer-context, assistant-floating and settings-transfer tests updated.
 

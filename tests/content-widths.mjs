@@ -28,7 +28,9 @@ assert.equal(contentRail(2560,'xsmall',64).content,960,'Extra small is a 960px r
 assert(css.includes('--content-width-xs:960px;'),'The CSS twin of the Extra small width matches CONTENT_WIDTHS');assert(css.includes('--content-width-reading:600px;')&&article.includes('.article-header,.article-section,.article-sources{max-width:var(--content-width-reading);margin-inline:auto}'),'Article text sits in a centred 600px reading column');
 assert(article.includes(':root[data-article-images="page"] .article-section:is([data-block-type="image"],[data-block-type="video"]){max-width:none}'),'Article images can span the page width');
 assert(html.includes('<select id="articleImages"><option value="text" selected>Text width · 600px</option><option value="page">Page width</option></select>'),'The Article images setting starts on the text width');
-assert.equal((html.match(/<option value="xsmall">Extra small · 960px<\/option>/g)||[]).length,3,'Every page-width dropdown offers Extra small');}
+assert.equal((html.match(/<option value="xsmall">Extra small · 960px<\/option>/g)||[]).length,4,'Every page-width dropdown offers Extra small');
+assert(html.includes('<select id="chatWidth"><option value="default" selected>Default</option>'),'The chat page has its own width dropdown, starting on its default column');
+const chatCss=await read('portfolio-assistant.css');assert(chatCss.includes('.assistant-thread{width:min(100%,var(--chat-width,900px))'),'The chat column follows --chat-width, 900px by default');}
 assert.equal(sectionRail(contentRail(2560,'small',64),'edge').width,1920);
 assert.equal(contentRail(320,'large',24).content,272,'Mobile fitting wins over a desktop maximum');
 
