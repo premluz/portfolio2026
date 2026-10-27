@@ -29,7 +29,7 @@ button,input,select,textarea{font-family:var(--font-family-sans)}
 .hero-strapline{margin:var(--space-2) 0 var(--space-hero-heading-content);font-size:var(--font-size-hero-support);font-weight:var(--font-weight-body);line-height:var(--line-height-body);color:var(--muted)}
 .hero-strapline[hidden]{display:none}
 .home-hero{padding-block:var(--space-page-rhythm)}
-.home-view-split .home-hero{padding-block:0;top:calc(var(--header-height) + var(--space-10));margin-top:var(--space-hero-top)}
+.home-view-split .home-hero{padding-block:0;top:calc(var(--header-total) + var(--space-10));margin-top:var(--space-hero-top)}
 .home-view-split .homepage-layout{gap:var(--space-detail-columns)}
 .gallery-toolbar{margin-bottom:var(--space-6)}
 .home-news{margin-top:calc(var(--space-unit) * 24)}
@@ -73,6 +73,10 @@ button,input,select,textarea{font-family:var(--font-family-sans)}
 .text-eyebrow{font-size:var(--font-size-caption);font-weight:var(--eyebrow-weight);letter-spacing:var(--eyebrow-tracking);line-height:var(--line-height-label);color:var(--eyebrow-ink);text-transform:uppercase}
 /* Mono text role: labels, lists and metadata set in uppercase monospace. */
 .text-mono{font-family:var(--font-family-mono);font-size:var(--font-size-mono);font-weight:var(--font-weight-body);letter-spacing:var(--eyebrow-tracking);text-transform:uppercase;line-height:var(--line-height-label)}
+/* The header is taller by --header-top-offset, which is padding, so its content (logo, name, top navigation) sits lower. */
+header{height:var(--header-total);padding-top:var(--header-top-offset)}
+.brand-name,.brand-role{display:block}
+.brand-role{margin-top:var(--space-1);font-size:var(--font-size-note);color:var(--muted)}
 .brand-avatar{display:block;width:var(--brand-avatar-size);height:var(--brand-avatar-size);border-radius:50%;object-fit:cover;object-position:50% 30%}
 .discipline{font-size:var(--font-size-small);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body)}
 .design-system-controls{border:0;padding:0;margin:0 0 24px;min-width:0}
@@ -200,7 +204,7 @@ html[data-animation="off"] .image-card[data-copy-hover="true"]:is(:hover,:focus-
 @media(max-width:380px){#dock nav a{font-size:min(var(--nav-item-font-size),14px);padding-inline:min(calc(var(--nav-item-padding) + 5px),6px)}}
 
 /* Reserve a glimpse of work as the window becomes shorter, using measured hero content. */
-main.home-canvas:not(.home-view-split) .home-hero{--hero-padding:min(var(--space-page-rhythm-lg),var(--hero-viewport-space,var(--space-page-rhythm-lg)));--hero-top-bias:min(32px,var(--hero-padding));padding-top:calc((var(--header-height) + var(--brand-avatar-size)) / 2 + var(--hero-gap));padding-bottom:0}
+main.home-canvas:not(.home-view-split) .home-hero{--hero-padding:min(var(--space-page-rhythm-lg),var(--hero-viewport-space,var(--space-page-rhythm-lg)));--hero-top-bias:min(32px,var(--hero-padding));padding-top:calc((var(--header-height) + var(--brand-avatar-size)) / 2 + var(--header-top-offset) + var(--hero-gap));padding-bottom:0}
 .home-view-split .home-hero{margin-top:calc(var(--space-page-rhythm-lg) + 32px)}
 
 /* Client, project title and summary are independently visible card fields. */

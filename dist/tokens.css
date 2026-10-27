@@ -230,6 +230,9 @@
   /* The stage photo settles slower than the card: it is the larger, calmer surface. */
   --stage-reveal-backdrop-duration: 1400ms;
   --brand-avatar-size: 40px;
+  /* The header (logo, name, top navigation and the agent beside it) sits this far lower, so it breathes at the top. */
+  --header-top-offset: clamp(16px, 3.5vh, 44px);
+  --header-total: calc(var(--header-height) + var(--header-top-offset));
   /* Phone carousel (<=600px): side margins and the gap between cards, and the smallest card size the saved
      Carousel size setting may produce there (1 = full width). Desktop keeps the saved setting. */
   --gallery-mobile-inset-landscape: 32px;
@@ -254,7 +257,7 @@
   /* The same breathing room above the hero (from the header's content) and below it (to At a glance). */
   --hero-gap: var(--space-12);
   /* Navigation at the top sits centred in the header row. */
-  --dock-top: calc((var(--header-height) - var(--nav-height)) / 2);
+  --dock-top: calc((var(--header-height) - var(--nav-height)) / 2 + var(--header-top-offset));
   /* At a glance: the three columns under the hero, and the gap between a heading and its list. */
   --overview-column-gap: clamp(32px, 4vw, 72px);
   --overview-list-gap: 18px;

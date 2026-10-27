@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Header spacing, role line and empty-hero centring
+The header (logo, name, top navigation) now sits lower by a shared `--header-top-offset`, which also lowers `--dock-top` and the hero's start; the name has `Product designer & builder` under it; and with no visible hero content the carousel is centred below the header instead of floating under an invisible hero. Evidence: tests/header-spacing.mjs passes; in a browser the header was 144px (was 112px), the agent orb stayed level with the nav, and the carousel card sat at the exact vertical centre of the space below the header on desktop (522px) and phone (477px). The agent orb is the owner's uncommitted feature; it followed the nav without any change to it. A first check missed the carousel's header margin (it started at y=0), fixed.
+
 ## 2026-10-27 Masonry test conflict resolved
 TASK-001: tests/masonry-placement.mjs failed because Bastion is both portrait and featured, and the planner's two rules (featured on the left, portrait on the right) disagree for such a card. Chose to keep the live layout (featured wins, ADR-010) and narrowed the test's portrait rule to non-featured cards; the planner is unchanged. Evidence: the test passes. If the owner wants a featured portrait card on the right, the note in ADR-010 says what to change.
 
