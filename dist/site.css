@@ -2182,6 +2182,18 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 #dock.assistant-floating-open :is(.composer-context-actions,.composer-suggestions){display:none}
 @media(prefers-reduced-motion:reduce){#askPage.assistant-floating{animation:none}}
 :root[data-animation="off"] #askPage.assistant-floating{animation:none}
+/* Sidebar: the same conversation docked to the right edge. The page is pushed aside and the dock's composer sits at the sidebar's foot. */
+/* Registered so the dock can read the composer cap as pixels even while it is a calc() of the sidebar width. */
+@property --composer-max-width{syntax:'<length>';inherits:true;initial-value:520px}
+:root{--assistant-sidebar-width:clamp(340px,30vw,440px)}
+:root.assistant-sidebar-open{--composer-max-width:calc(var(--assistant-sidebar-width) - var(--space-8))}
+:root.assistant-sidebar-open body{width:calc(100% - var(--assistant-sidebar-width));margin-inline:auto var(--assistant-sidebar-width)}
+:root.assistant-sidebar-open header{left:calc((100% - var(--assistant-sidebar-width)) / 2);width:calc(100% - var(--assistant-sidebar-width))}
+#askPage.assistant-floating.assistant-sidebar{left:auto;right:0;top:0;bottom:0;width:var(--assistant-sidebar-width);max-height:none;transform:none;border-width:0 0 0 1px;border-radius:0;padding-bottom:calc(var(--nav-height) + var(--dock-bottom,24px) + var(--space-6));animation:assistant-sidebar-in 260ms var(--ease-settle) both}
+@keyframes assistant-sidebar-in{from{transform:translateX(100%)}to{transform:none}}
+#dock.assistant-sidebar-dock{left:auto;right:var(--space-4);transform:none}
+@media(prefers-reduced-motion:reduce){#askPage.assistant-floating.assistant-sidebar{animation:none}}
+:root[data-animation="off"] #askPage.assistant-floating.assistant-sidebar{animation:none}
 
 /* assistant-fit.css */
 /* Role brief answers: one row per requirement, its fit and its evidence. "Not shown" is neutral, not an error:
