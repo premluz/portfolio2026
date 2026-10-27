@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 No Back pill on About and Contact
+With the menu visible in the dock, About and Contact no longer pull a Go Back pill out of the dock and back (the dock keeps its shape); Back remains for projects and the assistant. Evidence: headless browser: dock width and Back state unchanged between Work and About. tests/lab-page.mjs asserts the rule.
+
 ## 2026-10-27 Landing ripple switched off
 Only the instant click ring runs when choosing Lab; the second ring on landing is kept behind `LAB_RIPPLE.landing` (false). Evidence: tests/lab-page.mjs asserts the flag and the guarded call; headless browser showed the ring class only around the click.
 

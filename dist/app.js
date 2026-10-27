@@ -142,7 +142,8 @@ const composerShown=route=>route==='assistant'||contextualComposer||contextualBu
 function applyDockPreferences(){dockMorph.el.classList.toggle('contextual-composer',contextualComposer);dockMorph.el.classList.toggle('always-dark-glass',alwaysDarkGlass);$('#contextualComposerPreference').setAttribute('aria-checked',String(contextualComposer));$('#alwaysDarkGlassPreference').setAttribute('aria-checked',String(alwaysDarkGlass));}
 applyDockPreferences();
 const showProjectControls=route=>projectIds.includes(route);
-const showBackControl=route=>route==='assistant'||route==='about'||route==='contact'||projectIds.includes(route);
+// About and Contact are in the dock's own menu, so they get no Back pill morphing in and out of it.
+const showBackControl=route=>route==='assistant'||projectIds.includes(route);
 function syncDockActions(route,options={}){const composer=composerShown(route);dockMorph.setBack(!composer&&showBackControl(route),options);dockMorph.setSplit(!composer&&contextualButtons==='inline'&&showProjectControls(route),options);composerContext?.refresh();}
 installHoverTrail($('#dock'),{reduced:()=>reduce.matches});
 const edgeShades=new EdgeShades($('.page-edge-shades'),{reduced:()=>reduce.matches});
