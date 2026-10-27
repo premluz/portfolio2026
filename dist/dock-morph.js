@@ -129,7 +129,7 @@ export class DockMorph {
   const backSpace=back?.space||0,stretch=shape.mainWidth-this.baseMetrics.main;
   const available=Math.max(80,viewportWidth-32-shape.mainLeft-this.settingsSpace-backSpace-stretch);
   this.layoutMain=Math.min(this.baseMetrics.main,available);
-  const expanded=Math.max(this.layoutMain,Math.min(520,available)),compact=Math.min(320,available);this.composerWidth=expanded+(compact-expanded)*this.voicePosition;
+  const expanded=Math.max(this.layoutMain,Math.min(parseFloat(getComputedStyle(this.el).getPropertyValue('--composer-max-width'))||520,available)),compact=Math.min(320,available);this.composerWidth=expanded+(compact-expanded)*this.voicePosition;
  }
  setSplit(split,{duration=400,immediate=false}={}){
   this.target=split?1:0;this.duration=Math.max(550,duration*1.55);this.el.classList.toggle('split',split);this.updateComposerWidth();

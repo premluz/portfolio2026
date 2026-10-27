@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Assistant sidebar
+New "Assistant opens as → Sidebar" option: the conversation docks to the right, the page and header are pushed aside and the composer sits at the sidebar's foot. Evidence: headless browser at 1440x900 showed the sidebar at x 1008-1440, main 0-1008, header 0-1008, composer 393px wide inside the sidebar, Escape restoring the dock; tests/assistant-floating.mjs extended. Risks: the dock-morph composer cap now reads `--composer-max-width` (was a hard-coded 520); the agent character still homes at the dock and so sits over the sidebar; mobile widths not yet designed.
+
 ## 2026-10-27 Shared content start for About and project detail
 About and the project detail now start at the same height as the home hero (`--page-content-top`, one token used by all three) and the detail no longer has side padding, so its text lines up with the header logo and the hero (x 58 at 1440px). Evidence: headless browser at 1440x900: first content at y 165 on home, About and Merlin; detail text left edge 58 (was 110); tests/header-spacing.mjs updated.
 

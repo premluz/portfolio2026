@@ -472,7 +472,9 @@ function syncDockComposer(options={}){
  dockMorph.setComposer(active,options);portfolioAssistant.setComposerAvailable(active);composerContext?.refresh();
 }
 // The Assistant button sits beside the dock, and only when the menu, not the composer, fills the dock.
-const assistantPresentation=mountAssistantPresentation($('#assistantPresentation'),{onChange:value=>{if(value==='page')closeAssistantFloating({focus:false});}});
+const assistantPresentation=mountAssistantPresentation($('#assistantPresentation'),{onChange:()=>closeAssistantFloating({focus:false})});
+// The sidebar pushes the page aside and takes the dock's composer to its foot; both are root-level states.
+const setAssistantSidebar=on=>{document.documentElement.classList.toggle('assistant-sidebar-open',on);$('#dock').classList.toggle('assistant-sidebar-dock',on);dockMorph.refresh();};
 function syncAssistantLauncher(){
  const shown=!contextualComposer&&contextualButtons!=='composer';
  if(assistantLauncher.hidden===shown){assistantLauncher.hidden=!shown;dockMorph.refresh();}
@@ -481,7 +483,7 @@ function syncAssistantLauncher(){
 function syncFloatingDock(){const options={duration:duration*(slow?2.5:1)};syncDockActions(current,options);syncDockComposer(options);}
 function openAssistantFloating(){
  if(assistantFloating||busy)return;
- assistantFloating=true;setAssistantFloating($('#askPage'),true);$('#dock').classList.add('assistant-floating-open');void composerContext?.setBlocked(true);assistantLauncher.setAttribute('aria-expanded','true');
+ assistantFloating=true;const sidebar=assistantPresentation.value==='sidebar';setAssistantFloating($('#askPage'),true,sidebar?'sidebar':'panel');setAssistantSidebar(sidebar);$('#dock').classList.add('assistant-floating-open');void composerContext?.setBlocked(true);assistantLauncher.setAttribute('aria-expanded','true');
  syncFloatingDock();portfolioAssistant.setActive(true,{focus:true});
  // The dock reveals the composer over its transition, and a hidden field cannot take focus, so keep offering
  // focus each frame until the field accepts it or the transition is over.
@@ -491,11 +493,11 @@ function openAssistantFloating(){
 }
 function closeAssistantFloating({focus=true}={}){
  if(!assistantFloating)return;
- assistantFloating=false;setAssistantFloating($('#askPage'),false);$('#dock').classList.remove('assistant-floating-open');void composerContext?.setBlocked(false);assistantLauncher.setAttribute('aria-expanded','false');
+ assistantFloating=false;setAssistantFloating($('#askPage'),false);setAssistantSidebar(false);$('#dock').classList.remove('assistant-floating-open');void composerContext?.setBlocked(false);assistantLauncher.setAttribute('aria-expanded','false');
  portfolioAssistant.setActive(false);syncFloatingDock();
  if(focus&&!assistantLauncher.hidden)assistantLauncher.focus({preventScroll:true});
 }
-assistantLauncher.onclick=()=>{if(assistantPresentation.value==='floating')openAssistantFloating();else dispatchCommand({id:'route.assistant',source:'pointer'});};
+assistantLauncher.onclick=()=>{if(['floating','sidebar'].includes(assistantPresentation.value))openAssistantFloating();else dispatchCommand({id:'route.assistant',source:'pointer'});};
 $('#assistantMaximize').onclick=()=>{closeAssistantFloating({focus:false});dispatchCommand({id:'route.assistant',source:'pointer'});};
 $('#assistantFloatingClose').onclick=()=>closeAssistantFloating();
 mountAssistantUpload({button:$('#assistantAttach'),picker:$('#assistantAttachFile'),input:$('#askInput'),form:$('#askForm'),maxCharacters:assistantLimits.questionCharacters,onError:message=>siteToast.show(message,{tone:'error'})});
