@@ -1709,8 +1709,11 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 
 /* article.css */
 /* Articles: one readable column built from the reading tokens, not the card grid used by information pages. */
-/* A blog article reads at the Extra small page width. */
-.article-detail .article{max-width:var(--content-width-xs);margin-inline:auto}
+/* A blog article spans the page width; its text sits in a centred reading column so lines stay short.
+   Images and video take the reading column or, with the Article images setting on Page width, the whole page. */
+.article-detail .article{max-width:none}
+.article-header,.article-section,.article-sources{max-width:var(--content-width-reading);margin-inline:auto}
+:root[data-article-images="page"] .article-section:is([data-block-type="image"],[data-block-type="video"]){max-width:none}
 .article-header{margin-bottom:var(--space-page-rhythm-md)}
 .article-header .article-meta{margin:0 0 var(--space-4);color:var(--eyebrow-ink)}
 .article-header h1{margin:0}
@@ -1924,7 +1927,7 @@ body:has(.home-carousel-active){overflow-x:clip}
 @media(prefers-reduced-motion:reduce){.iconiq-thinking *,.vivid-stream *{animation:none!important}.iconiq-thinking-label{background:none;color:var(--eyebrow-ink)}.vivid-stream-character{color:inherit}}
 
 /* content-widths.css */
-:root{--app-max-width:1920px;--content-width-xs:960px;--content-width-sm:1200px;--content-width-md:1440px;--content-width-lg:1760px;--content-width:var(--content-width-md);--content-gutter:clamp(24px,4vw,64px);--app-canvas-width:min(100vw,var(--app-max-width));--content-shell-width:min(var(--app-max-width),calc(var(--content-width) + 2 * var(--content-gutter)))}
+:root{--app-max-width:1920px;--content-width-reading:600px;--content-width-xs:960px;--content-width-sm:1200px;--content-width-md:1440px;--content-width-lg:1760px;--content-width:var(--content-width-md);--content-gutter:clamp(24px,4vw,64px);--app-canvas-width:min(100vw,var(--app-max-width));--content-shell-width:min(var(--app-max-width),calc(var(--content-width) + 2 * var(--content-gutter)))}
 html{background:var(--page)}
 body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 :is(#main,.retained-home),body>header,body.wide-project-hero-page>header,.site-footer{width:100%;max-width:var(--content-shell-width);padding-inline:var(--content-gutter)}
