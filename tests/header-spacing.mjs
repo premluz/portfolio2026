@@ -14,7 +14,8 @@ assert(design.includes('top:calc(var(--header-total) + var(--space-10))'),'The s
 
 // The role line sits under the name, in the markup the hide-logo setting already hides.
 for(const page of [index,lab])assert(page.includes('<span class="discipline"><span class="brand-name">Prem Luczak</span><span class="brand-role">Product designer &amp; builder</span></span>'),'Both pages show the role under the name');
-assert(design.includes('.brand-role{'),'The role is styled');
+const role=design.match(/\.brand-role\{[^}]*\}/)?.[0]||'';
+assert(role&&!role.includes('font-size'),'The role has no size of its own: it matches the name');
 
 // Empty hero: only with the carousel showing and no visible hero content, Current layout only, and the carousel takes over the header margin.
 assert(styles.includes("'empty-hero.css'"),'The stylesheet ships in the bundle');
@@ -22,5 +23,6 @@ const rules=empty.split('\n').filter(line=>line.startsWith('main:'));
 assert.equal(rules.length,2);
 for(const rule of rules)for(const part of ['main:not(.home-view-split)','.home-product-carousel:not([hidden])',':not(:has(.hero-about>:is(.badge,h1,.hero-strapline):not([hidden])))',':not(:has(.hero-copy>*))',':not(:has(.home-overview:not([hidden])))'])assert(rule.includes(part),`Rule requires ${part}`);
 assert(rules[0].endsWith('>.home-hero{display:none}'));
-assert(rules[1].includes('margin-top:var(--header-total);min-height:calc(100svh - var(--header-total));display:grid;align-content:center'),'The carousel is centred below the header');
+assert(rules[1].includes('margin-top:var(--header-total);min-height:calc(100svh - var(--header-total));display:grid;align-content:center;padding-bottom:calc(2 * var(--empty-hero-lift))'),'The carousel is centred below the header, lifted slightly');
+assert(/--empty-hero-lift: clamp\([^;]+\);/.test(tokens),'The lift is a token');
 console.log('Header spacing passed: one offset token for header, nav and hero, role under the name, empty-hero centring scoped and header-aware.');

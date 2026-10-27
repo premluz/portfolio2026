@@ -233,6 +233,8 @@
   /* The header (logo, name, top navigation and the agent beside it) sits this far lower, so it breathes at the top. */
   --header-top-offset: clamp(16px, 3.5vh, 44px);
   --header-total: calc(var(--header-height) + var(--header-top-offset));
+  /* Empty hero: how far above the exact middle the carousel's visible content (cards, captions, arrows) sits. */
+  --empty-hero-lift: clamp(24px, 5vh, 56px);
   /* Phone carousel (<=600px): side margins and the gap between cards, and the smallest card size the saved
      Carousel size setting may produce there (1 = full width). Desktop keeps the saved setting. */
   --gallery-mobile-inset-landscape: 32px;

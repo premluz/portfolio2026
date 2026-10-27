@@ -76,7 +76,7 @@ button,input,select,textarea{font-family:var(--font-family-sans)}
 /* The header is taller by --header-top-offset, which is padding, so its content (logo, name, top navigation) sits lower. */
 header{height:var(--header-total);padding-top:var(--header-top-offset)}
 .brand-name,.brand-role{display:block}
-.brand-role{margin-top:var(--space-1);font-size:var(--font-size-note);color:var(--muted)}
+.brand-role{margin-top:var(--space-1);color:var(--muted)}
 .brand-avatar{display:block;width:var(--brand-avatar-size);height:var(--brand-avatar-size);border-radius:50%;object-fit:cover;object-position:50% 30%}
 .discipline{font-size:var(--font-size-small);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body)}
 .design-system-controls{border:0;padding:0;margin:0 0 24px;min-width:0}
