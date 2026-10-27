@@ -19,6 +19,8 @@
   --card-hover-lightness-end: .968;
   --card-hover-chroma-end: .009;
   --card-label-rest-strength: 42%;
+  /* A card's title line is its strongest text; the results line under it stays quieter. */
+  --card-title-rest-strength: 100%;
   --card-summary-rest-strength: 80%;
   --surface-hover-in-duration: 240ms;
   --surface-hover-out-duration: 1000ms;
@@ -300,6 +302,7 @@
   --card-hover-lightness-end: .145;
   --card-hover-chroma-end: .006;
   --card-label-rest-strength: 48%;
+  --card-title-rest-strength: 100%;
   --card-summary-rest-strength: 72%;
   --card-reflection-scale: .25;
   --card-glow-rgb: 13, 13, 15;

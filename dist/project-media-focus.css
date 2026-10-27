@@ -33,7 +33,7 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 .detail-caption{display:none}
 .surface.detail.heading-beside-image>.detail-caption{display:block;grid-column:1;grid-row:1;margin:0 0 var(--space-8)}
 .detail-caption p{margin:0;font-size:var(--font-size-project-summary);font-weight:var(--font-weight-body);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body)}
-.detail-caption-title{color:var(--body-ink)}
+.detail-caption-title{color:var(--ink)}
 .detail-caption-lead{color:var(--muted)}
 .surface.detail.heading-beside-image{grid-template-columns:minmax(0,1fr);grid-template-rows:none;column-gap:0;row-gap:0}
 .surface.detail.heading-beside-image>.detail-layout>.detail-media-column{grid-column:1;grid-row:2;margin-top:0}

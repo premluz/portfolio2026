@@ -252,6 +252,9 @@ document.documentElement.dataset.articleImages=articleImages;$('#articleImages')
 let featuredLarger=true;try{featuredLarger=localStorage.getItem('prem-featured-larger')!=='false';}catch(error){console.warn('Featured cards preference unreadable; using larger',error);}
 $('#featuredLarger').checked=featuredLarger;$('#featuredLarger').onchange=e=>{featuredLarger=e.target.checked;saveFlag('prem-featured-larger',featuredLarger);if(!labMode)homeLayout?.setFeaturedLarger(featuredLarger);};
 const labSettings=mountLabSettings($('#settings'),{onChange:()=>{if(labMode&&!busy)render('lab',{stream:false});}});
+// Optional: the article title at body text size instead of heading size.
+let articleTitleBody=readFlag('prem-article-title-body');document.documentElement.classList.toggle('article-title-body',articleTitleBody);
+$('#articleTitleBody').checked=articleTitleBody;$('#articleTitleBody').onchange=e=>{articleTitleBody=e.target.checked;document.documentElement.classList.toggle('article-title-body',articleTitleBody);saveFlag('prem-article-title-body',articleTitleBody);};
 let contentStartFirst=readFlag('prem-content-start-first');document.documentElement.classList.toggle('content-start-first',contentStartFirst);
 $('#contentStartFirst').checked=contentStartFirst;$('#contentStartFirst').onchange=e=>{contentStartFirst=e.target.checked;document.documentElement.classList.toggle('content-start-first',contentStartFirst);saveFlag('prem-content-start-first',contentStartFirst);};
 let projectBackdropEnabled=readFlag('prem-project-backdrop'),featureStage=readFlag('prem-feature-stage');

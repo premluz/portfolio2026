@@ -140,6 +140,7 @@ main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:0;padding-top:
 
 /* Project statements use sentence-case supporting text. Outcomes live in detail highlights. */
 /* A card's results line follows its title at regular line spacing; the detail page sets its own gap below. */
+.project-card:not(.flow-content) h2{color:color-mix(in oklab,var(--ink) var(--card-title-rest-strength),var(--surface-fill))}
 .project-card .project-summary,.surface.detail>.project-summary{max-width:58ch;margin:0;color:var(--muted);font-size:var(--font-size-project-summary);font-weight:var(--font-weight-body);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body);text-transform:none}
 .surface.detail>.project-summary{margin-top:var(--space-hero-heading-content)}
 /* Hero statements share the body scale rather than separate support sizes. */

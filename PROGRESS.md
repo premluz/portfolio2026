@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Title strength, blog header
+Card titles and the project page caption title are now the strongest text (card title rest strength 100%, caption in full ink); the results line stays quieter. Blog articles: the title is at the page content start, top left, then the date without the author, then the series line; the text stays centred in its column. New setting "Article title: body text size" (off). Evidence: computed colours and positions in the headless browser; tests/articles.mjs extended.
+
 ## 2026-10-27 Quieter menu links
 Idle menu links and the current page both dropped a step in tone (new tokens `--nav-link-ink`, `--nav-link-active-ink`), in the glass menu and Plain navigation; hover is unchanged. Evidence: computed lightness in the browser, dark theme: idle 0.58, current 0.80, hover and hover-on-current 0.94, in both menu styles. tests/header-spacing.mjs extended.
 

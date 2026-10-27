@@ -20,6 +20,8 @@
   --card-hover-lightness-end: .968;
   --card-hover-chroma-end: .009;
   --card-label-rest-strength: 42%;
+  /* A card's title line is its strongest text; the results line under it stays quieter. */
+  --card-title-rest-strength: 100%;
   --card-summary-rest-strength: 80%;
   --surface-hover-in-duration: 240ms;
   --surface-hover-out-duration: 1000ms;
@@ -301,6 +303,7 @@
   --card-hover-lightness-end: .145;
   --card-hover-chroma-end: .006;
   --card-label-rest-strength: 48%;
+  --card-title-rest-strength: 100%;
   --card-summary-rest-strength: 72%;
   --card-reflection-scale: .25;
   --card-glow-rgb: 13, 13, 15;
@@ -1194,6 +1197,7 @@ main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:0;padding-top:
 
 /* Project statements use sentence-case supporting text. Outcomes live in detail highlights. */
 /* A card's results line follows its title at regular line spacing; the detail page sets its own gap below. */
+.project-card:not(.flow-content) h2{color:color-mix(in oklab,var(--ink) var(--card-title-rest-strength),var(--surface-fill))}
 .project-card .project-summary,.surface.detail>.project-summary{max-width:58ch;margin:0;color:var(--muted);font-size:var(--font-size-project-summary);font-weight:var(--font-weight-body);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body);text-transform:none}
 .surface.detail>.project-summary{margin-top:var(--space-hero-heading-content)}
 /* Hero statements share the body scale rather than separate support sizes. */
@@ -1765,7 +1769,7 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 .detail-caption{display:none}
 .surface.detail.heading-beside-image>.detail-caption{display:block;grid-column:1;grid-row:1;margin:0 0 var(--space-8)}
 .detail-caption p{margin:0;font-size:var(--font-size-project-summary);font-weight:var(--font-weight-body);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body)}
-.detail-caption-title{color:var(--body-ink)}
+.detail-caption-title{color:var(--ink)}
 .detail-caption-lead{color:var(--muted)}
 .surface.detail.heading-beside-image{grid-template-columns:minmax(0,1fr);grid-template-rows:none;column-gap:0;row-gap:0}
 .surface.detail.heading-beside-image>.detail-layout>.detail-media-column{grid-column:1;grid-row:2;margin-top:0}
@@ -1782,11 +1786,13 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 /* A blog article spans the page width; its text sits in a centred reading column so lines stay short.
    Images and video take the reading column or, with the Article images setting on Page width, the whole page. */
 .article-detail .article{max-width:none}
-.article-header,.article-section,.article-sources{max-width:var(--content-width-reading);margin-inline:auto}
+.article-section,.article-sources{max-width:var(--content-width-reading);margin-inline:auto}
 :root[data-article-images="page"] .article-section:is([data-block-type="image"],[data-block-type="video"]){max-width:none}
 .article-header{margin-bottom:var(--space-page-rhythm-md)}
-.article-header .article-meta{margin:0 0 var(--space-4);color:var(--eyebrow-ink)}
-.article-header h1{margin:0}
+/* The title sits where any page's title does (top left); only the text below it is centred in its reading column. */
+.article-header .article-meta{margin:var(--space-4) 0 0;color:var(--eyebrow-ink)}
+.article-header h1{margin:0;font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);max-width:var(--measure-heading)}
+:root.article-title-body .article-header h1{font-size:var(--font-size-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
 .article-series{margin:var(--space-4) 0 0;color:var(--muted);font-size:var(--font-size-small);line-height:var(--line-height-body)}
 .article-series a,.article-sources a{color:var(--ink);text-underline-offset:.2em}
 .article-section+.article-section{margin-top:var(--space-page-rhythm-sm)}

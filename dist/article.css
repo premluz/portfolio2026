@@ -2,11 +2,13 @@
 /* A blog article spans the page width; its text sits in a centred reading column so lines stay short.
    Images and video take the reading column or, with the Article images setting on Page width, the whole page. */
 .article-detail .article{max-width:none}
-.article-header,.article-section,.article-sources{max-width:var(--content-width-reading);margin-inline:auto}
+.article-section,.article-sources{max-width:var(--content-width-reading);margin-inline:auto}
 :root[data-article-images="page"] .article-section:is([data-block-type="image"],[data-block-type="video"]){max-width:none}
 .article-header{margin-bottom:var(--space-page-rhythm-md)}
-.article-header .article-meta{margin:0 0 var(--space-4);color:var(--eyebrow-ink)}
-.article-header h1{margin:0}
+/* The title sits where any page's title does (top left); only the text below it is centred in its reading column. */
+.article-header .article-meta{margin:var(--space-4) 0 0;color:var(--eyebrow-ink)}
+.article-header h1{margin:0;font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);max-width:var(--measure-heading)}
+:root.article-title-body .article-header h1{font-size:var(--font-size-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
 .article-series{margin:var(--space-4) 0 0;color:var(--muted);font-size:var(--font-size-small);line-height:var(--line-height-body)}
 .article-series a,.article-sources a{color:var(--ink);text-underline-offset:.2em}
 .article-section+.article-section{margin-top:var(--space-page-rhythm-sm)}
