@@ -11,7 +11,7 @@ assert(!index.includes('lab-transition.js'),'The page does not load the ripple s
 assert(lab.includes("location.replace('./#lab')")&&lab.includes('url=./#lab')&&!lab.includes('app.js'),'lab.html only redirects to the in-app route');
 assert(app.includes("const LAB_VIEW=Object.freeze({layout:'regular',columns:4,productDisplay:'cards'});"),'The Lab shows four even columns of the cards');
 assert(app.includes("'route.lab':()=>activateRoute('lab')"),'The Lab has its own route command');
-assert(app.includes('void Promise.resolve(landing?.finished).then(()=>ripple.play());')&&!app.includes('ripple.out'),'The ripple fires once the Lab has faded in, not on the click');
+assert(app.includes('if(ripple)void ripple.click();')&&app.includes('void Promise.resolve(landing?.finished).then(()=>ripple.land());')&&!app.includes('await ripple'),'A short ring answers the click without delaying the transition, and the full ring fires once the Lab has landed');
 assert(index.indexOf('data-nav="work"')<index.indexOf('data-nav="lab"')&&index.indexOf('data-nav="lab"')<index.indexOf('data-nav="about"'),'Lab sits right after Work in the dock');
 assert(menu.indexOf("routeButton('work'")<menu.indexOf("routeButton('lab'")&&menu.indexOf("routeButton('lab'")<menu.indexOf("routeButton('about'"),'Lab sits right after Home in the site menu');
 assert(commandDefinitions.some(command=>command.id==='route.lab'),'The Lab command is in the command catalog');

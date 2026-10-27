@@ -308,8 +308,10 @@ async function simplePageTransition(route){
  busy=true;
  try{
   const leaving=current==='assistant'?$('#askPage'):main;
-  // The Lab fades in like any page and then lands with one colour-split ripple (ADR-004).
+  // The Lab answers the click with a short ring at once (never awaited, so it delays nothing), fades in like any
+  // page, and then lands with the full colour-split ripple (ADR-004).
   const ripple=!reduce.matches&&route==='lab'?(labRipple??=createLabRipple()):null;
+  if(ripple)void ripple.click();
   let exit=null;
   if(!reduce.matches&&!simpleTransitions.skipExit){
    // A project page recedes towards the current view with its visible text stepping out; other pages fade in place.
@@ -325,7 +327,7 @@ async function simplePageTransition(route){
   scrollPage(route==='work'?homeScroll:0);
   edgeShades.sync(cardIds.includes(route));if(ambientMovementEnabled())ambientLight.finishNavigation(null);
   const landing=fadeUpIn(route==='assistant'?$('#askPage'):main);
-  if(ripple)void Promise.resolve(landing?.finished).then(()=>ripple.play());
+  if(ripple)void Promise.resolve(landing?.finished).then(()=>ripple.land());
   heroImageEntrance(main,{reduced:reduce.matches,duration});
   exit?.cancel();
  }finally{busy=false;globalThis.dispatchEvent?.(new Event('portfolio-route-settled'));}

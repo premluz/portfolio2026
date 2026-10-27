@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Lab ripple also answers the click
+Choosing Lab now starts a short ring (to the handoff point) instantly, not awaited, so the fade out and in are not delayed; the full ring still lands once the Lab has faded in. Evidence: headless browser sampled frames: ring class on from the click, page fade unchanged, second ring after the fade-in. Risk: with the slow-motion setting the two rings could overlap; the landing ring then replaces the first.
+
 ## 2026-10-27 Lab after Work, ripple on landing
 Lab now sits right after Work in the dock and after Home in the site menu. The ripple no longer fires on the click: the old page fades out, the Lab fades in, and then one ring runs across it (`createLabRipple().play()`); leaving the Lab is the ordinary fade. Evidence: headless browser measured the ring starting only after the Lab had finished fading in; dock order Work, Lab, About, Contact. Risk: `LAB_RIPPLE.handoff` is now unused.
 
