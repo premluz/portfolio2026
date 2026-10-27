@@ -77,6 +77,18 @@ button,input,select,textarea{font-family:var(--font-family-sans)}
 .text-mono{font-family:var(--font-family-mono);font-size:var(--font-size-mono);font-weight:var(--font-weight-body);letter-spacing:var(--eyebrow-tracking);text-transform:uppercase;line-height:var(--line-height-label)}
 /* The header is taller by --header-top-offset, which is padding, so its content (logo, name, top navigation) sits lower. */
 header{height:var(--header-total);padding-top:var(--header-top-offset)}
+/* Top nav on a project or article page: Go Back and Previous/Next take the place of the avatar and name, in one fade. */
+/* Offset by the button padding so the Go Back text starts on the content edge, where the avatar was. */
+.header-detail-nav{position:absolute;left:calc(var(--content-gutter) - var(--space-3));top:var(--header-top-offset);bottom:0;display:flex;align-items:center;gap:var(--space-1);opacity:0;visibility:hidden;pointer-events:none;transition:opacity var(--header-swap-duration) var(--ease-settle),visibility 0s linear var(--header-swap-duration)}
+header :is(.brand,.discipline){transition:opacity var(--header-swap-duration) var(--ease-settle),visibility 0s}
+:root.header-detail-active .header-detail-nav{opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s}
+:root.header-detail-active header :is(.brand,.discipline){opacity:0;visibility:hidden;pointer-events:none;transition:opacity var(--header-swap-duration) var(--ease-settle),visibility 0s linear var(--header-swap-duration)}
+.header-detail-nav button{display:inline-flex;align-items:center;justify-content:center;height:var(--nav-icon-size);min-width:var(--nav-icon-size);padding:0 var(--space-3);border:0;border-radius:var(--radius-icon-control);background:transparent;color:var(--nav-item-ink);font:inherit;font-size:var(--font-size-body);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);cursor:pointer;transition:background-color var(--nav-hover-out-duration) ease-out,color 160ms ease}
+.header-detail-nav button:is(:hover,:focus-visible){background:var(--nav-item-hover);color:var(--ink);transition-duration:var(--nav-hover-in-duration)}
+.header-detail-nav button[hidden]{display:none}
+.header-detail-nav button:has(svg){padding:0}
+.header-detail-nav svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+:root[data-glass-style="on"] .header-detail-nav button:is(:hover,:focus-visible){background:var(--glass-ghost-fill);box-shadow:var(--glass-button-edge)}
 .brand-name,.brand-role{display:block}
 .brand-role{color:var(--muted)}
 .brand-avatar{display:block;width:var(--brand-avatar-size);height:var(--brand-avatar-size);border-radius:50%;object-fit:cover;object-position:50% 30%}
@@ -201,7 +213,7 @@ html[data-animation="off"] .image-card[data-copy-hover="true"]:is(:hover,:focus-
 /* Nav settings live on the final, high-specificity selectors so the control
    tokens win over the structural and mobile nav rules above. */
 /* Menu links sit in the composer's inset at the composer buttons' height, so both dock modes share one rhythm. */
-#dock nav a{display:inline-flex;align-items:center;box-sizing:border-box;height:var(--nav-icon-size);font-size:var(--nav-item-font-size);line-height:var(--line-height-label);padding:0 min(calc(var(--nav-item-padding) + 5px),16px)}
+#dock nav a{display:inline-flex;align-items:center;box-sizing:border-box;height:var(--nav-icon-size);font-size:var(--font-size-body);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);line-height:var(--line-height-label);padding:0 min(calc(var(--nav-item-padding) + 5px),16px)}
 #dock .dock-content>nav{padding:var(--composer-control-inset)}
 @media(max-width:600px){#dock nav a{padding-inline:min(calc(var(--nav-item-padding) + 5px),12px)}}
 @media(max-width:380px){#dock nav a{font-size:min(var(--nav-item-font-size),14px);padding-inline:min(calc(var(--nav-item-padding) + 5px),6px)}}

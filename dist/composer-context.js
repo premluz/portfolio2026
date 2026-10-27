@@ -54,8 +54,8 @@ export class ComposerContext {
   let carousel=null,score=0;
   if(this.placement!=='page')for(const gallery of scene.galleries||[]){if(!gallery.root?.isConnected||gallery.root.closest('[hidden]')||!gallery.details?.getAttribute('href'))continue;const next=carouselVisibility(gallery.viewport.getBoundingClientRect(),{bottom:limit});if(next>score){score=next;carousel=gallery;}}
   const project=section?null:scene.project;
-  // A classic dock shows Go Back itself, so its row never repeats it.
-  const actions=this.inRow(contextualActions({...scene,project,carousel,section})).filter(action=>!classic||action.id!=='back'&&!(action.id==='about-me'&&scene.route==='about'));if(project&&this.splitProjectControls){const firstRight=actions.find(action=>action.id==='fullscreen'||action.id==='previous');if(firstRight)firstRight.pushRight=true;}if(!actions.length)return null;
+  // A classic dock shows Go Back itself, so its row never repeats it; with the nav on top the header holds Back and Previous/Next.
+  const actions=this.inRow(contextualActions({...scene,project,carousel,section})).filter(action=>!classic||action.id!=='back'&&!(action.id==='about-me'&&scene.route==='about')).filter(action=>!(scene.headerNav&&project&&['back','previous','next'].includes(action.id)));if(project&&this.splitProjectControls){const firstRight=actions.find(action=>action.id==='fullscreen'||action.id==='previous');if(firstRight)firstRight.pushRight=true;}if(!actions.length)return null;
   return {...scene,project,carousel,section,actions,key:JSON.stringify(actions.map(action=>[action.id,action.label,action.text,action.tooltip,action.group,action.href,action.pushRight]))};
  }
  reconcile(){

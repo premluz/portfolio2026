@@ -26,4 +26,12 @@ for(const rule of rules)for(const part of ['main:not(.home-view-split)','.home-p
 assert(rules[0].endsWith('>.home-hero{display:none}'));
 assert(rules[1].includes('margin-top:var(--header-total);min-height:calc(100svh - var(--header-total));display:grid;align-content:center;padding-bottom:calc(2 * var(--empty-hero-lift))'),'The carousel is centred below the header, lifted slightly');
 assert(/--empty-hero-lift: clamp\([^;]+\);/.test(tokens),'The lift is a token');
+// Top nav on a project or article page: the header's avatar and name give way to Go Back and Previous/Next, in one fade.
+{const app=await read('app.js');
+assert(index.includes('<nav class="header-detail-nav" id="headerDetailNav" aria-label="Page navigation" aria-hidden="true" inert><button type="button" data-header-action="back">Go Back</button>'),'The header holds Go Back and Previous/Next, hidden until needed');
+assert(app.includes("const headerDetail=route=>navPosition==='top'&&(projectIds.includes(route)||articleIds.includes(route));"),'Only with the nav on top, on a project or article page');
+assert(app.includes('dockMorph.setBack(!composer&&showBackControl(route)&&!headerDetail(route),options);'),'The dock does not repeat Back while the header holds it');
+assert(design.includes(':root.header-detail-active header :is(.brand,.discipline){opacity:0;')&&design.includes(':root.header-detail-active .header-detail-nav{opacity:1;'),'The two swap by opacity over the same duration');
+assert(tokens.includes('--header-swap-duration: 400ms;'),'The swap lasts as long as the default page transition');
+assert(design.includes('#dock nav a{display:inline-flex;align-items:center;box-sizing:border-box;height:var(--nav-icon-size);font-size:var(--font-size-body);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);'),'Menu links are body text, like the name in the header');}
 console.log('Header spacing passed: one offset token for header, nav and hero, role under the name, empty-hero centring scoped and header-aware.');

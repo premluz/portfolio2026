@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Header swap on detail pages, body-size menu
+With the nav on top, project and article pages fade the avatar, name and role out of the header while Go Back and Previous/Next fade in at the same spot (articles: Go Back only); the dock no longer repeats Back or the side arrows there. Menu links are now body text like the name (were 12px with label tracking); footer text and writing titles were already body text. Evidence: headless browser with the owner's settings: mid-transition opacities 0.07 (name) and 0.93 (controls), Go Back text on the avatar's 58px edge, Next and Go Back work, articles show Go Back only, bottom nav unchanged with the dock Back pill; menu 13.12px. tests/header-spacing.mjs extended.
+
 ## 2026-10-27 Extra small back to 960px
 The 740px change was reverted the same day at the owner's request: `CONTENT_WIDTHS.xsmall`, `--content-width-xs`, the dropdown labels, docs and test are back to 960px. Evidence: tests/content-widths.mjs passes.
 
