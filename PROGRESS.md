@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Menu links in the composer's rhythm
+With the owner's 13px item padding and the Lab link, the menu needed 264px in a fixed 252px dock, so Contact ran 11.5px past the edge, and the links touched the dock's left edge. The dock now sizes to its links, links sit in the composer's 6px inset at its 36px button height, and the selected and hovered links use the composer buttons' glass. Evidence: headless browser with the owner's settings: every link inside the dock with equal insets matching the composer buttons, selected pill 36px tall.
+
 ## 2026-10-27 One dock glass for menu and composer
 The menu dock wore the Assistant button's lighter glass while the composer dock wore the dark dock glass. The menu override is gone, so both modes share the composer's glass. Evidence: headless browser compared the dock glass in both modes (fill, blur, outline, shadow, height).
 

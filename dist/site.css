@@ -1237,8 +1237,9 @@ html[data-animation="off"] .image-card[data-copy-hover="true"]:is(:hover,:focus-
 
 /* Nav settings live on the final, high-specificity selectors so the control
    tokens win over the structural and mobile nav rules above. */
-#dock nav a{font-size:var(--nav-item-font-size);line-height:var(--line-height-label);padding:var(--nav-item-padding) min(calc(var(--nav-item-padding) + 5px),16px)}
-#dock .dock-content>nav{padding:var(--nav-container-padding)}
+/* Menu links sit in the composer's inset at the composer buttons' height, so both dock modes share one rhythm. */
+#dock nav a{display:inline-flex;align-items:center;box-sizing:border-box;height:var(--nav-icon-size);font-size:var(--nav-item-font-size);line-height:var(--line-height-label);padding:0 min(calc(var(--nav-item-padding) + 5px),16px)}
+#dock .dock-content>nav{padding:var(--composer-control-inset)}
 @media(max-width:600px){#dock nav a{padding-inline:min(calc(var(--nav-item-padding) + 5px),12px)}}
 @media(max-width:380px){#dock nav a{font-size:min(var(--nav-item-font-size),14px);padding-inline:min(calc(var(--nav-item-padding) + 5px),6px)}}
 
@@ -2165,6 +2166,8 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 :root[data-glass-style="on"] #dock .composer-context-slot[data-group-solo="true"] :is(button,a)::before{content:"";position:absolute;inset:calc(-1 * var(--context-action-padding));z-index:-1;border-radius:calc(var(--context-control-height) / 2 + var(--context-action-padding));background:var(--glass-ghost-fill);box-shadow:var(--glass-button-edge);opacity:0;pointer-events:none;transition:opacity var(--nav-hover-out-duration) ease-out}
 :root[data-glass-style="on"] #dock .composer-context-slot[data-group-solo="true"] :is(button,a):is(:hover,:focus-visible):not(:disabled){background:transparent;box-shadow:none}
 :root[data-glass-style="on"] #dock .composer-context-slot[data-group-solo="true"] :is(button,a):is(:hover,:focus-visible):not(:disabled)::before{opacity:1;transition-duration:var(--nav-hover-in-duration)}
+/* The menu's selected and hovered links wear the composer buttons' glass. */
+:root[data-glass-style="on"] #dock nav a:is(.active,:hover,:focus-visible,.hover-trail){background:var(--glass-ghost-fill);box-shadow:var(--glass-button-edge)}
 
 /* assistant-floating.css */
 /* Assistant launcher: its own glass pill beside the dock, not an item of the menu. */

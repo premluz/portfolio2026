@@ -27,3 +27,5 @@
 :root[data-glass-style="on"] #dock .composer-context-slot[data-group-solo="true"] :is(button,a)::before{content:"";position:absolute;inset:calc(-1 * var(--context-action-padding));z-index:-1;border-radius:calc(var(--context-control-height) / 2 + var(--context-action-padding));background:var(--glass-ghost-fill);box-shadow:var(--glass-button-edge);opacity:0;pointer-events:none;transition:opacity var(--nav-hover-out-duration) ease-out}
 :root[data-glass-style="on"] #dock .composer-context-slot[data-group-solo="true"] :is(button,a):is(:hover,:focus-visible):not(:disabled){background:transparent;box-shadow:none}
 :root[data-glass-style="on"] #dock .composer-context-slot[data-group-solo="true"] :is(button,a):is(:hover,:focus-visible):not(:disabled)::before{opacity:1;transition-duration:var(--nav-hover-in-duration)}
+/* The menu's selected and hovered links wear the composer buttons' glass. */
+:root[data-glass-style="on"] #dock nav a:is(.active,:hover,:focus-visible,.hover-trail){background:var(--glass-ghost-fill);box-shadow:var(--glass-button-edge)}
