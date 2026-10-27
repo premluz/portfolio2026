@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Body-size headings in the About block and the blog
+The Home and About intro heading ("Most useful where…") is body size and its text a half-width block; "How I work", "Experience" and "Side Projects & R&D" are body text in full ink instead of eyebrows ("HOW I WORK" is now "How I work" in both catalogs). In blog posts the series line is the first line of the text at paragraph size, and the section headings are reading-size text in full ink. Evidence: computed styles in the headless browser: all 13.12px, labels lightness 0.97, intro heading 662px and text 648px wide on a 1325px rail; article series and headings measured. tests/articles.mjs and tests/header-spacing.mjs extended.
+
 ## 2026-10-27 Carousel arrows above right, tighter gap
 The home carousel arrows moved from under the carousel (centred) to above it, right-aligned to the content edge, and the empty space below the captions was removed; the section after the carousel now sits one medium rhythm step below instead of a large one. Evidence: headless browser at 1440px: arrows at the content right edge above the cards; carousel bottom to the next section down from 192px plus 45px blank to 96px plus 19px. tests/card-gallery.mjs extended.
 

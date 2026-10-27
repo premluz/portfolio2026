@@ -20,7 +20,7 @@ assert.equal(articleDate('2026-10-14'),'Oct 14, 2026','Dates keep the authored c
 
 const first=cardDetail(getDocument('desire-and-lived-experience')),second=cardDetail(getDocument('design-after-the-screen'));
 assert(first.includes('<time datetime="2026-10-14">Oct 14, 2026</time></p>')&&!first.includes('@Prem'),'The date sits under the title, without the author');
-assert(first.indexOf('<h1')<first.indexOf('article-meta')&&first.indexOf('article-meta')<first.indexOf('article-series'),'Title, then date, then the series line');
+assert(first.indexOf('<h1')<first.indexOf('article-meta')&&first.indexOf('article-meta')<first.indexOf('article-body')&&first.indexOf('article-body')<first.indexOf('article-series'),'Title, then date; the series line is the first line of the text, not part of the title block');
 assert(first.includes('Part 1 of 2. <a href="#design-after-the-screen">Part 2: Design after the screen</a>.'),'Part 1 links to Part 2');
 assert(second.includes('Part 2 of 2. <a href="#desire-and-lived-experience">Part 1: The distance between desire and lived experience</a>.'),'Part 2 links back to Part 1');
 assert(second.includes('<th scope="col">Product decides</th><th scope="col">Design shapes</th>')&&(second.match(/<tr>/g)||[]).length===5,'The decisions table renders a header and four rows');

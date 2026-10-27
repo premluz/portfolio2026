@@ -1434,14 +1434,15 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 
 /* home-about.css */
 .home-about{--home-about-years-column:5.375em;margin-top:var(--space-page-rhythm-lg);width:100%;min-width:0;grid-column:1 / -1}
-.home-about h2{max-width:27ch;margin:0;font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink);text-wrap:pretty}
+.home-about h2{max-width:var(--page-intro-width);margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-heading);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--ink);text-wrap:pretty}
 .home-about-title-secondary{color:var(--body-ink)}
 .home-about-copy,.home-about-lists{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6)}
 .home-about-copy{margin-top:var(--space-page-rhythm-sm)}
-.home-about-copy p{grid-column:var(--content-column-start);margin:0;max-width:38ch;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
-.home-about-copy p+p{grid-column:3}
+.home-about-copy p{grid-column:calc(2 * var(--content-column-start) - 1) / span 3;margin:0;max-width:none;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
+.home-about-copy p+p{grid-column:calc(2 * var(--content-column-start) - 1) / span 3}
+.home-about-copy p:empty{display:none}
 .home-about-how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);margin-top:var(--space-page-rhythm-md)}
-.home-about-how h3{grid-column:var(--content-column-start) / span 2;margin:0 0 var(--space-4);font-size:var(--font-size-caption);font-weight:var(--eyebrow-weight);line-height:var(--line-height-label);letter-spacing:var(--eyebrow-tracking);color:var(--eyebrow-ink)}
+.home-about-how h3{grid-column:var(--content-column-start) / span 2;margin:0 0 var(--space-4);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--ink)}
 .home-about-how ul{grid-column:var(--content-column-start) / span 2;list-style:none;padding:0;margin:0;display:grid;gap:var(--space-4)}
 .home-about-how li{display:grid;grid-template-columns:minmax(0,calc(50% - var(--space-6) / 2 - var(--home-about-years-column) - var(--space-4))) minmax(0,1fr);align-items:baseline;column-gap:var(--space-4);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
 .home-about-how li>span{color:var(--body-ink)}
@@ -1452,7 +1453,7 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 .home-about-lists{align-items:start;margin-top:var(--space-page-rhythm-md);padding:0;background:transparent}
 .home-about-list-content{grid-column:var(--content-column-start) / span 2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-6);row-gap:var(--space-page-rhythm-md)}
 .home-about-list{min-width:0;grid-column:1}
-.home-about-list h3{margin:0 0 var(--space-4);font-size:var(--font-size-caption);font-weight:var(--eyebrow-weight);line-height:var(--line-height-label);letter-spacing:var(--eyebrow-tracking);color:var(--eyebrow-ink)}
+.home-about-list h3{margin:0 0 var(--space-4);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--ink)}
 .home-about-list ul{position:relative;isolation:isolate;list-style:none;padding:0;margin:0;display:grid;gap:var(--space-6)}
 .home-about-list li{position:relative}
 .home-about-row{position:relative;display:grid;grid-template-columns:minmax(0,1fr) var(--home-about-years-column);align-items:baseline;gap:var(--space-6);padding:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
@@ -1462,6 +1463,8 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 .home-view-split .home-about{margin-top:var(--space-page-rhythm-md)}
 .info-grid[hidden]{display:none!important}
 @media(max-width:600px){.home-about-copy,.home-about-lists,.home-about-how{grid-template-columns:1fr}.home-about-copy{row-gap:var(--space-6)}.home-about-copy p,.home-about-copy p+p{grid-column:1;max-width:none}.home-about-how h3,.home-about-how ul{grid-column:1}.home-about-how li{grid-template-columns:minmax(0,1fr) minmax(0,2fr)}.home-about-list-content{grid-column:1;grid-template-columns:1fr}.home-about{margin-top:var(--space-page-rhythm-md)}.home-about-path{margin-top:var(--space-page-rhythm-md);padding-block:20px}.home-about-path .hero-timeline{--timeline-text-gap:32px}.home-about-path .timeline-track ol{padding-inline:28px}}
+/* Six columns so the intro text can be half the width and still start on the first or the second third, like the Home hero text. */
+.home-about-copy{grid-template-columns:repeat(6,minmax(0,1fr))}
 
 /* about-page.css */
 [data-about-section][hidden]{display:none!important}
@@ -1808,10 +1811,11 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 .article-header .article-meta{margin:var(--space-4) 0 0;color:var(--eyebrow-ink)}
 .surface.detail .article-header h1{margin:0;font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);max-width:var(--page-intro-width)}
 :root.article-title-body .article-header h1{font-size:var(--font-size-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
-.article-series{margin:var(--space-4) 0 0;color:var(--muted);font-size:var(--font-size-small);line-height:var(--line-height-body)}
+/* The series line is the first line of the text, set like a paragraph; it is not part of the title block. */
+.article-series{max-width:var(--content-width-reading);margin:0 auto var(--space-page-rhythm-sm);color:var(--body-ink);font-size:var(--font-size-reading);line-height:var(--line-height-reading)}
 .article-series a,.article-sources a{color:var(--ink);text-underline-offset:.2em}
 .article-section+.article-section{margin-top:var(--space-page-rhythm-sm)}
-.article-section h2{margin:var(--space-page-rhythm-sm) 0 var(--space-4);font-size:var(--font-size-section-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink)}
+.article-section h2{margin:var(--space-page-rhythm-sm) 0 var(--space-4);font-size:var(--font-size-reading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink)}
 .article-section p{margin:0 0 var(--space-4);color:var(--body-ink);font-size:var(--font-size-reading);line-height:var(--line-height-reading)}
 .content-table-scroll{overflow-x:auto}
 .content-table{width:100%;border-collapse:collapse;font-size:var(--font-size-body);line-height:var(--line-height-body)}

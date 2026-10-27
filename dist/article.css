@@ -9,10 +9,11 @@
 .article-header .article-meta{margin:var(--space-4) 0 0;color:var(--eyebrow-ink)}
 .surface.detail .article-header h1{margin:0;font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);max-width:var(--page-intro-width)}
 :root.article-title-body .article-header h1{font-size:var(--font-size-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
-.article-series{margin:var(--space-4) 0 0;color:var(--muted);font-size:var(--font-size-small);line-height:var(--line-height-body)}
+/* The series line is the first line of the text, set like a paragraph; it is not part of the title block. */
+.article-series{max-width:var(--content-width-reading);margin:0 auto var(--space-page-rhythm-sm);color:var(--body-ink);font-size:var(--font-size-reading);line-height:var(--line-height-reading)}
 .article-series a,.article-sources a{color:var(--ink);text-underline-offset:.2em}
 .article-section+.article-section{margin-top:var(--space-page-rhythm-sm)}
-.article-section h2{margin:var(--space-page-rhythm-sm) 0 var(--space-4);font-size:var(--font-size-section-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink)}
+.article-section h2{margin:var(--space-page-rhythm-sm) 0 var(--space-4);font-size:var(--font-size-reading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink)}
 .article-section p{margin:0 0 var(--space-4);color:var(--body-ink);font-size:var(--font-size-reading);line-height:var(--line-height-reading)}
 .content-table-scroll{overflow-x:auto}
 .content-table{width:100%;border-collapse:collapse;font-size:var(--font-size-body);line-height:var(--line-height-body)}

@@ -22,5 +22,5 @@ const sectionMarkup=block=>{
 
 export function articleMarkup(article){
  const sources=article.sources.length?`<div class="article-sources"><h2>Sources</h2><ul>${article.sources.map(sourceMarkup).join('')}</ul></div>`:'';
- return `<section class="surface detail info-detail article-detail" data-surface><article class="article"><div class="article-header"><h1 tabindex="-1">${headingText(article.title)}</h1><p class="eyebrow article-meta"><time datetime="${escapeText(article.publishedAt)}">${articleDate(article.publishedAt)}</time></p>${articleSeriesMarkup(article)}</div><div class="article-body">${article.blocks.map(sectionMarkup).join('')}</div>${sources}</article></section>`;
+ return `<section class="surface detail info-detail article-detail" data-surface><article class="article"><div class="article-header"><h1 tabindex="-1">${headingText(article.title)}</h1><p class="eyebrow article-meta"><time datetime="${escapeText(article.publishedAt)}">${articleDate(article.publishedAt)}</time></p></div><div class="article-body">${articleSeriesMarkup(article)}${article.blocks.map(sectionMarkup).join('')}</div>${sources}</article></section>`;
 }

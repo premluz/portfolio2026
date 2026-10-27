@@ -1079,7 +1079,7 @@ export const catalog={
         {
           "id": "about-how-i-work",
           "type": "timeline",
-          "title": "HOW I WORK",
+          "title": "How I work",
           "items": [
             {
               "id": "about-how-first-principles",
