@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 One title-then-text position, no Contact eyebrow
+The Lab switch is now "show title": off hides only the title and its text stays, starting where the title did. Contact lost its "Let's connect" eyebrow and got About's title-then-text rhythm. Evidence: headless browser with the owner's settings: Work, About, Lab and Contact all have the title at 165px, text 29px below it at 13.12px in the same colour (Contact's text sits lower only because its title is two lines). tests/lab-page.mjs extended.
+
 ## 2026-10-27 Lab show-heading switch
 New Lab setting "show heading" (on; saved and exported): off hides "Experiments" and its line, and the grid starts at the shared content start. Evidence: headless browser: grid top equals the heading top when it is hidden; no heading in the layout.
 

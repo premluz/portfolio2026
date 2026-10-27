@@ -1456,7 +1456,10 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 .about-hero{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-page-rhythm-sm);align-items:start}
 .about-hero-copy{min-width:0}
 :is(.about-hero-copy,.lab-heading) .info-body{margin-top:var(--space-hero-heading-content);max-width:var(--measure-body)}
+/* Contact (a plain information page) has the same heading-then-body rhythm, without changing its text colour. */
+.info-detail:not(.about-detail)>h1+.info-body{margin-top:var(--space-hero-heading-content);max-width:var(--measure-body)}
 :is(.about-hero-copy,.lab-heading) .info-body p{margin:0 0 var(--space-6);color:var(--ink);line-height:var(--line-height-body)}
+.info-detail:not(.about-detail)>h1+.info-body p{margin:0 0 var(--space-6);line-height:var(--line-height-body)}
 .about-portrait,.about-unusual-media{margin:0;overflow:hidden;border-radius:var(--radius-visual)}
 .about-portrait img,.about-unusual-media img{display:block;width:100%;height:auto}
 /* The About page spans the dev-settings content width instead of the detail surface's inset. */
@@ -2310,9 +2313,9 @@ main.lab-canvas .homepage-layout>:not(.lab-heading,.home-work){display:none}
 .lab-heading h1{margin:0;max-width:var(--measure-heading);font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink)}
 /* Lab: grid full width. Same breakout as a section set to "app": the app canvas (never wider than --app-max-width) less the gutters. */
 :root.lab-grid-full main.lab-canvas .gallery-grid{width:calc(var(--app-canvas-width) - 2 * var(--content-gutter));max-width:none;margin-inline:calc((100% - var(--app-canvas-width) + 2 * var(--content-gutter)) / 2)}
-/* Lab with "Show heading" off: the grid alone, starting where the heading would have. */
-:root.lab-heading-hidden .lab-heading{display:none}
-:root.lab-heading-hidden main.lab-canvas .gallery-grid{margin-top:var(--page-content-top)}
+/* Lab with "Show title" off: the title goes, its text stays and starts where the title did. */
+:root.lab-heading-hidden .lab-heading h1{display:none}
+:root.lab-heading-hidden .lab-heading .info-body{margin-top:0}
 
 /* project-backdrop.css */
 /* Project detail backdrop (project-backdrop.js) and the Home "Featured stage" card backdrop. */

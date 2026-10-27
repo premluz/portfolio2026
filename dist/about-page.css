@@ -4,7 +4,10 @@
 .about-hero{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-page-rhythm-sm);align-items:start}
 .about-hero-copy{min-width:0}
 :is(.about-hero-copy,.lab-heading) .info-body{margin-top:var(--space-hero-heading-content);max-width:var(--measure-body)}
+/* Contact (a plain information page) has the same heading-then-body rhythm, without changing its text colour. */
+.info-detail:not(.about-detail)>h1+.info-body{margin-top:var(--space-hero-heading-content);max-width:var(--measure-body)}
 :is(.about-hero-copy,.lab-heading) .info-body p{margin:0 0 var(--space-6);color:var(--ink);line-height:var(--line-height-body)}
+.info-detail:not(.about-detail)>h1+.info-body p{margin:0 0 var(--space-6);line-height:var(--line-height-body)}
 .about-portrait,.about-unusual-media{margin:0;overflow:hidden;border-radius:var(--radius-visual)}
 .about-portrait img,.about-unusual-media img{display:block;width:100%;height:auto}
 /* The About page spans the dev-settings content width instead of the detail surface's inset. */
