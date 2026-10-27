@@ -379,7 +379,7 @@ function recoverNavigation(error){
 const pageEntranceLift=14;
 // The Lab is the home page's cards under its own grid rules (Developer settings → Lab), whatever the home settings are.
 function labView(){return {layout:labSettings.layout,columns:labSettings.columns,productDisplay:'cards',featuredLarger:labSettings.featuredLarger};}
-function applyLabCardDetails(){document.documentElement.classList.toggle('lab-card-details-hidden',labMode&&!labSettings.cardDetails);}
+function applyLabCardDetails(){document.documentElement.classList.toggle('lab-card-details-hidden',labMode&&!labSettings.cardDetails);document.documentElement.classList.toggle('lab-grid-full',labMode&&labSettings.fullWidth);}
 function isRoute(route){return ['work','assistant','lab',...cardIds].includes(route);}
 function discardHomeScene(){if(!homeScene)return;homeScene.scene.galleries?.forEach(gallery=>gallery.destroy());homeScene.scene.dispose();homeScene.layout?.destroy();homeScene=null;}
 let labRipple=null;

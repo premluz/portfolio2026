@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Lab grid full width
+New Lab setting "grid full width" (off by default, saved and exported): the grid spans the app canvas less the gutters, capped by the app maximum (1920px), instead of the content rail. Evidence: headless browser at 1440, 1920 and 2560px: grid width with the option off (rail) and on (viewport less gutters, never above 1792px of 1920).
+
 ## 2026-10-27 Staggered header swap, tighter card copy
 The header swap is now staggered and slides like the old dock Back and arrows: avatar, then name, slide left and fade out, then Go Back, Previous, Next slide in from the right; leaving reverses it. Previous/Next no longer snap in from display:none. Card results now follow the title at regular line spacing (the 9.6px title-to-eyebrow margin is gone on cards). Evidence: headless browser frame timing: in 27, 87, 144, 209, 268ms; out 78, 139, 205, 269, 311ms; card title-to-results gap 0 beyond line height. tests/header-spacing.mjs updated.
 

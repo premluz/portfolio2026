@@ -14,3 +14,5 @@
 main.lab-canvas .homepage-layout>:not(.lab-heading,.home-work){display:none}
 .lab-heading{padding-top:var(--page-content-top);margin-bottom:var(--space-page-rhythm-md)}
 .lab-heading h1{margin:0;max-width:var(--measure-heading);font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink)}
+/* Lab: grid full width. Same breakout as a section set to "app": the app canvas (never wider than --app-max-width) less the gutters. */
+:root.lab-grid-full main.lab-canvas .gallery-grid{width:calc(var(--app-canvas-width) - 2 * var(--content-gutter));max-width:none;margin-inline:calc((100% - var(--app-canvas-width) + 2 * var(--content-gutter)) / 2)}

@@ -11,7 +11,7 @@ assert(/<a href="#lab" data-nav="lab">Lab/.test(index),'The Lab link is in the d
 assert(!index.includes('lab-transition.js'),'The page does not load the ripple separately; app.js imports it');
 assert(lab.includes("location.replace('./#lab')")&&lab.includes('url=./#lab')&&!lab.includes('app.js'),'lab.html only redirects to the in-app route');
 assert(app.includes("function labView(){return {layout:labSettings.layout,columns:labSettings.columns,productDisplay:'cards',featuredLarger:labSettings.featuredLarger};}"),'The Lab takes its grid from the Lab settings');
-for(const id of ['featuredLarger','labLayout','labColumns','labFeaturedLarger','labCardDetails'])assert(index.includes(`id="${id}"`),`The dev settings have ${id}`);
+for(const id of ['featuredLarger','labLayout','labColumns','labFeaturedLarger','labCardDetails','labFullWidth'])assert(index.includes(`id="${id}"`),`The dev settings have ${id}`);
 assert(app.includes("'route.lab':()=>activateRoute('lab')"),'The Lab has its own route command');
 assert(app.includes('if(ripple)void ripple.click();')&&app.includes('if(ripple&&LAB_RIPPLE.landing)void Promise.resolve(landing?.finished).then(()=>ripple.land());')&&!app.includes('await ripple'),'A short ring answers the click without delaying the transition, and the landing ring is behind LAB_RIPPLE.landing');
 assert.equal(LAB_RIPPLE.landing,false,'Only the click ring runs for now');
@@ -28,6 +28,7 @@ assert((await read('design-system.css')).includes('main .lab-heading .info-body 
 assert(labHeadingMarkup().startsWith('<section class="lab-heading" aria-labelledby="labTitle"><h1 id="labTitle" tabindex="-1">Experiments</h1>'),'The heading is a real page heading');
 assert(css.includes('main.lab-canvas .homepage-layout>:not(.lab-heading,.home-work){display:none}'),'The Lab shows only its heading and the grid, not the home hero or sections');
 assert(css.includes(':root.lab-card-details-hidden #main .gallery-grid .project-card>.visual{--image-padding-top:0px;--image-padding-bottom:0px;margin-block:0}'),'Images-only rows are one gap apart, like the columns');
+assert(css.includes(':root.lab-grid-full main.lab-canvas .gallery-grid{width:calc(var(--app-canvas-width) - 2 * var(--content-gutter));max-width:none;'),'Lab grid full width uses the app breakout, so it never exceeds the app maximum');
 assert(css.includes(':root.lab-card-details-hidden #main .gallery-grid[data-masonry-rhythm="true"]{grid-auto-rows:1px}')&&(await read('home-layout.js')).includes('const row=parseFloat(getComputedStyle(this.gallery).gridAutoRows)||8;'),'Images-only masonry rows are 1px, so no rounding gap is added');
 assert(app.includes("if(labMode)main.querySelector('.homepage-layout').insertAdjacentHTML('afterbegin',labHeadingMarkup());"),'The heading is placed above the grid');}
 console.log('Lab route passed: in-app route, four-column cards, dock and menu entries, command, legacy page redirect.');
