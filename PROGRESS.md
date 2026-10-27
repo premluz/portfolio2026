@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Plain navigation
+Added Settings → Navigation → Plain navigation (default off): the dock and the buttons lose their glass, borders, shadows and blur and read as text links, with the active page underlined; the composer is exempt. Evidence: tests/plain-nav.mjs passes; in a browser on desktop and phone the dock glass and outline were removed, links, the menu button, the launcher and the corner buttons were transparent, and the setting persisted across a reload. My dev server had loaded its stylesheet list before the new file existed, so the first check showed no effect until I restarted it (FACT-009).
+
 ## 2026-10-26 Phone carousel and spacing
 On a 390px phone the home carousel card was 239px wide: the saved Carousel size (70%, the minimum) scaled the card down. At 600px and below the size is now floored at full width, margins shrink (48px to 32px) and the card gap halves (48px to 24px), and the hero and overview gaps tighten. Measured in a mobile viewport: card 239px to 358px wide, carousel 77px higher. tests/mobile-carousel.mjs added. Desktop is unchanged.
 

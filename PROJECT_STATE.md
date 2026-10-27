@@ -33,6 +33,7 @@ A buildless native-module portfolio for Prem Luczak: authored HTML, CSS and ES m
 | Available badge (Content Home) | on | The hero status pill; switch it off there |
 | Strapline, At a glance (Content Home) | off | Hero additions |
 | Card details, Client above (Cards) | off | Status pill, gradient results and tag row; client on top in wide tracking |
+| Plain navigation (Navigation) | off | Dock and buttons as plain text links |
 | Navigation position | bottom | Top is a preview; see TASK-002 |
 | Ambient colour | automatic | Glow strength 100% |
 | Text size | Medium | Headings and body scale separately (ADR-006) |
