@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Plain cards
+Added Settings → Cards → Plain cards (default off). Measured first: with Card background off a card still showed the skin gradient, `.material-reflection` and `.image-edge` (the inner glow), so the existing switch was not enough. The new mode removes those layers, shadows, borders, blur, the hover-effect layer and the note-card panels while leaving images and layout alone. Evidence: tests/plain-cards.mjs passes; in a browser the three layers disappeared, the image stayed 323px wide, note cards and the detail card were plain, and no errors.
+
 ## 2026-10-27 Plain navigation
 Added Settings → Navigation → Plain navigation (default off): the dock and the buttons lose their glass, borders, shadows and blur and read as text links, with the active page underlined; the composer is exempt. Evidence: tests/plain-nav.mjs passes; in a browser on desktop and phone the dock glass and outline were removed, links, the menu button, the launcher and the corner buttons were transparent, and the setting persisted across a reload. My dev server had loaded its stylesheet list before the new file existed, so the first check showed no effect until I restarted it (FACT-009).
 
