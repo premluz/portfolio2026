@@ -1,4 +1,4 @@
-import {EASE} from './motion-tokens.js';
+import {EASE,LAB_RIPPLE} from './motion-tokens.js';
 import {applyDefaultSettings} from './default-settings.js';
 import {applyActiveSettings} from './site-settings.js';
 import {siteConfig} from './content/site-config-client.js';
@@ -308,8 +308,8 @@ async function simplePageTransition(route){
  busy=true;
  try{
   const leaving=current==='assistant'?$('#askPage'):main;
-  // The Lab answers the click with a short ring at once (never awaited, so it delays nothing), fades in like any
-  // page, and then lands with the full colour-split ripple (ADR-004).
+  // The Lab answers the click with a short ring at once (never awaited, so it delays nothing) and fades in like any
+  // page; the full landing ripple is off unless LAB_RIPPLE.landing is set (ADR-004).
   const ripple=!reduce.matches&&route==='lab'?(labRipple??=createLabRipple()):null;
   if(ripple)void ripple.click();
   let exit=null;
@@ -327,7 +327,7 @@ async function simplePageTransition(route){
   scrollPage(route==='work'?homeScroll:0);
   edgeShades.sync(cardIds.includes(route));if(ambientMovementEnabled())ambientLight.finishNavigation(null);
   const landing=fadeUpIn(route==='assistant'?$('#askPage'):main);
-  if(ripple)void Promise.resolve(landing?.finished).then(()=>ripple.land());
+  if(ripple&&LAB_RIPPLE.landing)void Promise.resolve(landing?.finished).then(()=>ripple.land());
   heroImageEntrance(main,{reduced:reduce.matches,duration});
   exit?.cancel();
  }finally{busy=false;globalThis.dispatchEvent?.(new Event('portfolio-route-settled'));}

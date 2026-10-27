@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Landing ripple switched off
+Only the instant click ring runs when choosing Lab; the second ring on landing is kept behind `LAB_RIPPLE.landing` (false). Evidence: tests/lab-page.mjs asserts the flag and the guarded call; headless browser showed the ring class only around the click.
+
 ## 2026-10-27 Lab ripple also answers the click
 Choosing Lab now starts a short ring (to the handoff point) instantly, not awaited, so the fade out and in are not delayed; the full ring still lands once the Lab has faded in. Evidence: headless browser sampled frames: ring class on from the click, page fade unchanged, second ring after the fade-in. Risk: with the slow-motion setting the two rings could overlap; the landing ring then replaces the first.
 
