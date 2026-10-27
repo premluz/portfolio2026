@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Lab heading in About's structure
+Removed the "Work in progress" eyebrow. The Lab heading is now About's structure, a title then `.info-body` text, sharing About's rules in about-page.css. Evidence: headless browser: Lab and About title and body text match in position, gap, size, weight, line height and colour.
+
 ## 2026-10-27 Lab as a content page
 The Lab no longer shows the home hero and home sections around its grid. It opens with its own heading like About and Contact: "Experiments", eyebrow "Work in progress", and "Prototypes, R&D and projects that never made it to market." (`lab-page.js`), then the card grid. Evidence: headless browser: heading at the shared content start, grid directly below, no hero or sections; Work unchanged after visiting the Lab. tests/lab-page.mjs extended.
 

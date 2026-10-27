@@ -21,7 +21,10 @@ assert(menu.indexOf("routeButton('work'")<menu.indexOf("routeButton('lab'")&&men
 assert(commandDefinitions.some(command=>command.id==='route.lab'),'The Lab command is in the command catalog');
 assert(menu.includes("routeButton('lab','Lab',icons.lab)"),'The site menu opens the Lab in-app');
 {const {LAB_HEADING,labHeadingMarkup}=await import('../dist/lab-page.js');const css=await read('lab.css');
-assert.deepEqual({...LAB_HEADING},{title:'Experiments',eyebrow:'Work in progress',summary:'Prototypes, R&D and projects that never made it to market.'},'The Lab is titled Experiments');
+assert.deepEqual({...LAB_HEADING},{title:'Experiments',summary:'Prototypes, R&D and projects that never made it to market.'},'The Lab is titled Experiments, with no eyebrow');
+assert(labHeadingMarkup().includes('</h1><div class="info-body"><p>Prototypes, R&amp;D and projects that never made it to market.</p></div>'),'The body text uses About\'s structure');
+const about=await read('about-page.css');assert(about.includes(':is(.about-hero-copy,.lab-heading) .info-body{')&&about.includes(':is(.about-hero-copy,.lab-heading) .info-body p{'),'The Lab shares About\'s body text rules');
+assert((await read('design-system.css')).includes('main .lab-heading .info-body p,'),'Its body text takes the shared body-text colour');
 assert(labHeadingMarkup().startsWith('<section class="lab-heading" aria-labelledby="labTitle"><h1 id="labTitle" tabindex="-1">Experiments</h1>'),'The heading is a real page heading');
 assert(css.includes('main.lab-canvas .homepage-layout>:not(.lab-heading,.home-work){display:none}'),'The Lab shows only its heading and the grid, not the home hero or sections');
 assert(app.includes("if(labMode)main.querySelector('.homepage-layout').insertAdjacentHTML('afterbegin',labHeadingMarkup());"),'The heading is placed above the grid');}

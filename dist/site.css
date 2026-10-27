@@ -1203,7 +1203,7 @@ html[data-animation="off"] .image-card[data-copy-hover="true"]:is(:hover,:focus-
 .surface.detail .description .detail-fact dt,.wide-hero-card .description .detail-fact dt{margin:0 0 var(--space-2)}
 
 /* Hero support and detail prose share one theme-responsive reading colour. */
-.hero-copy,.surface.detail>.project-summary,.surface.detail .description dd,.surface.detail .info-body p,.story p{color:var(--body-ink)}
+.hero-copy,.surface.detail>.project-summary,.surface.detail .description dd,.surface.detail .info-body p,main .lab-heading .info-body p,.story p{color:var(--body-ink)}
 .has-room{--body-ink:var(--ink)}
 
 /* Quiet metadata supports the reading hierarchy without competing with prose. */
@@ -1414,8 +1414,8 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 /* .about-highlight is a .text-gradient (design-system.css). */
 .about-hero{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-page-rhythm-sm);align-items:start}
 .about-hero-copy{min-width:0}
-.about-hero-copy .info-body{margin-top:var(--space-hero-heading-content);max-width:var(--measure-body)}
-.about-hero-copy .info-body p{margin:0 0 var(--space-6);color:var(--ink);line-height:var(--line-height-body)}
+:is(.about-hero-copy,.lab-heading) .info-body{margin-top:var(--space-hero-heading-content);max-width:var(--measure-body)}
+:is(.about-hero-copy,.lab-heading) .info-body p{margin:0 0 var(--space-6);color:var(--ink);line-height:var(--line-height-body)}
 .about-portrait,.about-unusual-media{margin:0;overflow:hidden;border-radius:var(--radius-visual)}
 .about-portrait img,.about-unusual-media img{display:block;width:100%;height:auto}
 /* The About page spans the dev-settings content width instead of the detail surface's inset. */
@@ -2236,12 +2236,11 @@ a.ask-fit-source:is(:hover,:focus-visible){color:var(--ink);text-decoration-colo
 :root.lab-arriving{--page-boot-fade:140ms}
 /* Lab with "Show card details" off: an images-only grid. */
 :root.lab-card-details-hidden #main .gallery-grid .card-copy{display:none}
-/* The Lab is a content page: its own heading, then the card grid, without the home hero or home sections. */
+/* The Lab is a content page: its own heading, then the card grid, without the home hero or home sections.
+   Its body text shares About's rules in about-page.css. */
 main.lab-canvas .homepage-layout>:not(.lab-heading,.home-work){display:none}
 .lab-heading{padding-top:var(--page-content-top);margin-bottom:var(--space-page-rhythm-md)}
 .lab-heading h1{margin:0;max-width:var(--measure-heading);font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink)}
-.lab-heading .eyebrow{margin:var(--space-detail-heading) 0 0;color:var(--eyebrow-ink);font-weight:var(--eyebrow-weight);letter-spacing:var(--eyebrow-tracking)}
-.lab-heading .lab-summary{margin:var(--space-4) 0 0;max-width:var(--measure-body);color:var(--body-ink);font-size:var(--font-size-body);line-height:var(--line-height-body)}
 
 /* project-backdrop.css */
 /* Project detail backdrop (project-backdrop.js) and the Home "Featured stage" card backdrop. */

@@ -168,7 +168,7 @@ html[data-animation="off"] .image-card[data-copy-hover="true"]:is(:hover,:focus-
 .surface.detail .description .detail-fact dt,.wide-hero-card .description .detail-fact dt{margin:0 0 var(--space-2)}
 
 /* Hero support and detail prose share one theme-responsive reading colour. */
-.hero-copy,.surface.detail>.project-summary,.surface.detail .description dd,.surface.detail .info-body p,.story p{color:var(--body-ink)}
+.hero-copy,.surface.detail>.project-summary,.surface.detail .description dd,.surface.detail .info-body p,main .lab-heading .info-body p,.story p{color:var(--body-ink)}
 .has-room{--body-ink:var(--ink)}
 
 /* Quiet metadata supports the reading hierarchy without competing with prose. */
