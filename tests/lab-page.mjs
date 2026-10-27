@@ -1,14 +1,16 @@
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
+import {commandDefinitions} from '../dist/interaction-commands.js';
 
-// lab.html is a hand-kept copy of index.html, and app.js wires controls by id, so a control added to one
-// page but not the other crashes app start on that page. The two must expose the same ids.
-const ids=html=>new Set([...html.matchAll(/\sid="([^"]+)"/g)].map(match=>match[1]));
-const [index,lab]=await Promise.all(['index.html','lab.html'].map(file=>readFile(new URL('../dist/'+file,import.meta.url),'utf8')));
-const indexIds=ids(index),labIds=ids(lab);
-assert.deepEqual([...indexIds].filter(id=>!labIds.has(id)),[],'lab.html has every id index.html has');
-assert.deepEqual([...labIds].filter(id=>!indexIds.has(id)),[],'lab.html adds no ids of its own');
-assert(lab.includes('data-page-product-display="cards"')&&lab.includes('data-lab-page'),'lab.html keeps its page attributes');
-assert(lab.includes('data-page-columns="4"')&&lab.includes('data-page-layout="regular"'),'The Lab shows four even columns of the same cards');
-assert(/<a href="lab.html" data-lab-transition="enter">Lab/.test(index),'The Lab link is visible in the home dock');
-console.log('Lab page passed: same control ids as the home page, own page attributes kept.');
+// The Lab is an in-app route (#lab), not a second HTML page: the home page's cards as an even four-column grid.
+// lab.html remains only so old links keep working.
+const read=file=>readFile(new URL('../dist/'+file,import.meta.url),'utf8');
+const [index,lab,app,menu]=await Promise.all(['index.html','lab.html','app.js','project-menu.js'].map(read));
+assert(/<a href="#lab" data-nav="lab">Lab/.test(index),'The Lab link is in the dock and is an in-app route');
+assert(!index.includes('lab-transition.js'),'The page does not load the ripple separately; app.js imports it');
+assert(lab.includes("location.replace('./#lab')")&&lab.includes('url=./#lab')&&!lab.includes('app.js'),'lab.html only redirects to the in-app route');
+assert(app.includes("const LAB_VIEW=Object.freeze({layout:'regular',columns:4,productDisplay:'cards'});"),'The Lab shows four even columns of the cards');
+assert(app.includes("'route.lab':()=>activateRoute('lab')"),'The Lab has its own route command');
+assert(commandDefinitions.some(command=>command.id==='route.lab'),'The Lab command is in the command catalog');
+assert(menu.includes("routeButton('lab','Lab',icons.lab)"),'The site menu opens the Lab in-app');
+console.log('Lab route passed: in-app route, four-column cards, dock and menu entries, command, legacy page redirect.');

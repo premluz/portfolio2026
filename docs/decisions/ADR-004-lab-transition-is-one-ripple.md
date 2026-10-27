@@ -15,4 +15,4 @@ related: [FRAMEWORK.md, MOTION.md, REQ-006]
 
 **Decision.** One ring expands from the click point, displacing the red, green and blue channels by slightly different amounts so the fringe appears only on the ring. The page changes at 42% of the ring's travel and the destination resumes it from the stored origin and progress. It is an SVG filter over the live page; the ring's displacement map is drawn once on a canvas.
 
-**Consequences.** No lingering distortion and no cursor reaction. Reduced motion navigates directly. The Lab links are currently hidden but kept (see [PROJECT_STATE.md](../../PROJECT_STATE.md)).
+**Consequences.** No lingering distortion and no cursor reaction. Reduced motion navigates directly. The Lab links are visible and the Lab is an in-app route, so the ripple plays over the route swap rather than across a page load ([ADR-011](ADR-011-the-lab-is-an-in-app-route.md)).

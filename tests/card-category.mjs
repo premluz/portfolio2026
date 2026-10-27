@@ -6,7 +6,7 @@ import {DEFAULT_STORAGE_VALUES} from '../dist/default-settings.js';
 const read=file=>fs.readFileSync(new URL(`../${file}`,import.meta.url),'utf8');
 const KEY='prem-card-show-category';
 
-for(const page of ['dist/index.html','dist/lab.html'])assert.match(read(page),/<input id="cardShowCategory" type="checkbox">/,`${page} has the category switch, unchecked`);
+assert.match(read('dist/index.html'),/<input id="cardShowCategory" type="checkbox">/,'The page has the category switch, unchecked');
 assert.match(read('dist/settings-transfer.js'),new RegExp(`cardShowCategory:'${KEY}'`),'The switch is exported with the other settings');
 assert.equal(DEFAULT_STORAGE_VALUES[KEY],'false','The switch starts off');
 

@@ -17,7 +17,7 @@ setAssistantFloating(page,false);assert(!classes.has('assistant-floating')&&page
 assert.equal(readAssistantPresentation(memory({'prem-assistant-presentation':'sidebar'})),'sidebar','Sidebar is a saved presentation');
 setAssistantFloating(page,true,'sidebar');assert(classes.has('assistant-floating')&&classes.has('assistant-sidebar'),'The sidebar variant is the floating conversation docked right');
 setAssistantFloating(page,false,'sidebar');assert(!classes.has('assistant-sidebar')&&!classes.has('assistant-floating'),'Closing removes the sidebar');
-for(const file of ['dist/index.html','dist/lab.html'])assert((await readFile(new URL('../'+file,import.meta.url),'utf8')).includes('<option value="sidebar">Sidebar</option>'),file+' offers the Sidebar presentation');
+for(const file of ['dist/index.html'])assert((await readFile(new URL('../'+file,import.meta.url),'utf8')).includes('<option value="sidebar">Sidebar</option>'),file+' offers the Sidebar presentation');
 const dockMorphSource=await readFile(new URL('../dist/dock-morph.js',import.meta.url),'utf8');
 assert(dockMorphSource.includes("getPropertyValue('--composer-max-width')"),'The dock takes its composer width cap from the token, so the sidebar can narrow it');
 

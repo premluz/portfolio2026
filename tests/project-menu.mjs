@@ -5,7 +5,7 @@ import {projectMenuMarkup} from '../dist/project-menu.js';
 const html=projectMenuMarkup(projects,'rios');
 assert.equal((html.match(/<section /g)||[]).length,2,'Shipped and Lab remain semantic groups without headings.');
 assert(!html.includes('<h2'),'Group headings are hidden for now.');
-assert.equal((html.match(/data-page-menu-item=/g)||[]).length,2,'Home and About retain their page routes.');
+assert.equal((html.match(/data-page-menu-item=/g)||[]).length,3,'Home, About and Lab are in-app page routes.');
 assert.equal((html.match(/data-project-menu-item=/g)||[]).length,projects.length,'Every route remains selectable once');
 assert(!/<small|project-menu-index/.test(html),'Rows have no number or status badge');
 assert(html.includes('project-menu-actions'),'Icon actions appear at the bottom');

@@ -39,7 +39,7 @@ A buildless native-module portfolio for Prem Luczak: authored HTML, CSS and ES m
 | Ambient colour | automatic | Glow strength 100% |
 | Text size | Medium | Headings and body scale separately (ADR-006) |
 | Composer attach button | hidden | In the code, not removed |
-| Lab links (dock, site menu) | visible | Lab page = four-column grid of the home cards |
+| Lab (dock, site menu) | visible | In-app route `#lab`: four-column grid of the home cards, ripple transition (ADR-011) |
 
 ## Tests
 
@@ -64,7 +64,7 @@ Yes, as a pill above the client, through Card details on cards ([ADR-008](docs/d
 - Status: answered
 - Tags: area/lab
 
-Linked from the dock and the site menu since 2026-10-27, as a four-column grid of the same cards (REQ-006).
+Linked from the dock and the site menu since 2026-10-27, as the in-app route `#lab`: a four-column grid of the same cards, entered through the ripple (REQ-006, ADR-011).
 
 ### Q-003 Should the Available badge move next to the name in the header?
 - Status: answered

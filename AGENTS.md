@@ -33,7 +33,7 @@ This file is the single set of instructions for every agent. `CLAUDE.md` imports
 - **Two content sets.** `catalog.json` and `catalog2.json` are both validated. Keep shared ids and asset files consistent in both; one invalid value or missing file stops the whole content build.
 - **Images and media.** Originals go in `dist/assets/`; see [MEDIA_ASSETS.md](MEDIA_ASSETS.md). Backdrops are assets whose id ends in `-bg`. Commit generated copies with their originals.
 - **Tokens.** Use `tokens.css` variables and `motion-tokens.js` roles; no literal colours, easing curves or sizes where a token exists, and no inline style objects in markup. A CSS twin of a JavaScript value needs a test (see `tests/motion-tokens.mjs`).
-- **Pages stay in step.** `lab.html` must expose the same element ids as `dist/index.html`; `tests/lab-page.mjs` checks it. Edit both when adding a control.
+- **One page.** `dist/index.html` is the only page; the Lab is the in-app route `#lab` (ADR-011) and `lab.html` just redirects, so a new control goes in `index.html` only.
 - **New behaviour starts off** behind a setting (ADR-005) and is persisted and exported with the other settings (`default-settings.js`, `settings-transfer.js`).
 - **Committing.** Stage only your own work; if the owner has unfinished changes in the same file, build the staged version from HEAD plus your lines, and regenerate generated files (`dist/site.css`) from committed sources rather than hunk-staging them. Verify in a clean `git worktree` of HEAD ([FACT-008](docs/FACTS.md)).
 - **Minimal diffs.** Change what the task needs. Report other problems you notice; do not fix them unasked. Hide rather than delete.

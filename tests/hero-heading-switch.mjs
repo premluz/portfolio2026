@@ -12,5 +12,5 @@ const read=name=>readFile(new URL('../dist/'+name,import.meta.url),'utf8');
 const sections=await read('home-sections.css'),design=await read('design-system.css');
 assert(sections.includes('[data-home-section][hidden]:not(.home-view-split [data-home-section="heading"])'),'The important hidden rule exempts the heading in split views');
 assert(design.includes('.home-view-split .hero-about h1[hidden]{display:block}'),'Split views restore a hidden heading');
-for(const page of ['index.html','lab.html'])assert((await read(page)).includes('data-home-section-control="heading" checked'),`${page} has the switch`);
+assert((await read('index.html')).includes('data-home-section-control="heading" checked'),'The page has the switch');
 console.log('Hero heading switch passed: default on, section hook, split layouts exempt, switch on both pages.');

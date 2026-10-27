@@ -42,7 +42,7 @@ related: [FRAMEWORK.md, MOTION.md, CONTENT_MODEL.md]
 
 ## REQ-006 Entering or leaving the Lab sends one colour-split ripple across the page
 - Status: implemented
-- Verifies: manual: ring crossed the page change and cleared in under a second in both directions (the Lab links were hidden then and are visible since 2026-10-27), 2026-10-24
+- Verifies: manual: ring crossed the page change and cleared in under a second in both directions (the Lab links were hidden then and are visible since 2026-10-27, and the ripple now plays over the in-app Lab route, ADR-011), 2026-10-24
 - Tags: area/lab, area/motion
 - Related: ADR-004
 
@@ -69,8 +69,8 @@ related: [FRAMEWORK.md, MOTION.md, CONTENT_MODEL.md]
 - Tags: area/dock, area/tests
 
 ## REQ-011 The home and Lab pages expose the same controls
-- Status: implemented
-- Verifies: tests/lab-page.mjs
+- Status: dropped
+- Verifies: manual: dropped 2026-10-27, the Lab is an in-app route with no second page to keep in step (ADR-011)
 - Tags: area/lab, area/settings
 
 ## REQ-012 Home images are ready before the page fades back in under simple transitions

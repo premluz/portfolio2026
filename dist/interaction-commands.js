@@ -15,6 +15,7 @@ export const commandDefinitions = Object.freeze([
   {id:'project.previous',label:'Previous project',phrases:['previous','previous project','prev','left','go left','move left'],scope:'project'},
   {id:'route.work',label:'All work',phrases:['work','all work','home','open work'],scope:'site'},
   {id:'route.about',label:'About',phrases:['about','open about'],scope:'site'},
+  {id:'route.lab',label:'Lab',phrases:['lab','open lab'],scope:'site'},
   {id:'route.contact',label:'Contact',phrases:['contact','open contact'],scope:'site'},
   {id:'route.assistant',label:'Chat',phrases:['chat','open chat','assistant','open assistant','ask about the work'],scope:'site'},
   {id:'assistant.ask',label:'Ask the assistant',phrases:[],scope:'site'},

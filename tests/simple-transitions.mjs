@@ -18,5 +18,5 @@ const html=await readFile(new URL('../dist/index.html',import.meta.url),'utf8'),
 assert(html.includes('id="simpleTransitions"')&&html.includes('id="simpleTransitionsSkipExit"'),'Both options are in the dev panel');
 assert(transfer.includes("simpleTransitions:'prem-simple-transitions'")&&transfer.includes("simpleTransitionsSkipExit:'prem-simple-transitions-skip-exit'"),'Both options export, import and publish with other settings');
 assert(app.includes('if(!reduce.matches&&!simpleTransitions.skipExit){'),'The exit fade is skipped when the option is on');
-assert(app.includes('if(simpleTransitions.enabled){await simplePageTransition(route);return;}'),'Every route change takes the simple transition when on');
+assert(app.includes("if(simpleTransitions.enabled||route==='lab'||labMode){await simplePageTransition(route);return;}"),'Every route change takes the simple transition when on, and the Lab always does');
 console.log('Simple transitions passed: default, persistence, blocked storage, panel control, settings export and routing.');

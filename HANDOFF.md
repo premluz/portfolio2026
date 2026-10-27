@@ -64,7 +64,7 @@ The live list is in [TASKS.md](TASKS.md) and [PROJECT_STATE.md](PROJECT_STATE.md
 - **Failing tests.** Six tests assert catalog contents that have since changed (`content-model`, `home-about`, `home-layout`, `home-sections`, `interaction-commands`, `project-media-focus`). `project-entry-memory` (card-sphere code reads `document` in a Node sandbox) and `text-list-hover` (a Porter fixture assertion) relate to in-progress card-sphere work. `masonry-placement` fails because Bastion is now a portrait card and also featured, which breaks the rule that portrait cards sit in the right-hand columns of a 3+ column grid.
 - **Navigation at the top.** The dock's attached menus still open upward, so the site index menu is mostly off screen; see `FRAMEWORK.md`.
 - **Bastion media.** `bastion.mp4` (portrait) is about 31MB against roughly 2MB for the other videos. `catalog2.json` still points Bastion at the landscape `bastion2.mp4`.
-- **Hidden controls.** The composer's attach button is hidden, not removed; see `FRAMEWORK.md`. The Lab links are visible again and the Lab page shows a four-column card grid.
+- **Hidden controls.** The composer's attach button is hidden, not removed; see `FRAMEWORK.md`. The Lab is the in-app route `#lab` (four-column cards, ripple transition; ADR-011); `lab.html` only redirects.
 - **Duplicate docs.** The parent folder holds older copies of `README.md` and `DEPLOYMENT.md` that differ from the ones in `portfolio2026/`. The `portfolio2026/` copies are current.
 
 ## Handoff checklist

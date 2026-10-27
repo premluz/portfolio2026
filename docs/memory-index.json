@@ -19,7 +19,7 @@
         "TASKS.md",
         "docs/CONSTITUTION.md"
       ],
-      "hash": "745cbb1cb361e7555b5a7ab8b4271c803231e43d",
+      "hash": "bffe56a8570956ddb933078b7f1fba7a8210d2ae",
       "items": []
     },
     {
@@ -161,7 +161,7 @@
         "MOTION.md",
         "DESIGN_SYSTEM.md"
       ],
-      "hash": "3c144783d89954466c82f601c5d94274cc24f687",
+      "hash": "e883b801a20a9eea7be19802904ca60ed3d7961e",
       "items": []
     },
     {
@@ -180,7 +180,7 @@
         "PROJECT_STATE.md",
         "DEPLOYMENT.md"
       ],
-      "hash": "fdb638f8f71d1180bcece6e808b3f474d37f5a90",
+      "hash": "a2b330223a4344be124ca58bfa184bb880789003",
       "items": []
     },
     {
@@ -253,7 +253,7 @@
         "TASKS.md",
         "PROJECT_STATE.md"
       ],
-      "hash": "13fd9a12f5f5607f3685ca7658718d79fecbe137",
+      "hash": "bef62209659e3d12ed47a6a50ed8fb7207813c00",
       "items": []
     },
     {
@@ -273,7 +273,7 @@
         "PROGRESS.md",
         "HANDOFF.md"
       ],
-      "hash": "a7829ba3ab83151df52a941db926194d3053e36e",
+      "hash": "feefe098d3466457967d64c9d22a69dc21606dc6",
       "items": [
         {
           "id": "Q-001",
@@ -665,7 +665,7 @@
         "MOTION.md",
         "CONTENT_MODEL.md"
       ],
-      "hash": "04bd48646bdd26dc622bffc1ea45845a4bb9f9ae",
+      "hash": "9981dc30e6c70e94e644760da8e54b47cdf7b94a",
       "items": [
         {
           "id": "REQ-001",
@@ -757,7 +757,7 @@
         {
           "id": "REQ-011",
           "title": "The home and Lab pages expose the same controls",
-          "status": "implemented",
+          "status": "dropped",
           "tags": [
             "area/lab",
             "area/settings"
@@ -889,7 +889,7 @@
         "MOTION.md",
         "REQ-006"
       ],
-      "hash": "cc076faa347a03bd628bdf05f04b80ece7dfb615",
+      "hash": "2dbaff4d5befe42fbd1bb78f0975cd339f277376",
       "items": []
     },
     {
@@ -1014,6 +1014,28 @@
         "FRAMEWORK.md"
       ],
       "hash": "9da7cf324c99fbd4fcb654b67b7d38f40a97ca41",
+      "items": []
+    },
+    {
+      "path": "docs/decisions/ADR-011-the-lab-is-an-in-app-route.md",
+      "id": "ADR-011",
+      "title": "The Lab is an in-app route, not a second HTML page",
+      "type": "decision",
+      "status": "accepted",
+      "updated": "2026-10-27",
+      "summary": "The Lab is #lab inside the single-page app (the home cards as four even columns), entered through the ripple; lab.html only redirects.",
+      "tags": [
+        "area/lab",
+        "area/home",
+        "kind/decision"
+      ],
+      "related": [
+        "ADR-004",
+        "REQ-006",
+        "REQ-011",
+        "FRAMEWORK.md"
+      ],
+      "hash": "cfaef32a1654b2d0bc695de7c8bf336deaa9e02f",
       "items": []
     }
   ]
