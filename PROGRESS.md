@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Article reading column
+Blog articles now span the content page width with text in a centred 600px reading column (`--content-width-reading`), and a new Article images setting (Text width default, or Page width) decides whether images and video match the text or span the page. Evidence: headless browser with the About / content page width at Extra small: article 960px, paragraphs 600px centred; an injected image section was 600px, then 960px with Page width; tests/content-widths.mjs extended. Risk: no article has images yet, so Page width was checked with an injected block.
+
 ## 2026-10-27 Extra small page width
 Added Extra small · 960px to the Home, About / content page and Project details width dropdowns (`CONTENT_WIDTHS.xsmall`, CSS twin `--content-width-xs`). Blog articles were 66ch wide (543px at 1440px), so they now read at the 960px width. Evidence: tests/content-widths.mjs covers the rail, the CSS twin, the article rule and the three options; headless browser measured the article and the Extra small rail.
 

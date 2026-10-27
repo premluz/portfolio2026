@@ -1,6 +1,9 @@
 /* Articles: one readable column built from the reading tokens, not the card grid used by information pages. */
-/* A blog article reads at the Extra small page width. */
-.article-detail .article{max-width:var(--content-width-xs);margin-inline:auto}
+/* A blog article spans the page width; its text sits in a centred reading column so lines stay short.
+   Images and video take the reading column or, with the Article images setting on Page width, the whole page. */
+.article-detail .article{max-width:none}
+.article-header,.article-section,.article-sources{max-width:var(--content-width-reading);margin-inline:auto}
+:root[data-article-images="page"] .article-section:is([data-block-type="image"],[data-block-type="video"]){max-width:none}
 .article-header{margin-bottom:var(--space-page-rhythm-md)}
 .article-header .article-meta{margin:0 0 var(--space-4);color:var(--eyebrow-ink)}
 .article-header h1{margin:0}

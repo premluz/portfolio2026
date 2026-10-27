@@ -222,6 +222,9 @@ let wideHero=true;try{wideHero=localStorage.getItem('prem-wide-hero')!=='false';
 // Off by default: a project's backdrop photo behind its detail page, and the Home featured stage.
 const readFlag=key=>{try{return localStorage.getItem(key)==='true';}catch(error){console.warn('Preference '+key+' unreadable; using off',error);return false;}};
 const saveFlag=(key,value)=>{try{localStorage.setItem(key,String(value));}catch(error){console.warn('Preference '+key+' not saved',error);}};
+// Article images sit in the reading column or span the page; the root attribute drives article.css.
+let articleImages='text';try{articleImages=localStorage.getItem('prem-article-images')==='page'?'page':'text';}catch(error){console.warn('Article images preference unreadable; using the text width',error);}
+document.documentElement.dataset.articleImages=articleImages;$('#articleImages').value=articleImages;$('#articleImages').onchange=e=>{articleImages=e.target.value==='page'?'page':'text';document.documentElement.dataset.articleImages=articleImages;try{localStorage.setItem('prem-article-images',articleImages);}catch(error){console.warn('Article images preference not saved',error);}};
 let contentStartFirst=readFlag('prem-content-start-first');document.documentElement.classList.toggle('content-start-first',contentStartFirst);
 $('#contentStartFirst').checked=contentStartFirst;$('#contentStartFirst').onchange=e=>{contentStartFirst=e.target.checked;document.documentElement.classList.toggle('content-start-first',contentStartFirst);saveFlag('prem-content-start-first',contentStartFirst);};
 let projectBackdropEnabled=readFlag('prem-project-backdrop'),featureStage=readFlag('prem-feature-stage');
