@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Quieter menu links
+Idle menu links and the current page both dropped a step in tone (new tokens `--nav-link-ink`, `--nav-link-active-ink`), in the glass menu and Plain navigation; hover is unchanged. Evidence: computed lightness in the browser, dark theme: idle 0.58, current 0.80, hover and hover-on-current 0.94, in both menu styles. tests/header-spacing.mjs extended.
+
 ## 2026-10-27 Quieter role line
 "Product designer & builder" under the name now uses the eyebrow tone instead of the muted text tone, so it sits one step quieter than "Prem Luczak". Evidence: computed colours compared in the browser (dark theme).
 

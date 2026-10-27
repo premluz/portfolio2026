@@ -48,6 +48,9 @@
   /* Navigation follows the eyebrow hierarchy: quiet at rest, a small
      tonal lift on hover, and a slightly denser selected surface. */
   --nav-item-ink: var(--eyebrow-ink);
+  /* Menu links: the idle link and the current page both sit a step quieter than before; hover still goes to full ink. */
+  --nav-link-ink: oklch(.68 .006 304);
+  --nav-link-active-ink: var(--muted);
   --nav-active: oklch(0.25543328 0.01903326 298.77205 / 0.065);
   --nav-item-hover: oklch(0.25543328 0.01903326 298.77205 / 0.025);
   --nav-hover-in-duration: 70ms;
@@ -317,6 +320,8 @@
   --nav-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.035);
   --nav-shadow: oklch(0.00000000 0.00000000 0.00000 / 0.18);
   --nav-item-ink: var(--eyebrow-ink);
+  --nav-link-ink: oklch(.58 .01 300);
+  --nav-link-active-ink: var(--muted);
   --nav-active: oklch(0.99999999 0.00000004 0.00000 / 0.08);
   --nav-item-hover: oklch(0.99999999 0.00000004 0.00000 / 0.025);
   --glass-rgb: 13, 13, 15;

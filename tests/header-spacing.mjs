@@ -37,4 +37,8 @@ assert(tokens.includes('--header-swap-duration: 240ms;')&&tokens.includes('--hea
 assert(design.includes('#dock nav a{display:inline-flex;align-items:center;box-sizing:border-box;height:var(--nav-icon-size);font-size:var(--font-size-body);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);'),'Menu links are body text, like the name in the header');}
 assert(design.includes('.project-card .project-summary,.surface.detail>.project-summary{max-width:58ch;margin:0;'),'A card\'s results line follows its title at regular line spacing');
 assert(design.includes('.brand-role{color:var(--eyebrow-ink)}'),'The role under the name is quieter than the name');
+{const plainCss=await read('plain-nav.css');
+assert(tokens.includes('--nav-link-ink: oklch(.58 .01 300);')&&tokens.includes('--nav-link-ink: oklch(.68 .006 304);')&&tokens.includes('--nav-link-active-ink: var(--muted);'),'Menu links have their own quieter idle and current tones, in both themes');
+assert(design.includes('.dock-morph nav a:not(.active){color:var(--nav-link-ink)}')&&design.includes('.dock-morph nav a.active{background:var(--nav-active);color:var(--nav-link-active-ink)}')&&design.includes('.dock-morph nav a.active:is(:hover,:focus-visible,.hover-trail){color:var(--ink)}'),'Glass menu: idle and current are quieter, hover (even on the current page) is unchanged');
+assert(plainCss.includes('nav a.active{color:var(--nav-link-active-ink)!important;')&&plainCss.includes('nav a.active:is(:hover,:focus-visible){color:var(--ink)!important}'),'Plain menu: the same, with the underline on the current page');}
 console.log('Header spacing passed: one offset token for header, nav and hero, role under the name, empty-hero centring scoped and header-aware.');

@@ -206,7 +206,9 @@ html[data-animation="off"] .image-card[data-copy-hover="true"]:is(:hover,:focus-
    slightly denser semantic surface from the active token. */
 .dock-morph nav a,.dock-morph .context-nav button,.dock-morph nav .site-settings-toggle,#settingsToggle{color:var(--nav-item-ink)}
 .dock-morph nav a{font-size:var(--font-size-caption);font-weight:var(--eyebrow-weight);line-height:var(--line-height-label);letter-spacing:var(--eyebrow-tracking)}
-.dock-morph nav a.active{background:var(--nav-active);color:var(--ink)}
+.dock-morph nav a:not(.active){color:var(--nav-link-ink)}
+.dock-morph nav a.active{background:var(--nav-active);color:var(--nav-link-active-ink)}
+.dock-morph nav a.active:is(:hover,:focus-visible,.hover-trail){color:var(--ink)}
 .dock-morph .context-nav button:is(:hover,:focus-visible,.hover-trail){background:var(--nav-item-hover);color:var(--ink)}
 .dock-morph nav a:not(.active):is(:hover,:focus-visible,.hover-trail){background:var(--nav-item-hover);color:var(--ink)}
 .dock-morph nav .site-settings-toggle{font-size:var(--font-size-caption);font-weight:var(--eyebrow-weight);line-height:1;letter-spacing:var(--eyebrow-tracking)}

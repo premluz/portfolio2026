@@ -49,6 +49,9 @@
   /* Navigation follows the eyebrow hierarchy: quiet at rest, a small
      tonal lift on hover, and a slightly denser selected surface. */
   --nav-item-ink: var(--eyebrow-ink);
+  /* Menu links: the idle link and the current page both sit a step quieter than before; hover still goes to full ink. */
+  --nav-link-ink: oklch(.68 .006 304);
+  --nav-link-active-ink: var(--muted);
   --nav-active: oklch(0.25543328 0.01903326 298.77205 / 0.065);
   --nav-item-hover: oklch(0.25543328 0.01903326 298.77205 / 0.025);
   --nav-hover-in-duration: 70ms;
@@ -318,6 +321,8 @@
   --nav-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.035);
   --nav-shadow: oklch(0.00000000 0.00000000 0.00000 / 0.18);
   --nav-item-ink: var(--eyebrow-ink);
+  --nav-link-ink: oklch(.58 .01 300);
+  --nav-link-active-ink: var(--muted);
   --nav-active: oklch(0.99999999 0.00000004 0.00000 / 0.08);
   --nav-item-hover: oklch(0.99999999 0.00000004 0.00000 / 0.025);
   --glass-rgb: 13, 13, 15;
@@ -1255,7 +1260,9 @@ html[data-animation="off"] .image-card[data-copy-hover="true"]:is(:hover,:focus-
    slightly denser semantic surface from the active token. */
 .dock-morph nav a,.dock-morph .context-nav button,.dock-morph nav .site-settings-toggle,#settingsToggle{color:var(--nav-item-ink)}
 .dock-morph nav a{font-size:var(--font-size-caption);font-weight:var(--eyebrow-weight);line-height:var(--line-height-label);letter-spacing:var(--eyebrow-tracking)}
-.dock-morph nav a.active{background:var(--nav-active);color:var(--ink)}
+.dock-morph nav a:not(.active){color:var(--nav-link-ink)}
+.dock-morph nav a.active{background:var(--nav-active);color:var(--nav-link-active-ink)}
+.dock-morph nav a.active:is(:hover,:focus-visible,.hover-trail){color:var(--ink)}
 .dock-morph .context-nav button:is(:hover,:focus-visible,.hover-trail){background:var(--nav-item-hover);color:var(--ink)}
 .dock-morph nav a:not(.active):is(:hover,:focus-visible,.hover-trail){background:var(--nav-item-hover);color:var(--ink)}
 .dock-morph nav .site-settings-toggle{font-size:var(--font-size-caption);font-weight:var(--eyebrow-weight);line-height:1;letter-spacing:var(--eyebrow-tracking)}
@@ -2441,7 +2448,9 @@ body.card-details.card-description-hidden .project-card.image-card>.card-copy>.c
 :root[data-plain-nav="on"] #dock:not(.is-composer) :is(.dock-glass,.dock-outline,.composer-aura-viewport){display:none!important}
 :root[data-plain-nav="on"] :is(#dock:not(.is-composer) :is(nav a,.context-nav button,.project-menu-toggle,.assistant-back,.assistant-launcher),#dock:not(.is-composer)>.assistant-launcher,.glass-utility-button,.detail-media-actions button,.card-rail-controls button,.spatial-gallery-controls button){background:none!important;box-shadow:none!important;border:0!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;color:var(--muted)}
 :root[data-plain-nav="on"] :is(#dock:not(.is-composer) :is(nav a,.context-nav button,.project-menu-toggle,.assistant-back,.assistant-launcher),.glass-utility-button,.detail-media-actions button,.card-rail-controls button,.spatial-gallery-controls button):is(:hover,:focus-visible){color:var(--ink)!important}
-:root[data-plain-nav="on"] #dock:not(.is-composer) nav a.active{color:var(--ink)!important;text-decoration:underline;text-underline-offset:.4em;text-decoration-thickness:1px}
+:root[data-plain-nav="on"] #dock:not(.is-composer) nav a:not(.active){color:var(--nav-link-ink)}
+:root[data-plain-nav="on"] #dock:not(.is-composer) nav a.active{color:var(--nav-link-active-ink)!important;text-decoration:underline;text-underline-offset:.4em;text-decoration-thickness:1px}
+:root[data-plain-nav="on"] #dock:not(.is-composer) nav a.active:is(:hover,:focus-visible){color:var(--ink)!important}
 
 /* plain-cards.css */
 /* Plain cards (Settings → Cards): strips card styling, leaving content only. The root carries data-plain-cards="on".
