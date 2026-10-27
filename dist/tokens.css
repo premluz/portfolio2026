@@ -230,6 +230,12 @@
   /* The stage photo settles slower than the card: it is the larger, calmer surface. */
   --stage-reveal-backdrop-duration: 1400ms;
   --brand-avatar-size: 40px;
+  /* Phone carousel (<=600px): side margins and the gap between cards, and the smallest card size the saved
+     Carousel size setting may produce there (1 = full width). Desktop keeps the saved setting. */
+  --gallery-mobile-inset-landscape: 32px;
+  --gallery-mobile-inset-portrait: 48px;
+  --gallery-mobile-gap: 24px;
+  --gallery-mobile-scale-floor: 1;
   /* Text gradient (.text-gradient): a quiet two-stop tint for phrases worth a little emphasis. */
   --text-gradient-from: oklch(.58 .13 295);
   --text-gradient-to: oklch(.62 .09 200);
@@ -328,6 +334,8 @@
 @media (max-width: 600px) {
   :root { --font-size-home-heading: clamp(calc(22px * var(--heading-scale)), calc(5.5vw * var(--heading-scale)), calc(30px * var(--heading-scale))); }
   :root { --card-gap: var(--card-gap-mobile); }
+  /* Tighter vertical rhythm on phones so the carousel starts higher. */
+  :root { --hero-gap: var(--space-6); --overview-column-gap: var(--space-4); }
 }
 
 /* Neutral cards keep their separation from the page in either theme. */

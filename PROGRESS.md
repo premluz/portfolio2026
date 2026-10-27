@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-26 Phone carousel and spacing
+On a 390px phone the home carousel card was 239px wide: the saved Carousel size (70%, the minimum) scaled the card down. At 600px and below the size is now floored at full width, margins shrink (48px to 32px) and the card gap halves (48px to 24px), and the hero and overview gaps tighten. Measured in a mobile viewport: card 239px to 358px wide, carousel 77px higher. tests/mobile-carousel.mjs added. Desktop is unchanged.
+
 ## 2026-10-26 At a glance type
 Owner asked to move the At a glance columns off mono: the three titles (Recently, Experience, Writing) are now `.text-eyebrow` and the items are ordinary sentence-case body text. Assumed "just titles" meant the titles become eyebrows; items back to mono is a one-class revert. Measured in a browser.
 
