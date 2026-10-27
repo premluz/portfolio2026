@@ -894,7 +894,7 @@ export const catalog={
           "id": "home-introduction",
           "type": "text",
           "label": "I make complex products feel simple.",
-          "title": " ",
+          "title": "  ",
           "paragraphs": []
         },
         {
@@ -908,7 +908,7 @@ export const catalog={
           "id": "home-description",
           "type": "text",
           "paragraphs": [
-            "For the last 10+ years, I’ve designed products for technical users and creators. Today, my focus is AI and genUI experiences. Recently built Rios, Porter & Bastion."
+            "10+ years  products for technical users and creators. Today, my focus is AI and genUI. Recently built Rios, Porter & Bastion."
           ]
         },
         {

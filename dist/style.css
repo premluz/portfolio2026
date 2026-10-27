@@ -493,6 +493,7 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 #dock .dock-content nav>.project-menu-toggle:is(:hover,:focus-visible,.hover-trail,[aria-expanded="true"]){background:var(--nav-item-hover);color:var(--ink);transition-duration:var(--nav-hover-in-duration)}
 #dock .dock-content nav>.project-menu-toggle svg{display:block;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 #dock.is-composer .dock-content nav>.project-menu-toggle{opacity:0;visibility:hidden;pointer-events:none}
+#dock .dock-content nav>.project-menu-toggle[hidden]{display:none}
 @media(max-width:600px){#dock{--nav-back-width:74px}#dock .dock-content nav>.project-menu-toggle{flex-basis:32px;width:32px;height:32px;padding:7px}}
 
 /* Developer controls are grouped by the feature they change. */

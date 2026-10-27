@@ -30,3 +30,14 @@ export const LAB_RIPPLE=Object.freeze({landing:false,durationMs:1400,handoff:.42
 // Backdrop: a once-per-page surface, so it may be richer. It arrives on `gentle` from a slightly larger
 // scale (a camera settling, not a zoom), leaves on the exit timing, and drifts behind the content with scroll.
 export const BACKDROP=Object.freeze({enterShare:2.2,enterScale:1.06,parallax:.08,parallaxMax:.08});
+// Character (MOTION.md → Character): the agent is a body, not content, so it alone may cross the screen and
+// overshoot its scale. Travel time grows with distance; far trips (a share of the viewport diagonal) teleport,
+// mid-range ones sometimes do, so the body never feels scripted. Exits (collapse) stay shorter than entrances.
+export const AGENT=Object.freeze({
+ travelMin:380,travelMax:900,travelPerPx:.45,arcMax:40,arcShare:.12,wobble:6,
+ teleportShare:.55,teleportMixShare:.3,teleportChance:.35,
+ collapseMs:200,teleportGapMs:80,emergeMs:520,landingMs:280,
+ emergeScale:[.6,1.14,.94,1.03,1],emergeBlur:6,collapseScale:[1,1.06,.5],collapseBlur:4,landingSquash:[1.06,.94],
+ // A visitor leaving is not a command to vanish: the body lingers, then goes home.
+ lingerMs:1200,snapPx:24,seatGap:12,bodyShare:.55
+});

@@ -260,6 +260,12 @@
   --note-card-radius: var(--radius-card);
   --note-card-fill: color-mix(in oklab, var(--ink) 1.5%, transparent);
   --note-card-media-width: 72%;
+  /* The agent (MOTION.md → Character): image size including its glow, and its slow idle breath. */
+  --agent-size: 72px;
+  --agent-layer: 166;
+  --agent-breathe-duration: 2400ms;
+  --agent-breathe-lift: 2px;
+  --agent-breathe-scale: 1.02;
   /* The same breathing room above the hero (from the header's content) and below it (to At a glance). */
   --hero-gap: var(--space-12);
   /* Navigation at the top sits centred in the header row. */

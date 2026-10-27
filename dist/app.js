@@ -17,6 +17,7 @@ import {CardRail,applySectionPresentation} from './card-rail.js';
 import {CardGallery} from './card-gallery.js';
 import {readCarouselSettings,mountCarouselSettings} from './carousel-settings.js';
 import {mountContextualPopovers} from './contextual-popovers.js';
+import {mountAgent} from './agent.js';
 import {ProjectMenuPreview} from './project-menu-preview.js';
 import {handleSiteIndexShortcut} from './menu-keyboard.js';
 import {ProjectMediaFocus} from './project-media-focus.js';
@@ -138,6 +139,7 @@ applyDockLiquid();
 $('#dockLiquidBlend').oninput=e=>{dockLiquidBlend=+e.target.value;applyDockLiquid();try{localStorage.setItem('prem-dock-liquid-blend',String(dockLiquidBlend));}catch{}};
 $('#dockLiquidPinch').oninput=e=>{dockLiquidPinch=+e.target.value;applyDockLiquid();try{localStorage.setItem('prem-dock-liquid-pinch',String(dockLiquidPinch));}catch{}};
 let voiceDock=null;
+let characterAssistant=true,characterButton=null;try{characterAssistant=localStorage.getItem('prem-character-assistant')!=='false';}catch(error){console.warn('Preference prem-character-assistant unreadable; using on',error);}
 let composerContext=null,contextualButtons=readContextualButtons(localStorage),splitProjectControls=false;try{splitProjectControls=localStorage.getItem('prem-split-project-controls')==='true';}catch{}
 // Stored as 'composer' (above the dock) or 'inline' (within the page) for older settings files.
 const contextualPlacement=()=>contextualButtons==='composer'?'above':'page';
@@ -245,10 +247,6 @@ document.documentElement.dataset.articleImages=articleImages;$('#articleImages')
 let featuredLarger=true;try{featuredLarger=localStorage.getItem('prem-featured-larger')!=='false';}catch(error){console.warn('Featured cards preference unreadable; using larger',error);}
 $('#featuredLarger').checked=featuredLarger;$('#featuredLarger').onchange=e=>{featuredLarger=e.target.checked;saveFlag('prem-featured-larger',featuredLarger);if(!labMode)homeLayout?.setFeaturedLarger(featuredLarger);};
 const labSettings=mountLabSettings($('#settings'),{onChange:()=>{if(labMode&&!busy)render('lab',{stream:false});}});
-// The chat page's own width: its default column, or one of the shared page widths.
-let chatWidth='default';try{const saved=localStorage.getItem('prem-chat-width');chatWidth=saved==='default'||Object.hasOwn(CONTENT_WIDTHS,saved)?saved:'default';}catch(error){console.warn('Chat width unreadable; using the default',error);}
-function applyChatWidth(){const root=document.documentElement;if(chatWidth==='default')root.style.removeProperty('--chat-width');else root.style.setProperty('--chat-width',CONTENT_WIDTHS[chatWidth]+'px');$('#chatWidth').value=chatWidth;}
-applyChatWidth();$('#chatWidth').onchange=e=>{chatWidth=e.target.value==='default'||Object.hasOwn(CONTENT_WIDTHS,e.target.value)?e.target.value:'default';applyChatWidth();try{localStorage.setItem('prem-chat-width',chatWidth);}catch(error){console.warn('Chat width not saved',error);}};
 let contentStartFirst=readFlag('prem-content-start-first');document.documentElement.classList.toggle('content-start-first',contentStartFirst);
 $('#contentStartFirst').checked=contentStartFirst;$('#contentStartFirst').onchange=e=>{contentStartFirst=e.target.checked;document.documentElement.classList.toggle('content-start-first',contentStartFirst);saveFlag('prem-content-start-first',contentStartFirst);};
 let projectBackdropEnabled=readFlag('prem-project-backdrop'),featureStage=readFlag('prem-feature-stage');
@@ -516,9 +514,17 @@ const assistantPresentation=mountAssistantPresentation($('#assistantPresentation
 // The sidebar pushes the page aside and takes the dock's composer to its foot; both are root-level states.
 const setAssistantSidebar=on=>{document.documentElement.classList.toggle('assistant-sidebar-open',on);$('#dock').classList.toggle('assistant-sidebar-dock',on);dockMorph.refresh();};
 function syncAssistantLauncher(){
- const shown=!contextualComposer;
- if(assistantLauncher.hidden===shown){assistantLauncher.hidden=!shown;dockMorph.refresh();}
- if(!shown)closeAssistantFloating({focus:false});
+ const available=!contextualComposer,character=available&&characterAssistant&&Boolean(characterButton),shown=available&&!character;
+ if(assistantLauncher.hidden===shown||projectMenuToggle.hidden!==character){assistantLauncher.hidden=!shown;projectMenuToggle.hidden=character;applyNavTypography();}
+ applyCharacterAssistant(character);
+ if(!available)closeAssistantFloating({focus:false});
+}
+// With the menu in the dock, the character stands in for the Assistant button and the index button steps aside.
+function applyCharacterAssistant(active){
+ if(!characterButton)return;
+ characterButton.classList.toggle('agent-assistant',active);
+ if(active){characterButton.setAttribute('role','button');characterButton.tabIndex=0;characterButton.setAttribute('aria-label','Open assistant');characterButton.removeAttribute('aria-hidden');}
+ else{characterButton.removeAttribute('role');characterButton.removeAttribute('tabindex');characterButton.removeAttribute('aria-label');characterButton.setAttribute('aria-hidden','true');}
 }
 function syncFloatingDock(){const options={duration:duration*(slow?2.5:1)};syncDockActions(current,options);syncDockComposer(options);}
 function openAssistantFloating(){
@@ -536,6 +542,7 @@ function closeAssistantFloating({focus=true}={}){
  assistantFloating=false;setAssistantFloating($('#askPage'),false);setAssistantSidebar(false);$('#dock').classList.remove('assistant-floating-open');void composerContext?.setBlocked(false);assistantLauncher.setAttribute('aria-expanded','false');
  portfolioAssistant.setActive(false);syncFloatingDock();
  if(focus&&!assistantLauncher.hidden)assistantLauncher.focus({preventScroll:true});
+ else if(focus&&characterButton?.classList.contains('agent-assistant'))characterButton.focus({preventScroll:true});
 }
 assistantLauncher.onclick=()=>{if(['floating','sidebar'].includes(assistantPresentation.value))openAssistantFloating();else dispatchCommand({id:'route.assistant',source:'pointer'});};
 $('#assistantMaximize').onclick=()=>{closeAssistantFloating({focus:false});dispatchCommand({id:'route.assistant',source:'pointer'});};
@@ -657,6 +664,11 @@ $('#splitProjectControls').checked=splitProjectControls;$('#splitProjectControls
 $('#contextualButtons').value=contextualButtons;$('#contextualButtons').onchange=e=>{if(busy){e.target.value=contextualButtons;return;}contextualButtons=e.target.value==='composer'?'composer':'inline';composerContext.setPlacement(contextualPlacement());syncDockActions(current,{duration:duration*(slow?2.5:1)});syncDockComposer({duration:duration*(slow?2.5:1)});try{localStorage.setItem('prem-contextual-buttons',contextualButtons);}catch{}};
 portfolioAssistant.setComposerGlowEnabled(showComposerGlow);$('#showComposerGlow').checked=showComposerGlow;$('#showComposerGlow').onchange=e=>{showComposerGlow=e.target.checked;portfolioAssistant.setComposerGlowEnabled(showComposerGlow);try{localStorage.setItem('prem-composer-glow',String(showComposerGlow));}catch{}};
 mountContextualPopovers({reduced:()=>reduce.matches,onRoute:id=>dispatchCommand({id:'project.open',target:id,source:'pointer'})});
+mountAgent({reduced:()=>reduce.matches});
+characterButton=document.querySelector('.agent');
+if(characterButton){characterButton.addEventListener('click',()=>{if(characterButton.classList.contains('agent-assistant'))assistantLauncher.onclick();});characterButton.addEventListener('keydown',event=>{if(!characterButton.classList.contains('agent-assistant')||!['Enter',' '].includes(event.key))return;event.preventDefault();assistantLauncher.onclick();});}
+$('#characterAssistant').checked=characterAssistant;$('#characterAssistant').onchange=e=>{characterAssistant=e.target.checked;saveFlag('prem-character-assistant',characterAssistant);syncAssistantLauncher();};
+syncAssistantLauncher();
 installTooltips();
 const animationButton=$('#animationPreference');
 $('#contextualComposerPreference').onclick=()=>{contextualComposer=!contextualComposer;applyDockPreferences();composerContext?.setMode(contextualComposer?'composer':'inline');try{localStorage.setItem('prem-contextual-composer',String(contextualComposer));}catch{}syncDockComposer({duration:duration*(slow?2.5:1)});};

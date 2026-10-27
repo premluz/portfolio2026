@@ -30,7 +30,9 @@ assert(app.includes("const composerShown=route=>route==='assistant'&&!inlineChat
 assert(app.includes("const inlineChat=route=>route==='assistant'&&chatInlineComposer&&!contextualComposer;"),'In menu-dock mode the chat page keeps the menu and puts the composer in the page');
 assert(html.includes('<div class="assistant-inline-composer" id="assistantInlineComposer" hidden></div>')&&html.includes('<div class="assistant-mascot" id="assistantMascot" aria-hidden="true" hidden></div>'),'The chat page has a composer slot and a mascot stage');
 assert(!/current==='assistant'\|\|contextualComposer\|\|contextualButtons==='composer'/.test(app),'No copies of the old rule remain');
-assert(app.includes("const shown=!contextualComposer;"),'The button appears only when the menu fills the dock');
+assert(app.includes("const available=!contextualComposer,character=available&&characterAssistant&&Boolean(characterButton),shown=available&&!character;"),'The button appears only when the menu fills the dock, unless the character stands in for it');
+assert(app.includes("projectMenuToggle.hidden=character;"),'The index button steps aside while the character is the assistant');
+assert(app.includes("if(characterButton.classList.contains('agent-assistant'))assistantLauncher.onclick();"),'Clicking the character opens the assistant the same way as the button');
 assert(app.includes('if(assistantFloating)closeAssistantFloating({focus:false});')&&app.includes("if(assistantFloating){closeAssistantFloating();return {ok:true,message:'Assistant closed'};}"),'Navigation and Escape close the panel');
 assert(app.includes("closeAssistantFloating({focus:false});dispatchCommand({id:'route.assistant',source:'pointer'});"),'Maximise moves the conversation to the chat page');
 assert(view.includes("if(r.page.dataset.floating==='true'){r.page.scrollTo("),'The panel scrolls itself, never the page behind it');

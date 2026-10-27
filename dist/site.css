@@ -261,6 +261,12 @@
   --note-card-radius: var(--radius-card);
   --note-card-fill: color-mix(in oklab, var(--ink) 1.5%, transparent);
   --note-card-media-width: 72%;
+  /* The agent (MOTION.md → Character): image size including its glow, and its slow idle breath. */
+  --agent-size: 72px;
+  --agent-layer: 166;
+  --agent-breathe-duration: 2400ms;
+  --agent-breathe-lift: 2px;
+  --agent-breathe-scale: 1.02;
   /* The same breathing room above the hero (from the header's content) and below it (to At a glance). */
   --hero-gap: var(--space-12);
   /* Navigation at the top sits centred in the header row. */
@@ -872,6 +878,7 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 #dock .dock-content nav>.project-menu-toggle:is(:hover,:focus-visible,.hover-trail,[aria-expanded="true"]){background:var(--nav-item-hover);color:var(--ink);transition-duration:var(--nav-hover-in-duration)}
 #dock .dock-content nav>.project-menu-toggle svg{display:block;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 #dock.is-composer .dock-content nav>.project-menu-toggle{opacity:0;visibility:hidden;pointer-events:none}
+#dock .dock-content nav>.project-menu-toggle[hidden]{display:none}
 @media(max-width:600px){#dock{--nav-back-width:74px}#dock .dock-content nav>.project-menu-toggle{flex-basis:32px;width:32px;height:32px;padding:7px}}
 
 /* Developer controls are grouped by the feature they change. */
@@ -1937,7 +1944,7 @@ body:has(.home-carousel-active){overflow-x:clip}
 @media(prefers-reduced-motion:reduce){.iconiq-thinking *,.vivid-stream *{animation:none!important}.iconiq-thinking-label{background:none;color:var(--eyebrow-ink)}.vivid-stream-character{color:inherit}}
 
 /* content-widths.css */
-:root{--app-max-width:1920px;--content-width-reading:600px;--content-width-xs:960px;--content-width-sm:1200px;--content-width-md:1440px;--content-width-lg:1760px;--content-width:var(--content-width-md);--content-gutter:clamp(24px,4vw,64px);--app-canvas-width:min(100vw,var(--app-max-width));--content-shell-width:min(var(--app-max-width),calc(var(--content-width) + 2 * var(--content-gutter)))}
+:root{--app-max-width:1920px;--content-width-reading:600px;--content-width-xs:740px;--content-width-sm:1200px;--content-width-md:1440px;--content-width-lg:1760px;--content-width:var(--content-width-md);--content-gutter:clamp(24px,4vw,64px);--app-canvas-width:min(100vw,var(--app-max-width));--content-shell-width:min(var(--app-max-width),calc(var(--content-width) + 2 * var(--content-gutter)))}
 html{background:var(--page)}
 body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 :is(#main,.retained-home),body>header,body.wide-project-hero-page>header,.site-footer{width:100%;max-width:var(--content-shell-width);padding-inline:var(--content-gutter)}
@@ -2135,6 +2142,22 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 .contextual-popover a{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em}
 .contextual-popover a:hover{opacity:.75}
 @media(prefers-reduced-motion:reduce){.context-marker-text{transition:none}}
+
+/* agent.css */
+/* The agent's body (MOTION.md → Character). Script writes only --agent-x/--agent-y; the shell carries emerge,
+   collapse and landing; the face breathes only while the body is at rest. */
+.agent{position:fixed;left:0;top:0;z-index:var(--agent-layer);width:var(--agent-size);height:var(--agent-size);margin:calc(var(--agent-size)/-2) 0 0 calc(var(--agent-size)/-2);transform:translate3d(var(--agent-x,0px),var(--agent-y,0px),0);pointer-events:none;will-change:transform}
+.agent[data-state="hidden"]{visibility:hidden}
+/* On the menu-dock chat page the character fills its stage above the welcome. */
+:root.assistant-inline-open .agent{--agent-size:var(--assistant-mascot-size)}
+.agent.agent-assistant{pointer-events:auto;cursor:pointer}
+.agent.agent-assistant:focus-visible{outline:2px solid var(--muted);outline-offset:3px;border-radius:50%}
+.agent-shell,.agent-face{display:block;width:100%;height:100%}
+.agent-face{user-select:none;-webkit-user-drag:none}
+.agent:is([data-state="home"],[data-state="perched"]) .agent-face{animation:agent-breathe var(--agent-breathe-duration) var(--ease-standard) infinite alternate}
+@keyframes agent-breathe{to{transform:translateY(calc(var(--agent-breathe-lift)*-1)) scale(var(--agent-breathe-scale))}}
+:root[data-animation="off"] .agent-face{animation:none}
+@media(prefers-reduced-motion:reduce){.agent-face{animation:none}}
 
 /* glass-style.css */
 /* Glass style toggle: inner light replaces explicit borders on standalone controls and media cards. */

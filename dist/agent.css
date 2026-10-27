@@ -1,0 +1,14 @@
+/* The agent's body (MOTION.md → Character). Script writes only --agent-x/--agent-y; the shell carries emerge,
+   collapse and landing; the face breathes only while the body is at rest. */
+.agent{position:fixed;left:0;top:0;z-index:var(--agent-layer);width:var(--agent-size);height:var(--agent-size);margin:calc(var(--agent-size)/-2) 0 0 calc(var(--agent-size)/-2);transform:translate3d(var(--agent-x,0px),var(--agent-y,0px),0);pointer-events:none;will-change:transform}
+.agent[data-state="hidden"]{visibility:hidden}
+/* On the menu-dock chat page the character fills its stage above the welcome. */
+:root.assistant-inline-open .agent{--agent-size:var(--assistant-mascot-size)}
+.agent.agent-assistant{pointer-events:auto;cursor:pointer}
+.agent.agent-assistant:focus-visible{outline:2px solid var(--muted);outline-offset:3px;border-radius:50%}
+.agent-shell,.agent-face{display:block;width:100%;height:100%}
+.agent-face{user-select:none;-webkit-user-drag:none}
+.agent:is([data-state="home"],[data-state="perched"]) .agent-face{animation:agent-breathe var(--agent-breathe-duration) var(--ease-standard) infinite alternate}
+@keyframes agent-breathe{to{transform:translateY(calc(var(--agent-breathe-lift)*-1)) scale(var(--agent-breathe-scale))}}
+:root[data-animation="off"] .agent-face{animation:none}
+@media(prefers-reduced-motion:reduce){.agent-face{animation:none}}
