@@ -79,11 +79,24 @@ button,input,select,textarea{font-family:var(--font-family-sans)}
 header{height:var(--header-total);padding-top:var(--header-top-offset)}
 /* Top nav on a project or article page: Go Back and Previous/Next take the place of the avatar and name, in one fade. */
 /* Offset by the button padding so the Go Back text starts on the content edge, where the avatar was. */
-.header-detail-nav{position:absolute;left:calc(var(--content-gutter) - var(--space-3));top:var(--header-top-offset);bottom:0;display:flex;align-items:center;gap:var(--space-1);opacity:0;visibility:hidden;pointer-events:none;transition:opacity var(--header-swap-duration) var(--ease-settle),visibility 0s linear var(--header-swap-duration)}
-header :is(.brand,.discipline){transition:opacity var(--header-swap-duration) var(--ease-settle),visibility 0s}
-:root.header-detail-active .header-detail-nav{opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s}
-:root.header-detail-active header :is(.brand,.discipline){opacity:0;visibility:hidden;pointer-events:none;transition:opacity var(--header-swap-duration) var(--ease-settle),visibility 0s linear var(--header-swap-duration)}
-.header-detail-nav button{display:inline-flex;align-items:center;justify-content:center;height:var(--nav-icon-size);min-width:var(--nav-icon-size);padding:0 var(--space-3);border:0;border-radius:var(--radius-icon-control);background:transparent;color:var(--nav-item-ink);font:inherit;font-size:var(--font-size-body);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);cursor:pointer;transition:background-color var(--nav-hover-out-duration) ease-out,color 160ms ease}
+/* One staggered move: the avatar, then the name slide left and fade out, then Go Back, Previous and Next slide in
+   from the right; leaving reverses the order. --swap-in / --swap-out are each element's place in that order. */
+.header-detail-nav{position:absolute;left:calc(var(--content-gutter) - var(--space-3));top:var(--header-top-offset);bottom:0;display:flex;align-items:center;gap:var(--space-1);pointer-events:none}
+:root.header-detail-active .header-detail-nav{pointer-events:auto}
+header .brand{--swap-in:0;--swap-out:4}
+header .discipline{--swap-in:1;--swap-out:3}
+.header-detail-nav [data-header-action="back"]{--swap-in:2;--swap-out:2}
+.header-detail-nav [data-header-action="previous"]{--swap-in:3;--swap-out:1}
+.header-detail-nav [data-header-action="next"]{--swap-in:4;--swap-out:0}
+:is(header .brand,header .discipline){transition:opacity var(--header-swap-duration) var(--ease-settle) calc(var(--swap-out) * var(--header-swap-step)),transform var(--header-swap-duration) var(--ease-settle) calc(var(--swap-out) * var(--header-swap-step))}
+:root.header-detail-active header :is(.brand,.discipline){transition-delay:calc(var(--swap-in) * var(--header-swap-step))}
+.header-detail-nav button{opacity:0;transform:translateX(var(--header-swap-shift))}
+:root.header-detail-active .header-detail-nav button{opacity:1;transform:none}
+:root.header-detail-active header :is(.brand,.discipline){opacity:0;transform:translateX(calc(-1 * var(--header-swap-shift)));pointer-events:none}
+@media(prefers-reduced-motion:reduce){:is(header .brand,header .discipline,.header-detail-nav button){transition-duration:0s;transition-delay:0s}}
+:root[data-animation="off"] :is(header .brand,header .discipline,.header-detail-nav button){transition-duration:0s;transition-delay:0s}
+.header-detail-nav button{display:inline-flex;align-items:center;justify-content:center;height:var(--nav-icon-size);min-width:var(--nav-icon-size);padding:0 var(--space-3);border:0;border-radius:var(--radius-icon-control);background:transparent;color:var(--nav-item-ink);font:inherit;font-size:var(--font-size-body);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);cursor:pointer;transition:opacity var(--header-swap-duration) var(--ease-settle) calc(var(--swap-out) * var(--header-swap-step)),transform var(--header-swap-duration) var(--ease-settle) calc(var(--swap-out) * var(--header-swap-step)),background-color var(--nav-hover-out-duration) ease-out,color 160ms ease}
+:root.header-detail-active .header-detail-nav button{transition-delay:calc(var(--swap-in) * var(--header-swap-step)),calc(var(--swap-in) * var(--header-swap-step)),0s,0s}
 .header-detail-nav button:is(:hover,:focus-visible){background:var(--nav-item-hover);color:var(--ink);transition-duration:var(--nav-hover-in-duration)}
 .header-detail-nav button[hidden]{display:none}
 .header-detail-nav button:has(svg){padding:0}
@@ -125,7 +138,8 @@ main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:0;padding-top:
 .footer-credit{font-size:var(--font-size-caption);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--eyebrow-tracking);color:var(--eyebrow-ink)}
 
 /* Project statements use sentence-case supporting text. Outcomes live in detail highlights. */
-.project-card .project-summary,.surface.detail>.project-summary{max-width:58ch;margin:var(--space-title-eyebrow) 0 0;color:var(--muted);font-size:var(--font-size-project-summary);font-weight:var(--font-weight-body);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body);text-transform:none}
+/* A card's results line follows its title at regular line spacing; the detail page sets its own gap below. */
+.project-card .project-summary,.surface.detail>.project-summary{max-width:58ch;margin:0;color:var(--muted);font-size:var(--font-size-project-summary);font-weight:var(--font-weight-body);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body);text-transform:none}
 .surface.detail>.project-summary{margin-top:var(--space-hero-heading-content)}
 /* Hero statements share the body scale rather than separate support sizes. */
 .hero-copy,.home-view-split .hero-copy,.surface.detail>.project-summary{font-size:var(--font-size-body);line-height:var(--line-height-body);max-width:var(--measure-body)}

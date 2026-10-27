@@ -52,8 +52,11 @@
   --nav-item-hover: oklch(0.25543328 0.01903326 298.77205 / 0.025);
   --nav-hover-in-duration: 70ms;
   --nav-hover-out-duration: 420ms;
-  /* The header swaps its name for Go Back and Previous/Next over the default page transition (400ms). */
-  --header-swap-duration: 400ms;
+  /* The header swaps its avatar and name for Go Back and Previous/Next one element after another: each moves
+     --header-swap-shift over --header-swap-duration, starting --header-swap-step after the one before. */
+  --header-swap-duration: 240ms;
+  --header-swap-step: 60ms;
+  --header-swap-shift: 12px;
   --nav-rounding: 24px;
   --nav-item-padding: 9px;
   --nav-item-font-size: 12px;

@@ -163,7 +163,8 @@ const showProjectControls=route=>projectIds.includes(route);
 // With the nav on top, a project or article page swaps the header's avatar and name for Go Back and Previous/Next, in one fade.
 const articleIds=cards.filter(card=>card._article).map(card=>card.id);
 const headerDetail=route=>navPosition==='top'&&(projectIds.includes(route)||articleIds.includes(route));
-function syncHeaderDetailNav(route){const active=headerDetail(route),nav=$('#headerDetailNav');document.documentElement.classList.toggle('header-detail-active',active);nav.inert=!active;nav.setAttribute('aria-hidden',String(!active));for(const button of nav.querySelectorAll('[data-header-action="previous"],[data-header-action="next"]'))button.hidden=!showProjectControls(route);}
+function syncHeaderDetailNav(route){const active=headerDetail(route),nav=$('#headerDetailNav');document.documentElement.classList.toggle('header-detail-active',active);nav.inert=!active;nav.setAttribute('aria-hidden',String(!active));// Only a page that shows the nav sets the arrows, so they never jump in from display:none mid-swap.
+if(active)for(const button of nav.querySelectorAll('[data-header-action="previous"],[data-header-action="next"]'))button.hidden=!showProjectControls(route);}
 // About and Contact are in the dock's own menu, so they get no Back pill morphing in and out of it.
 const showBackControl=route=>route==='assistant'&&!inlineChat(route)||projectIds.includes(route);
 function syncDockActions(route,options={}){const composer=composerShown(route);syncHeaderDetailNav(route);dockMorph.setBack(!composer&&showBackControl(route)&&!headerDetail(route),options);dockMorph.setSplit(!composer&&showProjectControls(route)&&!headerDetail(route),options);composerContext?.refresh();}
