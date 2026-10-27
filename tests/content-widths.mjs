@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {APP_MAX_WIDTH,CONTENT_WIDTHS,pageTemplateForRoute,readContentWidth,contentRail,sectionRail,responsiveContentGutter} from '../dist/content-widths.js';
 import {readHomeSectionSpans,initHomeSectionSettings,HOME_SECTION_DEFAULTS} from '../dist/home-sections.js';
 
-assert.equal(APP_MAX_WIDTH,1920);assert.equal(Object.keys(CONTENT_WIDTHS).length,3);
+assert.equal(APP_MAX_WIDTH,1920);assert.deepEqual(Object.keys(CONTENT_WIDTHS),['xsmall','small','medium','large']);
 const values=new Map(),storage={getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,value)};
 assert.equal(readContentWidth(storage,'home'),'medium');assert.equal(readContentWidth(storage,'details'),'medium');
 values.set('prem-portfolio-full-width','true');assert.equal(readContentWidth(storage,'home'),'large','The old full-width preference migrates to Large');
@@ -23,6 +23,10 @@ for(const viewport of [320,390,800,1440,1920,2560,3840])for(const preset of Obje
  }
 }
 assert.equal(contentRail(2560,'large',64).content,1760);
+assert.equal(contentRail(2560,'xsmall',64).content,960,'Extra small is a 960px rail');
+{const fs=await import('node:fs/promises'),read=file=>fs.readFile(new URL('../dist/'+file,import.meta.url),'utf8');const [css,article,html]=await Promise.all(['content-widths.css','article.css','index.html'].map(read));
+assert(css.includes('--content-width-xs:960px;'),'The CSS twin of the Extra small width matches CONTENT_WIDTHS');assert(article.includes('.article-detail .article{max-width:var(--content-width-xs);'),'A blog article reads at the Extra small width');
+assert.equal((html.match(/<option value="xsmall">Extra small · 960px<\/option>/g)||[]).length,3,'Every page-width dropdown offers Extra small');}
 assert.equal(sectionRail(contentRail(2560,'small',64),'edge').width,1920);
 assert.equal(contentRail(320,'large',24).content,272,'Mobile fitting wins over a desktop maximum');
 

@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-27 Extra small page width
+Added Extra small · 960px to the Home, About / content page and Project details width dropdowns (`CONTENT_WIDTHS.xsmall`, CSS twin `--content-width-xs`). Blog articles were 66ch wide (543px at 1440px), so they now read at the 960px width. Evidence: tests/content-widths.mjs covers the rail, the CSS twin, the article rule and the three options; headless browser measured the article and the Extra small rail.
+
 ## 2026-10-27 No Back pill on About and Contact
 With the menu visible in the dock, About and Contact no longer pull a Go Back pill out of the dock and back (the dock keeps its shape); Back remains for projects and the assistant. Evidence: headless browser: dock width and Back state unchanged between Work and About. tests/lab-page.mjs asserts the rule.
 

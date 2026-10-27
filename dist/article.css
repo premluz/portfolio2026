@@ -1,5 +1,6 @@
 /* Articles: one readable column built from the reading tokens, not the card grid used by information pages. */
-.article-detail .article{max-width:var(--measure-body);margin-inline:auto}
+/* A blog article reads at the Extra small page width. */
+.article-detail .article{max-width:var(--content-width-xs);margin-inline:auto}
 .article-header{margin-bottom:var(--space-page-rhythm-md)}
 .article-header .article-meta{margin:0 0 var(--space-4);color:var(--eyebrow-ink)}
 .article-header h1{margin:0}
