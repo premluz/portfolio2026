@@ -12,6 +12,10 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Image border switch lives in Settings → Images
+
+- The Thin border on card images switch moved from Cards to the Images group, under Full-bleed card images.
+
 ## 2026-10-28 Carousel uses the grid's rounding; image border sits on the picture
 
 - The carousel's card, frame and picture radius is now the card's own fitted Card rounding, the same value the grid cards get (it used to be that value times 0.3125, so the slider barely moved it). The image border is an outline on the `img`/`video` itself instead of its padded `.visual` frame, so image top, side and bottom padding no longer change where it sits.
