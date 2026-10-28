@@ -230,6 +230,8 @@
   --radius-visual: 24px;
   /* The QR code's corner squares reach the edge of its image, so only a hairline of rounding is safe. */
   --radius-qr: 4px;
+  /* The close control that stands in for the top menu while a prototype or reel is open. */
+  --media-close-size: 48px;
   --radius-visual-portrait: 29px;
   --radius-visual-flip: 26px;
   --radius-header-control: 18px;

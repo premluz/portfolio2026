@@ -91,7 +91,7 @@
 /* Navigation position (Settings → Navigation): top moves the dock into the header row. */
 :root[data-nav-position="top"] #dock{top:var(--dock-top);bottom:auto}
 /* Nav on top: the menu is right-aligned to the content edge (where the header ends), and is the rightmost container. */
-:root[data-nav-position="top"] #dock{left:auto;right:calc((100vw - min(100vw, var(--nav-shell-width))) / 2 + var(--nav-gutter));transform:translateX(var(--dock-focus-shift,0px))}
+:root[data-nav-position="top"] #dock{left:auto;right:calc((100vw - min(100vw, var(--nav-shell-width))) / 2 + var(--nav-gutter));transform:none}
 :root[data-nav-position="top"] #dock>.assistant-launcher{left:auto;right:calc(100% + var(--nav-section-gap))}
 /* Plain navigation has no visible pill, so the last link's text (not its padding) meets the content edge. */
 :root[data-nav-position="top"][data-plain-nav="on"] #dock:not(.is-composer){right:calc((100vw - min(100vw, var(--nav-shell-width))) / 2 + var(--nav-gutter) - var(--composer-control-inset) - min(calc(var(--nav-item-padding) + 5px), 16px))}

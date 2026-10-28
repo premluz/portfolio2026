@@ -12,6 +12,12 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Close appears in place; no tooltip pop; header controls stagger out; bigger prototype button
+
+- Replaces the sliding menu from the entry below: the Close control no longer travels. With the menu at the bottom it grows in the dock's own centre as before. With the menu on top it is a separate glass circle that fades in at the top centre while the right-aligned menu fades out (`--media-close-size`, `is-floating`). It is marked pointer-only for tooltips, so keyboard focus on open no longer pops "Exit full screen [Esc]" at the old position.
+- Go Back, Previous and Next fade and shift out one after another (same stagger tokens as the header swap) while a prototype or reel is open and return in order on close (`media-focus-open` on the root). The prototype and reel buttons use the body font size.
+- Evidence: headless browser at 1792x960 on #galachain: top menu: Close centred at x 896 from the start, menu opacity 0, header buttons 0, tooltip hidden; bottom menu: dock centre unchanged; after Escape the menu and header controls are back and the floating Close is gone; no console errors.
+
 ## 2026-10-28 Remove hover trail setting for cards
 
 - Settings → Cards → Remove hover trail (off by default, saved and exported) makes card hover instant in both directions: the trail was the 1000ms `--surface-hover-out-duration` fade on the card effect layers (240ms in) plus the 180–220ms title and summary colour fades. The dock's separate 32ms hover latch is unchanged.
@@ -19,7 +25,7 @@ Newest first. Add an entry after meaningful work: what changed, the evidence, an
 
 ## 2026-10-28 Prototype and reel windows are smaller; Close sits centred where the menu is
 
-- The focused image, prototype and YouTube window is at most 1200px wide (was 1440px) and leaves a 136px band above and below (was 48px), so the Close control no longer sits on top of it. With the menu at the bottom, Close is centred at the bottom; with the menu on top, the right-aligned menu now slides to the centre as it shrinks into Close (`--dock-focus-shift`, driven by the same spring as the shrink) and returns to the right when it closes.
+- The focused image, prototype and YouTube window is at most 1200px wide (was 1440px) and leaves a 136px band above and below (was 48px), so the Close control no longer sits on top of it. With the menu at the bottom, Close is centred at the bottom; with the menu on top, the Close control sits centred at the top (see the next entry; the first version slid the menu to the centre and was replaced).
 - Evidence: headless browser at 1792x960 on #galachain with the reel open: window 1100x688 at y 136–824; Close centred at x 896, y 90 (top menu) or y 912 (bottom menu); the menu is back at the right edge after Escape.
 
 ## 2026-10-28 Project details: prototype buttons under the image, smaller QR with a hairline radius

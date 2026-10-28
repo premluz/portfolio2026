@@ -35,7 +35,14 @@ export class ProjectMediaFocus{
   this.image=document.createElement('img');this.image.src=source.currentSrc||source.src;this.image.alt=source.alt;this.image.className='project-media-focus-image';this.image.style.borderRadius=getComputedStyle(source).borderRadius;
   this.closeButton=document.createElement('button');this.closeButton.className='project-media-focus-close';this.closeButton.type='button';this.closeButton.setAttribute('aria-label','Exit full screen');this.closeButton.dataset.tooltip='Exit full screen [Esc]';this.closeButton.innerHTML='<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg>';this.closeButton.onclick=()=>this.close();
   this.closeButton.id='project-media-focus-close';this.layer.setAttribute('aria-owns',this.closeButton.id);
-  this.layer.append(this.image);document.body.append(this.layer);this.dock().el.append(this.closeButton);this.layout();
+  // Close never travels: with the menu at the bottom it grows in the dock's own centre; with the menu on top (right-aligned) it
+  // appears in place at the top centre while the menu fades. Keyboard focus there must not pop the tooltip open mid-move.
+  this.closeButton.dataset.tooltipPointerOnly='';
+  const topMenu=document.documentElement.dataset.navPosition==='top';
+  this.layer.append(this.image);document.body.append(this.layer);
+  if(topMenu){this.closeButton.classList.add('is-floating');this.closeButton.style.setProperty('--focus-close-top',this.dock().el.getBoundingClientRect().top+'px');document.body.append(this.closeButton);}
+  else this.dock().el.append(this.closeButton);
+  document.documentElement.classList.add('media-focus-open');this.layout();
   const r=this.sourceRect,t=this.rect,transform=`translate(${r.left-t.left}px,${r.top-t.top}px) scale(${r.width/t.width},${r.height/t.height})`;
   this.image.style.transformOrigin='0 0';this.image.style.transform=transform;
   // Hide the whole original frame, including any ripple canvas or hover video.
@@ -56,6 +63,6 @@ export class ProjectMediaFocus{
   if(this.frame)for(const key of ['left','top','width','height'])this.frame.style[key]=this.rect[key]+'px';
  }
  awaitEnd(){const epoch=++this.epoch;Promise.all(this.animations.map(a=>a.finished.catch(()=>{}))).then(()=>{if(epoch!==this.epoch||!this.active)return;if(!this.target){this.destroy();return;}this.settled=true;this.image.style.transform='none';if(this.prototypeUrl&&!this.frame){this.frame=document.createElement('iframe');this.frame.className='project-media-focus-prototype';this.frame.title=this.prototypeTitle;this.frame.src=youtubeEmbedUrl(this.prototypeUrl);this.frame.style.borderRadius=this.image.style.borderRadius;this.frame.setAttribute('allow','autoplay; encrypted-media; picture-in-picture; web-share');this.frame.setAttribute('allowfullscreen','');this.layer.append(this.frame);this.layout();}});}
- close(){if(!this.active||!this.target)return;this.target=false;this.settled=false;this.dock?.().setMediaFocus(false,{duration:this.duration(),returnFocus:this.trigger});this.frame?.remove();this.frame=null;if(this.reduced()){this.destroy();return;}for(const a of this.animations)a.reverse();this.awaitEnd();}
- destroy(){if(!this.active)return;this.active=false;++this.epoch;this.dock?.().setMediaFocus(false,{duration:this.duration()});document.removeEventListener('keydown',this.trapFocus);this.closeButton?.remove();this.animations.forEach(a=>a.cancel());this.animations=[];this.layer.remove();this.visual.style.visibility=this.visualVisibility;this.root.inert=this.saved.inert;document.body.style.overflow=this.saved.overflow;if(this.trigger.isConnected)this.trigger.focus({preventScroll:true});this.frame=null;}
+ close(){if(!this.active||!this.target)return;this.target=false;this.settled=false;document.documentElement.classList.remove('media-focus-open');this.closeButton.classList.add('is-leaving');this.dock?.().setMediaFocus(false,{duration:this.duration(),returnFocus:this.trigger});this.frame?.remove();this.frame=null;if(this.reduced()){this.destroy();return;}for(const a of this.animations)a.reverse();this.awaitEnd();}
+ destroy(){if(!this.active)return;this.active=false;++this.epoch;document.documentElement.classList.remove('media-focus-open');this.dock?.().setMediaFocus(false,{duration:this.duration()});document.removeEventListener('keydown',this.trapFocus);this.closeButton?.remove();this.animations.forEach(a=>a.cancel());this.animations=[];this.layer.remove();this.visual.style.visibility=this.visualVisibility;this.root.inert=this.saved.inert;document.body.style.overflow=this.saved.overflow;if(this.trigger.isConnected)this.trigger.focus({preventScroll:true});this.frame=null;}
 }

@@ -9,7 +9,7 @@
 .detail[data-card-orientation="portrait"] .detail-media-column>.visual{margin-inline:auto}
 .detail-layout>.description{grid-column:1;grid-row:1 / span 2}
 .detail-media-actions{display:flex;align-items:center;justify-content:center;gap:8px;margin:0;align-self:center}
-.detail-media-actions button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:10px 16px;border:1px solid color-mix(in oklch,var(--ink) 8%,transparent);border-radius:999px;background:color-mix(in oklch,var(--page) 78%,transparent);color:var(--body-ink);font:inherit;font-size:var(--font-size-small);line-height:1;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);cursor:pointer;transition:background 180ms ease,color 180ms ease}
+.detail-media-actions button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:10px 16px;border:1px solid color-mix(in oklch,var(--ink) 8%,transparent);border-radius:999px;background:color-mix(in oklch,var(--page) 78%,transparent);color:var(--body-ink);font:inherit;font-size:var(--font-size-body);line-height:1;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);cursor:pointer;transition:background 180ms ease,color 180ms ease}
 .detail-media-actions button:hover{background:color-mix(in oklch,var(--ink) 8%,var(--page));color:var(--ink)}
 .detail-media-actions button:focus-visible,.project-media-focus-close:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .detail-media-actions button svg,.project-media-focus-close svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
@@ -53,3 +53,13 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 }
 /* A landscape image fills the page width here instead of stopping at the card's 1000px cap. */
 .surface.detail.heading-beside-image[data-card-orientation="landscape"]{--image-max-width-landscape:100000px}
+
+/* Close in the top-menu layout: a glass circle that fades in at the top centre, with the right-aligned menu fading out. */
+.project-media-focus-close.is-floating{position:fixed;z-index:123;left:50%;top:var(--focus-close-top);transform:translateX(-50%);display:grid;place-items:center;width:var(--media-close-size);height:var(--media-close-size);padding:0;border:1px solid var(--nav-rim);border-radius:50%;background:var(--chrome);color:var(--ink);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);cursor:pointer;animation:media-close-in var(--header-swap-duration) var(--ease-settle) both}
+.project-media-focus-close.is-floating.is-leaving{animation:media-close-out 150ms ease both;pointer-events:none}
+@keyframes media-close-in{from{opacity:0}to{opacity:1}}
+@keyframes media-close-out{from{opacity:1}to{opacity:0}}
+:root[data-animation="off"] .project-media-focus-close.is-floating{animation:none}
+:root[data-nav-position="top"] #dock.is-media-focus{opacity:var(--dock-return-reveal,1)}
+/* Previous, Next and Go Back leave and return one after another, like the other header controls, while a prototype is open. */
+:root.header-detail-active.media-focus-open .header-detail-nav button{opacity:0;transform:translateX(var(--header-swap-shift));pointer-events:none;transition-delay:calc(var(--swap-out) * var(--header-swap-step)),calc(var(--swap-out) * var(--header-swap-step)),0s,0s}
