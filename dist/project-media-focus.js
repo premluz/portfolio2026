@@ -35,12 +35,12 @@ export class ProjectMediaFocus{
   this.image=document.createElement('img');this.image.src=source.currentSrc||source.src;this.image.alt=source.alt;this.image.className='project-media-focus-image';this.image.style.borderRadius=getComputedStyle(source).borderRadius;
   this.closeButton=document.createElement('button');this.closeButton.className='project-media-focus-close';this.closeButton.type='button';this.closeButton.setAttribute('aria-label','Exit full screen');this.closeButton.dataset.tooltip='Exit full screen [Esc]';this.closeButton.innerHTML='<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg>';this.closeButton.onclick=()=>this.close();
   this.closeButton.id='project-media-focus-close';this.layer.setAttribute('aria-owns',this.closeButton.id);
-  // Close never travels: with the menu at the bottom it grows in the dock's own centre; with the menu on top (right-aligned) it
-  // appears in place at the top centre while the menu fades. Keyboard focus there must not pop the tooltip open mid-move.
+  // Close never travels and is always at the bottom centre: with the menu at the bottom it grows in the dock's own centre; with
+  // the menu on top (right-aligned) it appears in place there while the menu fades. Keyboard focus must not pop the tooltip open.
   this.closeButton.dataset.tooltipPointerOnly='';
   const topMenu=document.documentElement.dataset.navPosition==='top';
   this.layer.append(this.image);document.body.append(this.layer);
-  if(topMenu){this.closeButton.classList.add('is-floating');this.closeButton.style.setProperty('--focus-close-top',this.dock().el.getBoundingClientRect().top+'px');document.body.append(this.closeButton);}
+  if(topMenu){this.closeButton.classList.add('is-floating');document.body.append(this.closeButton);}
   else this.dock().el.append(this.closeButton);
   document.documentElement.classList.add('media-focus-open');this.layout();
   const r=this.sourceRect,t=this.rect,transform=`translate(${r.left-t.left}px,${r.top-t.top}px) scale(${r.width/t.width},${r.height/t.height})`;

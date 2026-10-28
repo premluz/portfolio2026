@@ -12,9 +12,13 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Close is always at the bottom centre
+
+- Close now sits at the bottom centre whichever way the menu is placed: with the menu at the bottom it grows in the dock, with the menu on top it appears in place at the same spot (the floating circle, offset like the dock's `--dock-bottom`) while the right-aligned menu fades. Measured at 1792x960: Close centre at x 896, y 912 in both cases; the window is unchanged (y 136–824).
+
 ## 2026-10-28 Close appears in place; no tooltip pop; header controls stagger out; bigger prototype button
 
-- Replaces the sliding menu from the entry below: the Close control no longer travels. With the menu at the bottom it grows in the dock's own centre as before. With the menu on top it is a separate glass circle that fades in at the top centre while the right-aligned menu fades out (`--media-close-size`, `is-floating`). It is marked pointer-only for tooltips, so keyboard focus on open no longer pops "Exit full screen [Esc]" at the old position.
+- Replaces the sliding menu from the entry below: the Close control no longer travels. With the menu at the bottom it grows in the dock's own centre as before. With the menu on top it is a separate glass circle that fades in in place while the right-aligned menu fades out (at the top centre in this first version, moved to the bottom centre in the entry above) (`--media-close-size`, `is-floating`). It is marked pointer-only for tooltips, so keyboard focus on open no longer pops "Exit full screen [Esc]" at the old position.
 - Go Back, Previous and Next fade and shift out one after another (same stagger tokens as the header swap) while a prototype or reel is open and return in order on close (`media-focus-open` on the root). The prototype and reel buttons use the body font size.
 - Evidence: headless browser at 1792x960 on #galachain: top menu: Close centred at x 896 from the start, menu opacity 0, header buttons 0, tooltip hidden; bottom menu: dock centre unchanged; after Escape the menu and header controls are back and the floating Close is gone; no console errors.
 
