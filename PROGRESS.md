@@ -12,6 +12,10 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Plain-card hairline moved to the card image
+
+- The hairline now outlines the image frame, not the card box, following the image's own rounding. Verified on the home carousel and the Lab grid with the owner's settings (1px at 8%, the image fills its frame, no outline on the card).
+
 ## 2026-10-28 Escape closes the reel after clicking in the video
 
 - Escape already closed full screen, prototype and reel views, except after a click inside the YouTube player: the player kept keyboard focus and swallowed the key. After a click in a YouTube reel, focus now returns to Close, so Escape works again; the player is still driven with the mouse. Interactive prototypes (Merlin, Bastion, Tracr) keep their keyboard, so Escape cannot be caught while one has focus.
@@ -20,7 +24,7 @@ Newest first. Add an entry after meaningful work: what changed, the evidence, an
 ## 2026-10-28 "Carter London" is now "Independent"; plain cards keep a hairline edge
 
 - The 2006–2009 experience entry is titled Independent in both catalogs (the committed change is that one line; run `npm run build` to refresh the built content). The retrieval test searches for it.
-- Plain cards (Settings → Cards) now keep a 1px edge at 8% of the text colour: an inset outline on `.project-card`, so it paints over the image, never changes the layout and gives way to the keyboard focus ring. The card pseudo-elements are switched off by the skin rules, which is why it is an outline.
+- Plain cards (Settings → Cards) keep a 1px edge at 8% of the text colour on the card image (`.project-card>.visual`), an inset outline that paints over the picture and never changes the layout. (A first version outlined the whole card; the owner meant the image.) The card pseudo-elements are switched off by the skin rules, which is why it is an outline.
 - Evidence: headless browser with plain cards on, on the Lab grid and the home carousel with the owner's settings: outline 1px solid at 8%, offset -1px, card boxes unchanged.
 
 ## 2026-10-28 Close is always at the bottom centre
