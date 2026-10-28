@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Tighter card caption and About intro spacing
+
+- New token `--space-card-copy` (19.2px, `--space-4`) for the gap between a card's media and its caption on the home grid, carousel and hero carousel (was the shared `--space-text-media`, 38.4px, which still spaces detail pages). The About block's top margin is `--space-page-rhythm-md` (96px, was 192px) and its heading-to-text gap is 19.2px (was 28.8px).
+- Evidence: headless browser with the owner's settings: caption margin 19.2px, About margin 96px, heading to text 19px.
+
 ## 2026-10-28 Carousel chevrons, footer text mode without tooltips
 
 - Carousel arrows (card rail and spatial gallery) use the header's Previous/Next chevrons instead of ← →. Footer contact items shown as text lose their tooltips (restored in button mode). The "Copied to clipboard" notice now sits above the item, like a normal tooltip, and drops below only when there is no room (`showNoticeNear`).

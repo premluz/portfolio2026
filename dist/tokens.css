@@ -188,6 +188,7 @@
   --space-title-eyebrow: var(--space-2);
   --space-hero-heading-content: var(--space-6);
   --space-text-media: var(--space-8);
+  --space-card-copy: var(--space-4);
   --space-paragraph: var(--space-5);
   --space-detail-columns: clamp(var(--space-8), 4vw, calc(var(--space-unit) * 20));
   --space-hero-top: clamp(calc(var(--space-unit) * 24), 17vh, calc(var(--space-unit) * 48));
