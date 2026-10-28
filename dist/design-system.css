@@ -109,7 +109,7 @@ header .discipline{--swap-in:1;--swap-out:3}
 /* The role sits one step quieter than the name, on the same tone as eyebrows. */
 .brand-role{color:var(--eyebrow-ink)}
 .brand-avatar{display:block;width:var(--brand-avatar-size);height:var(--brand-avatar-size);border-radius:50%;object-fit:cover;object-position:50% 30%}
-.discipline{font-size:var(--font-size-body);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body)}
+.discipline{font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-body)}
 .design-system-controls{border:0;padding:0;margin:0 0 24px;min-width:0}
 .design-system-controls legend{padding:0;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
 #settings .design-system-controls select{display:block;width:100%;margin-top:8px;padding:10px 12px;border:1px solid var(--nav-rim);border-radius:12px;background:var(--chrome);color:var(--ink);font:inherit}

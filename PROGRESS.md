@@ -12,6 +12,10 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Tighter name and role lines in the header
+
+- The stacked name and role now use the heading line height (`--line-height-heading`, 1.15) instead of the body one (1.6): the lines are 15px apart instead of 21px and stay centred on the avatar.
+
 ## 2026-10-28 Header brand: hide the avatar, name and description on one line
 
 - Two new switches under Developer settings → Navigation → Header, both off by default, saved and exported: Hide the avatar (the name and description move to the edge) and Name and description on one line. Evidence: headless browser (avatar gone, text starts at the content edge, name and role share one row 96px apart, persisted after reload, no console errors).
