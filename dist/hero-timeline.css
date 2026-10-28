@@ -1,7 +1,7 @@
 .hero-about:has(.hero-timeline),.hero-copy:has(.hero-timeline){max-width:none}
 .timeline-block{grid-column:1/-1;padding:0;margin:0;background:transparent;border:0;--timeline-text-gap:var(--space-hero-heading-content)}
 .timeline-block>.hero-timeline{margin-top:0}
-.hero-about h1 .hero-greeting{color:var(--body-ink)}
+.hero-about h1 .hero-greeting{color:var(--ink)}
 .hero-about:has(.hero-timeline){--timeline-text-gap:clamp(24px,3vw,48px)}
 .hero-about:has(.hero-timeline) h1{margin-bottom:0}
 /* Keep the heading-to-description rhythm when both hero content toggles are on. */

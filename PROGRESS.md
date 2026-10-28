@@ -12,6 +12,10 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Home hero heading uses the strongest text colour
+
+- The hero heading's greeting span was `--body-ink` under an `--ink` heading; it is now `--ink` like the rest of the heading.
+
 ## 2026-10-28 Heading to first item matches the gap between items
 
 - Home list headings (Experience, Side Projects & R&D) and section headings (Thoughts) now sit 28.8px (`--space-6`) above their first item, the same as the gap between items (was 19.2px). Measured 29px for both in a headless browser with the owner's settings.
