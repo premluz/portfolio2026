@@ -1316,6 +1316,7 @@ html[data-animation="off"] .image-card[data-copy-hover="true"]:is(:hover,:focus-
 /* Menu links sit in the composer's inset at the composer buttons' height, so both dock modes share one rhythm. */
 #dock nav a{display:inline-flex;align-items:center;box-sizing:border-box;height:var(--nav-icon-size);font-size:var(--font-size-body);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);line-height:var(--line-height-label);padding:0 min(calc(var(--nav-item-padding) + 5px),16px)}
 #dock .dock-content>nav{padding:var(--composer-control-inset)}
+#dock nav a[hidden]{display:none}
 @media(max-width:600px){#dock nav a{padding-inline:min(calc(var(--nav-item-padding) + 5px),12px)}}
 @media(max-width:380px){#dock nav a{font-size:min(var(--nav-item-font-size),14px);padding-inline:min(calc(var(--nav-item-padding) + 5px),6px)}}
 
@@ -2283,6 +2284,7 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 @keyframes agent-breathe{to{transform:translateY(calc(var(--agent-breathe-lift)*-1)) scale(var(--agent-breathe-scale))}}
 :root[data-animation="off"] .agent-face{animation:none}
 @media(prefers-reduced-motion:reduce){.agent-face{animation:none}}
+:root.mascot-hidden .agent{display:none}
 
 /* glass-style.css */
 /* Glass style toggle: inner light replaces explicit borders on standalone controls and media cards. */

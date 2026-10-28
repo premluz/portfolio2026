@@ -31,7 +31,7 @@ assert(app.includes("const inlineChat=route=>route==='assistant'&&chatInlineComp
 assert(html.includes('<p>I’m Prem’s custom-built assistant.</p>')&&!html.includes('powered by ChatGPT'),'The welcome text is just the one line');
 assert(html.includes('<div class="assistant-inline-composer" id="assistantInlineComposer" hidden></div>')&&html.includes('<div class="assistant-mascot" id="assistantMascot" aria-hidden="true" hidden></div>'),'The chat page has a composer slot and a mascot stage');
 assert(!/current==='assistant'\|\|contextualComposer\|\|contextualButtons==='composer'/.test(app),'No copies of the old rule remain');
-assert(app.includes("const available=!contextualComposer,character=available&&characterAssistant&&Boolean(characterButton),shown=available&&!character;"),'The button appears only when the menu fills the dock, unless the character stands in for it');
+assert(app.includes("const available=!contextualComposer,character=available&&characterAssistant&&showMascot&&Boolean(characterButton),shown=available&&!character,item=$('#assistantNavItem');"),'The Assistant item shows only when the menu fills the dock, unless the visible mascot stands in for it');
 assert(app.includes("projectMenuToggle.hidden=character;"),'The index button steps aside while the character is the assistant');
 assert(app.includes("if(characterButton.classList.contains('agent-assistant'))assistantLauncher.onclick();"),'Clicking the character opens the assistant the same way as the button');
 assert(app.includes('if(assistantFloating)closeAssistantFloating({focus:false});')&&app.includes("if(assistantFloating){closeAssistantFloating();return {ok:true,message:'Assistant closed'};}"),'Navigation and Escape close the panel');
@@ -41,4 +41,12 @@ const transfer=await readFile(new URL('../dist/settings-transfer.js',import.meta
 {const chatCss=await readFile(new URL('../dist/portfolio-assistant.css',import.meta.url),'utf8');
 assert(chatCss.includes('.assistant-welcome :is(h1,p){max-width:min(100%,calc(var(--content-rail-width) / 2))}')&&chatCss.includes('.assistant-welcome h1{color:var(--ink)}'),'The chat welcome is a half-width block with its title in full ink');
 assert(chatCss.includes(':root:not(.assistant-inline-open) #askPage.assistant-page{--chat-top:var(--page-content-top)}'),'Without the mascot stage the welcome starts where page titles start');}
+{const hp=html,tr2=await readFile(new URL('../dist/settings-transfer.js',import.meta.url),'utf8'),df=await readFile(new URL('../dist/default-settings.js',import.meta.url),'utf8'),ds=await readFile(new URL('../dist/design-system.css',import.meta.url),'utf8'),ag=await readFile(new URL('../dist/agent.css',import.meta.url),'utf8');
+assert(hp.includes('<a href="#assistant" data-nav="assistant" id="assistantNavItem" class="assistant-nav-item" hidden>Assistant</a>'),'The dock menu has an Assistant item after Contact');
+assert(hp.indexOf('data-nav="contact"',hp.indexOf('id="dock"'))<hp.indexOf('id="assistantNavItem"')&&hp.indexOf('id="assistantNavItem"')<hp.indexOf('id="projectMenuToggle"'),'It sits at the end of the menu, after Contact');
+for(const id of ['navShowLab','navShowContact','navChatLabel','characterAssistant','showMascot'])assert(hp.includes(`id="${id}"`),`The Navigation settings have ${id}`);
+assert(hp.includes('<option value="Assistant" selected>Assistant</option><option value="Call Assistant">Call Assistant</option><option value="Ask Assistant">Ask Assistant</option>'),'The chat item reads Assistant, Call Assistant or Ask Assistant');
+assert(tr2.includes("navShowLab:'prem-nav-show-lab'")&&tr2.includes("showMascot:'prem-show-mascot'")&&df.includes("'prem-nav-show-lab':'true'")&&df.includes("'prem-show-mascot':'true'"),'Menu item choices are exported and start on');
+assert(app.includes("if(link.dataset.nav==='assistant'){assistantLauncher.onclick();return;}")&&app.includes("assistantLauncher.hidden=true;item.hidden=!shown;"),'The item opens the assistant the way the old button did, and the old pill stays hidden');
+assert(ds.includes('#dock nav a[hidden]{display:none}')&&ag.includes(':root.mascot-hidden .agent{display:none}'),'Hidden items and a hidden mascot take no room');}
 console.log('Assistant floating passed: page default, presentation setting, panel state, launcher rule, one composer rule, navigation/Escape close, maximise and panel scrolling.');

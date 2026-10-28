@@ -117,6 +117,8 @@ let navItemPadding=9,navItemFontSize=12,navContainerPadding=0;
 try{const padding=localStorage.getItem('prem-nav-item-padding'),fontSize=localStorage.getItem('prem-nav-item-font-size'),containerPadding=localStorage.getItem('prem-nav-container-padding');if(padding!==null&&Number.isFinite(Number(padding)))navItemPadding=Math.max(4,Math.min(14,Number(padding)));if(fontSize!==null&&Number.isFinite(Number(fontSize)))navItemFontSize=Math.max(10,Math.min(16,Number(fontSize)));if(containerPadding!==null&&Number.isFinite(Number(containerPadding)))navContainerPadding=Math.max(0,Math.min(12,Number(containerPadding)));}catch{}
 // The menu dock is as wide as its visible links plus the composer's inset on each side, never narrower than before.
 function navContentWidth(){const nav=document.querySelector('#dock .dock-content>nav');if(!nav)return 0;const style=getComputedStyle(nav),items=[...nav.children].filter(item=>item.id!=='askForm'&&item.getClientRects().length&&getComputedStyle(item).position!=='absolute');return Math.ceil(items.reduce((width,item)=>width+item.getBoundingClientRect().width,0)+parseFloat(style.paddingLeft)+parseFloat(style.paddingRight)+(parseFloat(style.columnGap)||0)*Math.max(0,items.length-1));}
+// Lab, Contact and the Assistant item follow their settings; the dock is re-measured because its width follows its links.
+function applyNavItems(){const nav=document.querySelector('#dock .dock-content>nav'),lab=nav.querySelector('a[data-nav="lab"]'),contact=nav.querySelector('a[data-nav="contact"]'),chat=$('#assistantNavItem');lab.hidden=!navShowLab;contact.hidden=!navShowContact;chat.textContent=navChatLabel;chat.setAttribute('aria-label',navChatLabel);document.documentElement.classList.toggle('mascot-hidden',!showMascot);$('#navShowLab').checked=navShowLab;$('#navShowContact').checked=navShowContact;$('#navChatLabel').value=navChatLabel;$('#showMascot').checked=showMascot;applyNavTypography();}
 function applyNavTypography(){const root=document.documentElement;root.style.setProperty('--nav-item-padding',navItemPadding+'px');root.style.setProperty('--nav-item-font-size',navItemFontSize+'px');root.style.setProperty('--nav-container-padding',navContainerPadding+'px');root.style.setProperty('--nav-height',48+navContainerPadding*2+'px');const baseWidth=(innerWidth<=380?210:innerWidth<=600?228:252)+navContainerPadding*2;root.style.setProperty('--nav-main-width',Math.max(baseWidth,navContentWidth())+'px');$('#navItemPadding').value=navItemPadding;$('#navItemPaddingValue').value=navItemPadding+'px';$('#navContainerPadding').value=navContainerPadding;$('#navContainerPaddingValue').value=navContainerPadding+'px';$('#navItemFontSize').value=navItemFontSize;$('#navItemFontSizeValue').value=navItemFontSize+'px';dockMorph.refresh();}
 let navSlideTarget=null,homeOpenTarget=null,assistantProjectTarget=null,assistantProjectOrigin=null,homeScene=null,labMode=false,previewProjectTarget=null,previewProjectOrigin=null,chromeTransition=false,navigationPreparing=false;
 const assistantNavigation=new AssistantNavigationMemory();
@@ -140,6 +142,10 @@ $('#dockLiquidBlend').oninput=e=>{dockLiquidBlend=+e.target.value;applyDockLiqui
 $('#dockLiquidPinch').oninput=e=>{dockLiquidPinch=+e.target.value;applyDockLiquid();try{localStorage.setItem('prem-dock-liquid-pinch',String(dockLiquidPinch));}catch{}};
 let voiceDock=null;
 let characterAssistant=true,characterButton=null;try{characterAssistant=localStorage.getItem('prem-character-assistant')!=='false';}catch(error){console.warn('Preference prem-character-assistant unreadable; using on',error);}
+// Menu items: Work and About always show; Lab and Contact are optional, and Chat is the mascot or a text item after Contact.
+const NAV_CHAT_LABELS=['Assistant','Call Assistant','Ask Assistant'];
+let navShowLab=true,navShowContact=true,showMascot=true,navChatLabel=NAV_CHAT_LABELS[0];
+try{navShowLab=localStorage.getItem('prem-nav-show-lab')!=='false';navShowContact=localStorage.getItem('prem-nav-show-contact')!=='false';showMascot=localStorage.getItem('prem-show-mascot')!=='false';const savedLabel=localStorage.getItem('prem-nav-chat-label');if(NAV_CHAT_LABELS.includes(savedLabel))navChatLabel=savedLabel;}catch(error){console.warn('Menu item preferences unreadable; showing every item',error);}
 let composerContext=null,contextualButtons=readContextualButtons(localStorage),splitProjectControls=false;try{splitProjectControls=localStorage.getItem('prem-split-project-controls')==='true';}catch{}
 // Stored as 'composer' (above the dock) or 'inline' (within the page) for older settings files.
 const contextualPlacement=()=>contextualButtons==='composer'?'above':'page';
@@ -475,7 +481,7 @@ addEventListener('storage',e=>{if(e.key===null||['prem-image-ripple-enabled','pr
 addEventListener('pageshow',()=>{refreshImageEffectPreferences();syncImageEffectControls();});
 applyNavRounding();
 $('#navRounding').oninput=e=>{navRounding=+e.target.value;applyNavRounding();try{localStorage.setItem('prem-nav-rounding',String(navRounding));}catch{}};
-applyNavTypography();
+applyNavTypography();applyNavItems();
 addEventListener('resize',applyNavTypography,{passive:true});document.fonts?.ready.then(applyNavTypography,error=>console.warn('Fonts did not load; the menu keeps its measured width',error));
 $('#navItemPadding').oninput=e=>{navItemPadding=+e.target.value;applyNavTypography();try{localStorage.setItem('prem-nav-item-padding',String(navItemPadding));}catch{}};
 $('#navContainerPadding').oninput=e=>{navContainerPadding=+e.target.value;applyNavTypography();try{localStorage.setItem('prem-nav-container-padding',String(navContainerPadding));}catch{}};
@@ -500,7 +506,7 @@ $('#cardBackground').onchange=e=>{hideCardBackground=!e.target.checked;applyCard
 $('#edgeShadeRetreat').onchange=e=>{if(busy){e.target.checked=edgeShadeRetreat;return;}edgeShadeRetreat=e.target.checked;applyEdgeShades();try{localStorage.setItem('prem-edge-shade-retreat',String(edgeShadeRetreat));}catch{}};
 $('#edgeShadeTop').onchange=e=>{edgeShadeTop=e.target.checked;applyEdgeShades();try{localStorage.setItem('prem-edge-shade-top',String(edgeShadeTop));}catch{}};
 $('#edgeShadeBottom').onchange=e=>{edgeShadeBottom=e.target.checked;applyEdgeShades();try{localStorage.setItem('prem-edge-shade-bottom',String(edgeShadeBottom));}catch{}};$('#edgeShadeLeft').onchange=e=>{edgeShadeLeft=e.target.checked;applyEdgeShades();try{localStorage.setItem('prem-edge-shade-left',String(edgeShadeLeft));}catch{}};$('#edgeShadeRight').onchange=e=>{edgeShadeRight=e.target.checked;applyEdgeShades();try{localStorage.setItem('prem-edge-shade-right',String(edgeShadeRight));}catch{}};$('#edgeShadeDepth').oninput=e=>{edgeShadeDepth=+e.target.value;applyEdgeShades();try{localStorage.setItem('prem-edge-shade-depth',String(edgeShadeDepth));}catch{}};$('#imageRounding').oninput=e=>{if(busy){applyImageRounding();return;}imageRounding=+e.target.value;applyImageRounding();try{localStorage.setItem('prem-image-rounding',String(imageRounding));}catch{}};$('#cardRounding').oninput=e=>{cardRounding=+e.target.value;applyGeometryTokens();try{localStorage.setItem('prem-card-rounding',String(cardRounding));}catch{}};$('#cardGap').oninput=e=>{cardGap=+e.target.value;applyGeometryTokens();try{localStorage.setItem('prem-card-gap',String(cardGap));}catch{}};
-document.querySelectorAll('[data-nav]').forEach(link=>link.onclick=e=>{e.preventDefault();dispatchCommand({id:'route.'+link.dataset.nav,source:'pointer'});});
+document.querySelectorAll('[data-nav]').forEach(link=>link.onclick=e=>{e.preventDefault();if(link.dataset.nav==='assistant'){assistantLauncher.onclick();return;}dispatchCommand({id:'route.'+link.dataset.nav,source:'pointer'});});
 const canonicalProjectRoute=route=>homeProjects.find(project=>project.id===route)?.documentId||route;
 function moveCard(direction){if(busy)return;const next=stepProject(projects,canonicalProjectRoute(current),direction);if(!next)return;navSlideTarget=null;travelDirection=direction;location.hash=next.id;}
 const projectMenu=$('#projectMenu'),projectMenuToggle=$('#projectMenuToggle');
@@ -525,8 +531,9 @@ const assistantPresentation=mountAssistantPresentation($('#assistantPresentation
 // The sidebar pushes the page aside and takes the dock's composer to its foot; both are root-level states.
 const setAssistantSidebar=on=>{document.documentElement.classList.toggle('assistant-sidebar-open',on);$('#dock').classList.toggle('assistant-sidebar-dock',on);dockMorph.refresh();};
 function syncAssistantLauncher(){
- const available=!contextualComposer,character=available&&characterAssistant&&Boolean(characterButton),shown=available&&!character;
- if(assistantLauncher.hidden===shown||projectMenuToggle.hidden!==character){assistantLauncher.hidden=!shown;projectMenuToggle.hidden=character;applyNavTypography();}
+ const available=!contextualComposer,character=available&&characterAssistant&&showMascot&&Boolean(characterButton),shown=available&&!character,item=$('#assistantNavItem');
+ // The Assistant button that sat beside the dock is now a menu item after Contact; the old pill stays hidden.
+ if(item.hidden===shown||!assistantLauncher.hidden||projectMenuToggle.hidden!==character){assistantLauncher.hidden=true;item.hidden=!shown;projectMenuToggle.hidden=character;applyNavTypography();}
  applyCharacterAssistant(character);
  if(!available)closeAssistantFloating({focus:false});
 }
@@ -552,7 +559,8 @@ function closeAssistantFloating({focus=true}={}){
  if(!assistantFloating)return;
  assistantFloating=false;setAssistantFloating($('#askPage'),false);setAssistantSidebar(false);$('#dock').classList.remove('assistant-floating-open');void composerContext?.setBlocked(false);assistantLauncher.setAttribute('aria-expanded','false');
  portfolioAssistant.setActive(false);syncFloatingDock();
- if(focus&&!assistantLauncher.hidden)assistantLauncher.focus({preventScroll:true});
+ if(focus&&!$('#assistantNavItem').hidden)$('#assistantNavItem').focus({preventScroll:true});
+ else if(focus&&!assistantLauncher.hidden)assistantLauncher.focus({preventScroll:true});
  else if(focus&&characterButton?.classList.contains('agent-assistant'))characterButton.focus({preventScroll:true});
 }
 assistantLauncher.onclick=()=>{if(['floating','sidebar'].includes(assistantPresentation.value))openAssistantFloating();else dispatchCommand({id:'route.assistant',source:'pointer'});};
@@ -679,6 +687,10 @@ mountAgent({reduced:()=>reduce.matches});
 characterButton=document.querySelector('.agent');
 if(characterButton){characterButton.addEventListener('click',()=>{if(characterButton.classList.contains('agent-assistant'))assistantLauncher.onclick();});characterButton.addEventListener('keydown',event=>{if(!characterButton.classList.contains('agent-assistant')||!['Enter',' '].includes(event.key))return;event.preventDefault();assistantLauncher.onclick();});}
 $('#characterAssistant').checked=characterAssistant;$('#characterAssistant').onchange=e=>{characterAssistant=e.target.checked;saveFlag('prem-character-assistant',characterAssistant);syncAssistantLauncher();};
+$('#navShowLab').onchange=e=>{navShowLab=e.target.checked;saveFlag('prem-nav-show-lab',navShowLab);applyNavItems();};
+$('#navShowContact').onchange=e=>{navShowContact=e.target.checked;saveFlag('prem-nav-show-contact',navShowContact);applyNavItems();};
+$('#navChatLabel').onchange=e=>{navChatLabel=NAV_CHAT_LABELS.includes(e.target.value)?e.target.value:NAV_CHAT_LABELS[0];try{localStorage.setItem('prem-nav-chat-label',navChatLabel);}catch(error){console.warn('Chat item label not saved',error);}applyNavItems();};
+$('#showMascot').onchange=e=>{showMascot=e.target.checked;saveFlag('prem-show-mascot',showMascot);applyNavItems();syncAssistantLauncher();};
 syncAssistantLauncher();
 installTooltips();
 const animationButton=$('#animationPreference');

@@ -12,3 +12,4 @@
 @keyframes agent-breathe{to{transform:translateY(calc(var(--agent-breathe-lift)*-1)) scale(var(--agent-breathe-scale))}}
 :root[data-animation="off"] .agent-face{animation:none}
 @media(prefers-reduced-motion:reduce){.agent-face{animation:none}}
+:root.mascot-hidden .agent{display:none}

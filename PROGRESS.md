@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Menu item toggles, Chat menu item, mascot switch
+Navigation settings gained "Show Lab" and "Show Contact" (Work and About always show), a "Chat item" label (Assistant, Call Assistant or Ask Assistant) and "Show mascot". Chat is the mascot when "Chat is the mascot" is on and the mascot is shown; otherwise it is a text item at the end of the menu after Contact, which replaces the Assistant pill that sat beside the dock. Evidence: headless browser: each toggle changed the dock's links and width, the chat item opened the chat page and showed as active, hiding the mascot brought the item back and hid the character, choices persisted across a reload; tests/assistant-floating.mjs extended.
+
 ## 2026-10-28 One heading-style switch; Contact title switch
 A single Design system switch ("Editorial headings", off) now decides how every title and section heading reads: body size by default (titles, the About intro, How I work / Experience / Side projects labels, blog headings, footer and section headings) or editorial (large titles, small-caps labels). All headings read shared tokens, so a new heading follows the switch with no setting of its own. The article-only "title body size" switch was removed. Contact gained a "show title" switch (off): the title hides and its text starts where it was. Evidence: computed font sizes of every heading in both modes in the headless browser; tests/header-spacing.mjs and tests/articles.mjs updated.
 
