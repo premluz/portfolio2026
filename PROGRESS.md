@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Index button as its own switch
+The index (site menu) button in the dock has its own "Show index button" switch under Menu items, no longer tied to the mascot. Until the visitor chooses, it keeps the old behaviour (hidden while the mascot is the assistant), so nothing moves by surprise. Evidence: headless browser: default follows the mascot rule; ticking it shows the button beside a mascot assistant, unticking hides it with the chat item; choice persists; tests/assistant-floating.mjs updated.
+
 ## 2026-10-28 Normal gap under the About intro heading
 The gap between "Most useful where the problem is messy…" and its text was one large rhythm step (48px); it now uses the same title-to-text gap as every page (28.8px). Evidence: measured in the headless browser on Home and About.
 

@@ -32,7 +32,7 @@ assert(html.includes('<p>I’m Prem’s custom-built assistant.</p>')&&!html.inc
 assert(html.includes('<div class="assistant-inline-composer" id="assistantInlineComposer" hidden></div>')&&html.includes('<div class="assistant-mascot" id="assistantMascot" aria-hidden="true" hidden></div>'),'The chat page has a composer slot and a mascot stage');
 assert(!/current==='assistant'\|\|contextualComposer\|\|contextualButtons==='composer'/.test(app),'No copies of the old rule remain');
 assert(app.includes("const available=!contextualComposer,character=available&&characterAssistant&&showMascot&&Boolean(characterButton),shown=available&&!character,item=$('#assistantNavItem');"),'The Assistant item shows only when the menu fills the dock, unless the visible mascot stands in for it');
-assert(app.includes("projectMenuToggle.hidden=character;"),'The index button steps aside while the character is the assistant');
+assert(app.includes("const indexShown=navShowIndex===null?!character:navShowIndex;")&&app.includes("projectMenuToggle.hidden=!indexShown;"),'The index button has its own switch; until chosen it steps aside while the mascot is the assistant');
 assert(app.includes("if(characterButton.classList.contains('agent-assistant'))assistantLauncher.onclick();"),'Clicking the character opens the assistant the same way as the button');
 assert(app.includes('if(assistantFloating)closeAssistantFloating({focus:false});')&&app.includes("if(assistantFloating){closeAssistantFloating();return {ok:true,message:'Assistant closed'};}"),'Navigation and Escape close the panel');
 assert(app.includes("closeAssistantFloating({focus:false});dispatchCommand({id:'route.assistant',source:'pointer'});"),'Maximise moves the conversation to the chat page');
@@ -49,4 +49,7 @@ assert(hp.includes('<option value="Assistant" selected>Assistant</option><option
 assert(tr2.includes("navShowLab:'prem-nav-show-lab'")&&tr2.includes("showMascot:'prem-show-mascot'")&&df.includes("'prem-nav-show-lab':'true'")&&df.includes("'prem-show-mascot':'true'"),'Menu item choices are exported and start on');
 assert(app.includes("if(link.dataset.nav==='assistant'){assistantLauncher.onclick();return;}")&&app.includes("assistantLauncher.hidden=true;item.hidden=!shown;"),'The item opens the assistant the way the old button did, and the old pill stays hidden');
 assert(ds.includes('#dock nav a[hidden]{display:none}')&&ag.includes(':root.mascot-hidden .agent{display:none}'),'Hidden items and a hidden mascot take no room');}
+{const hp3=await readFile(new URL('../dist/index.html',import.meta.url),'utf8'),tr3=await readFile(new URL('../dist/settings-transfer.js',import.meta.url),'utf8'),df3=await readFile(new URL('../dist/default-settings.js',import.meta.url),'utf8');
+assert(hp3.includes('<input id="navShowIndex" type="checkbox" checked> Show index button (site menu)')&&tr3.includes("navShowIndex:'prem-nav-show-index'"),'The Navigation settings have a Show index button switch, exported');
+assert(!df3.includes('prem-nav-show-index'),'No stored default, so the old mascot rule applies until the visitor chooses');}
 console.log('Assistant floating passed: page default, presentation setting, panel state, launcher rule, one composer rule, navigation/Escape close, maximise and panel scrolling.');

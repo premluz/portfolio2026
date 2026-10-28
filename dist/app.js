@@ -144,8 +144,9 @@ let voiceDock=null;
 let characterAssistant=true,characterButton=null;try{characterAssistant=localStorage.getItem('prem-character-assistant')!=='false';}catch(error){console.warn('Preference prem-character-assistant unreadable; using on',error);}
 // Menu items: Work and About always show; Lab and Contact are optional, and Chat is the mascot or a text item after Contact.
 const NAV_CHAT_LABELS=['Assistant','Call Assistant','Ask Assistant'];
-let navShowLab=true,navShowContact=true,showMascot=true,navChatLabel=NAV_CHAT_LABELS[0];
-try{navShowLab=localStorage.getItem('prem-nav-show-lab')!=='false';navShowContact=localStorage.getItem('prem-nav-show-contact')!=='false';showMascot=localStorage.getItem('prem-show-mascot')!=='false';const savedLabel=localStorage.getItem('prem-nav-chat-label');if(NAV_CHAT_LABELS.includes(savedLabel))navChatLabel=savedLabel;}catch(error){console.warn('Menu item preferences unreadable; showing every item',error);}
+// The index (site menu) button: null until the visitor chooses, when it keeps its old rule of stepping aside for the mascot.
+let navShowLab=true,navShowContact=true,showMascot=true,navShowIndex=null,navChatLabel=NAV_CHAT_LABELS[0];
+try{const savedIndex=localStorage.getItem('prem-nav-show-index');if(savedIndex==='true'||savedIndex==='false')navShowIndex=savedIndex==='true';navShowLab=localStorage.getItem('prem-nav-show-lab')!=='false';navShowContact=localStorage.getItem('prem-nav-show-contact')!=='false';showMascot=localStorage.getItem('prem-show-mascot')!=='false';const savedLabel=localStorage.getItem('prem-nav-chat-label');if(NAV_CHAT_LABELS.includes(savedLabel))navChatLabel=savedLabel;}catch(error){console.warn('Menu item preferences unreadable; showing every item',error);}
 let composerContext=null,contextualButtons=readContextualButtons(localStorage),splitProjectControls=false;try{splitProjectControls=localStorage.getItem('prem-split-project-controls')==='true';}catch{}
 // Stored as 'composer' (above the dock) or 'inline' (within the page) for older settings files.
 const contextualPlacement=()=>contextualButtons==='composer'?'above':'page';
@@ -533,7 +534,9 @@ const setAssistantSidebar=on=>{document.documentElement.classList.toggle('assist
 function syncAssistantLauncher(){
  const available=!contextualComposer,character=available&&characterAssistant&&showMascot&&Boolean(characterButton),shown=available&&!character,item=$('#assistantNavItem');
  // The Assistant button that sat beside the dock is now a menu item after Contact; the old pill stays hidden.
- if(item.hidden===shown||!assistantLauncher.hidden||projectMenuToggle.hidden!==character){assistantLauncher.hidden=true;item.hidden=!shown;projectMenuToggle.hidden=character;applyNavTypography();}
+ const indexShown=navShowIndex===null?!character:navShowIndex;
+ if(item.hidden===shown||!assistantLauncher.hidden||projectMenuToggle.hidden===indexShown){assistantLauncher.hidden=true;item.hidden=!shown;projectMenuToggle.hidden=!indexShown;applyNavTypography();}
+ $('#navShowIndex').checked=indexShown;
  applyCharacterAssistant(character);
  if(!available)closeAssistantFloating({focus:false});
 }
@@ -689,6 +692,7 @@ if(characterButton){characterButton.addEventListener('click',()=>{if(characterBu
 $('#characterAssistant').checked=characterAssistant;$('#characterAssistant').onchange=e=>{characterAssistant=e.target.checked;saveFlag('prem-character-assistant',characterAssistant);syncAssistantLauncher();};
 $('#navShowLab').onchange=e=>{navShowLab=e.target.checked;saveFlag('prem-nav-show-lab',navShowLab);applyNavItems();};
 $('#navShowContact').onchange=e=>{navShowContact=e.target.checked;saveFlag('prem-nav-show-contact',navShowContact);applyNavItems();};
+$('#navShowIndex').onchange=e=>{navShowIndex=e.target.checked;saveFlag('prem-nav-show-index',navShowIndex);syncAssistantLauncher();};
 $('#navChatLabel').onchange=e=>{navChatLabel=NAV_CHAT_LABELS.includes(e.target.value)?e.target.value:NAV_CHAT_LABELS[0];try{localStorage.setItem('prem-nav-chat-label',navChatLabel);}catch(error){console.warn('Chat item label not saved',error);}applyNavItems();};
 $('#showMascot').onchange=e=>{showMascot=e.target.checked;saveFlag('prem-show-mascot',showMascot);applyNavItems();syncAssistantLauncher();};
 syncAssistantLauncher();
