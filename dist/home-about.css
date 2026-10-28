@@ -1,4 +1,4 @@
-.home-about{--home-about-years-column:5.375em;margin-top:var(--space-page-rhythm-md);width:100%;min-width:0;grid-column:1 / -1}
+.home-about{--home-about-years-column:5.375em;margin-top:var(--space-page-rhythm-lg);width:100%;min-width:0;grid-column:1 / -1}
 .home-about h2{max-width:var(--page-intro-width);margin:0;font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:pretty}
 .home-about-title-secondary{color:var(--body-ink)}
 .home-about-copy,.home-about-lists{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6)}
