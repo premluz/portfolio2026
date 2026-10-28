@@ -517,7 +517,7 @@ const projectMenu=$('#projectMenu'),projectMenuToggle=$('#projectMenuToggle');
 projectMenu.innerHTML=projectMenuMarkup(projects,canonicalProjectRoute(current));
 mountMenuIconSettings($('#settings'),projectMenu);
 const siteToast=createSiteToast($('#interactionFeedback'),{reduced:()=>reduce.matches});
-mountContactEmailCopy(projectMenu,siteToast.show);mountContactEmailCopy($('.site-footer'),siteToast.show);
+mountContactEmailCopy(projectMenu,siteToast.show);mountContactEmailCopy($('.site-footer'),siteToast.show,{anchored:true});
 const statusStack=mountStatusStack({dock:$('#dock'),hud:$('#interactionHud'),messages:$('#interactionFeedback'),obstacles:()=>[$('#dock .composer-suggestions'),$('#dock .composer-context-actions')]});
 const menuPreview=new ProjectMenuPreview(projectMenu,projects,{reduced:()=>reduce.matches});
 installProjectMenuHover(projectMenu,{reduced:()=>reduce.matches,onHover:row=>menuPreview.show(row),onLeave:()=>menuPreview.hide()});

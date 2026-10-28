@@ -22,4 +22,6 @@ try{
  handler({target:{closest:()=>({})},preventDefault:()=>prevented=true});await Promise.resolve();
  assert(prevented);assert.equal(copied,['prem.luczak','gmail.com'].join('@'));dispose();assert(removed);
 }finally{Object.defineProperty(globalThis,'navigator',{configurable:true,value:originalNavigator});}
+const appSource=await readFile(new URL('../dist/app.js',import.meta.url),'utf8');
+assert(appSource.includes("mountContactEmailCopy($('.site-footer'),siteToast.show,{anchored:true})"),'The footer confirms under its own button');
 console.log('Contact actions passed: exact clipboard value, encoded public source, delegated copy and visible permission failures.');

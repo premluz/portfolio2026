@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Footer copy confirmation sits under the button
+
+- The footer Email button confirms "Copied to clipboard" in a tooltip-styled notice directly beneath it (`anchored-notice.js`, 1.8s, hides on scroll or resize). Other copy actions keep the site toast.
+- Evidence: headless browser (notice 10px under the button, centred, gone after 2s, site toast empty, no errors); tests/contact-actions.mjs.
+
 ## 2026-10-28 Footer email copies to the clipboard
 
 - Removed the "Let's talk" footer item. The footer Email item is now a button that copies the address and shows the "Copied to clipboard" toast; the address is not in the HTML, only base64-encoded in `contact-actions.js` and decoded on click. The address is now prem.luczak@gmail.com (it was premluczak@gmail.com).

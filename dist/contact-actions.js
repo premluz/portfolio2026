@@ -1,3 +1,4 @@
+import {showNoticeBelow} from './anchored-notice.js';
 export const CONTACT_LINKEDIN_URL='https://www.linkedin.com/in/premluczak/';
 const encodedEmail='cHJlbS5sdWN6YWtAZ21haWwuY29t';
 
@@ -12,10 +13,12 @@ export async function copyContactEmail(notify,clipboard=globalThis.navigator?.cl
  }
 }
 
-export function mountContactEmailCopy(root,notify){
+// anchored: confirm under the clicked control instead of in the site toast.
+export function mountContactEmailCopy(root,notify,{anchored=false}={}){
  const copy=event=>{
-  if(!event.target.closest?.('[data-copy-email]'))return;
-  event.preventDefault();void copyContactEmail(notify);
+  const button=event.target.closest?.('[data-copy-email]');
+  if(!button)return;
+  event.preventDefault();void copyContactEmail(anchored?(text,options)=>showNoticeBelow(button,text,options):notify);
  };
  root.addEventListener('click',copy);
  return ()=>root.removeEventListener('click',copy);
