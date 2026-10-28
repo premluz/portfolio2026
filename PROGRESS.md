@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Experience and Side projects as two switches
+"Experience & side projects" was one switch; it is now "Experience" and "Side projects & R&D" in both Content Home and Content About (new section id `side-projects`, on by default on Home and off on About like the other Home components). Someone who had hidden the old combined section keeps both hidden until they choose otherwise. The width setting still applies to the pair. Evidence: tests/content-widths.mjs (defaults, migration, hiding one leaves the other, width); headless browser checked each switch on Home.
+
 ## 2026-10-28 Hover thumbnail left behind on the project page
 Clicking an Experience or Side Projects row on Home leaves a card-shaped stand-in for the hover thumbnail (`.preview-morph-proxy`) on the page. The simple page transition cleared its reference without removing the element, so the thumbnail stayed on the project page for good. It now removes it. Evidence: headless browser reproduced it (the proxy still at full opacity 4.5s after the route settled) and confirmed it gone after the fix; tests/simple-transitions.mjs asserts it.
 

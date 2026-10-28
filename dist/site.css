@@ -1465,6 +1465,8 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 @media(max-width:600px){.home-about-copy,.home-about-lists,.home-about-how{grid-template-columns:1fr}.home-about-copy{row-gap:var(--space-6)}.home-about-copy p,.home-about-copy p+p{grid-column:1;max-width:none}.home-about-how h3,.home-about-how ul{grid-column:1}.home-about-how li{grid-template-columns:minmax(0,1fr) minmax(0,2fr)}.home-about-list-content{grid-column:1;grid-template-columns:1fr}.home-about{margin-top:var(--space-page-rhythm-md)}.home-about-path{margin-top:var(--space-page-rhythm-md);padding-block:20px}.home-about-path .hero-timeline{--timeline-text-gap:32px}.home-about-path .timeline-track ol{padding-inline:28px}}
 /* Six columns so the intro text can be half the width and still start on the first or the second third, like the Home hero text. */
 .home-about-copy{grid-template-columns:repeat(6,minmax(0,1fr))}
+/* With both lists switched off the grid leaves no spacing behind. */
+.home-about-lists:not(:has(.home-about-list:not([hidden]))){display:none}
 
 /* about-page.css */
 [data-about-section][hidden]{display:none!important}

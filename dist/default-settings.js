@@ -13,9 +13,9 @@ export const DEFAULT_STORAGE_VALUES=Object.freeze({
 });
 
 export const DEFAULT_JSON_STORAGE_VALUES=Object.freeze({
- 'prem-home-content':{approach:false,services:false,about:true,'about-timeline':false,experience:true,testimonials:false},
+ 'prem-home-content':{approach:false,services:false,about:true,'about-timeline':false,experience:true,'side-projects':true,testimonials:false},
  'prem-home-section-spans':{approach:'content',services:'content',about:'content',experience:'content',testimonials:'content'},
- 'prem-about-content':{hero:true,title:true,traits:true,unusual:true,approach:false,services:false,about:false,'about-timeline':false,experience:false,testimonials:false,writing:false},
+ 'prem-about-content':{hero:true,title:true,traits:true,unusual:true,approach:false,services:false,about:false,'about-timeline':false,experience:false,'side-projects':false,testimonials:false,writing:false},
  'prem-about-section-spans':{approach:'content',services:'content',about:'content',experience:'content',testimonials:'content'},
  'prem-design-system':{typeSize:'small',spaceSize:'large',headingWeight:'bold',bodyWeight:'thin',typeTracking:'small',typeLeading:'small'},
  'prem-hero-carousel-settings':{size:100,gap:64,copy:true},
