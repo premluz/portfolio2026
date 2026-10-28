@@ -183,12 +183,14 @@ const edgeShades=new EdgeShades($('.page-edge-shades'),{reduced:()=>reduce.match
 try{layout=readHomeLayout(localStorage.getItem('prem-home-layout'));}catch{}
 let layoutStorage;try{layoutStorage=localStorage;}catch{}
 let homeContentWidth=readContentWidth(layoutStorage,'home'),detailContentWidth=readContentWidth(layoutStorage,'details'),contentPageWidth=readContentWidth(layoutStorage,'content');
+let navWidthPreset='page';try{const saved=layoutStorage?.getItem('prem-nav-content-width');navWidthPreset=saved==null||saved==='page'?'page':normaliseContentWidth(saved);}catch(error){console.warn('Navigation width unreadable; following the page',error);}
 function applyContentWidths(){
  const root=document.documentElement,template=pageTemplateForRoute(current,projectIds),preset=template==='home'?homeContentWidth:template==='project-details'?detailContentWidth:contentPageWidth,viewport=root.clientWidth||innerWidth,rail=contentRail(viewport,preset,responsiveContentGutter(viewport));
  root.style.setProperty('--content-width',CONTENT_WIDTHS[preset]+'px');root.style.setProperty('--content-rail-width',rail.content+'px');root.dataset.pageTemplate=template;
  root.style.setProperty('--app-max-width',APP_MAX_WIDTH+'px');root.style.setProperty('--app-canvas-width',rail.app+'px');
  root.style.setProperty('--content-shell-width',rail.shell+'px');root.style.setProperty('--content-gutter',rail.gutter+'px');
- root.dataset.contentWidth=preset;$('#homeContentWidth').value=homeContentWidth;$('#detailContentWidth').value=detailContentWidth;$('#contentPageWidth').value=contentPageWidth;
+ const navRail=navWidthPreset==='page'?rail:contentRail(viewport,navWidthPreset,responsiveContentGutter(viewport));root.style.setProperty('--nav-shell-width',navRail.shell+'px');root.style.setProperty('--nav-gutter',navRail.gutter+'px');
+ root.dataset.contentWidth=preset;$('#homeContentWidth').value=homeContentWidth;$('#detailContentWidth').value=detailContentWidth;$('#contentPageWidth').value=contentPageWidth;$('#navContentWidth').value=navWidthPreset;
 }
 addEventListener('resize',applyContentWidths,{passive:true});
 let homeColumns=2;try{homeColumns=Math.max(1,Math.min(4,Number(localStorage.getItem('prem-home-columns'))||2));}catch{}
@@ -717,6 +719,7 @@ mountGlassStyle($('#glassStyle'));const simpleTransitions=mountSimpleTransitions
 mountHeroCarouselSettings($('#settings'),{canChange:()=>!busy&&!navigationPreparing,onChange:settings=>{heroCarouselSettings=settings;applyHeroCarouselSettings(document.documentElement,settings);homeLayout?.carousel.measure();}});
 mountCarouselSettings($('#settings'),{canChange:()=>!busy&&!navigationPreparing,onChange:settings=>{carouselSettings=settings;document.documentElement.style.setProperty('--carousel-card-scale',String(settings.size/100));for(const gallery of cardGalleries)if(gallery instanceof CardGallery)gallery.setArcSettings(settings);}});
 $('#previous').onclick=()=>dispatchCommand({id:'project.previous',source:'pointer'});$('#next').onclick=()=>dispatchCommand({id:'project.next',source:'pointer'});for(const key of Object.keys(materialSettings)){const input=document.getElementById(key);input.value=materialSettings[key];input.oninput=()=>{materialSettings[key]=+input.value;document.getElementById(key+'Value').value=input.value+'%';document.documentElement.style.setProperty('--reflection-strength',String(materialSettings.reflections/100));document.documentElement.style.setProperty('--glow-strength',String(materialSettings.glow/100));};}document.documentElement.style.setProperty('--reflection-strength',String(materialSettings.reflections/100));
+$('#navContentWidth').onchange=e=>{navWidthPreset=e.target.value==='page'?'page':normaliseContentWidth(e.target.value);applyContentWidths();saveFlag('prem-nav-content-width',navWidthPreset);};
 $('#contentPageWidth').onchange=e=>{if(busy){applyContentWidths();return;}contentPageWidth=normaliseContentWidth(e.target.value);applyContentWidths();refreshImageFrames();try{localStorage.setItem('prem-content-page-width',contentPageWidth);}catch{}};
 $('#servicesCarouselAlignment').value=servicesCarouselAlignment;$('#servicesCarouselAlignment').onchange=e=>{if(busy){e.target.value=servicesCarouselAlignment;return;}servicesCarouselAlignment=e.target.value;syncCardGalleries();cardGalleries.forEach(gallery=>gallery.refresh?.());try{localStorage.setItem('prem-services-carousel-alignment',servicesCarouselAlignment);}catch{}};
 $('#servicesLayout').value=servicesLayout;$('#servicesLayout').onchange=e=>{if(busy){e.target.value=servicesLayout;return;}servicesLayout=e.target.value;syncCardGalleries();cardGalleries.forEach(gallery=>gallery.refresh?.());try{localStorage.setItem('prem-services-layout',servicesLayout);}catch{}};

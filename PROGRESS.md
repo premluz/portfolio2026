@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Navigation has its own width setting
+
+- Settings → Navigation → Width: Same as the page (default, today's behaviour), Extra small 960px, Small 1200px, Medium 1440px, Large 1760px. It drives the header row and the top menu through `--nav-shell-width` and `--nav-gutter`; the page content keeps its own widths. Saved as `prem-nav-content-width` and exported.
+- Evidence: headless browser at 1700px with the menu on top: Same as the page puts the menu 64px from the edge, Extra small 370px, Medium 130px, persisted after reload, no console errors; header box 1088px wide for Extra small.
+
 ## 2026-10-28 Carousel arrows float in the gap instead of pushing the cards
 
 - The home carousel reserved a 59px row above its first card for the arrows. That row is gone (`--gallery-controls-row: 0px`); the arrows are absolutely placed, centred vertically in the one-rhythm-step gap between the hero text and the cards, at the right edge as before. The carousel's top margin is now exactly `--space-page-rhythm-md`.

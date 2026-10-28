@@ -81,7 +81,7 @@ header{height:var(--header-total);padding-top:var(--header-top-offset)}
 /* Offset by the button padding so the Go Back text starts on the content edge, where the avatar was. */
 /* One staggered move: the avatar, then the name slide left and fade out, then Go Back, Previous and Next slide in
    from the right; leaving reverses the order. --swap-in / --swap-out are each element's place in that order. */
-.header-detail-nav{position:absolute;left:calc(var(--content-gutter) - var(--space-3));top:var(--header-top-offset);bottom:0;display:flex;align-items:center;gap:var(--space-1);pointer-events:none}
+.header-detail-nav{position:absolute;left:calc(var(--nav-gutter) - var(--space-3));top:var(--header-top-offset);bottom:0;display:flex;align-items:center;gap:var(--space-1);pointer-events:none}
 :root.header-detail-active .header-detail-nav{pointer-events:auto}
 header .brand{--swap-in:0;--swap-out:4}
 header .discipline{--swap-in:1;--swap-out:3}

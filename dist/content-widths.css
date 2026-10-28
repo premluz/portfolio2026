@@ -1,7 +1,9 @@
 :root{--app-max-width:1920px;--content-width-reading:600px;--content-width-xs:960px;--content-width-sm:1200px;--content-width-md:1440px;--content-width-lg:1760px;--content-width:var(--content-width-md);--content-gutter:clamp(24px,4vw,64px);--app-canvas-width:min(100vw,var(--app-max-width));--content-shell-width:min(var(--app-max-width),calc(var(--content-width) + 2 * var(--content-gutter)))}
 html{background:var(--page)}
 body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
-:is(#main,.retained-home),body>header,body.wide-project-hero-page>header,.site-footer{width:100%;max-width:var(--content-shell-width);padding-inline:var(--content-gutter)}
+:is(#main,.retained-home),.site-footer{width:100%;max-width:var(--content-shell-width);padding-inline:var(--content-gutter)}
+/* The header and the top menu have their own width setting; it follows the page unless chosen. */
+body>header,body.wide-project-hero-page>header{width:100%;max-width:var(--nav-shell-width);padding-inline:var(--nav-gutter)}
 :is(#main,.retained-home),.site-footer{margin-inline:auto}
 :is(#main,.retained-home) .home-hero{padding-inline:0}
 :is(#main,.retained-home)>.story,:is(#main,.retained-home)>.detail-footer{width:100%;max-width:100%}

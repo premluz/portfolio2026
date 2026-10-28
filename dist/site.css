@@ -1166,7 +1166,7 @@ header{height:var(--header-total);padding-top:var(--header-top-offset)}
 /* Offset by the button padding so the Go Back text starts on the content edge, where the avatar was. */
 /* One staggered move: the avatar, then the name slide left and fade out, then Go Back, Previous and Next slide in
    from the right; leaving reverses the order. --swap-in / --swap-out are each element's place in that order. */
-.header-detail-nav{position:absolute;left:calc(var(--content-gutter) - var(--space-3));top:var(--header-top-offset);bottom:0;display:flex;align-items:center;gap:var(--space-1);pointer-events:none}
+.header-detail-nav{position:absolute;left:calc(var(--nav-gutter) - var(--space-3));top:var(--header-top-offset);bottom:0;display:flex;align-items:center;gap:var(--space-1);pointer-events:none}
 :root.header-detail-active .header-detail-nav{pointer-events:auto}
 header .brand{--swap-in:0;--swap-out:4}
 header .discipline{--swap-in:1;--swap-out:3}
@@ -2019,10 +2019,10 @@ body:has(.home-carousel-active){overflow-x:clip}
 /* Navigation position (Settings → Navigation): top moves the dock into the header row. */
 :root[data-nav-position="top"] #dock{top:var(--dock-top);bottom:auto}
 /* Nav on top: the menu is right-aligned to the content edge (where the header ends), and is the rightmost container. */
-:root[data-nav-position="top"] #dock{left:auto;right:calc((100vw - min(100vw, var(--content-shell-width))) / 2 + var(--content-gutter));transform:none}
+:root[data-nav-position="top"] #dock{left:auto;right:calc((100vw - min(100vw, var(--nav-shell-width))) / 2 + var(--nav-gutter));transform:none}
 :root[data-nav-position="top"] #dock>.assistant-launcher{left:auto;right:calc(100% + var(--nav-section-gap))}
 /* Plain navigation has no visible pill, so the last link's text (not its padding) meets the content edge. */
-:root[data-nav-position="top"][data-plain-nav="on"] #dock:not(.is-composer){right:calc((100vw - min(100vw, var(--content-shell-width))) / 2 + var(--content-gutter) - var(--composer-control-inset) - min(calc(var(--nav-item-padding) + 5px), 16px))}
+:root[data-nav-position="top"][data-plain-nav="on"] #dock:not(.is-composer){right:calc((100vw - min(100vw, var(--nav-shell-width))) / 2 + var(--nav-gutter) - var(--composer-control-inset) - min(calc(var(--nav-item-padding) + 5px), 16px))}
 @media(max-width:750px) and (pointer:coarse){:is(#dock,.assistant-inline-composer) .assistant-composer input{font-size:max(16px,var(--composer-font-size))}}
 
 .corner-controls{position:fixed;right:max(24px,env(safe-area-inset-right));bottom:max(24px,env(safe-area-inset-bottom));z-index:44;display:flex;align-items:center;gap:8px}.corner-controls[hidden]{display:none!important}
@@ -2086,7 +2086,9 @@ body:has(.home-carousel-active){overflow-x:clip}
 :root{--app-max-width:1920px;--content-width-reading:600px;--content-width-xs:960px;--content-width-sm:1200px;--content-width-md:1440px;--content-width-lg:1760px;--content-width:var(--content-width-md);--content-gutter:clamp(24px,4vw,64px);--app-canvas-width:min(100vw,var(--app-max-width));--content-shell-width:min(var(--app-max-width),calc(var(--content-width) + 2 * var(--content-gutter)))}
 html{background:var(--page)}
 body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
-:is(#main,.retained-home),body>header,body.wide-project-hero-page>header,.site-footer{width:100%;max-width:var(--content-shell-width);padding-inline:var(--content-gutter)}
+:is(#main,.retained-home),.site-footer{width:100%;max-width:var(--content-shell-width);padding-inline:var(--content-gutter)}
+/* The header and the top menu have their own width setting; it follows the page unless chosen. */
+body>header,body.wide-project-hero-page>header{width:100%;max-width:var(--nav-shell-width);padding-inline:var(--nav-gutter)}
 :is(#main,.retained-home),.site-footer{margin-inline:auto}
 :is(#main,.retained-home) .home-hero{padding-inline:0}
 :is(#main,.retained-home)>.story,:is(#main,.retained-home)>.detail-footer{width:100%;max-width:100%}

@@ -91,10 +91,10 @@
 /* Navigation position (Settings → Navigation): top moves the dock into the header row. */
 :root[data-nav-position="top"] #dock{top:var(--dock-top);bottom:auto}
 /* Nav on top: the menu is right-aligned to the content edge (where the header ends), and is the rightmost container. */
-:root[data-nav-position="top"] #dock{left:auto;right:calc((100vw - min(100vw, var(--content-shell-width))) / 2 + var(--content-gutter));transform:none}
+:root[data-nav-position="top"] #dock{left:auto;right:calc((100vw - min(100vw, var(--nav-shell-width))) / 2 + var(--nav-gutter));transform:none}
 :root[data-nav-position="top"] #dock>.assistant-launcher{left:auto;right:calc(100% + var(--nav-section-gap))}
 /* Plain navigation has no visible pill, so the last link's text (not its padding) meets the content edge. */
-:root[data-nav-position="top"][data-plain-nav="on"] #dock:not(.is-composer){right:calc((100vw - min(100vw, var(--content-shell-width))) / 2 + var(--content-gutter) - var(--composer-control-inset) - min(calc(var(--nav-item-padding) + 5px), 16px))}
+:root[data-nav-position="top"][data-plain-nav="on"] #dock:not(.is-composer){right:calc((100vw - min(100vw, var(--nav-shell-width))) / 2 + var(--nav-gutter) - var(--composer-control-inset) - min(calc(var(--nav-item-padding) + 5px), 16px))}
 @media(max-width:750px) and (pointer:coarse){:is(#dock,.assistant-inline-composer) .assistant-composer input{font-size:max(16px,var(--composer-font-size))}}
 
 .corner-controls{position:fixed;right:max(24px,env(safe-area-inset-right));bottom:max(24px,env(safe-area-inset-bottom));z-index:44;display:flex;align-items:center;gap:8px}.corner-controls[hidden]{display:none!important}
