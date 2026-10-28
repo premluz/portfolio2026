@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 One page rhythm on Home; "Writing and opinions" is now "Thoughts"
+
+- Every Home section sits one medium step (96px) below the previous one: `.home-content-section` and `.home-about` margins are `--space-page-rhythm-md` (were 192px), and the carousel's pull-up is now just the 19.2px stage slack under its caption (it used to cancel a 192px margin, which is why changing only the About margin earlier collapsed the gap). Section headings sit one tight step (19.2px) above their content, as in the About lists (was 48px). The writing section and its Developer settings switch are titled Thoughts in both catalogs.
+- Evidence: headless browser with the owner's settings: caption to About heading 97px, About to Thoughts 96px, tests articles, card-gallery and header-spacing updated and passing.
+
 ## 2026-10-28 Tighter card caption and About intro spacing
 
 - New token `--space-card-copy` (19.2px, `--space-4`) for the gap between a card's media and its caption on the home grid, carousel and hero carousel (was the shared `--space-text-media`, 38.4px, which still spaces detail pages). The About block's heading-to-text gap is 19.2px (was 28.8px). Its top margin stays at `--space-page-rhythm-lg` (192px); a first change to 96px was reverted at the owner's request.

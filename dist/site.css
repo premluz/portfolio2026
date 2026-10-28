@@ -1467,7 +1467,7 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 .hero-timeline[data-timeline-graphic=false] .timeline-track{padding-top:0}
 
 /* home-about.css */
-.home-about{--home-about-years-column:5.375em;margin-top:var(--space-page-rhythm-lg);width:100%;min-width:0;grid-column:1 / -1}
+.home-about{--home-about-years-column:5.375em;margin-top:var(--space-page-rhythm-md);width:100%;min-width:0;grid-column:1 / -1}
 .home-about h2{max-width:var(--page-intro-width);margin:0;font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:pretty}
 .home-about-title-secondary{color:var(--body-ink)}
 .home-about-copy,.home-about-lists{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6)}
@@ -1693,7 +1693,7 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 .home-product-carousel .spatial-card-gallery:not([data-gallery-variant="circular"])[data-description-in-card="true"][data-gallery-axis="horizontal"]{--gallery-controls-row:calc(40px + var(--space-4))}
 .home-product-carousel .spatial-card-gallery:not([data-gallery-variant="circular"])[data-description-in-card="true"][data-gallery-axis="horizontal"] .spatial-gallery-primary-action{top:0;bottom:auto;justify-content:flex-end}
 .home-product-carousel .spatial-card-gallery:not([data-gallery-variant="circular"])[data-description-in-card="true"][data-gallery-axis="horizontal"] .spatial-gallery-viewport{padding-top:var(--gallery-controls-row);padding-bottom:calc(var(--space-4) + var(--gallery-copy-height,0px));height:calc(var(--gallery-controls-row) + var(--gallery-card-height) + var(--gallery-copy-height,0px) + var(--space-4) * 2)}
-.home-product-carousel:not([hidden]){margin-bottom:calc(var(--space-page-rhythm-md) - var(--space-page-rhythm-lg))}
+.home-product-carousel:not([hidden]){margin-bottom:calc(-1 * var(--space-4))}
 
 /* card-world.css */
 /* Card worlds: the spiral scrolls through a tall section with a pinned stage; the infinite space fills
@@ -1733,8 +1733,8 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 :root{--radius-home-content-card:20px;--home-content-card-padding:clamp(24px,2.6vw,40px);--font-size-testimonial:clamp(calc(22px * var(--type-scale)),calc(2.1vw * var(--type-scale)),calc(32px * var(--type-scale)))}
 /* Flip and Flat reuse the hero h1 for the active project, so the heading switch does not hide it there (design-system.css restores it). */
 [data-home-section][hidden]:not(.home-view-split [data-home-section="heading"]),.home-about[hidden]{display:none!important}
-.home-content-section{grid-column:1 / -1;min-width:0;width:100%;margin-top:var(--space-page-rhythm-lg)}
-.home-content-section>h2{margin:0 0 var(--space-page-rhythm-sm);font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink)}
+.home-content-section{grid-column:1 / -1;min-width:0;width:100%;margin-top:var(--space-page-rhythm-md)}
+.home-content-section>h2{margin:0 0 var(--space-4);font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink)}
 .home-services-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-6)}
 .home-approach{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);align-items:start}
 .home-approach-intro{grid-column:1 / -1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);min-width:0}

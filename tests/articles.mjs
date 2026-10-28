@@ -29,7 +29,7 @@ assert(!first.includes('class="story content-grid"'),'Articles read in one colum
 assert(!/<(header|footer)\b/.test(first+second),'Article markup avoids header and footer tags, which carry fixed site chrome styles');
 
 const home=homeWritingMarkup();
-assert(home.includes('data-home-section="writing"')&&home.includes('>Writing and opinions</h2>'),'Home shows the writing section');
+assert(home.includes('data-home-section="writing"')&&home.includes('>Thoughts</h2>'),'Home shows the writing section');
 assert(home.indexOf('#desire-and-lived-experience')<home.indexOf('#design-after-the-screen'),'Writing follows the authored order');
 assert.equal(HOME_SECTION_DEFAULTS.writing,true,'Writing can be toggled and starts visible');
 const page=homeMarkup(cards,'masonry'),at=name=>page.indexOf(`data-home-section="${name}"`);

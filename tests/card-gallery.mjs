@@ -56,5 +56,5 @@ let scrollPrevented=false;gallery.onClick({target:{closest:()=>items[0]},prevent
 gallery.destroy();assert(disconnected);assert.equal(viewport.listeners.size,0);assert.equal(frames.size,0);
 {const css=(await import('node:fs')).readFileSync(new URL('../dist/card-gallery.css',import.meta.url),'utf8');
 assert(css.includes('[data-gallery-axis="horizontal"] .spatial-gallery-primary-action{top:0;bottom:auto;justify-content:flex-end}'),'Carousel arrows sit above the cards at the right edge of the content');
-assert(css.includes('.home-product-carousel:not([hidden]){margin-bottom:calc(var(--space-page-rhythm-md) - var(--space-page-rhythm-lg))}'),'The section after the carousel moves up by the difference of two rhythm steps');}
+assert(css.includes('.home-product-carousel:not([hidden]){margin-bottom:calc(-1 * var(--space-4))}'),'The section after the carousel moves up by the stage slack under its caption, so it sits one medium step below');}
 console.log('Card gallery passed: generic content, five visible slots, centred face, both axes, captions, retained selection, keys, click selection, mouse drag, scroll presentation and cleanup.');
