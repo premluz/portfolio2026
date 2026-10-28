@@ -25,6 +25,6 @@ export function homeHero({heroContent='timeline'}={}){const hero=content.get('ho
 export function hydrateFooter(root=document){
  const footer=content.get('site-footer'),invitation=footer?.blocks.find(block=>block.id==='footer-invitation');if(!footer||!invitation)return;
  const title=root.querySelector('#footer-title'),body=root.querySelector('.footer-invitation');
- if(title)title.innerHTML=headingText(invitation.title);if(body)body.textContent=invitation.paragraphs?.join(' ')||'';
+ if(title)title.textContent=invitation.title.replace(/\s*\n\s*/g,' ');if(body)body.textContent=invitation.paragraphs?.join(' ')||'';
  const links=root.querySelectorAll('.footer-links a');footer.links?.forEach((link,index)=>{if(links[index]){links[index].href=link.url;links[index].setAttribute('aria-label',link.label);}});
 }

@@ -134,8 +134,16 @@ main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:0;padding-top:
 .site-footer[hidden]{display:none}
 
 /* Footer follows the same type ladder as the header and page heroes. */
-.site-footer h2{font-size:var(--heading-title-size);max-width:var(--measure-heading);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking)}
+.site-footer h2{font-size:var(--heading-title-size);max-width:none;font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking)}
 .footer-invitation{margin-top:var(--space-hero-heading-content);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
+.footer-invitation[hidden]{display:none}
+.footer-link-label{display:none}
+/* Contact items as plain text: the circle and icon give way to a label that reads like body copy. */
+.site-footer[data-links="text"] .footer-links{gap:var(--space-6)}
+.site-footer[data-links="text"] .footer-links a{display:inline;width:auto;height:auto;border-radius:0;background:none;box-shadow:none;color:var(--body-ink);font-size:var(--font-size-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);text-decoration:underline;text-decoration-color:var(--nav-rim);text-underline-offset:.2em}
+.site-footer[data-links="text"] .footer-links a:is(:hover,:focus-visible){color:var(--ink);background:none;text-decoration-color:currentColor}
+.site-footer[data-links="text"] .footer-links svg{display:none}
+.site-footer[data-links="text"] .footer-link-label{display:inline}
 .footer-credit{font-size:var(--font-size-caption);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--eyebrow-tracking);color:var(--eyebrow-ink)}
 
 /* Project statements use sentence-case supporting text. Outcomes live in detail highlights. */

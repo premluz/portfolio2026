@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Footer group in Developer settings
+
+- New Footer group collects Show footer (moved from Content), Show invitation line, Show contact items and Contact items as text. The title "Building something complex?" is one line. Text mode hides the circles and icons and shows LinkedIn, Email and Let's talk as underlined body-size labels.
+- Evidence: headless browser at 1440 and 390 wide (title one line, switches work, persist after reload, no console errors); tests/footer-switch.mjs extended.
+
 ## 2026-10-28 Assistant menu item is a checkbox, always named Assistant
 The Chat item's label dropdown (Assistant / Call Assistant / Ask Assistant) is gone. The item is now a "Show Assistant" checkbox with the other menu items and always reads "Assistant". It appears at the end of the menu when its switch is on and the mascot is not standing in as the assistant. Evidence: headless browser: ticking and unticking the switch adds and removes the item, the dock re-measures, the choice persists; tests/assistant-floating.mjs updated.
 
