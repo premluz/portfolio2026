@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Normal gap under the About intro heading
+The gap between "Most useful where the problem is messy…" and its text was one large rhythm step (48px); it now uses the same title-to-text gap as every page (28.8px). Evidence: measured in the headless browser on Home and About.
+
 ## 2026-10-28 Menu item toggles, Chat menu item, mascot switch
 Navigation settings gained "Show Lab" and "Show Contact" (Work and About always show), a "Chat item" label (Assistant, Call Assistant or Ask Assistant) and "Show mascot". Chat is the mascot when "Chat is the mascot" is on and the mascot is shown; otherwise it is a text item at the end of the menu after Contact, which replaces the Assistant pill that sat beside the dock. Evidence: headless browser: each toggle changed the dock's links and width, the chat item opened the chat page and showed as active, hiding the mascot brought the item back and hid the character, choices persisted across a reload; tests/assistant-floating.mjs extended.
 

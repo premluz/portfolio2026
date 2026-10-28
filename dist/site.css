@@ -1462,7 +1462,7 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 .home-about h2{max-width:var(--page-intro-width);margin:0;font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:pretty}
 .home-about-title-secondary{color:var(--body-ink)}
 .home-about-copy,.home-about-lists{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6)}
-.home-about-copy{margin-top:var(--space-page-rhythm-sm)}
+.home-about-copy{margin-top:var(--space-hero-heading-content)}
 .home-about-copy p{grid-column:calc(2 * var(--content-column-start) - 1) / span 3;margin:0;max-width:none;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
 .home-about-copy p+p{grid-column:calc(2 * var(--content-column-start) - 1) / span 3}
 .home-about-copy p:empty{display:none}
