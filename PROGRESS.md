@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Highlight popover sits closer to its text
+
+- The gap between a highlighted phrase and its popover is 4px (was 12px, plus the line box), so the pointer no longer crosses a neighbouring highlight on the way to the popover's link. `CONTEXTUAL_POPOVER_GAP` in `contextual-popovers.js`.
+- Evidence: headless browser, panel edge 4px from the trigger for the four visible highlights; tests/contextual-popovers.mjs.
+
 ## 2026-10-28 Footer copy confirmation sits under the button
 
 - The footer Email button confirms "Copied to clipboard" in a tooltip-styled notice directly beneath it (`anchored-notice.js`, 1.8s, hides on scroll or resize). Other copy actions keep the site toast.

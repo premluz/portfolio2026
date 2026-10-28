@@ -23,7 +23,9 @@ export function contextualPopoverMarkup(entry){
  const rows=entry.items||[entry];
  return `<div class="contextual-popover-copy">${rows.map(row=>{const href=safeHref(row.link?.url);return `<p>${href?`<a href="${href}"${/^https?:/.test(row.link.url)?' target="_blank" rel="noopener"':''}>${escapeText(row.link.label||row.title)}</a> `:''}${(row.paragraphs||[]).map(escapeText).join(' ')}</p>`;}).join('')}</div>`;
 }
-export function contextualPopoverPosition(anchor,size,viewport,gap=12){
+// Kept tight: a wide gap lets the pointer cross a neighbouring highlight on its way to the popover's link.
+export const CONTEXTUAL_POPOVER_GAP=4;
+export function contextualPopoverPosition(anchor,size,viewport,gap=CONTEXTUAL_POPOVER_GAP){
  const margin=16,width=Math.min(size.width,Math.max(0,viewport.width-margin*2)),height=Math.min(size.height,Math.max(0,viewport.height-margin*2));
  const above=anchor.top-height-gap>=margin;
  return {left:Math.max(margin,Math.min(anchor.left,viewport.width-width-margin)),top:Math.max(margin,Math.min(above?anchor.top-height-gap:anchor.bottom+gap,viewport.height-height-margin)),width,height,above};
