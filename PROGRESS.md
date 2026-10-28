@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Remove hover trail setting for cards
+
+- Settings → Cards → Remove hover trail (off by default, saved and exported) makes card hover instant in both directions: the trail was the 1000ms `--surface-hover-out-duration` fade on the card effect layers (240ms in) plus the 180–220ms title and summary colour fades. The dock's separate 32ms hover latch is unchanged.
+- Evidence: headless browser on the Lab grid: 60ms after leaving a card the effect layer was at opacity 0.96 (glow) and 0.86 (liquid morph) with the setting off, and 0 with it on; the title colour dropped at once; the setting persists after a reload.
+
 ## 2026-10-28 Prototype and reel windows are smaller; Close sits centred where the menu is
 
 - The focused image, prototype and YouTube window is at most 1200px wide (was 1440px) and leaves a 136px band above and below (was 48px), so the Close control no longer sits on top of it. With the menu at the bottom, Close is centred at the bottom; with the menu on top, the right-aligned menu now slides to the centre as it shrinks into Close (`--dock-focus-shift`, driven by the same spring as the shrink) and returns to the right when it closes.

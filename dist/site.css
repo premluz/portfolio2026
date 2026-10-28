@@ -956,6 +956,8 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 .visual>img[data-media-pending]{opacity:0}.visual:has(>img[data-media-pending])>.image-edge{opacity:0}
 
 /* surface-hover.css */
+/* Remove hover trail: card hover (surface fill, effect layers, title and summary colour) switches in and out instantly. */
+:root[data-hover-instant="on"]{--surface-hover-in-duration:0ms;--surface-hover-out-duration:0ms;--card-content-in-duration:0ms;--card-content-out-duration:0ms}
 /* Surface hover is opt-in and independent of card layout/content. An effect
    name can be combined with others (e.g. "tint blur scale"). The liquid skin
    is the visual plane; the host keeps its geometry and pointer semantics. */
