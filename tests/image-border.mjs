@@ -10,9 +10,9 @@ const [html,app,transfer,design,gallery,plain]=await Promise.all(['index.html','
 assert.equal(DEFAULT_STORAGE_VALUES['prem-image-border'],'false');assert(transfer.includes("imageBorder:'prem-image-border'"),'Exported with the other settings');
 assert(html.includes('<input id="imageBorder" type="checkbox"> Thin border on card images'),'The page carries the switch');
 assert(app.includes("document.documentElement.dataset.imageBorder=imageBorder?'on':'off'"),'It sets the root attribute');
-assert(design.includes(':root[data-image-border="on"] .project-card>.visual{outline:1px solid'),'The border is an inset outline on the image frame');
+assert(design.includes(':root[data-image-border="on"] .project-card>.visual :is(img,video){outline:1px solid'),'The border is an inset outline on the picture itself, not its padded frame');
 assert(!plain.includes('outline'),'Plain cards no longer add a border');
-assert(gallery.includes('.spatial-gallery-pose .project-card{--gallery-card-radius:calc(var(--radius-card) * .3125)}')&&gallery.includes('border-radius:var(--gallery-card-radius)'),'Card rounding reaches the carousel');
+assert(gallery.includes('.spatial-gallery-pose .project-card{--gallery-card-radius:var(--radius-card)}')&&gallery.includes('border-radius:var(--gallery-card-radius)'),'Card rounding reaches the carousel');
 const arc=html.slice(html.indexOf('<div id="carouselArcSettings"'));
 assert(!arc.slice(0,arc.indexOf('Motion and mobile')).includes('id="carouselSize"')&&html.indexOf('id="carouselSize"')<html.indexOf('<div id="carouselArcSettings"'),'Card size sits outside the circular-only group');
 assert(html.indexOf('id="carouselGap"')<html.indexOf('<div id="carouselArcSettings"')&&gallery.includes('gap:var(--carousel-gap,var(--space-6))'),'Gap works for the scroll presentation too');

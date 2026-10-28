@@ -1387,8 +1387,9 @@ body.card-client-hidden .project-card.image-card>.card-copy>.card-client,body.ca
 .about-detail .card-gallery-block{margin:0}
 body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 
-/* Thin border on card images (Settings → Cards): an inset outline paints over the picture, follows its rounding and moves nothing. */
-:root[data-image-border="on"] .project-card>.visual{outline:1px solid color-mix(in oklch,var(--ink) 8%,transparent);outline-offset:-1px}
+/* Thin border on card images (Settings → Cards): on the picture itself, not its padded frame. An inset outline paints over the
+   picture, follows its rounding and moves nothing. */
+:root[data-image-border="on"] .project-card>.visual :is(img,video){outline:1px solid color-mix(in oklch,var(--ink) 8%,transparent);outline-offset:-1px}
 
 /* spatial-navigation.css */
 /* Local input feedback lives outside the moving canvas and uses the site's
@@ -1713,8 +1714,8 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 
 /* The Gap setting spaces the scroll carousel's cards as well as the circular one's minimum gap. */
 .spatial-card-gallery:not([data-gallery-variant="circular"],[data-gallery-axis="vertical"]) .spatial-gallery-viewport{gap:var(--carousel-gap,var(--space-6))}
-/* Card rounding reaches the carousel too: 64px (the default) gives the carousel's usual 20px. Each card's --radius-card is fitted to its size. */
-.spatial-gallery-pose .project-card{--gallery-card-radius:calc(var(--radius-card) * .3125)}
+/* Card rounding reaches the carousel as it does the grid: each card's --radius-card is fitted to its size. */
+.spatial-gallery-pose .project-card{--gallery-card-radius:var(--radius-card)}
 .spatial-gallery-pose :is(.project-card,.content-media-frame){border-radius:var(--gallery-card-radius)}
 /* The picture sits one card padding inside the card, so its corners nest in the card's (the image frame code sets its own radius inline). */
 .home-product-carousel .spatial-gallery-pose .project-card>.visual,.home-product-carousel .spatial-gallery-pose .project-card>.visual :is(img,video,canvas){border-radius:max(0px,calc(var(--gallery-card-radius) - var(--card-padding-top,0px)))!important}

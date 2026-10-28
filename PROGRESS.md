@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Carousel uses the grid's rounding; image border sits on the picture
+
+- The carousel's card, frame and picture radius is now the card's own fitted Card rounding, the same value the grid cards get (it used to be that value times 0.3125, so the slider barely moved it). The image border is an outline on the `img`/`video` itself instead of its padded `.visual` frame, so image top, side and bottom padding no longer change where it sits.
+- Evidence: headless browser with the owner's settings: carousel 656x474 card radius 118.5px at setting 128 and 62.8px at 64, in scroll and circular; outline on the media, none on the frame; on a Lab card with 28px top and 64px bottom image padding the 194x157 frame is outline-free and the 194x121 image carries it.
+
 ## 2026-10-28 Card rounding is relative to the card size
 
 - Card rounding is now the radius of a large card: each image card fits its own radius tokens to its size (`fittedCardRadius`, set on the card by `ImageFrame.fitCardRadius`). Cards with a shorter side of 480px or more keep the setting, smaller ones get it scaled by (side / 480) ^ 1.5, and none exceeds a quarter of its shorter side. A first version only capped at a quarter of the side, which still left small cards too round at the slider's maximum. The carousel's radius derives from the same fitted value.
