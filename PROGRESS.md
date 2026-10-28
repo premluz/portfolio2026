@@ -12,6 +12,10 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Header brand: hide the avatar, name and description on one line
+
+- Two new switches under Developer settings → Navigation → Header, both off by default, saved and exported: Hide the avatar (the name and description move to the edge) and Name and description on one line. Evidence: headless browser (avatar gone, text starts at the content edge, name and role share one row 96px apart, persisted after reload, no console errors).
+
 ## 2026-10-28 Carousel card frames match the image, closing the extra gap under the hero
 
 - On desktop the home carousel's card frame had its own height (up to 500px) while the 16:10 picture inside was shorter and bottom-aligned, leaving an invisible ~59px strip above every image. That strip was the extra space the owner saw between the hero text and the carousel (earlier measurements used the card box, not the image). The frame height is now derived from the card width and the 1.6 image ratio at every screen size, as phones already did.
