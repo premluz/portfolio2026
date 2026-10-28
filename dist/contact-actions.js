@@ -1,4 +1,4 @@
-import {showNoticeBelow} from './anchored-notice.js';
+import {showNoticeNear} from './anchored-notice.js';
 export const CONTACT_LINKEDIN_URL='https://www.linkedin.com/in/premluczak/';
 const encodedEmail='cHJlbS5sdWN6YWtAZ21haWwuY29t';
 
@@ -18,7 +18,7 @@ export function mountContactEmailCopy(root,notify,{anchored=false}={}){
  const copy=event=>{
   const button=event.target.closest?.('[data-copy-email]');
   if(!button)return;
-  event.preventDefault();void copyContactEmail(anchored?(text,options)=>showNoticeBelow(button,text,options):notify);
+  event.preventDefault();void copyContactEmail(anchored?(text,options)=>showNoticeNear(button,text,options):notify);
  };
  root.addEventListener('click',copy);
  return ()=>root.removeEventListener('click',copy);

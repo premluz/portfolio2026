@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Carousel chevrons, footer text mode without tooltips
+
+- Carousel arrows (card rail and spatial gallery) use the header's Previous/Next chevrons instead of ← →. Footer contact items shown as text lose their tooltips (restored in button mode). The "Copied to clipboard" notice now sits above the item, like a normal tooltip, and drops below only when there is no room (`showNoticeNear`).
+- Evidence: headless browser (svg 16px stroked chevrons in a visible carousel, tooltips null in text mode and restored, notice 9px above the email).
+
 ## 2026-10-28 Highlights never link inline
 
 - Rios and Bastion in the hero text were inline links; now every highlight (Rios, Porter, Bastion and the phrases) only opens its popover, where the link lives. Removed the id list and `.context-marker-link`.
