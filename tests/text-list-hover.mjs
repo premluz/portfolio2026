@@ -18,10 +18,9 @@ globalThis.Image=class{constructor(){Object.assign(this,node());this.complete=tr
 const events=new Map(),anchor={getBoundingClientRect:()=>({left:600,right:850,top:300,height:30})};
 const row={dataset:{projectMenuItem:'porter'},querySelector:()=>anchor,getBoundingClientRect:()=>({top:300,height:30})};
 const section={querySelectorAll:()=>[],hidden:false,contains:()=>false,addEventListener:(type,fn)=>events.set(type,fn),removeEventListener:type=>events.delete(type)};
-assert(!homeProjects.some(project=>project.id==='porter'),'The fixture preserves the grid-only input that originally excluded Porter');
-const controller=mountTextListHover({querySelectorAll:()=>[section]},homeProjects);
+const controller=mountTextListHover({querySelectorAll:selector=>{assert(selector.includes('.home-about-list'),'Experience sections keep the shared text-list hover controller');return [section];}},homeProjects);
 events.get('focusin')({target:{closest:()=>row}});await Promise.resolve();await Promise.resolve();
 assert(loaded.some(url=>/assets\/(optimised\/)?porter[-.]/.test(url)),'Hero text previews resolve Porter from the complete published registry');
 assert.equal(portals[0].style.width,'360px');assert.equal(portals[0].style.left,'216px','The thumbnail is on the left with a 24px gap');
 controller.destroy();assert.equal(events.size,0);assert.equal(globalListeners.size,0);
-console.log('Text list hover passed: grid-only input still resolves Porter, shared size, left-side gap and cleanup.');
+console.log('Text list hover passed: Experience uses the shared controller, Porter resolves, thumbnail geometry and cleanup remain intact.');

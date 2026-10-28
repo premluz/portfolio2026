@@ -12,6 +12,81 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Detail caption-to-image rhythm matches Home
+
+- The project-detail caption now leaves the same Home hero/carousel rhythm before the image, using the shared `space-page-rhythm-md` token; the half-width description layout remains unchanged.
+- Evidence: focused detail-caption test, Playwright measured Home and detail at the same 96px gap, and build pass.
+
+## 2026-10-28 Detail caption uses the first content column
+
+- The project-detail title, company/year, intro and summary now share the same 50% first-column width as the Context description; the media remains full width.
+- Evidence: focused detail-caption test and Playwright measured the desktop caption at 880px of the 1760px content rail.
+
+## 2026-10-28 Stacked detail description matches page rhythm
+
+- In the title-above-image detail layout, the description now starts after the homepage `card-gap` and occupies the shared 50% intro column.
+- Evidence: focused content-renderer test and build pass.
+
+## 2026-10-28 Detail title gap matches card rhythm
+
+- Increased the project-detail title-to-Company · Year gap to the shared `space-4` rhythm, matching the card’s approximately 20px spacing.
+- Evidence: focused detail-caption test and build pass.
+
+## 2026-10-28 Project caption places intro and summary above image
+
+- Project details now show the title/category and Company · Year, then the authored intro and summary above the image; the duplicate title and summary below the image are hidden so content begins at Context.
+- Evidence: focused detail-caption, summary-stream and content-renderer tests plus build pass.
+
+## 2026-10-28 Project details use intro over title
+
+- Project details now use each portfolio item’s authored `intro` as the heading and place its `summary` directly underneath; the existing card title remains a card-only field.
+- Evidence: focused summary-stream and content-renderer tests plus build pass.
+
+## 2026-10-28 Detail caption follows card rhythm
+
+- Project detail captions now keep the title and Company · Year line together like the card, then apply the normal heading-to-content spacing before the results line.
+- Evidence: focused detail-caption test and build pass.
+
+## 2026-10-28 Writing constrained to half width
+
+- Home Writing/Thoughts now uses the same six-column half-width track as Experience and About instead of spanning two of three columns.
+- Evidence: focused article/home-writing assertion and build pass.
+
+## 2026-10-28 Brand hover targets name text
+
+- Corrected the header hover state so `Prem Luczak` turns white on hover and keyboard focus; the portrait avatar remains unchanged.
+- Evidence: focused header assertion and build pass.
+
+## 2026-10-28 How I work heading rhythm tightened
+
+- Removed the duplicate heading-bottom and principles-top spacing so How I work uses one standard `space-6` gap before its content; non-empty intro copy keeps the same row rhythm.
+- Evidence: focused Home sections test and build pass.
+
+## 2026-10-28 Logo hover matches navigation
+
+- The header portrait logo now transitions to the same white ink tone on hover and keyboard focus as the navigation items.
+- Evidence: build completed; the focused logo assertion passes. The broader header-spacing test still stops later at its unrelated editorial-heading fixture assertion.
+
+## 2026-10-28 Experience is independent of About
+
+- Experience and Side Projects & R&D render as independent Home sections after How I work, each with the shared main section `h2` treatment; About contains only its introduction and timeline.
+- Evidence: focused section, width, Home About and build checks updated for the independent markup. The broader header-spacing test still has its unrelated Contact-title fixture failure.
+
+## 2026-10-28 Experience hover and half-width alignment restored
+
+- Experience rows use the same text-list hover and return-morph selectors as the other project-linked lists. About, How I work, Experience and Side Projects now use the first-column-aware half-width track.
+- Evidence: focused hover, Home About, section, width and markup-order checks pass after rebuilding.
+
+## 2026-10-28 Home and detail heading rhythm aligned
+
+- How I work no longer reserves space for empty intro paragraphs and uses the standard title-to-content gap. Product detail captions now use the same gap between the semantic title and the `Gala · 2025` lead.
+- Evidence: focused Home sections and detail-caption checks pass after rebuilding.
+
+## 2026-10-28 About heading uses its authored introduction block
+
+- The Home About heading now renders `about-introduction.title` (“From vision and strategy to shipping and improving.”), alongside its authored paragraphs; the separate `home-about.title` remains document metadata and is no longer a second visible heading source.
+- Evidence: focused Home About test, build, memory check and diff check pass. The broader header-spacing test still stops at its pre-existing Contact title fixture assertion.
+
 ## 2026-10-28 No repeated company or headline below the caption
 
 - On project pages with a picture the client line no longer appears in the column under the picture, and the headline sentence (`pageTitle`, e.g. "Redesigned a fragmented IoT platform around one scalable interaction model") moved into the caption as its last line, at the side or above depending on the mode. The `h1` remains in the page, visually hidden, so the page keeps its heading. The column now holds the intro paragraph and the facts.
@@ -355,6 +430,12 @@ Added "Content starts in the first column" (off by default, saved and exported, 
 
 ## 2026-10-27 Character as the assistant button
 In menu-dock mode the index and Assistant buttons are hidden and the dock character opens the assistant (setting "Character opens the assistant", on, saved and exported, both pages). Evidence: headless browser showed launcher and index hidden, character focusable with pointer events, a click opened the floating assistant, and turning the setting off restored both buttons; tests/assistant-floating.mjs updated. Risk: uncommitted, because it depends on the owner's uncommitted agent work; the site index is still reachable by keyboard shortcut and command, not by a dock button.
+
+## 2026-10-28 How I work content consolidated
+The Home About heading is visible again. The five authored How I work principles moved from the `home-about` document into the independent `home-approach` component in both catalogs, so the section is managed once and remains above About on Home. Evidence: `npm run build`, `tests/home-about.mjs`, `tests/about-page.mjs` and `git diff --check` pass. The broader content test set still contains older catalog assertions outside this change.
+
+## 2026-10-28 Home About order
+Home now places the About section before the independent How I work section. About-page composition is unchanged. Evidence: Home/About tests and a direct Home markup order assertion pass.
 
 ## 2026-10-27 Simple scroll carousel
 The home carousel gained a Scroll presentation, now the default: free native scrolling with no snap or tilt, starts on the content edge, each card carries its own caption, and clicking any card opens its detail instead of bringing it to the front. Perspective and Circular stay selectable (Presentation select). Evidence: tests/card-gallery.mjs covers it; headless browser showed scroll positions held after scrolling (437 stays 437, wheel +260 lands at 697), first card at the content edge, and a click on a side card opened its detail. Risk: a saved Circular/Perspective choice still wins, so existing browsers must pick Scroll once.

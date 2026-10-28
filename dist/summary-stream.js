@@ -9,8 +9,8 @@ export function summaryParts(project){
  return first?{lead:first[1],context:context.slice(first[0].length)}:{lead:context,context:''};
 }
 export function detailSummaryMarkup(project){
- const context=String(project.intro||project.context||'').trim();if(!context)return '';
- const words=context.match(/\S+\s*/g)||[];
+ const summary=String(project.summary||'').trim();if(!summary)return '';
+ const words=summary.match(/\S+\s*/g)||[];
  return `<p class="project-summary"><span data-summary-context>${words.map(word=>`<span data-summary-word>${escapeText(word)}</span>`).join('')}</span></p>`;
 }
 // Inline words keep the full paragraph's dimensions and accessible text intact.

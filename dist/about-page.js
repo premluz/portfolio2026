@@ -4,7 +4,7 @@ import {imageMarkup} from './media-loading.js';
 import {traitIllustration} from './about-illustrations.js';
 import {servicesMarkup} from './home-services.js';
 import {homeApproachMarkup} from './home-approach.js';
-import {homeAboutMarkup} from './home-about.js';
+import {homeAboutMarkup,homeListSectionsMarkup} from './home-about.js';
 import {testimonialsMarkup} from './home-testimonials.js';
 import {writingMarkup} from './home-writing.js';
 
@@ -35,6 +35,6 @@ export function aboutUnusualMarkup(doc=content.get('about-unusual'),store=conten
 }
 
 // The Home components, in Home's order. Which of them show is a dev setting (Content About); all start off.
-export const aboutHomeComponentsMarkup=(store=content)=>forAbout(servicesMarkup(store.get('home-services'),{id:'about-services',homeSection:'services'})+homeAboutMarkup(store.get('home-about'))+homeApproachMarkup(store.get('home-approach'))+writingMarkup(store.get('home-writing'),{homeSection:'writing'})+testimonialsMarkup(store.get('home-testimonials'),{id:'about-testimonials',homeSection:'testimonials'}));
+export const aboutHomeComponentsMarkup=(store=content)=>forAbout(servicesMarkup(store.get('home-services'),{id:'about-services',homeSection:'services'})+homeAboutMarkup(store.get('home-about'),{showTitle:false})+homeApproachMarkup(store.get('home-approach'))+homeListSectionsMarkup(store.get('home-about'))+writingMarkup(store.get('home-writing'),{homeSection:'writing'})+testimonialsMarkup(store.get('home-testimonials'),{id:'about-testimonials',homeSection:'testimonials'}));
 
 export const aboutBodyMarkup=(card,store=content)=>aboutHeroMarkup(card,store)+aboutTraitsMarkup(store.get('about-traits'))+aboutUnusualMarkup(store.get('about-unusual'),store)+aboutHomeComponentsMarkup(store);

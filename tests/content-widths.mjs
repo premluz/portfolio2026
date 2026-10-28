@@ -37,27 +37,27 @@ assert.equal(contentRail(320,'large',24).content,272,'Mobile fitting wins over a
 
 values.set('prem-home-section-spans',JSON.stringify({services:'edge',about:'app',experience:'invalid'}));
 assert.deepEqual(readHomeSectionSpans(storage),{heading:'content',available:'content',strapline:'content',overview:'content',approach:'content',services:'edge',about:'app','about-timeline':'content',experience:'content','side-projects':'content',testimonials:'content',writing:'content'});
-const nodes=Object.fromEntries(['services','about','experience','testimonials'].map(id=>[id,{dataset:{homeSection:id},hidden:false}]));
-const listGrid={dataset:{}},root={querySelectorAll:()=>Object.values(nodes),querySelector:selector=>selector==='.home-about-lists'?listGrid:{querySelectorAll:()=>[nodes.about,nodes.experience]}};
+const nodes=Object.fromEntries(['services','about','experience','side-projects','testimonials'].map(id=>[id,{dataset:{homeSection:id},hidden:false}]));
+const root={querySelectorAll:()=>Object.values(nodes),querySelector:()=>null};
 const selects=Object.entries(nodes).map(([id])=>({dataset:{homeSpanControl:id},value:'content',addEventListener(type,fn){this[type]=fn;}}));
 const panel={querySelectorAll:selector=>selector==='[data-home-span-control]'?selects:[]};
 let allowed=true,changes=0;
 const controller=initHomeSectionSettings(panel,{storage,getRoot:()=>root,canChange:()=>allowed,onChange:()=>changes++});
 assert.equal(nodes.services.dataset.contentSpan,'edge');assert.equal(nodes.about.dataset.contentSpan,'app');
-selects[2].value='edge';selects[2].change();assert.equal(listGrid.dataset.contentSpan,'edge','The Experience width setting widens the grid that holds the two lists');assert.equal(nodes.experience.dataset.contentSpan,undefined,'A list never takes the breakout itself');assert.equal(changes,1);
+const experienceSelect=selects.find(select=>select.dataset.homeSpanControl==='experience');experienceSelect.value='edge';experienceSelect.change();assert.equal(nodes.experience.dataset.contentSpan,'edge','The Experience width setting applies to the independent Experience section');assert.equal(nodes['side-projects'].dataset.contentSpan,'edge','Side projects follow the Experience width setting');assert.equal(changes,1);
 assert.deepEqual(controller.value,{...HOME_SECTION_DEFAULTS},'A bleed setting does not change which sections show');
 assert.equal(readHomeSectionSpans(storage).experience,'edge','Breakout choices survive reload');
-allowed=false;selects[2].value='content';selects[2].change();assert.equal(selects[2].value,'edge');assert.equal(changes,1,'In-flight route transitions retain their layout');
+allowed=false;experienceSelect.value='content';experienceSelect.change();assert.equal(experienceSelect.value,'edge');assert.equal(changes,1,'In-flight route transitions retain their layout');
 {const {readSections,applySections,HOME_SECTION_DEFAULTS}=await import('../dist/home-sections.js');
 const mem=(entries={})=>({getItem:key=>entries[key]??null});
 assert.equal(HOME_SECTION_DEFAULTS['side-projects'],true,'Side projects have their own switch, on by default');
 assert.equal(readSections(mem({'prem-home-content':JSON.stringify({experience:false})}))['side-projects'],false,'A choice saved when the two shared one switch applies to both');
 assert.equal(readSections(mem({'prem-home-content':JSON.stringify({experience:false,'side-projects':true})}))['side-projects'],true,'Once split, each keeps its own choice');
-const node=id=>({dataset:{homeSection:id},hidden:false}),experience=node('experience'),side=node('side-projects'),grid={dataset:{}},list=[experience,side];
-const root={querySelectorAll:()=>list,querySelector:selector=>selector==='.home-about-lists'?grid:null};
+const node=id=>({dataset:{homeSection:id},hidden:false}),experience=node('experience'),side=node('side-projects'),list=[experience,side];
+const root={querySelectorAll:()=>list,querySelector:()=>null};
 applySections(root,{...HOME_SECTION_DEFAULTS,'side-projects':false},{experience:'app'});
 assert.equal(experience.hidden,false);assert.equal(side.hidden,true,'Hiding Side projects leaves Experience showing');
-assert.equal(grid.dataset.contentSpan,'app','The Experience width setting widens the lists grid');assert.equal(experience.dataset.contentSpan,undefined,'The lists themselves never take a breakout');}
+assert.equal(experience.dataset.contentSpan,'app','The Experience width setting applies to the independent section');assert.equal(side.dataset.contentSpan,'app','Side projects follow the Experience width setting');}
 console.log('Content widths passed: independent presets, legacy migration, mobile fitting, 1920px app cap, gutter and edge breakouts, centring, persistence and transition guards.');
 
 assert.equal(readContentWidth(storage,'content'),'medium','A new content-page preset is independent of the project width');

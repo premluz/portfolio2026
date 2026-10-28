@@ -5,7 +5,7 @@ import {createBlockRenderer,contentBlocks} from '../dist/content-blocks.js';
 import {contentAnswer} from '../dist/content-answer.js';
 import {card,cardDetail} from '../dist/card-renderer.js';
 const c=structuredClone(catalog),project=c.documents.find(d=>d.id==='playstation');
-project.client='Client <img onerror=bad>';project.title='<script>bad()</script>';project.pageTitle='<script>bad()</script>';project.summary='One & two <strong>words</strong>';c.assets.find(asset=>asset.id===project.heroMediaId).alt='" onerror="oops';
+project.client='Client <img onerror=bad>';project.title='<script>bad()</script>';project.pageTitle='<script>bad()</script>';project.intro='<script>bad()</script>';project.summary='One & two <strong>words</strong>';c.assets.find(asset=>asset.id===project.heroMediaId).alt='" onerror="oops';
 project.blocks.push({id:'carousel',type:'carousel',title:'Related',items:[{id:'project-link',type:'reference',documentId:'tracr',presentation:'card'},{id:'info',type:'info-card',title:'Info <img>',paragraphs:['<script>bad()</script>'],link:{id:'hello',url:'https://example.com/',label:'Learn more'}}]});
 project.blocks.push({id:'metric',type:'metric',label:'Result',value:'2×',evidenceIds:['highlights']},{id:'quote',type:'quote',text:'Clearer workflows.',attribution:'Prem',evidenceIds:['impact']},{id:'video',type:'video',mediaId:'sony-content-pipeline'});
 const store=createContentStore(c),render=createBlockRenderer({store});
@@ -30,7 +30,7 @@ assert.equal((detailHtml.match(/data-detail-fact/g)||[]).length,5,'Context, Chal
 const labels=['Context','Challenge','My role','Key work','Impact'].map(label=>detailHtml.indexOf(`<dt class="text-eyebrow">${label}</dt>`));
 assert(labels.every((position,index)=>position>=0&&(!index||position>labels[index-1])),'Project pages preserve the requested case-study section order');
 const authoredDetail=cardDetail(createContentStore(catalog).getCard('playstation'));
-assert(authoredDetail.includes('<h1 tabindex="-1">Transformation saving hundreds of hours for developers and publishers</h1>'),'The page thesis is separate from the outcome-led card headline');
+assert(authoredDetail.includes('<h1 tabindex="-1">I joined as the first designer on a programme that had already failed twice and was later described as the largest IT transformation in PlayStation history.</h1>'),'The detail intro is the page heading, separate from the outcome-led card headline');
 const authoredStore=createContentStore(catalog);
 const porter=authoredStore.getCard('porter'),porterCard=card(porter,0,'regular',{link:true});assert(porterCard.includes('href="#porter"')&&porterCard.includes('assets/porter.png')&&porterCard.includes('assets/porter.mp4'));
 const {image,videoUrl,...textOnlyPorter}=porter;
@@ -48,11 +48,13 @@ const cardAnswer=contentAnswer({type:'cards',documentIds:['playstation']},{store
 const extended=createBlockRenderer({store,renderers:{callout:b=>`<p>${b.tone}</p>`}});assert(extended([{type:'callout',tone:'quiet'}]).includes('<p>quiet</p>'));
 assert(contentBlocks([{type:'constructor'}]).includes('Content type unavailable.'));
 {const merlin=cardDetail(store.getCard('merlin'));
-assert(/<div class="detail-caption" data-client="Merlin" data-title="[^"]+" data-category="AI financial analysis"[^>]*><p class="detail-caption-title">[^<]+<\/p><p class="detail-caption-lead">/.test(merlin),'A project page carries a card-style caption holding the card texts (client, title, category, results, year); the Cards settings decide which lines show');
+assert(/<div class="detail-caption" data-client="Merlin" data-title="[^"]+" data-category="AI financial analysis"[^>]*><h2 class="detail-caption-title">[^<]+<\/h2><p class="detail-caption-intro">[^<]+<\/p><p class="detail-caption-results">/.test(merlin),'A project page puts the authored intro and summary in the semantic caption');
 assert(merlin.indexOf('detail-caption')<merlin.indexOf('class="project-client"'),'The caption leads the page');
 const css=await (await import('node:fs/promises')).readFile(new URL('../dist/project-media-focus.css',import.meta.url),'utf8');
 assert(css.includes('.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-caption{display:block;'),'The caption leads every project page that has a picture');
 assert(css.includes(':not(.heading-beside-image,.text-only-detail)>.project-summary')&&css.includes('margin-inline:auto'),'Without Details title beside image the reading column is centred like a blog post');
 assert(css.includes('>.project-client{display:none}')&&css.includes('clip-path:inset(50%)'),'The column below the caption does not repeat the company or the headline (the heading stays for screen readers)');
+assert(css.includes('>.project-summary{display:none;'),'The column below the image starts directly with Context');
+assert(css.includes(':not(.heading-beside-image,.text-only-detail)>.detail-layout>.description{max-width:var(--page-intro-width);margin:var(--card-gap) 0 0;width:100%}'),'The stacked detail description uses one half-width column and the homepage item rhythm');
 assert(css.includes('.surface.detail[data-card-orientation="landscape"]:not(.text-only-detail){--image-max-width-landscape:100000px}'),'A landscape image fills the page width in the stacked layout');}
 console.log('Content renderers passed: typed blocks, reusable project references, carousel accessibility, safe text/media, shared card rendering and validated AI presentation.');

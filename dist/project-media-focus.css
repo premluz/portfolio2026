@@ -31,12 +31,13 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 /* Project pages (with a picture): a card-style caption on top (it follows the Cards settings, see detail-caption.js), the picture
    across the page under it, then the long title, summary and facts in a reading-width column. With "Details title beside image"
    on that column sits at the left; off, it is centred like a blog post. These rules outrank the older two-column ones in style.css. */
-.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-caption{display:block;grid-column:1;grid-row:1;margin:0 0 var(--space-8)}
+.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-caption{display:block;grid-column:1;grid-row:1;width:100%;max-width:var(--page-intro-width);margin:0 0 var(--space-page-rhythm-md)}
 .detail-caption :is(p,h2){margin:0;font-size:var(--font-size-project-summary);font-weight:var(--font-weight-body);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body)}
 .detail-caption-title{color:var(--ink)}
 :root[data-heading-style="editorial"] .detail-caption .detail-caption-title{font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);text-transform:none;color:var(--ink);text-wrap:balance}
 .detail-caption-lead{color:var(--muted)}
-.detail-caption .detail-caption-results{margin-top:var(--space-5);color:var(--body-ink)}
+.detail-caption-title + .detail-caption-lead{margin-top:var(--space-4)}
+.detail-caption .detail-caption-results{margin-top:var(--space-hero-heading-content);color:var(--body-ink)}
 .detail-caption .detail-caption-intro{margin-top:var(--space-5);color:var(--ink)}
 /* The caption carries the company and the headline sentence, so the column below does not repeat them. The heading stays for screen readers. */
 .surface.detail[data-card-orientation]:not(.text-only-detail)>.project-client{display:none}
@@ -47,10 +48,11 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 .surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout>.detail-media-column{grid-column:1;grid-row:2;margin-top:0}
 .surface.detail[data-card-orientation]:not(.text-only-detail)>.project-client{grid-column:1;grid-row:3;margin-top:var(--space-page-rhythm-md)}
 .surface.detail[data-card-orientation]:not(.text-only-detail)>h1{grid-column:1;grid-row:4}
-.surface.detail[data-card-orientation]:not(.text-only-detail)>.project-summary{grid-column:1;grid-row:5}
-.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{grid-column:1;grid-row:6}
+.surface.detail[data-card-orientation]:not(.text-only-detail)>.project-summary{display:none;grid-column:1;grid-row:5}
+.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{grid-column:1;grid-row:3}
 .surface.detail[data-card-orientation]:not(.text-only-detail)>.project-summary,.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{max-width:var(--content-width-reading)}
 .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.project-summary,.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-layout>.description{margin-inline:auto;width:100%}
+.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-layout>.description{max-width:var(--page-intro-width);margin:var(--card-gap) 0 0;width:100%}
 /* "Details title beside image" on, wide screens: the caption sits at the bottom left of the picture (level with its bottom edge), the
    picture on the right with the buttons and QR code under it, and everything else (client line, title, summary, facts) below as a
    centred reading column. Off, and on phones, the stack above applies. */
@@ -63,8 +65,8 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 .surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.detail-layout>.detail-media-column>.detail-project-qr{grid-column:2;grid-row:3;margin-top:var(--space-5)}
 .surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.project-client{grid-column:1 / -1;grid-row:4}
 .surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>h1{grid-column:1 / -1;grid-row:5}
-.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.project-summary{grid-column:1 / -1;grid-row:6}
-.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{grid-column:1 / -1;grid-row:7}
+.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.project-summary{display:none;grid-column:1 / -1;grid-row:6}
+.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{grid-column:1 / -1;grid-row:4}
 .surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.project-summary,.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{margin-inline:auto;width:100%}
 }
 /* A landscape image fills the page width here instead of stopping at the card's 1000px cap. */

@@ -32,7 +32,7 @@ const detail=cardDetail(card);
 assert(detail.includes('about-detail')&&detail.includes('about-traits'),'The About page renders its own sections');
 const aboutIds=[...detail.matchAll(/data-about-section="([^"]+)"/g)].map(match=>match[1]);
 assert.deepEqual(aboutIds,['hero','title','traits','unusual','services','about','about-timeline','experience','side-projects','approach','writing','testimonials'],'Every About component, including the Home ones, is addressable by the About settings in page order');
-assert(!detail.includes('data-home-section'),'Home components on About answer to the About settings, never the Home ones');
+assert(!detail.includes('data-home-section')&&!detail.includes('<h2 id="home-about-title">'),'Home components on About answer to the About settings, never the Home ones or a duplicate About heading');
 assert(!new RegExp('id="([^"]+)"[\\s\\S]*id="\\1"').test(detail),'Reusing Home components adds no duplicate ids');
 const css=await readFile(new URL('../dist/about-page.css',import.meta.url),'utf8'),styles=await readFile(new URL('../scripts/client-styles.mjs',import.meta.url),'utf8');
 assert(styles.includes("'about-page.css'")&&styles.includes("'about-illustrations.css'"),'About stylesheets ship in the client bundle');

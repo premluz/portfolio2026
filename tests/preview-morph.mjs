@@ -13,6 +13,7 @@ assert.deepEqual([proxy.style.left,proxy.style.top,proxy.style.width,proxy.style
 assert.equal(proxy.children[0].className,'visual','The stand-in has the .visual frame the card morph reads');assert.equal(proxy.children[0].children[0].src,'thumb.webp');
 
 let removed=0;fadeOutProxy({remove:()=>removed++},true);assert.equal(removed,1,'Reduced motion removes the stand-in at once');fadeOutProxy(null);
-const css=await readFile(new URL('../dist/preview-morph.css',import.meta.url),'utf8'),styles=await readFile(new URL('../scripts/client-styles.mjs',import.meta.url),'utf8');
+const css=await readFile(new URL('../dist/preview-morph.css',import.meta.url),'utf8'),styles=await readFile(new URL('../scripts/client-styles.mjs',import.meta.url),'utf8'),source=await readFile(new URL('../dist/preview-morph.js',import.meta.url),'utf8');
+assert(source.includes(".home-about-list [data-project-menu-item]"),'Experience rows keep the return-morph anchor');
 assert(styles.includes("'preview-morph.css'")&&!/#[0-9a-f]{3,8}\b/i.test(css),'Stand-in styles ship in the bundle with tokens only');
 console.log('Preview morph passed: contained thumbnail geometry, card-shaped stand-in, reduced-motion cleanup and bundled styles.');

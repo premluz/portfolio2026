@@ -161,7 +161,7 @@
         "MOTION.md",
         "DESIGN_SYSTEM.md"
       ],
-      "hash": "96c242234826c6b1afc0a31347150c5b8b915a92",
+      "hash": "da95424067d812ef58a66c2b0605c43e69102d0a",
       "items": []
     },
     {
@@ -253,7 +253,7 @@
         "TASKS.md",
         "PROJECT_STATE.md"
       ],
-      "hash": "c0cef9504884edff67a27a6ae17d269f9cb5d0d5",
+      "hash": "157626413974025b3e4736c60c911a6636bb6b2b",
       "items": []
     },
     {
@@ -262,8 +262,8 @@
       "title": "Project state",
       "type": "state",
       "status": "active",
-      "updated": "2026-10-26",
-      "summary": "Where the project is right now: what runs, what is switched on, what is failing, open questions and the next action.",
+      "updated": "2026-10-28",
+      "summary": "Where the project is right now: what runs, what is switched on, what is failing, open questions and the next action. How I work content is consolidated in its independent component.",
       "tags": [
         "area/docs",
         "kind/process"
@@ -273,7 +273,7 @@
         "PROGRESS.md",
         "HANDOFF.md"
       ],
-      "hash": "feefe098d3466457967d64c9d22a69dc21606dc6",
+      "hash": "81689033bd364e21be62fe1a8b27831766c27048",
       "items": [
         {
           "id": "Q-001",
@@ -333,7 +333,7 @@
         "PROJECT_STATE.md",
         "PROGRESS.md"
       ],
-      "hash": "6bcd35ed51017cd08790a2de4e0a73a80a9578fd",
+      "hash": "0cc5b1459c621920ac4bc0e43fa1e66aeb96348a",
       "items": [
         {
           "id": "TASK-002",
@@ -411,6 +411,15 @@
           "tags": [
             "area/images",
             "area/content"
+          ]
+        },
+        {
+          "id": "TASK-018",
+          "title": "Consolidate How I work content",
+          "status": "done",
+          "tags": [
+            "area/content",
+            "area/home"
           ]
         },
         {

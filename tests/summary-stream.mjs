@@ -10,18 +10,18 @@ for(const project of projects){
  assert.equal(cardSummary,escapeText(parts.lead),'Card contains the original first sentence');
  assert(grid.includes('data-card-copy-word'),'Card copy is split into stable words for hover streaming');
  assert(!grid.includes('data-summary-context'),'Grid never adds the long context');
- assert.equal((detail.match(/class="project-summary"/g)||[]).length,1,'Details has one longer introduction');
+ assert.equal((detail.match(/class="project-summary"/g)||[]).length,1,'Details has one summary under the intro heading');
  assert(!detail.includes('class="project-context"'),'No duplicated standalone context');
  const paragraph=detail.match(/<p class="project-summary">(.*?)<\/p>/s)[1].replace(/<[^>]*>/g,'');
- assert.equal(paragraph,escapeText((project.intro||project.context).trim()),'The longer project introduction appears under the detail heading');
- assert(!paragraph.includes(escapeText(parts.lead)),'Card results are not prepended to the longer description');
- assert(!detail.includes('data-summary-lead'),'The full introduction streams; no card lead remains visible');
- assert(detail.includes(`<h1 tabindex="-1">${escapeText(project.pageTitle||project.title)}</h1>`),'Details use the project-page thesis, while the card keeps its own headline');
+ assert.equal(paragraph,escapeText((project.summary||'').trim()),'The project summary appears under the detail intro heading');
+ assert(!paragraph.includes(escapeText(project.intro||'')),'The intro is used as the heading, not repeated in the summary');
+ assert(!detail.includes('data-summary-lead'),'The full summary streams; no card lead remains visible');
+ assert(detail.includes(`<h1 tabindex="-1">${escapeText(project.intro||project.pageTitle||project.title)}</h1>`),'Details use the project intro, while the card keeps its own headline');
  assert(detail.indexOf('</p>')<detail.indexOf('<dt class="text-eyebrow">Context</dt>'));
 }
-assert(detailSummaryMarkup({summary:'First.',context:'Safe <text> & content.'}).includes('Safe '));
-assert(detailSummaryMarkup({summary:'First.',context:'Safe <text> & content.'}).includes('&lt;text&gt;'));
-assert.equal(detailSummaryMarkup({summary:'Card only.'}), '','A card description is not silently reused as a detail introduction');
+assert(detailSummaryMarkup({summary:'First.',context:'Safe <text> & content.'}).includes('First.'));
+assert(detailSummaryMarkup({summary:'Safe <text> & content.'}).includes('&lt;text&gt;'));
+assert(detailSummaryMarkup({summary:'Card only.'}).replace(/<[^>]*>/g,'').includes('Card only.'),'The authored summary is used under the detail intro');
 
 let now=0,id=0;const frames=new Map();
 globalThis.requestAnimationFrame=fn=>{frames.set(++id,fn);return id;};globalThis.cancelAnimationFrame=id=>frames.delete(id);

@@ -3,8 +3,8 @@ title: Project state
 type: state
 status: active
 owner: Prem
-updated: 2026-10-26
-summary: Where the project is right now: what runs, what is switched on, what is failing, open questions and the next action.
+updated: 2026-10-28
+summary: Where the project is right now: what runs, what is switched on, what is failing, open questions and the next action. How I work content is consolidated in its independent component.
 tags: [area/docs, kind/process]
 related: [TASKS.md, PROGRESS.md, HANDOFF.md]
 ---

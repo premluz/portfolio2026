@@ -34,7 +34,7 @@
           "mediaId": "merlin-cover"
         }
       ],
-      "intro": "Wwhen an agent does the analysis, the interface should become part of the answer.",
+      "intro": "When an agent does the analysis, the interface should become part of the answer.",
       "context": "Financial intelligence platform where users ask questions, follow the reasoning and work with interfaces generated around the answer.",
       "challenge": "Generative interfaces often feel like chat with a chart attached. I wanted something analysts could trust, inspect and continue working in rather than a disposable response.",
       "role": "Sole designer and builder. Defined the product concept, interaction model, design system, motion and implementation.",
@@ -860,7 +860,7 @@
       "template": "information",
       "status": "published",
       "slug": "contact",
-      "title": "Good things start\nwith a conversation.",
+      "title": "Let's connect!",
       "name": "Contact",
       "summary": "Have a complex product or an interesting idea?",
       "category": "Let’s connect",
@@ -1084,53 +1084,6 @@
           ]
         },
         {
-          "id": "about-how-i-work",
-          "type": "timeline",
-          "title": "How I work",
-          "items": [
-            {
-              "id": "about-how-first-principles",
-              "type": "text",
-              "title": "First principles",
-              "paragraphs": [
-                "Find the real problem before solving it."
-              ]
-            },
-            {
-              "id": "about-how-define-model",
-              "type": "text",
-              "title": "Define the model",
-              "paragraphs": [
-                "Turn user needs & constraints into a clear structure."
-              ]
-            },
-            {
-              "id": "about-how-own-outcome",
-              "type": "text",
-              "title": "Own the outcome",
-              "paragraphs": [
-                "Connect product, teams and business goals."
-              ]
-            },
-            {
-              "id": "about-how-learn-fast",
-              "type": "text",
-              "title": "Adapt to change",
-              "paragraphs": [
-                "Change course when the evidence does."
-              ]
-            },
-            {
-              "id": "about-how-day-one",
-              "type": "text",
-              "title": "Ship fast",
-              "paragraphs": [
-                "Prototype early, decide quickly, ship, then scale."
-              ]
-            }
-          ]
-        },
-        {
           "id": "about-roles",
           "type": "timeline",
           "title": "Experience",
@@ -1234,7 +1187,7 @@
           "type": "info-card",
           "title": "Define the model",
           "paragraphs": [
-            "Turn needs & constraints into a clear product structure."
+            "Turn user needs & constraints into a clear structure."
           ]
         },
         {
@@ -1248,15 +1201,15 @@
         {
           "id": "approach-learn",
           "type": "info-card",
-          "title": "Learn fast",
+          "title": "Adapt to change",
           "paragraphs": [
-            "If I don’t know it, I learn it."
+            "Change course when the evidence does."
           ]
         },
         {
           "id": "approach-mindset",
           "type": "info-card",
-          "title": "Day one mindset",
+          "title": "Ship fast",
           "paragraphs": [
             "Prototype early, decide quickly, ship, then scale."
           ]

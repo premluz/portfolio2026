@@ -1,7 +1,7 @@
 {
   "format": "prem-portfolio-settings",
   "version": 1,
-  "exportedAt": "2026-10-28T21:42:26.210Z",
+  "exportedAt": "2026-10-28T21:43:35.201Z",
   "settings": {
     "section.heading": true,
     "section.available": false,
@@ -143,7 +143,7 @@
     "design.headingWeight": "bold",
     "design.bodyWeight": "thin",
     "design.typeTracking": "small",
-    "design.typeLeading": "medium",
+    "design.typeLeading": "large",
     "servicesLayout": "carousel",
     "servicesCardBackground": true,
     "servicesCarouselAlignment": "content",

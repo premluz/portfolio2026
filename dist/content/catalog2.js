@@ -1085,53 +1085,6 @@ export const catalog={
           ]
         },
         {
-          "id": "about-how-i-work",
-          "type": "timeline",
-          "title": "How I work",
-          "items": [
-            {
-              "id": "about-how-first-principles",
-              "type": "text",
-              "title": "First principles",
-              "paragraphs": [
-                "Find the real problem before solving it."
-              ]
-            },
-            {
-              "id": "about-how-define-model",
-              "type": "text",
-              "title": "Define the model",
-              "paragraphs": [
-                "Turn user needs & constraints into a clear product structure."
-              ]
-            },
-            {
-              "id": "about-how-own-outcome",
-              "type": "text",
-              "title": "Own the outcome",
-              "paragraphs": [
-                "Connect product, teams and business goals."
-              ]
-            },
-            {
-              "id": "about-how-learn-fast",
-              "type": "text",
-              "title": "Learn fast",
-              "paragraphs": [
-                "If I don’t know it, I learn it."
-              ]
-            },
-            {
-              "id": "about-how-day-one",
-              "type": "text",
-              "title": "Day one mindset",
-              "paragraphs": [
-                "Prototype early, decide quickly, ship, then scale."
-              ]
-            }
-          ]
-        },
-        {
           "id": "about-roles",
           "type": "timeline",
           "title": "Experience",
@@ -1235,7 +1188,7 @@ export const catalog={
           "type": "info-card",
           "title": "Define the model",
           "paragraphs": [
-            "Turn needs & constraints into a clear product structure."
+            "Turn user needs & constraints into a clear product structure."
           ]
         },
         {

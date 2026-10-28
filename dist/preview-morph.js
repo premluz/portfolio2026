@@ -4,7 +4,7 @@ import {menuPreviewPosition,PROJECT_PREVIEW_SIZE,PROJECT_PREVIEW_GAP} from './pr
 import {TEXT_LIST_PREVIEW_ANCHOR} from './text-list-hover.js';
 import {EASE} from './motion-tokens.js';
 
-const PREVIEW_ROWS='.home-about-list-content [data-project-menu-item],.home-product-text [data-project-menu-item]';
+const PREVIEW_ROWS='.home-about-list [data-project-menu-item],.home-product-text [data-project-menu-item]';
 const PROXY_FADE_MS=220;
 
 // The hover preview shows its image contained in a fixed box; the morph needs the image's own rect.

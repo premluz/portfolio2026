@@ -4,14 +4,15 @@
 .home-content-section{grid-column:1 / -1;min-width:0;width:100%;margin-top:var(--space-page-rhythm-md)}
 .home-content-section>h2{margin:0 0 var(--space-6);font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink)}
 .home-services-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-6)}
-.home-approach{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);align-items:start}
-.home-approach-intro{grid-column:1 / -1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);min-width:0}
-.home-approach-principles{grid-column:var(--content-column-start) / span 2;min-width:0}
-.home-approach-intro h2{grid-column:1 / -1;margin:0 0 var(--space-6);font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
+.home-approach{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));column-gap:var(--space-6);align-items:start}
+.home-approach-intro{grid-column:1 / -1;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));column-gap:var(--space-6);row-gap:var(--space-6);min-width:0}
+.home-approach-principles{grid-column:calc(2 * var(--content-column-start) - 1) / span 3;min-width:0}
+.home-approach-intro h2{grid-column:1 / -1;margin:0;font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
 .home-approach p{margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink);text-wrap:pretty}
-.home-approach-intro>p{grid-column:var(--content-column-start);min-width:0;max-width:38ch}
-.home-approach-intro>p+p{grid-column:3}
-.home-approach-principles{display:grid;gap:var(--space-6);margin-top:var(--space-page-rhythm-sm)}
+.home-approach-intro>p{grid-column:calc(2 * var(--content-column-start) - 1) / span 3;min-width:0;max-width:none}
+.home-approach-intro>p+p{grid-column:calc(2 * var(--content-column-start) - 1) / span 3}
+.home-approach-intro>p:empty{display:none}
+.home-approach-principles{display:grid;gap:var(--space-6);margin-top:var(--space-6)}
 .home-approach-principles h3{display:inline;margin:0 var(--space-2) 0 0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
 .home-approach-principles p{display:inline;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--eyebrow-ink)}
 @media(max-width:600px){.home-approach,.home-approach-intro{grid-template-columns:1fr}.home-approach-intro{row-gap:var(--space-6)}.home-approach-intro h2{margin-bottom:0}.home-approach-intro,.home-approach-intro>p,.home-approach-intro>p+p,.home-approach-principles{grid-column:1}.home-approach-intro>p{max-width:none}}
@@ -22,7 +23,6 @@
 .home-service-card h3{margin:0 0 var(--space-3);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--ink)}
 .home-service-card p{max-width:34ch;margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
 .home-service-card p+p{margin-top:var(--space-3)}
-.home-about:has(.home-about-introduction[hidden]) .home-about-lists{margin-top:0}
 .home-testimonials-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));--testimonial-gap:var(--space-6);column-gap:0;row-gap:var(--testimonial-gap);min-width:0;width:auto;max-width:100%}
 .home-testimonials{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);min-width:0}
 .home-testimonials>h2{grid-column:1/-1}

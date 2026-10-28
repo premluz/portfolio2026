@@ -67,6 +67,11 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 
 ## Done
 
+### TASK-018 Consolidate How I work content
+- Status: done
+- Tags: area/content, area/home
+- Evidence: both catalogs now keep the five How I work principles only in `home-approach`; the duplicate `about-how-i-work` block is removed, the Home About heading is restored, About precedes How I work on Home, and `tests/home-about.mjs` plus `tests/about-page.mjs` pass, 2026-10-28.
+
 ### TASK-010 Project memory structure and tooling
 - Status: done
 - Tags: area/docs, area/tooling, kind/process

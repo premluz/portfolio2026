@@ -1199,12 +1199,14 @@ header .discipline{--swap-in:1;--swap-out:3}
 .header-detail-nav svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 :root[data-glass-style="on"] .header-detail-nav button:is(:hover,:focus-visible){background:var(--glass-ghost-fill);box-shadow:var(--glass-button-edge)}
 .brand-name,.brand-role{display:block}
+.brand-name{transition:color var(--nav-hover-in-duration) ease-out}
 :root.brand-avatar-hidden header .brand{display:none}
 :root.brand-one-line .discipline{display:flex;align-items:baseline;gap:var(--space-4)}
 :root.brand-one-line :is(.brand-name,.brand-role){display:inline}
 /* The role sits one step quieter than the name, on the same tone as eyebrows. */
 .brand-role{color:var(--eyebrow-ink)}
 .brand-avatar{display:block;width:var(--brand-avatar-size);height:var(--brand-avatar-size);border:1px solid color-mix(in oklch,var(--ink) 8%,transparent);border-radius:50%;object-fit:cover;object-position:50% 30%}
+.discipline:is(:hover,:focus-visible) .brand-name{color:var(--ink)}
 .discipline{font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-body)}
 .design-system-controls{border:0;padding:0;margin:0 0 24px;min-width:0}
 .design-system-controls legend{padding:0;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
@@ -1487,7 +1489,8 @@ body.page-card-background-hidden .info-detail>.liquid-skin{display:none!importan
 
 /* home-about.css */
 .home-about{--home-about-years-column:5.375em;margin-top:var(--space-page-rhythm-md);width:100%;min-width:0;grid-column:1 / -1}
-.home-about-copy,.home-about-lists{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6)}
+.home-about>h2{margin:0 0 var(--space-6);font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
+.home-about-copy{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6)}
 .home-about-copy{margin-top:0}
 .home-about-copy p{grid-column:calc(2 * var(--content-column-start) - 1) / span 3;margin:0;max-width:none;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
 .home-about-copy p+p{grid-column:calc(2 * var(--content-column-start) - 1) / span 3}
@@ -1495,11 +1498,7 @@ body.page-card-background-hidden .info-detail>.liquid-skin{display:none!importan
 .home-about-path{grid-column:1/-1;margin-top:var(--space-page-rhythm-md);padding-block:clamp(20px,2.5vw,36px)}
 .home-about-path .hero-timeline{--timeline-text-gap:clamp(36px,4vw,56px);margin-top:0}
 .home-about-path .timeline-track ol{padding-inline:clamp(48px,6vw,120px)}
-.home-about-lists{align-items:start;margin-top:var(--space-page-rhythm-md);padding:0;background:transparent}
-.home-about-list-content{grid-column:var(--content-column-start) / span 2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-6);row-gap:var(--space-page-rhythm-md)}
-.home-about-list{min-width:0;grid-column:1}
-.home-about-list h3{margin:0 0 var(--space-6);font-size:var(--heading-label-size);text-transform:var(--heading-label-transform);font-weight:var(--heading-label-weight);line-height:var(--heading-label-line);letter-spacing:var(--heading-label-tracking);color:var(--heading-label-color)}
-:root[data-heading-style="editorial"] .home-about-list h3{font-size:var(--heading-article-size);text-transform:none;font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink)}
+.home-about-list{--home-about-years-column:5.375em;min-width:0}
 .home-about-list ul{position:relative;isolation:isolate;list-style:none;padding:0;margin:0;display:grid;gap:var(--space-6)}
 .home-about-list li{position:relative}
 .home-about-row{position:relative;display:grid;grid-template-columns:minmax(0,1fr) var(--home-about-years-column);align-items:baseline;gap:var(--space-6);padding:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
@@ -1508,11 +1507,15 @@ body.page-card-background-hidden .info-detail>.liquid-skin{display:none!importan
 @media(hover:hover){.home-about-list li:hover .home-about-item{color:var(--ink)}}
 .home-view-split .home-about{margin-top:var(--space-page-rhythm-md)}
 .info-grid[hidden]{display:none!important}
-@media(max-width:600px){.home-about-copy,.home-about-lists{grid-template-columns:1fr}.home-about-copy{row-gap:var(--space-6)}.home-about-copy p,.home-about-copy p+p{grid-column:1;max-width:none}.home-about-list-content{grid-column:1;grid-template-columns:1fr}.home-about{margin-top:var(--space-page-rhythm-md)}.home-about-path{margin-top:var(--space-page-rhythm-md);padding-block:20px}.home-about-path .hero-timeline{--timeline-text-gap:32px}.home-about-path .timeline-track ol{padding-inline:28px}}
+@media(max-width:600px){.home-about-copy{grid-template-columns:1fr}.home-about-copy{row-gap:var(--space-6)}.home-about-copy p,.home-about-copy p+p{grid-column:1;max-width:none}.home-about{margin-top:var(--space-page-rhythm-md)}.home-about-path{margin-top:var(--space-page-rhythm-md);padding-block:20px}.home-about-path .hero-timeline{--timeline-text-gap:32px}.home-about-path .timeline-track ol{padding-inline:28px}}
 /* Six columns so the intro text can be half the width and still start on the first or the second third, like the Home hero text. */
 .home-about-copy{grid-template-columns:repeat(6,minmax(0,1fr))}
 /* With both lists switched off the grid leaves no spacing behind. */
-.home-about-lists:not(:has(.home-about-list:not([hidden]))){display:none}
+/* Experience and Side projects & R&D: sections of their own with the main heading (.home-content-section>h2), the list in the content column. */
+.home-content-section.home-about-list{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));column-gap:var(--space-6);grid-column:1 / -1}
+.home-content-section.home-about-list>h2{grid-column:1 / -1}
+.home-content-section.home-about-list>ul{grid-column:calc(2 * var(--content-column-start) - 1) / span 3}
+@media(max-width:900px){.home-content-section.home-about-list{grid-template-columns:1fr}.home-content-section.home-about-list>h2,.home-content-section.home-about-list>ul{grid-column:1}}
 
 /* about-page.css */
 [data-about-section][hidden]{display:none!important}
@@ -1757,14 +1760,15 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 .home-content-section{grid-column:1 / -1;min-width:0;width:100%;margin-top:var(--space-page-rhythm-md)}
 .home-content-section>h2{margin:0 0 var(--space-6);font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink)}
 .home-services-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-6)}
-.home-approach{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);align-items:start}
-.home-approach-intro{grid-column:1 / -1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);min-width:0}
-.home-approach-principles{grid-column:var(--content-column-start) / span 2;min-width:0}
-.home-approach-intro h2{grid-column:1 / -1;margin:0 0 var(--space-6);font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
+.home-approach{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));column-gap:var(--space-6);align-items:start}
+.home-approach-intro{grid-column:1 / -1;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));column-gap:var(--space-6);row-gap:var(--space-6);min-width:0}
+.home-approach-principles{grid-column:calc(2 * var(--content-column-start) - 1) / span 3;min-width:0}
+.home-approach-intro h2{grid-column:1 / -1;margin:0;font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
 .home-approach p{margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink);text-wrap:pretty}
-.home-approach-intro>p{grid-column:var(--content-column-start);min-width:0;max-width:38ch}
-.home-approach-intro>p+p{grid-column:3}
-.home-approach-principles{display:grid;gap:var(--space-6);margin-top:var(--space-page-rhythm-sm)}
+.home-approach-intro>p{grid-column:calc(2 * var(--content-column-start) - 1) / span 3;min-width:0;max-width:none}
+.home-approach-intro>p+p{grid-column:calc(2 * var(--content-column-start) - 1) / span 3}
+.home-approach-intro>p:empty{display:none}
+.home-approach-principles{display:grid;gap:var(--space-6);margin-top:var(--space-6)}
 .home-approach-principles h3{display:inline;margin:0 var(--space-2) 0 0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
 .home-approach-principles p{display:inline;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--eyebrow-ink)}
 @media(max-width:600px){.home-approach,.home-approach-intro{grid-template-columns:1fr}.home-approach-intro{row-gap:var(--space-6)}.home-approach-intro h2{margin-bottom:0}.home-approach-intro,.home-approach-intro>p,.home-approach-intro>p+p,.home-approach-principles{grid-column:1}.home-approach-intro>p{max-width:none}}
@@ -1775,7 +1779,6 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 .home-service-card h3{margin:0 0 var(--space-3);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--ink)}
 .home-service-card p{max-width:34ch;margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
 .home-service-card p+p{margin-top:var(--space-3)}
-.home-about:has(.home-about-introduction[hidden]) .home-about-lists{margin-top:0}
 .home-testimonials-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));--testimonial-gap:var(--space-6);column-gap:0;row-gap:var(--testimonial-gap);min-width:0;width:auto;max-width:100%}
 .home-testimonials{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);min-width:0}
 .home-testimonials>h2{grid-column:1/-1}
@@ -1845,12 +1848,13 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 /* Project pages (with a picture): a card-style caption on top (it follows the Cards settings, see detail-caption.js), the picture
    across the page under it, then the long title, summary and facts in a reading-width column. With "Details title beside image"
    on that column sits at the left; off, it is centred like a blog post. These rules outrank the older two-column ones in style.css. */
-.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-caption{display:block;grid-column:1;grid-row:1;margin:0 0 var(--space-8)}
+.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-caption{display:block;grid-column:1;grid-row:1;width:100%;max-width:var(--page-intro-width);margin:0 0 var(--space-page-rhythm-md)}
 .detail-caption :is(p,h2){margin:0;font-size:var(--font-size-project-summary);font-weight:var(--font-weight-body);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body)}
 .detail-caption-title{color:var(--ink)}
 :root[data-heading-style="editorial"] .detail-caption .detail-caption-title{font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);text-transform:none;color:var(--ink);text-wrap:balance}
 .detail-caption-lead{color:var(--muted)}
-.detail-caption .detail-caption-results{margin-top:var(--space-5);color:var(--body-ink)}
+.detail-caption-title + .detail-caption-lead{margin-top:var(--space-4)}
+.detail-caption .detail-caption-results{margin-top:var(--space-hero-heading-content);color:var(--body-ink)}
 .detail-caption .detail-caption-intro{margin-top:var(--space-5);color:var(--ink)}
 /* The caption carries the company and the headline sentence, so the column below does not repeat them. The heading stays for screen readers. */
 .surface.detail[data-card-orientation]:not(.text-only-detail)>.project-client{display:none}
@@ -1861,10 +1865,11 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 .surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout>.detail-media-column{grid-column:1;grid-row:2;margin-top:0}
 .surface.detail[data-card-orientation]:not(.text-only-detail)>.project-client{grid-column:1;grid-row:3;margin-top:var(--space-page-rhythm-md)}
 .surface.detail[data-card-orientation]:not(.text-only-detail)>h1{grid-column:1;grid-row:4}
-.surface.detail[data-card-orientation]:not(.text-only-detail)>.project-summary{grid-column:1;grid-row:5}
-.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{grid-column:1;grid-row:6}
+.surface.detail[data-card-orientation]:not(.text-only-detail)>.project-summary{display:none;grid-column:1;grid-row:5}
+.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{grid-column:1;grid-row:3}
 .surface.detail[data-card-orientation]:not(.text-only-detail)>.project-summary,.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{max-width:var(--content-width-reading)}
 .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.project-summary,.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-layout>.description{margin-inline:auto;width:100%}
+.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-layout>.description{max-width:var(--page-intro-width);margin:var(--card-gap) 0 0;width:100%}
 /* "Details title beside image" on, wide screens: the caption sits at the bottom left of the picture (level with its bottom edge), the
    picture on the right with the buttons and QR code under it, and everything else (client line, title, summary, facts) below as a
    centred reading column. Off, and on phones, the stack above applies. */
@@ -1877,8 +1882,8 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 .surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.detail-layout>.detail-media-column>.detail-project-qr{grid-column:2;grid-row:3;margin-top:var(--space-5)}
 .surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.project-client{grid-column:1 / -1;grid-row:4}
 .surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>h1{grid-column:1 / -1;grid-row:5}
-.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.project-summary{grid-column:1 / -1;grid-row:6}
-.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{grid-column:1 / -1;grid-row:7}
+.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.project-summary{display:none;grid-column:1 / -1;grid-row:6}
+.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{grid-column:1 / -1;grid-row:4}
 .surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.project-summary,.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{margin-inline:auto;width:100%}
 }
 /* A landscape image fills the page width here instead of stopping at the card's 1000px cap. */
@@ -1919,10 +1924,10 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 .article-sources{margin-top:var(--space-page-rhythm-md);padding-top:var(--space-6);border-top:1px solid var(--dock-outline)}
 .article-sources h2{margin:0 0 var(--space-3);font-size:var(--font-size-small);font-weight:var(--font-weight-heading);color:var(--ink)}
 .article-sources ul{margin:0;padding-left:var(--space-5);color:var(--muted);font-size:var(--font-size-small);line-height:var(--line-height-body)}
-/* Home writing follows the other home sections: heading across, list in columns two and three, body-size titles. */
-.home-writing{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);min-width:0}
+/* Home writing follows the other home sections: heading across, list on the shared half-width track, body-size titles. */
+.home-writing{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));column-gap:var(--space-6);min-width:0}
 .home-writing>h2{grid-column:1/-1}
-.home-writing-list{grid-column:var(--content-column-start) / span 2;position:relative;isolation:isolate;display:grid;gap:var(--space-6);margin:0;padding:0;list-style:none;min-width:0}
+.home-writing-list{grid-column:calc(2 * var(--content-column-start) - 1) / span 3;position:relative;isolation:isolate;display:grid;gap:var(--space-6);margin:0;padding:0;list-style:none;min-width:0}
 .home-writing-list li{position:relative}
 .home-writing-row{position:relative;display:block;color:var(--body-ink);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);text-decoration:none;transition:color 180ms ease}
 .home-writing-row:is(:hover,:focus-visible){color:var(--ink)}

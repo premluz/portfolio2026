@@ -2,8 +2,6 @@ import {normaliseSectionSpan} from './content-widths.js';
 // heading (the hero h1) and available (the badge) are on because they are shown today; Flip and Flat reuse the h1 for the active project, so they ignore the switch; strapline and overview (At a glance) start off so the live site only changes once they are switched on.
 export const HOME_SECTION_DEFAULTS=Object.freeze({heading:true,available:true,strapline:false,overview:false,approach:true,services:true,about:true,'about-timeline':true,experience:true,'side-projects':true,testimonials:true,writing:true});
 
-// The two lists inside the About block's list grid; each has its own switch.
-const LIST_SECTIONS=Object.freeze(['experience','side-projects']);
 
 // A scope names one page's sections: where its choices persist and which attributes tie its markup to the dev panel.
 // Home and About share this machinery; only the scope differs.
@@ -29,10 +27,9 @@ export function applySections(root,sections,spans={},scope=HOME_SCOPE){
  for(const node of root.querySelectorAll(`[${scope.nodeAttribute}]`)){
   const id=node.dataset[scope.nodeKey];if(!(id in scope.defaults))continue;
   node.hidden=sections[id]===false;
-  if(scope.spanIds.includes(id)&&!LIST_SECTIONS.includes(id))node.dataset.contentSpan=id==='testimonials'?'content':normaliseSectionSpan(spans[id]);
+  // Side projects follow the Experience width setting ("Experience & side projects width").
+  if(scope.spanIds.includes(id))node.dataset.contentSpan=id==='testimonials'?'content':normaliseSectionSpan(spans[id==='side-projects'?'experience':id]);
  }
- // Experience and Side projects are two lists in one grid: the Experience width setting widens that grid, not each list.
- const listGrid=root.querySelector('.home-about-lists');if(listGrid?.dataset)listGrid.dataset.contentSpan=normaliseSectionSpan(spans.experience);
  // The shared About block wraps several toggled parts; it leaves no spacing behind once all of them are hidden.
  const about=root.querySelector('.home-about'),parts=about?[...about.querySelectorAll(`[${scope.nodeAttribute}]`)]:[];
  if(parts.length)about.hidden=parts.every(node=>node.hidden);
