@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Carousel pictures follow the Images settings
+
+- Removed the carousel rule that forced its pictures to the card radius (with `!important`). The carousel card and frame take Card rounding; the pictures take Image corner rounding and the Thin border on card images switch, exactly as grid pictures do.
+- Evidence: headless browser with the owner's settings, scroll and circular: card radius 118.5px at card rounding 128 and 62.8px at 64; picture radius 6px then 20px as Image corner rounding changes 6 to 20; the outline is on the picture, none on the frame.
+
 ## 2026-10-28 Image border switch lives in Settings → Images
 
 - The Thin border on card images switch moved from Cards to the Images group, under Full-bleed card images.
