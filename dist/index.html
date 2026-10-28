@@ -96,13 +96,14 @@
 <label>Orientation <select id="aboutGalleryOrientation"><option value="horizontal">Horizontal</option><option value="vertical">Vertical</option></select></label>
 <label class="check"><input id="carouselDescriptionInCard" type="checkbox"> Show description below each carousel image</label>
 <label class="check"><input id="carouselNativeSnap" type="checkbox"> Native snap scrolling (experiment)</label>
+<div class="setting-subsection">Card size and gap</div>
+<label>Card size <output data-carousel-output="size">100%</output><input id="carouselSize" data-carousel-control="size" type="range" min="70" max="130" step="5" value="100"></label>
+<label>Gap between cards <output data-carousel-output="gap">32px</output><input id="carouselGap" data-carousel-control="gap" type="range" min="8" max="96" step="2" value="32"></label>
 <div id="carouselArcSettings">
 <div class="setting-subsection">Circular arc</div>
 <label>Side tilt <output data-carousel-output="tilt">24°</output><input id="carouselTilt" data-carousel-control="tilt" type="range" min="0" max="60" step="1" value="24"></label>
 <label>Horizontal spread <output data-carousel-output="spread">100%</output><input id="carouselSpread" data-carousel-control="spread" type="range" min="60" max="180" step="5" value="100"></label>
 <label>Arc depth <output data-carousel-output="depth">100%</output><input id="carouselDepth" data-carousel-control="depth" type="range" min="0" max="200" step="5" value="100"></label>
-<label>Card size <output data-carousel-output="size">100%</output><input id="carouselSize" data-carousel-control="size" type="range" min="70" max="130" step="5" value="100"></label>
-<label>Minimum gap <output data-carousel-output="gap">32px</output><input id="carouselGap" data-carousel-control="gap" type="range" min="8" max="96" step="2" value="32"></label>
 <div class="setting-subsection">Motion and mobile</div>
 <label>Motion speed <output data-carousel-output="speed">100%</output><input id="carouselSpeed" data-carousel-control="speed" type="range" min="25" max="200" step="5" value="100"></label>
 <label>Mobile neighbour peek <output data-carousel-output="peek">12px</output><input id="carouselPeek" data-carousel-control="peek" type="range" min="0" max="32" step="1" value="12"></label>
@@ -175,9 +176,10 @@
 <label>Card title size <output id="cardTitleScaleValue">h3</output><input id="cardTitleScale" type="range" min="2" max="4" step="1" value="3"></label>
 <div class="setting-subsection">Surface</div>
 <label class="check"><input id="cardBackground" type="checkbox" checked> Card background</label>
-<label class="check"><input id="plainCards" type="checkbox"> Plain cards · no card styling (glow, reflections, edge)</label>
+<label class="check"><input id="plainCards" type="checkbox"> Plain cards · remove the inner glow, reflections and edge lighting (the card stays: see Card background)</label>
 <label class="check"><input id="hideCardColor" type="checkbox"> Hide card color</label>
 <label class="check"><input id="hideCardHover" type="checkbox"> Hide card hover</label>
+<label class="check"><input id="imageBorder" type="checkbox"> Thin border on card images</label>
 <label class="check"><input id="cardInstantHover" type="checkbox"> Remove hover trail (card hover in and out are instant)</label>
 <label>Card hover effect <select id="cardHoverEffect"><option value="reveal">Liquid morph</option><option value="reveal-soft">Soft reveal · previous</option><option value="tint">Original colour hover</option><option value="glow">Ambient liquid glow</option></select></label>
 <div class="setting-subsection">Shape and spacing</div>

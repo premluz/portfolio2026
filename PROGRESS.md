@@ -12,6 +12,12 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Plain cards only remove the glow; image border switch; carousel rounding, size and gap
+
+- Plain cards no longer removes the card: it removes the inner glow (skin edge lighting, reflections, image edge glow, hover effect layers, shadows) and leaves the card's background and edge to Card background. The hairline I added to plain cards is gone; a separate Cards switch, Thin border on card images (off by default), draws it on the image frame.
+- The carousel's card and picture corners follow Card rounding in the scroll presentation as well (64px gives the usual 20px). Card size and Gap between cards moved out of the circular-only group; Gap now spaces the scroll carousel's cards too (it was fixed at 28.8px there; the saved 96px from the owner's settings will now apply to it). I read "circular mode should also have size and gap" as asking for them in the scroll mode, since the circular group already had them.
+- Evidence: headless browser with the owner's settings: carousel radius 12.5px at card rounding 40 in scroll and circular (20px at 64); with plain cards on the skin's shadow is none and reflections are hidden while the skin stays; image border toggles none to 1px solid; in scroll mode the gap slider changes the card spacing from 96px to 24px. New test tests/image-border.mjs.
+
 ## 2026-10-28 Project years and a company-and-year card description
 
 - Every project has a `year` (Bastion 2025, Merlin 2026, PlayStation 2018, Vodafone IoT 2020, Gala Film 2025, Gala DeFi 2025, Tracr 2024, Rios 2026, Porter 2026) in both catalogs, validated by the model. New Cards setting under Show project description: Description is the company and year (off by default, saved and exported, hidden while the description is off) turns each card's description into `client · year`.

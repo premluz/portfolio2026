@@ -295,3 +295,6 @@ body.card-client-hidden .project-card.image-card>.card-copy>.card-client,body.ca
 .about-detail>.story{margin:var(--space-hero-heading-content) 0 0;width:100%;max-width:none}
 .about-detail .card-gallery-block{margin:0}
 body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
+
+/* Thin border on card images (Settings → Cards): an inset outline paints over the picture, follows its rounding and moves nothing. */
+:root[data-image-border="on"] .project-card>.visual{outline:1px solid color-mix(in oklch,var(--ink) 8%,transparent);outline-offset:-1px}

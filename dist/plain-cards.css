@@ -1,11 +1,9 @@
-/* Plain cards (Settings → Cards): strips card styling, leaving content only. The root carries data-plain-cards="on".
-   Removes the shell and glass skin, the inner reflections, the image's inner-edge glow, shadows, borders, blur and the
-   note-card panels. Images, text and layout stay. "Card background" only hides the shell; this also removes the layers
-   it leaves behind. These layers are set by the glass-style, skin and material rules (long selectors, some inline
-   from motion), hence !important, confined to this opt-in mode. */
-:root[data-plain-cards="on"] .surface{background:none!important;box-shadow:none!important;border-color:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-:root[data-plain-cards="on"] .surface :is(.liquid-skin,.material-reflection,.image-edge,.surface-effect-layer){display:none!important}
+/* Plain cards (Settings → Cards): removes the inner glow, lighting and reflections from cards and their images, and shadows; the
+   card itself (its background and edge) stays under the Card background setting, and images and text stay. The root carries
+   data-plain-cards="on". The glow layers are set by the glass-style, skin and material rules (long selectors, some inline from
+   motion), hence !important, confined to this opt-in mode. */
+:root[data-plain-cards="on"] .surface{box-shadow:none!important}
+/* Repeated attribute and html: the glass style's skin edge rule is more specific than a single attribute selector can beat. */
+html:root[data-plain-cards="on"][data-plain-cards="on"] body .surface>.liquid-skin{box-shadow:none!important}
+:root[data-plain-cards="on"] .surface :is(.material-reflection,.image-edge,.surface-effect-layer){display:none!important}
 :root[data-plain-cards="on"] .note-card{background:none!important;box-shadow:none!important}
-/* The one thing plain cards keep: a hairline edge on the card image. An inset outline paints over the picture and never moves
-   the layout (the pseudo-elements are switched off by the skin rules). */
-:root[data-plain-cards="on"] .project-card>.visual{outline:1px solid color-mix(in oklch,var(--ink) 8%,transparent);outline-offset:-1px}

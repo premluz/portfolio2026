@@ -1387,6 +1387,9 @@ body.card-client-hidden .project-card.image-card>.card-copy>.card-client,body.ca
 .about-detail .card-gallery-block{margin:0}
 body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 
+/* Thin border on card images (Settings → Cards): an inset outline paints over the picture, follows its rounding and moves nothing. */
+:root[data-image-border="on"] .project-card>.visual{outline:1px solid color-mix(in oklch,var(--ink) 8%,transparent);outline-offset:-1px}
+
 /* spatial-navigation.css */
 /* Local input feedback lives outside the moving canvas and uses the site's
    existing type, spacing and theme roles. */
@@ -1707,6 +1710,14 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 /* The arrows float in the gap above the cards instead of reserving a row there, so the hero text, the cards and the next section sit one medium rhythm step apart whatever the arrows do. The stage's own slack under the caption is taken back. */
 .home-product-carousel:not([hidden]){margin-bottom:calc(-1 * var(--space-8))}
 .home-hero:not([hidden])~.home-product-carousel:not([hidden]){margin-top:var(--space-page-rhythm-md)}
+
+/* The Gap setting spaces the scroll carousel's cards as well as the circular one's minimum gap. */
+.spatial-card-gallery:not([data-gallery-variant="circular"],[data-gallery-axis="vertical"]) .spatial-gallery-viewport{gap:var(--carousel-gap,var(--space-6))}
+/* Card rounding reaches the carousel too: 64px (the default) gives the carousel's usual 20px. */
+.spatial-card-gallery{--gallery-card-radius:calc(var(--radius-card) * .3125)}
+.spatial-gallery-pose :is(.project-card,.content-media-frame){border-radius:var(--gallery-card-radius)}
+/* The picture sits one card padding inside the card, so its corners nest in the card's (the image frame code sets its own radius inline). */
+.home-product-carousel .spatial-gallery-pose .project-card>.visual,.home-product-carousel .spatial-gallery-pose .project-card>.visual :is(img,video,canvas){border-radius:max(0px,calc(var(--gallery-card-radius) - var(--card-padding-top,0px)))!important}
 
 /* card-world.css */
 /* Card worlds: the spiral scrolls through a tall section with a pinned stage; the infinite space fills
@@ -2566,17 +2577,15 @@ body.card-details.card-description-hidden .project-card.image-card>.card-copy>.c
 :root[data-plain-nav="on"] #dock:not(.is-composer) nav a.active:is(:hover,:focus-visible){color:var(--ink)!important}
 
 /* plain-cards.css */
-/* Plain cards (Settings → Cards): strips card styling, leaving content only. The root carries data-plain-cards="on".
-   Removes the shell and glass skin, the inner reflections, the image's inner-edge glow, shadows, borders, blur and the
-   note-card panels. Images, text and layout stay. "Card background" only hides the shell; this also removes the layers
-   it leaves behind. These layers are set by the glass-style, skin and material rules (long selectors, some inline
-   from motion), hence !important, confined to this opt-in mode. */
-:root[data-plain-cards="on"] .surface{background:none!important;box-shadow:none!important;border-color:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-:root[data-plain-cards="on"] .surface :is(.liquid-skin,.material-reflection,.image-edge,.surface-effect-layer){display:none!important}
+/* Plain cards (Settings → Cards): removes the inner glow, lighting and reflections from cards and their images, and shadows; the
+   card itself (its background and edge) stays under the Card background setting, and images and text stay. The root carries
+   data-plain-cards="on". The glow layers are set by the glass-style, skin and material rules (long selectors, some inline from
+   motion), hence !important, confined to this opt-in mode. */
+:root[data-plain-cards="on"] .surface{box-shadow:none!important}
+/* Repeated attribute and html: the glass style's skin edge rule is more specific than a single attribute selector can beat. */
+html:root[data-plain-cards="on"][data-plain-cards="on"] body .surface>.liquid-skin{box-shadow:none!important}
+:root[data-plain-cards="on"] .surface :is(.material-reflection,.image-edge,.surface-effect-layer){display:none!important}
 :root[data-plain-cards="on"] .note-card{background:none!important;box-shadow:none!important}
-/* The one thing plain cards keep: a hairline edge on the card image. An inset outline paints over the picture and never moves
-   the layout (the pseudo-elements are switched off by the skin rules). */
-:root[data-plain-cards="on"] .project-card>.visual{outline:1px solid color-mix(in oklch,var(--ink) 8%,transparent);outline-offset:-1px}
 
 /* empty-hero.css */
 /* Empty hero: when the home page shows no hero heading, badge, strapline, description or At a glance, and the carousel is
