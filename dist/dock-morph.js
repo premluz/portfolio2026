@@ -101,7 +101,7 @@ export class DockMorph {
  constructor(el,{reduced=()=>false}={}){
   this.el=el;this.reduced=reduced;this.position=0;this.velocity=0;this.target=0;this.duration=400;
   this.voicePosition=0;this.voiceVelocity=0;this.voiceTarget=0;this.liquid={...LIQUID_DEFAULTS};
-  this.focusPosition=0;this.focusVelocity=0;this.focusTarget=0;
+  this.focusPosition=0;this.focusVelocity=0;this.focusTarget=0;this.focusShift=0;
   this.composerPosition=0;this.composerVelocity=0;this.composerTarget=0;this.backPosition=0;this.backVelocity=0;this.backTarget=0;this.back=el.querySelector('#assistantBack');
   el.querySelector('.dock-shapes')?.remove();
   this.context=el.querySelector('.context-nav');this.main=el.querySelector('nav');
@@ -179,6 +179,9 @@ export class DockMorph {
   if(!this.content.inert&&this.focusReturn){this.focusReturn.focus({preventScroll:true});this.focusReturn=null;}
   const extensionSource=this.popover||this.accessory,extension=extensionSource?{...extensionSource,position:extensionSource.position*remaining}:null;
   const shape=dockGeometry(phase,this.metrics,extension);this.el.style.width=shape.width+'px';this.el.style.setProperty('--dock-painted-width',shape.width+'px');
+  // With the menu on top it is right-aligned; the close control it shrinks into slides to the centre of the screen.
+  const topNav=this.el.ownerDocument?.documentElement.dataset.navPosition==='top';
+  if(topNav||this.focusShift){const box=this.el.getBoundingClientRect();this.focusShift=topNav?(innerWidth/2-(box.left+box.width/2-this.focusShift))*this.focusPosition:0;this.el.style.setProperty('--dock-focus-shift',this.focusShift+'px');}
   // Keep the receding action branch in the same glass while the menu grows.
   // Both paths share the base, so their clipped surface remains continuous.
   // The receding pill's glass sinks into the bar while the menu is still a small lobe at its button, so it

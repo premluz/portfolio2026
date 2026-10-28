@@ -1,7 +1,11 @@
 import {EASE} from './motion-tokens.js';
 // One reversible image-to-focus transition for prototype and full-screen actions.
+// The close control sits centred at the top or bottom edge (where the menu is), so the window leaves a band for it on
+// both sides instead of running underneath it.
+export const FOCUS_MAX_WIDTH=1200,FOCUS_EDGE_BAND=136;
 export function focusedImageRect({width,height},{width:vw,height:vh},portrait=false){
- const scale=Math.min((portrait?vw-48:Math.min(1440,vw-48))/width,(portrait?vh*.85:vh-96)/height);
+ const band=Math.min(FOCUS_EDGE_BAND,vh*.18);
+ const scale=Math.min((portrait?vw-48:Math.min(FOCUS_MAX_WIDTH,vw-48))/width,(vh-band*2)/height);
  const w=width*Math.max(.01,scale),h=height*Math.max(.01,scale);
  return {left:(vw-w)/2,top:(vh-h)/2,width:w,height:h};
 }

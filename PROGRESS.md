@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Prototype and reel windows are smaller; Close sits centred where the menu is
+
+- The focused image, prototype and YouTube window is at most 1200px wide (was 1440px) and leaves a 136px band above and below (was 48px), so the Close control no longer sits on top of it. With the menu at the bottom, Close is centred at the bottom; with the menu on top, the right-aligned menu now slides to the centre as it shrinks into Close (`--dock-focus-shift`, driven by the same spring as the shrink) and returns to the right when it closes.
+- Evidence: headless browser at 1792x960 on #galachain with the reel open: window 1100x688 at y 136–824; Close centred at x 896, y 90 (top menu) or y 912 (bottom menu); the menu is back at the right edge after Escape.
+
 ## 2026-10-28 Project details: prototype buttons under the image, smaller QR with a hairline radius
 
 - With a QR code the prototype buttons used to sit below it, far from the image. The QR now follows the buttons (CSS order), so they sit directly under the image as on pages without a QR. The QR is 96px at most (was 128px) and its corner radius is the new `--radius-qr` token, 4px (was the 24px visual radius, which cut the corner squares).
