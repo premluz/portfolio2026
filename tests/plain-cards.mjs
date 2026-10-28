@@ -16,5 +16,7 @@ assert(styles.includes("'plain-cards.css'"),'The stylesheet ships in the bundle'
 const rules=css.split('\n').filter(line=>line.startsWith(':root'));
 assert(rules.length>=3&&rules.every(rule=>rule.startsWith(':root[data-plain-cards="on"]')),'Every rule is behind data-plain-cards="on"');
 for(const part of ['.surface{background:none','box-shadow:none','backdrop-filter:none','.liquid-skin','.material-reflection','.image-edge','.note-card'])assert(css.includes(part),`Plain cards covers ${part}`);
-assert(!/\.visual\s*\{|img\s*\{|display:none[^}]*\.visual/.test(css),'Images and their frames are left alone');
+const hairline=':root[data-plain-cards="on"] .project-card>.visual{outline:1px solid color-mix(in oklch,var(--ink) 8%,transparent);outline-offset:-1px}';
+assert(css.includes(hairline),'Plain cards keep a hairline edge on the card image');
+assert(!/\.visual\s*\{|img\s*\{|display:none[^}]*\.visual/.test(css.replace(hairline,'')),'Images and their frames are otherwise left alone (only the hairline outline touches the frame)');
 console.log('Plain cards passed: default off, exported, both pages, every rule scoped, skin, reflections, edge glow and note cards removed, media untouched.');
