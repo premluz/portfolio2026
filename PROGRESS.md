@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Beside-image pages: caption at the picture's bottom left, the rest as a column below
+
+- With Details title beside image on, the left column now holds only the caption (company/category/title, Company · Year and the results line) bottom-aligned with the picture, which sits on the right with the buttons and QR under it; the client line, title, summary and facts are a centred 600px reading column below, as when it is off. With Company · Year as the description the caption also keeps the results line under it (`detail-caption-results`).
+- Evidence: headless browser on Bastion at 1500px with category and company-year on: caption lines AI wallet, Bastion · 2025, R&D • Design • Build; caption bottom 704 equals picture bottom 704; picture at x 628; column at x 450; off: caption on top, picture across, same column; 390px stacks; no overflow. tests/detail-caption.mjs extended.
+
 ## 2026-10-28 Details title beside image on: text left, picture right again
 
 - The previous change stacked project pages in both modes, so the switch only moved a column. On now restores the side-by-side arrangement at 751px and wider: caption, client line, title, summary and facts in the left column, the picture on the right starting level with the caption, with the buttons and QR under it. Off keeps the stack with the centred reading column; phones always stack.
