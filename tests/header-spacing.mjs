@@ -14,7 +14,7 @@ assert(design.includes('padding-top:var(--page-content-top);padding-bottom:0}')&
 assert(design.includes('top:calc(var(--header-total) + var(--space-10))'),'The sticky split hero clears the taller header');
 
 // The role line sits under the name, in the markup the hide-logo setting already hides.
-assert(index.includes('<span class="discipline"><span class="brand-name">Prem Luczak</span><span class="brand-role">Product designer &amp; builder</span></span>'),'The page shows the role under the name');
+assert(index.includes('<a href="#work" class="discipline"><span class="brand-name">Prem Luczak</span><span class="brand-role">Product designer &amp; builder</span></a>'),'The page shows the role under the name');
 const role=design.match(/\.brand-role\{[^}]*\}/)?.[0]||'';
 assert(role&&!role.includes('font-size'),'The role has no size of its own: it matches the name');
 

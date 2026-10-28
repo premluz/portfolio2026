@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Header title links home; avatar has a thin border
+
+- The name and role are now a link to Home like the avatar. The avatar has a 1px border at 8% of the text colour (the carousel buttons' border), a plain edge with no inner lighting, so it stays when plain cards are on. `--card-rim` was too faint (2%) to read.
+- Evidence: headless browser with plain cards on: border 1px solid, title is `<a href="#work">`, clicking it from About goes to #work, no console errors.
+
 ## 2026-10-28 Tighter name and role lines in the header
 
 - The stacked name and role now use the heading line height (`--line-height-heading`, 1.15) instead of the body one (1.6): the lines are 15px apart instead of 21px and stay centred on the avatar.
