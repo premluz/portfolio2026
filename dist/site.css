@@ -2268,6 +2268,8 @@ body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 .contextual-popover a{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em}
 .contextual-popover a:hover{opacity:.75}
 @media(prefers-reduced-motion:reduce){.context-marker-text{transition:none}}
+/* The highlight is only a background: the hero text colours every span in full ink, which must not reach it. */
+:root .hero-copy p :is(.context-marker,.context-marker-text){color:inherit}
 
 /* agent.css */
 /* The agent's body (MOTION.md → Character). Script writes only --agent-x/--agent-y; the shell carries emerge,

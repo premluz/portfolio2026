@@ -44,7 +44,7 @@ assert(chatCss.includes(':root:not(.assistant-inline-open) #askPage.assistant-pa
 {const hp=html,tr2=await readFile(new URL('../dist/settings-transfer.js',import.meta.url),'utf8'),df=await readFile(new URL('../dist/default-settings.js',import.meta.url),'utf8'),ds=await readFile(new URL('../dist/design-system.css',import.meta.url),'utf8'),ag=await readFile(new URL('../dist/agent.css',import.meta.url),'utf8');
 assert(hp.includes('<a href="#assistant" data-nav="assistant" id="assistantNavItem" class="assistant-nav-item" hidden>Assistant</a>'),'The dock menu has an Assistant item after Contact');
 assert(hp.indexOf('data-nav="contact"',hp.indexOf('id="dock"'))<hp.indexOf('id="assistantNavItem"')&&hp.indexOf('id="assistantNavItem"')<hp.indexOf('id="projectMenuToggle"'),'It sits at the end of the menu, after Contact');
-for(const id of ['navShowLab','navShowContact','navChatLabel','characterAssistant','showMascot'])assert(hp.includes(`id="${id}"`),`The Navigation settings have ${id}`);
+for(const id of ['navShowWork','navShowAbout','navShowLab','navShowContact','navChatLabel','characterAssistant','showMascot'])assert(hp.includes(`id="${id}"`),`The Navigation settings have ${id}`);
 assert(hp.includes('<option value="Assistant" selected>Assistant</option><option value="Call Assistant">Call Assistant</option><option value="Ask Assistant">Ask Assistant</option>'),'The chat item reads Assistant, Call Assistant or Ask Assistant');
 assert(tr2.includes("navShowLab:'prem-nav-show-lab'")&&tr2.includes("showMascot:'prem-show-mascot'")&&df.includes("'prem-nav-show-lab':'true'")&&df.includes("'prem-show-mascot':'true'"),'Menu item choices are exported and start on');
 assert(app.includes("if(link.dataset.nav==='assistant'){assistantLauncher.onclick();return;}")&&app.includes("assistantLauncher.hidden=true;item.hidden=!shown;"),'The item opens the assistant the way the old button did, and the old pill stays hidden');
@@ -52,4 +52,6 @@ assert(ds.includes('#dock nav a[hidden]{display:none}')&&ag.includes(':root.masc
 {const hp3=await readFile(new URL('../dist/index.html',import.meta.url),'utf8'),tr3=await readFile(new URL('../dist/settings-transfer.js',import.meta.url),'utf8'),df3=await readFile(new URL('../dist/default-settings.js',import.meta.url),'utf8');
 assert(hp3.includes('<input id="navShowIndex" type="checkbox" checked> Show index button (site menu)')&&tr3.includes("navShowIndex:'prem-nav-show-index'"),'The Navigation settings have a Show index button switch, exported');
 assert(!df3.includes('prem-nav-show-index'),'No stored default, so the old mascot rule applies until the visitor chooses');}
+{const ctx=await readFile(new URL('../dist/contextual-popovers.css',import.meta.url),'utf8');
+assert(ctx.includes(':root .hero-copy p :is(.context-marker,.context-marker-text){color:inherit}'),'The popover highlight keeps the paragraph colour; only its background marks it');}
 console.log('Assistant floating passed: page default, presentation setting, panel state, launcher rule, one composer rule, navigation/Escape close, maximise and panel scrolling.');
