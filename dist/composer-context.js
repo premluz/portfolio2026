@@ -47,6 +47,8 @@ export class ComposerContext {
    const actions=this.inRow(contextualActions(scene).filter(action=>PAGE_ACTIONS.includes(action.id)));if(!actions.length)return null;
    return {...scene,actions,key:JSON.stringify(actions.map(action=>[action.id,action.group]))};
   }
+  // Section and carousel actions (About me, Contact, View project) belong to the contextual composer; menu-item mode shows only the project controls above.
+  if(this.mode==='inline'&&!scene.project)return null;
   if(this.dock.position>.001)return null;
   const limit=this.dock.el.getBoundingClientRect().top-16;
   let section=null,sectionScore=0;

@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Contextual section actions only with the contextual composer
+
+- "About me", the testimonial and footer contact actions and the carousel's View project and arrows appeared in the header area while scrolling even in menu-item mode. They now belong to the contextual composer (Contextual composer on); menu-item mode keeps only the project-page controls.
+- Evidence: headless browser scrolling Home: composer off, menu top or bottom: no contextual actions; composer on: View project, Previous card, Next card, About me (and LinkedIn, Copy email with the menu at the bottom). tests/composer-context.mjs asserts the gate.
+
 ## 2026-10-28 Plain cards only remove the glow; image border switch; carousel rounding, size and gap
 
 - Plain cards no longer removes the card: it removes the inner glow (skin edge lighting, reflections, image edge glow, hover effect layers, shadows) and leaves the card's background and edge to Card background. The hairline I added to plain cards is gone; a separate Cards switch, Thin border on card images (off by default), draws it on the image frame.

@@ -99,4 +99,6 @@ let spring={position:0,velocity:0};for(let i=0;i<80;i++){spring=stepActionSpring
 {const scene2={route:'one',project:{id:'one',prototype:{url:'https://example.com'},watchPrototype:{url:'https://example.com/v',label:'Watch'}},fullScreen:true,back:true};const row=new ComposerContext(dock,{getScene:()=>scene2,reduced:()=>true});
 row.setMode('inline');row.setPlacement('above');assert.deepEqual(row.rendered.actions.map(action=>action.id),['prototype','watch-prototype','fullscreen'],'Above the classic dock: the page actions');
 row.setPlacement('page');assert.equal(row.target,0,'Within the page: the classic dock row is empty');assert.equal(document.documentElement.dataset.contextualPlacement,'page');}
+{const source=await (await import('node:fs/promises')).readFile(new URL('../dist/composer-context.js',import.meta.url),'utf8');
+assert(source.includes("if(this.mode==='inline'&&!scene.project)return null;"),'Menu-item mode shows no section or carousel actions: they belong to the contextual composer');}
 console.log('Composer context passed: persistent action identities/routes, keyed emergence/recession, physical bounce, monotone pane resizing, removed semantics, live targets, focus speed, rapid reversals, menu cancellation, suggestion order and reduced motion.');
