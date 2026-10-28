@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Assistant menu item is a checkbox, always named Assistant
+The Chat item's label dropdown (Assistant / Call Assistant / Ask Assistant) is gone. The item is now a "Show Assistant" checkbox with the other menu items and always reads "Assistant". It appears at the end of the menu when its switch is on and the mascot is not standing in as the assistant. Evidence: headless browser: ticking and unticking the switch adds and removes the item, the dock re-measures, the choice persists; tests/assistant-floating.mjs updated.
+
 ## 2026-10-28 Work and About switches; highlight keeps the text colour
 Work and About now have Show switches like Lab and Contact (all four on by default). The popover highlight in the hero text ("products for technical users and creators", "Rios", "Porter", "Bastion") no longer takes the stronger ink colour: a rule coloured every span in the hero text, and the highlight now inherits the paragraph colour, leaving only its background. Evidence: computed colours in the headless browser (highlight 0.97 before, 0.80 like the paragraph after); each nav switch checked in the browser; tests/assistant-floating.mjs extended.
 
