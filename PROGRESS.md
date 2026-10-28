@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Card colour comes from the card's picture; Hide card colour leaves the page alone
+
+- Hide card colour no longer sets the page background (`--page`, `--page-rgb`); it only neutralises the card surfaces. With colour on, each card and detail page now takes its two hues from its own picture through the ambient sampler (new `card-media-color.js`) instead of its authored project colours, which return when Hide card colour is on or the media cannot be read. This changes the default look: Gala's cards go from purple (317°) to orange (64°), Bastion to amber (53°), Tracr and Vodafone to greens.
+- Evidence: headless browser on Lab and Home: loaded cards carry sampled hues with `data-media-color=on`; Hide card colour restores the project tokens and the page background value is identical in both states; no console errors. New test tests/card-media-color.mjs.
+
 ## 2026-10-28 Plain cards and plain images are separate; the card glow is really removed
 
 - Plain cards now owns the card's lighting only; a new Plain images switch (Settings → Images, off by default, saved and exported) removes the picture's edge glow. The card's inner lighting was not being removed because an earlier change of mine made the glass style's edge rule more specific than the plain-cards override; the override is stronger again.

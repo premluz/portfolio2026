@@ -388,18 +388,14 @@
   :root { --hero-gap: var(--space-6); --overview-column-gap: var(--space-4); }
 }
 
-/* Neutral cards keep their separation from the page in either theme. */
+/* Neutral cards keep their separation from the page in either theme; Hide card colour never changes the page background itself. */
 :root.card-color-hidden {
-  --page: #f4f4ef;
-  --page-rgb: 244, 244, 239;
   --card-surface: #fefef9;
   --card-surface-end: #fdfdf8;
   --card-surface-rgb: 254, 254, 249;
 }
 
 :root[data-theme="dark"].card-color-hidden {
-  --page: #050506;
-  --page-rgb: 19, 19, 21;
   --card-surface: #131314;
   --card-surface-end: #101011;
   --card-surface-rgb: 19, 19, 20;
