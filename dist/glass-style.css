@@ -7,7 +7,7 @@
 :root[data-glass-style="on"] :is(.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface):is(:hover,:focus-visible){background:linear-gradient(var(--nav-item-hover),var(--nav-item-hover)),var(--glass-button-fill)}
 :root[data-glass-style="on"] .card-bottom .open-symbol{border-color:transparent;box-shadow:var(--glass-button-edge)}
 :root[data-glass-style="on"] .visual>.image-edge{background:var(--glass-card-wash);box-shadow:var(--glass-card-edge)}
-:root[data-glass-style="on"] body:not(.card-background-hidden) .surface>.liquid-skin{box-shadow:var(--glass-card-edge)!important}
+:root[data-glass-style="on"] body:not(.card-background-hidden) .surface:not(.detail)>.liquid-skin,:root[data-glass-style="on"] body:not(.page-card-background-hidden) .surface.detail>.liquid-skin{box-shadow:var(--glass-card-edge)!important}
 @media(prefers-reduced-motion:reduce){:root[data-glass-style="on"] :is(.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back):active{transform:none}}
 :root[data-animation="off"][data-glass-style="on"] :is(.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back):active{transform:none}
 :root:not([data-glass-style="on"]) #dock .dock-glass-light{display:none}

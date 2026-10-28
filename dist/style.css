@@ -189,13 +189,15 @@ header .theme-toggle{margin-left:auto}
 @media(max-width:600px){.image-card[data-image-mode="bleed"]{min-height:390px}.image-card[data-image-mode="bleed"][data-card-layout="portrait"]{min-height:520px}.image-card[data-image-mode="bleed"][data-card-presentation="flip"]{min-height:0}}
 
 /* A page-coloured resting fill lets the glass interpolate into hover. */
-body.card-background-hidden .surface.project-card,body.card-background-hidden .surface.detail{background:transparent!important}
-body.card-background-hidden .surface.detail>.liquid-skin,body.card-background-hidden .flow-material{background:transparent!important}
+body.card-background-hidden .surface.project-card{background:transparent!important}
+/* Page cards (project details, About, Contact, articles) have their own switch, apart from the listing cards above. */
+body.page-card-background-hidden .surface.detail{background:transparent!important}
+body.page-card-background-hidden .surface.detail>.liquid-skin,body:is(.card-background-hidden,.page-card-background-hidden) .flow-material{background:transparent!important}
 /* The morph shell must obey the same card-styling switch as its endpoints.
    Otherwise its rim and reflection draw a temporary rounded rectangle. */
-body.card-background-hidden .flow-material{visibility:hidden!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+body:is(.card-background-hidden,.page-card-background-hidden) .flow-material{visibility:hidden!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 /* With the card background hidden there is no card, so its glass edge goes too. */
-body.card-background-hidden .surface>.liquid-skin{box-shadow:none!important}
+body.card-background-hidden .surface:not(.detail)>.liquid-skin,body.page-card-background-hidden .surface.detail>.liquid-skin{box-shadow:none!important}
 body.card-background-hidden.card-hover-hidden .surface.project-card>.liquid-skin{background:transparent!important}
 
 /* Edge shades let the canvas pass beneath the viewport chrome. */

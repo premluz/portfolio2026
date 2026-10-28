@@ -31,6 +31,7 @@ export function settingsSchema(panel,root=document){
   if(motionIds.includes(key)){storage=motionKey;path=key;}
   if(/^cardPadding(Top|Right|Bottom|Left)$/.test(key)){storage='prem-card-padding-'+key.slice(11).toLowerCase();nullable=['cardPaddingRight','cardPaddingLeft'].includes(key);}
   if(key==='cardBackground'){storage='prem-hide-card-background';invert=true;}
+  if(key==='pageCardBackground'){storage='prem-hide-page-card-background';invert=true;}
   if(['bleedTop','bleedSide','bleedBottom','bleedBacking'].includes(key)){storage='prem-bleed-image';path=key.slice(5).toLowerCase();}
   if(!storage)continue;
   const kind=input.tagName==='SELECT'?'enum':input.type==='range'?'number':'boolean';

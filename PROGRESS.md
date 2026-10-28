@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Page card background switch
+
+- New Cards setting under Card background: Page card background (on by default, saved and exported) removes the card shell on project details, About, Contact and article pages. Card background now governs only listing cards (grid, carousel, Lab); before, it also removed the page shells, so a saved Card background off no longer hides them.
+- Evidence: headless browser on About and Lab: page off removes the skin and its glass edge; listing off alone leaves the About card as it was; page off leaves Lab cards alone; no console errors. New test tests/page-card-background.mjs; tests/card-background-hidden.mjs updated.
+
 ## 2026-10-28 Carousel pictures follow the Images settings
 
 - Removed the carousel rule that forced its pictures to the card radius (with `!important`). The carousel card and frame take Card rounding; the pictures take Image corner rounding and the Thin border on card images switch, exactly as grid pictures do.
