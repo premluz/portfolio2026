@@ -24,6 +24,6 @@ assert(html.indexOf('Experience')<html.indexOf('Side Projects &amp; R&amp;D'));a
 for(const id of ['merlin','bastion'])assert(html.includes(`data-project-menu-item="${id}" href="#${id}" data-text-project="${id}"`),'Added R&D projects share the same clickable/hover identity');
 for(const layout of ['regular','masonry']){const home=homeMarkup(cards,layout);assert(!home.includes('data-card="about"'));assert(!home.includes('data-card="contact"'));assert(!home.includes('Technically fluent.'));assert(!home.includes('Good things start'));assert.equal((home.match(/data-slot=/g)||[]).length,homeProjects.length);assert(home.indexOf('data-content-document="home-about"')>home.indexOf('data-gallery'));}
 assert(content.getCard('about'));assert(content.getCard('contact'),'Page routes remain addressable through the index');
-assert(content.search({query:'Carter London'}).items.some(item=>item.documentId==='home-about'),'Role history is retrievable from the structured content');
+assert(content.search({query:'Independent'}).items.some(item=>item.documentId==='home-about'),'Role history is retrievable from the structured content');
 const unsafe=structuredClone(document);unsafe.blocks[0].title='<img onerror=bad>';unsafe.blocks[0].paragraphs=['<script>bad</script>','Normal'];assert(homeAboutMarkup(unsafe).includes('&lt;img'));assert(!homeAboutMarkup(unsafe).includes('<script>'));
 console.log('Home About passed: structured biography, two paragraphs, year-only roles, side projects, hidden homepage information cards, retained routes and safe rendering.');

@@ -6,3 +6,6 @@
 :root[data-plain-cards="on"] .surface{background:none!important;box-shadow:none!important;border-color:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 :root[data-plain-cards="on"] .surface :is(.liquid-skin,.material-reflection,.image-edge,.surface-effect-layer){display:none!important}
 :root[data-plain-cards="on"] .note-card{background:none!important;box-shadow:none!important}
+/* The one thing plain cards keep: a hairline edge. An inset outline paints over the image and never moves the layout (the card
+   pseudo-elements are switched off by the skin rules); the keyboard focus ring still takes over when focused. */
+:root[data-plain-cards="on"] .project-card:not(:focus-visible){outline:1px solid color-mix(in oklch,var(--ink) 8%,transparent);outline-offset:-1px}

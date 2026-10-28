@@ -12,6 +12,12 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 "Carter London" is now "Independent"; plain cards keep a hairline edge
+
+- The 2006–2009 experience entry is titled Independent in both catalogs (the committed change is that one line; run `npm run build` to refresh the built content). The retrieval test searches for it.
+- Plain cards (Settings → Cards) now keep a 1px edge at 8% of the text colour: an inset outline on `.project-card`, so it paints over the image, never changes the layout and gives way to the keyboard focus ring. The card pseudo-elements are switched off by the skin rules, which is why it is an outline.
+- Evidence: headless browser with plain cards on, on the Lab grid and the home carousel with the owner's settings: outline 1px solid at 8%, offset -1px, card boxes unchanged.
+
 ## 2026-10-28 Close is always at the bottom centre
 
 - Close now sits at the bottom centre whichever way the menu is placed: with the menu at the bottom it grows in the dock, with the menu on top it appears in place at the same spot (the floating circle, offset like the dock's `--dock-bottom`) while the right-aligned menu fades. Measured at 1792x960: Close centre at x 896, y 912 in both cases; the window is unchanged (y 136–824).
