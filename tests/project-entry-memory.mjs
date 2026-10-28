@@ -9,7 +9,7 @@ for(const route of ['work','about','assistant']){memory.capture(route);assert.eq
 const nodes={title:{textContent:'Project heading'},client:{textContent:'Customer'},summary:{textContent:'Result'}},caption={querySelector(selector){return {'[data-gallery-title]':nodes.title,'[data-gallery-client]':nodes.client,'[data-gallery-description]':nodes.summary}[selector];}};
 const host={morphCopyRoot:caption,querySelector(){throw Error('Hidden card labels must not override the visible gallery caption');}};
 for(const key of ['title','client','summary'])assert.equal(sharedCopyNode(host,key),nodes[key]);
-const normal={querySelector:selector=>selector};assert.equal(sharedCopyNode(normal,'title'),'h1,h2');
+const normal={querySelector:selector=>selector};assert.equal(sharedCopyNode(normal,'title'),'h1,h2,h3');
 
 // Execute the production Back adapter with a stale Chat return flag: the
 // explicit project entry must win over that older history.

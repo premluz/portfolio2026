@@ -3,7 +3,7 @@ const normalized=value=>String(value||'').trim().replace(/\s+/g,' ');
 export function sharedCopyNode(host,key){
  const external=host?.morphCopyRoot;
  const gallery={title:'[data-gallery-title]',client:'[data-gallery-client]',summary:'[data-gallery-description]'};
- const standard={title:'h1,h2',client:'.card-client,.project-client',category:'.eyebrow',summary:'.project-summary,.info-summary'};
+ const standard={title:'h1,h2,h3',client:'.card-client,.project-client',category:'.eyebrow',summary:'.project-summary,.info-summary'};
  return external&&gallery[key]?external.querySelector(gallery[key])||external.querySelector(standard[key]):host?.querySelector(standard[key]);
 }
 export function sharedLead(node,key='summary'){

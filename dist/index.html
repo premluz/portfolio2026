@@ -51,17 +51,37 @@
 <aside id="settings" hidden aria-label="Developer settings">
 <div class="panel-heading">Developer settings<button id="settingsClose" data-tooltip="Close developer settings" aria-label="Close developer settings">×</button></div>
 <div class="settings-transfer"><div class="settings-transfer-actions"><button id="settingsExport" type="button">Export settings</button><button id="settingsImport" type="button">Import settings</button></div><input id="settingsImportFile" type="file" accept="application/json,.json" hidden><p>Save a JSON preset. Import applies it and reloads this page. Chat and room images stay separate.</p><p id="settingsTransferStatus" role="status" aria-live="polite"></p><div class="settings-transfer-actions"><button id="settingsPublish" type="button">Publish to this site</button><button id="settingsUnpublish" type="button">Use built-in</button></div><p>Publish makes these settings live for every visitor of this domain, without a deploy. Use built-in returns to the settings file shipped with the site.</p><p id="settingsPublishStatus" role="status" aria-live="polite"></p></div>
-<details class="developer-settings-group" open>
-<summary>Layout</summary><div class="developer-settings-content">
-<div class="setting-subsection">Page template widths</div>
-<label>Home <select id="homeContentWidth"><option value="xsmall">Extra small · 960px</option><option value="small">Small · 1200px</option><option value="medium" selected>Medium · 1440px</option><option value="large">Large · 1760px</option></select></label>
-<label class="check"><input id="contactTitle" type="checkbox"> Contact page: show title</label>
-<label>Chat <select id="chatWidth"><option value="default" selected>Default</option><option value="xsmall">Extra small · 960px</option><option value="small">Small · 1200px</option><option value="medium">Medium · 1440px</option><option value="large">Large · 1760px</option></select></label>
-<label>Article images <select id="articleImages"><option value="text" selected>Text width · 600px</option><option value="page">Page width</option></select></label>
-<label>About / content page <select id="contentPageWidth"><option value="xsmall">Extra small · 960px</option><option value="small">Small · 1200px</option><option value="medium" selected>Medium · 1440px</option><option value="large">Large · 1760px</option></select></label>
-<label><input id="contentStartFirst" type="checkbox">Content starts in the first column</label>
-<label>Project details <select id="detailContentWidth"><option value="xsmall">Extra small · 960px</option><option value="small">Small · 1200px</option><option value="medium" selected>Medium · 1440px</option><option value="large">Large · 1760px</option></select></label>
-
+<nav class="settings-tabs" role="tablist" aria-label="Developer settings categories">
+<button id="settingsTabContent" type="button" role="tab" aria-controls="settingsPanelContent" aria-selected="true" data-settings-tab="content">Content</button>
+<button id="settingsTabStructure" type="button" role="tab" aria-controls="settingsPanelStructure" aria-selected="false" data-settings-tab="structure" tabindex="-1">Structure</button>
+<button id="settingsTabDesign" type="button" role="tab" aria-controls="settingsPanelDesign" aria-selected="false" data-settings-tab="design" tabindex="-1">Design</button>
+<button id="settingsTabMotion" type="button" role="tab" aria-controls="settingsPanelMotion" aria-selected="false" data-settings-tab="motion" tabindex="-1">Motion</button>
+</nav>
+<div class="settings-tab-panels">
+<section id="settingsPanelContent" role="tabpanel" aria-labelledby="settingsTabContent" data-settings-tabpanel="content">
+<details class="developer-settings-group">
+<summary>Home</summary><div class="developer-settings-content">
+<div class="setting-subsection">Hero</div>
+<label class="check"><input type="checkbox" data-home-section-control="heading" checked> Hero heading (h1) · Current layout</label>
+<label class="check"><input type="checkbox" data-home-section-control="available" checked> Available badge · above the hero heading</label>
+<label class="check"><input type="checkbox" data-home-section-control="strapline"> Strapline · one line under the hero heading</label>
+<label class="check"><input type="checkbox" data-home-section-control="overview"> At a glance · three columns under the hero</label>
+<label class="check"><input id="heroTimelineEnabled" type="checkbox" checked> Show hero timeline</label>
+<label class="check"><input id="heroTimelineTextEnabled" type="checkbox" checked> Show timeline text</label>
+<label class="check"><input id="heroDescriptionEnabled" type="checkbox"> Show hero description</label>
+<div class="setting-subsection">Sections</div>
+<label class="check"><input type="checkbox" data-home-section-control="approach" checked> How I work</label>
+<label>How I work width <select data-home-span-control="approach"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
+<label class="check"><input type="checkbox" data-home-section-control="services" checked> Services</label>
+<label>Services width <select data-home-span-control="services"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
+<label class="check"><input type="checkbox" data-home-section-control="about" checked> About</label>
+<label>About width <select data-home-span-control="about"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
+<label class="check"><input type="checkbox" data-home-section-control="about-timeline" checked> About timeline</label>
+<label class="check"><input type="checkbox" data-home-section-control="experience" checked> Experience</label>
+<label class="check"><input type="checkbox" data-home-section-control="side-projects" checked> Side projects &amp; R&amp;D</label>
+<label>Experience &amp; side projects width <select data-home-span-control="experience"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
+<label class="check"><input type="checkbox" data-home-section-control="testimonials" checked> Testimonials</label>
+<label class="check"><input type="checkbox" data-home-section-control="writing" checked> Writing and opinions</label>
 <div class="setting-subsection">Homepage</div>
 <label>Product display <select id="homeProductDisplay"><option value="cards">Cards</option><option value="carousel" selected>Carousel</option><option value="text">Text</option></select></label>
 <label class="check"><input id="featureStage" type="checkbox"> Featured stage · one per row, backdrop behind featured cards</label>
@@ -71,9 +91,6 @@
 <label>Gap below intro <output data-hero-carousel-output="gap">64px</output><input id="heroCarouselGap" data-hero-carousel-control="gap" type="range" min="0" max="200" step="4" value="64"></label>
 <label class="check"><input id="heroCarouselCopy" data-hero-carousel-control="copy" type="checkbox" checked> Show description under cards</label>
 </div>
-<label class="check"><input id="heroTimelineEnabled" type="checkbox" checked> Show hero timeline</label>
-<label class="check"><input id="heroTimelineTextEnabled" type="checkbox" checked> Show timeline text</label>
-<label class="check"><input id="heroDescriptionEnabled" type="checkbox"> Show hero description</label>
 <label id="heroTimelineModeSetting">Timeline interaction <select id="heroTimelineMode"><option value="cursor">Cursor movement</option><option value="drag">Drag</option></select></label>
 <label>Homepage layout <select id="homeViewSelect"><option value="current">Current grid</option><option value="flip">Flip</option><option value="flat">Two columns · Flat cards</option></select></label>
 <label>Card arrangement <select id="homeLayoutSelect"><option value="masonry">Masonry</option><option value="regular">Regular</option><option value="alternating">Alternating 1 · 2</option></select></label>
@@ -82,13 +99,61 @@
 <label id="multiColumnCardPositionSetting" hidden>Multi-column card composition <select id="multiColumnCardPosition"><option value="top">Copy above image</option><option value="bottom">Copy below image</option></select></label>
 <label class="check" id="cardCopyHoverSetting" hidden><input id="cardCopyHover" type="checkbox"> Show title on hover (desktop)</label>
 <label class="check"><input id="featuredLarger" type="checkbox" checked> Featured cards larger (masonry)</label>
-<div class="setting-subsection">Lab</div>
+</div></details>
+<details class="developer-settings-group">
+<summary>Lab</summary><div class="developer-settings-content">
+<label class="check"><input id="labCardDetails" type="checkbox" checked> Show card details</label>
+<label class="check"><input id="labHeading" type="checkbox" checked> Show title</label>
+<div class="setting-subsection">Lab layout</div>
 <label>Lab card arrangement <select id="labLayout"><option value="masonry" selected>Masonry</option><option value="regular">Regular</option></select></label>
 <label>Lab grid columns <select id="labColumns"><option value="1">1 column</option><option value="2">2 columns</option><option value="3">3 columns</option><option value="4" selected>4 columns</option></select></label>
 <label class="check"><input id="labFeaturedLarger" type="checkbox"> Lab: featured cards larger</label>
-<label class="check"><input id="labCardDetails" type="checkbox" checked> Lab: show card details</label>
-<label class="check"><input id="labHeading" type="checkbox" checked> Lab: show title</label>
 <label class="check"><input id="labFullWidth" type="checkbox"> Lab: grid full width (up to the app maximum)</label>
+</div></details>
+<details class="developer-settings-group">
+<summary>Project details</summary><div class="developer-settings-content">
+<label class="check"><input id="showFullScreenOption" type="checkbox" checked> Show full screen option</label>
+<label class="check"><input id="detailHeadingBeside" type="checkbox"> Details title beside image</label>
+<label class="check"><input id="wideHero" type="checkbox" checked> Wide hero card</label>
+<label class="check"><input id="projectBackdrop" type="checkbox"> Project backdrop image</label>
+</div></details>
+<details class="developer-settings-group">
+<summary>About</summary><div class="developer-settings-content">
+<label class="check"><input type="checkbox" data-about-section-control="hero" checked> Intro and portrait</label>
+<label class="check"><input type="checkbox" data-about-section-control="title" checked> Heading</label>
+<label class="check"><input type="checkbox" data-about-section-control="traits" checked> Traits</label>
+<label class="check"><input type="checkbox" data-about-section-control="unusual" checked> Unusual things</label>
+<label class="check"><input type="checkbox" data-about-section-control="approach" checked> How I work</label>
+<label>How I work width <select data-about-span-control="approach"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
+<label class="check"><input type="checkbox" data-about-section-control="services" checked> Services</label>
+<label>Services width <select data-about-span-control="services"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
+<label class="check"><input type="checkbox" data-about-section-control="about" checked> About</label>
+<label>About width <select data-about-span-control="about"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
+<label class="check"><input type="checkbox" data-about-section-control="about-timeline" checked> About timeline</label>
+<label class="check"><input type="checkbox" data-about-section-control="experience" checked> Experience</label>
+<label class="check"><input type="checkbox" data-about-section-control="side-projects" checked> Side projects &amp; R&amp;D</label>
+<label>Experience &amp; side projects width <select data-about-span-control="experience"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
+<label class="check"><input type="checkbox" data-about-section-control="writing" checked> Thoughts</label>
+<label class="check"><input type="checkbox" data-about-section-control="testimonials" checked> Testimonials</label>
+</div></details>
+<details class="developer-settings-group">
+<summary>Contact</summary><div class="developer-settings-content">
+<label class="check"><input id="contactTitle" type="checkbox"> Show title</label>
+</div></details>
+</section>
+<section id="settingsPanelStructure" role="tabpanel" aria-labelledby="settingsTabStructure" data-settings-tabpanel="structure" hidden>
+<details class="developer-settings-group">
+<summary>Page width</summary><div class="developer-settings-content">
+<label>Home <select id="homeContentWidth"><option value="xsmall">Extra small · 960px</option><option value="small">Small · 1200px</option><option value="medium" selected>Medium · 1440px</option><option value="large">Large · 1760px</option></select></label>
+<label>Chat <select id="chatWidth"><option value="default" selected>Default</option><option value="xsmall">Extra small · 960px</option><option value="small">Small · 1200px</option><option value="medium">Medium · 1440px</option><option value="large">Large · 1760px</option></select></label>
+<label>Article images <select id="articleImages"><option value="text" selected>Text width · 600px</option><option value="page">Page width</option></select></label>
+<label>About / content page <select id="contentPageWidth"><option value="xsmall">Extra small · 960px</option><option value="small">Small · 1200px</option><option value="medium" selected>Medium · 1440px</option><option value="large">Large · 1760px</option></select></label>
+<label>Project details <select id="detailContentWidth"><option value="xsmall">Extra small · 960px</option><option value="small">Small · 1200px</option><option value="medium" selected>Medium · 1440px</option><option value="large">Large · 1760px</option></select></label>
+<label>Navigation <select id="navContentWidth"><option value="page" selected>Same as the page</option><option value="xsmall">Extra small · 960px</option><option value="small">Small · 1200px</option><option value="medium">Medium · 1440px</option><option value="large">Large · 1760px</option></select></label>
+</div></details>
+<details class="developer-settings-group">
+<summary>Layout</summary><div class="developer-settings-content">
+<label><input id="contentStartFirst" type="checkbox">Content starts in the first column</label>
 </div></details>
 <details class="developer-settings-group">
 <summary>Carousel</summary><div class="developer-settings-content">
@@ -110,59 +175,6 @@
 </div>
 </div></details>
 <details class="developer-settings-group">
-<summary>Content</summary><div class="developer-settings-content">
-<div class="setting-subsection">Section presentation</div>
-<label>Card layout <select id="servicesLayout"><option value="grid">Grid</option><option value="carousel" selected>Carousel</option></select></label>
-<label class="check"><input id="servicesCardBackground" type="checkbox" checked> Show card</label>
-<label>Card carousel start <select id="servicesCarouselAlignment"><option value="full-bleed">Full bleed · global side padding</option><option value="content">Align with content width</option></select></label>
-<label class="check"><input id="testimonialCardBackground" type="checkbox" checked> Testimonial card backgrounds</label>
-</div></details>
-<details class="developer-settings-group">
-<summary>Footer</summary><div class="developer-settings-content">
-<label class="check"><input id="showFooter" type="checkbox" checked> Show footer</label>
-<label class="check"><input id="showFooterInvitation" type="checkbox" checked> Show invitation line (Let's make it happen)</label>
-<label class="check"><input id="showFooterContactLinks" type="checkbox"> Show contact items</label>
-<label class="check"><input id="footerLinksAsText" type="checkbox"> Contact items as text instead of buttons</label>
-</div></details>
-<details class="developer-settings-group">
-<summary>Content Home</summary><div class="developer-settings-content">
-<label class="check"><input type="checkbox" data-home-section-control="heading" checked> Hero heading (h1) · Current layout</label>
-<label class="check"><input type="checkbox" data-home-section-control="available" checked> Available badge · above the hero heading</label>
-<label class="check"><input type="checkbox" data-home-section-control="strapline"> Strapline · one line under the hero heading</label>
-<label class="check"><input type="checkbox" data-home-section-control="overview"> At a glance · three columns under the hero</label>
-<label class="check"><input type="checkbox" data-home-section-control="approach" checked> How I work</label>
-<label>How I work width <select data-home-span-control="approach"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
-<label class="check"><input type="checkbox" data-home-section-control="services" checked> Services</label>
-<label>Services width <select data-home-span-control="services"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
-<label class="check"><input type="checkbox" data-home-section-control="about" checked> About</label>
-<label>About width <select data-home-span-control="about"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
-<label class="check"><input type="checkbox" data-home-section-control="about-timeline" checked> About timeline</label>
-<label class="check"><input type="checkbox" data-home-section-control="experience" checked> Experience</label>
-<label class="check"><input type="checkbox" data-home-section-control="side-projects" checked> Side projects &amp; R&amp;D</label>
-<label>Experience &amp; side projects width <select data-home-span-control="experience"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
-<label class="check"><input type="checkbox" data-home-section-control="testimonials" checked> Testimonials</label><label class="check"><input type="checkbox" data-home-section-control="writing" checked> Writing and opinions</label>
-
-</div></details>
-<details class="developer-settings-group">
-<summary>Content About</summary><div class="developer-settings-content">
-<label class="check"><input type="checkbox" data-about-section-control="hero" checked> Intro and portrait</label>
-<label class="check"><input type="checkbox" data-about-section-control="title" checked> Heading</label>
-<label class="check"><input type="checkbox" data-about-section-control="traits" checked> Traits</label>
-<label class="check"><input type="checkbox" data-about-section-control="unusual" checked> Unusual things</label>
-<label class="check"><input type="checkbox" data-about-section-control="approach" checked> How I work</label>
-<label>How I work width <select data-about-span-control="approach"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
-<label class="check"><input type="checkbox" data-about-section-control="services" checked> Services</label>
-<label>Services width <select data-about-span-control="services"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
-<label class="check"><input type="checkbox" data-about-section-control="about" checked> About</label>
-<label>About width <select data-about-span-control="about"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
-<label class="check"><input type="checkbox" data-about-section-control="about-timeline" checked> About timeline</label>
-<label class="check"><input type="checkbox" data-about-section-control="experience" checked> Experience</label>
-<label class="check"><input type="checkbox" data-about-section-control="side-projects" checked> Side projects &amp; R&amp;D</label>
-<label>Experience &amp; side projects width <select data-about-span-control="experience"><option value="content">Content width</option><option value="app">Full bleed · keep gutters</option><option value="edge">Full bleed · ignore gutters</option></select></label>
-<label class="check"><input type="checkbox" data-about-section-control="writing" checked> Thoughts</label>
-<label class="check"><input type="checkbox" data-about-section-control="testimonials" checked> Testimonials</label>
-</div></details>
-<details class="developer-settings-group">
 <summary>Cards</summary><div class="developer-settings-content">
 <div class="setting-subsection">Card content</div>
 <label class="check"><input id="cardShowClient" type="checkbox" checked> Show client / company</label>
@@ -173,7 +185,6 @@
 <label class="check"><input id="cardShowCategory" type="checkbox"> Show category instead of title</label>
 <label class="check"><input id="cardShowDescription" type="checkbox" checked> Show project description</label>
 <label class="check"><input id="cardCompanyYear" type="checkbox"> Description is the company and year (e.g. Gala · 2025)</label>
-<label>Card title size <output id="cardTitleScaleValue">h3</output><input id="cardTitleScale" type="range" min="2" max="4" step="1" value="3"></label>
 <div class="setting-subsection">Surface</div>
 <label class="check"><input id="cardBackground" type="checkbox" checked> Card background</label>
 <label class="check"><input id="pageCardBackground" type="checkbox" checked> Page card background (project details, About, Contact, articles)</label>
@@ -189,6 +200,61 @@
 <p>Card padding controls the surface inset on every side, independently of image padding.</p></div>
 <label>Card rounding <output id="cardRoundingValue">64px</output><input id="cardRounding" type="range" min="0" max="128" step="2" value="64"></label>
 <label>Card gap <output id="cardGapValue">28px</output><input id="cardGap" type="range" min="0" max="160" step="2" value="28"></label>
+</div></details>
+<details class="developer-settings-group">
+<summary>Footer</summary><div class="developer-settings-content">
+<label class="check"><input id="showFooter" type="checkbox" checked> Show footer</label>
+<label class="check"><input id="showFooterInvitation" type="checkbox" checked> Show invitation line (Let's make it happen)</label>
+<label class="check"><input id="showFooterContactLinks" type="checkbox"> Show contact items</label>
+<label class="check"><input id="footerLinksAsText" type="checkbox"> Contact items as text instead of buttons</label>
+</div></details>
+<details class="developer-settings-group">
+<summary>Navigation</summary><div class="developer-settings-content">
+<label class="check"><input id="plainNav" type="checkbox"> Plain navigation · text links only</label>
+<div class="setting-subsection">Menu items</div>
+<label class="check"><input id="navShowWork" type="checkbox" checked> Show Work</label>
+<label class="check"><input id="navShowAbout" type="checkbox" checked> Show About</label>
+<label class="check"><input id="navShowLab" type="checkbox" checked> Show Lab</label>
+<label class="check"><input id="navShowContact" type="checkbox" checked> Show Contact</label>
+<label class="check"><input id="navShowAssistant" type="checkbox" checked> Show Assistant (a menu item after Contact when the mascot is not the assistant)</label>
+<label class="check"><input id="navShowIndex" type="checkbox" checked> Show index button (site menu)</label>
+<label class="check"><input id="characterAssistant" type="checkbox" checked> Chat is the mascot (off: a menu item after Contact)</label>
+<label class="check"><input id="showMascot" type="checkbox" checked> Show mascot</label>
+<label>Position <select id="navPosition"><option value="bottom">Bottom</option><option value="top">Top · in the header row</option></select></label>
+<div class="setting-subsection">Header</div>
+<label class="check"><input id="hideBranding" type="checkbox" checked> Hide logo &amp; tagline</label>
+<label class="check"><input id="hideBrandAvatar" type="checkbox"> Hide the avatar (keep the name and description)</label>
+<label class="check"><input id="brandOneLine" type="checkbox"> Name and description on one line</label>
+<div class="setting-subsection">Floating dock</div>
+<label>Bottom nav roundness <output id="navRoundingValue">24px</output><input id="navRounding" type="range" min="0" max="100" step="1" value="24"></label>
+<label>Nav item padding <output id="navItemPaddingValue">9px</output><input id="navItemPadding" type="range" min="4" max="14" step="1" value="9"></label>
+<label>Nav container padding <output id="navContainerPaddingValue">0px</output><input id="navContainerPadding" type="range" min="0" max="12" step="1" value="0"></label>
+<label hidden>Nav font size <output id="navItemFontSizeValue">12px</output><input id="navItemFontSize" type="range" min="10" max="16" step="1" value="12"></label>
+<label>Liquid blend <output id="dockLiquidBlendValue">28px</output><input id="dockLiquidBlend" type="range" min="0" max="60" step="1" value="28"></label>
+<label>Pinch point <output id="dockLiquidPinchValue">60%</output><input id="dockLiquidPinch" type="range" min="30" max="95" step="1" value="60"></label>
+<div class="setting-subsection">Composer</div>
+<label><input id="splitProjectControls" type="checkbox"> Split project controls left / right</label>
+<label><input id="chatInlineComposer" type="checkbox" checked> Chat page: composer under the welcome (menu dock)</label>
+<label>Assistant opens as <select id="assistantPresentation"><option value="page" selected>Chat page</option><option value="floating">Floating panel</option><option value="sidebar">Sidebar</option></select></label>
+<label>Contextual actions <select id="contextualButtons"><option value="composer">Above the dock</option><option value="inline" selected>Within the page</option></select></label>
+<div class="dev-setting-row"><span id="contextualComposerLabel">Navigation: composer (off: classic nav)</span><button id="contextualComposerPreference" class="preference-switch" type="button" role="switch" aria-checked="true" aria-labelledby="contextualComposerLabel" data-tooltip="Show the assistant composer in the floating dock across all pages."><span></span></button></div>
+<div class="dev-setting-row"><span id="alwaysDarkGlassLabel">Always dark glass</span><button id="alwaysDarkGlassPreference" class="preference-switch" type="button" role="switch" aria-checked="false" aria-labelledby="alwaysDarkGlassLabel" data-tooltip="Keep the floating dock and its popovers in dark blurred glass, independent of theme."><span></span></button></div>
+<div class="setting-subsection">Menu controls</div>
+<div class="dev-setting-row"><span id="showGestureControlLabel">Show gesture control</span><button id="showGestureControl" class="preference-switch" type="button" role="switch" aria-checked="false" aria-labelledby="showGestureControlLabel" data-tooltip="Show or hide the gesture control."><span></span></button></div>
+<div class="dev-setting-row"><span id="showInfoControlLabel">Show info control</span><button id="showInfoControl" class="preference-switch" type="button" role="switch" aria-checked="false" aria-labelledby="showInfoControlLabel" data-tooltip="Show or hide the info control."><span></span></button></div>
+<div class="dev-setting-row"><span id="showAnimationControlLabel">Show animation control</span><button id="showAnimationControl" class="preference-switch" type="button" role="switch" aria-checked="false" aria-labelledby="showAnimationControlLabel" data-tooltip="Show or hide the animation control."><span></span></button></div>
+</div></details>
+</section>
+<section id="settingsPanelDesign" role="tabpanel" aria-labelledby="settingsTabDesign" data-settings-tabpanel="design" hidden>
+<details class="developer-settings-group">
+<summary>Design system</summary><div class="developer-settings-content" data-settings-slot="design-system"><label class="check"><input id="glassStyle" type="checkbox" checked> Glass buttons &amp; cards</label><label class="check"><input id="editorialHeadings" type="checkbox"> Editorial headings (large titles, small-caps section labels)</label></div>
+</details>
+<details class="developer-settings-group">
+<summary>Section presentation</summary><div class="developer-settings-content">
+<label>Card layout <select id="servicesLayout"><option value="grid">Grid</option><option value="carousel" selected>Carousel</option></select></label>
+<label class="check"><input id="servicesCardBackground" type="checkbox" checked> Show card</label>
+<label>Card carousel start <select id="servicesCarouselAlignment"><option value="full-bleed">Full bleed · global side padding</option><option value="content">Align with content width</option></select></label>
+<label class="check"><input id="testimonialCardBackground" type="checkbox" checked> Testimonial card backgrounds</label>
 </div></details>
 <details class="developer-settings-group">
 <summary>Ambient</summary><div class="developer-settings-content">
@@ -212,49 +278,24 @@
 <label>Image corner rounding <output id="imageRoundingValue">6px</output><input id="imageRounding" type="range" min="0" max="32" step="1" value="6"></label>
 </div></details>
 <details class="developer-settings-group">
-<summary>Project details</summary><div class="developer-settings-content">
-<label class="check"><input id="showFullScreenOption" type="checkbox" checked> Show full screen option</label>
-<label class="check"><input id="detailHeadingBeside" type="checkbox"> Details title beside image</label>
-<label class="check"><input id="wideHero" type="checkbox" checked> Wide hero card</label>
-<label class="check"><input id="projectBackdrop" type="checkbox"> Project backdrop image</label>
+<summary>Environment</summary><div class="developer-settings-content">
+<label>Content set <select id="contentSet" data-settings-scope="server" aria-describedby="contentSetStatus"><option value="catalog" selected>catalog</option></select></label><p id="contentSetStatus" class="content-set-status" role="status" aria-live="polite"></p>
+<div class="setting-subsection">Room background</div>
+<div class="room-upload"><button id="chooseRoom"><span id="roomName">Drop a room image</span><small>or choose an image</small></button><input id="roomFile" type="file" accept="image/jpeg,image/png,image/webp,image/avif,image/gif" hidden><button id="removeRoom" hidden>Remove background</button></div>
+<p id="roomStatus" role="status" aria-live="polite"></p>
+<label>Glass opacity <output id="glassOpacityValue">45%</output><input id="glassOpacity" type="range" min="15" max="90" value="45"></label>
+<label>Background blur <output id="roomBlurValue">12px</output><input id="roomBlur" type="range" min="0" max="24" value="12"></label>
+<label>Room dimming <output id="roomShadeValue">18%</output><input id="roomShade" type="range" min="0" max="60" value="18"></label>
+<div class="setting-subsection">Edge shades</div>
+<label class="check"><input id="edgeShadeTop" type="checkbox" checked> Top edge shade</label>
+<label class="check"><input id="edgeShadeBottom" type="checkbox" checked> Bottom edge shade</label>
+<label class="check"><input id="edgeShadeLeft" type="checkbox" checked> Left edge shade</label>
+<label class="check"><input id="edgeShadeRight" type="checkbox" checked> Right edge shade</label>
+<label class="check"><input id="edgeShadeRetreat" type="checkbox" checked> Move edge shades away on details</label>
+<label>Edge shade depth <output id="edgeShadeDepthValue">100%</output><input id="edgeShadeDepth" type="range" min="0" max="200" step="10" value="100"></label>
 </div></details>
-<details class="developer-settings-group">
-<summary>Navigation</summary><div class="developer-settings-content">
-<label class="check"><input id="plainNav" type="checkbox"> Plain navigation · text links only</label>
-<div class="setting-subsection">Menu items</div>
-<label class="check"><input id="navShowWork" type="checkbox" checked> Show Work</label>
-<label class="check"><input id="navShowAbout" type="checkbox" checked> Show About</label>
-<label class="check"><input id="navShowLab" type="checkbox" checked> Show Lab</label>
-<label class="check"><input id="navShowContact" type="checkbox" checked> Show Contact</label>
-<label class="check"><input id="navShowAssistant" type="checkbox" checked> Show Assistant (a menu item after Contact when the mascot is not the assistant)</label>
-<label class="check"><input id="navShowIndex" type="checkbox" checked> Show index button (site menu)</label>
-<label class="check"><input id="characterAssistant" type="checkbox" checked> Chat is the mascot (off: a menu item after Contact)</label>
-<label class="check"><input id="showMascot" type="checkbox" checked> Show mascot</label>
-<label>Width <select id="navContentWidth"><option value="page" selected>Same as the page</option><option value="xsmall">Extra small · 960px</option><option value="small">Small · 1200px</option><option value="medium">Medium · 1440px</option><option value="large">Large · 1760px</option></select></label>
-<label>Position <select id="navPosition"><option value="bottom">Bottom</option><option value="top">Top · in the header row</option></select></label>
-<div class="setting-subsection">Header</div>
-<label class="check"><input id="hideBranding" type="checkbox" checked> Hide logo &amp; tagline</label>
-<label class="check"><input id="hideBrandAvatar" type="checkbox"> Hide the avatar (keep the name and description)</label>
-<label class="check"><input id="brandOneLine" type="checkbox"> Name and description on one line</label>
-<div class="setting-subsection">Floating dock</div>
-<label>Bottom nav roundness <output id="navRoundingValue">24px</output><input id="navRounding" type="range" min="0" max="100" step="1" value="24"></label>
-<label>Nav item padding <output id="navItemPaddingValue">9px</output><input id="navItemPadding" type="range" min="4" max="14" step="1" value="9"></label>
-<label>Nav container padding <output id="navContainerPaddingValue">0px</output><input id="navContainerPadding" type="range" min="0" max="12" step="1" value="0"></label>
-<label hidden>Nav font size <output id="navItemFontSizeValue">12px</output><input id="navItemFontSize" type="range" min="10" max="16" step="1" value="12"></label>
-<label>Liquid blend <output id="dockLiquidBlendValue">28px</output><input id="dockLiquidBlend" type="range" min="0" max="60" step="1" value="28"></label>
-<label>Pinch point <output id="dockLiquidPinchValue">60%</output><input id="dockLiquidPinch" type="range" min="30" max="95" step="1" value="60"></label>
-<div class="setting-subsection">Composer</div>
-<label><input id="splitProjectControls" type="checkbox">Split project controls left / right</label>
-<label><input id="chatInlineComposer" type="checkbox" checked>Chat page: composer under the welcome (menu dock)</label>
-<label>Assistant opens as <select id="assistantPresentation"><option value="page" selected>Chat page</option><option value="floating">Floating panel</option><option value="sidebar">Sidebar</option></select></label>
-<label>Contextual actions <select id="contextualButtons"><option value="composer">Above the dock</option><option value="inline" selected>Within the page</option></select></label>
-<div class="dev-setting-row"><span id="contextualComposerLabel">Navigation: composer (off: classic nav)</span><button id="contextualComposerPreference" class="preference-switch" type="button" role="switch" aria-checked="true" aria-labelledby="contextualComposerLabel" data-tooltip="Show the assistant composer in the floating dock across all pages."><span></span></button></div>
-<div class="dev-setting-row"><span id="alwaysDarkGlassLabel">Always dark glass</span><button id="alwaysDarkGlassPreference" class="preference-switch" type="button" role="switch" aria-checked="false" aria-labelledby="alwaysDarkGlassLabel" data-tooltip="Keep the floating dock and its popovers in dark blurred glass, independent of theme."><span></span></button></div>
-<div class="setting-subsection">Menu controls</div>
-<div class="dev-setting-row"><span id="showGestureControlLabel">Show gesture control</span><button id="showGestureControl" class="preference-switch" type="button" role="switch" aria-checked="false" aria-labelledby="showGestureControlLabel" data-tooltip="Show or hide the gesture control."><span></span></button></div>
-<div class="dev-setting-row"><span id="showInfoControlLabel">Show info control</span><button id="showInfoControl" class="preference-switch" type="button" role="switch" aria-checked="false" aria-labelledby="showInfoControlLabel" data-tooltip="Show or hide the info control."><span></span></button></div>
-<div class="dev-setting-row"><span id="showAnimationControlLabel">Show animation control</span><button id="showAnimationControl" class="preference-switch" type="button" role="switch" aria-checked="false" aria-labelledby="showAnimationControlLabel" data-tooltip="Show or hide the animation control."><span></span></button></div>
-</div></details>
+</section>
+<section id="settingsPanelMotion" role="tabpanel" aria-labelledby="settingsTabMotion" data-settings-tabpanel="motion" hidden>
 <details class="developer-settings-group">
 <summary>Motion</summary><div class="developer-settings-content">
 <div class="setting-subsection">Page changes</div>
@@ -280,27 +321,7 @@
 <p>Drag a card left and right to feel the response. Escape settles it back.</p>
 <button id="replay">Replay transition</button>
 </div></details>
-<details class="developer-settings-group">
-<summary>Environment</summary><div class="developer-settings-content">
-<div class="setting-subsection">Room background</div>
-<div class="room-upload"><button id="chooseRoom"><span id="roomName">Drop a room image</span><small>or choose an image</small></button><input id="roomFile" type="file" accept="image/jpeg,image/png,image/webp,image/avif,image/gif" hidden><button id="removeRoom" hidden>Remove background</button></div>
-<p id="roomStatus" role="status" aria-live="polite"></p>
-<label>Glass opacity <output id="glassOpacityValue">45%</output><input id="glassOpacity" type="range" min="15" max="90" value="45"></label>
-<label>Background blur <output id="roomBlurValue">12px</output><input id="roomBlur" type="range" min="0" max="24" value="12"></label>
-<label>Room dimming <output id="roomShadeValue">18%</output><input id="roomShade" type="range" min="0" max="60" value="18"></label>
-<div class="setting-subsection">Edge shades</div>
-<label class="check"><input id="edgeShadeTop" type="checkbox" checked> Top edge shade</label>
-<label class="check"><input id="edgeShadeBottom" type="checkbox" checked> Bottom edge shade</label>
-<label class="check"><input id="edgeShadeLeft" type="checkbox" checked> Left edge shade</label>
-<label class="check"><input id="edgeShadeRight" type="checkbox" checked> Right edge shade</label>
-<label class="check"><input id="edgeShadeRetreat" type="checkbox" checked> Move edge shades away on details</label>
-<label>Edge shade depth <output id="edgeShadeDepthValue">100%</output><input id="edgeShadeDepth" type="range" min="0" max="200" step="10" value="100"></label>
-</div></details>
-<details class="developer-settings-group">
-<summary>Content</summary><div class="developer-settings-content"><label>Content set <select id="contentSet" data-settings-scope="server" aria-describedby="contentSetStatus"><option value="catalog" selected>catalog</option></select></label><p id="contentSetStatus" class="content-set-status" aria-live="polite"></p></div>
-</details>
-<details class="developer-settings-group">
-<summary>Design system</summary><div class="developer-settings-content" data-settings-slot="design-system"><label class="check"><input id="glassStyle" type="checkbox" checked> Glass buttons &amp; cards</label><label class="check"><input id="editorialHeadings" type="checkbox"> Editorial headings (large titles, small-caps section labels)</label></div>
-</details>
+</section>
+</div>
 </aside>
 <script type="module" src="app.js"></script></body></html>

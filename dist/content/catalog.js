@@ -12,6 +12,7 @@ export const catalog={
       "summary": "R&D • AI assistant • Generative UI • Prototype",
       "category": "Financial intelligence · R&D",
       "kind": "lab",
+      "year": "2026",
       "projectStatus": "R&D",
       "disciplines": [
         "Product",
@@ -110,6 +111,7 @@ export const catalog={
       "summary": "0→1 • Everything solo",
       "category": "Life-first planner · Independent product",
       "kind": "shipped",
+      "year": "2026",
       "projectStatus": "Launched",
       "disciplines": [
         "Product",
@@ -205,6 +207,7 @@ export const catalog={
       "summary": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 ",
       "category": "Publishing pipeline · PlayStation Network",
       "kind": "shipped",
+      "year": "2018",
       "projectStatus": "Launched",
       "disciplines": [
         "Research",
@@ -300,6 +303,7 @@ export const catalog={
       "summary": "180+ regions · 240M+ devices · NPS –33 → +62",
       "category": "IoT connectivity · Enterprise",
       "kind": "shipped",
+      "year": "2020",
       "projectStatus": "Launched",
       "disciplines": [
         "Research",
@@ -395,6 +399,7 @@ export const catalog={
       "summary": "Design System 0→1 + platform redesign • ~2× faster dev & QA",
       "category": "Blockchain traceability · Regulated supply chain",
       "kind": "shipped",
+      "year": "2024",
       "projectStatus": "Launched",
       "disciplines": [
         "Design system",
@@ -493,6 +498,7 @@ export const catalog={
       "summary": "End-to-end 0 → 1 → Growth and continous improvements",
       "category": "Web3 entertainment · Film and music",
       "kind": "shipped",
+      "year": "2025",
       "projectStatus": "Launched",
       "disciplines": [
         "UX",
@@ -595,6 +601,7 @@ export const catalog={
       "summary": "R&D • Design • Build",
       "category": "AI wallet · R&D",
       "kind": "lab",
+      "year": "2025",
       "projectStatus": "R&D",
       "disciplines": [
         "Interaction",
@@ -697,6 +704,7 @@ export const catalog={
       "summary": "Everything solo",
       "category": "Agent switchboard · R&D",
       "kind": "lab",
+      "year": "2026",
       "projectStatus": "Building",
       "disciplines": [
         "Interaction",
@@ -1094,7 +1102,7 @@ export const catalog={
               "type": "text",
               "title": "Define the model",
               "paragraphs": [
-                "Turn user needs & constraints into a clear product structure."
+                "Turn user needs & constraints into a clear structure."
               ]
             },
             {
@@ -1159,7 +1167,7 @@ export const catalog={
             {
               "id": "role-carter",
               "type": "text",
-              "title": "Carter London",
+              "title": "Independent",
               "label": "2006–2009",
               "paragraphs": []
             }
@@ -2039,6 +2047,7 @@ export const catalog={
       "summary": "0 → 1 • North Star",
       "category": "Decentralised finance",
       "kind": "shipped",
+      "year": "2025",
       "projectStatus": "Launched",
       "disciplines": [
         "Product",

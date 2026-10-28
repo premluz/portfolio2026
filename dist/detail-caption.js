@@ -16,6 +16,6 @@ export function detailCaptionLines(data,flags=DEFAULT_CAPTION_FLAGS){
  return {eyebrow,title:titleLine,lead,results,intro};
 }
 export function detailCaptionInner({eyebrow,title,lead,results='',intro=''}){
- return `${eyebrow?`<p class="detail-caption-client">${escapeText(eyebrow)}</p>`:''}${title?`<p class="detail-caption-title">${escapeText(title)}</p>`:''}${lead?`<p class="detail-caption-lead">${escapeText(lead)}</p>`:''}${results?`<p class="detail-caption-results">${escapeText(results)}</p>`:''}${intro?`<p class="detail-caption-intro">${escapeText(intro)}</p>`:''}`;
+ return `${eyebrow?`<p class="detail-caption-client">${escapeText(eyebrow)}</p>`:''}${title?`<h2 class="detail-caption-title">${escapeText(title)}</h2>`:''}${lead?`<p class="detail-caption-lead">${escapeText(lead)}</p>`:''}${results?`<p class="detail-caption-results">${escapeText(results)}</p>`:''}${intro?`<p class="detail-caption-intro">${escapeText(intro)}</p>`:''}`;
 }
 export const detailCaptionDataAttributes=data=>`data-client="${escapeText(data.client||'')}" data-title="${escapeText(data.title||'')}" data-category="${escapeText(data.category||'')}" data-summary="${escapeText(data.summary||'')}" data-year="${escapeText(data.year||'')}" data-page-title="${escapeText(data.pageTitle||'')}"`;

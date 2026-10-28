@@ -1,17 +1,9 @@
 .home-about{--home-about-years-column:5.375em;margin-top:var(--space-page-rhythm-md);width:100%;min-width:0;grid-column:1 / -1}
-.home-about h2{max-width:var(--page-intro-width);margin:0;font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:pretty}
-.home-about-title-secondary{color:var(--body-ink)}
 .home-about-copy,.home-about-lists{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6)}
-.home-about-copy{margin-top:var(--space-4)}
+.home-about-copy{margin-top:0}
 .home-about-copy p{grid-column:calc(2 * var(--content-column-start) - 1) / span 3;margin:0;max-width:none;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
 .home-about-copy p+p{grid-column:calc(2 * var(--content-column-start) - 1) / span 3}
 .home-about-copy p:empty{display:none}
-.home-about-how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);margin-top:var(--space-page-rhythm-md)}
-.home-about-how h3{grid-column:var(--content-column-start) / span 2;margin:0 0 var(--space-4);font-size:var(--heading-label-size);text-transform:var(--heading-label-transform);font-weight:var(--heading-label-weight);line-height:var(--heading-label-line);letter-spacing:var(--heading-label-tracking);color:var(--heading-label-color)}
-.home-about-how ul{grid-column:var(--content-column-start) / span 2;list-style:none;padding:0;margin:0;display:grid;gap:var(--space-4)}
-.home-about-how li{display:grid;grid-template-columns:minmax(0,calc(50% - var(--space-6) / 2 - var(--home-about-years-column) - var(--space-4))) minmax(0,1fr);align-items:baseline;column-gap:var(--space-4);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
-.home-about-how li>span{color:var(--body-ink)}
-.home-about-how li>p{margin:0;color:var(--eyebrow-ink)}
 .home-about-path{grid-column:1/-1;margin-top:var(--space-page-rhythm-md);padding-block:clamp(20px,2.5vw,36px)}
 .home-about-path .hero-timeline{--timeline-text-gap:clamp(36px,4vw,56px);margin-top:0}
 .home-about-path .timeline-track ol{padding-inline:clamp(48px,6vw,120px)}
@@ -19,6 +11,7 @@
 .home-about-list-content{grid-column:var(--content-column-start) / span 2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-6);row-gap:var(--space-page-rhythm-md)}
 .home-about-list{min-width:0;grid-column:1}
 .home-about-list h3{margin:0 0 var(--space-6);font-size:var(--heading-label-size);text-transform:var(--heading-label-transform);font-weight:var(--heading-label-weight);line-height:var(--heading-label-line);letter-spacing:var(--heading-label-tracking);color:var(--heading-label-color)}
+:root[data-heading-style="editorial"] .home-about-list h3{font-size:var(--heading-article-size);text-transform:none;font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink)}
 .home-about-list ul{position:relative;isolation:isolate;list-style:none;padding:0;margin:0;display:grid;gap:var(--space-6)}
 .home-about-list li{position:relative}
 .home-about-row{position:relative;display:grid;grid-template-columns:minmax(0,1fr) var(--home-about-years-column);align-items:baseline;gap:var(--space-6);padding:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
@@ -27,7 +20,7 @@
 @media(hover:hover){.home-about-list li:hover .home-about-item{color:var(--ink)}}
 .home-view-split .home-about{margin-top:var(--space-page-rhythm-md)}
 .info-grid[hidden]{display:none!important}
-@media(max-width:600px){.home-about-copy,.home-about-lists,.home-about-how{grid-template-columns:1fr}.home-about-copy{row-gap:var(--space-6)}.home-about-copy p,.home-about-copy p+p{grid-column:1;max-width:none}.home-about-how h3,.home-about-how ul{grid-column:1}.home-about-how li{grid-template-columns:minmax(0,1fr) minmax(0,2fr)}.home-about-list-content{grid-column:1;grid-template-columns:1fr}.home-about{margin-top:var(--space-page-rhythm-md)}.home-about-path{margin-top:var(--space-page-rhythm-md);padding-block:20px}.home-about-path .hero-timeline{--timeline-text-gap:32px}.home-about-path .timeline-track ol{padding-inline:28px}}
+@media(max-width:600px){.home-about-copy,.home-about-lists{grid-template-columns:1fr}.home-about-copy{row-gap:var(--space-6)}.home-about-copy p,.home-about-copy p+p{grid-column:1;max-width:none}.home-about-list-content{grid-column:1;grid-template-columns:1fr}.home-about{margin-top:var(--space-page-rhythm-md)}.home-about-path{margin-top:var(--space-page-rhythm-md);padding-block:20px}.home-about-path .hero-timeline{--timeline-text-gap:32px}.home-about-path .timeline-track ol{padding-inline:28px}}
 /* Six columns so the intro text can be half the width and still start on the first or the second third, like the Home hero text. */
 .home-about-copy{grid-template-columns:repeat(6,minmax(0,1fr))}
 /* With both lists switched off the grid leaves no spacing behind. */

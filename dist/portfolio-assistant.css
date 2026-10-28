@@ -111,3 +111,5 @@
 .assistant-welcome h1{color:var(--ink)}
 :root:not(.assistant-inline-open) #askPage.assistant-page{--chat-top:var(--page-content-top)}
 :root:not(.assistant-inline-open) #askPage.assistant-empty .assistant-thread{justify-content:flex-start}
+.ask-cards .project-card h3{max-width:none;font-size:var(--font-size-body);line-height:1.25;letter-spacing:var(--letter-spacing-card)}
+#askPage .ask-cards .project-card>.card-copy>h3{position:static;visibility:visible;opacity:1;margin:0;width:auto;font-size:var(--font-size-body);font-weight:var(--font-weight-heading);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-card)}

@@ -32,8 +32,9 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
    across the page under it, then the long title, summary and facts in a reading-width column. With "Details title beside image"
    on that column sits at the left; off, it is centred like a blog post. These rules outrank the older two-column ones in style.css. */
 .surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-caption{display:block;grid-column:1;grid-row:1;margin:0 0 var(--space-8)}
-.detail-caption p{margin:0;font-size:var(--font-size-project-summary);font-weight:var(--font-weight-body);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body)}
+.detail-caption :is(p,h2){margin:0;font-size:var(--font-size-project-summary);font-weight:var(--font-weight-body);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body)}
 .detail-caption-title{color:var(--ink)}
+:root[data-heading-style="editorial"] .detail-caption .detail-caption-title{font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);text-transform:none;color:var(--ink);text-wrap:balance}
 .detail-caption-lead{color:var(--muted)}
 .detail-caption .detail-caption-results{margin-top:var(--space-5);color:var(--body-ink)}
 .detail-caption .detail-caption-intro{margin-top:var(--space-5);color:var(--ink)}

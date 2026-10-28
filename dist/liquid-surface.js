@@ -59,7 +59,7 @@ export async function flow(from,to,{duration,intensity,control,ambientGlow=false
  if(independentCopy)for(const [index,key] of captionKeys.entries()){
   // A settled detail returns exactly as its entry reverses: its own heading and copy stay
   // in the moving page and fade with it, rather than a pinned static copy.
-  const source=galleryReturn?null:from.shared?.[key];if(source){const copy=createStaticCopy({...source,opacity:source.hidden?0:source.opacity},shell);if(key==='title')lockLineBreaks(copy.node,source.words);copy.node.classList.add('flow-caption-out');sourceCaptions.push({copy,index});const native=outgoing.querySelector(key==='title'?'h1,h2':key==='client'?'.card-client,.project-client':'.project-summary,.info-summary');if(native)native.style.visibility='hidden';}
+  const source=galleryReturn?null:from.shared?.[key];if(source){const copy=createStaticCopy({...source,opacity:source.hidden?0:source.opacity},shell);if(key==='title')lockLineBreaks(copy.node,source.words);copy.node.classList.add('flow-caption-out');sourceCaptions.push({copy,index});const native=outgoing.querySelector(key==='title'?'h1,h2,h3':key==='client'?'.card-client,.project-client':'.project-summary,.info-summary');if(native)native.style.visibility='hidden';}
   const target=independentReturn?sharedCopyNode(to,key):null;if(target){const style=getComputedStyle(target),copy=createStaticCopy({node:target,rect:target.getBoundingClientRect(),opacity:copyOpacity(target,to),fontFamily:style.fontFamily,fontSize:parseFloat(style.fontSize),fontWeight:style.fontWeight,lineHeight:parseFloat(style.lineHeight)/parseFloat(style.fontSize),letterSpacing:parseFloat(style.letterSpacing)||0,color:style.color},shell);copy.node.classList.add('flow-caption-in');if(key==='title')lockLineBreaks(copy.node,captureSharedWords(target,key));targetCaptions.push({copy,index});}
  }
  // Staging can paint before the first animation callback positions the captions.
@@ -70,7 +70,7 @@ export async function flow(from,to,{duration,intensity,control,ambientGlow=false
  const detachSummary=attachSummaryStream(to.querySelector('.project-summary'),incoming.querySelector('.project-summary'));
  const detachHeadingReveal=newDetailHeading?[incoming.querySelector('h1'),incoming.querySelector('.project-client')].map(node=>attachTitleReveal(to.querySelector('.project-summary'),node)):[];
  const shared=[];
- for(const [key,selector] of [['title','h1,h2'],['client','.card-client,.project-client'],['category','.eyebrow'],['summary','.project-summary,.info-summary']]){
+ for(const [key,selector] of [['title','h1,h2,h3'],['client','.card-client,.project-client'],['category','.eyebrow'],['summary','.project-summary,.info-summary']]){
  const source=from.shared?.[key],target=sharedCopyNode(to,key);if(!source||!target)continue;
  if(independentCopy)continue;
  // The page thesis is new content, not the outcome sentence on the card.

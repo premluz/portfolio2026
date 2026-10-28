@@ -14,7 +14,7 @@ const measurements={
  createRange(){return {setStart(node){this.node=node;},setEnd(){},getBoundingClientRect(){return this.node.rect;}};}
 };
 const host=new Node(),part=new Node(),wordSpan=new Node();part.parentElement=host;part.opacity='.8';wordSpan.parentElement=part;wordSpan.opacity='.4';part.ownerDocument=measurements;
-for(const [key,standaloneSelector,cardSelector] of [['title','[data-gallery-title]','h1,h2'],['client','[data-gallery-client]','.card-client,.project-client'],['summary','[data-gallery-description]','.project-summary,.info-summary']]){
+for(const [key,standaloneSelector,cardSelector] of [['title','[data-gallery-title]','h1,h2,h3'],['client','[data-gallery-client]','.card-client,.project-client'],['summary','[data-gallery-description]','.project-summary,.info-summary']]){
  const standalone=new Node(),cardCopy=new Node();
  assert.equal(sharedCopyNode({morphCopyRoot:{querySelector:selector=>selector===standaloneSelector?standalone:null}},key),standalone);
  assert.equal(sharedCopyNode({morphCopyRoot:{querySelector:selector=>selector===cardSelector?cardCopy:null}},key),cardCopy,'Per-card text uses the same fields as grid cards');

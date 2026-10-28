@@ -1,12 +1,32 @@
 import {test,expect} from '@playwright/test';
 
-// Every developer settings group is visible and the panel loads without errors.
-test('developer settings panel lists every group',async({page})=>{
+test('developer settings panel uses category tabs and collapsed accordions',async({page})=>{
  const errors=[];page.on('pageerror',error=>errors.push(error.message));page.on('console',message=>{if(message.type()==='error')errors.push(message.text());});
  await page.goto('/?dev=1');await expect(page.locator('html')).not.toHaveClass(/page-booting/);
+ const rhythm=await page.evaluate(()=>{const carousel=document.querySelector('.home-product-carousel'),work=document.querySelector('.home-work');return {carousel:carousel?getComputedStyle(carousel).marginTop:'',work:work?getComputedStyle(work).marginTop:''};});
+ expect(rhythm.work).toBe(rhythm.carousel);
  await page.locator('#settingsToggle').click();
- const groups=await page.locator('#settings .developer-settings-group>summary').evaluateAll(nodes=>nodes.map(node=>({name:node.textContent.trim(),visible:!!node.offsetParent})));
- expect(groups.filter(group=>!group.visible),'hidden groups').toEqual([]);
- expect(groups.map(group=>group.name)).toContain('Navigation');
+ await expect(page.locator('#settings .settings-tabs [role="tab"]')).toHaveCount(4);
+ await expect(page.locator('#settingsTabContent')).toHaveAttribute('aria-selected','true');
+ await expect(page.locator('#settingsPanelContent')).toBeVisible();
+ await expect(page.locator('#cardTitleScale')).toHaveCount(0);
+ await expect(page.locator('#settingsPanelStructure')).toBeHidden();
+ await expect(page.locator('#settings .developer-settings-group[open]')).toHaveCount(0);
+ const panel=await page.locator('#settings').boundingBox();
+ expect(panel?.width??0).toBeGreaterThanOrEqual((page.viewportSize()?.width??1280)*.45);
+ await expect(page.locator('#settingsPanelContent > .developer-settings-group > summary')).toHaveText(['Home','Lab','Project details','About','Contact']);
+ await expect(page.locator('#settingsPanelContent #heroTimelineEnabled')).toBeAttached();
+ await expect(page.locator('#settingsPanelContent #heroTimelineTextEnabled')).toBeAttached();
+ await expect(page.locator('#settingsPanelContent #heroDescriptionEnabled')).toBeAttached();
+ await expect(page.locator('#settingsPanelStructure #heroTimelineEnabled')).toHaveCount(0);
+ for(const id of ['homeProductDisplay','homeViewSelect','homeLayoutSelect','gridColumns','multiColumnCardPosition','cardCopyHover','featuredLarger','labLayout','labColumns','labFeaturedLarger','labFullWidth'])await expect(page.locator(`#settingsPanelContent #${id}`)).toBeAttached();
+ for(const id of ['homeProductDisplay','homeViewSelect','homeLayoutSelect','gridColumns','multiColumnCardPosition','cardCopyHover','featuredLarger','labLayout','labColumns','labFeaturedLarger','labFullWidth'])await expect(page.locator(`#settingsPanelStructure #${id}`)).toHaveCount(0);
+ await page.locator('#settingsTabStructure').click();
+ await expect(page.locator('#settingsPanelStructure')).toBeVisible();
+ await expect(page.locator('#settingsPanelStructure > .developer-settings-group > summary')).toHaveText(['Page width','Layout','Carousel','Cards','Footer','Navigation']);
+ await page.locator('#settingsTabDesign').click();
+ await expect(page.locator('#settingsPanelDesign > .developer-settings-group > summary')).toHaveText(['Design system','Section presentation','Ambient','Images','Environment']);
+ await page.locator('#settingsTabMotion').click();
+ await expect(page.locator('#settingsPanelMotion > .developer-settings-group > summary')).toHaveText(['Motion']);
  expect(errors).toEqual([]);
 });

@@ -238,6 +238,7 @@
 
   /* Page layout and edge fade */
   --header-height: 112px;
+  --settings-panel-width: 50vw;
   --page-top: 18px;
   --flat-text-column: .88fr;
   --flat-card-column: 1.12fr;

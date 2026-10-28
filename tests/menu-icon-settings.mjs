@@ -4,7 +4,16 @@ import {readFile} from 'node:fs/promises';
 
 const html=await readFile(new URL('../dist/index.html',import.meta.url),'utf8');
 for(const id of ['showGestureControl','showInfoControl','showAnimationControl'])assert.match(html,new RegExp(`id="${id}"`));
-assert.match(html,/<details class="developer-settings-group">\s*<summary>Navigation/);assert.doesNotMatch(html,/<details class="developer-settings-group" hidden>/,'Every developer settings group is visible');
+assert.deepEqual([...html.matchAll(/data-settings-tab="([^"]+)"/g)].map(match=>match[1]),['content','structure','design','motion']);
+assert.equal((html.match(/<details class="developer-settings-group"[^>]*\bopen\b/g)??[]).length,0,'Developer settings accordions are collapsed by default');
+for(const summary of ['Home','Lab','Project details','About','Contact','Page width','Layout','Cards','Footer','Navigation','Design system','Section presentation','Environment','Motion'])assert.match(html,new RegExp(`<summary>${summary}</summary>`));
+assert.match(html,/<summary>Home<\/summary>[\s\S]*<div class="setting-subsection">Hero<\/div>[\s\S]*id="heroTimelineEnabled"[\s\S]*id="heroTimelineTextEnabled"[\s\S]*id="heroDescriptionEnabled"/);
+assert.doesNotMatch(html,/<summary>Layout<\/summary>[\s\S]*id="heroTimelineEnabled"[\s\S]*id="heroTimelineTextEnabled"[\s\S]*id="heroDescriptionEnabled"/,'Hero visibility settings belong to Content');
+assert.match(html,/<summary>Home<\/summary>[\s\S]*id="homeProductDisplay"[\s\S]*id="homeViewSelect"[\s\S]*id="featuredLarger"/,'Homepage layout settings belong to Content');
+assert.doesNotMatch(html,/<summary>Layout<\/summary>[\s\S]*id="homeProductDisplay"[\s\S]*id="homeViewSelect"[\s\S]*id="featuredLarger"/,'Homepage settings are not structural layout settings');
+assert.match(html,/<summary>Lab<\/summary>[\s\S]*id="labLayout"[\s\S]*id="labColumns"[\s\S]*id="labFeaturedLarger"[\s\S]*id="labFullWidth"/,'Lab layout settings belong to Content');
+assert.doesNotMatch(html,/<summary>Layout<\/summary>[\s\S]*id="labLayout"[\s\S]*id="labColumns"[\s\S]*id="labFeaturedLarger"[\s\S]*id="labFullWidth"/,'Lab settings are not structural layout settings');
+assert.doesNotMatch(html,/<summary>Content Home<\/summary>|<summary>Content About<\/summary>/,'Legacy page groups are not duplicated');
 const ids=['showGestureControl','showInfoControl','showAnimationControl'];
 const toggles=new Map(ids.map(id=>[id,{attrs:{},listeners:{},addEventListener(type,callback){this.listeners[type]=callback;},setAttribute(name,value){this.attrs[name]=value;}}]));
 const makeButton=()=>({hidden:false,disabled:false});

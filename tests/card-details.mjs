@@ -8,7 +8,7 @@ const tracr=cards.find(item=>item.id==='tracr');
 assert.equal(tracr.projectStatus,'Launched');assert.deepEqual(tracr.disciplines,['Design system','Product','Brand']);
 const html=card(tracr,0,'regular',{link:false});
 assert(html.includes('<span class="card-status" data-status="launched">Launched</span>'),'Status pill is in the markup');
-assert(html.indexOf('card-status')<html.indexOf('card-client')&&html.indexOf('card-client')<html.indexOf('<h2>')&&html.indexOf('project-summary')<html.indexOf('card-tags'),'Order is status, client, title, results, tags');
+assert(html.indexOf('card-status')<html.indexOf('card-client')&&html.indexOf('card-client')<html.indexOf('<h3>')&&html.indexOf('project-summary')<html.indexOf('card-tags'),'Order is status, client, title, results, tags');
 assert((html.match(/<span>[^<]+<\/span>/g)||[]).some(span=>span==='<span>Design system</span>'),'Each discipline is its own span');
 const hostile=card({...tracr,projectStatus:'R&D',disciplines:['<b>x</b>']},0,'regular',{link:false});
 assert(hostile.includes('data-status="randd"')&&hostile.includes('&lt;b&gt;x&lt;/b&gt;'),'Status and tags are escaped');
@@ -25,5 +25,7 @@ for(const part of ['--font-size-caption','--eyebrow-weight','--eyebrow-tracking'
 assert(/\.text-gradient,\.about-highlight,body\.card-details[^{]*\.project-summary\{[^}]*linear-gradient\(90deg,var\(--text-gradient-from\),var\(--text-gradient-to\)\)/.test(design),'The gradient is defined once, as .text-gradient');
 assert(!/about-highlight\{/.test(about)&&!/--about-highlight/.test(about),'About no longer carries its own copy');
 assert((tokens.match(/--text-gradient-from:/g)||[]).length===2&&(tokens.match(/--text-gradient-to:/g)||[]).length===2,'Light and dark values exist');
-assert(/body\.card-client-above:not\(\.card-client-hidden\)[^{]*\.card-title-hidden|body\.card-client-above:not\(\.card-client-hidden\) \.project-card\.image-card>\.card-copy>h2>\.card-title-client\{display:none\}/.test(card_css),'Above hides the inline client prefix so it wins over inline');
+assert(/body\.card-client-above:not\(\.card-client-hidden\)[^{]*\.card-title-hidden|body\.card-client-above:not\(\.card-client-hidden\) \.project-card\.image-card>\.card-copy>h3>\.card-title-client\{display:none\}/.test(card_css),'Above hides the inline client prefix so it wins over inline');
+assert(!html.includes('<h2>')&&html.includes('<h3>'),'Project card titles use h3 semantics');
+assert(design.includes('var(--heading-article-size)'),'Project card title size follows the editorial heading token');
 console.log('Card details passed: status and tags markup and order, escaping, missing data, every project has disciplines, one shared gradient class.');

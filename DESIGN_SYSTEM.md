@@ -52,7 +52,7 @@ route changes; touch devices suppress scrollbar indicators for that interval.
 Normal vertical scrolling remains available, and horizontal page overflow is
 clipped without creating a nested scroller.
 
-Card title size, image padding, card gap, card rounding and page-edge sliders
+Image padding, card gap, card rounding and page-edge sliders
 remain independent fine adjustments. Preset changes remeasure the current layout
 and images without replacing card nodes. Changes are held while a card transition
 is active. Hover physics, theme palettes and glass materials are unchanged.

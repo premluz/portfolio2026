@@ -119,6 +119,7 @@ main.home-canvas{max-width:1920px;padding-inline:clamp(24px,5.4vw,110px)}
 .home-view-split [data-home-news]{display:none!important}
 .gallery-toolbar{display:flex;justify-content:flex-end;margin:0 0 24px}
 .gallery-toolbar .layout-control button{font-size:.875rem}
+main.home-canvas:not(.home-view-split) .homepage-layout>.home-work{margin-top:var(--space-page-rhythm-md)}
 [data-theme=dark] .hero-copy,[data-theme=dark] .hero-news h2{color:var(--muted)}
 [data-theme=dark] .hero-copy p span,[data-theme=dark] .hero-news h3{color:var(--ink)}
 [data-theme=dark] .hero-news li{border-color:rgba(255,255,255,.10)}
@@ -154,7 +155,7 @@ header .theme-toggle{margin-left:0}
 .home-view-flip .card-slot{display:grid;place-items:center;height:clamp(480px,65svh,760px);position:relative;grid-row:auto!important}
 .home-view-flip .card-placement{width:min(100%,580px);transform-origin:center;backface-visibility:hidden;will-change:transform,opacity}
 .project-card[data-card-presentation="flip"]{padding:32px 32px 26px;min-height:0;height:clamp(460px,60svh,620px);border-radius:var(--radius-card-flip)}
-.project-card[data-card-presentation="flip"] h2{font-size:var(--font-size-body);max-width:440px;line-height:1.15}
+.project-card[data-card-presentation="flip"] h3{font-size:var(--heading-article-size);max-width:440px;line-height:1.15}
 .project-card[data-card-presentation="flip"] .visual{width:100%;height:clamp(210px,29svh,330px);margin:28px 0 0;border-radius:var(--radius-visual-flip)}
 .project-card[data-card-presentation="flip"] .eyebrow{font-size:.75rem;margin-top:16px}
 .project-card[data-card-presentation="flip"] .card-bottom{margin-top:22px}
@@ -248,7 +249,7 @@ body.edge-shade-top .page-edge-shades .top,body.edge-shade-bottom .page-edge-sha
 /* Width drives the holding frame, rather than a fixed pixel height. Regular
    uses one frame for both orientations; masonry gives mobile screens more room. */
 .project-card[data-card-presentation="current"]:not([data-image-mode="bleed"]){min-height:0}
-.project-card[data-card-presentation="current"]:not([data-image-mode="bleed"]) h2{min-height:0}
+.project-card[data-card-presentation="current"]:not([data-image-mode="bleed"]) h3{min-height:0}
 .project-card[data-card-presentation="current"]:not([data-image-mode="bleed"])>.visual{width:100%;height:auto;aspect-ratio:var(--image-frame-regular-aspect);margin:28px 0 0;border-radius:var(--radius-visual)}
 .project-card[data-card-presentation="current"][data-card-layout="masonry"][data-card-orientation="portrait"]:not([data-image-mode="bleed"])>.visual{aspect-ratio:var(--image-frame-masonry-portrait-aspect)}
 .project-card[data-card-presentation="current"][data-card-orientation="landscape"]:not([data-image-mode="bleed"])>.visual{width:min(100%,var(--image-max-width-landscape,1000px));aspect-ratio:var(--image-source-ratio,var(--image-frame-regular-aspect));margin-top:28px}
@@ -274,7 +275,7 @@ body.edge-shade-top .page-edge-shades .top,body.edge-shade-bottom .page-edge-sha
 .image-backing-disabled .image-card[data-image-mode="bleed"]>.visual{background:transparent!important}
 #bleedSettings p{margin:10px 0 0;font-size:12px}
 
-.project-card h2{overflow-wrap:anywhere}
+.project-card h3{overflow-wrap:anywhere}
 
 /* Card titles and metadata close up together as the title size is reduced. */
 .project-card[data-card-presentation="current"]:not([data-image-mode="bleed"])>.card-copy>.eyebrow{margin-top:18px}
@@ -380,9 +381,9 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 /* Desktop card labels brighten with the whole card. Using resolved colours
    preserves shared-title colour interpolation when opening or returning. */
 @media(min-width:751px) and (hover:hover) and (pointer:fine){
- .project-card:not(.flow-content) h2,.project-card:not(.flow-content) .eyebrow{color:color-mix(in oklab,var(--ink) var(--card-label-rest-strength),var(--surface-fill));transition:color var(--card-content-out-duration) ease-out}
+ .project-card:not(.flow-content) h3,.project-card:not(.flow-content) .eyebrow{color:color-mix(in oklab,var(--ink) var(--card-label-rest-strength),var(--surface-fill));transition:color var(--card-content-out-duration) ease-out}
  .project-card:not(.flow-content) .project-summary{color:color-mix(in oklab,var(--body-ink) var(--card-summary-rest-strength),var(--surface-fill));transition:color var(--card-content-out-duration) ease-out}
- .project-card:not(.flow-content):is(:hover,:focus-visible,.gesture-hover) h2,.project-card:not(.flow-content):is(:hover,:focus-visible,.gesture-hover) .eyebrow{color:var(--ink);transition-duration:var(--card-content-in-duration);transition-timing-function:ease-out}
+ .project-card:not(.flow-content):is(:hover,:focus-visible,.gesture-hover) h3,.project-card:not(.flow-content):is(:hover,:focus-visible,.gesture-hover) .eyebrow{color:var(--ink);transition-duration:var(--card-content-in-duration);transition-timing-function:ease-out}
  .project-card:not(.flow-content):is(:hover,:focus-visible,.gesture-hover) .project-summary{color:var(--body-ink);transition-duration:var(--card-content-in-duration);transition-timing-function:ease-out}
  .image-card[data-image-mode="bleed"]>.card-copy>.eyebrow{opacity:1}
 }
@@ -522,6 +523,15 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 #settings .settings-transfer p{margin:10px 0 0;font-size:var(--font-size-note);line-height:var(--line-height-body);color:var(--muted)}
 #settings #settingsTransferStatus:empty{display:none}
 #settings #settingsTransferStatus{color:var(--ink)}
+
+#settings{width:var(--settings-panel-width)}
+#settings .settings-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--space-1);margin:0 0 var(--space-4);padding:var(--space-1);border-radius:var(--radius-header-control);background:var(--chrome)}
+#settings .settings-tabs button{min-width:0;min-height:calc(var(--space-unit) * 5);padding:var(--space-2) var(--space-1);border-radius:calc(var(--radius-header-control) - var(--space-1));background:transparent;color:var(--muted);font-size:var(--font-size-small);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body);transition:background-color var(--nav-hover-in-duration) var(--ease-standard),color var(--nav-hover-in-duration) var(--ease-standard)}
+#settings .settings-tabs button[aria-selected="true"]{background:var(--nav-active);color:var(--ink);font-weight:var(--font-weight-label)}
+#settings .settings-tabs button:focus-visible{outline:2px solid var(--muted);outline-offset:2px}
+#settings .settings-tab-panels{min-width:0}
+#settings [data-settings-tabpanel][hidden]{display:none}
+@media(max-width:600px){#settings{width:calc(100vw - (var(--space-unit) * 4))}#settings .settings-tabs button{font-size:var(--font-size-caption)}}
 
 .flow-shared-words{position:absolute;inset:0;z-index:3;pointer-events:none}
 .flow-shared-words>span{display:block;max-width:none;border:0;text-shadow:none;transform:none}
