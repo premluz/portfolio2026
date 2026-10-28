@@ -58,10 +58,14 @@ export function imageGeometry(width,height,ratio,radius=24,padding={},sourceCorn
  const sourceRadius=sourceCorners?.width>0?sourceCorners.radius*imageWidth/sourceCorners.width:0;
  return {width:imageWidth,height:imageHeight,left:left+(align==='start'?0:(availableWidth-imageWidth)/2),top:top+(availableHeight-imageHeight)*(blockAlign==='end'?1:.5),radius:Math.min(imageWidth/2,imageHeight/2,Math.max(0,radius,sourceRadius))};
 }
-// Card rounding is a ceiling, not a fixed size: a small card never rounds past a share of its shorter side, so a setting made
-// for large cards cannot turn small ones into circles. Large cards keep the setting as it is.
-export const CARD_RADIUS_SIDE_SHARE=.25;
-export const fittedCardRadius=(setting,width,height)=>Math.min(setting,Math.max(0,Math.min(width,height))*CARD_RADIUS_SIDE_SHARE);
+// Card rounding is the radius of a large card, and it shrinks faster than the card does: cards whose shorter side is at least
+// the reference keep the setting, smaller ones get it scaled by (side / reference) ^ exponent, and no card rounds past a share
+// of its shorter side. So the slider's maximum stays reasonable on small cards.
+export const CARD_RADIUS_REFERENCE_SIDE=480,CARD_RADIUS_SIZE_EXPONENT=1.5,CARD_RADIUS_SIDE_SHARE=.25;
+export function fittedCardRadius(setting,width,height){
+ const side=Math.max(0,Math.min(width,height));
+ return Math.min(setting*Math.min(1,side/CARD_RADIUS_REFERENCE_SIDE)**CARD_RADIUS_SIZE_EXPONENT,side*CARD_RADIUS_SIDE_SHARE);
+}
 const CARD_RADIUS_VARIANTS=['--radius-card-compact','--radius-card-flip','--radius-card-flip-compact','--radius-card-simple'];
 export function readImagePadding(el){const style=getComputedStyle(el);return Object.fromEntries(['top','right','bottom','left'].map(side=>[side,Math.max(0,parseFloat(style.getPropertyValue('--image-padding-'+side))||0)]));}
 export function updateImageShade(el){

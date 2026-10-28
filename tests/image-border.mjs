@@ -18,7 +18,9 @@ assert(!arc.slice(0,arc.indexOf('Motion and mobile')).includes('id="carouselSize
 assert(html.indexOf('id="carouselGap"')<html.indexOf('<div id="carouselArcSettings"')&&gallery.includes('gap:var(--carousel-gap,var(--space-6))'),'Gap works for the scroll presentation too');
 // Card rounding is a ceiling relative to the card: large cards keep it, small cards never round past a share of their shorter side.
 assert.equal(fittedCardRadius(128,1000,700),128,'A large card keeps the setting');
-assert.equal(fittedCardRadius(128,317,198),198*CARD_RADIUS_SIDE_SHARE,'A small card is capped by its shorter side');
-assert.equal(fittedCardRadius(40,317,198),40,'A setting below the cap is untouched');
+assert.equal(fittedCardRadius(128,1000,600),128,'A card past the reference side keeps the setting');
+const small=fittedCardRadius(128,317,198);assert(small<198*CARD_RADIUS_SIDE_SHARE/1.3&&small>0,'A small card rounds much less than its share cap');
+assert(fittedCardRadius(128,317,198)<fittedCardRadius(128,420,300)&&fittedCardRadius(128,420,300)<fittedCardRadius(128,600,420),'Rounding grows with the card');
+assert(fittedCardRadius(40,317,198)<40,'A small setting also shrinks on a small card');
 assert.equal(fittedCardRadius(64,0,0),0,'An empty box has no radius');
 console.log('Image border passed: default off, exported, outline on the image frame, plain cards add none, carousel rounding, size and gap for every presentation.');

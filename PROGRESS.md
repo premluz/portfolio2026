@@ -14,8 +14,8 @@ Newest first. Add an entry after meaningful work: what changed, the evidence, an
 
 ## 2026-10-28 Card rounding is relative to the card size
 
-- Card rounding is now a ceiling: each image card fits its own radius tokens to its size (`fittedCardRadius`, at most a quarter of its shorter side, set on the card by `ImageFrame.fitCardRadius`), so a 128px setting no longer turns a small Lab card into a near circle. Large cards keep the setting. The carousel's radius derives from the same fitted value.
-- Evidence: headless browser with the owner's settings: Lab cards 317x198 at setting 128 measure 49.5px (before 128px), at setting 40 stay 40px; the home carousel's 656x474 cards at 64 stay 20px; unit assertions in tests/image-border.mjs.
+- Card rounding is now the radius of a large card: each image card fits its own radius tokens to its size (`fittedCardRadius`, set on the card by `ImageFrame.fitCardRadius`). Cards with a shorter side of 480px or more keep the setting, smaller ones get it scaled by (side / 480) ^ 1.5, and none exceeds a quarter of its shorter side. A first version only capped at a quarter of the side, which still left small cards too round at the slider's maximum. The carousel's radius derives from the same fitted value.
+- Evidence: headless browser with the owner's settings: Lab cards 317x198 at setting 128 measure 33.9px (before 128px), at setting 40 10.6px; the home carousel's 656x474 cards at 64 measure 19.6px; unit assertions in tests/image-border.mjs.
 
 ## 2026-10-28 Contextual section actions only with the contextual composer
 
