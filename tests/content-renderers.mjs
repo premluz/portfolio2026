@@ -52,6 +52,7 @@ assert(/<div class="detail-caption" data-client="Merlin" data-title="[^"]+" data
 assert(merlin.indexOf('detail-caption')<merlin.indexOf('class="project-client"'),'The caption leads the page');
 const css=await (await import('node:fs/promises')).readFile(new URL('../dist/project-media-focus.css',import.meta.url),'utf8');
 assert(css.includes('.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-caption{display:block;'),'The caption leads every project page that has a picture');
-assert(css.includes(':not(.heading-beside-image,.text-only-detail)>:is(.project-client,h1,.project-summary)')&&css.includes('margin-inline:auto'),'Without Details title beside image the reading column is centred like a blog post');
+assert(css.includes(':not(.heading-beside-image,.text-only-detail)>.project-summary')&&css.includes('margin-inline:auto'),'Without Details title beside image the reading column is centred like a blog post');
+assert(css.includes('>.project-client{display:none}')&&css.includes('clip-path:inset(50%)'),'The column below the caption does not repeat the company or the headline (the heading stays for screen readers)');
 assert(css.includes('.surface.detail[data-card-orientation="landscape"]:not(.text-only-detail){--image-max-width-landscape:100000px}'),'A landscape image fills the page width in the stacked layout');}
 console.log('Content renderers passed: typed blocks, reusable project references, carousel accessibility, safe text/media, shared card rendering and validated AI presentation.');

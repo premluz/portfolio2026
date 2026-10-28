@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 No repeated company or headline below the caption
+
+- On project pages with a picture the client line no longer appears in the column under the picture, and the headline sentence (`pageTitle`, e.g. "Redesigned a fragmented IoT platform around one scalable interaction model") moved into the caption as its last line, at the side or above depending on the mode. The `h1` remains in the page, visually hidden, so the page keeps its heading. The column now holds the intro paragraph and the facts.
+- Evidence: headless browser on Bastion at 1500px and 390px, both modes: caption lines end with the headline sentence, the client line is display none, the h1 is 1x1 and clipped, the column starts with the intro paragraph; no overflow.
+
 ## 2026-10-28 Beside-image pages: caption at the picture's bottom left, the rest as a column below
 
 - With Details title beside image on, the left column now holds only the caption (company/category/title, Company · Year and the results line) bottom-aligned with the picture, which sits on the right with the buttons and QR under it; the client line, title, summary and facts are a centred 600px reading column below, as when it is off. With Company · Year as the description the caption also keeps the results line under it (`detail-caption-results`).

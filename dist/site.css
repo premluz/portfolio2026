@@ -1851,6 +1851,10 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 .detail-caption-title{color:var(--ink)}
 .detail-caption-lead{color:var(--muted)}
 .detail-caption .detail-caption-results{margin-top:var(--space-5);color:var(--body-ink)}
+.detail-caption .detail-caption-intro{margin-top:var(--space-5);color:var(--ink)}
+/* The caption carries the company and the headline sentence, so the column below does not repeat them. The heading stays for screen readers. */
+.surface.detail[data-card-orientation]:not(.text-only-detail)>.project-client{display:none}
+.surface.detail[data-card-orientation]:not(.text-only-detail)>h1{position:absolute;width:1px;height:1px;margin:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .detail-caption .detail-caption-client{margin-bottom:var(--space-4);font-size:var(--font-size-body);letter-spacing:var(--client-eyebrow-tracking);text-transform:uppercase;color:var(--eyebrow-ink)}
 .surface.detail[data-card-orientation]:not(.text-only-detail){display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:none;column-gap:0;row-gap:0}
 .surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout{display:contents}
@@ -1859,8 +1863,8 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 .surface.detail[data-card-orientation]:not(.text-only-detail)>h1{grid-column:1;grid-row:4}
 .surface.detail[data-card-orientation]:not(.text-only-detail)>.project-summary{grid-column:1;grid-row:5}
 .surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{grid-column:1;grid-row:6}
-.surface.detail[data-card-orientation]:not(.text-only-detail)>:is(.project-client,h1,.project-summary),.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{max-width:var(--content-width-reading)}
-.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>:is(.project-client,h1,.project-summary),.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-layout>.description{margin-inline:auto;width:100%}
+.surface.detail[data-card-orientation]:not(.text-only-detail)>.project-summary,.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{max-width:var(--content-width-reading)}
+.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.project-summary,.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-layout>.description{margin-inline:auto;width:100%}
 /* "Details title beside image" on, wide screens: the caption sits at the bottom left of the picture (level with its bottom edge), the
    picture on the right with the buttons and QR code under it, and everything else (client line, title, summary, facts) below as a
    centred reading column. Off, and on phones, the stack above applies. */
@@ -1875,7 +1879,7 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 .surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>h1{grid-column:1 / -1;grid-row:5}
 .surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.project-summary{grid-column:1 / -1;grid-row:6}
 .surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{grid-column:1 / -1;grid-row:7}
-.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>:is(.project-client,h1,.project-summary),.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{margin-inline:auto;width:100%}
+.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.project-summary,.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{margin-inline:auto;width:100%}
 }
 /* A landscape image fills the page width here instead of stopping at the card's 1000px cap. */
 .surface.detail[data-card-orientation="landscape"]:not(.text-only-detail){--image-max-width-landscape:100000px}
