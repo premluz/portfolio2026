@@ -12,6 +12,12 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Project years and a company-and-year card description
+
+- Every project has a `year` (Bastion 2025, Merlin 2026, PlayStation 2018, Vodafone IoT 2020, Gala Film 2025, Gala DeFi 2025, Tracr 2024, Rios 2026, Porter 2026) in both catalogs, validated by the model. New Cards setting under Show project description: Description is the company and year (off by default, saved and exported, hidden while the description is off) turns each card's description into `client · year`.
+- Evidence: headless browser on the Lab grid: off shows the usual lines; on shows Gala · 2025, Bastion · 2025, Merlin · 2026, Tracr · 2024, Vodafone · 2020, PlayStation · 2018, Porter · 2026, Rios · 2026; the switch hides when the description is off; persists after a reload. New test tests/card-company-year.mjs.
+- Incident: a script of mine emptied `content/catalog.json` when it failed halfway (the file was opened for writing before the new text was computed). I restored it from the last commit plus the owner's one uncommitted line (the shortened "clear structure" text) and checked the rebuilt content against the build made before the wipe: the only difference was the expected Independent rename.
+
 ## 2026-10-28 Plain-card hairline moved to the card image
 
 - The hairline now outlines the image frame, not the card box, following the image's own rounding. Verified on the home carousel and the Lab grid with the owner's settings (1px at 8%, the image fills its frame, no outline on the card).

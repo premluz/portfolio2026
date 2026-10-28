@@ -535,6 +535,10 @@
           "type": "string",
           "maxLength": 500
         },
+        "year": {
+          "type": "string",
+          "maxLength": 500
+        },
         "homeCards": {
           "type": "array",
           "items": {

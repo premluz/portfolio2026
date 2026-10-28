@@ -6,7 +6,7 @@ import {escapeText} from '../dist/content/html.js';
 
 for(const project of projects){
  const grid=card(project,0),detail=cardDetail(project),parts=summaryParts(project);
- const cardSummary=grid.match(/<p class="project-summary">(.*?)<\/p>/s)?.[1].replace(/<br>/g,'\n').replace(/<[^>]*>/g,'');
+ const cardSummary=grid.match(/<p class="project-summary"[^>]*>(.*?)<\/p>/s)?.[1].replace(/<br>/g,'\n').replace(/<[^>]*>/g,'');
  assert.equal(cardSummary,escapeText(parts.lead),'Card contains the original first sentence');
  assert(grid.includes('data-card-copy-word'),'Card copy is split into stable words for hover streaming');
  assert(!grid.includes('data-summary-context'),'Grid never adds the long context');
