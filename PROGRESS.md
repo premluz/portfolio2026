@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Carousel card frames match the image, closing the extra gap under the hero
+
+- On desktop the home carousel's card frame had its own height (up to 500px) while the 16:10 picture inside was shorter and bottom-aligned, leaving an invisible ~59px strip above every image. That strip was the extra space the owner saw between the hero text and the carousel (earlier measurements used the card box, not the image). The frame height is now derived from the card width and the 1.6 image ratio at every screen size, as phones already did.
+- Evidence: headless browser with the owner's settings at 1676px and 1258px: hero text to visible image 99px, last caption to the next heading 98px, arrows centred in the gap; all nine carousel images fill their frames exactly.
+
 ## 2026-10-28 Project details with text beside the image: image starts at the top
 
 - In the default project detail layout (title beside image off) the image column sat level with the description, 179px below the client line. The page is now a two-column grid at 751px and wider: client, title and summary in the left column, the image column spanning from the first row, so the image top is level with the client line (196px both). The description follows the summary in the left column. Mobile and the stacked "title beside image" layout are unchanged.
