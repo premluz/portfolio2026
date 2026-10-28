@@ -19,4 +19,5 @@ assert(html.includes('id="simpleTransitions"')&&html.includes('id="simpleTransit
 assert(transfer.includes("simpleTransitions:'prem-simple-transitions'")&&transfer.includes("simpleTransitionsSkipExit:'prem-simple-transitions-skip-exit'"),'Both options export, import and publish with other settings');
 assert(app.includes('if(!reduce.matches&&!simpleTransitions.skipExit){'),'The exit fade is skipped when the option is on');
 assert(app.includes("if(simpleTransitions.enabled||route==='lab'||labMode){await simplePageTransition(route);return;}"),'Every route change takes the simple transition when on, and the Lab always does');
+assert(app.includes('galleryProjectTarget=null;previewProjectTarget?.remove();previewProjectTarget=null;assistantProjectTarget=null;'),'The simple transition removes the hover-thumbnail stand-in; a list click used to leave it on the page');
 console.log('Simple transitions passed: default, persistence, blocked storage, panel control, settings export and routing.');

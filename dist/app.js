@@ -355,7 +355,7 @@ async function simplePageTransition(route){
   if(current==='work')homeScroll=labMode?0:scrollY;
   // Back and Escape return to wherever this project was opened from, as with the animated transitions.
   if(projectIds.includes(route)){if(!projectIds.includes(current))projectEntry.capture(labMode?'lab':current);}else projectEntry.clear();
-  disposeGalleryOrigin();previewProjectOrigin=null;assistantProjectOrigin=null;galleryProjectTarget=null;previewProjectTarget=null;assistantProjectTarget=null;homeOpenTarget=null;navSlideTarget=null;travelDirection=0;
+  disposeGalleryOrigin();previewProjectOrigin=null;assistantProjectOrigin=null;galleryProjectTarget=null;previewProjectTarget?.remove();previewProjectTarget=null;assistantProjectTarget=null;homeOpenTarget=null;navSlideTarget=null;travelDirection=0;
   // Streaming keeps a project's staggered text reveal (title, summary, then each fact); the hero image grows in.
   chromeTransition=true;render(route,{stream:true});chromeTransition=false;
   scrollPage(route==='work'?homeScroll:0);
