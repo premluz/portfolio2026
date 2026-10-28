@@ -12,6 +12,10 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Hero heading to text gap matches the About intro
+
+- The Home hero heading sat 28.8px above its text; it now sits 19.2px (`--space-4`), the same as "Most useful where…" and its paragraph, including the combined hero content mode. Measured 19px for both in a headless browser.
+
 ## 2026-10-28 Home hero heading uses the strongest text colour
 
 - The hero heading's greeting span was `--body-ink` under an `--ink` heading; it is now `--ink` like the rest of the heading.

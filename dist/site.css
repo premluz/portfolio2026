@@ -1102,7 +1102,7 @@ body.card-background-hidden [data-hover-effect~="glow"][data-image-mode="bleed"]
 body{font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
 button,input,select,textarea{font-family:var(--font-family-sans)}
 .hero-about h1,.surface.detail h1{font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);max-width:var(--measure-heading);text-wrap:balance}
-.hero-about h1,.home-view-split .hero-about h1{margin:0 0 var(--space-hero-heading-content)}
+.hero-about h1,.home-view-split .hero-about h1{margin:0 0 var(--space-4)}
 .hero-copy,.home-view-split .hero-copy{font-size:var(--font-size-hero-support);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);max-width:var(--measure-body)}
 .hero-copy p+p{margin-top:var(--space-paragraph)}
 /* The strapline reads with the heading: a tight gap above, and it takes over the heading's space before the copy. */
@@ -1448,7 +1448,7 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 .hero-about:has(.hero-timeline){--timeline-text-gap:clamp(24px,3vw,48px)}
 .hero-about:has(.hero-timeline) h1{margin-bottom:0}
 /* Keep the heading-to-description rhythm when both hero content toggles are on. */
-.hero-about[data-hero-combined-content="true"] h1{margin:0px 0px 24px}
+.hero-about[data-hero-combined-content="true"] h1{margin:0 0 var(--space-4)}
 .hero-timeline{--timeline-position:0;position:relative;left:50%;transform:translateX(-50%);margin-top:var(--timeline-text-gap);width:100vw;color:var(--body-ink)}
 .timeline-viewport{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-x:contain;outline-offset:8px;touch-action:pan-x pan-y}
 .timeline-viewport::-webkit-scrollbar{display:none}

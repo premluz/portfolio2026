@@ -5,7 +5,7 @@
 .hero-about:has(.hero-timeline){--timeline-text-gap:clamp(24px,3vw,48px)}
 .hero-about:has(.hero-timeline) h1{margin-bottom:0}
 /* Keep the heading-to-description rhythm when both hero content toggles are on. */
-.hero-about[data-hero-combined-content="true"] h1{margin:0px 0px 24px}
+.hero-about[data-hero-combined-content="true"] h1{margin:0 0 var(--space-4)}
 .hero-timeline{--timeline-position:0;position:relative;left:50%;transform:translateX(-50%);margin-top:var(--timeline-text-gap);width:100vw;color:var(--body-ink)}
 .timeline-viewport{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-x:contain;outline-offset:8px;touch-action:pan-x pan-y}
 .timeline-viewport::-webkit-scrollbar{display:none}
