@@ -13,7 +13,7 @@ export function contextualText(text,entries=contextualEntries()){
   if(!next){html+=headingText(source.slice(cursor));break;}
   html+=headingText(source.slice(cursor,next.at));const {entry}=next,label=escapeText(entry.title),attrs=`data-context-id="${escapeText(entry.id)}" aria-haspopup="dialog" aria-expanded="false"`;
   const highlighted=`<span class="context-marker-text">${label}</span>`;
-  html+=['rios','bastion'].includes(entry.id)&&safeHref(entry.link?.url)?`<a class="context-marker context-marker-link" href="${safeHref(entry.link.url)}" target="_blank" rel="noopener" ${attrs}>${highlighted}</a>`:`<span class="context-marker" role="button" tabindex="0" ${attrs}>${highlighted}</span>`;
+  html+=`<span class="context-marker" role="button" tabindex="0" ${attrs}>${highlighted}</span>`;
   cursor=next.at+entry.title.length;
  }
  return html;

@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Highlights never link inline
+
+- Rios and Bastion in the hero text were inline links; now every highlight (Rios, Porter, Bastion and the phrases) only opens its popover, where the link lives. Removed the id list and `.context-marker-link`.
+- Evidence: tests/contextual-popovers.mjs updated and passing.
+
 ## 2026-10-28 Highlight popover sits closer to its text
 
 - The gap between a highlighted phrase and its popover is 4px (was 12px, plus the line box), so the pointer no longer crosses a neighbouring highlight on the way to the popover's link. `CONTEXTUAL_POPOVER_GAP` in `contextual-popovers.js`.
