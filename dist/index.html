@@ -177,7 +177,7 @@
 <div class="setting-subsection">Surface</div>
 <label class="check"><input id="cardBackground" type="checkbox" checked> Card background</label>
 <label class="check"><input id="pageCardBackground" type="checkbox" checked> Page card background (project details, About, Contact, articles)</label>
-<label class="check"><input id="plainCards" type="checkbox"> Plain cards · remove the inner glow, reflections and edge lighting (the card stays: see Card background)</label>
+<label class="check"><input id="plainCards" type="checkbox"> Plain cards · remove the inner glow and reflections from cards (the card stays: see Card background)</label>
 <label class="check"><input id="hideCardColor" type="checkbox"> Hide card color</label>
 <label class="check"><input id="hideCardHover" type="checkbox"> Hide card hover</label>
 <label class="check"><input id="cardInstantHover" type="checkbox"> Remove hover trail (card hover in and out are instant)</label>
@@ -206,6 +206,7 @@
 <div class="setting-subsection">Card images</div>
 <label class="check"><input id="fullBleed" type="checkbox"> Full-bleed card images</label>
 <label class="check"><input id="imageBorder" type="checkbox"> Thin border on card images</label>
+<label class="check"><input id="plainImages" type="checkbox"> Plain images · remove the edge glow and lighting from card images</label>
 <div id="imagePaddingSettings"><p>Landscape images max out at 1000px wide. Portrait images max out at 600px wide and 700px high.</p><label>Image top padding <output id="bleedTopValue">0px</output><input id="bleedTop" type="range" min="0" max="240" step="4" value="0"></label><label>Image side padding <output id="bleedSideValue">0px</output><input id="bleedSide" type="range" min="0" max="100" step="2" value="0"></label><label>Image bottom padding <output id="bleedBottomValue">0px</output><input id="bleedBottom" type="range" min="0" max="120" step="2" value="0"></label></div>
 <div id="bleedSettings" hidden><label class="check"><input id="bleedBacking" type="checkbox" checked> Image gap fill</label><p>Image gap fill follows the card surface. When desktop labels are hidden in full-bleed mode, image top padding follows side padding.</p></div>
 <label>Image corner rounding <output id="imageRoundingValue">6px</output><input id="imageRounding" type="range" min="0" max="32" step="1" value="6"></label>

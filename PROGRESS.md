@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Plain cards and plain images are separate; the card glow is really removed
+
+- Plain cards now owns the card's lighting only; a new Plain images switch (Settings → Images, off by default, saved and exported) removes the picture's edge glow. The card's inner lighting was not being removed because an earlier change of mine made the glass style's edge rule more specific than the plain-cards override; the override is stronger again.
+- Evidence: headless browser with the owner's settings and glass style on: with plain cards on the skin's glow shadow is none and the reflection hidden on Lab cards, home cards and the About page card; the four switch combinations hide the reflection and the image edge independently.
+
 ## 2026-10-28 Page card background switch
 
 - New Cards setting under Card background: Page card background (on by default, saved and exported) removes the card shell on project details, About, Contact and article pages. Card background now governs only listing cards (grid, carousel, Lab); before, it also removed the page shells, so a saved Card background off no longer hides them.

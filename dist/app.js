@@ -279,6 +279,7 @@ let navPosition='bottom';try{navPosition=localStorage.getItem('prem-nav-position
 document.documentElement.dataset.navPosition=navPosition;
 let plainNav=readFlag('prem-plain-nav');document.documentElement.dataset.plainNav=plainNav?'on':'off';
 let plainCards=readFlag('prem-plain-cards');document.documentElement.dataset.plainCards=plainCards?'on':'off';
+let plainImages=readFlag('prem-plain-images');document.documentElement.dataset.plainImages=plainImages?'on':'off';
 const projectBackdrop=createProjectBackdrop({reduced:()=>reduce.matches,duration:()=>duration*(slow?2.5:1),before:$('.room-shade')?.nextSibling||null});
 function applyHeroLayout(){applyContentWidths();const enabled=wideHero&&cardIds.includes(current);main.classList.toggle('wide-project-hero',enabled);main.querySelector('.detail')?.classList.toggle('wide-hero-card',enabled);document.body.classList.toggle('wide-project-hero-page',enabled);$('#wideHero').checked=wideHero;applyDetailHeading();}
 const motionMaterial=new MotionMaterial(()=>intensity,()=>reduce.matches);
@@ -501,7 +502,7 @@ for(const side of ['top','right','bottom','left'])$('#cardPadding'+side[0].toUpp
 $('#detailHeadingBeside').onchange=e=>setDetailLayout({heading:e.target.checked});
 $('#wideHero').onchange=e=>setDetailLayout({hero:e.target.checked});
 $('#projectBackdrop').checked=projectBackdropEnabled;$('#projectBackdrop').onchange=e=>{projectBackdropEnabled=e.target.checked;saveFlag('prem-project-backdrop',projectBackdropEnabled);const p=cards.find(card=>card.id===current);projectBackdrop.sync(projectBackdropEnabled&&p&&!p.body?p:null);};
-$('#plainCards').checked=plainCards;$('#plainCards').onchange=e=>{plainCards=e.target.checked;document.documentElement.dataset.plainCards=plainCards?'on':'off';saveFlag('prem-plain-cards',plainCards);};
+$('#plainCards').checked=plainCards;$('#plainImages').checked=plainImages;$('#plainImages').onchange=e=>{plainImages=e.target.checked;document.documentElement.dataset.plainImages=plainImages?'on':'off';saveFlag('prem-plain-images',plainImages);};$('#plainCards').onchange=e=>{plainCards=e.target.checked;document.documentElement.dataset.plainCards=plainCards?'on':'off';saveFlag('prem-plain-cards',plainCards);};
 $('#plainNav').checked=plainNav;$('#plainNav').onchange=e=>{plainNav=e.target.checked;document.documentElement.dataset.plainNav=plainNav?'on':'off';saveFlag('prem-plain-nav',plainNav);};
 $('#headerDetailNav').addEventListener('click',event=>{const button=event.target.closest('[data-header-action]');if(!button)return;const action=button.dataset.headerAction;void dispatchCommand({id:action==='back'?'navigation.back':'project.'+action,source:'pointer'});});
 $('#navPosition').value=navPosition;$('#navPosition').onchange=e=>{navPosition=e.target.value==='top'?'top':'bottom';document.documentElement.dataset.navPosition=navPosition;syncDockActions(current,{duration:duration*(slow?2.5:1)});try{localStorage.setItem('prem-nav-position',navPosition);}catch(error){console.warn('Navigation position not saved',error);}};

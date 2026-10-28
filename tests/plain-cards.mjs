@@ -14,10 +14,15 @@ assert(styles.includes("'plain-cards.css'"),'The stylesheet ships in the bundle'
 
 // Scope and coverage: every rule sits behind the attribute and removes the shell and the layers "Card background" leaves behind.
 const rules=css.split('\n').filter(line=>line.startsWith(':root'));
-assert(rules.length>=3&&rules.every(rule=>rule.startsWith(':root[data-plain-cards="on"]')),'Every rule is behind data-plain-cards="on"');
+assert(rules.length>=3&&rules.every(rule=>rule.startsWith(':root[data-plain-cards="on"]')||rule.startsWith(':root[data-plain-images="on"]')),'Every rule is behind data-plain-cards="on" or data-plain-images="on"');
 for(const part of ['.surface{box-shadow:none','.liquid-skin{box-shadow:none','.material-reflection','.image-edge','.surface-effect-layer','.note-card'])assert(css.includes(part),`Plain cards covers ${part}`);
 // It removes the glow, not the card: the shell (background, border, blur, the skin itself) is left to the Card background setting.
 assert(!/\.surface\{[^}]*background:none/.test(css)&&!/border-color:transparent/.test(css)&&!/backdrop-filter:none/.test(css),'The card shell is not removed by plain cards');
 assert(!/\.liquid-skin[,)][^{]*\{[^}]*display:none/.test(css),'The skin itself stays');
 assert(!/\.visual\s*\{|img\s*\{|display:none[^}]*\.visual/.test(css),'Images and their frames are left alone');
+// Plain images is its own switch: the picture's edge glow goes with it, not with Plain cards.
+assert(css.includes(':root[data-plain-images="on"] .visual>.image-edge{display:none!important}'),'Plain images removes the image edge glow');
+assert(!/data-plain-cards="on"\][^{]*\.image-edge/.test(css),'Plain cards leaves the image edge to Plain images');
+{const [html,transfer,defaults]=await Promise.all(['index.html','settings-transfer.js','default-settings.js'].map(read));
+assert(html.includes('<input id="plainImages" type="checkbox">')&&transfer.includes("plainImages:'prem-plain-images'")&&defaults.includes("'prem-plain-images':'false'"),'Plain images is a saved, exported setting that starts off');}
 console.log('Plain cards passed: default off, exported, both pages, every rule scoped, glow, reflections, edge glow and note cards removed, the card and media untouched.');

@@ -2578,15 +2578,17 @@ body.card-details.card-description-hidden .project-card.image-card>.card-copy>.c
 :root[data-plain-nav="on"] #dock:not(.is-composer) nav a.active:is(:hover,:focus-visible){color:var(--ink)!important}
 
 /* plain-cards.css */
-/* Plain cards (Settings → Cards): removes the inner glow, lighting and reflections from cards and their images, and shadows; the
-   card itself (its background and edge) stays under the Card background setting, and images and text stay. The root carries
-   data-plain-cards="on". The glow layers are set by the glass-style, skin and material rules (long selectors, some inline from
-   motion), hence !important, confined to this opt-in mode. */
+/* Plain cards (Settings → Cards): removes the inner glow, lighting and reflections from cards, and shadows; the card itself (its
+   background and edge) stays under the Card background setting. The root carries data-plain-cards="on". The glow layers are set by
+   the glass-style, skin and material rules (long selectors, some inline from motion), hence !important, confined to this opt-in mode. */
 :root[data-plain-cards="on"] .surface{box-shadow:none!important}
-/* Repeated attribute and html: the glass style's skin edge rule is more specific than a single attribute selector can beat. */
-html:root[data-plain-cards="on"][data-plain-cards="on"] body .surface>.liquid-skin{box-shadow:none!important}
-:root[data-plain-cards="on"] .surface :is(.material-reflection,.image-edge,.surface-effect-layer){display:none!important}
+/* The skin's edge lighting: the glass style's selector is more specific than a single attribute selector can beat. */
+html:root[data-plain-cards="on"][data-plain-cards="on"][data-plain-cards="on"] body .surface>.liquid-skin{box-shadow:none!important}
+:root[data-plain-cards="on"] .surface :is(.material-reflection,.surface-effect-layer){display:none!important}
 :root[data-plain-cards="on"] .note-card{background:none!important;box-shadow:none!important}
+/* Plain images (Settings → Images): removes the edge glow and lighting from the pictures on cards; images and their frames stay. */
+:root[data-plain-images="on"] .visual>.image-edge{display:none!important}
+:root[data-plain-images="on"] .visual :is(img,video,canvas){box-shadow:none!important}
 
 /* empty-hero.css */
 /* Empty hero: when the home page shows no hero heading, badge, strapline, description or At a glance, and the carousel is
