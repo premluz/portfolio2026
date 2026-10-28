@@ -1860,6 +1860,18 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 .surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{grid-column:1;grid-row:6}
 .surface.detail[data-card-orientation]:not(.text-only-detail)>:is(.project-client,h1,.project-summary),.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{max-width:var(--content-width-reading)}
 .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>:is(.project-client,h1,.project-summary),.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-layout>.description{margin-inline:auto;width:100%}
+/* "Details title beside image" on, wide screens: the text on the left (caption, client, title, summary, facts) and the picture on the
+   right starting level with the top of it. Off, and on phones, the stack above applies. */
+@media(min-width:751px){
+.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail){grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);grid-template-rows:repeat(4,max-content) 1fr;column-gap:var(--space-detail-columns);align-items:start}
+.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.detail-caption{grid-column:1;grid-row:1}
+.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.project-client{grid-column:1;grid-row:2;margin-top:0}
+.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>h1{grid-column:1;grid-row:3}
+.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.project-summary{grid-column:1;grid-row:4}
+.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{grid-column:1;grid-row:5;margin-top:var(--space-text-media)}
+.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.detail-layout>.detail-media-column{grid-column:2;grid-row:1 / span 5}
+.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>:is(.project-client,h1,.project-summary),.surface.detail.heading-beside-image[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{max-width:none}
+}
 /* A landscape image fills the page width here instead of stopping at the card's 1000px cap. */
 .surface.detail[data-card-orientation="landscape"]:not(.text-only-detail){--image-max-width-landscape:100000px}
 

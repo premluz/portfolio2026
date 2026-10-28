@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Details title beside image on: text left, picture right again
+
+- The previous change stacked project pages in both modes, so the switch only moved a column. On now restores the side-by-side arrangement at 751px and wider: caption, client line, title, summary and facts in the left column, the picture on the right starting level with the caption, with the buttons and QR under it. Off keeps the stack with the centred reading column; phones always stack.
+- Evidence: headless browser on Bastion at 1500px: on: caption at (60, 194) 508px wide, picture at (628, 194) 812px wide; off: caption 1380px wide, picture below, column centred at x 450; 390px stacks; 820px is two columns; no horizontal overflow.
+
 ## 2026-10-28 Project pages: one stack, caption follows the card settings, centred column
 
 - With Details title beside image off, project pages no longer put all the text beside the picture. Both modes now use the stacked layout: a caption on top, the picture across the page, then the client line, title, summary and facts in a 600px reading column that is centred like a blog post when the switch is off and left-aligned when it is on. The caption follows the Cards settings (company above or leading the title, title or category, results or Company · Year). The facts column also gets the 600px reading width in the on mode (it ran full width before: a nested-selector mistake in the earlier rule). The two-column rules I added earlier today were removed.
