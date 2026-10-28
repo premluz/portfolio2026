@@ -312,11 +312,12 @@
   --text-gradient-from: oklch(.78 .1 295);
   --text-gradient-to: oklch(.82 .08 195);
   color-scheme: dark;
-  --page: oklch(.185 .003 285.9);
-  --page-rgb: 19, 19, 21;
-  --card-surface: oklch(.205 .004 285.9);
-  --card-surface-end: oklch(.135 .002 285.9);
-  --card-surface-rgb: 23, 23, 25;
+  /* Dark theme: a neutral #121212 page under #151515 cards. The edge fades are built from --page, so they match it on all four sides. */
+  --page: #121212;
+  --page-rgb: 18, 18, 18;
+  --card-surface: #151515;
+  --card-surface-end: #101010;
+  --card-surface-rgb: 21, 21, 21;
   --card-hover-lightness: .27;
   --card-hover-chroma: .031;
   --card-hover-lightness-end: .145;
@@ -396,9 +397,9 @@
 }
 
 :root[data-theme="dark"].card-color-hidden {
-  --card-surface: #131314;
-  --card-surface-end: #101011;
-  --card-surface-rgb: 19, 19, 20;
+  --card-surface: #151515;
+  --card-surface-end: #101010;
+  --card-surface-rgb: 21, 21, 21;
 }
 
 :root{--composer-max-width:520px;--composer-font-size:clamp(13px,1.3vw,15px);--composer-text-ink:var(--muted)}

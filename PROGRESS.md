@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Dark theme page #121212 and cards #151515
+
+- Dark theme `--page` is #121212 (rgb 18, 18, 18) and `--card-surface` is #151515 (rgb 21, 21, 21), ending its gradient at #101010; the neutral cards (Hide card colour) use the same. The edge fades on all four sides are built from `--page`, so they now fade to exactly #121212. Light theme unchanged.
+- Evidence: headless browser: page and body 18,18,18, card 21,21,21, card end 16,16,16, edge-shade stops 0.0706 (=18/255).
+
 ## 2026-10-28 Card colour comes from the card's picture; Hide card colour leaves the page alone
 
 - Hide card colour no longer sets the page background (`--page`, `--page-rgb`); it only neutralises the card surfaces. With colour on, each card and detail page now takes its two hues from its own picture through the ambient sampler (new `card-media-color.js`) instead of its authored project colours, which return when Hide card colour is on or the media cannot be read. This changes the default look: Gala's cards go from purple (317°) to orange (64°), Bastion to amber (53°), Tracr and Vodafone to greens.
