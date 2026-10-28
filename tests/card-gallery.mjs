@@ -55,6 +55,6 @@ gallery.suppressClick=false;gallery.setVariant('scroll');flush();assert.equal(ro
 let scrollPrevented=false;gallery.onClick({target:{closest:()=>items[0]},preventDefault(){scrollPrevented=true;},stopPropagation(){}});assert(!scrollPrevented,'In Scroll a click on any card is left to open its detail');
 gallery.destroy();assert(disconnected);assert.equal(viewport.listeners.size,0);assert.equal(frames.size,0);
 {const css=(await import('node:fs')).readFileSync(new URL('../dist/card-gallery.css',import.meta.url),'utf8');
-assert(css.includes('[data-gallery-axis="horizontal"] .spatial-gallery-primary-action{top:0;bottom:auto;justify-content:flex-end}'),'Carousel arrows sit above the cards at the right edge of the content');
+assert(css.includes('[data-gallery-axis="horizontal"] .spatial-gallery-primary-action{top:calc(-1 * (var(--space-page-rhythm-md) / 2 + 20px));bottom:auto;justify-content:flex-end}')&&css.includes('{--gallery-controls-row:0px}'),'Carousel arrows float centred in the gap above the cards at the right edge of the content, reserving no row');
 assert(css.includes('.home-product-carousel:not([hidden]){margin-bottom:calc(-1 * var(--space-8))}'),'The section after the carousel moves up by the stage slack under its caption, so it sits one medium step below');}
 console.log('Card gallery passed: generic content, five visible slots, centred face, both axes, captions, retained selection, keys, click selection, mouse drag, scroll presentation and cleanup.');

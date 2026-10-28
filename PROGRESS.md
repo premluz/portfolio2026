@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Carousel arrows float in the gap instead of pushing the cards
+
+- The home carousel reserved a 59px row above its first card for the arrows. That row is gone (`--gallery-controls-row: 0px`); the arrows are absolutely placed, centred vertically in the one-rhythm-step gap between the hero text and the cards, at the right edge as before. The carousel's top margin is now exactly `--space-page-rhythm-md`.
+- Evidence: headless browser at 1377px with the owner's settings: hero text to first card 99px, arrows 303–343px centred in that gap (272–371px), last caption to About heading 98px.
+
 ## 2026-10-28 One rhythm from the header to the hero, the cards and the next section
 
 - Measured text to text with the owner's settings at 1377px: header nav to hero heading 101px, hero text to first card 96px, last caption to the About heading 98px, About text to How I work 101px (were 72, 62, 118 and 101). `--hero-gap` is now `--space-page-rhythm-md` less `--space-2`, which also moves the content start of every desktop page (About, Lab, details, chat) down by 29px so they still align with the Home hero; the carousel gets a top margin of one rhythm step less its first-card slack when it follows the hero, and its pull-up under the caption is `--space-8`.
