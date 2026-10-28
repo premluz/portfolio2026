@@ -16,7 +16,7 @@
 /* Heading and its lead read as one header; the header-to-content gap matches the card sections. */
 .home-content-section.about-unusual>h2{margin:0}
 .about-traits .about-trait-art{width:100%;aspect-ratio:330 / 230;margin:0 0 var(--space-6)}
-.about-section>h2{max-width:27ch;margin:0;font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink);text-wrap:balance}
+.about-section>h2{max-width:27ch;margin:0;font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
 .about-section .about-section-lead{margin:var(--space-hero-heading-content) 0 0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
 .about-unusual-list{list-style:none;padding:0;margin:var(--space-page-rhythm-sm) 0 0;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--space-6);row-gap:var(--space-page-rhythm-md)}
 .about-unusual-item{min-width:0;display:grid;grid-template-columns:subgrid;grid-column:1 / span 4;align-content:start;row-gap:var(--space-6)}
@@ -50,3 +50,6 @@
 .lab-heading{max-width:var(--page-intro-width)}
 .surface.detail.info-detail:not(.about-detail)>h1,.surface.detail.info-detail:not(.about-detail)>h1+.info-body{max-width:var(--page-intro-width)}
 @media(max-width:1000px){:root{--page-intro-width:100%}}
+/* Contact with "show title" off: the title goes, its text stays and starts where the title did. */
+:root.contact-title-hidden [data-info-page="contact"]>h1{display:none}
+:root.contact-title-hidden [data-info-page="contact"]>h1+.info-body{margin-top:0}

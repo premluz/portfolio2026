@@ -148,6 +148,18 @@
   --font-size-hero-support: var(--font-size-body);
   --measure-body: 66ch;
   --measure-heading: 32ch;
+  /* Heading style (Developer settings -> Design system). Every title and section heading reads these tokens, so one switch
+     moves them all: body size (the default) or the editorial scale (large titles, small-caps section labels). */
+  --heading-title-size: var(--font-size-body);
+  --heading-title-line: var(--line-height-body);
+  --heading-title-tracking: var(--letter-spacing-body);
+  --heading-article-size: var(--font-size-reading);
+  --heading-label-size: var(--font-size-body);
+  --heading-label-weight: var(--font-weight-body);
+  --heading-label-line: var(--line-height-body);
+  --heading-label-tracking: var(--letter-spacing-body);
+  --heading-label-transform: none;
+  --heading-label-color: var(--ink);
   /* Every page's title and its text sit in a block this wide (half the content width); full width on small screens. */
   --page-intro-width: 50%;
   --space-detail-heading: var(--space-2);
@@ -389,6 +401,18 @@
 }
 
 :root{--composer-max-width:520px;--composer-font-size:clamp(13px,1.3vw,15px);--composer-text-ink:var(--muted)}
+:root[data-heading-style="editorial"]{
+  --heading-title-size: var(--font-size-home-heading);
+  --heading-title-line: var(--line-height-heading);
+  --heading-title-tracking: var(--letter-spacing-heading);
+  --heading-article-size: var(--font-size-section-heading);
+  --heading-label-size: var(--font-size-caption);
+  --heading-label-weight: var(--eyebrow-weight);
+  --heading-label-line: var(--line-height-label);
+  --heading-label-tracking: var(--eyebrow-tracking);
+  --heading-label-transform: uppercase;
+  --heading-label-color: var(--eyebrow-ink);
+}
 
 /* page-boot.css */
 /* Dark cover shown until the first route is ready, so neither theme flashes white while loading. */
@@ -1076,7 +1100,7 @@ body.card-background-hidden [data-hover-effect~="glow"][data-image-mode="bleed"]
 
 body{font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
 button,input,select,textarea{font-family:var(--font-family-sans)}
-.hero-about h1,.surface.detail h1{font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);max-width:var(--measure-heading);text-wrap:balance}
+.hero-about h1,.surface.detail h1{font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);max-width:var(--measure-heading);text-wrap:balance}
 .hero-about h1,.home-view-split .hero-about h1{margin:0 0 var(--space-hero-heading-content)}
 .hero-copy,.home-view-split .hero-copy{font-size:var(--font-size-hero-support);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);max-width:var(--measure-body)}
 .hero-copy p+p{margin-top:var(--space-paragraph)}
@@ -1193,7 +1217,7 @@ main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:0;padding-top:
 .site-footer[hidden]{display:none}
 
 /* Footer follows the same type ladder as the header and page heroes. */
-.site-footer h2{font-size:var(--font-size-home-heading);max-width:var(--measure-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading)}
+.site-footer h2{font-size:var(--heading-title-size);max-width:var(--measure-heading);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking)}
 .footer-invitation{margin-top:var(--space-hero-heading-content);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
 .footer-credit{font-size:var(--font-size-caption);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--eyebrow-tracking);color:var(--eyebrow-ink)}
 
@@ -1434,7 +1458,7 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 
 /* home-about.css */
 .home-about{--home-about-years-column:5.375em;margin-top:var(--space-page-rhythm-lg);width:100%;min-width:0;grid-column:1 / -1}
-.home-about h2{max-width:var(--page-intro-width);margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-heading);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--ink);text-wrap:pretty}
+.home-about h2{max-width:var(--page-intro-width);margin:0;font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:pretty}
 .home-about-title-secondary{color:var(--body-ink)}
 .home-about-copy,.home-about-lists{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6)}
 .home-about-copy{margin-top:var(--space-page-rhythm-sm)}
@@ -1442,7 +1466,7 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 .home-about-copy p+p{grid-column:calc(2 * var(--content-column-start) - 1) / span 3}
 .home-about-copy p:empty{display:none}
 .home-about-how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);margin-top:var(--space-page-rhythm-md)}
-.home-about-how h3{grid-column:var(--content-column-start) / span 2;margin:0 0 var(--space-4);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--ink)}
+.home-about-how h3{grid-column:var(--content-column-start) / span 2;margin:0 0 var(--space-4);font-size:var(--heading-label-size);text-transform:var(--heading-label-transform);font-weight:var(--heading-label-weight);line-height:var(--heading-label-line);letter-spacing:var(--heading-label-tracking);color:var(--heading-label-color)}
 .home-about-how ul{grid-column:var(--content-column-start) / span 2;list-style:none;padding:0;margin:0;display:grid;gap:var(--space-4)}
 .home-about-how li{display:grid;grid-template-columns:minmax(0,calc(50% - var(--space-6) / 2 - var(--home-about-years-column) - var(--space-4))) minmax(0,1fr);align-items:baseline;column-gap:var(--space-4);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
 .home-about-how li>span{color:var(--body-ink)}
@@ -1453,7 +1477,7 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 .home-about-lists{align-items:start;margin-top:var(--space-page-rhythm-md);padding:0;background:transparent}
 .home-about-list-content{grid-column:var(--content-column-start) / span 2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-6);row-gap:var(--space-page-rhythm-md)}
 .home-about-list{min-width:0;grid-column:1}
-.home-about-list h3{margin:0 0 var(--space-4);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--ink)}
+.home-about-list h3{margin:0 0 var(--space-4);font-size:var(--heading-label-size);text-transform:var(--heading-label-transform);font-weight:var(--heading-label-weight);line-height:var(--heading-label-line);letter-spacing:var(--heading-label-tracking);color:var(--heading-label-color)}
 .home-about-list ul{position:relative;isolation:isolate;list-style:none;padding:0;margin:0;display:grid;gap:var(--space-6)}
 .home-about-list li{position:relative}
 .home-about-row{position:relative;display:grid;grid-template-columns:minmax(0,1fr) var(--home-about-years-column);align-items:baseline;gap:var(--space-6);padding:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
@@ -1487,7 +1511,7 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 /* Heading and its lead read as one header; the header-to-content gap matches the card sections. */
 .home-content-section.about-unusual>h2{margin:0}
 .about-traits .about-trait-art{width:100%;aspect-ratio:330 / 230;margin:0 0 var(--space-6)}
-.about-section>h2{max-width:27ch;margin:0;font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink);text-wrap:balance}
+.about-section>h2{max-width:27ch;margin:0;font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
 .about-section .about-section-lead{margin:var(--space-hero-heading-content) 0 0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
 .about-unusual-list{list-style:none;padding:0;margin:var(--space-page-rhythm-sm) 0 0;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--space-6);row-gap:var(--space-page-rhythm-md)}
 .about-unusual-item{min-width:0;display:grid;grid-template-columns:subgrid;grid-column:1 / span 4;align-content:start;row-gap:var(--space-6)}
@@ -1521,6 +1545,9 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 .lab-heading{max-width:var(--page-intro-width)}
 .surface.detail.info-detail:not(.about-detail)>h1,.surface.detail.info-detail:not(.about-detail)>h1+.info-body{max-width:var(--page-intro-width)}
 @media(max-width:1000px){:root{--page-intro-width:100%}}
+/* Contact with "show title" off: the title goes, its text stays and starts where the title did. */
+:root.contact-title-hidden [data-info-page="contact"]>h1{display:none}
+:root.contact-title-hidden [data-info-page="contact"]>h1+.info-body{margin-top:0}
 
 /* about-illustrations.css */
 .about-trait-art{--trait-dur-short:180ms;--trait-dur:420ms;--trait-dur-long:600ms;--trait-spring:cubic-bezier(.34,1.56,.64,1);--trait-lift:-3px;--trait-tilt:-2deg;display:block;width:100%;height:auto;aspect-ratio:1;color:color-mix(in oklch,var(--ink) 48%,var(--card-surface))}
@@ -1560,7 +1587,7 @@ body.card-background-hidden .info-detail>.liquid-skin{display:none!important}
 .card-gallery-block{grid-column:1 / -1;min-width:0;margin:var(--space-page-rhythm-xs) 0;background:transparent;border:0;padding:0}
 .home-product-carousel>.story{margin-top:0}
 .homepage-layout[data-product-display="carousel"] .flip-index{display:none}
-.card-gallery-block>h2{font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);margin:0 0 var(--space-6);color:var(--ink)}
+.card-gallery-block>h2{font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);margin:0 0 var(--space-6);color:var(--ink)}
 .card-gallery-block>p{font-size:var(--font-size-body);line-height:var(--line-height-body);color:var(--body-ink);margin:0 0 var(--space-8)}
 .spatial-card-gallery{--gallery-card-scale:var(--carousel-card-scale,1);--gallery-landscape-width:clamp(calc(340px * var(--gallery-card-scale)),calc(46vw * var(--gallery-card-scale)),calc(700px * var(--gallery-card-scale)));--gallery-portrait-width:clamp(calc(210px * var(--gallery-card-scale)),calc(26vw * var(--gallery-card-scale)),calc(360px * var(--gallery-card-scale)));--gallery-card-width:var(--gallery-landscape-width);--gallery-card-height:clamp(calc(340px * var(--gallery-card-scale)),calc(40vw * var(--gallery-card-scale)),calc(500px * var(--gallery-card-scale)));min-width:0}
 .spatial-gallery-viewport{position:relative;display:flex;align-items:center;gap:var(--space-6);height:calc(var(--gallery-card-height) + 64px);width:var(--app-canvas-width);margin-inline:calc((100% - var(--app-canvas-width))/2);padding:32px calc((var(--app-canvas-width) - var(--gallery-last-width,var(--gallery-card-width)))/2) 32px calc((var(--app-canvas-width) - var(--gallery-first-width,var(--gallery-card-width)))/2);overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none}
@@ -1697,12 +1724,12 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 /* Flip and Flat reuse the hero h1 for the active project, so the heading switch does not hide it there (design-system.css restores it). */
 [data-home-section][hidden]:not(.home-view-split [data-home-section="heading"]),.home-about[hidden]{display:none!important}
 .home-content-section{grid-column:1 / -1;min-width:0;width:100%;margin-top:var(--space-page-rhythm-lg)}
-.home-content-section>h2{margin:0 0 var(--space-page-rhythm-sm);font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink)}
+.home-content-section>h2{margin:0 0 var(--space-page-rhythm-sm);font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink)}
 .home-services-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-6)}
 .home-approach{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);align-items:start}
 .home-approach-intro{grid-column:1 / -1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);min-width:0}
 .home-approach-principles{grid-column:var(--content-column-start) / span 2;min-width:0}
-.home-approach-intro h2{grid-column:1 / -1;margin:0 0 var(--space-6);font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink);text-wrap:balance}
+.home-approach-intro h2{grid-column:1 / -1;margin:0 0 var(--space-6);font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
 .home-approach p{margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink);text-wrap:pretty}
 .home-approach-intro>p{grid-column:var(--content-column-start);min-width:0;max-width:38ch}
 .home-approach-intro>p+p{grid-column:3}
@@ -1811,13 +1838,12 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 .article-header{margin-bottom:var(--space-page-rhythm-md)}
 /* The title sits where any page's title does (top left); only the text below it is centred in its reading column. */
 .article-header .article-meta{margin:var(--space-4) 0 0;color:var(--eyebrow-ink)}
-.surface.detail .article-header h1{margin:0;font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);max-width:var(--page-intro-width)}
-:root.article-title-body .article-header h1{font-size:var(--font-size-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
+.surface.detail .article-header h1{margin:0;font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);max-width:var(--page-intro-width)}
 /* The series line is the first line of the text, set like a paragraph; it is not part of the title block. */
 .article-series{max-width:var(--content-width-reading);margin:0 auto var(--space-page-rhythm-sm);color:var(--body-ink);font-size:var(--font-size-reading);line-height:var(--line-height-reading)}
 .article-series a,.article-sources a{color:var(--ink);text-underline-offset:.2em}
 .article-section+.article-section{margin-top:var(--space-page-rhythm-sm)}
-.article-section h2{margin:var(--space-page-rhythm-sm) 0 var(--space-4);font-size:var(--font-size-reading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink)}
+.article-section h2{margin:var(--space-page-rhythm-sm) 0 var(--space-4);font-size:var(--heading-article-size);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink)}
 .article-section p{margin:0 0 var(--space-4);color:var(--body-ink);font-size:var(--font-size-reading);line-height:var(--line-height-reading)}
 .content-table-scroll{overflow-x:auto}
 .content-table{width:100%;border-collapse:collapse;font-size:var(--font-size-body);line-height:var(--line-height-body)}
@@ -1894,7 +1920,7 @@ body:has(.home-carousel-active){overflow-x:clip}
 /* Card auras can spill out of their cards, but never enlarge the conversation's
    scroll extent. Otherwise their scroll-following springs fight bottom clamping. */
 #askPage.assistant-page{overflow:clip;contain:paint}
-.assistant-thread{width:min(100%,var(--chat-width,900px));margin:0 auto}.assistant-welcome{width:100%;max-width:none;margin:0 0 48px;text-align:left}.assistant-eyebrow{display:block;color:var(--eyebrow-ink);font-size:var(--font-size-caption);font-weight:var(--eyebrow-weight);letter-spacing:var(--eyebrow-tracking);text-transform:uppercase}.assistant-welcome h1{max-width:var(--measure-heading);margin:0 0 var(--space-hero-heading-content);font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);text-wrap:balance}.assistant-welcome p{margin:0;max-width:var(--measure-body);color:var(--body-ink);font-size:var(--font-size-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
+.assistant-thread{width:min(100%,var(--chat-width,900px));margin:0 auto}.assistant-welcome{width:100%;max-width:none;margin:0 0 48px;text-align:left}.assistant-eyebrow{display:block;color:var(--eyebrow-ink);font-size:var(--font-size-caption);font-weight:var(--eyebrow-weight);letter-spacing:var(--eyebrow-tracking);text-transform:uppercase}.assistant-welcome h1{max-width:var(--measure-heading);margin:0 0 var(--space-hero-heading-content);font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);text-wrap:balance}.assistant-welcome p{margin:0;max-width:var(--measure-body);color:var(--body-ink);font-size:var(--font-size-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
 .ask-messages{display:flex;flex-direction:column;gap:36px;width:100%;min-height:20vh}.ask-messages>*{scroll-margin-bottom:var(--assistant-scroll-clearance)}.ask-message,.ask-response{margin:0;font-size:var(--font-size-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}.ask-user{align-self:flex-end;max-width:min(80%,580px);padding:15px 20px;border-radius:22px;background:var(--nav-active);color:var(--ink)}.ask-response{align-self:flex-start;width:100%;color:var(--body-ink)}.ask-response>p{max-width:690px;margin:0 0 22px}.ask-status{align-self:flex-start;color:var(--eyebrow-ink);font-size:var(--font-size-small)}.ask-sources{margin-top:12px;color:var(--muted);font-size:var(--font-size-caption)}.ask-sources a{text-decoration:underline;text-underline-offset:3px}
 .ask-response-lead{display:flex;flex-direction:column;align-items:flex-start;gap:10px;max-width:750px;width:100%}.ask-response-lead p{width:100%;margin:0 0 22px}.ask-speech-button{flex:0 0 auto;display:flex;align-items:center;gap:7px;min-height:24px;margin:0;padding:0;border:0;background:transparent;color:var(--muted);font-size:var(--font-size-caption);white-space:nowrap;transition:opacity 180ms var(--ease-settle),background-color .18s,color .18s}.ask-speech-button:is(:hover,:focus-visible),.ask-speech-button[data-speech-state=playing],.ask-speech-button[data-speech-state=blocked],.ask-speech-button[data-speech-state=error]{background:transparent;color:var(--ink)}.ask-speech-button[data-speech-state=loading]{opacity:.7}.ask-speech-button svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .ask-speech-hint{align-self:center;white-space:nowrap;color:var(--muted);font-size:var(--font-size-caption)}
@@ -2375,7 +2401,7 @@ a.ask-fit-source:is(:hover,:focus-visible){color:var(--ink);text-decoration-colo
    Its body text shares About's rules in about-page.css. */
 main.lab-canvas .homepage-layout>:not(.lab-heading,.home-work){display:none}
 .lab-heading{padding-top:var(--page-content-top);margin-bottom:var(--space-page-rhythm-md)}
-.lab-heading h1{margin:0;font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink)}
+.lab-heading h1{margin:0;font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink)}
 /* Lab: grid full width. Same breakout as a section set to "app": the app canvas (never wider than --app-max-width) less the gutters. */
 :root.lab-grid-full main.lab-canvas .gallery-grid{width:calc(var(--app-canvas-width) - 2 * var(--content-gutter));max-width:none;margin-inline:calc((100% - var(--app-canvas-width) + 2 * var(--content-gutter)) / 2)}
 /* Lab with "Show title" off: the title goes, its text stays and starts where the title did. */

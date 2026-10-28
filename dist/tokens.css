@@ -147,6 +147,18 @@
   --font-size-hero-support: var(--font-size-body);
   --measure-body: 66ch;
   --measure-heading: 32ch;
+  /* Heading style (Developer settings -> Design system). Every title and section heading reads these tokens, so one switch
+     moves them all: body size (the default) or the editorial scale (large titles, small-caps section labels). */
+  --heading-title-size: var(--font-size-body);
+  --heading-title-line: var(--line-height-body);
+  --heading-title-tracking: var(--letter-spacing-body);
+  --heading-article-size: var(--font-size-reading);
+  --heading-label-size: var(--font-size-body);
+  --heading-label-weight: var(--font-weight-body);
+  --heading-label-line: var(--line-height-body);
+  --heading-label-tracking: var(--letter-spacing-body);
+  --heading-label-transform: none;
+  --heading-label-color: var(--ink);
   /* Every page's title and its text sit in a block this wide (half the content width); full width on small screens. */
   --page-intro-width: 50%;
   --space-detail-heading: var(--space-2);
@@ -388,3 +400,15 @@
 }
 
 :root{--composer-max-width:520px;--composer-font-size:clamp(13px,1.3vw,15px);--composer-text-ink:var(--muted)}
+:root[data-heading-style="editorial"]{
+  --heading-title-size: var(--font-size-home-heading);
+  --heading-title-line: var(--line-height-heading);
+  --heading-title-tracking: var(--letter-spacing-heading);
+  --heading-article-size: var(--font-size-section-heading);
+  --heading-label-size: var(--font-size-caption);
+  --heading-label-weight: var(--eyebrow-weight);
+  --heading-label-line: var(--line-height-label);
+  --heading-label-tracking: var(--eyebrow-tracking);
+  --heading-label-transform: uppercase;
+  --heading-label-color: var(--eyebrow-ink);
+}

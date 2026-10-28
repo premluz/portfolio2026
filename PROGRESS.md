@@ -12,6 +12,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 One heading-style switch; Contact title switch
+A single Design system switch ("Editorial headings", off) now decides how every title and section heading reads: body size by default (titles, the About intro, How I work / Experience / Side projects labels, blog headings, footer and section headings) or editorial (large titles, small-caps labels). All headings read shared tokens, so a new heading follows the switch with no setting of its own. The article-only "title body size" switch was removed. Contact gained a "show title" switch (off): the title hides and its text starts where it was. Evidence: computed font sizes of every heading in both modes in the headless browser; tests/header-spacing.mjs and tests/articles.mjs updated.
+
 ## 2026-10-28 Experience and Side projects as two switches
 "Experience & side projects" was one switch; it is now "Experience" and "Side projects & R&D" in both Content Home and Content About (new section id `side-projects`, on by default on Home and off on About like the other Home components). Someone who had hidden the old combined section keeps both hidden until they choose otherwise. The width setting still applies to the pair. Evidence: tests/content-widths.mjs (defaults, migration, hiding one leaves the other, width); headless browser checked each switch on Home.
 

@@ -17,7 +17,7 @@
 
 body{font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
 button,input,select,textarea{font-family:var(--font-family-sans)}
-.hero-about h1,.surface.detail h1{font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);max-width:var(--measure-heading);text-wrap:balance}
+.hero-about h1,.surface.detail h1{font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);max-width:var(--measure-heading);text-wrap:balance}
 .hero-about h1,.home-view-split .hero-about h1{margin:0 0 var(--space-hero-heading-content)}
 .hero-copy,.home-view-split .hero-copy{font-size:var(--font-size-hero-support);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);max-width:var(--measure-body)}
 .hero-copy p+p{margin-top:var(--space-paragraph)}
@@ -134,7 +134,7 @@ main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:0;padding-top:
 .site-footer[hidden]{display:none}
 
 /* Footer follows the same type ladder as the header and page heroes. */
-.site-footer h2{font-size:var(--font-size-home-heading);max-width:var(--measure-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading)}
+.site-footer h2{font-size:var(--heading-title-size);max-width:var(--measure-heading);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking)}
 .footer-invitation{margin-top:var(--space-hero-heading-content);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
 .footer-credit{font-size:var(--font-size-caption);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--eyebrow-tracking);color:var(--eyebrow-ink)}
 

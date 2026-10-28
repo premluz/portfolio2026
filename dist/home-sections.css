@@ -2,12 +2,12 @@
 /* Flip and Flat reuse the hero h1 for the active project, so the heading switch does not hide it there (design-system.css restores it). */
 [data-home-section][hidden]:not(.home-view-split [data-home-section="heading"]),.home-about[hidden]{display:none!important}
 .home-content-section{grid-column:1 / -1;min-width:0;width:100%;margin-top:var(--space-page-rhythm-lg)}
-.home-content-section>h2{margin:0 0 var(--space-page-rhythm-sm);font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink)}
+.home-content-section>h2{margin:0 0 var(--space-page-rhythm-sm);font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink)}
 .home-services-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-6)}
 .home-approach{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);align-items:start}
 .home-approach-intro{grid-column:1 / -1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);min-width:0}
 .home-approach-principles{grid-column:var(--content-column-start) / span 2;min-width:0}
-.home-approach-intro h2{grid-column:1 / -1;margin:0 0 var(--space-6);font-size:var(--font-size-home-heading);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink);text-wrap:balance}
+.home-approach-intro h2{grid-column:1 / -1;margin:0 0 var(--space-6);font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
 .home-approach p{margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink);text-wrap:pretty}
 .home-approach-intro>p{grid-column:var(--content-column-start);min-width:0;max-width:38ch}
 .home-approach-intro>p+p{grid-column:3}
