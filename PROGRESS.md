@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Escape closes the reel after clicking in the video
+
+- Escape already closed full screen, prototype and reel views, except after a click inside the YouTube player: the player kept keyboard focus and swallowed the key. After a click in a YouTube reel, focus now returns to Close, so Escape works again; the player is still driven with the mouse. Interactive prototypes (Merlin, Bastion, Tracr) keep their keyboard, so Escape cannot be caught while one has focus.
+- Evidence: headless browser on #galachain: Escape closes the image full screen and the reel with the menu at the top or bottom, and also after clicking in the reel (before: it stayed open).
+
 ## 2026-10-28 "Carter London" is now "Independent"; plain cards keep a hairline edge
 
 - The 2006–2009 experience entry is titled Independent in both catalogs (the committed change is that one line; run `npm run build` to refresh the built content). The retrieval test searches for it.
