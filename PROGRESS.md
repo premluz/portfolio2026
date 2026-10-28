@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Project details: prototype buttons under the image, smaller QR with a hairline radius
+
+- With a QR code the prototype buttons used to sit below it, far from the image. The QR now follows the buttons (CSS order), so they sit directly under the image as on pages without a QR. The QR is 96px at most (was 128px) and its corner radius is the new `--radius-qr` token, 4px (was the 24px visual radius, which cut the corner squares).
+- Evidence: headless browser on #bastion in both detail layouts: image bottom 809, buttons row 833, QR 857–974, 96px wide, 4px radius.
+
 ## 2026-10-28 Header title links home; avatar has a thin border
 
 - The name and role are now a link to Home like the avatar. The avatar has a 1px border at 8% of the text colour (the carousel buttons' border), a plain edge with no inner lighting, so it stays when plain cards are on. `--card-rim` was too faint (2%) to read.

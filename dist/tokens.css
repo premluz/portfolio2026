@@ -228,6 +228,8 @@
   --radius-card-wide-max: 140px;
   --radius-card-simple: 42px;
   --radius-visual: 24px;
+  /* The QR code's corner squares reach the edge of its image, so only a hairline of rounding is safe. */
+  --radius-qr: 4px;
   --radius-visual-portrait: 29px;
   --radius-visual-flip: 26px;
   --radius-header-control: 18px;
