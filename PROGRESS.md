@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 One rhythm from the header to the hero, the cards and the next section
+
+- Measured text to text with the owner's settings at 1377px: header nav to hero heading 101px, hero text to first card 96px, last caption to the About heading 98px, About text to How I work 101px (were 72, 62, 118 and 101). `--hero-gap` is now `--space-page-rhythm-md` less `--space-2`, which also moves the content start of every desktop page (About, Lab, details, chat) down by 29px so they still align with the Home hero; the carousel gets a top margin of one rhythm step less its first-card slack when it follows the hero, and its pull-up under the caption is `--space-8`.
+- Mobile keeps its own `--hero-gap` (`--space-6`).
+
 ## 2026-10-28 Hero heading to text gap matches the About intro
 
 - The Home hero heading sat 28.8px above its text; it now sits 19.2px (`--space-4`), the same as "Most useful where…" and its paragraph, including the combined hero content mode. Measured 19px for both in a headless browser.

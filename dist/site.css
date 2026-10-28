@@ -293,7 +293,8 @@
   --agent-breathe-lift: 2px;
   --agent-breathe-scale: 1.02;
   /* The same breathing room above the hero (from the header's content) and below it (to At a glance). */
-  --hero-gap: var(--space-12);
+  /* One medium rhythm step from the header to the content, less the nav text's own height above the avatar's bottom edge. */
+  --hero-gap: calc(var(--space-page-rhythm-md) - var(--space-2));
   /* Navigation at the top sits centred in the header row. */
   --dock-top: calc((var(--header-height) - var(--nav-height)) / 2 + var(--header-top-offset));
   /* At a glance: the three columns under the hero, and the gap between a heading and its list. */
@@ -1693,7 +1694,9 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 .home-product-carousel .spatial-card-gallery:not([data-gallery-variant="circular"])[data-description-in-card="true"][data-gallery-axis="horizontal"]{--gallery-controls-row:calc(40px + var(--space-4))}
 .home-product-carousel .spatial-card-gallery:not([data-gallery-variant="circular"])[data-description-in-card="true"][data-gallery-axis="horizontal"] .spatial-gallery-primary-action{top:0;bottom:auto;justify-content:flex-end}
 .home-product-carousel .spatial-card-gallery:not([data-gallery-variant="circular"])[data-description-in-card="true"][data-gallery-axis="horizontal"] .spatial-gallery-viewport{padding-top:var(--gallery-controls-row);padding-bottom:calc(var(--space-4) + var(--gallery-copy-height,0px));height:calc(var(--gallery-controls-row) + var(--gallery-card-height) + var(--gallery-copy-height,0px) + var(--space-4) * 2)}
-.home-product-carousel:not([hidden]){margin-bottom:calc(-1 * var(--space-4))}
+/* The stage keeps slack above the first card (viewport padding plus the arrow row) and below the caption. Taking both back makes the hero text, the cards and the next section sit one medium rhythm step apart. */
+.home-product-carousel:not([hidden]){margin-bottom:calc(-1 * var(--space-8))}
+.home-hero:not([hidden])~.home-product-carousel:not([hidden]){margin-top:calc(var(--space-page-rhythm-md) - var(--space-8) - var(--space-5))}
 
 /* card-world.css */
 /* Card worlds: the spiral scrolls through a tall section with a pinned stage; the infinite space fills
