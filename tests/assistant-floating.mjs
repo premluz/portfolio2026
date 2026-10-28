@@ -28,6 +28,7 @@ const morph=await readFile(new URL('../dist/dock-morph.js',import.meta.url),'utf
 assert(html.includes('id="assistantMaximize"')&&html.includes('id="assistantFloatingClose"')&&html.includes('id="assistantPresentation"'));
 assert(app.includes("const composerShown=route=>route==='assistant'&&!inlineChat(route)||contextualComposer||assistantFloating;"),'One rule decides when the dock shows the composer, including the open panel');
 assert(app.includes("const inlineChat=route=>route==='assistant'&&chatInlineComposer&&!contextualComposer;"),'In menu-dock mode the chat page keeps the menu and puts the composer in the page');
+assert(html.includes('<p>I’m Prem’s custom-built assistant.</p>')&&!html.includes('powered by ChatGPT'),'The welcome text is just the one line');
 assert(html.includes('<div class="assistant-inline-composer" id="assistantInlineComposer" hidden></div>')&&html.includes('<div class="assistant-mascot" id="assistantMascot" aria-hidden="true" hidden></div>'),'The chat page has a composer slot and a mascot stage');
 assert(!/current==='assistant'\|\|contextualComposer\|\|contextualButtons==='composer'/.test(app),'No copies of the old rule remain');
 assert(app.includes("const available=!contextualComposer,character=available&&characterAssistant&&Boolean(characterButton),shown=available&&!character;"),'The button appears only when the menu fills the dock, unless the character stands in for it');
@@ -37,4 +38,7 @@ assert(app.includes('if(assistantFloating)closeAssistantFloating({focus:false});
 assert(app.includes("closeAssistantFloating({focus:false});dispatchCommand({id:'route.assistant',source:'pointer'});"),'Maximise moves the conversation to the chat page');
 assert(view.includes("if(r.page.dataset.floating==='true'){r.page.scrollTo("),'The panel scrolls itself, never the page behind it');
 const transfer=await readFile(new URL('../dist/settings-transfer.js',import.meta.url),'utf8');assert(transfer.includes("assistantPresentation:'prem-assistant-presentation'"),'The setting exports and publishes');
+{const chatCss=await readFile(new URL('../dist/portfolio-assistant.css',import.meta.url),'utf8');
+assert(chatCss.includes('.assistant-welcome :is(h1,p){max-width:min(100%,calc(var(--content-rail-width) / 2))}')&&chatCss.includes('.assistant-welcome h1{color:var(--ink)}'),'The chat welcome is a half-width block with its title in full ink');
+assert(chatCss.includes(':root:not(.assistant-inline-open) #askPage.assistant-page{--chat-top:var(--page-content-top)}'),'Without the mascot stage the welcome starts where page titles start');}
 console.log('Assistant floating passed: page default, presentation setting, panel state, launcher rule, one composer rule, navigation/Escape close, maximise and panel scrolling.');

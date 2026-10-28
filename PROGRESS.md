@@ -12,6 +12,12 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Header Go Back and arrows plain like the carousel arrows
+With Plain navigation on, Go Back and Previous/Next in the header now behave like the carousel arrows: muted text at rest, full ink on hover and no glass background (they showed the glass hover before because they were not in the Plain navigation rules). With it off they keep the glass hover. Evidence: computed colours and backgrounds on hover in the headless browser, both modes.
+
+## 2026-10-27 Chat welcome follows the page pattern
+The chat welcome text is now just "I’m Prem’s custom-built assistant."; the title is in full ink; title and text are a half-width block (bounded by the chat column); in the composer-dock chat the welcome starts at the content start (165px) instead of being centred vertically. The menu-dock chat keeps the mascot stage. Evidence: headless browser in both chat modes: title top, widths and colour measured; tests/assistant-floating.mjs extended.
+
 ## 2026-10-27 Body-size headings in the About block and the blog
 The Home and About intro heading ("Most useful where…") is body size and its text a half-width block; "How I work", "Experience" and "Side Projects & R&D" are body text in full ink instead of eyebrows ("HOW I WORK" is now "How I work" in both catalogs). In blog posts the series line is the first line of the text at paragraph size, and the section headings are reading-size text in full ink. Evidence: computed styles in the headless browser: all 13.12px, labels lightness 0.97, intro heading 662px and text 648px wide on a 1325px rail; article series and headings measured. tests/articles.mjs and tests/header-spacing.mjs extended.
 

@@ -17,4 +17,5 @@ const rules=css.split('\n').filter(line=>line.startsWith(':root'));
 assert(rules.length>=3&&rules.every(rule=>rule.startsWith(':root[data-plain-nav="on"]')),'Every rule is behind data-plain-nav="on"');
 assert(rules.filter(rule=>rule.includes('#dock')).every(rule=>rule.includes('#dock:not(.is-composer)')),'Dock rules skip composer mode');
 for(const part of ['.dock-glass','.dock-outline','nav a','.assistant-launcher','.assistant-back','.glass-utility-button','.detail-media-actions button','background:none','box-shadow:none','backdrop-filter:none','text-decoration:underline'])assert(css.includes(part),`Plain mode covers ${part}`);
+assert((css.match(/\.header-detail-nav button/g)||[]).length>=2,'Go Back and Previous/Next in the header are plain with the carousel arrows: text only, full ink on hover');
 console.log('Plain navigation passed: default off, exported, both pages, every rule scoped, composer exempt, chrome removed and active link underlined.');

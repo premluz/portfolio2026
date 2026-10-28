@@ -105,3 +105,9 @@
 :root.assistant-inline-open .assistant-page{padding-bottom:var(--space-page-rhythm-md)}
 :root.assistant-inline-open #askPage .assistant-thread{width:min(100%,var(--chat-width,var(--composer-max-width)));min-height:0}
 .assistant-inline-composer{position:sticky;z-index:2;bottom:calc(var(--space-6) + env(safe-area-inset-bottom,0px));width:min(100%,var(--chat-width,var(--composer-max-width)));height:var(--nav-height);margin:var(--space-6) auto 0;border:1px solid var(--dock-outline);border-radius:var(--nav-rounding);background:linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));-webkit-backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));box-shadow:inset 0 1px 0 var(--nav-highlight),0 12px 40px var(--nav-shadow)}
+/* The welcome follows the page pattern: the title in full ink, title and text in a block half the content width (never wider
+   than the chat column), and, without the menu-dock mascot stage, starting where every page's title starts. */
+.assistant-welcome :is(h1,p){max-width:min(100%,calc(var(--content-rail-width) / 2))}
+.assistant-welcome h1{color:var(--ink)}
+:root:not(.assistant-inline-open) #askPage.assistant-page{--chat-top:var(--page-content-top)}
+:root:not(.assistant-inline-open) #askPage.assistant-empty .assistant-thread{justify-content:flex-start}
