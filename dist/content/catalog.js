@@ -967,15 +967,21 @@ export const catalog={
           },
           "items": [
             {
-              "id": "home-project-merlin",
+              "id": "home-project-galachain",
               "type": "reference",
-              "documentId": "merlin",
+              "documentId": "galachain",
               "presentation": "card"
             },
             {
-              "id": "home-project-porter",
+              "id": "home-project-bastion",
               "type": "reference",
-              "documentId": "porter",
+              "documentId": "bastion",
+              "presentation": "card"
+            },
+            {
+              "id": "home-project-merlin",
+              "type": "reference",
+              "documentId": "merlin",
               "presentation": "card"
             },
             {
@@ -991,18 +997,6 @@ export const catalog={
               "presentation": "card"
             },
             {
-              "id": "home-project-galachain",
-              "type": "reference",
-              "documentId": "galachain",
-              "presentation": "card"
-            },
-            {
-              "id": "home-project-bastion",
-              "type": "reference",
-              "documentId": "bastion",
-              "presentation": "card"
-            },
-            {
               "id": "home-project-gala-defi",
               "type": "reference",
               "documentId": "gala-defi",
@@ -1012,6 +1006,12 @@ export const catalog={
               "id": "home-project-playstation",
               "type": "reference",
               "documentId": "playstation",
+              "presentation": "card"
+            },
+            {
+              "id": "home-project-porter",
+              "type": "reference",
+              "documentId": "porter",
               "presentation": "card"
             },
             {
@@ -1069,10 +1069,10 @@ export const catalog={
         {
           "id": "about-introduction",
           "type": "text",
-          "title": "Most useful where the problem is messy and the path isn’t obvious yet.",
+          "title": "From vision and strategy to shipping and improving.",
           "label": "",
           "paragraphs": [
-            "I work from business opportunity to shipped product: vision, research, interaction models, design systems, and building with engineers, then measuring and improving.",
+            "Associative thinker drawn to complexity. I value craft and simplicity. Outside work, I’m into psychology, philosophy, health, biohacking, financial markets, and a few odd rabbit holes.",
             ""
           ]
         },
@@ -1108,15 +1108,15 @@ export const catalog={
             {
               "id": "about-how-learn-fast",
               "type": "text",
-              "title": "Learn fast",
+              "title": "Adapt to change",
               "paragraphs": [
-                "If I don’t know it, I learn it."
+                "Change course when the evidence does."
               ]
             },
             {
               "id": "about-how-day-one",
               "type": "text",
-              "title": "Day one mindset",
+              "title": "Ship fast",
               "paragraphs": [
                 "Prototype early, decide quickly, ship, then scale."
               ]
@@ -1476,7 +1476,7 @@ export const catalog={
             "A life-first planner turning your day into a canvas, so changing plans takes seconds."
           ],
           "link": {
-            "id": "rios-site",
+            "id": "porter-page",
             "label": "Rios",
             "url": "https://getrios.app"
           }
@@ -1502,9 +1502,9 @@ export const catalog={
             "Agent-first mobile wallet with an AI assistant and generative UI. Working R&D prototype with voice mode."
           ],
           "link": {
-            "id": "bastion-site",
+            "id": "porter-page",
             "label": "Bastion",
-            "url": "https://www.youtube.com/watch?v=ipIZ0LvNj7c"
+            "url": "#bastion"
           }
         },
         {
@@ -1929,7 +1929,7 @@ export const catalog={
       "id": "home-writing",
       "type": "component",
       "status": "published",
-      "title": "Writing and opinions",
+      "title": "Thoughts",
       "blocks": [
         {
           "id": "writing-desire",
@@ -2545,7 +2545,7 @@ export const catalog={
     {
       "documentId": "bastion",
       "card": {
-        "orientation": "portrait",
+        "orientation": "landscape",
         "surface": [
           "#e6e9f4",
           "#e5e7ef"
@@ -2601,18 +2601,13 @@ export const catalog={
       "id": "home",
       "items": [
         {
+          "id": "galachain",
+          "documentId": "galachain",
+          "featured": false
+        },
+        {
           "id": "bastion",
           "documentId": "bastion",
-          "featured": true
-        },
-        {
-          "id": "merlin",
-          "documentId": "merlin",
-          "featured": true
-        },
-        {
-          "id": "gala-defi",
-          "documentId": "gala-defi",
           "featured": true
         },
         {
@@ -2621,13 +2616,18 @@ export const catalog={
           "featured": true
         },
         {
+          "id": "merlin",
+          "documentId": "merlin",
+          "featured": true
+        },
+        {
           "id": "vodafone-iot",
           "documentId": "vodafone-iot",
           "featured": true
         },
         {
-          "id": "playstation",
-          "documentId": "playstation",
+          "id": "gala-defi",
+          "documentId": "gala-defi",
           "featured": true
         },
         {
@@ -2641,9 +2641,9 @@ export const catalog={
           "featured": false
         },
         {
-          "id": "galachain",
-          "documentId": "galachain",
-          "featured": false
+          "id": "playstation",
+          "documentId": "playstation",
+          "featured": true
         },
         {
           "id": "about",

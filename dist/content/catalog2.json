@@ -104,9 +104,9 @@
       "type": "portfolio-item",
       "status": "published",
       "slug": "rios",
-      "title": "Designed and built a spatial planner for days that change",
+      "title": "Life-first planner that makes your day a canvas",
       "name": "Life-first planner",
-      "summary": "0→1 product • Solo designer/builder",
+      "summary": "0→1 • Everything solo",
       "category": "Life-first planner · Independent product",
       "kind": "shipped",
       "projectStatus": "Launched",
@@ -199,9 +199,9 @@
       "type": "portfolio-item",
       "status": "published",
       "slug": "playstation",
-      "title": "Designed a unified workflow saving developers and publishers hundreds of hours",
+      "title": "Designed a unified workflow for developers and publishers",
       "name": "Publishing pipeline",
-      "summary": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 • 4 teams aligned",
+      "summary": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 ",
       "category": "Publishing pipeline · PlayStation Network",
       "kind": "shipped",
       "projectStatus": "Launched",
@@ -294,9 +294,9 @@
       "type": "portfolio-item",
       "status": "published",
       "slug": "vodafone-iot",
-      "title": "Redesigned platform around research-informed IA and interaction model for technical users and occasional operators",
+      "title": "Research-informed revamp of IoT connectivity platform for technical users",
       "name": "IoT connectivity",
-      "summary": "180+ regions · 240M+ devices · NPS –33 → +62 · Operations time reduced to under 10 seconds",
+      "summary": "180+ regions · 240M+ devices · NPS –33 → +62",
       "category": "IoT connectivity · Enterprise",
       "kind": "shipped",
       "projectStatus": "Launched",
@@ -389,9 +389,9 @@
       "type": "portfolio-item",
       "status": "published",
       "slug": "tracr",
-      "title": "Created a design system as a vehicle to fix fragmented platform",
+      "title": "Strategic redesign of fragmented blockchain platform",
       "name": "Blockchain traceability",
-      "summary": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
+      "summary": "Design System 0→1 + platform redesign • ~2× faster dev & QA",
       "category": "Blockchain traceability · Regulated supply chain",
       "kind": "shipped",
       "projectStatus": "Launched",
@@ -487,9 +487,9 @@
       "type": "portfolio-item",
       "status": "published",
       "slug": "galachain",
-      "title": "Made Web3 wiring invisible for fans and creators on a decentralised entertainment platform",
+      "title": "Made Web3 wiring invisible for fans and creators on a greenfield platform",
       "name": "Web3 film platform",
-      "summary": "End-to-end design across 0 → 1 → Growth and continous improvements",
+      "summary": "End-to-end 0 → 1 → Growth and continous improvements",
       "category": "Web3 entertainment · Film and music",
       "kind": "shipped",
       "projectStatus": "Launched",
@@ -587,11 +587,11 @@
     {
       "id": "bastion",
       "slug": "bastion",
-      "title": "Designed and built prototype of mobile wallet with AI assistant and generative UI",
+      "title": "Mobile wallet with AI assistant and generative UI",
       "pageTitle": "A wallet where you can ask, speak or tap and the interface adapts around the task",
       "name": "Digital wallet with AI assistant",
       "client": "Bastion",
-      "summary": "R&D • AI assistant • Generative UI • Prototype",
+      "summary": "R&D • Design • Build",
       "category": "AI wallet · R&D",
       "kind": "lab",
       "projectStatus": "R&D",
@@ -689,11 +689,11 @@
       "type": "portfolio-item",
       "status": "published",
       "slug": "porter",
-      "title": "Designed and built switchboard for the AI agents",
+      "title": "Created switchboard for the AI agents",
       "pageTitle": "I designed and built a Mac app that keeps track of your AI agents, so you never lose one or keep one waiting.",
       "name": "AI agent switchboard",
       "client": "Porter",
-      "summary": "0→1 product • Solo designer/builder",
+      "summary": "Everything solo",
       "category": "Agent switchboard · R&D",
       "kind": "lab",
       "projectStatus": "Building",
@@ -716,7 +716,7 @@
           "mediaId": "porter-cover"
         }
       ],
-      "listOnly": true,
+      "listOnly": false,
       "heroMediaId": "porter-cover",
       "hoverVideoId": "porter-walkthrough",
       "intro": "People now work with several AI agents at once, and the real bottleneck is knowing which one needs attention and switching between multiple windows they operate in.",
@@ -886,14 +886,14 @@
       "template": "home",
       "status": "published",
       "slug": "work",
-      "title": "Hey, I’m Prem, builder turned designer.",
+      "title": "I make complex products feel simple.",
       "summary": "I started out building for the web and running a solo studio. For the last 10+ years, I’ve designed products for technical and expert users. Recently I built Rios and Porter. Today, my focus is AI conversational and generative UI experiences. ",
       "blocks": [
         {
           "id": "home-introduction",
           "type": "text",
-          "label": "Hey, I’m Prem, builder turned designer.",
-          "title": "<br/>I make complex products feel simple.",
+          "label": "I make complex products feel simple.",
+          "title": "  ",
           "paragraphs": []
         },
         {
@@ -907,7 +907,7 @@
           "id": "home-description",
           "type": "text",
           "paragraphs": [
-            "For the last 10+ years, I’ve designed products for technical users and creators. Today, my focus is AI and genUI experiences. Recently built Rios, Porter & Bastion."
+            "10+ years  products for technical users and creators. Today, my focus is AI and genUI. Recently built Rios, Porter & Bastion."
           ]
         },
         {
@@ -1928,7 +1928,7 @@
       "id": "home-writing",
       "type": "component",
       "status": "published",
-      "title": "Writing and opinions",
+      "title": "Thoughts",
       "blocks": [
         {
           "id": "writing-desire",
@@ -2033,9 +2033,9 @@
       "type": "portfolio-item",
       "status": "published",
       "slug": "gala-defi",
-      "title": "Brought coherence to a DeFi stack that launched fast, outsourced and stitched together",
+      "title": "Brought coherence to a DeFi ecosystem",
       "name": "DeFi swap, pools and wallet",
-      "summary": "0 → 1 • North Star • Easy mode",
+      "summary": "0 → 1 • North Star",
       "category": "Decentralised finance",
       "kind": "shipped",
       "projectStatus": "Launched",
@@ -2304,7 +2304,7 @@
       "id": "bastion-walkthrough",
       "type": "video",
       "status": "published",
-      "url": "assets/bastion2.mp4",
+      "url": "assets/bastion.mp4",
       "alt": "",
       "width": 1440,
       "height": 900
@@ -2600,13 +2600,18 @@
       "id": "home",
       "items": [
         {
+          "id": "bastion",
+          "documentId": "bastion",
+          "featured": true
+        },
+        {
           "id": "merlin",
           "documentId": "merlin",
           "featured": true
         },
         {
-          "id": "bastion",
-          "documentId": "bastion",
+          "id": "gala-defi",
+          "documentId": "gala-defi",
           "featured": true
         },
         {
@@ -2620,29 +2625,29 @@
           "featured": true
         },
         {
-          "id": "gala-defi",
-          "documentId": "gala-defi",
-          "featured": true
-        },
-        {
           "id": "playstation",
           "documentId": "playstation",
           "featured": true
         },
         {
+          "id": "porter",
+          "documentId": "porter",
+          "featured": false
+        },
+        {
           "id": "rios",
           "documentId": "rios",
-          "featured": true
+          "featured": false
         },
         {
           "id": "galachain",
           "documentId": "galachain",
-          "featured": true
+          "featured": false
         },
         {
           "id": "about",
           "documentId": "about",
-          "featured": false
+          "featured": true
         },
         {
           "id": "about-lab",
