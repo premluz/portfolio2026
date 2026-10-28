@@ -28,31 +28,25 @@
 @media(max-width:750px){.detail-layout>.detail-media-column{grid-column:1;grid-row:1}.detail-layout>.description{grid-column:1;grid-row:2}.detail.heading-beside-image>.detail-layout>.detail-media-column{grid-column:1;grid-row:4}.detail.heading-beside-image>.detail-layout>.description{grid-row:6}}
 
 body:has(.project-media-focus) .site-tooltip{z-index:122}
-/* "Details title beside image" on: a card-style caption, the image across the whole page under it, then the long title,
-   summary and facts in a reading-width column. These rules outrank the older two-column ones above and in style.css. */
-.detail-caption{display:none}
-.surface.detail.heading-beside-image>.detail-caption{display:block;grid-column:1;grid-row:1;margin:0 0 var(--space-8)}
+/* Project pages (with a picture): a card-style caption on top (it follows the Cards settings, see detail-caption.js), the picture
+   across the page under it, then the long title, summary and facts in a reading-width column. With "Details title beside image"
+   on that column sits at the left; off, it is centred like a blog post. These rules outrank the older two-column ones in style.css. */
+.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-caption{display:block;grid-column:1;grid-row:1;margin:0 0 var(--space-8)}
 .detail-caption p{margin:0;font-size:var(--font-size-project-summary);font-weight:var(--font-weight-body);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body)}
 .detail-caption-title{color:var(--ink)}
 .detail-caption-lead{color:var(--muted)}
-.surface.detail.heading-beside-image{grid-template-columns:minmax(0,1fr);grid-template-rows:none;column-gap:0;row-gap:0}
-.surface.detail.heading-beside-image>.detail-layout>.detail-media-column{grid-column:1;grid-row:2;margin-top:0}
-.surface.detail.heading-beside-image>.project-client{grid-column:1;grid-row:3;margin-top:var(--space-page-rhythm-md)}
-.surface.detail.heading-beside-image>h1{grid-column:1;grid-row:4}
-.surface.detail.heading-beside-image>.project-summary{grid-column:1;grid-row:5}
-.surface.detail.heading-beside-image>.detail-layout>.description{grid-column:1;grid-row:6}
-.surface.detail.heading-beside-image>:is(.project-client,h1,.project-summary,.detail-layout>.description){max-width:var(--content-width-reading)}
-/* Text beside the image (the default): the image column starts at the top of the text, level with the client line, instead of
-   waiting for the description row below the title and summary. */
-@media(min-width:751px){
-.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail){display:grid;grid-template-columns:1fr 1.6fr;grid-template-rows:max-content max-content max-content 1fr;column-gap:var(--space-detail-columns);align-items:start}
-.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-layout{display:contents}
-.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>:is(.project-client,h1,.project-summary){grid-column:1}
-.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-layout>.detail-media-column{grid-column:2;grid-row:1 / span 4}
-.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-layout>.description{grid-column:1;grid-row:4;margin-top:var(--space-text-media)}
-}
+.detail-caption .detail-caption-client{margin-bottom:var(--space-4);font-size:var(--font-size-body);letter-spacing:var(--client-eyebrow-tracking);text-transform:uppercase;color:var(--eyebrow-ink)}
+.surface.detail[data-card-orientation]:not(.text-only-detail){display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:none;column-gap:0;row-gap:0}
+.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout{display:contents}
+.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout>.detail-media-column{grid-column:1;grid-row:2;margin-top:0}
+.surface.detail[data-card-orientation]:not(.text-only-detail)>.project-client{grid-column:1;grid-row:3;margin-top:var(--space-page-rhythm-md)}
+.surface.detail[data-card-orientation]:not(.text-only-detail)>h1{grid-column:1;grid-row:4}
+.surface.detail[data-card-orientation]:not(.text-only-detail)>.project-summary{grid-column:1;grid-row:5}
+.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{grid-column:1;grid-row:6}
+.surface.detail[data-card-orientation]:not(.text-only-detail)>:is(.project-client,h1,.project-summary),.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{max-width:var(--content-width-reading)}
+.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>:is(.project-client,h1,.project-summary),.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-layout>.description{margin-inline:auto;width:100%}
 /* A landscape image fills the page width here instead of stopping at the card's 1000px cap. */
-.surface.detail.heading-beside-image[data-card-orientation="landscape"]{--image-max-width-landscape:100000px}
+.surface.detail[data-card-orientation="landscape"]:not(.text-only-detail){--image-max-width-landscape:100000px}
 
 /* Close in the top-menu layout: a glass circle that fades in at the bottom centre, level with the bottom dock (same offset as .dock's --dock-bottom), with the right-aligned menu fading out. */
 .project-media-focus-close.is-floating{position:fixed;z-index:123;left:50%;bottom:max(24px,env(safe-area-inset-bottom));transform:translateX(-50%);display:grid;place-items:center;width:var(--media-close-size);height:var(--media-close-size);padding:0;border:1px solid var(--nav-rim);border-radius:50%;background:var(--chrome);color:var(--ink);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);cursor:pointer;animation:media-close-in var(--header-swap-duration) var(--ease-settle) both}

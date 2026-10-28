@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Project pages: one stack, caption follows the card settings, centred column
+
+- With Details title beside image off, project pages no longer put all the text beside the picture. Both modes now use the stacked layout: a caption on top, the picture across the page, then the client line, title, summary and facts in a 600px reading column that is centred like a blog post when the switch is off and left-aligned when it is on. The caption follows the Cards settings (company above or leading the title, title or category, results or Company · Year). The facts column also gets the 600px reading width in the on mode (it ran full width before: a nested-selector mistake in the earlier rule). The two-column rules I added earlier today were removed.
+- Evidence: headless browser on Bastion at 1500x960: off: caption 196, picture 279, column at x 450 (centred in the 1380px page), on: x 60; caption lines for company above + category + company-year: Bastion / AI wallet / Bastion · 2025; inline: Bastion. AI wallet; hidden description and company leave only the title. New test tests/detail-caption.mjs; tests/content-renderers.mjs updated.
+
 ## 2026-10-28 Dark theme page #121212 and cards #151515
 
 - Dark theme `--page` is #121212 (rgb 18, 18, 18) and `--card-surface` is #151515 (rgb 21, 21, 21), ending its gradient at #101010; the neutral cards (Hide card colour) use the same. The edge fades on all four sides are built from `--page`, so they now fade to exactly #121212. Light theme unchanged.
