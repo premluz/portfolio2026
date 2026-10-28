@@ -1838,6 +1838,15 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 .surface.detail.heading-beside-image>.project-summary{grid-column:1;grid-row:5}
 .surface.detail.heading-beside-image>.detail-layout>.description{grid-column:1;grid-row:6}
 .surface.detail.heading-beside-image>:is(.project-client,h1,.project-summary,.detail-layout>.description){max-width:var(--content-width-reading)}
+/* Text beside the image (the default): the image column starts at the top of the text, level with the client line, instead of
+   waiting for the description row below the title and summary. */
+@media(min-width:751px){
+.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail){display:grid;grid-template-columns:1fr 1.6fr;grid-template-rows:max-content max-content max-content 1fr;column-gap:var(--space-detail-columns);align-items:start}
+.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-layout{display:contents}
+.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>:is(.project-client,h1,.project-summary){grid-column:1}
+.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-layout>.detail-media-column{grid-column:2;grid-row:1 / span 4}
+.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-layout>.description{grid-column:1;grid-row:4;margin-top:var(--space-text-media)}
+}
 /* A landscape image fills the page width here instead of stopping at the card's 1000px cap. */
 .surface.detail.heading-beside-image[data-card-orientation="landscape"]{--image-max-width-landscape:100000px}
 

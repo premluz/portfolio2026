@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Project details with text beside the image: image starts at the top
+
+- In the default project detail layout (title beside image off) the image column sat level with the description, 179px below the client line. The page is now a two-column grid at 751px and wider: client, title and summary in the left column, the image column spanning from the first row, so the image top is level with the client line (196px both). The description follows the summary in the left column. Mobile and the stacked "title beside image" layout are unchanged.
+- Evidence: headless browser at 1792px (client 196, image 196, title 224 as before), 700px (still one block) and with the stacked layout on.
+
 ## 2026-10-28 Navigation has its own width setting
 
 - Settings → Navigation → Width: Same as the page (default, today's behaviour), Extra small 960px, Small 1200px, Medium 1440px, Large 1760px. It drives the header row and the top menu through `--nav-shell-width` and `--nav-gutter`; the page content keeps its own widths. Saved as `prem-nav-content-width` and exported.
