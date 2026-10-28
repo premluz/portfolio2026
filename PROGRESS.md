@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Card rounding is relative to the card size
+
+- Card rounding is now a ceiling: each image card fits its own radius tokens to its size (`fittedCardRadius`, at most a quarter of its shorter side, set on the card by `ImageFrame.fitCardRadius`), so a 128px setting no longer turns a small Lab card into a near circle. Large cards keep the setting. The carousel's radius derives from the same fitted value.
+- Evidence: headless browser with the owner's settings: Lab cards 317x198 at setting 128 measure 49.5px (before 128px), at setting 40 stay 40px; the home carousel's 656x474 cards at 64 stay 20px; unit assertions in tests/image-border.mjs.
+
 ## 2026-10-28 Contextual section actions only with the contextual composer
 
 - "About me", the testimonial and footer contact actions and the carousel's View project and arrows appeared in the header area while scrolling even in menu-item mode. They now belong to the contextual composer (Contextual composer on); menu-item mode keeps only the project-page controls.

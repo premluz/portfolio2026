@@ -58,6 +58,11 @@ export function imageGeometry(width,height,ratio,radius=24,padding={},sourceCorn
  const sourceRadius=sourceCorners?.width>0?sourceCorners.radius*imageWidth/sourceCorners.width:0;
  return {width:imageWidth,height:imageHeight,left:left+(align==='start'?0:(availableWidth-imageWidth)/2),top:top+(availableHeight-imageHeight)*(blockAlign==='end'?1:.5),radius:Math.min(imageWidth/2,imageHeight/2,Math.max(0,radius,sourceRadius))};
 }
+// Card rounding is a ceiling, not a fixed size: a small card never rounds past a share of its shorter side, so a setting made
+// for large cards cannot turn small ones into circles. Large cards keep the setting as it is.
+export const CARD_RADIUS_SIDE_SHARE=.25;
+export const fittedCardRadius=(setting,width,height)=>Math.min(setting,Math.max(0,Math.min(width,height))*CARD_RADIUS_SIDE_SHARE);
+const CARD_RADIUS_VARIANTS=['--radius-card-compact','--radius-card-flip','--radius-card-flip-compact','--radius-card-simple'];
 export function readImagePadding(el){const style=getComputedStyle(el);return Object.fromEntries(['top','right','bottom','left'].map(side=>[side,Math.max(0,parseFloat(style.getPropertyValue('--image-padding-'+side))||0)]));}
 export function updateImageShade(el){
  const card=el.parentElement;if(!card?.matches('.image-card'))return;
@@ -76,8 +81,18 @@ export class ImageFrame {
   if(video?.play)this.preview=new HoverVideo(el,video,()=>this.resize());
   this.observer=new ResizeObserver(()=>this.resize());this.observer.observe(el);if(this.card)this.observer.observe(this.card);this.resize();
  }
+ // The card's own radius tokens, fitted to its size; the card's children inherit them.
+ fitCardRadius(){
+  const card=this.card;if(!card?.style?.setProperty)return;
+  const root=getComputedStyle(document.documentElement),setting=parseFloat(root.getPropertyValue('--radius-card'));
+  if(!Number.isFinite(setting)||setting<=0||!card.offsetWidth||!card.offsetHeight)return;
+  const fitted=fittedCardRadius(setting,card.offsetWidth,card.offsetHeight),scale=fitted/setting;
+  card.style.setProperty('--radius-card',fitted+'px');
+  for(const name of CARD_RADIUS_VARIANTS){const value=parseFloat(root.getPropertyValue(name));if(Number.isFinite(value))card.style.setProperty(name,value*scale+'px');}
+ }
  resize(){
   if(this.el.isConnected===false||this.el.clientWidth===0)return;
+  this.fitCardRadius();
   updateImageShade(this.el);
   const declaredWidth=Number(this.img?.getAttribute?.('width'))||0,declaredHeight=Number(this.img?.getAttribute?.('height'))||0;
   const width=this.img?.naturalWidth||declaredWidth,height=this.img?.naturalHeight||declaredHeight;
