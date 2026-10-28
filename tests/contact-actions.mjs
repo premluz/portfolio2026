@@ -5,7 +5,7 @@ import {copyContactEmail,mountContactEmailCopy} from '../dist/contact-actions.js
 let copied;const notices=[];
 const notify=(text,options)=>notices.push({text,...options});
 assert(await copyContactEmail(notify,{writeText:async value=>copied=value}));
-assert.equal(copied,['premluczak','gmail.com'].join('@'));assert.equal(notices.at(-1).text,'Email copied');
+assert.equal(copied,['prem.luczak','gmail.com'].join('@'));assert.equal(notices.at(-1).text,'Copied to clipboard');
 const warnings=[],warn=console.warn;console.warn=(...args)=>warnings.push(args);
 try{
  assert.equal(await copyContactEmail(notify,{writeText:async()=>{throw Error('Permission denied');}}),false);
@@ -20,6 +20,6 @@ Object.defineProperty(globalThis,'navigator',{configurable:true,value:{clipboard
 try{
  const dispose=mountContactEmailCopy(root,notify);
  handler({target:{closest:()=>({})},preventDefault:()=>prevented=true});await Promise.resolve();
- assert(prevented);assert.equal(copied,['premluczak','gmail.com'].join('@'));dispose();assert(removed);
+ assert(prevented);assert.equal(copied,['prem.luczak','gmail.com'].join('@'));dispose();assert(removed);
 }finally{Object.defineProperty(globalThis,'navigator',{configurable:true,value:originalNavigator});}
 console.log('Contact actions passed: exact clipboard value, encoded public source, delegated copy and visible permission failures.');

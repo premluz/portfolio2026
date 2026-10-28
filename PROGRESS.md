@@ -12,6 +12,11 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-28 Footer email copies to the clipboard
+
+- Removed the "Let's talk" footer item. The footer Email item is now a button that copies the address and shows the "Copied to clipboard" toast; the address is not in the HTML, only base64-encoded in `contact-actions.js` and decoded on click. The address is now prem.luczak@gmail.com (it was premluczak@gmail.com).
+- Evidence: headless browser clipboard read, toast text, button and text modes; tests/contact-actions.mjs updated.
+
 ## 2026-10-28 Footer group in Developer settings
 
 - New Footer group collects Show footer (moved from Content), Show invitation line, Show contact items and Contact items as text. The title "Building something complex?" is one line. Text mode hides the circles and icons and shows LinkedIn, Email and Let's talk as underlined body-size labels.
