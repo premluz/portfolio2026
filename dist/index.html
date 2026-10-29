@@ -56,6 +56,7 @@
 <button id="settingsTabStructure" type="button" role="tab" aria-controls="settingsPanelStructure" aria-selected="false" data-settings-tab="structure" tabindex="-1">Structure</button>
 <button id="settingsTabDesign" type="button" role="tab" aria-controls="settingsPanelDesign" aria-selected="false" data-settings-tab="design" tabindex="-1">Design</button>
 <button id="settingsTabMotion" type="button" role="tab" aria-controls="settingsPanelMotion" aria-selected="false" data-settings-tab="motion" tabindex="-1">Motion</button>
+<button id="settingsTabMascott" type="button" role="tab" aria-controls="settingsPanelMascott" aria-selected="false" data-settings-tab="mascott" tabindex="-1">Mascott</button>
 </nav>
 <div class="settings-tab-panels">
 <section id="settingsPanelContent" role="tabpanel" aria-labelledby="settingsTabContent" data-settings-tabpanel="content">
@@ -218,7 +219,6 @@
 <label class="check"><input id="navShowAssistant" type="checkbox" checked> Show Assistant (a menu item after Contact when the mascot is not the assistant)</label>
 <label class="check"><input id="navShowIndex" type="checkbox" checked> Show index button (site menu)</label>
 <label class="check"><input id="characterAssistant" type="checkbox" checked> Chat is the mascot (off: a menu item after Contact)</label>
-<label class="check"><input id="showMascot" type="checkbox" checked> Show mascot</label>
 <label>Position <select id="navPosition"><option value="bottom">Bottom</option><option value="top">Top · in the header row</option></select></label>
 <div class="setting-subsection">Header</div>
 <label class="check"><input id="hideBranding" type="checkbox" checked> Hide logo &amp; tagline</label>
@@ -330,6 +330,22 @@
 <label class="check"><input type="checkbox" id="slow"> Slow motion</label>
 <p>Drag a card left and right to feel the response. Escape settles it back.</p>
 <button id="replay">Replay transition</button>
+</div></details>
+</section>
+<section id="settingsPanelMascott" role="tabpanel" aria-labelledby="settingsTabMascott" data-settings-tabpanel="mascott" hidden>
+<details class="developer-settings-group">
+<summary>Mascott</summary><div class="developer-settings-content">
+<label class="check"><input id="showMascot" type="checkbox" checked> Show mascot</label>
+<label>Speed <output id="mascotSpeedValue">100%</output><input id="mascotSpeed" type="range" min="25" max="300" step="25" value="100"></label>
+<label>Material <select id="mascotMaterial"><option value="flat">Flat</option><option value="glass">Glass</option><option value="gloss" selected>Gloss</option><option value="neon">Neon</option><option value="iridescent">Iridescent</option><option value="cosmic">Cosmic</option><option value="liquid">Liquid</option><option value="aura">Aura</option></select></label>
+<label>Palette <select id="mascotPalette"><option value="coral" selected>Coral</option><option value="lavender">Lavender</option><option value="mist">Mist</option></select></label>
+<div class="setting-subsection">Effects</div>
+<label>Glow effect <select id="mascotGlow"><option value="off">Off</option><option value="cloud" selected>Cloud</option><option value="edge">Edge</option></select></label>
+<label>Glow colour <select id="mascotGlowTint"><option value="auto" selected>Auto</option><option value="palette">Palette</option><option value="ocean">Ocean</option><option value="sunset">Sunset</option><option value="mint">Mint</option><option value="white">White</option></select></label>
+<label>Motion effect <select id="mascotMotion"><option value="still">Still</option><option value="drift" selected>Drift</option><option value="currents">Currents</option><option value="convection">Convection</option><option value="synapse">Synapse</option></select></label>
+<label>Liquid / Aura variety <select id="mascotVariety"><option value="aurora" selected>Aurora</option><option value="ember">Ember</option><option value="toxic">Toxic</option><option value="ice">Ice</option><option value="plasma">Plasma</option><option value="ghost">Ghost</option><option value="daylight">Daylight</option><option value="dusk">Dusk</option></select></label>
+<p>Materials and effects update the mascot immediately. The animation switch and reduced-motion preference still apply.</p>
+<p id="mascotSettingsStatus" role="status" aria-live="polite"></p>
 </div></details>
 </section>
 </div>

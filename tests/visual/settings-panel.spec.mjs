@@ -6,7 +6,7 @@ test('developer settings panel uses category tabs and collapsed accordions',asyn
  const rhythm=await page.evaluate(()=>{const carousel=document.querySelector('.home-product-carousel'),work=document.querySelector('.home-work');return {carousel:carousel?getComputedStyle(carousel).marginTop:'',work:work?getComputedStyle(work).marginTop:''};});
  expect(rhythm.work).toBe(rhythm.carousel);
  await page.locator('#settingsToggle').click();
- await expect(page.locator('#settings .settings-tabs [role="tab"]')).toHaveCount(4);
+ await expect(page.locator('#settings .settings-tabs [role="tab"]')).toHaveCount(5);
  await expect(page.locator('#settingsTabContent')).toHaveAttribute('aria-selected','true');
  await expect(page.locator('#settingsPanelContent')).toBeVisible();
  await expect(page.locator('#cardTitleScale')).toHaveCount(0);

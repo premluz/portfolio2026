@@ -40,7 +40,7 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 .detail-caption-title{color:var(--ink)}
 :root[data-heading-style="editorial"] .detail-caption .detail-caption-title{font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);text-transform:none;color:var(--ink);text-wrap:balance}
 .detail-caption-lead{color:var(--eyebrow-ink)}
-.detail-caption-title + .detail-caption-lead{margin-top:var(--space-4)}
+.detail-caption-title + .detail-caption-lead{margin-top:var(--space-title-eyebrow)}
 .detail-caption .detail-caption-results{margin-top:var(--space-hero-heading-content);color:var(--body-ink)}
 .detail-caption .detail-caption-intro{margin-top:var(--space-5);color:var(--ink)}
 /* The caption carries the company and the headline sentence, so the column below does not repeat them. The heading stays for screen readers. */

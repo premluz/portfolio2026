@@ -15,6 +15,12 @@ body>header,body.wide-project-hero-page>header{width:100%;max-width:var(--nav-sh
 .timeline-track ol{padding-inline:var(--content-gutter)}
 
 :is(#main,.retained-home) .home-testimonials[data-content-span]{width:100%;max-width:100%;margin-inline:0}
+/* About-related home sections own one column; nested text must not halve it again. */
+:is(#main,.retained-home).home-canvas :is(.home-about,.home-approach,.home-about-list,.home-writing){width:calc((100% - var(--space-6)) / 2);max-width:none;margin-inline:0}
+.home-canvas :is(.home-about-copy,.home-approach,.home-approach-intro,.home-content-section.home-about-list,.home-writing){grid-template-columns:minmax(0,1fr)}
+.home-canvas :is(.home-about-copy,.home-approach,.home-approach-intro,.home-about-list,.home-writing)>*{grid-column:1 / -1}
+.home-canvas .home-about-copy p+p,.home-canvas .home-approach-intro>p+p{grid-column:1 / -1}
+@media(max-width:1000px){:is(#main,.retained-home).home-canvas :is(.home-about,.home-approach,.home-about-list,.home-writing){width:100%}}
 .home-hero .hero-about{max-width:100%;min-width:0}
 .home-hero .hero-about h1{max-width:none;text-wrap:wrap}
 .home-canvas:not(.home-view-split) .hero-about h1{max-width:var(--page-intro-width)}

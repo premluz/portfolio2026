@@ -4,7 +4,7 @@ import {readFile} from 'node:fs/promises';
 
 const html=await readFile(new URL('../dist/index.html',import.meta.url),'utf8');
 for(const id of ['showGestureControl','showInfoControl','showAnimationControl'])assert.match(html,new RegExp(`id="${id}"`));
-assert.deepEqual([...html.matchAll(/data-settings-tab="([^"]+)"/g)].map(match=>match[1]),['content','structure','design','motion']);
+assert.deepEqual([...html.matchAll(/data-settings-tab="([^"]+)"/g)].map(match=>match[1]),['content','structure','design','motion','mascott']);
 assert.equal((html.match(/<details class="developer-settings-group"[^>]*\bopen\b/g)??[]).length,0,'Developer settings accordions are collapsed by default');
 for(const summary of ['Home','Lab','Project details','About','Contact','Page width','Layout','Cards','Footer','Navigation','Design system','Section presentation','Environment','Motion'])assert.match(html,new RegExp(`<summary>${summary}</summary>`));
 assert.match(html,/<summary>Home<\/summary>[\s\S]*<div class="setting-subsection">Hero<\/div>[\s\S]*id="heroTimelineEnabled"[\s\S]*id="heroTimelineTextEnabled"[\s\S]*id="heroDescriptionEnabled"/);

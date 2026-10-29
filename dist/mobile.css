@@ -3,6 +3,14 @@
 :is(#dock,.assistant-inline-composer) #askInput{font-size:max(16px,var(--composer-font-size));line-height:1.4}
 /* Keep native edge stretching from distorting the fixed, clipped glass. */
 @media(hover:none) and (pointer:coarse){html{overscroll-behavior-y:none}}
+/* Shared About components must drop their desktop text tracks on narrow screens. */
+@media(max-width:1000px){
+ .about-detail :is(.about-hero,.home-about-copy,.home-approach,.home-approach-intro,.home-content-section.home-about-list,.home-writing){grid-template-columns:minmax(0,1fr)}
+ .about-detail :is(.home-about-copy,.home-approach,.home-approach-intro,.home-about-list,.home-writing)>*,.about-detail .home-about-copy p+p,.about-detail .home-approach-intro>p+p{grid-column:1 / -1}
+ .about-detail .about-hero{row-gap:var(--space-page-rhythm-sm)}
+ .home-product-carousel .spatial-gallery-caption{grid-template-columns:minmax(0,1fr)}
+ .home-product-carousel .spatial-gallery-copy{grid-column:1 / -1}
+}
 @supports(-webkit-touch-callout:none){html{-webkit-text-size-adjust:100%;text-size-adjust:100%}input:not([type="range"]):not([type="checkbox"]),textarea,select{font-size:max(16px,var(--font-size-body))}}
 @media(max-width:1024px){
  .detail-layout,.description,.info-body,.content-grid>.surface{min-width:0}
@@ -12,6 +20,11 @@
  .detail-media-actions [data-media-focus="fullscreen"],.project-media-focus-close{width:44px;height:44px}
 }
 @media(max-width:750px){.detail,.home-carousel-active .card-placement{touch-action:pan-y pinch-zoom}.timeline-viewport{touch-action:pan-x pan-y pinch-zoom}}
+@media(max-width:600px){
+ main.home-canvas:not(.home-view-split):has(.home-product-carousel:not([hidden])) .home-hero{padding-top:calc((var(--header-height) + var(--brand-avatar-size)) / 2 + var(--header-top-offset) + var(--space-page-rhythm-md))}
+ .home-product-carousel .spatial-card-gallery[data-gallery-axis="horizontal"]{--gallery-mobile-width-limit:calc(var(--app-canvas-width) - var(--content-gutter) - var(--gallery-mobile-gap) - var(--space-8));--gallery-landscape-width:min(calc((var(--app-canvas-width) - var(--gallery-mobile-inset-landscape)) * var(--gallery-card-scale)),var(--gallery-mobile-width-limit));--gallery-portrait-width:min(calc((var(--app-canvas-width) - var(--gallery-mobile-inset-portrait)) * var(--gallery-card-scale)),var(--gallery-mobile-width-limit))}
+ .home-product-carousel .spatial-card-gallery[data-gallery-axis="horizontal"] .spatial-gallery-viewport{gap:var(--gallery-mobile-gap)}
+}
 @media(max-width:750px){
  .surface.detail{padding-inline:0}
  .detail.heading-beside-image>.detail-layout>.detail-media-column{margin-top:var(--space-text-media)}

@@ -44,10 +44,17 @@ A buildless native-module portfolio for Prem Luczak: authored HTML, CSS and ES m
 
 ## Tests
 
+TASK-035: Mascott Speed controls travel pace from 25–300% (100% default), updates an active path without jumping, and persists/round-trips with presets. Build, focused motion/engine tests and all six browser checks pass (three startup/material timeouts passed on isolated rerun).
+
+TASK-033: Developer settings → Mascott follows Motion. Six appearance dropdowns update/save the real renderer and travel with presets; startup configuration is applied before the first render, including while hidden. Build, five focused Node checks and sixteen distinct browser checks pass.
+
+TASK-031/TASK-032 mascot integration is complete locally: WebGL retains the PNG fallback and now shares drag glow/deformation during container travel. All 175 package tests, package typing/source checks and builds, folio build, four existing agent/assistant checks and ten focused browser checks pass. Existing visibility/motion settings remain authoritative; the shipped profile has Show mascot off. Remote deployment is outside scope.
+
 The current full check stops at the existing About section-order assertion (`tests/about-page.mjs:34`). The control-system build, thirteen focused unit checks and five browser checks pass (TASK-021).
 
-Eight test files fail, each tied to a task. Run one with `node tests/<name>.mjs`.
+Known failing checks are tracked by task. Run one with `node tests/<name>.mjs`.
 
+- Preset fixture drift (TASK-034): settings-transfer and site-settings still assume legacy style fields removed from the current exported profile.
 - Content drift (TASK-004): content-model, home-about, home-layout, home-sections, interaction-commands, project-media-focus.
 - Card-sphere work in progress (TASK-005): project-entry-memory, text-list-hover.
 

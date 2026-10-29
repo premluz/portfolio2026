@@ -1,10 +1,12 @@
 import {designSettingControls} from './design-system.js';
+import {MASCOT_STORAGE_KEYS} from './mascot-settings.js';
 
 const FORMAT='prem-portfolio-settings';
 const VERSION=1;
 export const MAX_SETTINGS_BYTES=64*1024;
 const motionKey='prem-motion-settings';
 const direct={
+ ...MASCOT_STORAGE_KEYS,
  controlStyle:'prem-control-style',cardGlassStyle:'prem-card-glass-style',
  controlStyleNavigation:'prem-control-style-navigation',controlStyleProjects:'prem-control-style-projects',controlStyleCarousels:'prem-control-style-carousels',controlStyleSuggestions:'prem-control-style-suggestions',controlStyleUtilities:'prem-control-style-utilities',
  showFooterContactLinks:'prem-footer-contact-links',showFooter:'prem-show-footer',showFooterInvitation:'prem-footer-invitation',footerLinksAsText:'prem-footer-links-text',splitProjectControls:'prem-split-project-controls',

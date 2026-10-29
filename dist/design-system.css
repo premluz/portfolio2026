@@ -31,7 +31,6 @@ button,input,select,textarea{font-family:var(--font-family-sans)}
 .home-hero{padding-block:var(--space-page-rhythm)}
 .home-view-split .home-hero{padding-block:0;top:calc(var(--header-total) + var(--space-10));margin-top:var(--space-hero-top)}
 .home-view-split .homepage-layout{gap:var(--space-detail-columns)}
-.gallery-toolbar{margin-bottom:var(--space-6)}
 .home-news{margin-top:calc(var(--space-unit) * 24)}
 .hero-news h2,.eyebrow,.description dt,.wide-hero-card .description dt,.project-menu-group h2{font-size:var(--font-size-caption);font-weight:var(--font-weight-label);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-label)}
 .hero-news h2{margin-bottom:var(--space-4)}
@@ -61,7 +60,7 @@ button,input,select,textarea{font-family:var(--font-family-sans)}
 .project-menu button{font-size:var(--font-size-small);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body);padding:calc(var(--space-unit) * 2.5) var(--space-3)}
 .project-menu-group h2{padding:var(--space-2) var(--space-3)}
 .project-menu-group+.project-menu-group{margin-top:var(--space-3)}
-.layout-control button,.gallery-toolbar .layout-control button,header .theme-toggle{font-size:var(--font-size-small);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body)}
+.layout-control button,header .theme-toggle{font-size:var(--font-size-small);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body)}
 .brand{font-weight:var(--font-weight-strong);letter-spacing:var(--letter-spacing-heading)}
 /* The logo is the About portrait as a round avatar; the tagline beside it is the name. */
 /* Gradient text role: a reusable tint. .about-highlight is the About page's use; card results use it when Card details is on. */
@@ -224,9 +223,9 @@ html[data-animation="off"] .image-card[data-copy-hover="true"]:is(:hover,:focus-
 .dock-morph .project-menu button.active{background:var(--nav-active);color:var(--ink)}
 .dock-morph .project-menu button:not(.active):is(:hover,:focus-visible,.hover-trail){background:var(--nav-item-hover);color:var(--ink)}
 .dock-morph nav a,.dock-morph .context-nav button,.dock-morph nav .site-settings-toggle,.dock-morph .project-menu button{transition:background-color var(--nav-hover-out-duration) ease-out,color var(--nav-hover-out-duration) ease,transform var(--glass-button-press-duration) var(--glass-button-press-ease)}
-.project-card{transform-origin:center;transition:transform var(--glass-button-press-duration) var(--glass-button-press-ease)}
-@media(hover:hover) and (pointer:fine){.project-card:hover:not(:active){transform:scale(var(--card-hover-scale));transition-duration:var(--surface-hover-in-duration)}}
-.project-card:active{transform:scale(var(--card-press-scale));transition-duration:var(--glass-button-press-in-duration);transition-delay:0s}
+.project-card{transform-origin:center;transition:transform var(--card-release-duration) var(--card-release-ease)}
+@media(hover:hover) and (pointer:fine){.project-card:hover:not(:active){transform:scale(var(--card-hover-scale));transition-duration:var(--card-hover-duration);transition-timing-function:var(--card-hover-ease)}}
+.project-card:active{transform:scale(var(--card-press-scale));transition-duration:var(--card-press-in-duration);transition-timing-function:var(--card-press-ease);transition-delay:0s}
 @media(prefers-reduced-motion:reduce){.project-card:active,.project-card:hover:not(:active){transform:none}}
 :root[data-animation="off"] .project-card:is(:active,:hover:not(:active)){transform:none}
 .dock-morph .project-menu-group h2{color:var(--eyebrow-ink)}

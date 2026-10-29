@@ -161,7 +161,7 @@
         "MOTION.md",
         "DESIGN_SYSTEM.md"
       ],
-      "hash": "5f7e3240501a5d12492facdf00c29c01f30e88ba",
+      "hash": "23940d36cc79675db1ac1e3a3eb4ed2eada30edb",
       "items": []
     },
     {
@@ -180,7 +180,7 @@
         "PROJECT_STATE.md",
         "DEPLOYMENT.md"
       ],
-      "hash": "101111f9d6aeb836a035ad8121e0b645132ae074",
+      "hash": "ffa8d596ea39c335033c7eaebb859cff64d229b8",
       "items": []
     },
     {
@@ -234,7 +234,7 @@
         "FRAMEWORK.md",
         "DESIGN_SYSTEM.md"
       ],
-      "hash": "cfa5746da310600905dad393561255708bf293c1",
+      "hash": "601097e0629d789e9e8f8e39ad05b9d4ae5316b3",
       "items": []
     },
     {
@@ -253,7 +253,7 @@
         "TASKS.md",
         "PROJECT_STATE.md"
       ],
-      "hash": "940cf9a513ab42b6a5af2620f883806419410c32",
+      "hash": "b6009797e52060f85f3ff1605f76eb01a466ff35",
       "items": []
     },
     {
@@ -273,7 +273,7 @@
         "PROGRESS.md",
         "HANDOFF.md"
       ],
-      "hash": "5339595166f1db8ca6d2ed2a5f83cd109d5247ea",
+      "hash": "48d451fad73bec6a734780354d47be17edccfec0",
       "items": [
         {
           "id": "Q-001",
@@ -333,8 +333,18 @@
         "PROJECT_STATE.md",
         "PROGRESS.md"
       ],
-      "hash": "6e5b9dd12994d32a7bada1609ab966fcaa32ae0a",
+      "hash": "719005b8a00a9cb7394bd006b0fc088dffcd7a9e",
       "items": [
+        {
+          "id": "TASK-034",
+          "title": "Repair preset tests that assume legacy style fields",
+          "status": "todo",
+          "tags": [
+            "area/settings",
+            "area/tests",
+            "kind/debt"
+          ]
+        },
         {
           "id": "TASK-002",
           "title": "Open the dock's attached menus downward when navigation is at the top",
@@ -411,6 +421,109 @@
           "tags": [
             "area/images",
             "area/content"
+          ]
+        },
+        {
+          "id": "TASK-036",
+          "title": "Soften card hover and press timing",
+          "status": "done",
+          "tags": [
+            "area/home",
+            "area/motion"
+          ]
+        },
+        {
+          "id": "TASK-035",
+          "title": "Add mascot travel speed control",
+          "status": "done",
+          "tags": [
+            "area/settings",
+            "area/assistant",
+            "area/motion"
+          ]
+        },
+        {
+          "id": "TASK-033",
+          "title": "Add live Mascott appearance controls and fix initial configuration",
+          "status": "done",
+          "tags": [
+            "area/settings",
+            "area/assistant",
+            "kind/feature"
+          ]
+        },
+        {
+          "id": "TASK-032",
+          "title": "Preserve mascot drag physics during portfolio travel",
+          "status": "done",
+          "tags": [
+            "area/assistant",
+            "area/motion",
+            "area/tests"
+          ]
+        },
+        {
+          "id": "TASK-031",
+          "title": "Replace the portfolio PNG mascot with packaged WebGL",
+          "status": "done",
+          "tags": [
+            "area/assistant",
+            "area/motion"
+          ]
+        },
+        {
+          "id": "TASK-030",
+          "title": "Balance mobile hero spacing and reveal the next carousel project",
+          "status": "done",
+          "tags": [
+            "area/home",
+            "area/design-system"
+          ]
+        },
+        {
+          "id": "TASK-029",
+          "title": "Verify mobile text widths and remove retained desktop tracks",
+          "status": "done",
+          "tags": [
+            "area/home",
+            "area/design-system",
+            "area/tests"
+          ]
+        },
+        {
+          "id": "TASK-028",
+          "title": "Match detail title/company spacing to carousel cards",
+          "status": "done",
+          "tags": [
+            "area/project-detail",
+            "area/design-system"
+          ]
+        },
+        {
+          "id": "TASK-027",
+          "title": "Keep card secondary rows faint on hover",
+          "status": "done",
+          "tags": [
+            "area/home",
+            "area/design-system"
+          ]
+        },
+        {
+          "id": "TASK-026",
+          "title": "Remove the gallery toolbar and wrapper bottom spacing",
+          "status": "done",
+          "tags": [
+            "area/home",
+            "kind/bug"
+          ]
+        },
+        {
+          "id": "TASK-025",
+          "title": "Align homepage About-related sections to one half-width column",
+          "status": "done",
+          "tags": [
+            "area/home",
+            "area/design-system"
           ]
         },
         {

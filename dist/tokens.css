@@ -103,6 +103,12 @@
   --glass-button-press-scale: .92;
   --card-hover-scale: .985;
   --card-press-scale: .97;
+  --card-hover-duration: 300ms;
+  --card-press-in-duration: 160ms;
+  --card-release-duration: 360ms;
+  --card-hover-ease: var(--ease-standard);
+  --card-press-ease: var(--ease-press);
+  --card-release-ease: var(--ease-gentle);
   --glass-button-press-in-duration: 90ms;
   --glass-button-press-duration: 300ms;
   --glass-button-press-ease: var(--ease-press);

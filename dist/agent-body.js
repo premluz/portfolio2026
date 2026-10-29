@@ -1,11 +1,13 @@
 // The agent's one persistent body. Position is two custom properties the stylesheet turns into a transform;
 // the shell carries emerge, collapse and landing so they never fight the position.
+import {mountAgentWebGL} from './agent-webgl.js';
+
 export function createAgentBody(doc=document){
  const root=doc.createElement('div');
- root.className='agent';root.dataset.state='hidden';root.setAttribute('aria-hidden','true');
- root.innerHTML='<div class="agent-shell"><img class="agent-face" src="assets/agent-144.webp" srcset="assets/agent-144.webp 1x, assets/agent-288.webp 2x" width="144" height="144" alt="" decoding="async" draggable="false"></div>';
+ root.className='agent';root.dataset.state='hidden';root.dataset.renderer='png';root.setAttribute('aria-hidden','true');
+ root.innerHTML='<div class="agent-shell"><img class="agent-face agent-fallback" src="assets/agent.png" width="144" height="144" alt="" decoding="async" draggable="false"></div>';
  doc.body.append(root);
- const shell=root.firstElementChild,face=shell.firstElementChild;
+ const shell=root.firstElementChild,face=shell.firstElementChild,webgl=mountAgentWebGL(root,shell,doc);
  let animation=null;
  return {
   ready:()=>face.decode().catch(error=>{throw new Error('The agent image could not be decoded.',{cause:error});}),
@@ -20,6 +22,6 @@ export function createAgentBody(doc=document){
    return current.finished.then(()=>{if(animation!==current)return false;if(!keep){current.cancel();animation=null;}return true;},error=>{if(error?.name!=='AbortError')throw error;return false;});
   },
   stop(){animation?.cancel();animation=null;},
-  destroy(){animation?.cancel();root.remove();}
+  destroy(){animation?.cancel();webgl.destroy();root.remove();}
  };
 }

@@ -62,6 +62,7 @@ The existing content model is CMS-agnostic: an eventual CMS or API can provide r
 
 The live list is in [TASKS.md](TASKS.md) and [PROJECT_STATE.md](PROJECT_STATE.md); this section is a snapshot for people who start here.
 
+- **Preset fixture drift (TASK-034).** settings-transfer/site-settings assume removed legacy style fields; the current profile has explicit controlStyle/cardGlassStyle values. The Mascott appearance/preset browser checks pass.
 - **Failing tests.** Six tests assert catalog contents that have since changed (`content-model`, `home-about`, `home-layout`, `home-sections`, `interaction-commands`, `project-media-focus`). `project-entry-memory` (card-sphere code reads `document` in a Node sandbox) and `text-list-hover` (a Porter fixture assertion) relate to in-progress card-sphere work. `masonry-placement` fails because Bastion is now a portrait card and also featured, which breaks the rule that portrait cards sit in the right-hand columns of a 3+ column grid.
 - **Navigation at the top.** The dock's attached menus still open upward, so the site index menu is mostly off screen; see `FRAMEWORK.md`.
 - **Bastion media.** `bastion.mp4` (portrait) is about 31MB against roughly 2MB for the other videos. `catalog2.json` still points Bastion at the landscape `bastion2.mp4`.

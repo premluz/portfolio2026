@@ -12,6 +12,50 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-29 Softer card hover and press feedback (TASK-036)
+
+Card-only timing tokens now give hover a 300ms standard curve, press a responsive 160ms press curve, and release a gentler 360ms return. Existing centred 0.985/0.97 scales remain unchanged. Scale feedback is independent of the instant colour-hover preference and button/nav timing. MOTION.md records the distinction. Evidence: build, press-feedback and motion-tokens checks pass; six browser tests pass for timing, settled scales, reduced-motion/Animation Off and unchanged faint secondary text across all hover modes. Full check still stops at the existing `tests/about-page.mjs:34` section-order assertion.
+
+## 2026-10-29 Mascott travel speed control (TASK-035)
+
+Added a native Speed slider to Mascott: 25–300%, default 100%. The setting persists locally and participates in preset export/import. Travel duration and transition animations scale inversely with speed; changing speed during travel preserves the path and current progress. Idle/linger timing stays independent. Evidence: build, motion/engine tests across two different trip geometries and 25/100/300% rates, and all six browser checks pass, including live wiring, preset persistence, desktop/phone layout and appearance. Three startup/material checks initially timed out under host load and passed on an isolated rerun; full check still stops at the existing About section-order failure (tests/about-page.mjs:34). No deployment.
+
+## 2026-10-29 Mascott developer tab and live appearance configuration (TASK-033)
+
+Developer settings now has a Mascott tab after Motion, with the existing Show mascot control and dropdowns for material, palette, glow effect, glow colour, motion effect and Liquid/Aura variety. Choices update the real renderer immediately, persist locally and join portfolio preset import/export/publishing through the shared allowlist. The tab grid creates one equal column per tab at desktop and phone widths. Fixed the pink/default look at startup: the adapter upgrades its detached custom element before assigning config, avoids pending assignments that could shadow the component setter, and reads the CSS stage size while hidden. Evidence: build, five focused Node checks and all sixteen distinct browser checks pass, including all eight materials, two different preset configurations, visible/hidden startup, responsive panel fit, drag physics and PNG/GPU recovery. The full check still stops at the existing About section-order assertion at tests/about-page.mjs:34. The focused settings-transfer/site-settings checks reveal legacy-fixture drift in the current exported profile; recorded separately as TASK-034. No remote publication is in scope.
+
+## 2026-10-29 Mascot travel inherits smudged glow and deformation (TASK-032)
+
+The shared Mascott package now measures inline container movement inside its existing render loop and rebases the glow/previous-position history into the moving canvas. The unchanged drag physics therefore produce the same trailing glow, turn, stretch and braking squash while the portfolio's agent shell travels; these settle at rest. Initial placement/resizing and reduced motion do not introduce travel effects. Rebuilt the standalone embed, updated its provenance checksum and padded the draw canvas so the smudge is not clipped; the original position and click region remain unchanged. Evidence: all 175 package tests, package typing/source checks and builds, folio build, four existing agent/assistant checks and ten focused browser checks pass. Two distinct motion datasets prove parity with dragging; browser tests verify the actual halo trail and body-deformation shader values for horizontal/diagonal travel, plus reduced-motion/animation-off states. The full folio check still fails at the existing tests/about-page.mjs:34 About section-order assertion. TASK-031 is complete: this is local integration only, and Vercel publication/authorization is no longer required.
+
+## 2026-10-29 Packaged WebGL mascot with PNG fallback (TASK-031)
+
+The portfolio now loads the existing standalone @mascott/embed 0.1.0 production bundle, isolated from the site's other Three.js version and requiring no npm dependency installation. The WebGL face uses gloss, white capsule eyes and cloud glow; the existing agent engine retains travel, placement, sizing and assistant activation. The original PNG remains visible until the first frame, when the bundle or WebGL is unavailable, and during context loss; restoration returns the WebGL face. The existing Show mascot and animation settings remain authoritative (the shipped settings profile currently hides the mascot). Evidence: production build, four existing agent/assistant checks and all six focused browser checks pass, including desktop/mobile and GPU recovery. Component captures are under test-results/mascot-webgl-*/. Full check still fails at the existing tests/about-page.mjs:34 About section-order assertion. Live publication is blocked by Vercel team access (403); the integration is built locally but not published.
+
+## 2026-10-29 Balanced phone hero gaps and carousel preview (TASK-030)
+
+Phone homepage carousel layouts now use one medium-rhythm gap from visible header content to hero and from hero to carousel. Horizontal home carousel landscape/portrait widths are capped with existing gutter, mobile-gap and spacing tokens, preserving a next-card sliver even with larger saved size/gap settings. Desktop rules are unchanged. Evidence: build, mobile-carousel and hero-viewport unit checks pass; 17 browser checks pass, including equal settled-layout gaps and partially visible next projects at 375/430px plus full-width content across five routes. Full check still stops at the existing `tests/about-page.mjs:34` section-order assertion.
+
+## 2026-10-29 Mobile full-width text audit (TASK-029)
+
+Measured Home, About, project details, Lab and Contact at 375px, 600px and 768px. About's introduction retained a six-column grid and shrank to 30.5px at 375px; its shared text grids now collapse at the existing 1000px narrow-content breakpoint. The About hero stacks there, and the external homepage carousel caption also takes the full track. Project details already passed once the probe handled display:contents. Evidence: build, content-widths and 17 browser checks pass, including preserved desktop Home half-width sections and detail caption spacing. Full check still stops at the existing `tests/about-page.mjs:34` section-order assertion.
+
+## 2026-10-29 Restore compact detail title/company spacing (TASK-028)
+
+Detail caption company/year spacing now shares the carousel card's space-title-eyebrow token rather than the larger space-4. Intro and image spacing remain unchanged. Evidence: build and detail-caption unit test pass; browser geometry matches the measured carousel gap at desktop/mobile widths with editorial headings on and off. Full check still stops at the existing `tests/about-page.mjs:34` section-order assertion.
+
+## 2026-10-29 Card secondary rows keep their faint colour (TASK-027)
+
+Removed summary-row brightening on hover/focus/gesture and made its faint colour independent of the changing hover fill, preserving the resting page-versus-card surface choice. Title brightening and other hover effects remain unchanged. Evidence: build, press-feedback and four browser tests pass, checking two cards in both themes across reveal, reveal-soft, tint and glow, with pointer, keyboard-focus and gesture states. Full check still stops at the existing `tests/about-page.mjs:34` section-order assertion.
+
+## 2026-10-29 Remove gallery toolbar and wrapper spacing (TASK-026)
+
+Removed the gallery-toolbar div and its obsolete CSS/retained-transition references while preserving the accessible heading. Explicit zero padding and block margins on the gallery grid, zero padding/margins on slot/placement divs, and zero bottom padding/margin on home-work leave card gaps and external section rhythm intact. Evidence: build and browser checks pass for regular/masonry at desktop/mobile sizes and adjoining About columns. Existing home-layout unit assertion fails at line 60 (`516 !== 1060`); the full check still stops at the existing About section-order assertion at line 34.
+
+## 2026-10-29 Shared half-width homepage About sections (TASK-025)
+
+Homepage About introduction, How I work, Experience, Side projects and Thoughts now keep their headings and content together on the left half-track, using the existing column gap. Nested grids no longer halve or offset the text again. Sections become full-width at the existing 1000px content breakpoint; the separate About page is unaffected. Evidence: build, content-widths unit check and measured browser geometry at 1440px, 1920px and 390px pass. Full check still stops at the existing `tests/about-page.mjs:34` section-order assertion.
+
 ## 2026-10-29 Fully rounded footer label buttons (TASK-024)
 
 LinkedIn and Email labels use a dedicated pill-radius token; icon geometry and shared Ghost/Outline/Glass materials and feedback stay unchanged. Evidence: build, footer-switch and all five control browser checks pass, with both label radii measured across every variant. Full check remains blocked by the existing `tests/about-page.mjs:34` section-order assertion.

@@ -5,10 +5,13 @@ import {createAgentBody} from './agent-body.js';
 import {createAgentWorld} from './agent-world.js';
 import {AgentEngine} from './agent-engine.js';
 import {mountAgentScenes} from './agent-scenes.js';
+import {readMascotSpeed,MASCOT_SPEED_EVENT} from './mascot-settings.js';
 
 export function mountAgent({doc=document,win=window,reduced=()=>false}={}){
  const body=createAgentBody(doc),world=createAgentWorld({doc,win,gap:AGENT.seatGap});
- const engine=new AgentEngine({body,world,reduced}),scenes=mountAgentScenes(engine,{doc,win});
+ const engine=new AgentEngine({body,world,reduced,getSpeed:()=>readMascotSpeed(doc)}),scenes=mountAgentScenes(engine,{doc,win});
+ const speedChanged=()=>engine.refreshSpeed();
+ doc.addEventListener(MASCOT_SPEED_EVENT,speedChanged);
  // Home follows the dock: it changes size on route changes and swaps the composer for the Assistant button.
  const refresh=()=>engine.refreshHome(),dock=doc.getElementById('dock');
  const resized=new ResizeObserver(refresh),toggled=new MutationObserver(refresh);
@@ -17,5 +20,5 @@ export function mountAgent({doc=document,win=window,reduced=()=>false}={}){
  const settle=()=>{refresh();Promise.all((doc.getElementById('askPage')?.getAnimations?.()||[]).map(animation=>animation.finished)).then(refresh,refresh);};
  win.addEventListener('resize',refresh);win.addEventListener('scroll',refresh,{passive:true});win.addEventListener('portfolio-route-settled',settle);dock?.addEventListener('transitionend',refresh);
  body.ready().then(()=>engine.appear()).catch(error=>console.error('The agent could not appear.',error));
- return {engine,destroy(){resized.disconnect();toggled.disconnect();win.removeEventListener('resize',refresh);win.removeEventListener('scroll',refresh);win.removeEventListener('portfolio-route-settled',settle);dock?.removeEventListener('transitionend',refresh);scenes.destroy();engine.destroy();}};
+ return {engine,destroy(){doc.removeEventListener(MASCOT_SPEED_EVENT,speedChanged);resized.disconnect();toggled.disconnect();win.removeEventListener('resize',refresh);win.removeEventListener('scroll',refresh);win.removeEventListener('portfolio-route-settled',settle);dock?.removeEventListener('transitionend',refresh);scenes.destroy();engine.destroy();}};
 }

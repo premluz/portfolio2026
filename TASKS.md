@@ -14,6 +14,12 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 
 ## Open
 
+### TASK-034 Repair preset tests that assume legacy style fields
+- Status: todo
+- Tags: area/settings, area/tests, kind/debt
+- Acceptance: settings-transfer and site-settings use explicit legacy fixtures for migration checks, and test the current published preset through its explicit controlStyle/cardGlassStyle fields. Both checks pass without changing application styling.
+- Evidence: Focused checks expose existing preset drift: settings-transfer.mjs:156 expects glass while the published profile explicitly selects outline; site-settings.mjs:22 builds an empty legacy preset from plainNav/glassStyle fields no longer present in the current export, 2026-10-29.
+
 ### TASK-002 Open the dock's attached menus downward when navigation is at the top
 - Status: todo
 - Tags: area/dock, kind/feature
@@ -66,6 +72,65 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 - Acceptance: a `porter-bg.jpg` (photo-only export) is added to dist/assets, linked with `backgroundMediaId` in both catalogs, `npm run images` run, and Porter shows it in the featured stage. Needs the image from the owner.
 
 ## Done
+
+### TASK-036 Soften card hover and press timing
+- Status: done
+- Tags: area/home, area/motion
+- Evidence: Added independent card timing/easing tokens: hover 300ms standard, press 160ms press, release 360ms gentle. Depth and centred origin are unchanged; instant surface-colour mode no longer zeroes scale-hover duration. Build, press-feedback, motion-tokens and six browser checks pass, covering actual computed timing, settled scales, reduced motion/Animation Off and secondary text in four hover modes. Full check retains the existing About section-order assertion, 2026-10-29.
+
+### TASK-035 Add mascot travel speed control
+- Status: done
+- Tags: area/settings, area/assistant, area/motion
+- Acceptance: Mascott has a persisted Speed slider that controls travel pace and updates an active trip without changing its current position.
+- Evidence: Added 25–300% speed with 100% preserving the current pace; travel, landing and teleport timing scale together. Active trips retain their path/progress when retimed. Engine checks pass across short horizontal and longer diagonal trips at 25/100/300%, including live changes and reduced motion. Build and all six browser checks pass, covering speed wiring, preset export/import/reload, desktop/phone layout and appearance. Three startup/material checks initially timed out under host load and passed on an isolated rerun; the full check retains the existing About order failure at tests/about-page.mjs:34. Local only, 2026-10-29.
+
+### TASK-033 Add live Mascott appearance controls and fix initial configuration
+- Status: done
+- Tags: area/settings, area/assistant, kind/feature
+- Acceptance: a Mascott tab after Motion exposes material/effect dropdowns, applies changes to the rendered mascot immediately and preserves choices through reload and preset import/export; initially visible and hidden mascots retain their selected look.
+- Evidence: Added material, palette, glow effect/colour, motion effect and Liquid/Aura variety selectors plus the reused Show mascot switch. Controls share the preset allowlist and save live. Explicitly upgrade the detached custom element before setting config and resolve hidden stage size from CSS; this fixes the flat coral defaults. The tab bar sizes one column per tab. Build, five focused Node checks and all sixteen distinct browser checks pass, covering all eight materials, two appearance presets, visible/hidden startup, desktop/mobile layout, travel, reduced motion and PNG/context-loss fallback. Full check retains the About section-order failure at tests/about-page.mjs:34; additional stale preset checks are tracked in TASK-034. Local integration only, 2026-10-29.
+
+### TASK-032 Preserve mascot drag physics during portfolio travel
+- Status: done
+- Tags: area/assistant, area/motion, area/tests
+- Acceptance: the packaged character's glow smears and the body turns/deforms with portfolio travel, using the same physics as dragging; both settle after stopping, and reduced motion/animation off retain a still character.
+- Evidence: Added inline container-motion tracking to the shared Mascott renderer loop and rebuilt the folio's standalone embed. Four new unit checks prove parity with dragging across horizontal/braking and diagonal/reversal datasets, plus safe placement/resizing and settling. All 175 package tests, package type/source checks, package builds, folio build, four existing agent/assistant checks and ten focused folio browser checks pass. Browser movement checks sample actual halo trail/body-deformation shader uniforms inside the page's frame clock. Full folio check retains the pre-existing About section-order failure at tests/about-page.mjs:34. Local integration only; remote deployment is outside scope, 2026-10-29.
+
+### TASK-031 Replace the portfolio PNG mascot with packaged WebGL
+- Status: done
+- Tags: area/assistant, area/motion
+- Acceptance: packaged Mascott replaces the image while retaining movement, sizing, assistant activation, visibility and motion settings; the original PNG appears during loading and on bundle/WebGL/context failure.
+- Evidence: Integration and local production assets are built; desktop/mobile sizing, assistant activation, bundle/WebGL failure and GPU context loss/restoration pass in the focused browser suite. The shipped Show mascot setting remains authoritative. Remote deployment is outside scope; no Vercel authorization is needed, 2026-10-29.
+
+### TASK-030 Balance mobile hero spacing and reveal the next carousel project
+- Status: done
+- Tags: area/home, area/design-system
+- Evidence: On phones, the header-content-to-hero gap shares the medium rhythm used before the carousel. Horizontal home carousel widths are capped using existing gutter/gap/space tokens, and the mobile gap overrides oversized saved gaps so the next project peeks into view. Build, mobile-carousel, hero-viewport and 17 browser checks pass, including matched gaps/partial next-card visibility at 375/430px and full-width content checks across five routes. Full check retains the existing About section-order assertion, 2026-10-29.
+
+### TASK-029 Verify mobile text widths and remove retained desktop tracks
+- Status: done
+- Tags: area/home, area/design-system, area/tests
+- Evidence: Fixed About-page shared text grids and hero stacking plus the external home carousel caption at the existing 1000px narrow-content breakpoint. Build, content-widths and 17 browser checks pass: five routes at 375/600/768px, desktop Home half-width sections and detail title spacing. Full check retains the existing About section-order assertion, 2026-10-29.
+
+### TASK-028 Match detail title/company spacing to carousel cards
+- Status: done
+- Tags: area/project-detail, area/design-system
+- Evidence: Detail title-to-company/year margin now uses the same space-title-eyebrow token as the carousel card instead of space-4. Intro/image rhythm is untouched. Build, detail-caption unit check and browser gap comparison pass at desktop/mobile sizes with editorial headings on/off. Full check retains the existing About section-order failure, 2026-10-29.
+
+### TASK-027 Keep card secondary rows faint on hover
+- Status: done
+- Tags: area/home, area/design-system
+- Evidence: Removed secondary-row hover brightening and anchored its existing faint colour mix to the resting card/page surface instead of the hover-dependent fill. Heading and other hover feedback are unchanged. Build, press-feedback and four browser checks pass across both themes, two cards, all four hover modes, pointer/focus/gesture states. Full check retains the existing About section-order assertion, 2026-10-29.
+
+### TASK-026 Remove the gallery toolbar and wrapper bottom spacing
+- Status: done
+- Tags: area/home, kind/bug
+- Evidence: Removed the toolbar div and obsolete style/transition references, retaining its screen-reader heading. Grid, slots and placement wrappers have no padding/bottom margin; home-work has no bottom padding/margin. Build and two browser checks pass, covering regular/masonry desktop/mobile and adjoining About columns. Known home-layout height assertion still reports 516 !== 1060 at line 60; full check stops at the existing About section-order assertion, 2026-10-29.
+
+### TASK-025 Align homepage About-related sections to one half-width column
+- Status: done
+- Tags: area/home, area/design-system
+- Evidence: About introduction, How I work, Experience, Side projects and Thoughts occupy the left half-track on desktop, with full-width nested content and full-width mobile sections. About-page styles and other homepage components are unchanged. Build, content-widths and browser geometry checks at 1440px, 1920px and 390px pass. Full check retains the existing About section-order failure, 2026-10-29.
 
 ### TASK-024 Make footer label buttons fully rounded
 - Status: done

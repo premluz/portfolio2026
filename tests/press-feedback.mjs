@@ -20,6 +20,8 @@ assert(pressScale<hoverScale&&pressScale>.92,'Card press is deeper than hover wi
 assert(design.includes('.project-card:hover:not(:active){transform:scale(var(--card-hover-scale))'),'Cards press slightly on hover');
 assert(design.includes('.project-card:active{transform:scale(var(--card-press-scale))'),'Cards press further with their softer scale');
 assert(design.includes('.project-card:hover:not(:active){transform:none}'),'Card hover press is disabled for reduced motion');
+for(const token of ['card-hover-duration','card-press-in-duration','card-release-duration','card-hover-ease','card-press-ease','card-release-ease'])assert(design.includes(`var(--${token})`),`Card feedback has independent ${token}`);
+assert(tokens.includes('--card-hover-duration: 300ms;')&&tokens.includes('--card-press-in-duration: 160ms;')&&tokens.includes('--card-release-duration: 360ms;'),'Card feedback softens hover, press and release independently of buttons');
 for(const token of ['var(--glass-button-press-scale)','var(--glass-button-press-duration)','var(--glass-button-press-in-duration)','var(--glass-button-press-ease)'])assert(controls.includes(token),`Press feedback uses ${token}`);
 assert(!/transition\s*:\s*all/.test(design),'Press feedback does not use transition: all');
 assert(design.includes('@media(prefers-reduced-motion:reduce)')&&design.includes(':root[data-animation="off"]'),'Press feedback respects motion preferences');

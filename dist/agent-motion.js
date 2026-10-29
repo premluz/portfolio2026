@@ -10,6 +10,10 @@ export function seededRandom(seed=1){
  let state=(seed>>>0)||1;
  return()=>{state^=state<<13;state^=state>>>17;state^=state<<5;return (state>>>0)/4294967296;};
 }
+export function motionSpeed(value){
+ if(!Number.isFinite(value)||value<=0)throw new Error('Mascot speed must be a positive finite number.');
+ return value;
+}
 export function travelDuration(length){return clamp(AGENT.travelMin+length*AGENT.travelPerPx,AGENT.travelMin,AGENT.travelMax);}
 // Far trips teleport; mid-range ones sometimes do, so the body does not feel scripted.
 export function chooseTransition(from,to,viewport,random){
@@ -19,16 +23,21 @@ export function chooseTransition(from,to,viewport,random){
 }
 // Velocity is px/ms. Its tangent is capped at three times the trip (Fritsch–Carlson), so a fast redirect
 // curves into the new path without looping past the destination.
-export function planTravel(from,to,velocity,random,start=0){
- const length=distance(from,to),duration=travelDuration(length);
+export function planTravel(from,to,velocity,random,start=0,speed=1){
+ const length=distance(from,to),duration=travelDuration(length)/motionSpeed(speed);
  const tangent={x:velocity.x*duration,y:velocity.y*duration},magnitude=Math.hypot(tangent.x,tangent.y),limit=length*3;
  const scale=magnitude>limit&&magnitude>0?limit/magnitude:1;
  return {
-  from:{...from},to:{...to},start,duration,
+  from:{...from},to:{...to},start,duration,speed,
   tangent:{x:tangent.x*scale,y:tangent.y*scale},
   arc:Math.min(AGENT.arcMax,length*AGENT.arcShare)*(random()<.5?-1:1),
   wobble:AGENT.wobble*random(),phase:random()*Math.PI*2
  };
+}
+// Keep the path and its current progress when the visitor changes speed mid-flight.
+export function retimeTravel(plan,speed,now){
+ const progress=clamp((now-plan.start)/plan.duration,0,1),duration=plan.duration*plan.speed/motionSpeed(speed);
+ return {...plan,start:now-progress*duration,duration,speed};
 }
 // Cubic Hermite from the current velocity to rest (ease in and out), plus a sideways sine arc and a small
 // wobble. Their sin² envelope vanishes with zero slope at both ends: the body leaves and lands exactly where

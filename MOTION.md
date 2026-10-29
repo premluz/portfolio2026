@@ -137,6 +137,7 @@ items. Order is top-down on entry and bottom-up on exit.
 ### Feedback
 
 - **Press:** quick in (90ms), springy release (300ms).
+- **Card scale feedback:** hover settles over 300ms on `standard`, press over 160ms on `press`, and release over 360ms on `gentle`. Card timing is independent of button timing and the instant surface-colour switch; scales remain 0.985 on hover and 0.97 on press, centred and interruptible. Reduced motion and Animation Off remove the scale feedback.
 - **Hover:** appears almost instantly, leaves slowly, so passing the pointer
   across a list feels calm.
 - **Tooltips:** wait 350ms so passing over controls stays quiet; once one is

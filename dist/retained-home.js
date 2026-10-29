@@ -11,7 +11,7 @@ export function fadeHomeChrome(layer,control,duration){
   for(const node of [copy,heading,badge])if(node){fade(node,delay);delay+=step;}
   if(!copy&&!heading&&!badge)fade(hero);
  }
- for(const node of layer.querySelectorAll('.gallery-toolbar,.spatial-gallery-primary-action,.footer-note,[data-home-news],.home-about,.home-content-section'))fade(node);
+ for(const node of layer.querySelectorAll('.spatial-gallery-primary-action,.footer-note,[data-home-news],.home-about,.home-content-section'))fade(node);
  return promises;
 }
 export function retainHome(main,images){

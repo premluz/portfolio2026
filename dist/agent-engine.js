@@ -2,15 +2,15 @@
 // move starts from wherever the body is, so it glides in from where it last stopped. Frames run only while it
 // travels. Speaking and sleeping are future states on this same machine.
 import {AGENT,EASE} from './motion-tokens.js';
-import {distance,chooseTransition,planTravel,travelPoint,travelVelocity,emergeFrames,collapseFrames,landingFrames} from './agent-motion.js';
+import {distance,chooseTransition,planTravel,retimeTravel,motionSpeed,travelPoint,travelVelocity,emergeFrames,collapseFrames,landingFrames} from './agent-motion.js';
 
 const STILL=Object.freeze({x:0,y:0});
 const report=error=>console.error('Agent motion failed.',error);
 const browserTimers={set:(callback,ms)=>setTimeout(callback,ms),clear:id=>clearTimeout(id)};
 
 export class AgentEngine{
- constructor({body,world,reduced=()=>false,random=Math.random,frame=callback=>requestAnimationFrame(callback),cancelFrame=id=>cancelAnimationFrame(id),now=()=>performance.now(),timers=browserTimers}){
-  Object.assign(this,{body,world,reduced,random,frame,cancelFrame,now,timers});
+ constructor({body,world,reduced=()=>false,getSpeed=()=>1,random=Math.random,frame=callback=>requestAnimationFrame(callback),cancelFrame=id=>cancelAnimationFrame(id),now=()=>performance.now(),timers=browserTimers}){
+  Object.assign(this,{body,world,reduced,getSpeed,random,frame,cancelFrame,now,timers});
   this.state='hidden';this.position=null;this.plan=null;this.raf=0;this.linger=0;this.pending=null;this.epoch=0;
   this.tick=this.tick.bind(this);
  }
@@ -39,9 +39,10 @@ export class AgentEngine{
   if(chooseTransition(this.position,destination,this.world.viewport(),this.random)==='teleport'){
    this.pending={destination,arrival};this.teleport(++this.epoch).catch(report);return;
   }
-  this.plan={...planTravel(this.position,destination,velocity,this.random,this.now()),arrival};
+  this.plan={...planTravel(this.position,destination,velocity,this.random,this.now(),this.getSpeed()),arrival};
   this.setState('travelling');this.raf=this.frame(this.tick);
  }
+ refreshSpeed(){if(this.plan)this.plan=retimeTravel(this.plan,this.getSpeed(),this.now());}
  progress(){return this.plan?Math.min(1,(this.now()-this.plan.start)/this.plan.duration):1;}
  tick(){
   const t=this.progress();this.position=travelPoint(this.plan,t);this.body.place(this.position);
@@ -51,22 +52,22 @@ export class AgentEngine{
  stopTravel(){if(this.raf)this.cancelFrame(this.raf);this.raf=0;this.plan=null;}
  land(arrival){
   this.setState(arrival);
-  this.body.play(landingFrames(),{duration:AGENT.landingMs,easing:EASE.settle}).catch(report);
+  this.body.play(landingFrames(),{duration:AGENT.landingMs/motionSpeed(this.getSpeed()),easing:EASE.settle}).catch(report);
   if(arrival==='home')this.refreshHome();
  }
  wait(ms){return new Promise(resolve=>this.timers.set(resolve,ms));}
  // Collapse into the page where it is, then emerge at the latest destination (it may change mid-teleport).
  async teleport(epoch){
   this.setState('teleporting');
-  const collapsed=await this.body.play(collapseFrames(),{duration:AGENT.collapseMs,easing:EASE.leave},{keep:true});
+  const collapsed=await this.body.play(collapseFrames(),{duration:AGENT.collapseMs/motionSpeed(this.getSpeed()),easing:EASE.leave},{keep:true});
   if(!collapsed||epoch!==this.epoch)return;
-  await this.wait(AGENT.teleportGapMs);if(epoch!==this.epoch)return;
+  await this.wait(AGENT.teleportGapMs/motionSpeed(this.getSpeed()));if(epoch!==this.epoch)return;
   this.position=this.pending.destination;this.body.place(this.position);
   await this.emerge(epoch);
  }
  async emerge(epoch){
   this.setState('teleporting');
-  if(!await this.body.play(emergeFrames(),{duration:AGENT.emergeMs})||epoch!==this.epoch)return;
+  if(!await this.body.play(emergeFrames(),{duration:AGENT.emergeMs/motionSpeed(this.getSpeed())})||epoch!==this.epoch)return;
   const {destination,arrival}=this.pending;this.pending=null;this.setState(arrival);
   if(distance(destination,this.position)>=1)this.moveTo(destination,arrival);
   else if(arrival==='home')this.refreshHome();

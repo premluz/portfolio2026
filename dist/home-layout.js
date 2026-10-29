@@ -26,7 +26,7 @@ export function homeMarkup(documents,layout,{heroContent='timeline'}={}){
  const slot=(doc,index)=>`<div class="card-slot" data-slot="${doc.id}"><div class="card-placement">${card(doc,index,layout)}</div></div>`;
  const gallery=content.get('home')?.blocks.find(block=>block.id==='home-projects');
  return `<div class="homepage-layout">${homeHero({heroContent})}${homeOverviewMarkup()}${homeProductText(documents)}<div class="home-product-carousel" data-home-product-gallery hidden>${gallery?contentBlocks([gallery],2):''}</div><section class="hero-carousel-stage" data-hero-carousel aria-label="Selected projects carousel" hidden><div class="hero-carousel-controls" data-carousel-controls><button class="glass-surface" type="button" data-carousel-previous aria-label="Previous projects">←</button><span>Drag to browse · Scroll to explore</span><button class="glass-surface" type="button" data-carousel-pause aria-label="Pause carousel" aria-pressed="false">Ⅱ</button><button class="glass-surface" type="button" data-carousel-next aria-label="Next projects">→</button></div></section><div class="home-work">
- <div class="gallery-toolbar"><h2 class="sr">Selected work & explorations</h2></div>
+ <h2 class="sr">Selected work & explorations</h2>
  <div class="gallery-grid" data-gallery>${projects.map((doc,index)=>slot(doc,index)).join('')}</div>
  <div class="grid info-grid" data-information hidden></div>
  </div>
