@@ -1,0 +1,24 @@
+/* Variant classes own material; components retain geometry and route transforms. */
+/* An empty navigation has no surface, but composer and project actions remain usable. */
+:root #dock:not(.is-composer,.split,[data-separate-back="true"]):not(:has(>.dock-content>nav>:is(a,button):not([hidden]))){display:none}
+.control-outline{--control-fill:linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));--control-border:var(--dock-outline);--control-shadow:inset 0 1px 0 var(--nav-highlight);--control-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));--control-hover-fill:linear-gradient(var(--nav-item-hover),var(--nav-item-hover)),var(--control-fill);--control-hover-shadow:var(--control-shadow);--control-item-fill:var(--nav-item-hover);--control-item-shadow:none;--control-light-display:none}
+.control-glass{--control-fill:var(--glass-button-fill);--control-border:transparent;--control-shadow:var(--glass-button-edge);--control-filter:blur(var(--glass-button-blur));--control-hover-fill:var(--glass-ghost-fill);--control-hover-shadow:var(--glass-button-edge);--control-item-fill:var(--glass-ghost-fill);--control-item-shadow:var(--glass-button-edge);--control-light-display:block}
+.control-ghost{--control-fill:transparent;--control-border:transparent;--control-shadow:none;--control-filter:none;--control-hover-fill:var(--nav-item-hover);--control-hover-shadow:none;--control-item-fill:var(--nav-item-hover);--control-item-shadow:none;--control-light-display:none}
+:root .control-surface:is(.control-ghost,.control-outline,.control-glass),:root #dock .control-surface:is(.control-ghost,.control-outline,.control-glass){border:1px solid var(--control-border);background:var(--control-fill);box-shadow:var(--control-shadow);backdrop-filter:var(--control-filter);-webkit-backdrop-filter:var(--control-filter)}
+:root .control-surface:is(:hover,:focus-visible):not(:disabled),:root #dock .control-surface:is(:hover,:focus-visible):not(:disabled){background:var(--control-hover-fill);box-shadow:var(--control-hover-shadow);color:var(--ink)}
+:root .control-surface:not([data-header-action],.project-media-focus-close),:root #dock .control-surface:not(.project-media-focus-close),:root .control-item,:root #dock .control-item{transition:scale var(--glass-button-press-duration) var(--glass-button-press-ease),background var(--nav-hover-out-duration) ease-out,box-shadow var(--nav-hover-out-duration) ease-out,color var(--nav-hover-out-duration) ease-out}
+:root :is(.control-surface,.control-item){scale:1;transform-origin:center}
+@media(hover:hover) and (pointer:fine){:root :is(.control-surface,.control-item):not(.project-media-focus-close):hover:not(:active,:disabled){scale:var(--card-hover-scale)}}
+:root :is(.control-surface,.control-item):not(.project-media-focus-close):active:not(:disabled){scale:var(--glass-button-press-scale);transition-duration:var(--glass-button-press-in-duration);transition-delay:0s}
+:root :is(.control-surface,.control-item):focus-visible{outline:2px solid var(--ink);outline-offset:var(--space-1)}
+:root #dock.control-container:not(.is-composer)>.dock-glass{background:var(--control-fill);backdrop-filter:var(--control-filter);-webkit-backdrop-filter:var(--control-filter)}
+:root #dock.control-container>.dock-outline{stroke:var(--control-border)}
+:root #dock.control-container.is-composer>.dock-outline{stroke:var(--dock-outline)}
+:root #dock.control-container .dock-glass-light{display:var(--control-light-display);fill:currentColor;stroke:none}
+:root #dock.control-container .dock-glass-light-rim{flood-color:var(--glass-button-rim-light)}
+:root #dock.control-container .dock-glass-light-side{flood-color:var(--glass-button-rim-dark)}
+:root #dock.control-container .dock-glass-light-glow{flood-color:var(--glass-button-glow)}
+:root #dock .control-item:is(:hover,:focus-visible,.hover-trail,.active,[aria-pressed="true"]):not(:disabled),:root .assistant-inline-composer .control-item:is(:hover,:focus-visible,[aria-pressed="true"]):not(:disabled){background:var(--control-item-fill);box-shadow:var(--control-item-shadow);color:var(--ink)}
+:root #dock .control-item:not(:is(:hover,:focus-visible,.hover-trail,.active,[aria-pressed="true"])),:root .assistant-inline-composer .control-item:not(:is(:hover,:focus-visible,[aria-pressed="true"])){background:transparent;box-shadow:none}
+@media(prefers-reduced-motion:reduce){:root :is(.control-surface,.control-item):not(.project-media-focus-close):is(:hover,:active):not(:disabled){scale:1}}
+:root[data-animation="off"] :is(.control-surface,.control-item):not(.project-media-focus-close):is(:hover,:active):not(:disabled){scale:1}

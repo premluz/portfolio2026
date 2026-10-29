@@ -451,8 +451,7 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 .footer-invitation{margin:var(--space-footer-heading-content) 0 0;font-size:var(--font-size-section-heading);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
 .footer-links{display:flex;align-items:center;justify-content:center;gap:var(--space-5);margin-top:var(--space-6)}
 .footer-links[hidden]{display:none}
-.footer-links :is(a,button){display:grid;place-items:center;width:60px;height:60px;border-radius:50%;color:var(--muted);background:var(--nav-item-hover);box-shadow:inset 0 0 0 1px var(--nav-rim);transition:color 180ms ease,background-color var(--nav-hover-out-duration) ease-out}
-.footer-links :is(a,button):is(:hover,:focus-visible){color:var(--ink);background:var(--nav-active);transition-duration:var(--nav-hover-in-duration)}
+.footer-links :is(a,button){display:grid;place-items:center;width:60px;height:60px;border-radius:50%;color:var(--muted)}
 .footer-links svg{display:block;width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .footer-credit{max-width:var(--measure-body);margin:calc(var(--space-unit) * 18) 0 0;font-size:var(--font-size-caption);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--eyebrow-tracking);color:var(--eyebrow-ink);text-wrap:pretty}
 @media(max-width:600px){.site-footer{min-height:80svh}.footer-links :is(a,button){width:52px;height:52px}.footer-links svg{width:22px;height:22px}.footer-credit{margin-top:var(--space-12)}}
@@ -482,10 +481,9 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 @media(max-width:600px){.content-grid>.surface[data-block-columns="1"],.content-grid>.surface[data-block-columns="2"]{grid-column:1/-1}.story [data-media-fit="full-bleed"] .content-media-frame{width:calc(100% + var(--space-story-inset) + var(--space-story-inset));height:clamp(220px,70vw,420px)}}
 
 /* The dock can keep the same smoked glass in light or dark site themes. */
-#dock.always-dark-glass{color:var(--ink);--ink:oklch(.94 .008 285);--muted:oklch(.76 .012 285);--body-ink:var(--muted);--eyebrow-ink:oklch(.70 .012 285);--chrome:oklch(.19 .006 285 / .88);--panel:oklch(.21 .006 285 / .94);--nav-glass-rgb:23,23,28;--nav-glass-alpha:.32;--dock-glass-alpha:.32;--dock-backdrop-brightness:.65;--nav-rim:oklch(.98 .004 285 / .08);--dock-outline:oklch(.98 .004 285 / .10);--nav-highlight:oklch(.98 .004 285 / .10);--nav-shadow:oklch(0 0 0 / .24);--nav-item-ink:oklch(.76 .012 285);--nav-active:oklch(.98 .004 285 / .12);--nav-item-hover:oklch(.98 .004 285 / .055)}
+#dock.always-dark-glass{color:var(--ink);--ink:oklch(.94 .008 285);--muted:oklch(.76 .012 285);--body-ink:var(--muted);--eyebrow-ink:oklch(.70 .012 285);--chrome:oklch(.19 .006 285 / .88);--panel:oklch(.21 .006 285 / .94);--nav-glass-rgb:23,23,28;--nav-glass-alpha:.32;--dock-glass-alpha:.32;--dock-backdrop-brightness:.65;--nav-rim:oklch(.98 .004 285 / .08);--dock-outline:var(--dock-outline-dark);--nav-highlight:oklch(.98 .004 285 / .10);--nav-shadow:oklch(0 0 0 / .24);--nav-item-ink:oklch(.76 .012 285);--nav-active:oklch(.98 .004 285 / .12);--nav-item-hover:oklch(.98 .004 285 / .055)}
 #dock.always-dark-glass .dock-glass{background:linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));-webkit-backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness))}
 #dock.always-dark-glass .dock-outline{stroke:var(--dock-outline)}
-#dock.always-dark-glass .composer-suggestions button{background:color-mix(in oklab,var(--chrome) 82%,transparent)}
 /* Site settings has its own glass surface beside the navigation/composer. */
 #dock.dock-morph{left:calc(50% + var(--dock-center-offset,0px))}
 #dock>.site-settings-dock{position:absolute;left:calc(100% + 10px);bottom:0;transform:none;--nav-main-width:var(--nav-height);--nav-context-width:0px;--nav-section-gap:0px;z-index:5}

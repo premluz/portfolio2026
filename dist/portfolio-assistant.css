@@ -13,12 +13,12 @@
 @keyframes ask-card-arrive{0%{opacity:0;transform:translate3d(0,14px,0) scale(.975)}68%{opacity:1;transform:translate3d(0,-2px,0) scale(1.008)}100%{opacity:1;transform:translate3d(0,0,0) scale(1)}}
 .ask-cards .project-card.ask-card-enter{animation:ask-card-arrive 460ms var(--ease-settle) both;animation-delay:calc(var(--ask-card-index,0)*70ms);will-change:transform,opacity}
 .ask-response-lead p{white-space:pre-wrap}
-.ask-suggestions{display:flex;flex-wrap:wrap;gap:9px;margin-top:-10px}.ask-suggestions button{border:1px solid color-mix(in oklab,var(--body-ink) 18%,transparent);border-radius:999px;background:color-mix(in oklab,var(--card-surface) 75%,transparent);color:var(--body-ink);padding:9px 14px;font-size:var(--font-size-caption);line-height:1.35;text-align:left;transition:background-color .2s ease,border-color .2s ease}.ask-suggestions button:hover,.ask-suggestions button:focus-visible{background:var(--nav-active);border-color:color-mix(in oklab,var(--body-ink) 35%,transparent)}
+.ask-suggestions{display:flex;flex-wrap:wrap;gap:9px;margin-top:-10px}.ask-suggestions button{border-radius:999px;color:var(--body-ink);padding:9px 14px;font-size:var(--font-size-caption);line-height:1.35;text-align:left;transition:background-color .2s ease,border-color .2s ease}
 @keyframes suggestion-chip-appear{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
 .ask-suggestions button.suggestion-chip{animation:suggestion-chip-appear 300ms var(--ease-settle) both;animation-delay:calc(var(--suggestion-index,0)*65ms)}
 #dock .composer-suggestions{position:absolute;z-index:4;left:50%;bottom:calc(100% + 16px);width:max-content;max-width:min(var(--composer-max-width),calc(100vw - 28px));justify-content:center;gap:8px;margin:0;transform:translateX(-50%);pointer-events:auto}
 #dock .composer-suggestions[hidden]{display:none}
-#dock .composer-suggestions button{flex:0 1 auto;max-width:100%;background:color-mix(in oklab,var(--card-surface) 82%,transparent);backdrop-filter:blur(18px) saturate(1.15);-webkit-backdrop-filter:blur(18px) saturate(1.15)}
+#dock .composer-suggestions button{flex:0 1 auto;max-width:100%}
 /* The composer has a separate ambient viewport. Its light is a quiet elliptical
    field rising from below the page, never a glow attached to the input. */
 @property --assistant-glow-angle{syntax:"<angle>";inherits:false;initial-value:0deg}
@@ -50,10 +50,11 @@
 :root[data-animation="off"] #dock.is-composer .composer-aura-light::before,:root[data-animation="off"] #dock.is-composer .composer-aura-light::after{animation:none;opacity:.1}
 :root[data-animation="off"] .ask-suggestions button.suggestion-chip{animation:none;opacity:1;transform:none}
 
-/* One transparent glass material for dock surfaces and suggested prompts. */
+/* Navigation, standalone controls and suggested prompts share one material. */
 .glass-surface,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface{background:linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));-webkit-backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness))}
-.ask-suggestions button.glass-surface{border:1px solid var(--dock-outline);box-shadow:inset 0 1px 0 var(--nav-highlight);color:var(--composer-text-ink);font-size:var(--composer-font-size);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);line-height:var(--line-height-label)}
-.ask-suggestions button.glass-surface:is(:hover,:focus-visible),#dock .composer-suggestions button.glass-surface:is(:hover,:focus-visible){background:linear-gradient(var(--nav-item-hover),var(--nav-item-hover)),linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));color:var(--ink)}
+button.glass-surface{border:1px solid var(--dock-outline);box-shadow:inset 0 1px 0 var(--nav-highlight)}
+.ask-suggestions button.glass-surface{color:var(--composer-text-ink);font-size:var(--composer-font-size);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);line-height:var(--line-height-label)}
+button.glass-surface:is(:hover,:focus-visible):not(:active),#dock .composer-suggestions button.glass-surface:is(:hover,:focus-visible):not(:active){background:linear-gradient(var(--nav-item-hover),var(--nav-item-hover)),linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));color:var(--ink)}
 
 .project-menu-client{flex:0 0 auto;color:inherit}
 .project-menu-title{min-width:0;overflow:hidden;text-overflow:ellipsis}
@@ -94,7 +95,7 @@
 :root[data-nav-position="top"] #dock{left:auto;right:calc((100vw - min(100vw, var(--nav-shell-width))) / 2 + var(--nav-gutter));transform:none}
 :root[data-nav-position="top"] #dock>.assistant-launcher{left:auto;right:calc(100% + var(--nav-section-gap))}
 /* Plain navigation has no visible pill, so the last link's text (not its padding) meets the content edge. */
-:root[data-nav-position="top"][data-plain-nav="on"] #dock:not(.is-composer){right:calc((100vw - min(100vw, var(--nav-shell-width))) / 2 + var(--nav-gutter) - var(--composer-control-inset) - min(calc(var(--nav-item-padding) + 5px), 16px))}
+:root[data-nav-position="top"] #dock.control-ghost:not(.is-composer){right:calc((100vw - min(100vw, var(--nav-shell-width))) / 2 + var(--nav-gutter) - var(--composer-control-inset) - min(calc(var(--nav-item-padding) + 5px), 16px))}
 @media(max-width:750px) and (pointer:coarse){:is(#dock,.assistant-inline-composer) .assistant-composer input{font-size:max(16px,var(--composer-font-size))}}
 
 .corner-controls{position:fixed;right:max(24px,env(safe-area-inset-right));bottom:max(24px,env(safe-area-inset-bottom));z-index:44;display:flex;align-items:center;gap:8px}.corner-controls[hidden]{display:none!important}

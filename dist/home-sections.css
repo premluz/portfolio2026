@@ -45,7 +45,7 @@
 .home-services[data-services-layout="carousel"] .home-services-grid::-webkit-scrollbar{display:none}
 .card-rail-controls{display:flex;justify-content:flex-end;gap:var(--space-2);margin-top:var(--space-6)}
 .home-services[data-services-layout="grid"] .card-rail-controls{display:none}
-.card-rail-controls button{width:40px;height:40px;padding:0;border:1px solid color-mix(in oklch,var(--ink) 8%,transparent);border-radius:50%;background:var(--card-surface);color:var(--body-ink);font-size:20px}
+.card-rail-controls button{width:40px;height:40px;padding:0;border-radius:50%;color:var(--body-ink);font-size:20px}
 .card-rail-controls button:hover{color:var(--ink)}.card-rail-controls button:disabled{opacity:.3;cursor:default}
 [data-card-rail-viewport]:focus-visible{outline:2px solid var(--body-ink);outline-offset:4px}
 .home-testimonials[data-card-background="false"] .home-testimonial{padding:0;min-height:0;background:transparent;border:0;border-radius:0}

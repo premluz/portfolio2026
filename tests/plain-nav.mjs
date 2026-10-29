@@ -1,21 +1,39 @@
 import assert from 'node:assert/strict';
-import {readFile} from 'node:fs/promises';
-import {DEFAULT_STORAGE_VALUES} from '../dist/default-settings.js';
+import {CONTROL_STYLES,CONTROL_GROUPS,readControlPreferences,resolveControlStyle,seedControlPreferences} from '../dist/control-preferences.js';
 
-const read=name=>readFile(new URL(name.startsWith('scripts/')?'../'+name:'../dist/'+name,import.meta.url),'utf8');
-const [css,app,transfer,index,styles]=await Promise.all(['plain-nav.css','app.js','settings-transfer.js','index.html','scripts/client-styles.mjs'].map(read));
-
-// An opt-in override mode, off by default, saved and exported with the other navigation settings.
-assert.equal(DEFAULT_STORAGE_VALUES['prem-plain-nav'],'false');
-assert(transfer.includes("plainNav:'prem-plain-nav'"),'The switch is exported');
-assert(index.includes('<input id="plainNav" type="checkbox"> Plain navigation'),'The page carries the switch, unchecked');
-assert(app.includes("document.documentElement.dataset.plainNav=plainNav?'on':'off'"),'The root attribute follows the preference');
-assert(styles.includes("'plain-nav.css'"),'The stylesheet ships in the bundle');
-
-// Scope: every rule needs the attribute, and the composer (an input, not a link) keeps its glass.
-const rules=css.split('\n').filter(line=>line.startsWith(':root'));
-assert(rules.length>=3&&rules.every(rule=>rule.startsWith(':root[data-plain-nav="on"]')),'Every rule is behind data-plain-nav="on"');
-assert(rules.filter(rule=>rule.includes('#dock')).every(rule=>rule.includes('#dock:not(.is-composer)')),'Dock rules skip composer mode');
-for(const part of ['.dock-glass','.dock-outline','nav a','.assistant-launcher','.assistant-back','.glass-utility-button','.detail-media-actions button','background:none','box-shadow:none','backdrop-filter:none','text-decoration:underline'])assert(css.includes(part),`Plain mode covers ${part}`);
-assert((css.match(/\.header-detail-nav button/g)||[]).length>=2,'Go Back and Previous/Next in the header are plain with the carousel arrows: text only, full ink on hover');
-console.log('Plain navigation passed: default off, exported, both pages, every rule scoped, composer exempt, chrome removed and active link underlined.');
+const memory=initial=>{const values=new Map(Object.entries(initial));return {values,getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,value)};};
+for(const [legacy,expected,cards] of [
+ [{'prem-plain-nav':'true','prem-glass-style':'true'},'ghost','true'],
+ [{'prem-plain-nav':'false','prem-glass-style':'false'},'outline','false'],
+ [{},'glass','true']
+]){
+ const storage=memory(legacy);
+ assert.equal(readControlPreferences(storage).style,expected);
+ seedControlPreferences(storage);
+ assert.equal(storage.getItem('prem-control-style'),expected,'The legacy style is migrated once');
+ assert.equal(storage.getItem('prem-card-glass-style'),cards,'Card glass migrates independently');
+ storage.setItem('prem-control-style','outline');
+ seedControlPreferences(storage);
+ assert.equal(readControlPreferences(storage).style,'outline','Later explicit choices survive old flags');
+}
+for(const style of CONTROL_STYLES){
+ assert.equal(resolveControlStyle(style),style);
+ assert.equal(resolveControlStyle(style,'outline'),'outline');
+ assert.equal(resolveControlStyle(style,'outline','ghost'),'ghost','An element or enclosing group wins over the saved group override');
+ assert.equal(resolveControlStyle(style,'inherit','inherit'),style);
+}
+const grouped=readControlPreferences(memory({'prem-control-style':'ghost','prem-control-style-navigation':'glass','prem-control-style-suggestions':'outline'}));
+assert.throws(()=>resolveControlStyle('invalid'),/Invalid global control style/);
+assert.throws(()=>resolveControlStyle('glass','invalid'),/Invalid group control style/);
+assert.throws(()=>resolveControlStyle('glass','inherit','invalid'),/Invalid local control style/);
+assert.equal(grouped.groups.navigation,'glass');
+assert.equal(grouped.groups.suggestions,'outline');
+for(const group of CONTROL_GROUPS.filter(group=>!['navigation','suggestions'].includes(group)))assert.equal(grouped.groups[group],'inherit');
+const warnings=[],previousWarn=console.warn;
+try{
+ console.warn=(...args)=>warnings.push(args);
+ assert.equal(readControlPreferences(memory({'prem-control-style':'invalid'})).style,'glass');
+ assert.equal(readControlPreferences({getItem(){throw Error('blocked');}}).style,'glass');
+}finally{console.warn=previousWarn;}
+assert.equal(warnings.length,2,'Invalid and unavailable storage report their fallback');
+console.log('Control preferences passed: contrasting legacy profiles, independent cards, explicit choices, group/element precedence, inheritance and reported storage failures.');

@@ -47,7 +47,7 @@ body.card-client-hidden .spatial-gallery-copy h3,body.card-client-hidden .spatia
 body.card-client-hidden.card-title-hidden .spatial-gallery-copy .spatial-gallery-description{grid-row:1}
 body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-title-hidden .spatial-gallery-copy h3,body.card-description-hidden .spatial-gallery-copy .spatial-gallery-description{display:none}
 .spatial-gallery-controls{display:flex;gap:var(--space-2);flex-shrink:0}
-.spatial-gallery-controls button{width:40px;height:40px;padding:0;font-size:20px}
+.spatial-gallery-controls button{width:40px;height:40px;padding:0;border-radius:var(--radius-icon-control);font-size:20px}
 .spatial-gallery-controls button:hover{color:var(--ink)}.spatial-gallery-controls button:disabled{opacity:.3;cursor:default}
 .spatial-gallery-viewport:focus-visible,.spatial-gallery-controls button:focus-visible{outline:2px solid var(--body-ink);outline-offset:4px}
 [data-gallery-axis="vertical"] .spatial-gallery-viewport{flex-direction:column;width:100%;height:760px;margin-inline:0;padding:calc((760px - var(--gallery-card-height))/2) 0;overflow-x:hidden;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior-y:contain}

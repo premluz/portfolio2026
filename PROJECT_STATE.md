@@ -3,14 +3,14 @@ title: Project state
 type: state
 status: active
 owner: Prem
-updated: 2026-10-28
+updated: 2026-10-29
 summary: Where the project is right now: what runs, what is switched on, what is failing, open questions and the next action. How I work content is consolidated in its independent component.
 tags: [area/docs, kind/process]
 related: [TASKS.md, PROGRESS.md, HANDOFF.md]
 ---
 # Project state
 
-Snapshot of 2026-10-26. Git HEAD is `1ee57a1`. The only uncommitted work is the owner's `agent*` feature (7 modules, 3 tests, 2 images, plus hunks in app.js, site.css, tokens.css, motion-tokens.js and client-styles.mjs), left alone on purpose. Refresh this file whenever the picture or the next action changes.
+Snapshot of 2026-10-29. The control-variant work is uncommitted alongside pre-existing owner changes; preserve the full dirty worktree. Ghost, Outline and Glass now share one global setting with local overrides and independent card glass (ADR-012). Refresh this file whenever the picture or the next action changes.
 
 ## What this is
 
@@ -34,7 +34,8 @@ A buildless native-module portfolio for Prem Luczak: authored HTML, CSS and ES m
 | Strapline, At a glance (Content Home) | off | Hero additions |
 | Card details, Client above (Cards) | off | Status pill, gradient results and tag row; client on top in wide tracking |
 | Plain cards (Cards) | off | Removes skin, reflections, edge glow and note-card panels |
-| Plain navigation (Navigation) | off | Dock and buttons as plain text links |
+| Control style (Design → Controls) | Glass | Ghost / Outline / Glass, with local Inherit overrides; the legacy published profile migrates to Ghost |
+| Glass cards (Design system) | on | Independent of control styling |
 | Navigation position | bottom | Top is a preview; see TASK-002 |
 | Ambient colour | automatic | Glow strength 100% |
 | Text size | Medium | Headings and body scale separately (ADR-006) |
@@ -42,6 +43,8 @@ A buildless native-module portfolio for Prem Luczak: authored HTML, CSS and ES m
 | Lab (dock, site menu) | visible | In-app route `#lab`: four-column grid of the home cards, ripple transition (ADR-011) |
 
 ## Tests
+
+The current full check stops at the existing About section-order assertion (`tests/about-page.mjs:34`). The control-system build, thirteen focused unit checks and five browser checks pass (TASK-021).
 
 Eight test files fail, each tied to a task. Run one with `node tests/<name>.mjs`.
 

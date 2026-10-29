@@ -45,6 +45,7 @@
   --dock-backdrop-brightness: 1;
   --nav-rim: oklch(0.99999999 0.00000004 0.00000 / 0.65);
   --dock-outline: oklch(0.25543328 0.01903326 298.77205 / 0.06);
+  --dock-outline-dark: oklch(0.97184305 0.01472839 294.47299 / 0.03);
   --nav-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.18);
   --nav-shadow: oklch(0.22773614 0.03305204 297.22251 / 0.09);
   /* Navigation follows the eyebrow hierarchy: quiet at rest, a small
@@ -100,6 +101,8 @@
   --glass-dark-button-glow: oklch(0.9499 0.0243 280.86 / .04);
   --glass-button-blur: 10px;
   --glass-button-press-scale: .92;
+  --card-hover-scale: .985;
+  --card-press-scale: .97;
   --glass-button-press-in-duration: 90ms;
   --glass-button-press-duration: 300ms;
   --glass-button-press-ease: var(--ease-press);
@@ -235,6 +238,7 @@
   --radius-visual-portrait: 29px;
   --radius-visual-flip: 26px;
   --radius-header-control: 18px;
+  --radius-pill: 999px;
 
   /* Page layout and edge fade */
   --header-height: 112px;
@@ -341,7 +345,7 @@
   --dock-glass-alpha: .34;
   --dock-backdrop-brightness: .65;
   --nav-rim: oklch(0.99999999 0.00000004 0.00000 / 0.04);
-  --dock-outline: oklch(0.97184305 0.01472839 294.47299 / 0.03);
+  --dock-outline: var(--dock-outline-dark);
   --nav-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.035);
   --nav-shadow: oklch(0.00000000 0.00000000 0.00000 / 0.18);
   --nav-item-ink: var(--eyebrow-ink);

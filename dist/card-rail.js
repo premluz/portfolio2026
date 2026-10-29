@@ -1,5 +1,5 @@
 import {escapeText} from './content/html.js';
-export const cardRailControlsMarkup=({label='cards'}={})=>`<div class="card-rail-controls"><button type="button" data-card-rail-previous aria-label="Previous ${escapeText(label)}" data-tooltip="Previous ${escapeText(label)}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m14.5 5-7 7 7 7"/></svg></button><button type="button" data-card-rail-next aria-label="Next ${escapeText(label)}" data-tooltip="Next ${escapeText(label)}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m9.5 5 7 7-7 7"/></svg></button></div>`;
+export const cardRailControlsMarkup=({label='cards'}={})=>`<div class="card-rail-controls"><button class="glass-surface" type="button" data-card-rail-previous aria-label="Previous ${escapeText(label)}" data-tooltip="Previous ${escapeText(label)}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m14.5 5-7 7 7 7"/></svg></button><button class="glass-surface" type="button" data-card-rail-next aria-label="Next ${escapeText(label)}" data-tooltip="Next ${escapeText(label)}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m9.5 5 7 7-7 7"/></svg></button></div>`;
 
 // A flat carousel controller independent of page layout and card contents.
 export class CardRail{

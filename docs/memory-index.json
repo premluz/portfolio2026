@@ -129,7 +129,7 @@
       "title": "Design system",
       "type": "spec",
       "status": "active",
-      "updated": "2026-10-26",
+      "updated": "2026-10-29",
       "summary": "Tokens, type scale, mono text, glass surfaces and card/media rules.",
       "tags": [
         "area/design-system"
@@ -138,7 +138,7 @@
         "FRAMEWORK.md",
         "MOTION.md"
       ],
-      "hash": "91fc4d20728593470df874dd3ab86a05949553e7",
+      "hash": "e09fb046e3f24c615c3afc5a6cccb5f31e375449",
       "items": []
     },
     {
@@ -147,7 +147,7 @@
       "title": "Liquid portfolio framework",
       "type": "spec",
       "status": "active",
-      "updated": "2026-10-26",
+      "updated": "2026-10-29",
       "summary": "Cards, placement, featured stage, backdrops, hero and navigation, geometry, motion, Lab page and media loading.",
       "tags": [
         "area/home",
@@ -161,7 +161,7 @@
         "MOTION.md",
         "DESIGN_SYSTEM.md"
       ],
-      "hash": "da95424067d812ef58a66c2b0605c43e69102d0a",
+      "hash": "5f7e3240501a5d12492facdf00c29c01f30e88ba",
       "items": []
     },
     {
@@ -170,7 +170,7 @@
       "title": "Project handoff",
       "type": "guide",
       "status": "active",
-      "updated": "2026-10-26",
+      "updated": "2026-10-29",
       "summary": "Architecture map, build and content workflow, open items and the transfer checklist.",
       "tags": [
         "area/docs",
@@ -180,7 +180,7 @@
         "PROJECT_STATE.md",
         "DEPLOYMENT.md"
       ],
-      "hash": "a2b330223a4344be124ca58bfa184bb880789003",
+      "hash": "101111f9d6aeb836a035ad8121e0b645132ae074",
       "items": []
     },
     {
@@ -253,7 +253,7 @@
         "TASKS.md",
         "PROJECT_STATE.md"
       ],
-      "hash": "157626413974025b3e4736c60c911a6636bb6b2b",
+      "hash": "940cf9a513ab42b6a5af2620f883806419410c32",
       "items": []
     },
     {
@@ -262,7 +262,7 @@
       "title": "Project state",
       "type": "state",
       "status": "active",
-      "updated": "2026-10-28",
+      "updated": "2026-10-29",
       "summary": "Where the project is right now: what runs, what is switched on, what is failing, open questions and the next action. How I work content is consolidated in its independent component.",
       "tags": [
         "area/docs",
@@ -273,7 +273,7 @@
         "PROGRESS.md",
         "HANDOFF.md"
       ],
-      "hash": "81689033bd364e21be62fe1a8b27831766c27048",
+      "hash": "5339595166f1db8ca6d2ed2a5f83cd109d5247ea",
       "items": [
         {
           "id": "Q-001",
@@ -333,7 +333,7 @@
         "PROJECT_STATE.md",
         "PROGRESS.md"
       ],
-      "hash": "0cc5b1459c621920ac4bc0e43fa1e66aeb96348a",
+      "hash": "6e5b9dd12994d32a7bada1609ab966fcaa32ae0a",
       "items": [
         {
           "id": "TASK-002",
@@ -411,6 +411,62 @@
           "tags": [
             "area/images",
             "area/content"
+          ]
+        },
+        {
+          "id": "TASK-024",
+          "title": "Make footer label buttons fully rounded",
+          "status": "done",
+          "tags": [
+            "area/home",
+            "area/design-system"
+          ]
+        },
+        {
+          "id": "TASK-023",
+          "title": "Hide the empty navigation shell",
+          "status": "done",
+          "tags": [
+            "area/dock",
+            "kind/bug"
+          ]
+        },
+        {
+          "id": "TASK-022",
+          "title": "Make footer contact controls inherit button styling",
+          "status": "done",
+          "tags": [
+            "area/home",
+            "area/design-system"
+          ]
+        },
+        {
+          "id": "TASK-021",
+          "title": "Consolidate Ghost, Outline and Glass control variants",
+          "status": "done",
+          "tags": [
+            "area/dock",
+            "area/design-system",
+            "area/assistant"
+          ]
+        },
+        {
+          "id": "TASK-020",
+          "title": "Match carousel controls and navigation to the header surface",
+          "status": "done",
+          "tags": [
+            "area/home",
+            "area/dock"
+          ]
+        },
+        {
+          "id": "TASK-019",
+          "title": "Share navigation surfaces across project controls and assistant suggestions",
+          "status": "done",
+          "tags": [
+            "area/project-detail",
+            "area/dock",
+            "area/assistant"
           ]
         },
         {
@@ -1045,6 +1101,27 @@
         "FRAMEWORK.md"
       ],
       "hash": "f9a1d6c9540ecb29c9594d23f593961d8d525862",
+      "items": []
+    },
+    {
+      "path": "docs/decisions/ADR-012-controls-have-inherited-variants.md",
+      "id": "ADR-012",
+      "title": "Controls have inherited Ghost, Outline and Glass variants",
+      "type": "decision",
+      "status": "accepted",
+      "updated": "2026-10-29",
+      "summary": "One global control variant with group and element overrides replaces overlapping navigation/glass flags; card glass is independent.",
+      "tags": [
+        "area/dock",
+        "area/home",
+        "kind/decision"
+      ],
+      "related": [
+        "DESIGN_SYSTEM.md",
+        "FRAMEWORK.md",
+        "TASKS.md"
+      ],
+      "hash": "8bd44f0116dccdff0f67b99bb11501c629231c4e",
       "items": []
     }
   ]

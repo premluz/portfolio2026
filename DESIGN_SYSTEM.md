@@ -3,7 +3,7 @@ title: Design system
 type: spec
 status: active
 owner: Prem
-updated: 2026-10-26
+updated: 2026-10-29
 summary: Tokens, type scale, mono text, glass surfaces and card/media rules.
 tags: [area/design-system]
 related: [FRAMEWORK.md, MOTION.md]
@@ -39,6 +39,20 @@ slightly denser selected surface, with both values adapted to light and dark
 themes. The bottom liquid dock uses its own `--dock-outline` token so its
 perimeter stays much quieter than the glass fill and reflections; its outline
 does not add a second drop shadow.
+
+Control styling lives in **Design → Controls**: Ghost, Outline or Glass globally,
+with Inherit or an explicit variant for Navigation, Project controls, Carousels,
+Assistant suggestions and Utilities. Precedence is element/enclosing-group
+`data-control-style="ghost|outline|glass"`, then the saved group override, then
+the global choice. `control-style.js` applies `.control-ghost`, `.control-outline`
+or `.control-glass` to current and newly rendered controls. Components keep
+their sizing and rounding; all variants share focus and press feedback.
+Ghost is transparent at rest with visible hover/focus feedback, Outline uses
+the quiet nav hairline, and Glass uses the illuminated glass material. Composite
+navigation applies its material to the outer silhouette and feedback to its
+links. Composer inputs retain their readable input surface. **Glass cards** is
+independent. Migration and rationale are recorded in [ADR-012](docs/decisions/ADR-012-controls-have-inherited-variants.md).
+Footer contact controls follow the global/Utilities variant. Their text-labels-versus-icons option changes presentation only, including for older saved profiles.
 
 Project details use an unlabeled three-sentence context introduction, followed
 by Role, Highlights and Key work. `--space-detail-context` separates it from

@@ -12,6 +12,82 @@ related: [TASKS.md, PROJECT_STATE.md]
 
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
 
+## 2026-10-29 Fully rounded footer label buttons (TASK-024)
+
+LinkedIn and Email labels use a dedicated pill-radius token; icon geometry and shared Ghost/Outline/Glass materials and feedback stay unchanged. Evidence: build, footer-switch and all five control browser checks pass, with both label radii measured across every variant. Full check remains blocked by the existing `tests/about-page.mjs:34` section-order assertion.
+
+## 2026-10-29 Hide the empty navigation shell (TASK-023)
+
+A shared control stylesheet guard hides an empty dock without changing saved preferences. The composer and active project controls remain available. Evidence: build, menu-icon-settings and seven browser checks pass, including Home/Lab empty states, restoring each navigation item, persistence and composer availability. The existing full-suite About assertion remains unrelated.
+
+## 2026-10-29 Footer contacts inherit the shared control variants (TASK-022)
+
+LinkedIn and Email no longer force Ghost when their labels are shown. Both presentations inherit global/Utilities styling. The existing option is labelled “Text labels instead of icons”; saved values remain valid, but affect presentation only. Label controls have padded, rounded button geometry; obsolete footer material/hover rules are removed so the shared variants own feedback.
+Evidence: build and footer-switch, settings-transfer and site-settings checks pass. All five control-style browser tests pass, including footer label materials in Ghost/Outline/Glass, hover/press, icon presentation, Utilities override and reload persistence. The unrelated full-suite failure remains documented under TASK-021.
+
+## 2026-10-29 Inherited control variants replace overlapping toggles (TASK-021)
+
+Design → Controls now owns Ghost, Outline and Glass globally, with saved Navigation, Project controls, Carousels, Suggestions and Utilities overrides. Element/enclosing-group `data-control-style` declarations win over those choices. Dynamic controls receive their resolved variant; shared focus/hover/press feedback respects reduced motion and Animation Off, and Close retains its centred transform. Glass cards is a separate flag. Legacy storage and published/imported presets migrate to the new fields, preserving explicit variants and group overrides. See ADR-012 and DESIGN_SYSTEM.md.
+Evidence: build, thirteen focused unit checks and five Playwright tests pass. Browser coverage includes both themes, desktop/mobile widths, all five override groups, reload persistence, live suggestions, local declarations, ghost feedback, reduced motion and independent cards. `npm run check` stops at the existing `tests/about-page.mjs:34` assertion: “Every About component, including the Home ones, is addressable by the About settings in page order.” The previous press-feedback source assertion is updated for the shared control system and passes.
+
+## 2026-10-29 Carousel controls and navigation share the quieter header treatment (TASK-020)
+
+Gallery arrows, section-rail arrows and optional hero-carousel controls now use `.glass-surface`, retaining circular arrows and their existing geometry. The utility-button surface no longer overrides that shared material. Plain navigation keeps carousel controls styled like the header. Always-dark navigation now uses the same dark outline token as the header instead of its stronger local border; the glass-on treatment remains intact.
+Evidence: build plus glass-style, card-rail, card-gallery, hero-carousel and dock-morph tests pass. Chromium computed-style checks pass in all eight combinations of light/dark theme, glass on/off and plain navigation on/off, including normal/always-dark nav outline comparison; no runtime errors. Existing unrelated suite failures remain recorded under TASK-019.
+
+## 2026-10-29 Project controls reuse the navigation surface (TASK-019)
+
+Removed the separate chrome-based media-control tokens and component fill/hover overrides. Project header buttons, media actions and full-screen Close now use the existing `.glass-surface` material alongside assistant thread/composer suggestions; the glass-on variant is preserved. Removed the obsolete composer-suggestion chrome override.
+Evidence: `npm run build`, glass-style and suggestion-chip tests pass. Chromium measured matching surfaces in light/dark themes with glass on/off on portrait and landscape projects, including both suggestion placements and non-glass hover; no runtime errors. The full check stops at the pre-existing `tests/about-page.mjs:34` section-order assertion. `tests/press-feedback.mjs:27` also fails its existing source-text expectation that plain-nav CSS includes the header selector removed in the preceding work.
+
+## 2026-10-29 Go Back shares the project media-action class
+
+Go Back and the project media actions now use `.detail-media-action`, so their corner shape and plain/glass variants come from the same CSS class. Previous/Next stay icon controls; plain-navigation styling no longer strips the shared action surface.
+Evidence: regenerated `dist/site.css` and `git diff --check` pass.
+
+## 2026-10-29 Project detail Back uses a rounded-rectangle radius
+
+Go Back now uses the 12px spacing token for its corner radius instead of the 50% icon-control radius; Previous and Next remain circular.
+Evidence: regenerated `dist/site.css` and `git diff --check` pass.
+
+## 2026-10-29 Project detail controls now separate from the page surface
+
+The non-glass media-control fill now uses the shared chrome surface instead of blending the page colour into transparency, which made the top-left project-detail controls indistinguishable from the page at rest. Hover is mixed from the same surface; Glass buttons & cards continues to supply its glass material.
+Evidence: rebuilt `dist/site.css` and `git diff --check` pass.
+
+## 2026-10-29 Project detail navigation uses media-control surfaces
+
+Go Back and Previous/Next now use the same outlined, softly filled surface as the floating full-screen close control, with the glass fill and edge when Glass buttons & cards is enabled. The plain-navigation reset no longer strips these project-detail controls; existing shared hover and press feedback remains in place.
+Evidence: regenerated `dist/site.css` and `git diff --check` pass.
+
+## 2026-10-29 Project detail client/year is quieter
+
+- The `Client · Year` line under project detail titles now uses the existing eyebrow ink token, lowering its contrast without changing the title, spacing, or content order.
+- Evidence: focused detail-caption test and rebuilt client stylesheet pass.
+
+## 2026-10-29 Card hover press layer
+
+Project cards now use a softer `.985` hover settle and `.97` press scale, keeping the stronger `.92` glass-button feedback for navigation. Hover is excluded from the active state, and both reduced-motion and animation-off modes disable the transform. Evidence: `tests/press-feedback.mjs`, rebuilt client stylesheet and CSS diff check pass; live browser verification is blocked by the existing invalid `content/catalog.json`.
+
+## 2026-10-29 Full-screen close follows plain media controls
+
+The floating close button used by full-screen images and prototypes now uses the non-glass media-control surface: a slightly darkened page-colour fill, one thin ink line, quiet body colour and no extra shadow. When Glass buttons & cards is on, it takes the shared glass fill and edge. Both placements use the shared hover scale and press scale without losing their center transform. Evidence: focused CSS assertions, rebuilt client stylesheet, memory check and diff check pass; the broader `tests/project-media-focus.mjs` is currently blocked by the existing catalog mismatch (`bastion` is absent from the loaded catalog).
+
+## 2026-10-29 Full-screen close hover state is visible
+
+Close hover and keyboard focus now override the resting plain/glass surfaces: plain mode gains a tinted fill and stronger hairline; glass mode gains the shared ghost fill and edge. Hover color and surface transitions use the shared navigation timing.
+Evidence: regenerated `dist/site.css` and `git diff --check` pass.
+
+## 2026-10-28 Card press is centered
+
+- Project cards now use a centered transform origin for the shared press scale, keeping the card visually centered while it contracts.
+- Evidence: focused press-feedback test, build regeneration, and live Playwright measurement confirmed `transform-origin: center` and the shared `0.92` scale.
+
+## 2026-10-28 Shared press feedback for navigation and cards
+
+- Installed and applied the `emil-design-eng` interaction guidance. Dock navigation, plain text navigation, detail navigation and project cards now share the existing composer press scale, easing and timing tokens, with motion-off and reduced-motion guards.
+- Evidence: `press-feedback.mjs`, plain-navigation, card-details, build, and live Playwright press probes passed in both plain-nav on/off states.
+
 ## 2026-10-28 Detail caption-to-image rhythm matches Home
 
 - The project-detail caption now leaves the same Home hero/carousel rhythm before the image, using the shared `space-page-rhythm-md` token; the half-width description layout remains unchanged.

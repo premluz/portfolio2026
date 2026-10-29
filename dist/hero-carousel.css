@@ -3,7 +3,7 @@
 .hero-carousel-stage{position:relative;height:calc(clamp(220px,32svh,340px) * var(--hero-carousel-size,1));margin-top:var(--hero-carousel-gap,64px);margin-bottom:clamp(80px,12vh,140px);touch-action:pan-y}
 .hero-carousel-controls{position:absolute;inset:auto 0 -48px;display:flex;align-items:center;justify-content:center;gap:14px;color:var(--muted);font-size:12px;z-index:2}
 .hero-carousel-controls span{margin-inline:6px}
-.hero-carousel-controls button{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;background:var(--chrome);color:var(--ink);font-size:17px}
+.hero-carousel-controls button{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;color:var(--ink);font-size:17px}
 .home-carousel-active .card-placement{position:relative;transform-origin:0 0;touch-action:pan-y}
 .home-carousel-active .card-slot{position:relative}
 .home-carousel-active .image-card[data-image-mode="bleed"]{display:flex;flex-direction:column;height:auto!important;min-height:0!important;padding:0!important}

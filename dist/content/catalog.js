@@ -1120,8 +1120,15 @@ export const catalog={
             {
               "id": "role-carter",
               "type": "text",
+              "title": "Carter London",
+              "label": "2006-2009",
+              "paragraphs": []
+            },
+            {
+              "id": "role-independent",
+              "type": "text",
               "title": "Independent",
-              "label": "2006–2009",
+              "label": "2006–Present",
               "paragraphs": []
             }
           ]

@@ -25,7 +25,7 @@ test('developer settings panel uses category tabs and collapsed accordions',asyn
  await expect(page.locator('#settingsPanelStructure')).toBeVisible();
  await expect(page.locator('#settingsPanelStructure > .developer-settings-group > summary')).toHaveText(['Page width','Layout','Carousel','Cards','Footer','Navigation']);
  await page.locator('#settingsTabDesign').click();
- await expect(page.locator('#settingsPanelDesign > .developer-settings-group > summary')).toHaveText(['Design system','Section presentation','Ambient','Images','Environment']);
+ await expect(page.locator('#settingsPanelDesign > .developer-settings-group > summary')).toHaveText(['Controls','Design system','Section presentation','Ambient','Images','Environment']);
  await page.locator('#settingsTabMotion').click();
  await expect(page.locator('#settingsPanelMotion > .developer-settings-group > summary')).toHaveText(['Motion']);
  expect(errors).toEqual([]);

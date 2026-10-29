@@ -46,6 +46,7 @@
   --dock-backdrop-brightness: 1;
   --nav-rim: oklch(0.99999999 0.00000004 0.00000 / 0.65);
   --dock-outline: oklch(0.25543328 0.01903326 298.77205 / 0.06);
+  --dock-outline-dark: oklch(0.97184305 0.01472839 294.47299 / 0.03);
   --nav-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.18);
   --nav-shadow: oklch(0.22773614 0.03305204 297.22251 / 0.09);
   /* Navigation follows the eyebrow hierarchy: quiet at rest, a small
@@ -101,6 +102,8 @@
   --glass-dark-button-glow: oklch(0.9499 0.0243 280.86 / .04);
   --glass-button-blur: 10px;
   --glass-button-press-scale: .92;
+  --card-hover-scale: .985;
+  --card-press-scale: .97;
   --glass-button-press-in-duration: 90ms;
   --glass-button-press-duration: 300ms;
   --glass-button-press-ease: var(--ease-press);
@@ -236,6 +239,7 @@
   --radius-visual-portrait: 29px;
   --radius-visual-flip: 26px;
   --radius-header-control: 18px;
+  --radius-pill: 999px;
 
   /* Page layout and edge fade */
   --header-height: 112px;
@@ -342,7 +346,7 @@
   --dock-glass-alpha: .34;
   --dock-backdrop-brightness: .65;
   --nav-rim: oklch(0.99999999 0.00000004 0.00000 / 0.04);
-  --dock-outline: oklch(0.97184305 0.01472839 294.47299 / 0.03);
+  --dock-outline: var(--dock-outline-dark);
   --nav-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.035);
   --nav-shadow: oklch(0.00000000 0.00000000 0.00000 / 0.18);
   --nav-item-ink: var(--eyebrow-ink);
@@ -879,8 +883,7 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 .footer-invitation{margin:var(--space-footer-heading-content) 0 0;font-size:var(--font-size-section-heading);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
 .footer-links{display:flex;align-items:center;justify-content:center;gap:var(--space-5);margin-top:var(--space-6)}
 .footer-links[hidden]{display:none}
-.footer-links :is(a,button){display:grid;place-items:center;width:60px;height:60px;border-radius:50%;color:var(--muted);background:var(--nav-item-hover);box-shadow:inset 0 0 0 1px var(--nav-rim);transition:color 180ms ease,background-color var(--nav-hover-out-duration) ease-out}
-.footer-links :is(a,button):is(:hover,:focus-visible){color:var(--ink);background:var(--nav-active);transition-duration:var(--nav-hover-in-duration)}
+.footer-links :is(a,button){display:grid;place-items:center;width:60px;height:60px;border-radius:50%;color:var(--muted)}
 .footer-links svg{display:block;width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .footer-credit{max-width:var(--measure-body);margin:calc(var(--space-unit) * 18) 0 0;font-size:var(--font-size-caption);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--eyebrow-tracking);color:var(--eyebrow-ink);text-wrap:pretty}
 @media(max-width:600px){.site-footer{min-height:80svh}.footer-links :is(a,button){width:52px;height:52px}.footer-links svg{width:22px;height:22px}.footer-credit{margin-top:var(--space-12)}}
@@ -910,10 +913,9 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 @media(max-width:600px){.content-grid>.surface[data-block-columns="1"],.content-grid>.surface[data-block-columns="2"]{grid-column:1/-1}.story [data-media-fit="full-bleed"] .content-media-frame{width:calc(100% + var(--space-story-inset) + var(--space-story-inset));height:clamp(220px,70vw,420px)}}
 
 /* The dock can keep the same smoked glass in light or dark site themes. */
-#dock.always-dark-glass{color:var(--ink);--ink:oklch(.94 .008 285);--muted:oklch(.76 .012 285);--body-ink:var(--muted);--eyebrow-ink:oklch(.70 .012 285);--chrome:oklch(.19 .006 285 / .88);--panel:oklch(.21 .006 285 / .94);--nav-glass-rgb:23,23,28;--nav-glass-alpha:.32;--dock-glass-alpha:.32;--dock-backdrop-brightness:.65;--nav-rim:oklch(.98 .004 285 / .08);--dock-outline:oklch(.98 .004 285 / .10);--nav-highlight:oklch(.98 .004 285 / .10);--nav-shadow:oklch(0 0 0 / .24);--nav-item-ink:oklch(.76 .012 285);--nav-active:oklch(.98 .004 285 / .12);--nav-item-hover:oklch(.98 .004 285 / .055)}
+#dock.always-dark-glass{color:var(--ink);--ink:oklch(.94 .008 285);--muted:oklch(.76 .012 285);--body-ink:var(--muted);--eyebrow-ink:oklch(.70 .012 285);--chrome:oklch(.19 .006 285 / .88);--panel:oklch(.21 .006 285 / .94);--nav-glass-rgb:23,23,28;--nav-glass-alpha:.32;--dock-glass-alpha:.32;--dock-backdrop-brightness:.65;--nav-rim:oklch(.98 .004 285 / .08);--dock-outline:var(--dock-outline-dark);--nav-highlight:oklch(.98 .004 285 / .10);--nav-shadow:oklch(0 0 0 / .24);--nav-item-ink:oklch(.76 .012 285);--nav-active:oklch(.98 .004 285 / .12);--nav-item-hover:oklch(.98 .004 285 / .055)}
 #dock.always-dark-glass .dock-glass{background:linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));-webkit-backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness))}
 #dock.always-dark-glass .dock-outline{stroke:var(--dock-outline)}
-#dock.always-dark-glass .composer-suggestions button{background:color-mix(in oklab,var(--chrome) 82%,transparent)}
 /* Site settings has its own glass surface beside the navigation/composer. */
 #dock.dock-morph{left:calc(50% + var(--dock-center-offset,0px))}
 #dock>.site-settings-dock{position:absolute;left:calc(100% + 10px);bottom:0;transform:none;--nav-main-width:var(--nav-height);--nav-context-width:0px;--nav-section-gap:0px;z-index:5}
@@ -1191,13 +1193,11 @@ header .discipline{--swap-in:1;--swap-out:3}
 :root.header-detail-active header :is(.brand,.discipline){opacity:0;transform:translateX(calc(-1 * var(--header-swap-shift)));pointer-events:none}
 @media(prefers-reduced-motion:reduce){:is(header .brand,header .discipline,.header-detail-nav button){transition-duration:0s;transition-delay:0s}}
 :root[data-animation="off"] :is(header .brand,header .discipline,.header-detail-nav button){transition-duration:0s;transition-delay:0s}
-.header-detail-nav button{display:inline-flex;align-items:center;justify-content:center;height:var(--nav-icon-size);min-width:var(--nav-icon-size);padding:0 var(--space-3);border:0;border-radius:var(--radius-icon-control);background:transparent;color:var(--nav-item-ink);font:inherit;font-size:var(--font-size-body);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);cursor:pointer;transition:opacity var(--header-swap-duration) var(--ease-settle) calc(var(--swap-out) * var(--header-swap-step)),transform var(--header-swap-duration) var(--ease-settle) calc(var(--swap-out) * var(--header-swap-step)),background-color var(--nav-hover-out-duration) ease-out,color 160ms ease}
-:root.header-detail-active .header-detail-nav button{transition-delay:calc(var(--swap-in) * var(--header-swap-step)),calc(var(--swap-in) * var(--header-swap-step)),0s,0s}
-.header-detail-nav button:is(:hover,:focus-visible){background:var(--nav-item-hover);color:var(--ink);transition-duration:var(--nav-hover-in-duration)}
+.header-detail-nav button{display:inline-flex;align-items:center;justify-content:center;height:var(--nav-icon-size);min-width:var(--nav-icon-size);padding:0 var(--space-3);border-radius:var(--radius-icon-control);color:var(--body-ink);font:inherit;font-size:var(--font-size-body);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);cursor:pointer;transition:opacity var(--header-swap-duration) var(--ease-settle) calc(var(--swap-out) * var(--header-swap-step)),transform var(--header-swap-duration) var(--ease-settle) calc(var(--swap-out) * var(--header-swap-step)),scale var(--glass-button-press-duration) var(--glass-button-press-ease),background-color var(--nav-hover-out-duration) ease-out,border-color var(--nav-hover-out-duration) ease-out,box-shadow var(--nav-hover-out-duration) ease-out,color 160ms ease}
+:root.header-detail-active .header-detail-nav button{transition-delay:calc(var(--swap-in) * var(--header-swap-step)),calc(var(--swap-in) * var(--header-swap-step)),0s,0s,0s,0s,0s}
 .header-detail-nav button[hidden]{display:none}
 .header-detail-nav button:has(svg){padding:0}
 .header-detail-nav svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-:root[data-glass-style="on"] .header-detail-nav button:is(:hover,:focus-visible){background:var(--glass-ghost-fill);box-shadow:var(--glass-button-edge)}
 .brand-name,.brand-role{display:block}
 .brand-name{transition:color var(--nav-hover-in-duration) ease-out}
 :root.brand-avatar-hidden header .brand{display:none}
@@ -1239,10 +1239,9 @@ main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:0;padding-top:
 .footer-invitation{margin-top:var(--space-hero-heading-content);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
 .footer-invitation[hidden]{display:none}
 .footer-link-label{display:none}
-/* Contact items as plain text: the circle and icon give way to a label that reads like body copy. */
+/* Footer labels and icons share control materials; this option changes geometry and content only. */
 .site-footer[data-links="text"] .footer-links{gap:var(--space-6)}
-.site-footer[data-links="text"] .footer-links :is(a,button){display:inline;padding:0;border:0;font-family:inherit;cursor:pointer;width:auto;height:auto;border-radius:0;background:none;box-shadow:none;color:var(--body-ink);font-size:var(--font-size-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);text-decoration:underline;text-decoration-color:var(--nav-rim);text-underline-offset:.2em}
-.site-footer[data-links="text"] .footer-links :is(a,button):is(:hover,:focus-visible){color:var(--ink);background:none;text-decoration-color:currentColor}
+.site-footer[data-links="text"] .footer-links :is(a,button){display:inline-flex;align-items:center;justify-content:center;min-height:var(--nav-icon-size);padding:var(--space-2) var(--space-4);font-family:inherit;cursor:pointer;width:auto;height:auto;border-radius:var(--radius-pill);font-size:var(--font-size-body);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body);text-decoration:none}
 .site-footer[data-links="text"] .footer-links svg{display:none}
 .site-footer[data-links="text"] .footer-link-label{display:inline}
 .footer-credit{font-size:var(--font-size-caption);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--eyebrow-tracking);color:var(--eyebrow-ink)}
@@ -1327,6 +1326,12 @@ html[data-animation="off"] .image-card[data-copy-hover="true"]:is(:hover,:focus-
 .dock-morph .project-menu button{font-size:var(--font-size-caption);font-weight:var(--eyebrow-weight);line-height:var(--line-height-label);letter-spacing:var(--eyebrow-tracking);color:var(--nav-item-ink)}
 .dock-morph .project-menu button.active{background:var(--nav-active);color:var(--ink)}
 .dock-morph .project-menu button:not(.active):is(:hover,:focus-visible,.hover-trail){background:var(--nav-item-hover);color:var(--ink)}
+.dock-morph nav a,.dock-morph .context-nav button,.dock-morph nav .site-settings-toggle,.dock-morph .project-menu button{transition:background-color var(--nav-hover-out-duration) ease-out,color var(--nav-hover-out-duration) ease,transform var(--glass-button-press-duration) var(--glass-button-press-ease)}
+.project-card{transform-origin:center;transition:transform var(--glass-button-press-duration) var(--glass-button-press-ease)}
+@media(hover:hover) and (pointer:fine){.project-card:hover:not(:active){transform:scale(var(--card-hover-scale));transition-duration:var(--surface-hover-in-duration)}}
+.project-card:active{transform:scale(var(--card-press-scale));transition-duration:var(--glass-button-press-in-duration);transition-delay:0s}
+@media(prefers-reduced-motion:reduce){.project-card:active,.project-card:hover:not(:active){transform:none}}
+:root[data-animation="off"] .project-card:is(:active,:hover:not(:active)){transform:none}
 .dock-morph .project-menu-group h2{color:var(--eyebrow-ink)}
 .dock-morph .project-menu{isolation:isolate}
 .dock-morph .project-menu::before{content:"";position:absolute;z-index:0;left:8px;right:8px;top:0;height:var(--project-menu-hover-height,36px);border-radius:14px;background:var(--nav-item-hover);opacity:0;pointer-events:none;transform:translate3d(0,var(--project-menu-hover-y,0px),0);transition:transform 110ms var(--ease-press),height 130ms var(--ease-press),opacity 180ms ease;will-change:transform,height}
@@ -1658,7 +1663,7 @@ body.card-client-hidden .spatial-gallery-copy h3,body.card-client-hidden .spatia
 body.card-client-hidden.card-title-hidden .spatial-gallery-copy .spatial-gallery-description{grid-row:1}
 body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-title-hidden .spatial-gallery-copy h3,body.card-description-hidden .spatial-gallery-copy .spatial-gallery-description{display:none}
 .spatial-gallery-controls{display:flex;gap:var(--space-2);flex-shrink:0}
-.spatial-gallery-controls button{width:40px;height:40px;padding:0;font-size:20px}
+.spatial-gallery-controls button{width:40px;height:40px;padding:0;border-radius:var(--radius-icon-control);font-size:20px}
 .spatial-gallery-controls button:hover{color:var(--ink)}.spatial-gallery-controls button:disabled{opacity:.3;cursor:default}
 .spatial-gallery-viewport:focus-visible,.spatial-gallery-controls button:focus-visible{outline:2px solid var(--body-ink);outline-offset:4px}
 [data-gallery-axis="vertical"] .spatial-gallery-viewport{flex-direction:column;width:100%;height:760px;margin-inline:0;padding:calc((760px - var(--gallery-card-height))/2) 0;overflow-x:hidden;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior-y:contain}
@@ -1801,7 +1806,7 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 .home-services[data-services-layout="carousel"] .home-services-grid::-webkit-scrollbar{display:none}
 .card-rail-controls{display:flex;justify-content:flex-end;gap:var(--space-2);margin-top:var(--space-6)}
 .home-services[data-services-layout="grid"] .card-rail-controls{display:none}
-.card-rail-controls button{width:40px;height:40px;padding:0;border:1px solid color-mix(in oklch,var(--ink) 8%,transparent);border-radius:50%;background:var(--card-surface);color:var(--body-ink);font-size:20px}
+.card-rail-controls button{width:40px;height:40px;padding:0;border-radius:50%;color:var(--body-ink);font-size:20px}
 .card-rail-controls button:hover{color:var(--ink)}.card-rail-controls button:disabled{opacity:.3;cursor:default}
 [data-card-rail-viewport]:focus-visible{outline:2px solid var(--body-ink);outline-offset:4px}
 .home-testimonials[data-card-background="false"] .home-testimonial{padding:0;min-height:0;background:transparent;border:0;border-radius:0}
@@ -1826,10 +1831,10 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 .detail[data-card-orientation="portrait"] .detail-media-column>.visual{margin-inline:auto}
 .detail-layout>.description{grid-column:1;grid-row:1 / span 2}
 .detail-media-actions{display:flex;align-items:center;justify-content:center;gap:8px;margin:0;align-self:center}
-.detail-media-actions button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:10px 16px;border:1px solid color-mix(in oklch,var(--ink) 8%,transparent);border-radius:999px;background:color-mix(in oklch,var(--page) 78%,transparent);color:var(--body-ink);font:inherit;font-size:var(--font-size-body);line-height:1;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);cursor:pointer;transition:background 180ms ease,color 180ms ease}
-.detail-media-actions button:hover{background:color-mix(in oklch,var(--ink) 8%,var(--page));color:var(--ink)}
-.detail-media-actions button:focus-visible,.project-media-focus-close:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
-.detail-media-actions button svg,.project-media-focus-close svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+button.detail-media-action{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:10px 16px;border-radius:999px;color:var(--body-ink);font:inherit;font-size:var(--font-size-body);line-height:1;cursor:pointer}
+.detail-media-actions .detail-media-action{transition:background 180ms ease,color 180ms ease}
+.detail-media-action:focus-visible,.project-media-focus-close:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.detail-media-actions .detail-media-action svg,.project-media-focus-close svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .detail-media-actions [data-media-focus=fullscreen]{width:40px;padding:10px}
 .detail.heading-beside-image>.detail-layout>.detail-media-column{grid-column:2;grid-row:1 / span 6}
 .project-media-focus{position:fixed;inset:0;z-index:120;isolation:isolate}
@@ -1840,8 +1845,12 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 #dock.dock-morph.is-media-focus:not(.is-media-focus-active) .dock-content{opacity:var(--dock-return-reveal)}
 #dock.dock-morph.is-media-focus:not(.is-media-focus-active) .assistant-composer{transition-delay:0s}
 #dock.dock-morph:not(.is-media-focus-active) .project-media-focus-close{visibility:hidden;pointer-events:none}
-#dock .project-media-focus-close{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:var(--nav-icon-size);height:var(--nav-icon-size);min-height:var(--nav-icon-size);padding:0;border:0;border-radius:var(--radius-icon-control);background:transparent;color:var(--nav-item-ink);cursor:pointer;z-index:2}
-#dock .project-media-focus-close:hover{background:var(--nav-item-hover);color:var(--ink)}
+#dock .project-media-focus-close{--media-close-position:translate(-50%,-50%);position:absolute;left:50%;top:50%;transform:var(--media-close-position);display:grid;place-items:center;width:var(--nav-icon-size);height:var(--nav-icon-size);min-height:var(--nav-icon-size);padding:0;border:1px solid transparent;border-radius:var(--radius-icon-control);background:transparent;color:var(--nav-item-ink);cursor:pointer;z-index:2;transition:background var(--nav-hover-out-duration) ease-out,border-color var(--nav-hover-out-duration) ease-out,box-shadow var(--nav-hover-out-duration) ease-out,color var(--nav-hover-out-duration) ease-out,transform var(--glass-button-press-duration) var(--glass-button-press-ease)}
+/* Translation and scale stay together so the close control does not drift from the centre. */
+@media(hover:hover) and (pointer:fine){:is(#dock .project-media-focus-close,.project-media-focus-close.is-floating):hover:not(:active){transform:var(--media-close-position) scale(var(--card-hover-scale));transition-duration:var(--surface-hover-in-duration)}}
+:is(#dock .project-media-focus-close,.project-media-focus-close.is-floating):active{transform:var(--media-close-position) scale(var(--glass-button-press-scale));transition-duration:var(--glass-button-press-in-duration);transition-delay:0s}
+@media(prefers-reduced-motion:reduce){:is(#dock .project-media-focus-close,.project-media-focus-close.is-floating):hover:not(:active),:is(#dock .project-media-focus-close,.project-media-focus-close.is-floating):active{transform:var(--media-close-position)}}
+:root[data-animation="off"] :is(#dock .project-media-focus-close,.project-media-focus-close.is-floating):is(:active,:hover:not(:active)){transform:var(--media-close-position)}
 @media(max-width:750px){.detail-layout>.detail-media-column{grid-column:1;grid-row:1}.detail-layout>.description{grid-column:1;grid-row:2}.detail.heading-beside-image>.detail-layout>.detail-media-column{grid-column:1;grid-row:4}.detail.heading-beside-image>.detail-layout>.description{grid-row:6}}
 
 body:has(.project-media-focus) .site-tooltip{z-index:122}
@@ -1852,7 +1861,7 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 .detail-caption :is(p,h2){margin:0;font-size:var(--font-size-project-summary);font-weight:var(--font-weight-body);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body)}
 .detail-caption-title{color:var(--ink)}
 :root[data-heading-style="editorial"] .detail-caption .detail-caption-title{font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);text-transform:none;color:var(--ink);text-wrap:balance}
-.detail-caption-lead{color:var(--muted)}
+.detail-caption-lead{color:var(--eyebrow-ink)}
 .detail-caption-title + .detail-caption-lead{margin-top:var(--space-4)}
 .detail-caption .detail-caption-results{margin-top:var(--space-hero-heading-content);color:var(--body-ink)}
 .detail-caption .detail-caption-intro{margin-top:var(--space-5);color:var(--ink)}
@@ -1890,7 +1899,7 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 .surface.detail[data-card-orientation="landscape"]:not(.text-only-detail){--image-max-width-landscape:100000px}
 
 /* Close in the top-menu layout: a glass circle that fades in at the bottom centre, level with the bottom dock (same offset as .dock's --dock-bottom), with the right-aligned menu fading out. */
-.project-media-focus-close.is-floating{position:fixed;z-index:123;left:50%;bottom:max(24px,env(safe-area-inset-bottom));transform:translateX(-50%);display:grid;place-items:center;width:var(--media-close-size);height:var(--media-close-size);padding:0;border:1px solid var(--nav-rim);border-radius:50%;background:var(--chrome);color:var(--ink);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);cursor:pointer;animation:media-close-in var(--header-swap-duration) var(--ease-settle) both}
+.project-media-focus-close.is-floating{--media-close-position:translateX(-50%);position:fixed;z-index:123;left:50%;bottom:max(24px,env(safe-area-inset-bottom));transform:var(--media-close-position);display:grid;place-items:center;width:var(--media-close-size);height:var(--media-close-size);padding:0;border-radius:50%;color:var(--body-ink);cursor:pointer;transition:background-color var(--nav-hover-out-duration) ease-out,color var(--nav-hover-out-duration) ease,transform var(--glass-button-press-duration) var(--glass-button-press-ease);animation:media-close-in var(--header-swap-duration) var(--ease-settle) both}
 .project-media-focus-close.is-floating.is-leaving{animation:media-close-out 150ms ease both;pointer-events:none}
 @keyframes media-close-in{from{opacity:0}to{opacity:1}}
 @keyframes media-close-out{from{opacity:1}to{opacity:0}}
@@ -1970,7 +1979,7 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 .hero-carousel-stage{position:relative;height:calc(clamp(220px,32svh,340px) * var(--hero-carousel-size,1));margin-top:var(--hero-carousel-gap,64px);margin-bottom:clamp(80px,12vh,140px);touch-action:pan-y}
 .hero-carousel-controls{position:absolute;inset:auto 0 -48px;display:flex;align-items:center;justify-content:center;gap:14px;color:var(--muted);font-size:12px;z-index:2}
 .hero-carousel-controls span{margin-inline:6px}
-.hero-carousel-controls button{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;background:var(--chrome);color:var(--ink);font-size:17px}
+.hero-carousel-controls button{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;color:var(--ink);font-size:17px}
 .home-carousel-active .card-placement{position:relative;transform-origin:0 0;touch-action:pan-y}
 .home-carousel-active .card-slot{position:relative}
 .home-carousel-active .image-card[data-image-mode="bleed"]{display:flex;flex-direction:column;height:auto!important;min-height:0!important;padding:0!important}
@@ -1999,12 +2008,12 @@ body:has(.home-carousel-active){overflow-x:clip}
 @keyframes ask-card-arrive{0%{opacity:0;transform:translate3d(0,14px,0) scale(.975)}68%{opacity:1;transform:translate3d(0,-2px,0) scale(1.008)}100%{opacity:1;transform:translate3d(0,0,0) scale(1)}}
 .ask-cards .project-card.ask-card-enter{animation:ask-card-arrive 460ms var(--ease-settle) both;animation-delay:calc(var(--ask-card-index,0)*70ms);will-change:transform,opacity}
 .ask-response-lead p{white-space:pre-wrap}
-.ask-suggestions{display:flex;flex-wrap:wrap;gap:9px;margin-top:-10px}.ask-suggestions button{border:1px solid color-mix(in oklab,var(--body-ink) 18%,transparent);border-radius:999px;background:color-mix(in oklab,var(--card-surface) 75%,transparent);color:var(--body-ink);padding:9px 14px;font-size:var(--font-size-caption);line-height:1.35;text-align:left;transition:background-color .2s ease,border-color .2s ease}.ask-suggestions button:hover,.ask-suggestions button:focus-visible{background:var(--nav-active);border-color:color-mix(in oklab,var(--body-ink) 35%,transparent)}
+.ask-suggestions{display:flex;flex-wrap:wrap;gap:9px;margin-top:-10px}.ask-suggestions button{border-radius:999px;color:var(--body-ink);padding:9px 14px;font-size:var(--font-size-caption);line-height:1.35;text-align:left;transition:background-color .2s ease,border-color .2s ease}
 @keyframes suggestion-chip-appear{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
 .ask-suggestions button.suggestion-chip{animation:suggestion-chip-appear 300ms var(--ease-settle) both;animation-delay:calc(var(--suggestion-index,0)*65ms)}
 #dock .composer-suggestions{position:absolute;z-index:4;left:50%;bottom:calc(100% + 16px);width:max-content;max-width:min(var(--composer-max-width),calc(100vw - 28px));justify-content:center;gap:8px;margin:0;transform:translateX(-50%);pointer-events:auto}
 #dock .composer-suggestions[hidden]{display:none}
-#dock .composer-suggestions button{flex:0 1 auto;max-width:100%;background:color-mix(in oklab,var(--card-surface) 82%,transparent);backdrop-filter:blur(18px) saturate(1.15);-webkit-backdrop-filter:blur(18px) saturate(1.15)}
+#dock .composer-suggestions button{flex:0 1 auto;max-width:100%}
 /* The composer has a separate ambient viewport. Its light is a quiet elliptical
    field rising from below the page, never a glow attached to the input. */
 @property --assistant-glow-angle{syntax:"<angle>";inherits:false;initial-value:0deg}
@@ -2036,10 +2045,11 @@ body:has(.home-carousel-active){overflow-x:clip}
 :root[data-animation="off"] #dock.is-composer .composer-aura-light::before,:root[data-animation="off"] #dock.is-composer .composer-aura-light::after{animation:none;opacity:.1}
 :root[data-animation="off"] .ask-suggestions button.suggestion-chip{animation:none;opacity:1;transform:none}
 
-/* One transparent glass material for dock surfaces and suggested prompts. */
+/* Navigation, standalone controls and suggested prompts share one material. */
 .glass-surface,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface{background:linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));-webkit-backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness))}
-.ask-suggestions button.glass-surface{border:1px solid var(--dock-outline);box-shadow:inset 0 1px 0 var(--nav-highlight);color:var(--composer-text-ink);font-size:var(--composer-font-size);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);line-height:var(--line-height-label)}
-.ask-suggestions button.glass-surface:is(:hover,:focus-visible),#dock .composer-suggestions button.glass-surface:is(:hover,:focus-visible){background:linear-gradient(var(--nav-item-hover),var(--nav-item-hover)),linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));color:var(--ink)}
+button.glass-surface{border:1px solid var(--dock-outline);box-shadow:inset 0 1px 0 var(--nav-highlight)}
+.ask-suggestions button.glass-surface{color:var(--composer-text-ink);font-size:var(--composer-font-size);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);line-height:var(--line-height-label)}
+button.glass-surface:is(:hover,:focus-visible):not(:active),#dock .composer-suggestions button.glass-surface:is(:hover,:focus-visible):not(:active){background:linear-gradient(var(--nav-item-hover),var(--nav-item-hover)),linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));color:var(--ink)}
 
 .project-menu-client{flex:0 0 auto;color:inherit}
 .project-menu-title{min-width:0;overflow:hidden;text-overflow:ellipsis}
@@ -2080,7 +2090,7 @@ body:has(.home-carousel-active){overflow-x:clip}
 :root[data-nav-position="top"] #dock{left:auto;right:calc((100vw - min(100vw, var(--nav-shell-width))) / 2 + var(--nav-gutter));transform:none}
 :root[data-nav-position="top"] #dock>.assistant-launcher{left:auto;right:calc(100% + var(--nav-section-gap))}
 /* Plain navigation has no visible pill, so the last link's text (not its padding) meets the content edge. */
-:root[data-nav-position="top"][data-plain-nav="on"] #dock:not(.is-composer){right:calc((100vw - min(100vw, var(--nav-shell-width))) / 2 + var(--nav-gutter) - var(--composer-control-inset) - min(calc(var(--nav-item-padding) + 5px), 16px))}
+:root[data-nav-position="top"] #dock.control-ghost:not(.is-composer){right:calc((100vw - min(100vw, var(--nav-shell-width))) / 2 + var(--nav-gutter) - var(--composer-control-inset) - min(calc(var(--nav-item-padding) + 5px), 16px))}
 @media(max-width:750px) and (pointer:coarse){:is(#dock,.assistant-inline-composer) .assistant-composer input{font-size:max(16px,var(--composer-font-size))}}
 
 .corner-controls{position:fixed;right:max(24px,env(safe-area-inset-right));bottom:max(24px,env(safe-area-inset-bottom));z-index:44;display:flex;align-items:center;gap:8px}.corner-controls[hidden]{display:none!important}
@@ -2101,16 +2111,11 @@ body:has(.home-carousel-active){overflow-x:clip}
 #askPage .ask-cards .project-card>.card-copy>h3{position:static;visibility:visible;opacity:1;margin:0;width:auto;font-size:var(--font-size-body);font-weight:var(--font-weight-heading);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-card)}
 
 /* glass-utility.css */
-/* Shared transparent glass for utility icons and carousel actions. */
-.glass-utility-button{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:10px 16px;border-radius:var(--radius-header-control);border:1px solid var(--nav-rim);background:linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--nav-glass-alpha) + .14)),rgba(var(--nav-glass-rgb),var(--nav-glass-alpha)));backdrop-filter:blur(24px) saturate(1.4);-webkit-backdrop-filter:blur(24px) saturate(1.4);box-shadow:inset 0 1px 0 var(--nav-highlight),0 6px 22px var(--nav-shadow);color:var(--muted);font:inherit;font-size:var(--font-size-small);line-height:1;cursor:pointer;user-select:none;transform:scale(1);transition:transform 160ms var(--ease-settle),color 180ms ease}
-.glass-utility-button:hover{color:var(--ink);transform:scale(.96)}
-.glass-utility-button:active{transform:scale(var(--glass-button-press-scale));transition:transform var(--glass-button-press-in-duration) var(--ease-settle),color 180ms ease}
-.glass-utility-button:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+/* Utility geometry; control-style.css owns material and interaction. */
+.glass-utility-button{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:10px 16px;border-radius:var(--radius-header-control);color:var(--muted);font:inherit;font-size:var(--font-size-small);line-height:1;cursor:pointer;user-select:none;}
 /* The same chevrons as the header's Previous and Next. */
 :is(.card-rail-controls,.spatial-gallery-controls) button svg{display:block;width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .glass-utility-button[hidden]{display:none}
-@media(prefers-reduced-motion:reduce){.glass-utility-button{transition:none}.glass-utility-button:hover,.glass-utility-button:active{transform:none}}
-:root[data-animation="off"] .glass-utility-button:hover,:root[data-animation="off"] .glass-utility-button:active{transform:none}
 
 /* iconiq-chat-effects.css */
 /* Adapted from Iconiq, MIT © Edwin Vakayil. */
@@ -2364,37 +2369,10 @@ body>header,body.wide-project-hero-page>header{width:100%;max-width:var(--nav-sh
 :root.mascot-hidden .agent{display:none}
 
 /* glass-style.css */
-/* Glass style toggle: inner light replaces explicit borders on standalone controls and media cards. */
-:root[data-glass-style="on"] :is(.glass-utility-button,.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back,#dock>.assistant-launcher){border:0;background:var(--glass-button-fill);box-shadow:var(--glass-button-edge);backdrop-filter:blur(var(--glass-button-blur));-webkit-backdrop-filter:blur(var(--glass-button-blur))}
-:root[data-glass-style="on"] :is(.card-rail-controls button,.spatial-gallery-controls button){border-radius:50%}
-:root[data-glass-style="on"] :is(.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back){transition:color 180ms ease,transform var(--glass-button-press-duration) var(--glass-button-press-ease)}
-:root[data-glass-style="on"] :is(.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back):active:not(:disabled){transform:scale(var(--glass-button-press-scale));transition-duration:160ms,var(--glass-button-press-in-duration)}
-:root[data-glass-style="on"] .detail-media-actions button:hover{background:var(--glass-button-fill)}
-:root[data-glass-style="on"] :is(.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface):is(:hover,:focus-visible){background:linear-gradient(var(--nav-item-hover),var(--nav-item-hover)),var(--glass-button-fill)}
-:root[data-glass-style="on"] .card-bottom .open-symbol{border-color:transparent;box-shadow:var(--glass-button-edge)}
-:root[data-glass-style="on"] .visual>.image-edge{background:var(--glass-card-wash);box-shadow:var(--glass-card-edge)}
-:root[data-glass-style="on"] body:not(.card-background-hidden) .surface:not(.detail)>.liquid-skin,:root[data-glass-style="on"] body:not(.page-card-background-hidden) .surface.detail>.liquid-skin{box-shadow:var(--glass-card-edge)!important}
-@media(prefers-reduced-motion:reduce){:root[data-glass-style="on"] :is(.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back):active{transform:none}}
-:root[data-animation="off"][data-glass-style="on"] :is(.card-rail-controls button,.detail-media-actions button,.ask-suggestions button.glass-surface,#dock .composer-suggestions button.glass-surface,#dock .assistant-back):active{transform:none}
-:root:not([data-glass-style="on"]) #dock .dock-glass-light{display:none}
-:root[data-glass-style="on"] #dock .dock-outline{stroke:transparent}
-:root[data-glass-style="on"] #dock .dock-glass-light{fill:currentColor;stroke:none}
-:root[data-glass-style="on"] #dock .dock-glass-light-rim{flood-color:var(--glass-button-rim-light)}
-:root[data-glass-style="on"] #dock .dock-glass-light-side{flood-color:var(--glass-button-rim-dark)}
-:root[data-glass-style="on"] #dock .dock-glass-light-glow{flood-color:var(--glass-button-glow)}
-/* Ghost variant: controls inside the composer stay clear at rest and only catch the glass light when engaged. */
-:root[data-glass-style="on"] :is(:is(#dock,.assistant-inline-composer) .assistant-composer button,#dock .voice-composer button:not([aria-pressed="false"]),#dock .composer-context-actions :is(button,a)){transition:background var(--nav-hover-out-duration) ease-out,box-shadow var(--nav-hover-out-duration) ease-out,color 160ms ease,transform var(--glass-button-press-duration) var(--glass-button-press-ease)}
-:root[data-glass-style="on"] :is(:is(#dock,.assistant-inline-composer) .assistant-composer button,#dock .voice-composer button:not([aria-pressed="false"]),#dock .composer-context-actions :is(button,a)):is(:hover,:focus-visible):not(:disabled),:root[data-glass-style="on"] :is(#dock,.assistant-inline-composer) .assistant-composer button[aria-pressed=true]{background:var(--glass-ghost-fill);box-shadow:var(--glass-button-edge);transition-duration:var(--nav-hover-in-duration),var(--nav-hover-in-duration),160ms,var(--glass-button-press-duration)}
-:root[data-glass-style="on"] :is(:is(#dock,.assistant-inline-composer) .assistant-composer button,#dock .voice-composer button,#dock .composer-context-actions :is(button,a)):active:not(:disabled){transform:scale(var(--glass-button-press-scale));transition-duration:160ms,var(--glass-button-press-in-duration)}
-:root[data-animation="off"][data-glass-style="on"] :is(:is(#dock,.assistant-inline-composer) .assistant-composer button,#dock .voice-composer button,#dock .composer-context-actions :is(button,a)):active{transform:none}
-@media(prefers-reduced-motion:reduce){:root[data-glass-style="on"] :is(:is(#dock,.assistant-inline-composer) .assistant-composer button,#dock .voice-composer button,#dock .composer-context-actions :is(button,a)):active{transform:none}}
-/* A lone action owns its whole pill, so its hover light fills the pill instead of sitting inset within it. */
-:root[data-glass-style="on"] #dock .composer-context-slot[data-group-solo="true"] :is(button,a){position:relative;isolation:isolate}
-:root[data-glass-style="on"] #dock .composer-context-slot[data-group-solo="true"] :is(button,a)::before{content:"";position:absolute;inset:calc(-1 * var(--context-action-padding));z-index:-1;border-radius:calc(var(--context-control-height) / 2 + var(--context-action-padding));background:var(--glass-ghost-fill);box-shadow:var(--glass-button-edge);opacity:0;pointer-events:none;transition:opacity var(--nav-hover-out-duration) ease-out}
-:root[data-glass-style="on"] #dock .composer-context-slot[data-group-solo="true"] :is(button,a):is(:hover,:focus-visible):not(:disabled){background:transparent;box-shadow:none}
-:root[data-glass-style="on"] #dock .composer-context-slot[data-group-solo="true"] :is(button,a):is(:hover,:focus-visible):not(:disabled)::before{opacity:1;transition-duration:var(--nav-hover-in-duration)}
-/* The menu's selected and hovered links wear the composer buttons' glass. */
-:root[data-glass-style="on"] #dock nav a:is(.active,:hover,:focus-visible,.hover-trail){background:var(--glass-ghost-fill);box-shadow:var(--glass-button-edge)}
+/* Card glass is independent of the control variant. */
+:root[data-card-glass-style="on"] .card-bottom .open-symbol{border-color:transparent;box-shadow:var(--glass-button-edge)}
+:root[data-card-glass-style="on"] .visual>.image-edge{background:var(--glass-card-wash);box-shadow:var(--glass-card-edge)}
+:root[data-card-glass-style="on"] body:not(.card-background-hidden) .surface:not(.detail)>.liquid-skin,:root[data-card-glass-style="on"] body:not(.page-card-background-hidden) .surface.detail>.liquid-skin{box-shadow:var(--glass-card-edge)!important}
 
 /* assistant-floating.css */
 /* Assistant launcher: its own glass pill beside the dock, not an item of the menu. */
@@ -2584,17 +2562,12 @@ body.card-details.card-description-hidden .project-card.image-card>.card-copy>.c
 }
 
 /* plain-nav.css */
-/* Plain navigation (Settings → Navigation): the dock and the buttons become plain text links. The root carries
-   data-plain-nav="on". Backgrounds, borders, shadows, blur and the dock's glass and outline are removed; labels and
-   icons stay, and the active page reads by colour and an underline instead of a pill. The chat composer is an input
-   rather than a link, so it keeps its glass (#dock.is-composer). The glass-style rules this overrides sit behind ids
-   and long selectors, hence !important; it is confined to this opt-in mode. */
-:root[data-plain-nav="on"] #dock:not(.is-composer) :is(.dock-glass,.dock-outline,.composer-aura-viewport){display:none!important}
-:root[data-plain-nav="on"] :is(#dock:not(.is-composer) :is(nav a,.context-nav button,.project-menu-toggle,.assistant-back,.assistant-launcher),#dock:not(.is-composer)>.assistant-launcher,.glass-utility-button,.header-detail-nav button,.detail-media-actions button,.card-rail-controls button,.spatial-gallery-controls button){background:none!important;box-shadow:none!important;border:0!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;color:var(--muted)}
-:root[data-plain-nav="on"] :is(#dock:not(.is-composer) :is(nav a,.context-nav button,.project-menu-toggle,.assistant-back,.assistant-launcher),.glass-utility-button,.header-detail-nav button,.detail-media-actions button,.card-rail-controls button,.spatial-gallery-controls button):is(:hover,:focus-visible){color:var(--ink)!important}
-:root[data-plain-nav="on"] #dock:not(.is-composer) nav a:not(.active){color:var(--nav-link-ink)}
-:root[data-plain-nav="on"] #dock:not(.is-composer) nav a.active{color:var(--nav-link-active-ink)!important;text-decoration:underline;text-underline-offset:.4em;text-decoration-thickness:1px}
-:root[data-plain-nav="on"] #dock:not(.is-composer) nav a.active:is(:hover,:focus-visible){color:var(--ink)!important}
+/* Ghost navigation keeps text emphasis; control-style.css owns material and feedback. */
+:root #dock.control-ghost:not(.is-composer)>.composer-aura-viewport{display:none}
+:root #dock.control-ghost:not(.is-composer) nav a:not(.active){color:var(--nav-link-ink)}
+:root #dock.control-ghost:not(.is-composer) nav a.active{color:var(--nav-link-active-ink);text-decoration:underline;text-underline-offset:.4em;text-decoration-thickness:1px}
+:root #dock.control-ghost:not(.is-composer) nav a.active:is(:hover,:focus-visible){color:var(--ink)}
+:root #dock nav a.control-ghost.active:not(:hover,:focus-visible,.hover-trail){background:transparent;box-shadow:none}
 
 /* plain-cards.css */
 /* Plain cards (Settings → Cards): removes the inner glow, lighting and reflections from cards, and shadows; the card itself (its
@@ -2616,6 +2589,32 @@ html:root[data-plain-cards="on"][data-plain-cards="on"][data-plain-cards="on"] b
    a bottom padding of twice --empty-hero-lift raises the visible content (cards, captions, arrows) slightly above the middle. Current layout only: Flip and Flat keep their sticky hero. */
 main:not(.home-view-split) .homepage-layout:has(.home-product-carousel:not([hidden])):not(:has(.hero-about>:is(.badge,h1,.hero-strapline):not([hidden]))):not(:has(.hero-copy>*)):not(:has(.home-overview:not([hidden])))>.home-hero{display:none}
 main:not(.home-view-split) .homepage-layout:has(.home-product-carousel:not([hidden])):not(:has(.hero-about>:is(.badge,h1,.hero-strapline):not([hidden]))):not(:has(.hero-copy>*)):not(:has(.home-overview:not([hidden])))>.home-product-carousel{margin-top:var(--header-total);min-height:calc(100svh - var(--header-total));display:grid;align-content:center;padding-bottom:calc(2 * var(--empty-hero-lift))}
+
+/* control-style.css */
+/* Variant classes own material; components retain geometry and route transforms. */
+/* An empty navigation has no surface, but composer and project actions remain usable. */
+:root #dock:not(.is-composer,.split,[data-separate-back="true"]):not(:has(>.dock-content>nav>:is(a,button):not([hidden]))){display:none}
+.control-outline{--control-fill:linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));--control-border:var(--dock-outline);--control-shadow:inset 0 1px 0 var(--nav-highlight);--control-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));--control-hover-fill:linear-gradient(var(--nav-item-hover),var(--nav-item-hover)),var(--control-fill);--control-hover-shadow:var(--control-shadow);--control-item-fill:var(--nav-item-hover);--control-item-shadow:none;--control-light-display:none}
+.control-glass{--control-fill:var(--glass-button-fill);--control-border:transparent;--control-shadow:var(--glass-button-edge);--control-filter:blur(var(--glass-button-blur));--control-hover-fill:var(--glass-ghost-fill);--control-hover-shadow:var(--glass-button-edge);--control-item-fill:var(--glass-ghost-fill);--control-item-shadow:var(--glass-button-edge);--control-light-display:block}
+.control-ghost{--control-fill:transparent;--control-border:transparent;--control-shadow:none;--control-filter:none;--control-hover-fill:var(--nav-item-hover);--control-hover-shadow:none;--control-item-fill:var(--nav-item-hover);--control-item-shadow:none;--control-light-display:none}
+:root .control-surface:is(.control-ghost,.control-outline,.control-glass),:root #dock .control-surface:is(.control-ghost,.control-outline,.control-glass){border:1px solid var(--control-border);background:var(--control-fill);box-shadow:var(--control-shadow);backdrop-filter:var(--control-filter);-webkit-backdrop-filter:var(--control-filter)}
+:root .control-surface:is(:hover,:focus-visible):not(:disabled),:root #dock .control-surface:is(:hover,:focus-visible):not(:disabled){background:var(--control-hover-fill);box-shadow:var(--control-hover-shadow);color:var(--ink)}
+:root .control-surface:not([data-header-action],.project-media-focus-close),:root #dock .control-surface:not(.project-media-focus-close),:root .control-item,:root #dock .control-item{transition:scale var(--glass-button-press-duration) var(--glass-button-press-ease),background var(--nav-hover-out-duration) ease-out,box-shadow var(--nav-hover-out-duration) ease-out,color var(--nav-hover-out-duration) ease-out}
+:root :is(.control-surface,.control-item){scale:1;transform-origin:center}
+@media(hover:hover) and (pointer:fine){:root :is(.control-surface,.control-item):not(.project-media-focus-close):hover:not(:active,:disabled){scale:var(--card-hover-scale)}}
+:root :is(.control-surface,.control-item):not(.project-media-focus-close):active:not(:disabled){scale:var(--glass-button-press-scale);transition-duration:var(--glass-button-press-in-duration);transition-delay:0s}
+:root :is(.control-surface,.control-item):focus-visible{outline:2px solid var(--ink);outline-offset:var(--space-1)}
+:root #dock.control-container:not(.is-composer)>.dock-glass{background:var(--control-fill);backdrop-filter:var(--control-filter);-webkit-backdrop-filter:var(--control-filter)}
+:root #dock.control-container>.dock-outline{stroke:var(--control-border)}
+:root #dock.control-container.is-composer>.dock-outline{stroke:var(--dock-outline)}
+:root #dock.control-container .dock-glass-light{display:var(--control-light-display);fill:currentColor;stroke:none}
+:root #dock.control-container .dock-glass-light-rim{flood-color:var(--glass-button-rim-light)}
+:root #dock.control-container .dock-glass-light-side{flood-color:var(--glass-button-rim-dark)}
+:root #dock.control-container .dock-glass-light-glow{flood-color:var(--glass-button-glow)}
+:root #dock .control-item:is(:hover,:focus-visible,.hover-trail,.active,[aria-pressed="true"]):not(:disabled),:root .assistant-inline-composer .control-item:is(:hover,:focus-visible,[aria-pressed="true"]):not(:disabled){background:var(--control-item-fill);box-shadow:var(--control-item-shadow);color:var(--ink)}
+:root #dock .control-item:not(:is(:hover,:focus-visible,.hover-trail,.active,[aria-pressed="true"])),:root .assistant-inline-composer .control-item:not(:is(:hover,:focus-visible,[aria-pressed="true"])){background:transparent;box-shadow:none}
+@media(prefers-reduced-motion:reduce){:root :is(.control-surface,.control-item):not(.project-media-focus-close):is(:hover,:active):not(:disabled){scale:1}}
+:root[data-animation="off"] :is(.control-surface,.control-item):not(.project-media-focus-close):is(:hover,:active):not(:disabled){scale:1}
 
 /* mobile.css */
 /* Keep editable text large enough to avoid Safari's automatic input zoom.

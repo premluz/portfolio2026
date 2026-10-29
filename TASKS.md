@@ -67,6 +67,38 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 
 ## Done
 
+### TASK-024 Make footer label buttons fully rounded
+- Status: done
+- Tags: area/home, area/design-system
+- Evidence: Footer labels use the dedicated pill-radius token without altering other controls or shared materials. Build, footer-switch and five browser tests pass, including pill geometry for both labels in all three control variants. Full check still stops at the existing About section-order assertion, 2026-10-29.
+
+### TASK-023 Hide the empty navigation shell
+- Status: done
+- Tags: area/dock, kind/bug
+- Evidence: The dock disappears when no direct navigation links/buttons remain, except while the composer or project controls are active. Build, menu-icon-settings and seven browser checks pass; Home and Lab cover each item's restoration, saved hidden state and composer availability, 2026-10-29.
+
+### TASK-022 Make footer contact controls inherit button styling
+- Status: done
+- Tags: area/home, area/design-system
+- Related: ADR-012
+- Evidence: LinkedIn and Email inherit the global/Utilities control variant instead of forcing Ghost. The existing saved text option now selects labels versus icons, with padded rounded label buttons and no footer-specific material or hover overrides. Build, footer-switch, settings-transfer and site-settings checks pass; five browser tests pass, including footer materials across all three variants, hover/press, icon presentation, Utilities override and reload persistence, 2026-10-29.
+
+### TASK-021 Consolidate Ghost, Outline and Glass control variants
+- Status: done
+- Tags: area/dock, area/design-system, area/assistant
+- Related: ADR-012
+- Evidence: Design → Controls now provides a global variant and five saved Inherit/local overrides, with element/group declarations taking precedence. Legacy flags and published/imported presets migrate without losing explicit choices; Glass cards is independent. Build, thirteen focused unit tests and five browser tests pass, covering both themes, desktop/mobile widths, dynamically created controls, all override groups, keyboard/hover/press, reduced motion, Animation Off and centred fullscreen Close. Full check still stops at the pre-existing About section-order assertion (`tests/about-page.mjs:34`), 2026-10-29.
+
+### TASK-020 Match carousel controls and navigation to the header surface
+- Status: done
+- Tags: area/home, area/dock
+- Evidence: gallery, section-rail and optional hero-carousel controls reuse `.glass-surface`; the always-dark nav outline shares the dark header outline token. Build and glass-style, card-rail, card-gallery, hero-carousel and dock-morph tests pass. Chromium confirms matching control materials for both themes, glass variants and plain-nav settings, plus matching normal/always-dark nav outlines, 2026-10-29.
+
+### TASK-019 Share navigation surfaces across project controls and assistant suggestions
+- Status: done
+- Tags: area/project-detail, area/dock, area/assistant
+- Evidence: removed the separate chrome-based media-control material; project navigation, media actions, full-screen Close and both suggestion placements use the shared navigation surface. Build, glass-style and suggestion-chip tests pass. Chromium computed-style checks pass for glass on/off, light/dark themes and portrait/landscape projects, including non-glass hover, 2026-10-29. The full check stops at the existing About section-order assertion in `tests/about-page.mjs:34`; the existing press-feedback source check also expects a removed plain-nav selector.
+
 ### TASK-018 Consolidate How I work content
 - Status: done
 - Tags: area/content, area/home

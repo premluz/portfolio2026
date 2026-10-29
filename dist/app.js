@@ -41,6 +41,7 @@ import {installHoverTrail} from './hover-trail.js';
 import {installProjectMenuHover} from './project-menu-hover.js';
 import {initDesignSystem} from './design-system.js';
 import {mountGlassStyle} from './glass-style.js';
+import {mountControlStyles} from './control-style.js';
 import {mountSimpleTransitions} from './simple-transitions.js';
 import {mountAssistantPresentation,setAssistantFloating} from './assistant-floating.js';
 import {createLabRipple} from './lab-transition.js';
@@ -284,7 +285,7 @@ $('#contentStartFirst').checked=contentStartFirst;$('#contentStartFirst').onchan
 let projectBackdropEnabled=readFlag('prem-project-backdrop'),featureStage=readFlag('prem-feature-stage');
 let navPosition='bottom';try{navPosition=localStorage.getItem('prem-nav-position')==='top'?'top':'bottom';}catch(error){console.warn('Navigation position unreadable; using bottom',error);}
 document.documentElement.dataset.navPosition=navPosition;
-let plainNav=readFlag('prem-plain-nav');document.documentElement.dataset.plainNav=plainNav?'on':'off';
+
 let plainCards=readFlag('prem-plain-cards');document.documentElement.dataset.plainCards=plainCards?'on':'off';
 let plainImages=readFlag('prem-plain-images');document.documentElement.dataset.plainImages=plainImages?'on':'off';
 const projectBackdrop=createProjectBackdrop({reduced:()=>reduce.matches,duration:()=>duration*(slow?2.5:1),before:$('.room-shade')?.nextSibling||null});
@@ -507,7 +508,7 @@ $('#detailHeadingBeside').onchange=e=>setDetailLayout({heading:e.target.checked}
 $('#wideHero').onchange=e=>setDetailLayout({hero:e.target.checked});
 $('#projectBackdrop').checked=projectBackdropEnabled;$('#projectBackdrop').onchange=e=>{projectBackdropEnabled=e.target.checked;saveFlag('prem-project-backdrop',projectBackdropEnabled);const p=cards.find(card=>card.id===current);projectBackdrop.sync(projectBackdropEnabled&&p&&!p.body?p:null);};
 $('#plainCards').checked=plainCards;$('#plainImages').checked=plainImages;$('#plainImages').onchange=e=>{plainImages=e.target.checked;document.documentElement.dataset.plainImages=plainImages?'on':'off';saveFlag('prem-plain-images',plainImages);};$('#plainCards').onchange=e=>{plainCards=e.target.checked;document.documentElement.dataset.plainCards=plainCards?'on':'off';saveFlag('prem-plain-cards',plainCards);};
-$('#plainNav').checked=plainNav;$('#plainNav').onchange=e=>{plainNav=e.target.checked;document.documentElement.dataset.plainNav=plainNav?'on':'off';saveFlag('prem-plain-nav',plainNav);};
+
 $('#headerDetailNav').addEventListener('click',event=>{const button=event.target.closest('[data-header-action]');if(!button)return;const action=button.dataset.headerAction;void dispatchCommand({id:action==='back'?'navigation.back':'project.'+action,source:'pointer'});});
 $('#navPosition').value=navPosition;$('#navPosition').onchange=e=>{navPosition=e.target.value==='top'?'top':'bottom';document.documentElement.dataset.navPosition=navPosition;syncDockActions(current,{duration:duration*(slow?2.5:1)});try{localStorage.setItem('prem-nav-position',navPosition);}catch(error){console.warn('Navigation position not saved',error);}};
 $('#featureStage').checked=featureStage;$('#featureStage').onchange=e=>{if(busy){e.target.checked=featureStage;return;}featureStage=e.target.checked;saveFlag('prem-feature-stage',featureStage);homeLayout?.setFeatureStage(featureStage);refreshImageFrames();};
@@ -740,7 +741,7 @@ animationButton.onclick=()=>{if(busy)return;animationsEnabled=!animationsEnabled
 };
 syncAnimationPreference();systemReduce.addEventListener('change',()=>{if(!busy)refreshAnimationPreference();});
 renderProjectMenu();
-mountGlassStyle($('#glassStyle'));const simpleTransitions=mountSimpleTransitions({enabled:$('#simpleTransitions'),skipExit:$('#simpleTransitionsSkipExit')});initDesignSystem($('#settings'),{canChange:()=>!busy,onChange:()=>{homeLayout?.flush(true);applyDetailHeading();main.querySelectorAll('.image-card>.visual').forEach(updateImageShade);dockMorph.refresh();if(!projectMenu.hidden){projectPopover.measure();projectPopover.paint();}}});
+mountGlassStyle($('#cardGlassStyle'));mountControlStyles($('#settings'));const simpleTransitions=mountSimpleTransitions({enabled:$('#simpleTransitions'),skipExit:$('#simpleTransitionsSkipExit')});initDesignSystem($('#settings'),{canChange:()=>!busy,onChange:()=>{homeLayout?.flush(true);applyDetailHeading();main.querySelectorAll('.image-card>.visual').forEach(updateImageShade);dockMorph.refresh();if(!projectMenu.hidden){projectPopover.measure();projectPopover.paint();}}});
 mountHeroCarouselSettings($('#settings'),{canChange:()=>!busy&&!navigationPreparing,onChange:settings=>{heroCarouselSettings=settings;applyHeroCarouselSettings(document.documentElement,settings);homeLayout?.carousel.measure();}});
 mountCarouselSettings($('#settings'),{canChange:()=>!busy&&!navigationPreparing,onChange:settings=>{carouselSettings=settings;document.documentElement.style.setProperty('--carousel-card-scale',String(settings.size/100));document.documentElement.style.setProperty('--carousel-gap',settings.gap+'px');for(const gallery of cardGalleries)if(gallery instanceof CardGallery)gallery.setArcSettings(settings);}});
 $('#previous').onclick=()=>dispatchCommand({id:'project.previous',source:'pointer'});$('#next').onclick=()=>dispatchCommand({id:'project.next',source:'pointer'});for(const key of Object.keys(materialSettings)){const input=document.getElementById(key);input.value=materialSettings[key];input.oninput=()=>{materialSettings[key]=+input.value;document.getElementById(key+'Value').value=input.value+'%';document.documentElement.style.setProperty('--reflection-strength',String(materialSettings.reflections/100));document.documentElement.style.setProperty('--glow-strength',String(materialSettings.glow/100));};}document.documentElement.style.setProperty('--reflection-strength',String(materialSettings.reflections/100));

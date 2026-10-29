@@ -3,7 +3,7 @@ title: Project handoff
 type: guide
 status: active
 owner: Prem
-updated: 2026-10-26
+updated: 2026-10-29
 summary: Architecture map, build and content workflow, open items and the transfer checklist.
 tags: [area/docs, area/deploy]
 related: [PROJECT_STATE.md, DEPLOYMENT.md]
@@ -20,6 +20,7 @@ This is a modular portfolio frontend and content framework, not a CMS-dependent 
 | --- | --- |
 | `dist/index.html` | Main document and bootstrapping markup |
 | `dist/*.js`, `dist/*.css` | Browser modules, design tokens, layouts, navigation and motion |
+| `dist/control-preferences.js`, `dist/control-style.js`, `dist/control-style.css` | Global and local control variants; see DESIGN_SYSTEM.md and ADR-012 |
 | `dist/assets/` | Local project images and video |
 | `dist/vendor/` | Bundled third-party assets and their notices |
 | `content/catalog.json` | Editable content catalog, including projects, profile pages and reusable components |
