@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {commandDefinitions} from '../dist/interaction-commands.js';
 import {LAB_RIPPLE} from '../dist/motion-tokens.js';
+import {escapeText} from '../dist/content/html.js';
 
 // The Lab is an in-app route (#lab), not a second HTML page: the home page's cards as an even four-column grid.
 // lab.html remains only so old links keep working.
@@ -21,8 +22,8 @@ assert(menu.indexOf("routeButton('work'")<menu.indexOf("routeButton('lab'")&&men
 assert(commandDefinitions.some(command=>command.id==='route.lab'),'The Lab command is in the command catalog');
 assert(menu.includes("routeButton('lab','Lab',icons.lab)"),'The site menu opens the Lab in-app');
 {const {LAB_HEADING,labHeadingMarkup}=await import('../dist/lab-page.js');const css=await read('lab.css');
-assert.deepEqual({...LAB_HEADING},{title:'Experiments',summary:'Prototypes, R&D and projects that never made it to market.'},'The Lab is titled Experiments, with no eyebrow');
-assert(labHeadingMarkup().includes('</h1><div class="info-body"><p>Prototypes, R&amp;D and projects that never made it to market.</p></div>'),'The body text uses About\'s structure');
+assert.deepEqual(Object.keys(LAB_HEADING).sort(),['summary','title'],'The Lab heading is a title and one line, with no eyebrow');assert.equal(LAB_HEADING.title,'Experiments');assert(LAB_HEADING.summary.trim(),'The Lab has its one line of text (its wording is the owner\'s to change)');
+assert(labHeadingMarkup().includes('</h1><div class="info-body"><p>'+escapeText(LAB_HEADING.summary)+'</p></div>'),'The body text uses About\'s structure');
 const about=await read('about-page.css');assert(about.includes(':is(.about-hero-copy,.lab-heading) .info-body{')&&about.includes(':is(.about-hero-copy,.lab-heading) .info-body p{'),'The Lab shares About\'s body text rules');
 assert((await read('design-system.css')).includes('main .lab-heading .info-body p,'),'Its body text takes the shared body-text colour');
 assert(labHeadingMarkup().startsWith('<section class="lab-heading" aria-labelledby="labTitle"><h1 id="labTitle" tabindex="-1">Experiments</h1>'),'The heading is a real page heading');

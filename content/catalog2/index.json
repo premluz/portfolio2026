@@ -1,0 +1,6 @@
+{
+  "extends": "catalog",
+  "documents": [
+    "projects/tracr.json"
+  ]
+}

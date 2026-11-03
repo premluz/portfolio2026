@@ -57,7 +57,7 @@ assert(sectionStyles.includes('.home-testimonial figcaption{display:flex;flex-di
 assert(sectionStyles.includes('.home-testimonials{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))')&&sectionStyles.includes('.home-testimonials>h2{grid-column:1/-1}')&&sectionStyles.includes('.home-testimonials-grid{grid-column:var(--content-column-start) / span 2}'),'Testimonial heading spans all columns while the irregular card grid occupies columns two and three');
 assert(sectionStyles.includes('.home-testimonials-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));--testimonial-gap:var(--space-6);column-gap:0;row-gap:var(--testimonial-gap);min-width:0;width:auto;max-width:100%}')&&sectionStyles.includes('column-gap:var(--space-6);min-width:0}'),'Testimonial grid stays within the selected page content width');
 assert(sectionStyles.includes('.home-testimonial:nth-child(4n+1),.home-testimonial:nth-child(4n){grid-column:span 7}')&&sectionStyles.includes('.home-testimonial{grid-column:span 5'),'Testimonial cards keep their nested irregular two-column rhythm');
-for(const name of ['Gabriele Ciaccasassi','Matt Bindoff','Venessa Benett','Jonathan Burk'])assert(quoteHTML.includes(name));
+for(const name of ['Paul Wilsher','Matt Bindoff','Santiago Jaramillo','Jonathan Burk'])assert(quoteHTML.includes(name));
 for(const block of quotes.blocks)assert(quotes.evidence.some(e=>block.evidenceIds.includes(e.id)&&e.text===block.text),'Every displayed quote retains its supplied evidence');
 assert(!/Derek|Christine Fernandez|Mick Gow/.test(quoteHTML),'Reference layout does not introduce testimonials about someone else');
 for(const layout of ['regular','masonry']){

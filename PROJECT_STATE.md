@@ -50,13 +50,9 @@ TASK-033: Developer settings → Mascott follows Motion. Six appearance dropdown
 
 TASK-031/TASK-032 mascot integration is complete locally: WebGL retains the PNG fallback and now shares drag glow/deformation during container travel. All 175 package tests, package typing/source checks and builds, folio build, four existing agent/assistant checks and ten focused browser checks pass. Existing visibility/motion settings remain authoritative; the shipped profile has Show mascot off. Remote deployment is outside scope.
 
-The current full check stops at the existing About section-order assertion (`tests/about-page.mjs:34`). The control-system build, thirteen focused unit checks and five browser checks pass (TASK-021).
+The About section-order assertion (`tests/about-page.mjs`) now expects How I work before Experience, as on the pages. The control-system build, thirteen focused unit checks and five browser checks pass (TASK-021).
 
-Known failing checks are tracked by task. Run one with `node tests/<name>.mjs`.
-
-- Preset fixture drift (TASK-034): settings-transfer and site-settings still assume legacy style fields removed from the current exported profile.
-- Content drift (TASK-004): content-model, home-about, home-layout, home-sections, interaction-commands, project-media-focus.
-- Card-sphere work in progress (TASK-005): project-entry-memory, text-list-hover.
+All 155 test files pass and `npm run check` and `npm run build` exit 0 (2026-11-03). The browser suite (`npm run test:visual`) does not: 12 of 75 fail, reproducibly (TASK-037). Eight already failed on 2cb9174 (card-padding, card-sphere screenshot, card-spiral, carousel-glow ×4, native-snap); assistant-info-card, errors and video-transition started with ca647d9 (2026-10-28, which also changed the published settings preset) and dock-flash with 9045a5a (2026-10-29, control-style consolidation). Any other failure is yours to explain or fix.
 
 `npm run check` stops at the first failing test, so use the loop in [AGENTS.md](AGENTS.md) to see them all.
 

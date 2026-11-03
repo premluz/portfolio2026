@@ -14,11 +14,18 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 
 ## Open
 
-### TASK-034 Repair preset tests that assume legacy style fields
+### TASK-037 Repair the twelve failing browser checks
 - Status: todo
+- Tags: area/tests, kind/debt
+- Acceptance: `npm run test:visual` passes; for each failure decide, with the owner, whether the page or the check is wrong.
+- Evidence: 2026-11-03, 62 of 75 pass. Reproducible alone and on a clean worktree of HEAD (so not from uncommitted work). Already failing on 2cb9174: card-padding (bottom inset 59px with padding off), card-sphere (screenshot differs by 1%), card-spiral (a grid card does not open its project), carousel-glow ×4 (card image never finishes loading within 5s), native-snap (scroll-snap is `none`, expected `x mandatory`). Since ca647d9: assistant-info-card (`#askInput` never visible: the published preset hides the composer), errors (after Go Back the carousel centres a different card, so the next click opens Bastion, not Merlin), video-transition (the playing clip restarts 12 times across open and return). Since 9045a5a: dock-flash (detached glass briefly fuses back). Per-commit logs were taken with a script over ca647d9..481253a.
+
+### TASK-034 Repair preset tests that assume legacy style fields
+- Status: done
 - Tags: area/settings, area/tests, kind/debt
 - Acceptance: settings-transfer and site-settings use explicit legacy fixtures for migration checks, and test the current published preset through its explicit controlStyle/cardGlassStyle fields. Both checks pass without changing application styling.
 - Evidence: Focused checks expose existing preset drift: settings-transfer.mjs:156 expects glass while the published profile explicitly selects outline; site-settings.mjs:22 builds an empty legacy preset from plainNav/glassStyle fields no longer present in the current export, 2026-10-29.
+- Evidence: 2026-11-03 settings-transfer checks the published preset's explicit controlStyle and cardGlassStyle; site-settings migrates an explicit legacy profile (plainNav, glassStyle) and checks the published preset names its style. Both pass; no application change.
 
 ### TASK-002 Open the dock's attached menus downward when navigation is at the top
 - Status: todo
@@ -32,9 +39,11 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 - Acceptance: the file is a few MB, like the other project videos (it is about 31MB), still plays smoothly on hover at 786×1704 and keeps the portrait shape.
 
 ### TASK-004 Repair the six tests that assert old catalog contents
-- Status: todo
+- Status: done
+- Progress: 2026-11-03 home-about and home-sections repaired against the current catalog (row count and years, testimonial names); project-media-focus now counts watch links and expects the prototype button under the picture, and fails later at its pins on the close button's old border and fill. content-model, home-layout and interaction-commands remain (the first and last expect duplicate card ids such as `rios-02` that the home layout no longer produces).
 - Tags: area/tests, kind/debt
 - Acceptance: content-model, home-about, home-layout, home-sections, interaction-commands and project-media-focus pass, either against the current catalog or by using fixtures that no longer depend on live content. Decide which, per test, with the owner.
+- Evidence: 2026-11-03 all six pass. Live content where it is the point (Experience rows, quote authors, prototype and watch links, Porter's home card, capability counts derived from the catalog); fixtures where it is not (duplicate placements such as rios-02 and playstation-02 are added to a copy of the catalog). home-layout also measured NaN heights in its fake DOM and passed for the wrong reason; its cards now have sizes and its heights must be numbers.
 
 ### TASK-013 Review the drafted discipline tags
 - Status: todo
@@ -55,15 +64,16 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 - Acceptance: each project's `homeCards` (and later `detailCards`) points at real media with titles and descriptions the owner approves, replacing the three cover-image placeholders. Needs the media and copy from the owner.
 
 ### TASK-005 Fix the two tests affected by card-sphere work
-- Status: blocked
+- Status: done
 - Tags: area/tests
-- Blocked by: the owner's in-progress card-sphere changes
 - Acceptance: project-entry-memory (the sphere viewer reads `document` inside a Node sandbox) and text-list-hover (a Porter fixture assertion) pass.
+- Evidence: 2026-11-03 project-entry-memory gives the Back adapter a `document` with no open sphere viewer, and a second case checks Back closes an open one first; text-list-hover already passed. Both pass.
 
 ### TASK-006 Align catalog2.json with catalog.json for Bastion
-- Status: todo
+- Status: done
 - Tags: area/content, kind/debt
 - Acceptance: decide whether the second content set should follow the first. Today catalog2 still has Bastion as a landscape card with the landscape bastion2.mp4, while catalog has it portrait with bastion.mp4. Both sets must keep building.
+- Evidence: 2026-11-03 the owner's last catalog2.json differed from catalog only in Tracr, so Bastion already matched; catalog2 now extends catalog (`content/catalog2/`), so it follows catalog for Bastion and everything else.
 
 ### TASK-007 Give Porter its own backdrop
 - Status: todo

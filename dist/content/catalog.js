@@ -916,7 +916,7 @@ export const catalog={
           "id": "home-description",
           "type": "text",
           "paragraphs": [
-            "10+ years  products for technical users and creators. Today, my focus is AI and genUI. Recently built Rios, Porter & Bastion."
+            "10+ years products for technical users and creators. Today, my focus is AI and genUI. Recently built Rios, Porter & Bastion."
           ]
         },
         {
@@ -1121,7 +1121,7 @@ export const catalog={
               "id": "role-carter",
               "type": "text",
               "title": "Carter London",
-              "label": "2006-2009",
+              "label": "2006–2009",
               "paragraphs": []
             },
             {

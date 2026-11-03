@@ -2,7 +2,9 @@ import assert from 'node:assert/strict';
 import {createCommandCatalog,parseVoiceCommand,isVoiceNavigationRequest,CommandBus} from '../dist/interaction-commands.js';
 import {homeProjects,projects as allProjects} from '../dist/documents.js';
 
-const catalog=createCommandCatalog([...homeProjects,allProjects.find(project=>project.id==='porter')]);
+// A layout may place a project twice; the second placement has its own id. The live layout has none, so add one here.
+const duplicate={...homeProjects.find(project=>project.id==='playstation'),id:'playstation-02',sourceProjectId:'playstation'};
+const catalog=createCommandCatalog([...homeProjects,duplicate,allProjects.find(project=>project.id==='porter')]);
 assert.equal(catalog.version,1);assert.equal(catalog.projects.length,9);
 for(const [phrase,id,target] of [
   ['Open PlayStation','project.open','playstation'],['open play station','project.open','playstation'],

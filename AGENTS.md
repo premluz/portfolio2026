@@ -30,7 +30,7 @@ This file is the single set of instructions for every agent. `CLAUDE.md` imports
 
 - **Read before you write.** View the files you will change, as they are now. Search for an existing helper, token or pattern before creating one.
 - **Authored versus generated.** Edit sources only: `dist/*.js|css|html`, `content/catalog*` sets (a `catalog*/` folder or a `catalog*.json` file), `tests/`, `scripts/`, docs. Never edit `dist/client/`, `dist/content/` exports, `dist/site.css`, `dist/image-variants.js`, `dist/assets/optimised/` or `dist/assets/backgrounds/`.
-- **Two content sets.** `content/catalog/` and `content/catalog2.json` are both validated. Keep shared ids and asset files consistent in both; one invalid value or missing file stops the whole content build.
+- **Two content sets.** `content/catalog/` and `content/catalog2/` are both validated. `catalog2` extends `catalog`: it holds only the documents that differ (today, `projects/tracr.json`), so everything else follows `catalog`. One invalid value or missing file stops the whole content build.
 - **Images and media.** Originals go in `dist/assets/`; see [MEDIA_ASSETS.md](MEDIA_ASSETS.md). Backdrops are assets whose id ends in `-bg`. Commit generated copies with their originals.
 - **Tokens.** Use `tokens.css` variables and `motion-tokens.js` roles; no literal colours, easing curves or sizes where a token exists, and no inline style objects in markup. A CSS twin of a JavaScript value needs a test (see `tests/motion-tokens.mjs`).
 - **One page.** `dist/index.html` is the only page; the Lab is the in-app route `#lab` (ADR-011) and `lab.html` just redirects, so a new control goes in `index.html` only.

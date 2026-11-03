@@ -22,3 +22,21 @@ export function captionRevealLines(detail,travel=true){
  const hasLead=lines.some(line=>line.classList.contains('detail-caption-lead'));
  return lines.filter(line=>line.classList.contains('detail-caption-intro')||hasLead&&line.classList.contains('detail-caption-results'));
 }
+
+// A project caption never rides the moving page copy: it stays where the live page shows it and only staggers in or
+// fades out. The copy can lay the caption out a little differently, so each copy's caption is pinned to the live
+// caption's measured place. A copy is [root, live caption rect, the copy's own end rect, drift], where drift is how far
+// the copy is carried towards that rect. Offsets are measured on the first call, once the shell is on the page, and
+// inside the copy, so its drift cancels. Returns place(x, y), called with the shell's position each frame.
+export function captionPinner(copies){
+ let pinned=null;
+ const pin=([root,target,rect,drift])=>{
+  const node=root.querySelector(':scope > .detail-caption');if(!node||!target)return null;
+  const own=node.getBoundingClientRect(),host=root.getBoundingClientRect();
+  return {node,target,rect,drift,left:own.left-host.left,top:own.top-host.top};
+ };
+ return (x,y)=>{
+  pinned??=copies.filter(Boolean).map(pin).filter(Boolean);
+  for(const item of pinned)item.node.style.transform=`translate(${item.target.left-item.left-x-(item.rect.left-x)*item.drift}px,${item.target.top-item.top-y-(item.rect.top-y)*item.drift}px)`;
+ };
+}

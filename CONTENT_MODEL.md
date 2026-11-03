@@ -57,8 +57,15 @@ content/catalog/
 A file is named after its document's `id` and sits in its type's folder (`DOCUMENT_FOLDERS` in
 `scripts/content-source.mjs`). To add a document, add its file and list it in `index.json`; a file missing from the
 index, a wrong folder or name, a duplicate, or a set present both as `catalog/` and `catalog.json` stops the build.
-A set can also be a single file (`content/catalog2.json` still is); both forms assemble to the same catalog, and
-every script, the dev server and the tests read them through `scripts/content-source.mjs`.
+A set can also be a single `catalog*.json` file; both forms assemble to the same catalog, and every script, the dev
+server and the tests read them through `scripts/content-source.mjs`.
+
+A set can extend another, so it holds only what differs. `content/catalog2/index.json` is
+`{"extends": "catalog", "documents": ["projects/tracr.json"]}`: its listed documents replace the base's by id (keeping
+the base's place in the order) or, if new, follow it; `"remove": ["id"]` drops documents; and an `assets.json`,
+`presentations.json` or `layouts.json` in the set replaces the base's. Everything else is the base's, so a change
+to `catalog` reaches `catalog2` too. Removing an id the base lacks, listing and removing the same id, and sets
+extending each other in a circle stop the build.
 
 Edit `content/catalog/`. `node scripts/build-content.mjs` validates it and
 checks local media, then generates:
@@ -292,6 +299,45 @@ Developer settings → Article images choice applies; a width never exceeds the 
 Body images are plain figures (no card frame or hover effect) so they keep their own
 proportions. The grid pages (About, Contact) render the same blocks through
 `content-blocks.js`, where `section` also works.
+
+### Writing an article in Markdown
+
+An article can be `content/catalog/articles/<id>.md` (listed in `index.json` as `articles/<id>.md`; the file
+name is the id) instead of JSON. The file is a JSON header fenced by `---`, then the body; no inline Markdown is
+interpreted. `"blocks": "below"` in the header marks where the body's blocks sit among the fields.
+
+```
+---
+{"type": "article", "status": "published", "slug": "my-post", "title": "My post",
+ "summary": "…", "publishedAt": "2026-11-03", "author": "@Prem", "blocks": "below", "sources": []}
+---
+
+Opening paragraphs, before any heading.
+
+## A heading {#optional-id}
+
+Paragraphs under it, separated by blank lines.
+
+::image{media="asset-id" alt="Describe it" caption="Shown underneath" width="960"}
+
+::section{title="A group"}
+
+::video{media="asset-id" poster="cover-id" caption="Shown underneath" width="page"}
+
+::end
+
+::table{title="Optional"}
+| Product decides | Design shapes |
+| --- | --- |
+| Ask when unsure | The question itself |
+```
+
+`::text{id="…" title="…" label="…"}` is a text block that needs a label; `::image` and `::video` take `media`,
+`alt` or `poster`, `caption`, `title`, `label`, `id` and `width` (`content`, `960`, `1280`, `page`); `::section` …
+`::end` nests. A block without an id gets `<article id>-<n>`; give one (`{#id}`, `id="…"`) when something refers to
+it. Quotes, metrics, references and the other block types keep the article as `.json`.
+`node -e "import('./scripts/article-markdown-format.mjs')"` (`formatArticleMarkdown`) writes a JSON article as
+Markdown and refuses anything it cannot carry exactly. Mistakes fail the build with the file and line.
 
 Articles are routes (`#<id>`) that slide in and fade back like information
 pages, but render in one reading column (`article-page.js`). The

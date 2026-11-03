@@ -15,8 +15,10 @@ const normal={querySelector:selector=>selector};assert.equal(sharedCopyNode(norm
 // explicit project entry must win over that older history.
 const app=await readFile(new URL('../dist/app.js',import.meta.url),'utf8'),code=app.slice(app.indexOf('async function activateBack(){'),app.indexOf('function openSiteIndex('));
 const back=new Function('env',`with(env){return (${code})();}`),calls=[];
-const env={assistantFloating:false,current:'one',projectIds:projects,projectEntry:memory,spatialNavigation:{cancelScroll(){}},portfolioAssistant:{dictating:false},mediaFocus:{active:false},projectDrag:{active:false},activeTransition:null,projectPopover:{target:null},$:()=>({hidden:true}),assistantNavigation:{backTarget:()=> 'assistant'},activateRoute:route=>calls.push(route)};
+// No sphere viewer is open unless a case says so; Back closes an open one before anything else.
+const env={document:{querySelector:()=>null},assistantFloating:false,current:'one',projectIds:projects,projectEntry:memory,spatialNavigation:{cancelScroll(){}},portfolioAssistant:{dictating:false},mediaFocus:{active:false},projectDrag:{active:false},activeTransition:null,projectPopover:{target:null},$:()=>({hidden:true}),assistantNavigation:{backTarget:()=> 'assistant'},activateRoute:route=>calls.push(route)};
 memory.capture('work');await back(env);assert.equal(calls.pop(),'work');memory.capture('about');await back(env);assert.equal(calls.pop(),'about');memory.capture('assistant');await back(env);assert.equal(calls.pop(),'assistant');
+{const cancelled=[];const viewer={dispatchEvent:event=>{cancelled.push(event.type);return true;}};const result=await back({...env,document:{querySelector:selector=>selector==='.sphere-viewer[open]'?viewer:null}});assert.deepEqual(cancelled,['cancel']);assert.equal(result.message,'Returning to sphere','Back closes an open sphere viewer first');}
 console.log('Project entry passed: source-specific Back, next/previous continuity, Escape rollback, stale Chat history priority and visible caption slots.');
 
 let clickHandler;const clickedImage={},captionLink={dataset:{contentCard:'one'},morphImageRoot:clickedImage,closest:()=>({})},dispatches=[];

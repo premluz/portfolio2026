@@ -19,7 +19,7 @@
         "TASKS.md",
         "docs/CONSTITUTION.md"
       ],
-      "hash": "d700a764cb0f455947aff371ffea3bfb841fe495",
+      "hash": "7ba7392179a049b84862516b3aeb26368728eeef",
       "items": []
     },
     {
@@ -88,7 +88,7 @@
         "FRAMEWORK.md",
         "MEDIA_ASSETS.md"
       ],
-      "hash": "8e62480785a12261ecb6d4efd855f7a16265a4eb",
+      "hash": "ac1524a998ea2186434abbeeb4cb8b8010e62137",
       "items": []
     },
     {
@@ -120,7 +120,7 @@
         "area/deploy"
       ],
       "related": [],
-      "hash": "d5665a4ab689baeca61582e83cd196e87f996731",
+      "hash": "4bd8ae9de3872742ab26860c14d70df03b5da038",
       "items": []
     },
     {
@@ -180,7 +180,7 @@
         "PROJECT_STATE.md",
         "DEPLOYMENT.md"
       ],
-      "hash": "9acccafd213d221a7226094034af259412f256bd",
+      "hash": "7150a7f990e620956e1b230714d1dc7f8eab0ea0",
       "items": []
     },
     {
@@ -253,7 +253,7 @@
         "TASKS.md",
         "PROJECT_STATE.md"
       ],
-      "hash": "e30e490c1bc45bbb932b36be6b16661e4b98e3a3",
+      "hash": "5dea019ecbc9424700d979c495ff0137ff4ad288",
       "items": []
     },
     {
@@ -273,7 +273,7 @@
         "PROGRESS.md",
         "HANDOFF.md"
       ],
-      "hash": "010c3e377e527fd200d27271196c8860595c7858",
+      "hash": "a37ac0ef510afeb135d385efc59d4b851f977388",
       "items": [
         {
           "id": "Q-001",
@@ -333,12 +333,21 @@
         "PROJECT_STATE.md",
         "PROGRESS.md"
       ],
-      "hash": "719005b8a00a9cb7394bd006b0fc088dffcd7a9e",
+      "hash": "f714a3c46c1a3bd13f05512b2da5e047a04b458b",
       "items": [
+        {
+          "id": "TASK-037",
+          "title": "Repair the twelve failing browser checks",
+          "status": "todo",
+          "tags": [
+            "area/tests",
+            "kind/debt"
+          ]
+        },
         {
           "id": "TASK-034",
           "title": "Repair preset tests that assume legacy style fields",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "area/settings",
             "area/tests",
@@ -366,7 +375,7 @@
         {
           "id": "TASK-004",
           "title": "Repair the six tests that assert old catalog contents",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "area/tests",
             "kind/debt"
@@ -400,7 +409,7 @@
         {
           "id": "TASK-005",
           "title": "Fix the two tests affected by card-sphere work",
-          "status": "blocked",
+          "status": "done",
           "tags": [
             "area/tests"
           ]
@@ -408,7 +417,7 @@
         {
           "id": "TASK-006",
           "title": "Align catalog2.json with catalog.json for Bastion",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "area/content",
             "kind/debt"

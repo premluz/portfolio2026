@@ -9,7 +9,7 @@ import {colorInterpolator,gradientInterpolator} from './surface-colors.js';
 import {stageMotion} from './motion-viewport.js';
 import {hideMorphSource,placedPadding} from './morph-visibility.js';
 import {bindDetailContentReveal} from './detail-content-reveal.js';
-import {captionTravelTargets} from './caption-travel.js';
+import {captionTravelTargets,captionPinner} from './caption-travel.js';
 import {sameImageAsset,ImageDecodeGate,handoffImage} from './image-handoff.js';
 // Broad, continuous contour deformation. No noise displacement of DOM content.
 export function contour(w,h,r,amount=0,phase=0){
@@ -32,10 +32,8 @@ export function returnExitBlocks(root){
 }
 const captionEase=value=>{const q=Math.max(0,Math.min(1,value));return q*q*(3-2*q);};
 export async function flow(from,to,{duration,intensity,control,ambientGlow=false,ambientLight=null,textTravel=true}){
- // Card and page copy are separate content (a card's outcome line is not the page's thesis), so text never
- // travels between them: the leaving copy staggers out bottom-up and the arriving copy staggers in top-down.
- // The one exception is a card opening its project page, whose caption repeats the card's own lines: those
- // travel (caption-travel.js). With textTravel off the card copy leaves with the card and the caption staggers in.
+ // Card and page copy are separate content, so text mostly stays put: leaving copy staggers out bottom-up, arriving copy
+ // in top-down. Only a card's own lines travel, into its project caption (caption-travel.js), unless textTravel is off.
  const galleryEntry=!!from.copyRoot,galleryReturn=!!to.morphCopyRoot,chatEntry=!!from.element?.closest?.('.ask-cards'),chatReturn=!!to.closest?.('.ask-cards'),cardEntry=!!from.element?.matches?.('.project-card'),cardReturn=!!to.matches?.('.project-card'),independentEntry=galleryEntry||chatEntry||cardEntry,independentReturn=galleryReturn||chatReturn||cardReturn,independentCopy=independentEntry||independentReturn;
  const newDetailHeading=!!to.querySelector('h1')&&(independentEntry||!!from.shared?.title?.node?.textContent?.trim()&&!hasSharedHeading(from,to));
  if(!independentCopy&&hasSharedHeading(from,to))preserveSharedHeading(to.querySelector('.project-summary'));
@@ -60,8 +58,7 @@ export async function flow(from,to,{duration,intensity,control,ambientGlow=false
  if(chatReturn||cardReturn){const copy=incoming.querySelector('.card-copy');if(copy)copy.style.visibility='hidden';}
  const captionKeys=['client','title','summary'],sourceCaptions=[],targetCaptions=[],travel=cardEntry&&textTravel?captionTravelTargets(from.shared,to):new Map(),fadeCardCopy=!cardEntry||textTravel;
  if(independentCopy)for(const [index,key] of captionKeys.entries()){
-  // Only text the card paints gets a copy: a part the card hides (its company, with Company hidden) has no box, so
-  // its copy would sit at the viewport's top-left corner.
+  // Only painted card text gets a copy: hidden text has no box, so its copy would land at the top-left corner.
   // A settled detail returns exactly as its entry reverses: its own heading and copy stay
   // in the moving page and fade with it, rather than a pinned static copy.
   const source=galleryReturn?null:from.shared?.[key];if(source){if(fadeCardCopy&&!travel.has(key)&&!source.hidden){const copy=createStaticCopy({...source,opacity:source.hidden?0:source.opacity},shell);if(key==='title')lockLineBreaks(copy.node,source.words);copy.node.classList.add('flow-caption-out');sourceCaptions.push({copy,index});}const native=outgoing.querySelector(key==='title'?'h1,h2,h3':key==='client'?'.card-client,.project-client':'.project-summary,.info-summary');if(native)native.style.visibility='hidden';}
@@ -122,16 +119,9 @@ export async function flow(from,to,{duration,intensity,control,ambientGlow=false
  shell.append(outgoing,incoming);
  // Settled return exits top to bottom: each detail block leaves a beat before the one below it.
  const exitBlocks=galleryReturn?returnExitBlocks(outgoing):[];
- // A project caption never rides the moving page copy: it stays where the live page shows it and only staggers in or
- // fades out. The copy can lay the caption out a little differently, so it is pinned to the live caption's measured
- // place. Drift is how far each copy is carried towards its final place: a project page opened from a card is held
- // there (only the picture travels), other incoming pages 12% of the way; a card-bound page rides the shell.
+ // Captions stay put (captionPinner); a card-opened page is held too, so only its picture travels. Others drift 12%.
  const incomingDrift=cardEntry?1:.12;
- // Measured on the first frame, once the shell is on the page; the offset is taken inside the copy, so its drift cancels.
- const pin=(root,target,rect,drift)=>{const node=root.querySelector(':scope > .detail-caption');if(!node||!target)return null;const own=node.getBoundingClientRect(),host=root.getBoundingClientRect();return {node,target,rect,drift,left:own.left-host.left,top:own.top-host.top};};
- const captionTarget=cardEntry?to.querySelector(':scope > .detail-caption')?.getBoundingClientRect():null;let pinnedCaptions=null;
- const pinCaptions=()=>[cardEntry?pin(incoming,captionTarget,b,incomingDrift):null,cardReturn&&!galleryReturn?pin(outgoing,from.captionRect,a,0):null].filter(Boolean);
- const placeCaptions=(x,y)=>{pinnedCaptions??=pinCaptions();for(const item of pinnedCaptions)item.node.style.transform=`translate(${item.target.left-item.left-x-(item.rect.left-x)*item.drift}px,${item.target.top-item.top-y-(item.rect.top-y)*item.drift}px)`;};
+ const placeCaptions=captionPinner([cardEntry&&[incoming,to.querySelector(':scope > .detail-caption')?.getBoundingClientRect(),b,incomingDrift],cardReturn&&!galleryReturn&&[outgoing,from.captionRect,a,0]]);
 if(picture)shell.append(picture);if(nextPicture)shell.append(nextPicture);const fields=document.createElement('div');fields.className='material-reflection';fields.style.transform=from.reflectionTransform||'';material.append(fields);const glow=document.createElement('div');glow.className='motion-afterglow';const removeGlowViewport=keepAmbient||movingAmbient?()=>{}:stageMotion(glow,19),removeShellViewport=stageMotion(shell,25);placeCaptions(a.left,a.top);to.style.opacity=targetOpacity;const restoreTarget=hideMorphSource(to),restoreSource=hideMorphSource(from.element!==to?from.element:null),restoreSourceCopy=hideMorphSource(from.copyRoot),restoreTargetCopy=hideMorphSource(to.morphCopyRoot);try{const imageRenderers=[picture,nextPicture].filter(Boolean).map(el=>new LiquidImage(el,()=>intensity,{fixedResolution:[Math.max(from.image.rect.width,iv.width),Math.max(from.image.rect.height,iv.height)]}));
  // Appended after the picture's ImageFrame exists, so that frame never claims or unloads the carried clip.
  carried=carryVideo(from.video?.element,picture);

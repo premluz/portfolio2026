@@ -26,8 +26,8 @@
     "pages/about-lab.json",
     "pages/about-infinite.json",
     "pages/about-sphere.json",
-    "articles/desire-and-lived-experience.json",
-    "articles/design-after-the-screen.json",
+    "articles/desire-and-lived-experience.md",
+    "articles/design-after-the-screen.md",
     "components/home-writing.json",
     "components/home-overview.json",
     "projects/gala-defi.json"

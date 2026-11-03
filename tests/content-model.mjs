@@ -15,16 +15,18 @@ assert.equal(cards.length,catalog.layouts.find(layout=>layout.id==='home').items
 for(const id of ['merlin','rios','playstation','vodafone-iot','tracr','galachain','bastion','porter'])assert(content.get(id),`The published portfolio includes ${id}`);
 assert.equal(content.get('planner'),null,'Rios has one canonical document, not an old-ID duplicate');
 assert.equal(content.get('rios').slug,'rios');
-assert.equal(cards.find(card=>card.id==='rios-02').documentId,'rios');
+{const withDuplicate=copy();withDuplicate.layouts.find(layout=>layout.id==='home').items.push({id:'rios-02',documentId:'rios'});const placed=createContentStore(withDuplicate).getLayoutCards('home').find(card=>card.id==='rios-02');assert.equal(placed.documentId,'rios');assert.equal(placed.sourceProjectId,'rios','A second placement of a project keeps its own id and points back to the project');}
 assert(!cards.some(card=>['planner','planner-02'].includes(card.id)));
 assert.equal(content.get('home').blocks.find(block=>block.id==='home-projects').items.find(item=>item.documentId==='rios').id,'home-project-rios');
 for(const answer of assistantKnowledge.answers)for(const id of answer.sourceIds)assert(content.get(id),`Assistant source ${id} resolves to a published document`);
-assert.equal(content.get('porter').listOnly,true);assert.equal(content.getCard('porter').image,'assets/porter.png');assert.equal(content.getCard('porter').videoUrl,'assets/porter.mp4');assert.equal(content.getCard('porter').client,content.get('porter').client,'The card carries the authored client label');
+assert(!content.get('porter').listOnly&&catalog.layouts.find(layout=>layout.id==='home').items.some(item=>item.documentId==='porter'),'Porter has its own home card');assert.equal(content.getCard('porter').image,'assets/porter.png');assert.equal(content.getCard('porter').videoUrl,'assets/porter.mp4');assert.equal(content.getCard('porter').client,content.get('porter').client,'The card carries the authored client label');
 assert(content.get('home').blocks.find(block=>block.id==='home-projects').items.some(item=>item.documentId==='porter'),'The homepage carousel connects Porter to its project details');
 assert.equal(content.get('digital-trading'),null,'The replaced digital-trading placeholder is no longer published');
 assert.equal(content.get('playstation-02'),null,'A placement never creates a second content document');
-const canonical=content.getCard('playstation'),duplicate=cards.find(c=>c.id==='playstation-02');
-assert.equal(duplicate.documentId,'playstation');assert.equal(duplicate.title,canonical.title);assert(!duplicate.featured&&canonical.featured);
+const placedTwice=copy();placedTwice.layouts.find(layout=>layout.id==='home').items.push({id:'playstation-02',documentId:'playstation',featured:false});
+const placedStore=createContentStore(placedTwice),canonical=placedStore.getCard('playstation'),duplicate=placedStore.getLayoutCards('home').find(c=>c.id==='playstation-02');
+assert.equal(placedStore.get('playstation-02'),null,'A placement never creates a second content document');
+assert.equal(duplicate.documentId,'playstation');assert.equal(duplicate.title,canonical.title);assert.equal(duplicate.featured,false,'A placement sets its own featured flag');
 assert(Object.isFrozen(content.get('playstation').blocks[0].paragraphs));
 invalid(c=>c.schemaVersion=2,/schemaVersion/);
 invalid(c=>c.documents.push(c.documents[0]),/duplicate ID/);
@@ -66,7 +68,7 @@ assert.equal(content.search({query:'workflow',type:'portfolio-item'}).items[0].d
 assert.equal(content.search({kind:'lab',type:'portfolio-item'}).total,3);
 assert.equal(content.search({query:'Mac switchboard AI agents',type:'portfolio-item'}).items[0].documentId,'porter');
 assert.equal(content.search({domain:'Enterprise',type:'portfolio-item'}).total,3);
-assert.equal(content.search({capability:'Product design',type:'portfolio-item'}).total,5);
+assert.equal(content.search({capability:'Product design',type:'portfolio-item'}).total,catalog.documents.filter(doc=>doc.type==='portfolio-item'&&doc.status==='published'&&doc.capabilities?.includes('Product design')).length,'Capability search finds every published project with that capability');
 assert.equal(content.search({type:'portfolio-item',limit:2,offset:4}).items.length,2);
 assert.throws(()=>content.search({limit:200}),RangeError);assert.throws(()=>content.search({domainz:'Enterprise'}),/Invalid content filter/);
 const resolved=content.resolveAnswer({type:'mixed',text:'Publishing experience.',documentIds:['playstation'],citations:[{documentId:'playstation',evidenceId:'highlights'}]});

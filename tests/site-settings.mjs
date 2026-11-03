@@ -13,8 +13,9 @@ const root={querySelector:()=>({querySelectorAll:()=>controls})};
 const saved=new Map([['unrelated','keep'],['prem-control-style-navigation','outline']]);
 const storage={getItem:key=>saved.get(key)??null,setItem:(key,value)=>saved.set(key,value),removeItem:key=>saved.delete(key)};
 const profile=settings=>({format:'prem-portfolio-settings',version:1,settings});
-function verifyPublishedStyles(actual){
- const legacy=profile({plainNav:actual.settings.plainNav,glassStyle:actual.settings.glassStyle});
+// Migration from the old style fields uses an explicit legacy profile: the current published preset no longer has them.
+function verifyLegacyStyles(){
+ const legacy=profile({plainNav:true,glassStyle:true});
  const options={root,storage,preset:legacy,revision:'legacy'};
  const messages=[],originalError=console.error;
  try{
@@ -42,7 +43,8 @@ const directory=await fs.mkdtemp(path.join(os.tmpdir(),'portfolio-site-settings-
 const EXPORT_STEP_MS=1000;
 try{
  const actual=(await readPublishedSettings()).preset;
- verifyPublishedStyles(actual);
+ verifyLegacyStyles();
+ assert(['ghost','outline','glass'].includes(actual.settings.controlStyle),'The published preset names its control style explicitly');
  const nextTimestamp=step=>new Date(Date.parse(actual.exportedAt)+step*EXPORT_STEP_MS).toISOString();
  await fs.writeFile(path.join(directory,'z-later-filename.json'),JSON.stringify(actual));
  assert.deepEqual((await readPublishedSettings(directory)).preset,actual);

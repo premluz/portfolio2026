@@ -100,7 +100,7 @@ ship the same code and every set.
 
 Without them the site serves `catalog` and the picker is read-only. Locally,
 `npm run dev` keeps the choice in memory. To add a set, create
-`content/catalog2.json` (or `catalog-<name>.json`), rebuild and deploy once;
+`content/catalog2/` (or `catalog-<name>/`, or one `catalog-<name>.json` file), rebuild and deploy once;
 after that only the dropdown changes which set is served. Run
 `node tests/site-config.mjs` to check the endpoint.
 
