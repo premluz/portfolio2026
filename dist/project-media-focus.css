@@ -55,8 +55,14 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 .surface.detail[data-card-orientation]:not(.text-only-detail)>.project-summary{display:none;grid-column:1;grid-row:5}
 .surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{grid-column:1;grid-row:3}
 .surface.detail[data-card-orientation]:not(.text-only-detail)>.project-summary,.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{max-width:var(--content-width-reading)}
+/* The facts read like an article: their text fills the reading column instead of the older 48ch cap on .description dd. */
+.surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description dd{max-width:none}
 .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.project-summary,.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-layout>.description{margin-inline:auto;width:100%}
 .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-layout>.description{max-width:var(--page-intro-width);margin:var(--card-gap) 0 0;width:100%}
+/* Blocks authored under the facts (text, captioned images and videos, sections) follow them across the page, each in the
+   reading column unless an image or video sets a wider layout.width (article.css). Row 7 is below every row above. */
+.surface.detail>.page-blocks{grid-column:1 / -1;margin-top:var(--space-page-rhythm-md)}
+.surface.detail[data-card-orientation]:not(.text-only-detail)>.page-blocks{grid-row:7}
 /* "Details title beside image" on, wide screens: the caption sits at the bottom left of the picture (level with its bottom edge), the
    picture on the right with the buttons and QR code under it, and everything else (client line, title, summary, facts) below as a
    centred reading column. Off, and on phones, the stack above applies. */

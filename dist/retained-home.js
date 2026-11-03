@@ -14,6 +14,16 @@ export function fadeHomeChrome(layer,control,duration){
  for(const node of layer.querySelectorAll('.spatial-gallery-primary-action,.footer-note,[data-home-news],.home-about,.home-content-section'))fade(node);
  return promises;
 }
+// Going back, the hero returns as it left, reversed: top-down, the badge, then the heading, then the description,
+// with the same step and length as the exit. fill 'backwards' keeps each line hidden until its step begins.
+export function revealHomeHero(root,control,duration){
+ const promises=[],step=duration*.12;
+ for(const hero of root.querySelectorAll('.home-hero')){
+  const nodes=[hero.querySelector('.badge'),hero.querySelector('h1'),hero.querySelector('[data-hero-copy]')].filter(node=>node&&!node.hidden);
+  nodes.forEach((node,index)=>promises.push(control.track(node.animate([{opacity:0},{opacity:1}],{duration:duration*.4,delay:index*step,easing:EASE.settle,fill:'backwards'})).finished));
+ }
+ return promises;
+}
 export function retainHome(main,images){
  const rect=main.getBoundingClientRect(),style=getComputedStyle(main),className=main.className;
  const sticky=[...main.querySelectorAll('.home-hero')].filter(node=>getComputedStyle(node).position==='sticky').map(node=>({node,rect:node.getBoundingClientRect(),css:node.style.cssText}));

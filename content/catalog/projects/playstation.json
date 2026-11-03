@@ -1,0 +1,60 @@
+{
+  "id": "playstation",
+  "type": "portfolio-item",
+  "status": "published",
+  "slug": "playstation",
+  "title": "Designed a unified workflow for developers and publishers",
+  "name": "Publishing pipeline",
+  "summary": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 ",
+  "category": "Publishing pipeline · PlayStation Network",
+  "kind": "shipped",
+  "year": "2018",
+  "projectStatus": "Launched",
+  "disciplines": [
+    "Research",
+    "Interaction",
+    "Prototyping"
+  ],
+  "shortCategory": "Publishing pipeline",
+  "homeCards": [
+    {
+      "id": "playstation-home-1",
+      "mediaId": "playstation-cover"
+    },
+    {
+      "id": "playstation-home-2",
+      "mediaId": "playstation-cover"
+    },
+    {
+      "id": "playstation-home-3",
+      "mediaId": "playstation-cover"
+    }
+  ],
+  "context": "Self-service content pipeline for developers and publishers managing product details, regional rules and publishing across PlayStation Network.",
+  "role": "First designer. Led end-to-end design across discovery, research, prototyping, testing and implementation support through launch, while helping align four product teams.",
+  "highlights": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 • 4 teams aligned",
+  "keyWork": "Unified three regional systems into one publishing workflow and established design foundations across onboarding, international pricing, entitlements and issue management.",
+  "impact": "3 systems → 1 workflow • 4 teams aligned • Hundreds of hours saved across partner and internal workflows",
+  "heroMediaId": "playstation-cover",
+  "hoverVideoId": "playstation-walkthrough",
+  "blocks": [
+    {
+      "id": "playstation-walkthrough",
+      "type": "video",
+      "label": "Project walkthrough",
+      "title": "Product in motion",
+      "mediaId": "playstation-walkthrough",
+      "posterMediaId": "playstation-cover",
+      "caption": "Walkthrough video",
+      "layout": {
+        "columns": 2,
+        "mediaFit": "contain"
+      }
+    }
+  ],
+  "featured": true,
+  "client": "PlayStation",
+  "pageTitle": "Transformation saving hundreds of hours for developers and publishers",
+  "intro": "I joined as the first designer on a programme that had already failed twice and was later described as the largest IT transformation in PlayStation history.",
+  "challenge": "Three ageing regional systems created duplicated work, inconsistent workflows and operational overhead, while three organisations had to align around a programme with little inherited trust."
+}

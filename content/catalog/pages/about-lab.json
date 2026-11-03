@@ -1,0 +1,21 @@
+{
+  "id": "about-lab",
+  "type": "page",
+  "template": "information",
+  "status": "published",
+  "slug": "about-lab",
+  "title": "Every card, one field",
+  "name": "About lab",
+  "summary": "An experimental view of the portfolio: every card in one spiral that unwinds into a grid as you scroll.",
+  "category": "Prem / Experiments",
+  "links": [],
+  "blocks": [
+    {
+      "id": "about-lab-body",
+      "type": "text",
+      "paragraphs": [
+        "An experimental view of the portfolio: every card in one spiral that unwinds into a grid as you scroll. Pick any card to open it."
+      ]
+    }
+  ]
+}

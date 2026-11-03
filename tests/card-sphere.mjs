@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {projectContentDir,readContentSource} from '../scripts/content-source.mjs';
 import {readFile} from 'node:fs/promises';
 import {SPHERE,spherePositions,sphereCoast,sphereVelocity} from '../dist/card-sphere-layout.js';
 import {sphereThumbnailTransform} from '../dist/card-sphere-pose.js';
@@ -48,7 +49,7 @@ for(const pose of [{x:240,y:-120,z:500,tilt:.6,aspect:1.8},{x:-300,y:200,z:-150,
  mesh.geometry.dispose();mesh.material.dispose();
 }
 for(const filename of ['catalog','catalog2']){
- const catalog=JSON.parse(await readFile(new URL(`../content/${filename}.json`,import.meta.url)));
+ const catalog=await readContentSource(projectContentDir,filename);
  assert(catalog.documents.some(doc=>doc.id==='about-sphere'&&doc.status==='published'));
  assert(catalog.layouts.find(layout=>layout.id==='home').items.some(item=>item.documentId==='about-sphere'));
 }

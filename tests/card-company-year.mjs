@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {projectContentDir,readContentSource} from '../scripts/content-source.mjs';
 import {readFile} from 'node:fs/promises';
 import {createContentStore} from '../dist/content/provider.js';
 import {DEFAULT_STORAGE_VALUES} from '../dist/default-settings.js';
@@ -7,7 +8,7 @@ import {card} from '../dist/card-renderer.js';
 // Projects carry a year; a card's description can switch to "Company · Year" (Cards setting, off by default, under Show project description).
 const read=name=>readFile(new URL('../dist/'+name,import.meta.url),'utf8');
 const [html,app,transfer]=await Promise.all(['index.html','app.js','settings-transfer.js'].map(read));
-const catalog=JSON.parse(await readFile(new URL('../content/catalog.json',import.meta.url),'utf8'));
+const catalog=await readContentSource(projectContentDir,'catalog');
 const years=Object.fromEntries(catalog.documents.filter(doc=>doc.year).map(doc=>[doc.id,doc.year]));
 assert.deepEqual(years,{bastion:'2025',merlin:'2026',playstation:'2018','vodafone-iot':'2020',galachain:'2025','gala-defi':'2025',tracr:'2024',rios:'2026',porter:'2026'},'Every project has its year');
 const markup=card({id:'x',name:'Tracr',client:'Tracr',year:'2024',title:'Redesign',summary:'A • B',assets:[]},0,'masonry',{});

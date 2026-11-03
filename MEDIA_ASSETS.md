@@ -11,7 +11,7 @@ related: [CONTENT_MODEL.md, ADR-001, ADR-002]
 # Replacing project images and videos
 
 Run commands from the `portfolio2026` repository root. The authored catalog is
-`content/catalog.json`; files under `dist/content/`, `dist/server/` and
+`content/catalog/`; files under `dist/content/`, `dist/server/` and
 `dist/client/` are generated output, not independent configuration.
 
 For local editing, run `npm run dev`, save changes and reload the browser. Catalog
@@ -26,7 +26,7 @@ Put originals in `dist/assets/`. Prefer a new filename when replacing a publishe
 asset, such as `rios-landscape-v2.png` and `rios-landscape-v2.mp4`. A new filename
 also gives generated WebP copies new URLs, avoiding old browser/CDN cache entries.
 
-In `content/catalog.json`, update the matching asset entries:
+In `content/catalog/`, update the matching asset entries:
 
 ```json
 {"id":"rios-cover","type":"image","status":"published","url":"assets/rios-landscape-v2.png","alt":"Rios planning interface"}

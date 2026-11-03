@@ -14,7 +14,7 @@ The assistant is a dedicated `#assistant` page. Its composer grows from the site
 
 ## What the model can see
 
-The model is given one record per published document, built by `usableDocuments()` in `worker/assistant-core.mjs` from `content/catalog.json` (through the generated `dist/server/content.js`), so editing the catalog and running `npm run build` is all it takes to update what the assistant knows:
+The model is given one record per published document, built by `usableDocuments()` in `worker/assistant-core.mjs` from `content/catalog/` (through the generated `dist/server/content.js`), so editing the catalog and running `npm run build` is all it takes to update what the assistant knows:
 
 - **Projects** — every case-study field a visitor reads (summary, intro, context, challenge, role, highlights, key work, impact), plus client, category, kind and the prototype link, and the text of their blocks.
 - **Pages** — Home, About and Contact, including timeline items.
@@ -29,7 +29,7 @@ Each question carries up to 12 turns within a 48,000-character history budget. A
 
 ## Curated knowledge and answers
 
-Edit `dist/knowledge/profile.js` for approved public profile facts: stable `id`, `title`, `topic`, `text`, `route`, `tags`, and supporting published `sourceIds`. Project details remain in `content/catalog.json`; do not duplicate case studies into profile facts. `dist/assistant-knowledge.js` owns offline recovery answers and suggested questions. The Worker validates profile provenance and returned source IDs, and links cited knowledge back to its published evidence. All shipped knowledge is public; keep private notes, drafts, credentials and unconfirmed claims outside `dist` and the corpus.
+Edit `dist/knowledge/profile.js` for approved public profile facts: stable `id`, `title`, `topic`, `text`, `route`, `tags`, and supporting published `sourceIds`. Project details remain in `content/catalog/`; do not duplicate case studies into profile facts. `dist/assistant-knowledge.js` owns offline recovery answers and suggested questions. The Worker validates profile provenance and returned source IDs, and links cited knowledge back to its published evidence. All shipped knowledge is public; keep private notes, drafts, credentials and unconfirmed claims outside `dist` and the corpus.
 
 Useful additions, when confirmed: problem-framing and validation methods; collaboration and stakeholder responsibilities; actual leadership scope and mentoring; implementation tools linked to projects; exact outcomes with attribution and limitations; lessons and trade-offs; and approved location, availability or engagement preferences. Never infer these from seniority or a job description.
 

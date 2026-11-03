@@ -1,0 +1,58 @@
+{
+  "id": "home-approach",
+  "type": "component",
+  "status": "published",
+  "title": "How I work",
+  "summary": "",
+  "revision": 2,
+  "blocks": [
+    {
+      "id": "approach-intro",
+      "type": "text",
+      "paragraphs": [
+        "",
+        ""
+      ]
+    },
+    {
+      "id": "approach-principles",
+      "type": "info-card",
+      "title": "First principles",
+      "paragraphs": [
+        "Find the real problem before solving it."
+      ]
+    },
+    {
+      "id": "approach-model",
+      "type": "info-card",
+      "title": "Define the model",
+      "paragraphs": [
+        "Turn user needs & constraints into a clear structure."
+      ]
+    },
+    {
+      "id": "approach-outcome",
+      "type": "info-card",
+      "title": "Own the outcome",
+      "paragraphs": [
+        "Connect product, teams and business goals."
+      ]
+    },
+    {
+      "id": "approach-learn",
+      "type": "info-card",
+      "title": "Adapt to change",
+      "paragraphs": [
+        "Change course when the evidence does."
+      ]
+    },
+    {
+      "id": "approach-mindset",
+      "type": "info-card",
+      "title": "Ship fast",
+      "paragraphs": [
+        "Prototype early, decide quickly, ship, then scale."
+      ]
+    }
+  ]
+}

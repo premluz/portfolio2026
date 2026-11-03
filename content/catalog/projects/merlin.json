@@ -1,0 +1,64 @@
+{
+  "id": "merlin",
+  "slug": "merlin",
+  "title": "Designed an AI workspace that assembles itself around the analysis",
+  "pageTitle": "Designed an AI workspace that assembles itself around the analysis",
+  "name": "AI financial intelligence workspace",
+  "client": "Merlin",
+  "summary": "R&D • AI assistant • Generative UI • Prototype",
+  "category": "Financial intelligence · R&D",
+  "kind": "lab",
+  "year": "2026",
+  "projectStatus": "R&D",
+  "disciplines": [
+    "Product",
+    "Interaction",
+    "Design system",
+    "Motion"
+  ],
+  "shortCategory": "AI financial analysis",
+  "homeCards": [
+    {
+      "id": "merlin-home-1",
+      "mediaId": "merlin-cover"
+    },
+    {
+      "id": "merlin-home-2",
+      "mediaId": "merlin-cover"
+    },
+    {
+      "id": "merlin-home-3",
+      "mediaId": "merlin-cover"
+    }
+  ],
+  "intro": "When an agent does the analysis, the interface should become part of the answer.",
+  "context": "Financial intelligence platform where users ask questions, follow the reasoning and work with interfaces generated around the answer.",
+  "challenge": "Generative interfaces often feel like chat with a chart attached. I wanted something analysts could trust, inspect and continue working in rather than a disposable response.",
+  "role": "Sole designer and builder. Defined the product concept, interaction model, design system, motion and implementation.",
+  "keyWork": "Designed a multi-pane workbench connecting reasoning, artifacts and linked entities. Built it on a component registry and token system so generated screens and five themes reuse the same foundation.",
+  "impact": "0→1 prototype • Agent-assembled interfaces • Multi-pane workbench • 5 themes from one component system",
+  "heroMediaId": "merlin-cover",
+  "hoverVideoId": "merlin-walkthrough",
+  "type": "portfolio-item",
+  "status": "published",
+  "featured": false,
+  "blocks": [
+    {
+      "id": "merlin-walkthrough",
+      "type": "video",
+      "label": "Project walkthrough",
+      "title": "Product in motion",
+      "mediaId": "merlin-walkthrough",
+      "posterMediaId": "merlin-cover",
+      "caption": "Walkthrough video",
+      "layout": {
+        "columns": 2,
+        "mediaFit": "contain"
+      }
+    }
+  ],
+  "prototype": {
+    "label": "View prototype",
+    "url": "https://merlin-sazb.vercel.app/"
+  }
+}

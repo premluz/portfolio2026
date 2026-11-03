@@ -37,7 +37,7 @@ The frontend sends JSON to `POST /api/assistant`:
 
 The Worker checks the request and first looks for a curated phrase/answer in `dist/assistant-knowledge.js`. Curated matches avoid a model request. Otherwise, it sends the question, up to four recent history messages and published portfolio/profile records plus approved knowledge facts to the configured Chat Completions endpoint. The model is instructed to use only those records and return answer text plus source IDs; the server discards any source ID outside the supplied corpus. The browser receives the answer, citations, follow-up suggestions and an optional signed speech token.
 
-The content corpus is generated from published records in `content/catalog.json`. No vector database, external search index or transcript store is used.
+The content corpus is generated from published records in `content/catalog/`. No vector database, external search index or transcript store is used.
 
 ## Model provider variables
 
@@ -81,4 +81,4 @@ The counters are in-memory protection, not a global quota system. Serverless ins
 
 ## Secret handling
 
-For local work, copy `.env.example` to `.env`. The `.env` file is ignored by Git. For production, use the host's secret/environment settings instead of uploading `.env`. Never place API keys in `dist/`, `content/catalog.json`, browser storage, HTML, JavaScript, screenshots or logs.
+For local work, copy `.env.example` to `.env`. The `.env` file is ignored by Git. For production, use the host's secret/environment settings instead of uploading `.env`. Never place API keys in `dist/`, `content/catalog/`, browser storage, HTML, JavaScript, screenshots or logs.

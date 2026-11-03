@@ -1,0 +1,60 @@
+{
+  "id": "gala-defi",
+  "type": "portfolio-item",
+  "status": "published",
+  "slug": "gala-defi",
+  "title": "Brought coherence to a DeFi ecosystem",
+  "name": "DeFi swap, pools and wallet",
+  "summary": "0 → 1 • North Star",
+  "category": "Decentralised finance",
+  "kind": "shipped",
+  "year": "2025",
+  "projectStatus": "Launched",
+  "disciplines": [
+    "Product",
+    "Conversational UI"
+  ],
+  "homeCards": [
+    {
+      "id": "gala-defi-home-1",
+      "mediaId": "gala-defi-cover"
+    },
+    {
+      "id": "gala-defi-home-2",
+      "mediaId": "gala-defi-cover"
+    },
+    {
+      "id": "gala-defi-home-3",
+      "mediaId": "gala-defi-cover"
+    }
+  ],
+  "client": "Gala",
+  "pageTitle": "Designing for trust and ease of use in a DeFi stack that launched without design.",
+  "intro": "GalaSwap launched fast: outsourced, inconsistent, no shared system. I joined the CEO’s “A-team” squad for priority projects when coherence and ease of use started to define trust.",
+  "context": "Gala’s DeFi ecosystem: swap, liquidity pools and wallet, used by first-timers and experienced traders alike.",
+  "challenge": "Swap, wallet and pools were built by different teams with no shared system. In DeFi that costs trust, because people are putting in real money. Novices and traders needed opposite things. It was a live product with no design system, a small squad and restructuring throughout.",
+  "role": "Senior product designer leading the redesign. I owned the North Star, swap, liquidity pools, wallet onboarding and the conversational UI explorations. I also brought AI-assisted workflows into delivery and built straight into the production repo.",
+  "highlights": "0 → 1 • North Star • Easy mode",
+  "keyWork": "Redesigned incrementally alongside delivery, with a North Star so every tactical call pointed the same way.\nReplaced the raw price-range inputs with a visual chart and named risk postures (Wide, Stable, Upper side, Lower side), so users see where they sit in the market before committing.\nSplit the experience in two after the CEO’s “would your mum get it?” review. Easy mode, with Ollie as a conversational guide, was for first-timers, and Advanced was for speed. I argued against the split, as it meant maintaining two products.\nExplored intent-driven UI (“$100 of GALA” generates the confirmation). It didn’t reach production.",
+  "impact": "North Star aligned design, product and engineering • Easy mode and Ollie shipped • GalaSwap passed $40M+ trading volume, 250,000+ swaps and ~200 liquidity pools",
+  "aftermath": "Gala restructured and eliminated the design function. Ollie launched publicly, then was withdrawn. The vision was handed to product and engineering, but with no designers left to hold the line, the live product drifted from it.",
+  "lesson": "Fast AI-assisted delivery needs a boundary between exploration and production before scale, not after.",
+  "heroMediaId": "gala-defi-cover",
+  "hoverVideoId": "gala-defi-walkthrough",
+  "featured": false,
+  "blocks": [
+    {
+      "id": "gala-defi-walkthrough",
+      "type": "video",
+      "label": "Project walkthrough",
+      "title": "Product in motion",
+      "mediaId": "gala-defi-walkthrough",
+      "posterMediaId": "gala-defi-cover",
+      "caption": "Walkthrough video",
+      "layout": {
+        "columns": 2,
+        "mediaFit": "contain"
+      }
+    }
+  ]
+}

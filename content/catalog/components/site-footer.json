@@ -1,0 +1,34 @@
+{
+  "id": "site-footer",
+  "type": "component",
+  "status": "published",
+  "title": "Footer call to action",
+  "summary": "",
+  "links": [
+    {
+      "id": "linkedin",
+      "label": "Prem on LinkedIn",
+      "url": "https://www.linkedin.com/in/premluczak/"
+    },
+    {
+      "id": "contact-external",
+      "label": "Contact Prem",
+      "url": "https://prems.design/contact"
+    },
+    {
+      "id": "contact-page",
+      "label": "Open contact page",
+      "url": "#contact"
+    }
+  ],
+  "blocks": [
+    {
+      "id": "footer-invitation",
+      "type": "info-card",
+      "title": "Building something\ncomplex?",
+      "paragraphs": [
+        "Let's make it happen"
+      ]
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {projectContentDir,readContentSource} from '../scripts/content-source.mjs';
 import {readFile} from 'node:fs/promises';
 import {prepareCatalog,deriveEvidence,mergeAssistantData,readAssistantData,ASSISTANT_FIELDS} from '../dist/content/assistant-data.js';
 import {contentModel} from '../dist/content/model.js';
@@ -30,7 +31,7 @@ assert.deepEqual(ASSISTANT_FIELDS,['aliases','domains','capabilities','tags','ev
 assert.doesNotThrow(()=>contentModel.assert(prepareCatalog(catalog([doc(),quotes]),assistant)),'Prepared catalogs validate');
 
 // The real content: clean files, every shown quote and highlight cited with matching text.
-const files=await Promise.all(['catalog','catalog2'].map(name=>readFile(new URL(`../content/${name}.json`,import.meta.url),'utf8').then(JSON.parse)));
+const files=await Promise.all(['catalog','catalog2'].map(name=>readContentSource(projectContentDir,name)));
 for(const file of files)for(const d of file.documents)for(const field of ASSISTANT_FIELDS)assert(!(field in d),`${d.id}.${field} lives in assistant.json, not the content file`);
 const realAssistant=JSON.parse(await readFile(new URL('../content/assistant.json',import.meta.url),'utf8'));
 const published=JSON.parse(await readFile(new URL('../dist/content/catalog.json',import.meta.url),'utf8'));

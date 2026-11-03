@@ -1,13 +1,16 @@
 import {EASE} from './motion-tokens.js';
+import {captionRevealLines} from './caption-travel.js';
 const easing=EASE.settle;
 
 function revealTargets(root){
  const targets=[],detail=root?.matches?.('.detail:not(.info-detail)')?root:root?.querySelector?.('.detail:not(.info-detail)'),description=detail?.querySelector?.('.description');
+ targets.push(...captionRevealLines(detail,root?.ownerDocument?.documentElement?.dataset?.cardText!=='stagger'));
  // Keep the image present for its shared card-to-detail morph. Each label/value
  // pair is its own fade step, so more project facts need no timing code.
  const facts=[...(description?.querySelectorAll?.('[data-detail-fact]')||[])];
  if(facts.length)targets.push(...facts);else if(description)targets.push(description);
  const actions=detail?.querySelector?.('.detail-media-actions');if(actions)targets.push(actions);
+ targets.push(...(detail?.querySelectorAll?.(':scope > .page-blocks > *')||[]));
  const footer=root?.querySelector?.(':scope > .detail-footer');if(footer)targets.push(footer);
  for(const story of root?.querySelectorAll?.(':scope > .story')||[])targets.push(...story.children);
  return [...new Set(targets)];

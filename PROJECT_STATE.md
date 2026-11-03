@@ -14,7 +14,7 @@ Snapshot of 2026-10-29. The control-variant work is uncommitted alongside pre-ex
 
 ## What this is
 
-A buildless native-module portfolio for Prem Luczak: authored HTML, CSS and ES modules in `dist/`, structured content in `content/catalog*.json`, a small API worker for assistant answers and speech. Architecture is in [HANDOFF.md](HANDOFF.md) and [FRAMEWORK.md](FRAMEWORK.md).
+A buildless native-module portfolio for Prem Luczak: authored HTML, CSS and ES modules in `dist/`, structured content in `content/catalog*` sets (a `catalog*/` folder or a `catalog*.json` file), a small API worker for assistant answers and speech. Architecture is in [HANDOFF.md](HANDOFF.md) and [FRAMEWORK.md](FRAMEWORK.md).
 
 ## How to run it
 

@@ -3,7 +3,8 @@ import {readFile} from 'node:fs/promises';
 import {contentModel} from '../dist/content/model.js';
 import {card} from '../dist/card-renderer.js';
 import {cards} from '../dist/documents.js';
-import catalog from '../content/catalog.json' with {type:'json'};
+import {projectContentDir,readContentSource} from '../scripts/content-source.mjs';
+const catalog=await readContentSource(projectContentDir,'catalog');
 
 // A project's card sets validate like the rest of the model: unique card ids, media that exists and is an image or video.
 const clone=()=>structuredClone(catalog),issuesFor=doc=>contentModel.validate(doc).filter(issue=>/Cards|card/i.test(issue));

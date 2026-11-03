@@ -42,7 +42,25 @@ are shared content. Blocks do not own independent page routes.
 
 ## Source and public export
 
-Edit `content/catalog.json`. `node scripts/build-content.mjs` validates it and
+The default content set lives in `content/catalog/`, one file per document, so a page is edited (and its history
+read) on its own:
+
+```
+content/catalog/
+  index.json            {schemaVersion, documents: ["pages/home.json", ...]}  (document order)
+  pages/<id>.json       page          projects/<id>.json    portfolio-item
+  articles/<id>.json    article       news/<id>.json        news
+  components/<id>.json  component
+  assets.json   presentations.json   layouts.json
+```
+
+A file is named after its document's `id` and sits in its type's folder (`DOCUMENT_FOLDERS` in
+`scripts/content-source.mjs`). To add a document, add its file and list it in `index.json`; a file missing from the
+index, a wrong folder or name, a duplicate, or a set present both as `catalog/` and `catalog.json` stops the build.
+A set can also be a single file (`content/catalog2.json` still is); both forms assemble to the same catalog, and
+every script, the dev server and the tests read them through `scripts/content-source.mjs`.
+
+Edit `content/catalog/`. `node scripts/build-content.mjs` validates it and
 checks local media, then generates:
 
 - `dist/content/catalog.js`: embedded browser snapshot.
@@ -210,11 +228,11 @@ raw markup. Existing readers receive only public validated snapshots by default.
 
 ### Hero timeline
 
-The homepage document includes a `timeline` block with an ordered `items` array of typed content blocks. Add, remove or reorder those items in `content/catalog.json`, keeping each item ID stable. Text items use `paragraphs`; info cards can also supply a safe `link`. The hero renderer displays this sequence on a horizontal rail. Interaction preferences belong to the presentation layer, not the content document. Run `node scripts/build-content.mjs` after content edits.
+The homepage document includes a `timeline` block with an ordered `items` array of typed content blocks. Add, remove or reorder those items in `content/catalog/`, keeping each item ID stable. Text items use `paragraphs`; info cards can also supply a safe `link`. The hero renderer displays this sequence on a horizontal rail. Interaction preferences belong to the presentation layer, not the content document. Run `node scripts/build-content.mjs` after content edits.
 
 ## Content files and assistant data
 
-`content/catalog*.json` holds only what visitors see. Assistant-only data lives in
+The `content/catalog*` sets (a `catalog*/` folder or a `catalog*.json` file) hold only what visitors see. Assistant-only data lives in
 `content/assistant.json`, keyed by document id and shared by every content set:
 
 ```json
@@ -245,6 +263,36 @@ series `id`, and `sources` lists citations (`label`, plus optional `publisher`,
 `date` and `url`). Body sections are `text` blocks whose `title` becomes the
 section heading; a `table` block (`columns`, `rows`) renders a comparison grid.
 
+### Page blocks (articles and project pages)
+
+An article's `blocks` and a project's `blocks` (everything except the walkthrough
+`video` that feeds the card hover) render under the text or the facts as one list
+(`page-blocks.js`), each block in the 600px reading column:
+
+| Block | Authored as |
+| --- | --- |
+| `section` | `title`, optional `label`, and `items`: other blocks. A section only groups; its blocks keep their own width. |
+| `text` | optional `title` (the heading), `label`, and `paragraphs` |
+| `image` | `mediaId`, `alt`, `caption` (shown underneath) |
+| `video` | `mediaId`, optional `posterMediaId`, `caption` (shown underneath) |
+| `table`, `quote`, `metric`, `reference`, `info-card` | as on any page |
+
+`layout.width` on an image or video sets how wide it sits: `content` (the 600px text
+column), `960`, `1280` or `page` (the whole page). Without it the site-wide
+Developer settings → Article images choice applies; a width never exceeds the page.
+
+```json
+{"id": "key-work", "type": "section", "title": "Key work", "items": [
+  {"id": "intro", "type": "text", "title": "Unifying three systems", "paragraphs": ["…"]},
+  {"id": "flow", "type": "image", "mediaId": "playstation-content", "alt": "…",
+   "caption": "Publishing flow", "layout": {"width": "960"}}
+]}
+```
+
+Body images are plain figures (no card frame or hover effect) so they keep their own
+proportions. The grid pages (About, Contact) render the same blocks through
+`content-blocks.js`, where `section` also works.
+
 Articles are routes (`#<id>`) that slide in and fade back like information
 pages, but render in one reading column (`article-page.js`). The
 `home-writing` component lists them on the home page in its reference order,
@@ -259,7 +307,7 @@ outcome-led title and proof-line `summary`; the detail renderer presents the
 case-study fields in that order. Optional `challenge`, `intro` and `pageTitle`
 keep older records compatible while new records use the full rhythm.
 
-Each portfolio document has a `prototype` object in `content/catalog.json`.
+Each portfolio document has a `prototype` object in `content/catalog/`.
 `label` controls its button text; optional `url` is the HTTP(S) address of the
 interactive prototype. Do not put credentials or private URLs in this public content.
 
@@ -328,7 +376,7 @@ Dev settings → Content exposes the three section modes for Services, About, Ex
 
 ### Page template width presets and carousel alignment
 
-Home, project details and content pages (About / Contact) each have an independent Extra small (960px), Small (1200px), Medium (1440px) or Large (1760px) content width. A blog article spans the content page width; its header, text and sources sit in a centred 600px reading column (`--content-width-reading`). Images and video follow Developer settings → Article images: Text width (600px, default) or Page width (the whole article width). These are grouped under Developer settings → Layout → Page template widths. Storage keys are `prem-home-content-width`, `prem-detail-content-width`, and `prem-content-page-width`. Every template shares the 1920px app cap and responsive global side gutter. `pageTemplateForRoute()` selects the template; `--content-rail-width` exposes the resolved content size.
+Home, project details and content pages (About / Contact) each have an independent Extra small (960px), Small (1200px), Medium (1440px) or Large (1760px) content width. A blog article spans the content page width; its header, text and sources sit in a centred 600px reading column (`--content-width-reading`). Images and video follow Developer settings → Article images (`prem-article-images`): Text width (600px, default), Wide (960px, `--content-width-xs`), Wider (1280px, `--content-width-media-wide`) or Page width (the whole article width); the fixed widths never exceed the page, so on a 1200px page Wider equals Page width. A project page with a picture puts its facts in the same 600px reading column, and their text fills it like article text (the older 48ch cap on `.description dd` applies only to the other project layouts). These are grouped under Developer settings → Layout → Page template widths. Storage keys are `prem-home-content-width`, `prem-detail-content-width`, and `prem-content-page-width`. Every template shares the 1920px app cap and responsive global side gutter. `pageTemplateForRoute()` selects the template; `--content-rail-width` exposes the resolved content size.
 
 Services carousel alignment is independent of its section width. Full bleed starts the first card at the global side gutter; Content alignment starts it at the current template’s content edge. Both keep an app-wide scrolling track. The selection persists under `prem-services-carousel-alignment` and travels in settings exports. A standalone `servicesMarkup` instance accepts `carouselAlignment: "full-bleed" | "content"`.
 

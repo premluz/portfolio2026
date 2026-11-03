@@ -1371,6 +1371,14 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 4
+            },
+            "width": {
+              "enum": [
+                "content",
+                "960",
+                "1280",
+                "page"
+              ]
             }
           },
           "required": [],
@@ -1456,6 +1464,14 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 4
+            },
+            "width": {
+              "enum": [
+                "content",
+                "960",
+                "1280",
+                "page"
+              ]
             }
           },
           "required": [],
@@ -1546,6 +1562,14 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 4
+            },
+            "width": {
+              "enum": [
+                "content",
+                "960",
+                "1280",
+                "page"
+              ]
             }
           },
           "required": [],
@@ -1637,6 +1661,14 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 4
+            },
+            "width": {
+              "enum": [
+                "content",
+                "960",
+                "1280",
+                "page"
+              ]
             }
           },
           "required": [],
@@ -1715,6 +1747,99 @@
       ],
       "additionalProperties": false
     },
+    "block-section": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "maxLength": 120
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "label": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "layout": {
+          "type": "object",
+          "properties": {
+            "columns": {
+              "enum": [
+                1,
+                2
+              ]
+            },
+            "mediaFit": {
+              "enum": [
+                "max-side",
+                "contain",
+                "full-bleed"
+              ]
+            },
+            "span": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 4
+            },
+            "width": {
+              "enum": [
+                "content",
+                "960",
+                "1280",
+                "page"
+              ]
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "appearance": {
+          "type": "object",
+          "properties": {
+            "surface": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^#[0-9a-fA-F]{6}$"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "maxItems": 1000,
+          "uniqueItems": true
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/block"
+          },
+          "maxItems": 100,
+          "minItems": 1
+        },
+        "type": {
+          "const": "section"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "items"
+      ],
+      "additionalProperties": false
+    },
     "block-timeline": {
       "type": "object",
       "properties": {
@@ -1751,6 +1876,14 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 4
+            },
+            "width": {
+              "enum": [
+                "content",
+                "960",
+                "1280",
+                "page"
+              ]
             }
           },
           "required": [],
@@ -1836,6 +1969,14 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 4
+            },
+            "width": {
+              "enum": [
+                "content",
+                "960",
+                "1280",
+                "page"
+              ]
             }
           },
           "required": [],
@@ -1937,6 +2078,14 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 4
+            },
+            "width": {
+              "enum": [
+                "content",
+                "960",
+                "1280",
+                "page"
+              ]
             }
           },
           "required": [],
@@ -2026,6 +2175,14 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 4
+            },
+            "width": {
+              "enum": [
+                "content",
+                "960",
+                "1280",
+                "page"
+              ]
             }
           },
           "required": [],
@@ -2115,6 +2272,14 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 4
+            },
+            "width": {
+              "enum": [
+                "content",
+                "960",
+                "1280",
+                "page"
+              ]
             }
           },
           "required": [],
@@ -2203,6 +2368,14 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 4
+            },
+            "width": {
+              "enum": [
+                "content",
+                "960",
+                "1280",
+                "page"
+              ]
             }
           },
           "required": [],
@@ -2304,6 +2477,14 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 4
+            },
+            "width": {
+              "enum": [
+                "content",
+                "960",
+                "1280",
+                "page"
+              ]
             }
           },
           "required": [],
@@ -2387,6 +2568,9 @@
         },
         {
           "$ref": "#/$defs/block-info-card"
+        },
+        {
+          "$ref": "#/$defs/block-section"
         },
         {
           "$ref": "#/$defs/block-timeline"

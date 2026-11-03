@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import {access} from 'node:fs/promises';
 import {BACKDROP_WIDTHS,GENERIC_BACKDROP_ID,backdropCopy,backdropSources} from '../dist/backdrop-sources.js';
 import {cards} from '../dist/documents.js';
-import catalog from '../content/catalog.json' with {type:'json'};
+import {projectContentDir,readContentSource} from '../scripts/content-source.mjs';
+const catalog=await readContentSource(projectContentDir,'catalog');
 
 assert.equal(backdropSources(null),null,'No backdrop, no sources');
 const sources=backdropSources('assets/merlin-bg.jpg');

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {projectContentDir,readContentSource} from '../scripts/content-source.mjs';
 import {readFile} from 'node:fs/promises';
 import {badgeMarkup} from '../dist/badge.js';
 import {homeHero} from '../dist/home-content.js';
@@ -15,7 +16,7 @@ const hero=homeHero();
 assert(hero.indexOf('class="badge"')>0&&hero.indexOf('class="badge"')<hero.indexOf('<h1'),'The badge sits above the heading');
 assert(hero.includes('>Available<'),'The label comes from the home document');
 
-const catalog=JSON.parse(await readFile(new URL('../content/catalog.json',import.meta.url),'utf8'));
+const catalog=await readContentSource(projectContentDir,'catalog');
 const broken=structuredClone(catalog);broken.documents.find(doc=>doc.id==='home').badge={label:'x',tone:'neon'};
 assert.throws(()=>contentModel.assert(broken),'Badge tones are limited to the status colours');
 const css=await readFile(new URL('../dist/badge.css',import.meta.url),'utf8');

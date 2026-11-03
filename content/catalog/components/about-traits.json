@@ -1,0 +1,55 @@
+{
+  "id": "about-traits",
+  "type": "component",
+  "status": "published",
+  "title": "Open-minded with a bright personality and small ego.",
+  "summary": "Daily rhythm, roots, philosophy, interests, pattern-spotting and sense of humour.",
+  "revision": 1,
+  "blocks": [
+    {
+      "id": "trait-coffee",
+      "type": "info-card",
+      "title": "I wake up, stretch, meditate, have a coffee, then go on making software simpler for humans."
+    },
+    {
+      "id": "trait-roots",
+      "type": "info-card",
+      "title": "My roots",
+      "paragraphs": [
+        "Originally from Poland, spent most of my adult life in London."
+      ]
+    },
+    {
+      "id": "trait-philosophy",
+      "type": "info-card",
+      "title": "My philosophy",
+      "paragraphs": [
+        "Always improving – things, products, processes, people, or myself. I try to leave everything a little better than I found it."
+      ]
+    },
+    {
+      "id": "trait-interests",
+      "type": "info-card",
+      "title": "My interests",
+      "paragraphs": [
+        "Bio-hacking, physical and cognitive health, psychology, philosophy, traveling, cooking, and some weird ones too!"
+      ]
+    },
+    {
+      "id": "trait-sixth-sense",
+      "type": "info-card",
+      "title": "My sixth-sense",
+      "paragraphs": [
+        "Seeing things that others don't. Spotting patterns and connections between seemingly disparate things. I love finding order in chaos and achieving simplicity out of complexity."
+      ]
+    },
+    {
+      "id": "trait-seventh-sense",
+      "type": "info-card",
+      "title": "My seventh-sense",
+      "paragraphs": [
+        "Is sense of humour ;) I'm positive, cheerful and love a good laugh, good pun, and meme, but I'm also tactful and respectful."
+      ]
+    }
+  ]
+}

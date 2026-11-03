@@ -1,0 +1,61 @@
+{
+  "id": "rios",
+  "type": "portfolio-item",
+  "status": "published",
+  "slug": "rios",
+  "title": "Life-first planner that makes your day a canvas",
+  "name": "Life-first planner",
+  "summary": "0→1 • Everything solo",
+  "category": "Life-first planner · Independent product",
+  "kind": "shipped",
+  "year": "2026",
+  "projectStatus": "Launched",
+  "disciplines": [
+    "Product",
+    "Interaction",
+    "Brand",
+    "Motion"
+  ],
+  "shortCategory": "Life-first planner",
+  "homeCards": [
+    {
+      "id": "rios-home-1",
+      "mediaId": "rios-cover"
+    },
+    {
+      "id": "rios-home-2",
+      "mediaId": "rios-cover"
+    },
+    {
+      "id": "rios-home-3",
+      "mediaId": "rios-cover"
+    }
+  ],
+  "context": "Cross-platform planner combining daily planning, unscheduled Things, recurring Patterns and calendar import and sync.",
+  "role": "Sole product designer and builder. Owned product strategy, interaction model, IA, visual identity, motion and implementation across mobile and desktop.",
+  "highlights": "0 → 1 product · design · build",
+  "keyWork": "Designed a spatial timeline with direct manipulation, readable overlaps and cascading schedule changes, supported by Zones, What Matters and a unified Things → Days → Patterns model.",
+  "impact": "0→1 product • Mobile + desktop • Unified product + brand system • New spatial planning model",
+  "heroMediaId": "rios-cover",
+  "blocks": [
+    {
+      "id": "rios-walkthrough",
+      "type": "video",
+      "label": "Project walkthrough",
+      "title": "Product in motion",
+      "mediaId": "rios-walkthrough",
+      "posterMediaId": "rios-cover",
+      "caption": "Walkthrough video",
+      "layout": {
+        "columns": 2,
+        "mediaFit": "contain"
+      }
+    }
+  ],
+  "featured": false,
+  "client": "Rios",
+  "pageTitle": "A spatial planner designed around life changing the plan",
+  "intro": "I created Rios around a simple idea: planning is easy; reshaping the day when reality changes is the harder problem.",
+  "challenge": "Traditional calendars make adding events easy but make busy days increasingly difficult to reorganise. I wanted replanning to feel direct, spatial and readable.",
+  "hoverVideoId": "rios-walkthrough"
+}

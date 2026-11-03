@@ -1,0 +1,20 @@
+{
+  "id": "home-writing",
+  "type": "component",
+  "status": "published",
+  "title": "Thoughts",
+  "blocks": [
+    {
+      "id": "writing-desire",
+      "type": "reference",
+      "documentId": "desire-and-lived-experience",
+      "presentation": "inline"
+    },
+    {
+      "id": "writing-screen",
+      "type": "reference",
+      "documentId": "design-after-the-screen",
+      "presentation": "inline"
+    }
+  ]
+}

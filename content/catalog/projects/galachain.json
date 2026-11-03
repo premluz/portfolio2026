@@ -1,0 +1,64 @@
+{
+  "id": "galachain",
+  "type": "portfolio-item",
+  "status": "published",
+  "slug": "galachain",
+  "title": "Made Web3 wiring invisible for fans and creators on a greenfield platform",
+  "name": "Web3 film platform",
+  "summary": "End-to-end 0 → 1 → Growth and continous improvements",
+  "category": "Web3 entertainment · Film and music",
+  "kind": "shipped",
+  "year": "2025",
+  "projectStatus": "Launched",
+  "disciplines": [
+    "UX",
+    "UI",
+    "Motion"
+  ],
+  "shortCategory": "Web3 film platform",
+  "homeCards": [
+    {
+      "id": "galachain-home-1",
+      "mediaId": "gala-cover"
+    },
+    {
+      "id": "galachain-home-2",
+      "mediaId": "gala-cover"
+    },
+    {
+      "id": "galachain-home-3",
+      "mediaId": "gala-cover"
+    }
+  ],
+  "context": "Film and music ecosystem where creators monetise their work directly and reward participating fans.",
+  "role": "Product designer dedicated to Gala Film from 0→1, with supporting work across Gala Music and the broader ecosystem. Worked across UX, UI, motion and front-end as priorities shifted.",
+  "highlights": "End-to-end design across 0 → 1 → Growth and continuous improvements",
+  "keyWork": "Designed retention mechanics and creator publishing, validated key concepts with users and maintained a live architecture spanning 15+ interconnected flows across design, product and engineering.",
+  "impact": "MVP launched across film and music • Blockchain mechanics surfaced without Web3 terminology • Reward concepts validated • Creator publishing moved toward self-service",
+  "heroMediaId": "gala-cover",
+  "blocks": [
+    {
+      "id": "galachain-walkthrough",
+      "type": "video",
+      "label": "Project walkthrough",
+      "title": "Product in motion",
+      "mediaId": "gala-walkthrough",
+      "posterMediaId": "gala-cover",
+      "caption": "Walkthrough video",
+      "layout": {
+        "columns": 2,
+        "mediaFit": "contain"
+      }
+    }
+  ],
+  "featured": false,
+  "client": "Gala",
+  "pageTitle": "Designed Web3 film platform rewarding creators and fans.",
+  "intro": "I designed a decentralised entertainment platform where fans could watch, collect and earn while creators could publish and monetise directly.",
+  "challenge": "Make unfamiliar Web3 concepts disappear into familiar consumer and creator workflows while inventing ownership, monetisation and distribution models from scratch.",
+  "hoverVideoId": "gala-walkthrough",
+  "watchPrototype": {
+    "label": "Launch reel",
+    "url": "https://www.youtube.com/watch?v=SZioWD7iLxQ"
+  }
+}

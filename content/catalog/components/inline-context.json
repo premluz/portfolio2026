@@ -1,0 +1,131 @@
+{
+  "id": "inline-context",
+  "type": "component",
+  "status": "published",
+  "title": "Context behind the introduction",
+  "summary": "More about Prem’s experience, side projects and current direction.",
+  "blocks": [
+    {
+      "id": "technical-users",
+      "type": "carousel",
+      "title": "products for technical and expert users",
+      "items": [
+        {
+          "id": "context-playstation",
+          "type": "info-card",
+          "title": "PlayStation",
+          "paragraphs": [
+            "A digital publishing pipeline used by game developers and publishers around the world."
+          ],
+          "link": {
+            "id": "playstation-case",
+            "label": "PlayStation",
+            "url": "#playstation"
+          }
+        },
+        {
+          "id": "context-vodafone",
+          "type": "info-card",
+          "title": "Vodafone",
+          "paragraphs": [
+            "Connectivity tools for network operators and software developers managing and integrating IoT devices."
+          ],
+          "link": {
+            "id": "vodafone-case",
+            "label": "Vodafone",
+            "url": "#vodafone-iot"
+          }
+        },
+        {
+          "id": "context-tracr",
+          "type": "info-card",
+          "title": "Tracr",
+          "paragraphs": [
+            "A diamond traceability platform for supply-chain teams managing provenance, transfers and verification."
+          ],
+          "link": {
+            "id": "tracr-case",
+            "label": "Tracr",
+            "url": "#tracr"
+          }
+        },
+        {
+          "id": "context-gala",
+          "type": "info-card",
+          "title": "Gala",
+          "paragraphs": [
+            "A Gala Film content pipeline helping filmmakers prepare and publish their work on the platform."
+          ],
+          "link": {
+            "id": "gala-case",
+            "label": "Gala",
+            "url": "#galachain"
+          }
+        }
+      ]
+    },
+    {
+      "id": "rios",
+      "type": "info-card",
+      "title": "Rios",
+      "paragraphs": [
+        "A life-first planner turning your day into a canvas, so changing plans takes seconds."
+      ],
+      "link": {
+        "id": "porter-page",
+        "label": "Rios",
+        "url": "https://getrios.app"
+      }
+    },
+    {
+      "id": "porter",
+      "type": "info-card",
+      "title": "Porter",
+      "paragraphs": [
+        "A native Mac switcher for your AI conversations and agents. It lists them, wherever they live, and takes you to the exact tab or window in one click."
+      ],
+      "link": {
+        "id": "porter-page",
+        "label": "Porter",
+        "url": "#porter"
+      }
+    },
+    {
+      "id": "bastion",
+      "type": "info-card",
+      "title": "Bastion",
+      "paragraphs": [
+        "Agent-first mobile wallet with an AI assistant and generative UI. Working R&D prototype with voice mode."
+      ],
+      "link": {
+        "id": "porter-page",
+        "label": "Bastion",
+        "url": "#bastion"
+      }
+    },
+    {
+      "id": "projects-list",
+      "type": "info-card",
+      "title": "products for technical users and creators",
+      "paragraphs": [
+        "PlayStation - Content Pipeline Vodafone IoT connectivity, Tracr blockchain traceability, Gala Film, Gala Music, Gala DeFi - Web3 platforms"
+      ]
+    },
+    {
+      "id": "ai-native",
+      "type": "info-card",
+      "title": "AI-native experiences, generative interfaces and building prototypes in code",
+      "paragraphs": [
+        "I explore products where AI helps interpret intent and shapes the interface around the task. I build working prototypes to test the interaction, its limits and how it feels in use."
+      ]
+    },
+    {
+      "id": "intent-driven",
+      "type": "info-card",
+      "title": "Intent-driven, adaptive systems",
+      "paragraphs": [
+        "Interfaces that respond to what you want to achieve, adapting their tools and presentation to the task and its context. I think this is where interaction design is heading. I’m developing these ideas in an article."
+      ]
+    }
+  ]
+}

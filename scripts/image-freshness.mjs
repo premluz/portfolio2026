@@ -6,7 +6,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {BACKDROP_WIDTHS,backdropCopy} from '../dist/backdrop-sources.js';
-import {isContentSetName} from '../dist/content/content-set.js';
+import {contentSetNames,readContentSource} from './content-source.mjs';
 
 const FIX='npm run images';
 let reads=0; // a counter, not just the time: two reads in one millisecond must not share a module URL
@@ -19,9 +19,8 @@ const isBackdrop=asset=>asset.id.endsWith('-bg');
 const isRaster=asset=>asset.type==='image'&&asset.url.startsWith('assets/')&&!asset.url.endsWith('.svg');
 
 async function catalogImages(root){
- const sets=(await fs.readdir(path.join(root,'content'))).filter(file=>file.endsWith('.json')&&isContentSetName(file.slice(0,-5)));
- const byUrl=new Map();
- for(const file of sets)for(const asset of (await readJson(path.join(root,'content',file))).assets)if(isRaster(asset))byUrl.set(asset.url,asset);
+ const contentDir=path.join(root,'content'),byUrl=new Map();
+ for(const set of await contentSetNames(contentDir))for(const asset of (await readContentSource(contentDir,set)).assets)if(isRaster(asset))byUrl.set(asset.url,asset);
  return [...byUrl.values()];
 }
 

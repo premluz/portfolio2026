@@ -1,0 +1,164 @@
+[
+  {
+    "documentId": "playstation",
+    "card": {
+      "orientation": "landscape",
+      "surface": [
+        "#e7eefb",
+        "#e6e0f6"
+      ],
+      "backgroundMediaId": "playstation-bg"
+    },
+    "detail": {
+      "columns": 2
+    }
+  },
+  {
+    "documentId": "galachain",
+    "card": {
+      "orientation": "landscape",
+      "surface": [
+        "#f1e5f5",
+        "#e1e5f8"
+      ]
+    },
+    "detail": {
+      "columns": 2
+    }
+  },
+  {
+    "documentId": "tracr",
+    "card": {
+      "orientation": "landscape",
+      "surface": [
+        "#e5eee9",
+        "#e7eaf1"
+      ],
+      "backgroundMediaId": "tracr-bg"
+    },
+    "detail": {
+      "columns": 2
+    }
+  },
+  {
+    "documentId": "rios",
+    "card": {
+      "orientation": "landscape",
+      "surface": [
+        "#f5e5ee",
+        "#e3ddf5"
+      ],
+      "backgroundMediaId": "rios-bg"
+    },
+    "detail": {
+      "columns": 2
+    }
+  },
+  {
+    "documentId": "vodafone-iot",
+    "card": {
+      "orientation": "landscape",
+      "surface": [
+        "#e2f0eb",
+        "#e5eaf3"
+      ],
+      "backgroundMediaId": "vodafone-bg"
+    },
+    "detail": {
+      "columns": 2
+    }
+  },
+  {
+    "documentId": "about",
+    "card": {
+      "orientation": "landscape",
+      "surface": [
+        "#f5e5e9",
+        "#e6dff6"
+      ]
+    },
+    "detail": {
+      "columns": 2
+    }
+  },
+  {
+    "documentId": "contact",
+    "card": {
+      "orientation": "landscape",
+      "surface": [
+        "#e9edf7",
+        "#e6ddf5"
+      ]
+    },
+    "detail": {
+      "columns": 2
+    }
+  },
+  {
+    "documentId": "merlin",
+    "card": {
+      "orientation": "landscape",
+      "surface": [
+        "#e8eaf3",
+        "#e1e8f2"
+      ],
+      "backgroundMediaId": "merlin-bg"
+    },
+    "detail": {
+      "columns": 2
+    }
+  },
+  {
+    "documentId": "bastion",
+    "card": {
+      "orientation": "landscape",
+      "surface": [
+        "#e6e9f4",
+        "#e5e7ef"
+      ],
+      "backgroundMediaId": "bastion-bg"
+    },
+    "detail": {
+      "columns": 2
+    }
+  },
+  {
+    "documentId": "about-lab",
+    "card": {
+      "orientation": "landscape",
+      "surface": [
+        "#ececf0",
+        "#ececf0"
+      ]
+    },
+    "detail": {
+      "columns": 1
+    }
+  },
+  {
+    "documentId": "about-infinite",
+    "card": {
+      "orientation": "landscape",
+      "surface": [
+        "#ececf0",
+        "#ececf0"
+      ]
+    },
+    "detail": {
+      "columns": 1
+    }
+  },
+  {
+    "documentId": "gala-defi",
+    "card": {
+      "orientation": "landscape",
+      "surface": [
+        "#f1e5f5",
+        "#e1e5f8"
+      ]
+    },
+    "detail": {
+      "columns": 2
+    }
+  }
+]

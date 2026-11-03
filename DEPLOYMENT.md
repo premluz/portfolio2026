@@ -64,7 +64,7 @@ the shared voice handler's default. Redeploy after changing variables.
 
 #### Content sets (dev panel)
 
-Every `content/catalog*.json` is built into the deploy as a content set; all
+Every content set (`content/catalog*`: a `catalog*/` folder or a `catalog*.json` file) is built into the deploy as a content set; all
 share the same media. `api/site-config.js` records which set is live, and the
 dev panel (`?dev=1` → Content) switches it for every visitor without a
 redeploy. A write can only name a set that shipped; nothing is uploaded or
@@ -138,7 +138,7 @@ For a new deployment, begin with `.env.example`. The example contains no keys.
 
 ## 6. Content and domain changes
 
-- Edit projects and page sections in `content/catalog.json`.
+- Edit projects and page sections in `content/catalog/`.
 - Edit assistant facts, exact-answer routes and suggested prompts in `dist/assistant-knowledge.js`.
 - Update prototype iframe URLs and external links in the catalog if they change.
 - Update the legal/contact links in the content or markup as appropriate.

@@ -12,7 +12,9 @@ const noteCards={...list(noteCard),maxItems:12};
 const ref=name=>({$ref:'#/$defs/'+name});
 const link=object({id,label:short,url:short},['id','label','url']);
 const surface={type:'array',items:{type:'string',pattern:'^#[0-9a-fA-F]{6}$'},minItems:2,maxItems:2};
-const blockBase={id,title:short,label:short,layout:object({columns:{enum:[1,2]},mediaFit:{enum:['max-side','contain','full-bleed']},span:{type:'integer',minimum:1,maximum:4}}),appearance:object({surface}),evidenceIds:strings};
+// layout.width is how wide an image or video sits on a project or article page: the text column, 960px, 1280px or the whole page.
+export const BLOCK_WIDTHS=Object.freeze(['content','960','1280','page']);
+const blockBase={id,title:short,label:short,layout:object({columns:{enum:[1,2]},mediaFit:{enum:['max-side','contain','full-bleed']},span:{type:'integer',minimum:1,maximum:4},width:{enum:[...BLOCK_WIDTHS]}}),appearance:object({surface}),evidenceIds:strings};
 const common={id,status:{enum:['published','draft','archived']},slug:id,title:{...short,minLength:1},summary:text,name:short,aliases:strings,domains:strings,capabilities:strings,tags:strings,category:short,revision:{type:'integer',minimum:1},updatedAt:{type:'string'},links:list(link),evidence:list(ref('evidence')),blocks:{...list(ref('block')),maxItems:CONTENT_LIMITS.blocks}};
 export const documentTypeDefinitions=Object.freeze({
  'portfolio-item':{label:'Portfolio item',properties:{prototype:object({url:short,label:short}),watchPrototype:object({url:short,label:short},['url','label']),qrCodeMediaId:id,qrCodeLabel:short,client:short,kind:{enum:['shipped','lab']},projectStatus:{enum:['Launched','Building','R&D']},disciplines:strings,shortCategory:short,year:short,homeCards:noteCards,detailCards:noteCards,featured:{type:'boolean'},listOnly:{type:'boolean'},pageTitle:short,intro:text,context:text,challenge:text,role:text,highlights:text,keyWork:text,impact:text,aftermath:text,lesson:text,heroMediaId:id,hoverVideoId:id},required:['slug','name','kind','projectStatus','context','role','keyWork']},
@@ -26,6 +28,8 @@ export const blockTypeDefinitions=Object.freeze({
  image:{label:'Image',properties:{mediaId:id,alt:text,caption:text},required:['mediaId']},
  video:{label:'Video',properties:{mediaId:id,posterMediaId:id,caption:text},required:['mediaId']},
  'info-card':{label:'Info card',properties:{paragraphs:list(text),mediaId:id,link},required:['title']},
+ // A section groups blocks under an optional heading (title, label); its blocks are any other blocks, in order.
+ section:{label:'Section',properties:{items:{...list(ref('block')),minItems:1,maxItems:100}},required:['items']},
  timeline:{label:'Timeline',properties:{items:{...list(ref('block')),minItems:1,maxItems:100}},required:['items']},
  'card-gallery':{label:'Spatial card gallery',properties:{items:{...list(ref('block')),minItems:1,maxItems:100},description:text,orientation:{enum:['horizontal','vertical']},variant:{enum:['perspective','circular']}},required:['items']},
  carousel:{label:'Carousel',properties:{items:{...list(ref('block')),minItems:1,maxItems:100},description:text},required:['items']},

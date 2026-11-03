@@ -80,7 +80,7 @@ async function serveApi(incoming,response,url){
   if(siteConfig)result=await handleSiteConfigRequest(fetchRequest(incoming,url),siteConfigStore,{sets});
   else{
    const set=url.pathname==='/api/assistant'?await activeContentSet(siteConfigStore,sets):null;
-   const documents=set===null?null:development?(await readDevelopmentCatalog(new URL(`../content/${set}.json`,import.meta.url))).documents.filter(doc=>['portfolio-item','component','page'].includes(doc.type)):assistantDocumentSets[set];
+   const documents=set===null?null:development?(await readDevelopmentCatalog(set)).documents.filter(doc=>['portfolio-item','component','page'].includes(doc.type)):assistantDocumentSets[set];
    result=await handler(fetchRequest(incoming,url),environment,{documents});
   }
   response.statusCode=result.status;

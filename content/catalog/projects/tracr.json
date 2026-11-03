@@ -1,0 +1,64 @@
+{
+  "id": "tracr",
+  "type": "portfolio-item",
+  "status": "published",
+  "slug": "tracr",
+  "title": "Strategic redesign of fragmented blockchain platform",
+  "name": "Blockchain traceability",
+  "summary": "Design System 0→1 + platform redesign • ~2× faster dev & QA",
+  "category": "Blockchain traceability · Regulated supply chain",
+  "kind": "shipped",
+  "year": "2024",
+  "projectStatus": "Launched",
+  "disciplines": [
+    "Design system",
+    "Product",
+    "Brand"
+  ],
+  "shortCategory": "Blockchain traceability",
+  "homeCards": [
+    {
+      "id": "tracr-home-1",
+      "mediaId": "tracr-cover"
+    },
+    {
+      "id": "tracr-home-2",
+      "mediaId": "tracr-cover"
+    },
+    {
+      "id": "tracr-home-3",
+      "mediaId": "tracr-cover"
+    }
+  ],
+  "context": "Blockchain-based provenance and traceability across the regulated global diamond supply chain, including complex statuses, exceptions and conflict management.",
+  "role": "IC lead product designer. Owned the design system, governance and adoption, product architecture, North Star and strategic design direction while supporting leadership and mentoring.",
+  "highlights": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
+  "keyWork": "Used the design system as a vehicle for incremental redesign, reframed the architecture around the diamond and unified five independent workflows through one reusable action model.",
+  "impact": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
+  "heroMediaId": "tracr-cover",
+  "hoverVideoId": "tracr-walkthrough",
+  "blocks": [
+    {
+      "id": "tracr-walkthrough",
+      "type": "video",
+      "label": "Project walkthrough",
+      "title": "Product in motion",
+      "mediaId": "tracr-walkthrough",
+      "posterMediaId": "tracr-cover",
+      "caption": "Walkthrough video",
+      "layout": {
+        "columns": 2,
+        "mediaFit": "contain"
+      }
+    }
+  ],
+  "featured": true,
+  "client": "Tracr",
+  "pageTitle": "Turned a design-system brief into a broader platform redesign",
+  "intro": "Tracr brought me in to introduce a design system. I discovered the deeper problem was fragmented architecture and interaction, so the remit expanded into product strategy and redesign.",
+  "challenge": "The live platform had inconsistent workflows, repeated solutions and low design maturity. Every improvement needed to ship incrementally while rebuilding stakeholder trust.",
+  "prototype": {
+    "label": "View prototype",
+    "url": "https://tracr-beryl.vercel.app/"
+  }
+}

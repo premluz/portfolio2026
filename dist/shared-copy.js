@@ -6,6 +6,13 @@ export function sharedCopyNode(host,key){
  const standard={title:'h1,h2,h3',client:'.card-client,.project-client',category:'.eyebrow',summary:'.project-summary,.info-summary'};
  return external&&gallery[key]?external.querySelector(gallery[key])||external.querySelector(standard[key]):host?.querySelector(standard[key]);
 }
+// A moving copy shows only what the card paints. The card heading keeps its company as a hidden
+// inline part, which would otherwise flash in front of the title once detached from the card's styles.
+export function visibleClone(node){
+ const copy=node.cloneNode(true),copies=[...copy.querySelectorAll('*')];
+ [...node.querySelectorAll('*')].forEach((child,index)=>{if(child.tagName!=='BR'&&!child.getClientRects().length)copies[index].remove();});
+ return copy;
+}
 export function sharedLead(node,key='summary'){
  return key==='summary'?node?.querySelector?.('[data-summary-lead]')||node:node;
 }
@@ -32,6 +39,7 @@ export function captureSharedWords(node,key){
  const walker=doc.createTreeWalker(lead,5),texts=[];let current,length=0;
  while((current=walker.nextNode())){
   if(current.nodeType===1){if(current.tagName==='BR'){texts.push({text:' ',start:length,end:++length});}continue;}
+  if(!current.parentElement?.getClientRects().length)continue;
   const text=current.textContent;texts.push({node:current,text,start:length,end:length+text.length});length+=text.length;
  }
  const text=texts.map(item=>item.text).join(''),words=[];

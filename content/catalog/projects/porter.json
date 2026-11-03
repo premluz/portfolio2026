@@ -1,0 +1,45 @@
+{
+  "id": "porter",
+  "type": "portfolio-item",
+  "status": "published",
+  "slug": "porter",
+  "title": "Created switchboard for the AI agents",
+  "pageTitle": "I designed and built a Mac app that keeps track of your AI agents, so you never lose one or keep one waiting.",
+  "name": "AI agent switchboard",
+  "client": "Porter",
+  "summary": "Everything solo",
+  "category": "Agent switchboard · R&D",
+  "kind": "lab",
+  "year": "2026",
+  "projectStatus": "Building",
+  "disciplines": [
+    "Interaction",
+    "Character",
+    "Motion"
+  ],
+  "homeCards": [
+    {
+      "id": "porter-home-1",
+      "mediaId": "porter-cover"
+    },
+    {
+      "id": "porter-home-2",
+      "mediaId": "porter-cover"
+    },
+    {
+      "id": "porter-home-3",
+      "mediaId": "porter-cover"
+    }
+  ],
+  "listOnly": false,
+  "heroMediaId": "porter-cover",
+  "hoverVideoId": "porter-walkthrough",
+  "intro": "People now work with several AI agents at once, and the real bottleneck is knowing which one needs attention and switching between multiple windows they operate in.",
+  "context": "A native Mac utility that lists conversations from Claude, ChatGPT, Codex and Claude Code, wherever they live, and takes you to the exact tab or window in one click.",
+  "challenge": "Agents are scattered across browser tabs, editor windows, desktop apps and terminals, and none of them can see the others. You can't tell which one is working, which has finished, or which is waiting for you, so an agent sits idle while you look in the wrong place. The tool also had to earn trust: it could not read conversations, send anything off the Mac, or claim a status it couldn't know.",
+  "role": "Sole product designer and builder. I defined the interaction model, information architecture, status language, character, motion and the native implementation.",
+  "keyWork": "• Designed a panel that lives at the screen edge in three states: a black docked tab, a capsule of status dots on hover, and an expanded pane. The shape morphs between them as one liquid form.\n• Built the status model around honesty. Waiting questions outrank working agents, and when Porter can't see a state it shows nothing, never a guess.\n• Replaced a dashboard of badges with one small face that carries the state of every agent at once. It follows your pointer, blinks, and turns amber when something needs you.\n• Treated privacy as a design constraint: only titles and status signals are read, and nothing leaves the Mac.",
+  "impact": "0→1 product • 7 sources → 1 list • 3 panel states",
+  "featured": false,
+  "blocks": []
+}

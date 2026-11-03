@@ -1,0 +1,99 @@
+{
+  "id": "home-about",
+  "type": "component",
+  "status": "published",
+  "title": "About Prem",
+  "summary": "I’ve spent the last 10+ years untangling complex products, from early definition and research through interaction, systems and implementation.",
+  "blocks": [
+    {
+      "id": "about-introduction",
+      "type": "text",
+      "title": "From vision and strategy to shipping and improving.",
+      "label": "",
+      "paragraphs": [
+        "Associative thinker drawn to complexity. I value craft and simplicity. Outside work, I’m into psychology, philosophy, health, biohacking, financial markets, and a few odd rabbit holes.",
+        ""
+      ]
+    },
+    {
+      "id": "about-roles",
+      "type": "timeline",
+      "title": "Experience",
+      "items": [
+        {
+          "id": "role-gala",
+          "type": "text",
+          "title": "Gala",
+          "label": "2023–2026",
+          "paragraphs": []
+        },
+        {
+          "id": "role-tracr",
+          "type": "text",
+          "title": "Tracr",
+          "label": "2021–2023",
+          "paragraphs": []
+        },
+        {
+          "id": "role-vodafone",
+          "type": "text",
+          "title": "Vodafone",
+          "label": "2018–2021",
+          "paragraphs": []
+        },
+        {
+          "id": "role-playstation",
+          "type": "text",
+          "title": "PlayStation",
+          "label": "2016–2018",
+          "paragraphs": []
+        },
+        {
+          "id": "role-carter",
+          "type": "text",
+          "title": "Carter London",
+          "label": "2006-2009",
+          "paragraphs": []
+        },
+        {
+          "id": "role-independent",
+          "type": "text",
+          "title": "Independent",
+          "label": "2006–Present",
+          "paragraphs": []
+        }
+      ]
+    },
+    {
+      "id": "about-side-projects",
+      "type": "timeline",
+      "title": "Side Projects & R&D",
+      "items": [
+        {
+          "id": "side-rios",
+          "type": "text",
+          "title": "Rios",
+          "paragraphs": []
+        },
+        {
+          "id": "side-porter",
+          "type": "text",
+          "title": "Porter",
+          "paragraphs": []
+        },
+        {
+          "id": "side-merlin",
+          "type": "text",
+          "title": "Merlin",
+          "paragraphs": []
+        },
+        {
+          "id": "side-bastion",
+          "type": "text",
+          "title": "Bastion",
+          "paragraphs": []
+        }
+      ]
+    }
+  ]
+}

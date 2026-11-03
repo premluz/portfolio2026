@@ -1,0 +1,38 @@
+{
+  "id": "home-testimonials",
+  "type": "component",
+  "status": "published",
+  "title": "Testimonials",
+  "summary": "Feedback from collaborators at PlayStation, Tracr, Vodafone and Gala.",
+  "revision": 1,
+  "blocks": [
+    {
+      "id": "quote-gabriele",
+      "type": "quote",
+      "text": "His work is strongly informed by data and user research, and he’s especially good at tackling complex, trust-sensitive problems with very little steer, input or guidance.",
+      "attribution": "Paul Wilsher",
+      "label": "Product Manager at Gala"
+    },
+    {
+      "id": "quote-matt",
+      "type": "quote",
+      "text": "Exceptional technical depth. He designs with implementation in mind, anticipating edge cases and system constraints.",
+      "attribution": "Matt Bindoff",
+      "label": "Lead Engineer at Tracr"
+    },
+    {
+      "id": "quote-santiago",
+      "type": "quote",
+      "text": "He challenged our approach and the results showed in our KPIs. He ramped up incredibly quickly and made a meaningful impact within his first month.",
+      "attribution": "Santiago Jaramillo",
+      "label": "Head of Product at Gala"
+    },
+    {
+      "id": "quote-jonathan",
+      "type": "quote",
+      "text": "He brought AI workflows into our design-to-dev process in ways that genuinely sped things up. He's creative and sharp, but always grounded in actual constraints, adapting quickly when things shift.",
+      "attribution": "Jonathan Burk",
+      "label": "Lead AI Engineer at Gala"
+    }
+  ]
+}

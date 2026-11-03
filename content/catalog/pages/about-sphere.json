@@ -1,0 +1,20 @@
+{
+  "id": "about-sphere",
+  "type": "page",
+  "template": "information",
+  "status": "published",
+  "slug": "about-sphere",
+  "title": "A world of cards",
+  "name": "Card sphere",
+  "summary": "The portfolio cards arranged on a sphere you can turn in any direction.",
+  "category": "Prem / Experiments",
+  "blocks": [
+    {
+      "id": "about-sphere-body",
+      "type": "text",
+      "paragraphs": [
+        "Drag to turn. Scroll to explore. Pick a card to bring it closer."
+      ]
+    }
+  ]
+}

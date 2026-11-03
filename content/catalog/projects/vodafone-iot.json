@@ -1,0 +1,60 @@
+{
+  "id": "vodafone-iot",
+  "type": "portfolio-item",
+  "status": "published",
+  "slug": "vodafone-iot",
+  "title": "Research-informed revamp of IoT connectivity platform for technical users",
+  "name": "IoT connectivity",
+  "summary": "180+ regions · 240M+ devices · NPS –33 → +62",
+  "category": "IoT connectivity · Enterprise",
+  "kind": "shipped",
+  "year": "2020",
+  "projectStatus": "Launched",
+  "disciplines": [
+    "Research",
+    "Interaction",
+    "Prototyping"
+  ],
+  "shortCategory": "IoT connectivity",
+  "homeCards": [
+    {
+      "id": "vodafone-iot-home-1",
+      "mediaId": "vodafone-cover"
+    },
+    {
+      "id": "vodafone-iot-home-2",
+      "mediaId": "vodafone-cover"
+    },
+    {
+      "id": "vodafone-iot-home-3",
+      "mediaId": "vodafone-cover"
+    }
+  ],
+  "context": "Enterprise self-service platform for managing IoT connectivity and SIM operations at scale.",
+  "role": "Senior product designer, one of three alongside a design manager. Owned research, IA, interaction design, UI, prototyping, testing and delivery support.",
+  "highlights": "NPS –33 → +62 · Operations time reduced to under 10 seconds · 240M+ devices",
+  "keyWork": "Reframed users around power and occasional behaviour, designed a configurable dashboard and unified key workflows through contextual actions and progressive disclosure.",
+  "impact": "NPS −33 → +62 • Operations reduced from ~1 minute to under 10 seconds • Complex workflows opened to non-technical users without losing specialist depth",
+  "heroMediaId": "vodafone-cover",
+  "hoverVideoId": "vodafone-walkthrough",
+  "blocks": [
+    {
+      "id": "vodafone-iot-walkthrough",
+      "type": "video",
+      "label": "Project walkthrough",
+      "title": "Product in motion",
+      "mediaId": "vodafone-walkthrough",
+      "posterMediaId": "vodafone-cover",
+      "caption": "Walkthrough video",
+      "layout": {
+        "columns": 2,
+        "mediaFit": "contain"
+      }
+    }
+  ],
+  "featured": true,
+  "client": "Vodafone",
+  "pageTitle": "Redesigned a fragmented IoT platform around one scalable interaction model",
+  "intro": "I redesigned an operational platform serving users with very different levels of expertise, frequency of use and operational needs.",
+  "challenge": "Years of feature additions had created fragmented workflows, inconsistent patterns and screens shared by experts and occasional operators alike. High-volume anomalies were hard to spot and no suitable design system existed."
+}

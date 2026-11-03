@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {projectContentDir,readContentSource} from '../scripts/content-source.mjs';
 import fs from 'node:fs';
 import {card} from '../dist/card-renderer.js';
 import {DEFAULT_STORAGE_VALUES} from '../dist/default-settings.js';
@@ -16,7 +17,7 @@ assert.match(markup,/data-title="Strategic redesign"/,'The title is kept for swi
 assert.match(markup,/data-category="Blockchain traceability"/,'The short category is carried on the heading');
 assert.match(card({...project,shortCategory:''},0,'masonry',{}),/data-category="Tracr"/,'Without a short category the name is shown');
 
-const catalog=JSON.parse(read('content/catalog.json'));
+const catalog=await readContentSource(projectContentDir,'catalog');
 const expected={galachain:'Web3 film platform',playstation:'Publishing pipeline',merlin:'AI financial analysis',rios:'Life-first planner',tracr:'Blockchain traceability',bastion:'AI wallet','vodafone-iot':'IoT connectivity'};
 const items=catalog.documents;
 const shorts=Object.fromEntries(items.filter(item=>item.shortCategory).map(item=>[item.id,item.shortCategory]));

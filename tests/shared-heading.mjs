@@ -20,6 +20,7 @@ class Node {
  querySelector(selector){return selector==='.card-copy'?this.children.find(child=>child.kind==='copy')||null:selector==='[data-gallery-description]'||(selector==='.project-summary'||selector==='.project-summary,.info-summary')?this.children.find(child=>child.kind==='summary')||null:selector==='[data-gallery-title]'||selector==='h1'||selector==='h1,h2'||selector==='h1,h2,h3'?this.children.find(child=>child.kind==='heading')||null:selector==='[data-gallery-client]'||selector==='.project-client'||selector==='.card-client,.project-client'?this.children.find(child=>child.kind==='client')||null:null;}
  querySelectorAll(){return [];}
  getBoundingClientRect(){return this.rect;}
+ getClientRects(){return [this.rect];}
  remove(){this.isConnected=false;}
  animate(){return {finished:Promise.resolve()};}
 }

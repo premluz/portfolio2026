@@ -1,0 +1,62 @@
+{
+  "id": "about-unusual",
+  "type": "component",
+  "status": "published",
+  "title": "Unusual things about me",
+  "summary": "Things that don't fit on a CV: a water well, a school, a barefoot pilgrimage, a 28-day fast and hypnotherapy.",
+  "revision": 1,
+  "blocks": [
+    {
+      "id": "unusual-intro",
+      "type": "text",
+      "paragraphs": [
+        "that don't fit on a CV."
+      ]
+    },
+    {
+      "id": "unusual-well",
+      "type": "info-card",
+      "title": "Building water well",
+      "paragraphs": [
+        "Initiated and fundraised a drinking water project for the community I lived with."
+      ],
+      "mediaId": "unusual-well"
+    },
+    {
+      "id": "unusual-school",
+      "type": "info-card",
+      "title": "Building a school",
+      "paragraphs": [
+        "Organised a project to build a school in Sri Lanka."
+      ],
+      "mediaId": "unusual-school"
+    },
+    {
+      "id": "unusual-pilgrimage",
+      "type": "info-card",
+      "title": "Walking ancient pilgrimage route",
+      "paragraphs": [
+        "5 days barefoot in scorching sun — through jungle, savannah, and across a river with crocodiles."
+      ],
+      "mediaId": "unusual-pilgrimage"
+    },
+    {
+      "id": "unusual-fast",
+      "type": "info-card",
+      "title": "Fasting for 28 days",
+      "paragraphs": [
+        "Nothing but water, coffee, and tea. Surprisingly clarifying."
+      ],
+      "mediaId": "unusual-fast"
+    },
+    {
+      "id": "unusual-hypnotherapy",
+      "type": "info-card",
+      "title": "Studying hypnotherapy",
+      "paragraphs": [
+        "Certified. Ask me about it when we meet."
+      ],
+      "mediaId": "unusual-hypnotherapy"
+    }
+  ]
+}

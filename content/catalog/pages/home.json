@@ -1,0 +1,148 @@
+{
+  "id": "home",
+  "type": "page",
+  "badge": {
+    "label": "Available",
+    "tone": "success"
+  },
+  "template": "home",
+  "status": "published",
+  "slug": "work",
+  "title": "I make complex products feel simple.",
+  "summary": "I started out building for the web and running a solo studio. For the last 10+ years, I’ve designed products for technical and expert users. Recently I built Rios and Porter. Today, my focus is AI conversational and generative UI experiences. ",
+  "blocks": [
+    {
+      "id": "home-introduction",
+      "type": "text",
+      "label": "I make complex products feel simple.",
+      "title": "  ",
+      "paragraphs": []
+    },
+    {
+      "id": "home-strapline",
+      "type": "text",
+      "paragraphs": [
+        "Product designer and builder. From technical platforms to AI-native experiences."
+      ]
+    },
+    {
+      "id": "home-description",
+      "type": "text",
+      "paragraphs": [
+        "10+ years  products for technical users and creators. Today, my focus is AI and genUI. Recently built Rios, Porter & Bastion."
+      ]
+    },
+    {
+      "id": "home-timeline",
+      "type": "timeline",
+      "title": "My path",
+      "items": [
+        {
+          "id": "building",
+          "type": "text",
+          "label": "Foundations",
+          "paragraphs": [
+            "I started out building for the web and running a solo studio."
+          ]
+        },
+        {
+          "id": "technical-users",
+          "type": "text",
+          "label": "10+ years",
+          "paragraphs": [
+            "For the last 10+ years, I’ve designed products for technical and expert users."
+          ]
+        },
+        {
+          "id": "making-products",
+          "type": "text",
+          "label": "Recently",
+          "paragraphs": [
+            "Recently I built Rios and Porter."
+          ]
+        },
+        {
+          "id": "ai-native",
+          "type": "text",
+          "label": "Today",
+          "paragraphs": [
+            "Today, my focus is AI-native experiences, generative interfaces and building prototypes in code."
+          ]
+        },
+        {
+          "id": "beyond-screen",
+          "type": "text",
+          "label": "Looking ahead",
+          "paragraphs": [
+            "Intent-driven, adaptive systems and multimodal experiences beyond the screen."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "home-projects",
+      "type": "card-gallery",
+      "orientation": "horizontal",
+      "layout": {
+        "columns": 2
+      },
+      "items": [
+        {
+          "id": "home-project-galachain",
+          "type": "reference",
+          "documentId": "galachain",
+          "presentation": "card"
+        },
+        {
+          "id": "home-project-bastion",
+          "type": "reference",
+          "documentId": "bastion",
+          "presentation": "card"
+        },
+        {
+          "id": "home-project-merlin",
+          "type": "reference",
+          "documentId": "merlin",
+          "presentation": "card"
+        },
+        {
+          "id": "home-project-tracr",
+          "type": "reference",
+          "documentId": "tracr",
+          "presentation": "card"
+        },
+        {
+          "id": "home-project-vodafone-iot",
+          "type": "reference",
+          "documentId": "vodafone-iot",
+          "presentation": "card"
+        },
+        {
+          "id": "home-project-gala-defi",
+          "type": "reference",
+          "documentId": "gala-defi",
+          "presentation": "card"
+        },
+        {
+          "id": "home-project-playstation",
+          "type": "reference",
+          "documentId": "playstation",
+          "presentation": "card"
+        },
+        {
+          "id": "home-project-porter",
+          "type": "reference",
+          "documentId": "porter",
+          "presentation": "card"
+        },
+        {
+          "id": "home-project-rios",
+          "type": "reference",
+          "documentId": "rios",
+          "presentation": "card"
+        }
+      ],
+      "variant": "circular"
+    }
+  ]
+}

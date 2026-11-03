@@ -1,0 +1,58 @@
+{
+  "id": "home-services",
+  "type": "component",
+  "status": "published",
+  "title": "Services",
+  "summary": "Product design, working prototypes, brand and motion, interim design leadership, hiring and coaching.",
+  "revision": 1,
+  "blocks": [
+    {
+      "id": "service-product-design",
+      "type": "info-card",
+      "title": "Product design",
+      "paragraphs": [
+        "I design features end to end, working inside your team."
+      ]
+    },
+    {
+      "id": "service-prototyping",
+      "type": "info-card",
+      "title": "Prototyping in code",
+      "paragraphs": [
+        "Real, working prototypes, so you can try before you commit."
+      ]
+    },
+    {
+      "id": "service-brand-motion",
+      "type": "info-card",
+      "title": "Brand and motion",
+      "paragraphs": [
+        "Identity, marketing and motion. The pitch deck too."
+      ]
+    },
+    {
+      "id": "service-design-lead",
+      "type": "info-card",
+      "title": "Interim design lead",
+      "paragraphs": [
+        "If the lead’s seat is empty, I can fill it for a while."
+      ]
+    },
+    {
+      "id": "service-hiring",
+      "type": "info-card",
+      "title": "Hiring",
+      "paragraphs": [
+        "I’ll help you find and interview your next designer or head of design."
+      ]
+    },
+    {
+      "id": "service-coaching",
+      "type": "info-card",
+      "title": "Coaching",
+      "paragraphs": [
+        "Time to talk craft, career and working through complex design problems."
+      ]
+    }
+  ]
+}

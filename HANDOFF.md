@@ -23,7 +23,7 @@ This is a modular portfolio frontend and content framework, not a CMS-dependent 
 | `dist/control-preferences.js`, `dist/control-style.js`, `dist/control-style.css` | Global and local control variants; see DESIGN_SYSTEM.md and ADR-012 |
 | `dist/assets/` | Local project images and video |
 | `dist/vendor/` | Bundled third-party assets and their notices |
-| `content/catalog.json` | Editable content catalog, including projects, profile pages and reusable components |
+| `content/catalog/` | Editable content catalog, including projects, profile pages and reusable components |
 | `dist/content/` | Content model, schemas, generated content exports and render helpers |
 | `dist/assistant-knowledge.js` | Curated answer facts, phrase routes and suggested questions |
 | `worker/` | Assistant and voice handlers; provider keys are read only from runtime environment |
@@ -33,7 +33,7 @@ This is a modular portfolio frontend and content framework, not a CMS-dependent 
 
 ## Build and content workflow
 
-1. Edit the source record in `content/catalog.json`; do not edit generated content exports by hand.
+1. Edit the source record in `content/catalog/`; do not edit generated content exports by hand.
 2. Add or update media under `dist/assets/`, and point the catalog media entry to its local path or a deliberate external URL.
 3. Run `npm run images` after adding or replacing any image (thumbnails and backdrop copies; see `MEDIA_ASSETS.md`). Then run `npm run build`. `scripts/build-content.mjs` validates and generates catalog indexes/schemas. `scripts/build-worker.mjs` copies browser files into `dist/client/` and creates `dist/server/` with published assistant documents and server modules.
 4. Run `npm run check` before handoff or deployment.
@@ -55,7 +55,7 @@ The existing content model is CMS-agnostic: an eventual CMS or API can provide r
 - Per-session and per-IP rate limits are process/isolate-local maps. Multiple replicas each maintain their own counters; use shared storage if strict global limits are later required.
 - The backend is stateless between requests. It does not save chat transcripts or provider responses.
 - The API routes enforce same-origin checks and input-size limits. Keep them behind HTTPS and avoid logging request bodies.
-- Project prototypes for Merlin, Tracr and Bastion are external URLs defined in `content/catalog.json`. They need to remain reachable and permit iframe embedding, or be replaced with new URLs.
+- Project prototypes for Merlin, Tracr and Bastion are external URLs defined in `content/catalog/`. They need to remain reachable and permit iframe embedding, or be replaced with new URLs.
 - Local videos are large files; preserve HTTP byte-range support on hosts so browser video playback can seek efficiently. The included Node adapter supports range requests.
 
 ## Open items (as of 2026-10-26)

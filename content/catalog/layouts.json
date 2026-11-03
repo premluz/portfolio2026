@@ -1,0 +1,74 @@
+[
+  {
+    "id": "home",
+    "items": [
+      {
+        "id": "galachain",
+        "documentId": "galachain",
+        "featured": false
+      },
+      {
+        "id": "bastion",
+        "documentId": "bastion",
+        "featured": true
+      },
+      {
+        "id": "tracr",
+        "documentId": "tracr",
+        "featured": true
+      },
+      {
+        "id": "merlin",
+        "documentId": "merlin",
+        "featured": true
+      },
+      {
+        "id": "vodafone-iot",
+        "documentId": "vodafone-iot",
+        "featured": true
+      },
+      {
+        "id": "gala-defi",
+        "documentId": "gala-defi",
+        "featured": true
+      },
+      {
+        "id": "porter",
+        "documentId": "porter",
+        "featured": false
+      },
+      {
+        "id": "rios",
+        "documentId": "rios",
+        "featured": false
+      },
+      {
+        "id": "playstation",
+        "documentId": "playstation",
+        "featured": true
+      },
+      {
+        "id": "about",
+        "documentId": "about",
+        "featured": true
+      },
+      {
+        "id": "about-lab",
+        "documentId": "about-lab"
+      },
+      {
+        "id": "about-infinite",
+        "documentId": "about-infinite"
+      },
+      {
+        "id": "about-sphere",
+        "documentId": "about-sphere"
+      },
+      {
+        "id": "contact",
+        "documentId": "contact",
+        "featured": false
+      }
+    ]
+  }
+]

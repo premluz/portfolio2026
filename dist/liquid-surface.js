@@ -7,8 +7,9 @@ import { ReversibleProgress,morphProgress } from './transition-control.js';
 import {readImagePadding,readFrameRadius} from './image-frame.js';
 import {colorInterpolator,gradientInterpolator} from './surface-colors.js';
 import {stageMotion} from './motion-viewport.js';
-import {hideMorphSource} from './morph-visibility.js';
+import {hideMorphSource,placedPadding} from './morph-visibility.js';
 import {bindDetailContentReveal} from './detail-content-reveal.js';
+import {captionTravelTargets} from './caption-travel.js';
 import {sameImageAsset,ImageDecodeGate,handoffImage} from './image-handoff.js';
 // Broad, continuous contour deformation. No noise displacement of DOM content.
 export function contour(w,h,r,amount=0,phase=0){
@@ -30,9 +31,11 @@ export function returnExitBlocks(root){
  return nodes.map(node=>{const rect=node.getBoundingClientRect();return {node,top:rect.top,left:rect.left};}).sort((p,q)=>p.top-q.top||p.left-q.left).map(item=>item.node);
 }
 const captionEase=value=>{const q=Math.max(0,Math.min(1,value));return q*q*(3-2*q);};
-export async function flow(from,to,{duration,intensity,control,ambientGlow=false,ambientLight=null}){
+export async function flow(from,to,{duration,intensity,control,ambientGlow=false,ambientLight=null,textTravel=true}){
  // Card and page copy are separate content (a card's outcome line is not the page's thesis), so text never
  // travels between them: the leaving copy staggers out bottom-up and the arriving copy staggers in top-down.
+ // The one exception is a card opening its project page, whose caption repeats the card's own lines: those
+ // travel (caption-travel.js). With textTravel off the card copy leaves with the card and the caption staggers in.
  const galleryEntry=!!from.copyRoot,galleryReturn=!!to.morphCopyRoot,chatEntry=!!from.element?.closest?.('.ask-cards'),chatReturn=!!to.closest?.('.ask-cards'),cardEntry=!!from.element?.matches?.('.project-card'),cardReturn=!!to.matches?.('.project-card'),independentEntry=galleryEntry||chatEntry||cardEntry,independentReturn=galleryReturn||chatReturn||cardReturn,independentCopy=independentEntry||independentReturn;
  const newDetailHeading=!!to.querySelector('h1')&&(independentEntry||!!from.shared?.title?.node?.textContent?.trim()&&!hasSharedHeading(from,to));
  if(!independentCopy&&hasSharedHeading(from,to))preserveSharedHeading(to.querySelector('.project-summary'));
@@ -44,23 +47,25 @@ export async function flow(from,to,{duration,intensity,control,ambientGlow=false
  const bg=from.background||getComputedStyle(to).backgroundColor,targetStyle=getComputedStyle(to.querySelector(':scope > .liquid-skin')||to),targetBackground=targetStyle.backgroundColor;
  shell.style.background='none';const material=document.createElement('div');material.className='flow-material';material.style.background=from.backgroundImage&&from.backgroundImage!=='none'?from.backgroundImage:bg;shell.append(material);
  const blendBackground=gradientInterpolator(from.backgroundImage,targetStyle.backgroundImage,bg,targetBackground);
- const incoming=to.cloneNode(true);incoming.querySelectorAll('canvas,video').forEach(c=>c.remove());incoming.classList.add('flow-content');Object.assign(incoming.style,{width:b.width+'px',height:b.height+'px',background:'none',boxShadow:'none',filter:'none',margin:'0',opacity:'0'});
+ const incoming=to.cloneNode(true);incoming.querySelectorAll('canvas,video').forEach(c=>c.remove());incoming.classList.add('flow-content');Object.assign(incoming.style,{width:b.width+'px',height:b.height+'px',background:'none',boxShadow:'none',filter:'none',margin:'0',opacity:'0',...placedPadding(to)});
  // The destination is already rendered in its final place. Keep it unpainted from the first line, so no
  // frame shows it before the morph takes over (image decode, video first frame). Opacity only: computed
  // visibility of its copy is still measured below, and hideMorphSource takes over before the first frame.
  const targetOpacity=to.style.opacity;to.style.opacity='0';
- const outgoing=from.clone;outgoing.classList.add('flow-content');outgoing.querySelectorAll('.visual').forEach(v=>v.style.visibility='hidden');Object.assign(outgoing.style,{width:a.width+'px',height:a.height+'px',background:'none',boxShadow:'none',filter:'none',margin:'0'});
+ const outgoing=from.clone;outgoing.classList.add('flow-content');outgoing.querySelectorAll('.visual').forEach(v=>v.style.visibility='hidden');Object.assign(outgoing.style,{width:a.width+'px',height:a.height+'px',background:'none',boxShadow:'none',filter:'none',margin:'0',...from.padding});
  // Detached gallery clones no longer have the ancestor selector that hides
  // their internal card copy. The visible caption is its sole text source.
  for(const [external,clone] of [[from.copyRoot,outgoing],[to.morphCopyRoot,incoming]])if(external){const copy=clone.querySelector('.card-copy');if(copy)copy.style.display='none';}
  if(chatEntry){const copy=outgoing.querySelector('.card-copy');if(copy)copy.style.visibility='hidden';}
  if(chatReturn||cardReturn){const copy=incoming.querySelector('.card-copy');if(copy)copy.style.visibility='hidden';}
- const captionKeys=['client','title','summary'],sourceCaptions=[],targetCaptions=[];
+ const captionKeys=['client','title','summary'],sourceCaptions=[],targetCaptions=[],travel=cardEntry&&textTravel?captionTravelTargets(from.shared,to):new Map(),fadeCardCopy=!cardEntry||textTravel;
  if(independentCopy)for(const [index,key] of captionKeys.entries()){
+  // Only text the card paints gets a copy: a part the card hides (its company, with Company hidden) has no box, so
+  // its copy would sit at the viewport's top-left corner.
   // A settled detail returns exactly as its entry reverses: its own heading and copy stay
   // in the moving page and fade with it, rather than a pinned static copy.
-  const source=galleryReturn?null:from.shared?.[key];if(source){const copy=createStaticCopy({...source,opacity:source.hidden?0:source.opacity},shell);if(key==='title')lockLineBreaks(copy.node,source.words);copy.node.classList.add('flow-caption-out');sourceCaptions.push({copy,index});const native=outgoing.querySelector(key==='title'?'h1,h2,h3':key==='client'?'.card-client,.project-client':'.project-summary,.info-summary');if(native)native.style.visibility='hidden';}
-  const target=independentReturn?sharedCopyNode(to,key):null;if(target){const style=getComputedStyle(target),copy=createStaticCopy({node:target,rect:target.getBoundingClientRect(),opacity:copyOpacity(target,to),fontFamily:style.fontFamily,fontSize:parseFloat(style.fontSize),fontWeight:style.fontWeight,lineHeight:parseFloat(style.lineHeight)/parseFloat(style.fontSize),letterSpacing:parseFloat(style.letterSpacing)||0,color:style.color},shell);copy.node.classList.add('flow-caption-in');if(key==='title')lockLineBreaks(copy.node,captureSharedWords(target,key));targetCaptions.push({copy,index});}
+  const source=galleryReturn?null:from.shared?.[key];if(source){if(fadeCardCopy&&!travel.has(key)&&!source.hidden){const copy=createStaticCopy({...source,opacity:source.hidden?0:source.opacity},shell);if(key==='title')lockLineBreaks(copy.node,source.words);copy.node.classList.add('flow-caption-out');sourceCaptions.push({copy,index});}const native=outgoing.querySelector(key==='title'?'h1,h2,h3':key==='client'?'.card-client,.project-client':'.project-summary,.info-summary');if(native)native.style.visibility='hidden';}
+  const target=independentReturn?sharedCopyNode(to,key):null;if(target?.getClientRects().length){const style=getComputedStyle(target),copy=createStaticCopy({node:target,rect:target.getBoundingClientRect(),opacity:copyOpacity(target,to),fontFamily:style.fontFamily,fontSize:parseFloat(style.fontSize),fontWeight:style.fontWeight,lineHeight:parseFloat(style.lineHeight)/parseFloat(style.fontSize),letterSpacing:parseFloat(style.letterSpacing)||0,color:style.color},shell);copy.node.classList.add('flow-caption-in');if(key==='title')lockLineBreaks(copy.node,captureSharedWords(target,key));targetCaptions.push({copy,index});}
  }
  // Staging can paint before the first animation callback positions the captions.
  for(const {copy} of sourceCaptions)copy.paint(a.left,a.top,1);
@@ -71,25 +76,25 @@ export async function flow(from,to,{duration,intensity,control,ambientGlow=false
  const detachHeadingReveal=newDetailHeading?[incoming.querySelector('h1'),incoming.querySelector('.project-client')].map(node=>attachTitleReveal(to.querySelector('.project-summary'),node)):[];
  const shared=[];
  for(const [key,selector] of [['title','h1,h2,h3'],['client','.card-client,.project-client'],['category','.eyebrow'],['summary','.project-summary,.info-summary']]){
- const source=from.shared?.[key],target=sharedCopyNode(to,key);if(!source||!target)continue;
- if(independentCopy)continue;
+ const source=from.shared?.[key],line=travel.get(key),target=line?.node||sharedCopyNode(to,key);if(!source||!target)continue;
+ if(independentCopy&&!line)continue;
  // The page thesis is new content, not the outcome sentence on the card.
  // Its native header follows the same leading fade as project-to-project entry.
- if(newDetailHeading&&(key==='title'||key==='client'))continue;
+ if(!line&&newDetailHeading&&(key==='title'||key==='client'))continue;
  // Card results and the longer project introduction are separate content.
  // Let differing paragraphs use the normal crossfade and streaming reveal.
- if(key==='summary'&&!hasSharedLead(from,to))continue;
- const fadeReveal=to.querySelector('.project-summary')?.dataset?.revealMode==='fade';
+ if(!line&&key==='summary'&&!hasSharedLead(from,to))continue;
+ const fadeReveal=!line&&to.querySelector('.project-summary')?.dataset?.revealMode==='fade';
  const node=(fadeReveal?target:source.node).cloneNode(true),rect=target.getBoundingClientRect(),style=getComputedStyle(target),targetCopy=to.morphCopyRoot?null:target.closest?.('.card-copy'),targetCopyStyle=targetCopy?getComputedStyle(targetCopy):null;
  if(node.dataset)delete node.dataset.revealOpacity;
  const context=key==='summary'?target.querySelector('[data-summary-context]'):null;
  if(context&&!node.querySelector('[data-summary-context]'))node.append(context.cloneNode(true));
- const detachStream=key==='summary'?attachSummaryStream(target,node):(key==='title'||key==='client')?attachTitleReveal(to.querySelector('.project-summary'),node):()=>{};
- const closingSummary=key==='summary'&&!context&&!!node.querySelector('[data-summary-context]');
+ const detachStream=line?()=>{}:key==='summary'?attachSummaryStream(target,node):(key==='title'||key==='client')?attachTitleReveal(to.querySelector('.project-summary'),node):()=>{};
+ const closingSummary=!line&&key==='summary'&&!context&&!!node.querySelector('[data-summary-context]');
  const summaryStart=Number(source.node.dataset?.summaryProgress??1);
  const lineA=Number.isFinite(source.lineHeight)?source.lineHeight:1.2,targetLine=parseFloat(style.lineHeight)/parseFloat(style.fontSize),lineB=Number.isFinite(targetLine)?targetLine:1.2;
  node.classList.add('flow-shared');Object.assign(node.style,{position:'absolute',margin:'0',maxWidth:'none',fontFamily:source.fontFamily,fontWeight:source.fontWeight,lineHeight:lineA,color:source.color,zIndex:'3',opacity:source.hidden?'0':'1'});
- const outgoingCopy=outgoing.querySelector(selector),incomingCopy=incoming.querySelector(selector);if(outgoingCopy)outgoingCopy.style.visibility='hidden';if(incomingCopy)incomingCopy.style.visibility='hidden';shell.append(node);
+ const outgoingCopy=outgoing.querySelector(selector),incomingCopy=line?incoming.querySelector(':scope > .detail-caption')?.children[line.index]:incoming.querySelector(selector);if(outgoingCopy)outgoingCopy.style.visibility='hidden';if(incomingCopy)incomingCopy.style.visibility='hidden';shell.append(node);
  const words=createSharedWords(source,captureSharedWords(target,key),node,key,shell);
  if(!words&&key==='title')lockLineBreaks(node,source.words);
  const scaleB=copyScale(target);
@@ -117,7 +122,17 @@ export async function flow(from,to,{duration,intensity,control,ambientGlow=false
  shell.append(outgoing,incoming);
  // Settled return exits top to bottom: each detail block leaves a beat before the one below it.
  const exitBlocks=galleryReturn?returnExitBlocks(outgoing):[];
-if(picture)shell.append(picture);if(nextPicture)shell.append(nextPicture);const fields=document.createElement('div');fields.className='material-reflection';fields.style.transform=from.reflectionTransform||'';material.append(fields);const glow=document.createElement('div');glow.className='motion-afterglow';const removeGlowViewport=keepAmbient||movingAmbient?()=>{}:stageMotion(glow,19),removeShellViewport=stageMotion(shell,25);to.style.opacity=targetOpacity;const restoreTarget=hideMorphSource(to),restoreSource=hideMorphSource(from.element!==to?from.element:null),restoreSourceCopy=hideMorphSource(from.copyRoot),restoreTargetCopy=hideMorphSource(to.morphCopyRoot);try{const imageRenderers=[picture,nextPicture].filter(Boolean).map(el=>new LiquidImage(el,()=>intensity,{fixedResolution:[Math.max(from.image.rect.width,iv.width),Math.max(from.image.rect.height,iv.height)]}));
+ // A project caption never rides the moving page copy: it stays where the live page shows it and only staggers in or
+ // fades out. The copy can lay the caption out a little differently, so it is pinned to the live caption's measured
+ // place. Drift is how far each copy is carried towards its final place: a project page opened from a card is held
+ // there (only the picture travels), other incoming pages 12% of the way; a card-bound page rides the shell.
+ const incomingDrift=cardEntry?1:.12;
+ // Measured on the first frame, once the shell is on the page; the offset is taken inside the copy, so its drift cancels.
+ const pin=(root,target,rect,drift)=>{const node=root.querySelector(':scope > .detail-caption');if(!node||!target)return null;const own=node.getBoundingClientRect(),host=root.getBoundingClientRect();return {node,target,rect,drift,left:own.left-host.left,top:own.top-host.top};};
+ const captionTarget=cardEntry?to.querySelector(':scope > .detail-caption')?.getBoundingClientRect():null;let pinnedCaptions=null;
+ const pinCaptions=()=>[cardEntry?pin(incoming,captionTarget,b,incomingDrift):null,cardReturn&&!galleryReturn?pin(outgoing,from.captionRect,a,0):null].filter(Boolean);
+ const placeCaptions=(x,y)=>{pinnedCaptions??=pinCaptions();for(const item of pinnedCaptions)item.node.style.transform=`translate(${item.target.left-item.left-x-(item.rect.left-x)*item.drift}px,${item.target.top-item.top-y-(item.rect.top-y)*item.drift}px)`;};
+if(picture)shell.append(picture);if(nextPicture)shell.append(nextPicture);const fields=document.createElement('div');fields.className='material-reflection';fields.style.transform=from.reflectionTransform||'';material.append(fields);const glow=document.createElement('div');glow.className='motion-afterglow';const removeGlowViewport=keepAmbient||movingAmbient?()=>{}:stageMotion(glow,19),removeShellViewport=stageMotion(shell,25);placeCaptions(a.left,a.top);to.style.opacity=targetOpacity;const restoreTarget=hideMorphSource(to),restoreSource=hideMorphSource(from.element!==to?from.element:null),restoreSourceCopy=hideMorphSource(from.copyRoot),restoreTargetCopy=hideMorphSource(to.morphCopyRoot);try{const imageRenderers=[picture,nextPicture].filter(Boolean).map(el=>new LiquidImage(el,()=>intensity,{fixedResolution:[Math.max(from.image.rect.width,iv.width),Math.max(from.image.rect.height,iv.height)]}));
  // Appended after the picture's ImageFrame exists, so that frame never claims or unloads the carried clip.
  carried=carryVideo(from.video?.element,picture);
  const r0=from.radius??64,r1=parseFloat(getComputedStyle(to).borderTopLeftRadius)||0;
@@ -137,7 +152,7 @@ if(picture)shell.append(picture);if(nextPicture)shell.append(nextPicture);const 
  if(ambient){for(const [name,start,end,origin] of [['left',ambientSource.left,ambientTarget.left,x],['top',ambientSource.top,ambientTarget.top,y],['width',ambientSource.width,ambientTarget.width,0],['height',ambientSource.height,ambientTarget.height,0]])ambient.style.setProperty('--ambient-'+name,lerp(start,end,p)-origin+'px');ambient.style.opacity=String(lerp(ambientStart,ambientEnd,p));}
  movingAmbient?.frame(now,timeline.direction,{left:x,top:y});
  for(const item of shared){if(item.closingSummary)setSummaryProgress(item.node,item.summaryStart*(1-Math.min(1,t/.28)));let textP=p,opacity=1,xPos=lerp(item.a.left,item.b.left,p),yPos=lerp(item.a.top,item.b.top,p);if(item.sourceHidden&&item.targetHidden){opacity=0;}else if(item.sourceHidden){const origin={left:x+item.a.left-a.left,top:y+item.a.top-a.top},fadeProgress=Math.max(0,Math.min(1,t/.18)),moveProgress=Math.max(0,Math.min(1,(t-.08)/.60));item.revealOrigin=origin;textP=1-Math.pow(1-moveProgress,3);opacity=1-Math.pow(1-fadeProgress,2);xPos=lerp(origin.left,item.b.left,textP);yPos=lerp(origin.top,item.b.top,textP);}else if(item.targetHidden){const moveProgress=Math.max(0,Math.min(1,t/.76)),fadeProgress=Math.max(0,Math.min(1,t/.42));textP=1-Math.pow(1-moveProgress,3);opacity=1-fadeProgress*fadeProgress*(3-2*fadeProgress);}const fontSize=lerp(item.fontA,item.fontB,textP),lineHeight=lerp(item.lineA,item.lineB,textP),letterSpacing=lerp(item.spacingA,item.spacingB,textP),color=item.blendColor(textP),fontWeight=lerp(item.weightA,item.weightB,textP),visibleOpacity=opacity*lerp(item.opacityA,item.opacityB,textP)*Number(item.node.dataset?.revealOpacity??1);Object.assign(item.node.style,{left:xPos-x+'px',top:yPos-y+'px',width:lerp(item.a.width,item.b.width,textP)+'px',fontSize:fontSize+'px',fontWeight,lineHeight:String(lineHeight),letterSpacing:letterSpacing+'px',color,opacity:String(visibleOpacity)});item.words?.paint(item,{x,y,xPos,yPos,textP,opacity:visibleOpacity,fontSize,lineHeight,letterSpacing,color,fontWeight});}
- if(galleryReturn){const exitOpacity=start=>String(Math.max(0,Math.min(1,1-(t-start)/RETURN_EXIT_FADE)));if(exitBlocks.length)exitBlocks.forEach((node,index)=>{node.style.opacity=exitOpacity(RETURN_EXIT_STAGGER*index/Math.max(1,exitBlocks.length-1));});else outgoing.style.opacity=exitOpacity(0);outgoing.style.transform=`translate(${(a.left-x)*.12}px,${(a.top-y)*.12}px)`;}else outgoing.style.opacity=String(Math.max(0,1-t/.22));incoming.style.opacity=String(Math.max(0,Math.min(1,(t-.38)/.36)));incoming.style.transform=`translate(${(b.left-x)*.12}px,${(b.top-y)*.12}px)`;
+ if(galleryReturn){const exitOpacity=start=>String(Math.max(0,Math.min(1,1-(t-start)/RETURN_EXIT_FADE)));if(exitBlocks.length)exitBlocks.forEach((node,index)=>{node.style.opacity=exitOpacity(RETURN_EXIT_STAGGER*index/Math.max(1,exitBlocks.length-1));});else outgoing.style.opacity=exitOpacity(0);outgoing.style.transform=`translate(${(a.left-x)*.12}px,${(a.top-y)*.12}px)`;}else outgoing.style.opacity=String(Math.max(0,1-t/.22));incoming.style.opacity=String(Math.max(0,Math.min(1,(t-.38)/.36)));incoming.style.transform=`translate(${(b.left-x)*incomingDrift}px,${(b.top-y)*incomingDrift}px)`;placeCaptions(x,y);
  if(picture){if(Number.isFinite(from.image.rounding))picture.style.setProperty('--image-rounding',lerp(from.image.rounding,targetImageRounding,p)+'px');for(const side of ['top','right','bottom','left'])picture.style.setProperty('--image-padding-'+side,lerp(from.image.padding?.[side]||0,targetPadding[side]||0,p)+'px');picture.style.setProperty('--image-size-limit',String(lerp(from.image.sizeLimit??1,targetSizeLimit,p)));picture.style.background=blendImageBacking(p);picture.style.setProperty('--image-overlay',String(lerp(from.image.shade||0,targetShade,p)));picture.style.setProperty('--image-shade-height',lerp(from.image.shadeHeight||0,targetShadeHeight,p)+'px');const ia=from.image.rect;Object.assign(picture.style,{left:lerp(ia.left,iv.left,p)-x+'px',top:lerp(ia.top,iv.top,p)-y+'px',width:lerp(ia.width,iv.width,p)+'px',height:lerp(ia.height,iv.height,p)+'px',borderRadius:lerp(from.image.radius,targetFrameRadius,p)+'px'});const imageX=lerp(ia.left+ia.width/2,iv.left+iv.width/2,p),imageY=lerp(ia.top+ia.height/2,iv.top+iv.height/2,p);const velocityX=previousImage?(imageX-previousImage.x)/(dt*16.667):0,velocityY=previousImage?(imageY-previousImage.y)/(dt*16.667):0;previousImage={x:imageX,y:imageY};const exposure=imageEffects.blur?motionTrail(velocityX,velocityY,materialSettings.motionBlur):{x:0,y:0};imageMotion.x=easeMaterial(imageMotion.x,exposure.x,dt);imageMotion.y=easeMaterial(imageMotion.y,exposure.y,dt);if(nextPicture)nextPicture.style.cssText=picture.style.cssText;for(const image of imageRenderers){image.imageFrame.resize();image.setMotion(imageMotion.x,imageMotion.y);}syncMorphVideo(carried,picture?.querySelector('img'));if(nextPicture){const blend=nextImageGate.isReady()?Math.max(0,Math.min(1,(t-.3)/.35)):0;nextPicture.style.opacity=String(blend);picture.style.opacity=String(1-blend);}}
  if(!timeline.finished){requestAnimationFrame(frame);return;}
  const ripple=(timeline.direction>0?imageRenderers.at(-1):imageRenderers[0])?.rippleState(now);

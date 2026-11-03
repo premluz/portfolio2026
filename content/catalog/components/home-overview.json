@@ -1,0 +1,84 @@
+{
+  "id": "home-overview",
+  "type": "component",
+  "status": "published",
+  "title": "At a glance",
+  "summary": "Recent products, experience in brief and recent writing.",
+  "blocks": [
+    {
+      "id": "overview-recently",
+      "type": "timeline",
+      "title": "Recently",
+      "items": [
+        {
+          "id": "overview-rios",
+          "type": "reference",
+          "documentId": "rios",
+          "presentation": "inline"
+        },
+        {
+          "id": "overview-porter",
+          "type": "reference",
+          "documentId": "porter",
+          "presentation": "inline"
+        },
+        {
+          "id": "overview-snapper",
+          "type": "text",
+          "title": "Snapper bookmark enrichment",
+          "paragraphs": []
+        }
+      ]
+    },
+    {
+      "id": "overview-experience",
+      "type": "timeline",
+      "title": "Experience",
+      "items": [
+        {
+          "id": "overview-today",
+          "type": "text",
+          "label": "Today",
+          "paragraphs": [
+            "AI and genUI experiences."
+          ]
+        },
+        {
+          "id": "overview-decade",
+          "type": "text",
+          "label": "Last 10 years",
+          "paragraphs": [
+            "Products for technical users and creators."
+          ]
+        },
+        {
+          "id": "overview-roles",
+          "type": "text",
+          "label": "Roles",
+          "paragraphs": [
+            "Vodafone, Tracr, Gala, PlayStation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "overview-writing",
+      "type": "timeline",
+      "title": "Writing",
+      "items": [
+        {
+          "id": "overview-desire",
+          "type": "reference",
+          "documentId": "desire-and-lived-experience",
+          "presentation": "inline"
+        },
+        {
+          "id": "overview-screen",
+          "type": "reference",
+          "documentId": "design-after-the-screen",
+          "presentation": "inline"
+        }
+      ]
+    }
+  ]
+}

@@ -7,6 +7,7 @@ class Node{
  setAttribute(key,value){this[key]=value;}
  querySelector(){return null;}
  querySelectorAll(){return [];}
+ getClientRects(){return [{}];}
 }
 globalThis.getComputedStyle=node=>({opacity:node.opacity??'1',textTransform:'none',transform:node.transform||'none'});
 const measurements={

@@ -10,7 +10,19 @@ output = root / "dist/assets/optimised"
 output.mkdir(parents=True, exist_ok=True)
 manifest = {}
 before = after = 0
-for asset in json.loads((root / "content/catalog.json").read_text())["assets"]:
+
+
+def default_assets():
+    """The default content set's assets: content/catalog/assets.json (one file per page) or content/catalog.json."""
+    folder, single = root / "content/catalog/assets.json", root / "content/catalog.json"
+    if folder.is_file():
+        return json.loads(folder.read_text())
+    if single.is_file():
+        return json.loads(single.read_text())["assets"]
+    raise SystemExit(f"No default content set: expected {folder} or {single}")
+
+
+for asset in default_assets():
     if asset["type"] != "image" or not asset["url"].startswith("assets/"):
         continue
     # Project backdrops are ~16k px panoramas with their own pipeline (scripts/build-backgrounds.mjs).

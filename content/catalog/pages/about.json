@@ -1,0 +1,79 @@
+{
+  "id": "about",
+  "type": "page",
+  "template": "information",
+  "status": "published",
+  "slug": "about",
+  "title": "Hello, I'm Prem",
+  "name": "About",
+  "summary": "Product designer with a technical and entrepreneurial background, 10+ years across Web3, DeFi, blockchain, IoT & Telco, 0→1 through growth and scale.",
+  "category": "Prem / Designer + creative technologist",
+  "links": [],
+  "blocks": [
+    {
+      "id": "about-body",
+      "type": "text",
+      "paragraphs": [
+        "Product designer with a technical background, 10+ years across Web3, DeFi, blockchain, IoT & Telco, 0→1 through growth and scale.",
+        "I solve complexity and ambiguity wherever they show up in product, system, team, or workflow.",
+        "Today, I’m building AI-native design systems and experiences."
+      ]
+    },
+    {
+      "id": "about-portrait",
+      "type": "image",
+      "mediaId": "about-portrait",
+      "alt": "Portrait of Prem"
+    },
+    {
+      "id": "about-timeline",
+      "type": "timeline",
+      "title": "My path",
+      "items": [
+        {
+          "id": "about-building",
+          "type": "text",
+          "label": "Foundations",
+          "paragraphs": [
+            "I started out building for the web and running a solo studio."
+          ]
+        },
+        {
+          "id": "about-technical-users",
+          "type": "text",
+          "label": "10+ years",
+          "paragraphs": [
+            "For the last 10+ years, I’ve designed products for technical and expert users."
+          ]
+        },
+        {
+          "id": "about-making-products",
+          "type": "text",
+          "label": "Recently",
+          "paragraphs": [
+            "Recently I built Rios and Porter."
+          ]
+        },
+        {
+          "id": "about-ai-native",
+          "type": "text",
+          "label": "Today",
+          "paragraphs": [
+            "Today, my focus is AI-native experiences, generative interfaces and building prototypes in code."
+          ]
+        },
+        {
+          "id": "about-beyond-screen",
+          "type": "text",
+          "label": "Looking ahead",
+          "paragraphs": [
+            "Intent-driven, adaptive systems and multimodal experiences beyond the screen."
+          ]
+        }
+      ],
+      "layout": {
+        "columns": 2
+      }
+    }
+  ]
+}

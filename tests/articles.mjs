@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {projectContentDir,readContentSource} from '../scripts/content-source.mjs';
 import {readFile} from 'node:fs/promises';
 import {contentModel} from '../dist/content/model.js';
 import {cardIds,informationCards,getDocument,cards} from '../dist/documents.js';
@@ -8,7 +9,7 @@ import {homeWritingMarkup} from '../dist/home-writing.js';
 import {HOME_SECTION_DEFAULTS} from '../dist/home-sections.js';
 import {homeMarkup} from '../dist/home-layout.js';
 
-const catalog=JSON.parse(await readFile(new URL('../content/catalog.json',import.meta.url),'utf8'));
+const catalog=await readContentSource(projectContentDir,'catalog');
 assert.doesNotThrow(()=>contentModel.assert(catalog),'Both articles and the table block validate');
 const broken=structuredClone(catalog);broken.documents.find(doc=>doc.id==='desire-and-lived-experience').publishedAt='14 Oct';
 assert.throws(()=>contentModel.assert(broken),'Article dates must be ISO calendar days');

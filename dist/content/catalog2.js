@@ -399,7 +399,7 @@ export const catalog={
       "summary": "Design System 0→1 + platform redesign • ~2× faster dev & QA",
       "category": "Blockchain traceability · Regulated supply chain",
       "kind": "shipped",
-      "year": "2024",
+      "year": "2023",
       "projectStatus": "Launched",
       "disciplines": [
         "Design system",

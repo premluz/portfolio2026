@@ -1,0 +1,21 @@
+{
+  "id": "about-infinite",
+  "type": "page",
+  "template": "information",
+  "status": "published",
+  "slug": "about-infinite",
+  "title": "Fly through the cards",
+  "name": "About infinite",
+  "summary": "An experimental view of the portfolio: every card in an endless space you can fly through.",
+  "category": "Prem / Experiments",
+  "links": [],
+  "blocks": [
+    {
+      "id": "about-infinite-body",
+      "type": "text",
+      "paragraphs": [
+        "An experimental view of the portfolio: every card in an endless space. Drag to move, scroll to fly, and pick any project card to open it."
+      ]
+    }
+  ]
+}

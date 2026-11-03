@@ -42,7 +42,7 @@ for(const project of catalog.documents.filter(document=>document.type==='portfol
  assert(!markup.includes('content-block')&&!markup.includes('detail-footer')&&!markup.includes('All projects'),'Every project detail stops after its hero');
 }
 const aboutDetail=cardDetail(store.getCard('about'));assert(aboutDetail.includes('<h1 tabindex="-1" data-about-section="title">Hello, I&#39;m Prem</h1>'));assert(!aboutDetail.includes('id="back"'),'Information pages have no bottom project back button');assert(!aboutDetail.includes('detail-footer'));
-assert(!cardDetail(p).includes('content-block'),'Project details omit authored sections beneath the hero');
+{const body=cardDetail(p);assert(body.includes('<div class="page-blocks">')&&body.includes('Clearer workflows.')&&body.includes('2×')&&body.includes('<figure class="block-media">'),'Project details render authored blocks beneath the facts');assert(!body.includes('class="story'),'Project blocks use the page block renderer, not the grid page one');}
 const textAnswer=contentAnswer({type:'text',text:'<img src=x onerror=bad()>',citations:[{documentId:'playstation',evidenceId:'highlights'}]},{store});assert(textAnswer.includes('&lt;img'));assert(!textAnswer.includes('<img'));assert(textAnswer.includes('href="#playstation"'));
 const cardAnswer=contentAnswer({type:'cards',documentIds:['playstation']},{store});assert(cardAnswer.includes('data-content-card="playstation"'));assert(cardAnswer.includes('project-card image-card'));assert.throws(()=>contentAnswer({type:'cards',documentIds:['invented']},{store}));
 const extended=createBlockRenderer({store,renderers:{callout:b=>`<p>${b.tone}</p>`}});assert(extended([{type:'callout',tone:'quiet'}]).includes('<p>quiet</p>'));

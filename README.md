@@ -24,7 +24,7 @@ npm run dev
 Open `http://localhost:3000`. The assistant falls back to authored answers if the model API is not configured. Speech playback is disabled until `AI_VOICE_KEY` is configured.
 
 Save edits and reload the page; local development needs no build or cache clearing.
-The dev server serves authored files from `dist/`, reads `content/catalog.json`
+The dev server serves authored files from `dist/`, reads `content/catalog/`
 on each catalog request, and assembles CSS in memory. Settings exports in
 `settings/` are also read directly. Do not edit generated `dist/client/` copies.
 For local API credentials, copy `.env.example` to `.env`, enter the keys locally,
@@ -39,7 +39,7 @@ For production, configure variables in the hosting provider's secret manager, th
 ## What is included
 
 - `dist/` — site HTML, CSS, JavaScript modules, project media and bundled vendor assets.
-- `content/catalog.json` — editable source of truth for projects, profile sections and reusable content blocks.
+- `content/catalog/` — editable source of truth for projects, profile sections and reusable content blocks.
 - `worker/` — same-origin assistant and speech API handlers.
 - `deploy/node-server.mjs` — dependency-free Node server for static files and API routes.
 - `scripts/` and `tests/` — content/build scripts and automated checks.
