@@ -276,6 +276,14 @@ const saveFlag=(key,value)=>{try{localStorage.setItem(key,String(value));}catch(
 const ARTICLE_IMAGE_WIDTHS=['text','960','1280','page'],articleImageWidth=value=>ARTICLE_IMAGE_WIDTHS.includes(value)?value:'text';
 let articleImages='text';try{articleImages=articleImageWidth(localStorage.getItem('prem-article-images'));}catch(error){console.warn('Article images preference unreadable; using the text width',error);}
 document.documentElement.dataset.articleImages=articleImages;$('#articleImages').value=articleImages;$('#articleImages').onchange=e=>{articleImages=articleImageWidth(e.target.value);document.documentElement.dataset.articleImages=articleImages;try{localStorage.setItem('prem-article-images',articleImages);}catch(error){console.warn('Article images preference not saved',error);}};
+// Page images (project and article blocks) can sit in cards; the padding is a share of the card's width, clamped to the slider's range.
+const pageImageCardSlider=$('#pageImageCardPadding'),pageImageCardPaddingOf=value=>Math.min(Number(pageImageCardSlider.max),Math.max(Number(pageImageCardSlider.min),Number(value)));
+let pageImageCards=readFlag('prem-page-image-cards'),pageImageCardPadding=pageImageCardPaddingOf(pageImageCardSlider.value);
+try{const saved=localStorage.getItem('prem-page-image-card-share');if(saved!==null&&Number.isFinite(Number(saved)))pageImageCardPadding=pageImageCardPaddingOf(saved);}catch(error){console.warn('Page image card padding unreadable; using the default',error);}
+function applyPageImageCards(){const root=document.documentElement;root.dataset.pageImageCards=pageImageCards?'on':'off';root.style.setProperty('--page-image-card-padding',`${pageImageCardPadding}%`);$('#pageImageCards').checked=pageImageCards;pageImageCardSlider.value=pageImageCardPadding;$('#pageImageCardPaddingValue').textContent=`${pageImageCardPadding}%`;}
+applyPageImageCards();
+$('#pageImageCards').onchange=e=>{pageImageCards=e.target.checked;saveFlag('prem-page-image-cards',pageImageCards);applyPageImageCards();};
+pageImageCardSlider.oninput=e=>{pageImageCardPadding=pageImageCardPaddingOf(e.target.value);try{localStorage.setItem('prem-page-image-card-share',String(pageImageCardPadding));}catch(error){console.warn('Page image card padding not saved',error);}applyPageImageCards();};
 // Featured cards take two columns in a 3+ column masonry grid unless this is off; the Lab has its own value.
 let featuredLarger=true;try{featuredLarger=localStorage.getItem('prem-featured-larger')!=='false';}catch(error){console.warn('Featured cards preference unreadable; using larger',error);}
 $('#featuredLarger').checked=featuredLarger;$('#featuredLarger').onchange=e=>{featuredLarger=e.target.checked;saveFlag('prem-featured-larger',featuredLarger);if(!labMode)homeLayout?.setFeaturedLarger(featuredLarger);};

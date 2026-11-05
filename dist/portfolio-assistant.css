@@ -64,7 +64,7 @@ button.glass-surface:is(:hover,:focus-visible):not(:active),#dock .composer-sugg
 
 /* Suggestions start at the full dock's left edge, including contextual controls. */
 #dock .composer-suggestions{left:calc(-1 * var(--dock-back-space,0px));transform:none;width:calc(var(--dock-painted-width,var(--nav-main-width)) + var(--dock-back-space,0px));max-width:calc(100vw - 32px);justify-content:flex-start}
-#dock .assistant-back{position:absolute;left:calc(-1 * (var(--nav-back-width) + 10px));bottom:0;width:var(--nav-back-width);height:var(--nav-height);display:grid;place-items:center;padding:6px 12px;border:1px solid var(--dock-outline);border-radius:var(--nav-rounding);color:var(--composer-text-ink);font-size:var(--nav-item-font-size);line-height:var(--line-height-label);white-space:nowrap;pointer-events:auto;z-index:5}
+#dock .assistant-back{position:absolute;left:calc(-1 * (var(--nav-back-width) + 10px));bottom:0;width:var(--nav-back-width);height:var(--nav-height);display:grid;place-items:center;padding:6px 8px;border:1px solid var(--dock-outline);border-radius:var(--nav-rounding);color:var(--composer-text-ink);font-size:var(--font-size-body);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);line-height:var(--line-height-label);white-space:nowrap;pointer-events:auto;z-index:5}
 #dock .assistant-back[hidden]{display:none}
 #dock .assistant-back:is(:hover,:focus-visible){color:var(--ink);background:var(--nav-item-hover)}
 

@@ -297,7 +297,20 @@ Developer settings → Article images choice applies; a width never exceeds the 
 ```
 
 Body images are plain figures (no card frame or hover effect) so they keep their own
-proportions. The grid pages (About, Contact) render the same blocks through
+proportions. Developer settings → Design → Images → Page images: "Wrap images and videos in cards"
+(`prem-page-image-cards`, off by default) puts each one on the card surface with the card rounding and "Card
+padding" around it (`prem-page-image-card-share`, 0–40% of the card's width, 16 by default and not saved until you move the slider, so it scales on phones); the caption stays under the card.
+
+Two to a row (desktop only, 751px and wider): give a section `"layout": {"columns": 2}`. Its images and videos
+fill two columns across the section's `layout.width` (`page` unless set); its heading and any text span the full
+row; phones show one per row.
+
+```json
+{"id": "screens", "type": "section", "layout": {"columns": 2}, "items": [
+  {"id": "screen-left", "type": "image", "mediaId": "…", "caption": "…"},
+  {"id": "screen-right", "type": "image", "mediaId": "…", "caption": "…"}
+]}
+``` The grid pages (About, Contact) render the same blocks through
 `content-blocks.js`, where `section` also works.
 
 ### Writing an article in Markdown

@@ -24,7 +24,7 @@ assert.equal((html.match(/<div class="page-block-group" data-block-type="section
 assert(html.includes('<section class="article-section"><p class="eyebrow content-block-eyebrow">Chapter</p><h2>Key work</h2></section>'),'The section heading sits in the reading column on its own');
 assert(html.includes('<h2>Unifying three systems</h2><p>First paragraph.</p><p>Second &lt;b&gt;paragraph&lt;/b&gt;.</p>'),'A text block carries its own heading and paragraphs, escaped');
 const image=/<section class="article-section" data-block-type="image" data-block-width="960">(.*?)<\/section>/.exec(html)?.[1]||'';
-assert(image.startsWith('<figure class="block-media"><img')&&image.includes('alt="The publishing flow"')&&image.includes('<figcaption class="block-caption">Publishing flow, end to end</figcaption></figure>'),'An image carries its caption underneath, in one figure');
+assert(image.startsWith('<figure class="block-media"><div class="block-media-frame"><img')&&image.includes('alt="The publishing flow"')&&image.includes('</div><figcaption class="block-caption">Publishing flow, end to end</figcaption></figure>'),'An image sits in its frame (the card, when cards are on) with the caption underneath, outside it');
 assert(!image.includes('class="visual'),'Body images are plain figures, with no card frame or liquid effect');
 const video=/<section class="article-section" data-block-type="video" data-block-width="page">(.*?)<\/section>/.exec(html)?.[1]||'';
 assert(video.includes('<video class="content-video" controls playsinline preload="none" data-media-src=')&&video.includes('data-media-poster=')&&video.includes('Terms of sale</figcaption>'),'A video lazy-loads with its poster and caption');
@@ -44,6 +44,16 @@ assert.throws(()=>contentModel.assert(withBlocks({id:'empty',type:'section',titl
 const project=structuredClone(store.getCard('playstation')),withBody={...project,bodyBlocks:blocks.slice(0,2)};
 const page=cardDetail(withBody);
 assert(page.indexOf('</dl></div></div><div class="page-blocks">')>0&&page.indexOf('Key work')>page.indexOf('detail-fact'),'The block list follows the facts');
-assert(!cardDetail(project).includes('page-blocks'),'A project with no extra blocks gets no empty list');
+assert(!cardDetail({...project,bodyBlocks:[]}).includes('page-blocks'),'A project with no extra blocks gets no empty list');
 assert(!project.bodyBlocks.some(b=>b.mediaId==='playstation-walkthrough'),'The walkthrough video that feeds the card hover is not a body block');
+// Two to a row: a section with layout.columns 2 marks itself and defaults to the page width; one column stays plain.
+const two=pageBlocksMarkup([{id:'pair',type:'section',layout:{columns:2},items:[{id:'l',type:'image',mediaId:'playstation-content'},{id:'r',type:'image',mediaId:'playstation-content'}]}],{store});
+assert(two.startsWith('<div class="page-block-group" data-block-type="section" data-block-columns="2" data-block-width="page">'),'A two-column section spans the page unless it sets a width');
+assert(pageBlocksMarkup([{id:'pair',type:'section',layout:{columns:2,width:'1280'},items:[{id:'l',type:'image',mediaId:'playstation-content'}]}],{store}).includes('data-block-columns="2" data-block-width="1280"'));
+assert(!pageBlocksMarkup([{id:'one',type:'section',layout:{columns:1},items:[{id:'l',type:'image',mediaId:'playstation-content'}]}],{store}).includes('data-block-columns'),'One column is the plain list');
+const css=await (await import('node:fs/promises')).readFile(new URL('../dist/article.css',import.meta.url),'utf8');
+assert(css.includes('@media(min-width:751px){\n.page-block-group[data-block-columns="2"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))'),'Two to a row on desktop only');
+assert(css.includes(':root[data-page-image-cards="on"] .block-media-frame{display:grid;place-items:center;padding:var(--page-image-card-padding);background:var(--card-surface);border-radius:var(--radius-card)}'),'Cards use the card surface, the card rounding and the padding setting');
+const indexHtml=await (await import('node:fs/promises')).readFile(new URL('../dist/index.html',import.meta.url),'utf8');
+assert(indexHtml.includes('<input id="pageImageCards" type="checkbox"> Wrap images and videos in cards')&&indexHtml.includes('<input id="pageImageCardPadding" type="range" min="0" max="40" step="1" value="16">'),'The switch starts off; padding defaults to 16% of the card width');
 console.log('Page blocks passed: sections, headings, captioned images and videos, per-block widths, validation, and project page placement.');

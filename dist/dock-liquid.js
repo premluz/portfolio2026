@@ -5,6 +5,7 @@ export const LIQUID_DEFAULTS=Object.freeze({blend:28,pinch:.6});
 // A piece blends at most this many times its smallest side, so a sliver rises as a rounded dome and
 // shrinks smoothly to nothing instead of showing as a flat-topped lip.
 const SIZE_BLEND_RATIO=2.5;
+const DROP_ASPECT=1.5;
 const clamp=value=>Math.max(0,Math.min(1,value));
 const smooth=(a,b,value)=>{const t=clamp((value-a)/(b-a));return t*t*(3-2*t);};
 
@@ -56,6 +57,11 @@ export function dockLiquidShapes({shape,phase,metrics,extension=null,receding=nu
  if(shape.contextWidth>.001&&shape.contextHeight>.001)shapes.push(rect(0,(shape.height-shape.contextHeight)/2,shape.contextWidth,shape.contextHeight,radius,liquidBlend(phase,liquid),moving(phase),shape.contextHeight/shape.height));
  if(extension)shapes.push(...branchShapes(shape.popover,extension,liquid));
  if(receding&&recedingSource)shapes.push(...branchShapes(receding.popover,recedingSource,liquid));
- if(back)shapes.push(rect(back.left,back.top,back.width,back.height,radius,liquidBlend(backPhase,liquid),moving(backPhase),Math.min(back.width,back.height)/metrics.height));
+ if(back){
+  // The back pill leaves the bar's round end sideways: at its full height a thin piece would poke above and
+  // below that end as horns, so it rises as a drop no taller than DROP_ASPECT times its width.
+  const height=Math.min(back.height,DROP_ASPECT*back.width),top=back.top+(back.height-height)/2;
+  shapes.push(rect(back.left,top,back.width,height,radius,liquidBlend(backPhase,liquid),moving(backPhase),Math.min(back.width,height)/metrics.height));
+ }
  return shapes;
 }

@@ -82,13 +82,16 @@ header .discipline{--swap-in:1;--swap-out:3}
 .header-detail-nav [data-header-action="back"]{--swap-in:2;--swap-out:2}
 .header-detail-nav [data-header-action="previous"]{--swap-in:3;--swap-out:1}
 .header-detail-nav [data-header-action="next"]{--swap-in:4;--swap-out:0}
-:is(header .brand,header .discipline){transition:opacity var(--header-swap-duration) var(--ease-settle) calc(var(--swap-out) * var(--header-swap-step)),transform var(--header-swap-duration) var(--ease-settle) calc(var(--swap-out) * var(--header-swap-step))}
-:root.header-detail-active header :is(.brand,.discipline){transition-delay:calc(var(--swap-in) * var(--header-swap-step))}
+:is(header .brand,header .discipline){transition:opacity var(--header-swap-duration) var(--ease-settle) calc(var(--swap-out) * var(--header-swap-step)),transform var(--header-swap-duration) var(--ease-settle) calc(var(--swap-out) * var(--header-swap-step)),scale var(--glass-button-press-duration) var(--glass-button-press-ease)}
+:root.header-detail-active header :is(.brand,.discipline){transition-delay:calc(var(--swap-in) * var(--header-swap-step)),calc(var(--swap-in) * var(--header-swap-step)),0s}
+:is(header .brand,header .discipline):active{scale:var(--glass-button-press-scale);transition-duration:var(--glass-button-press-in-duration);transition-delay:0s}
 .header-detail-nav button{opacity:0;transform:translateX(var(--header-swap-shift))}
 :root.header-detail-active .header-detail-nav button{opacity:1;transform:none}
 :root.header-detail-active header :is(.brand,.discipline){opacity:0;transform:translateX(calc(-1 * var(--header-swap-shift)));pointer-events:none}
 @media(prefers-reduced-motion:reduce){:is(header .brand,header .discipline,.header-detail-nav button){transition-duration:0s;transition-delay:0s}}
+@media(prefers-reduced-motion:reduce){:is(header .brand,header .discipline):active{scale:1}}
 :root[data-animation="off"] :is(header .brand,header .discipline,.header-detail-nav button){transition-duration:0s;transition-delay:0s}
+:root[data-animation="off"] :is(header .brand,header .discipline):active{scale:1}
 .header-detail-nav button{display:inline-flex;align-items:center;justify-content:center;height:var(--nav-icon-size);min-width:var(--nav-icon-size);padding:0 var(--space-3);border-radius:var(--radius-icon-control);color:var(--body-ink);font:inherit;font-size:var(--font-size-body);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);cursor:pointer;transition:opacity var(--header-swap-duration) var(--ease-settle) calc(var(--swap-out) * var(--header-swap-step)),transform var(--header-swap-duration) var(--ease-settle) calc(var(--swap-out) * var(--header-swap-step)),scale var(--glass-button-press-duration) var(--glass-button-press-ease),background-color var(--nav-hover-out-duration) ease-out,border-color var(--nav-hover-out-duration) ease-out,box-shadow var(--nav-hover-out-duration) ease-out,color 160ms ease}
 :root.header-detail-active .header-detail-nav button{transition-delay:calc(var(--swap-in) * var(--header-swap-step)),calc(var(--swap-in) * var(--header-swap-step)),0s,0s,0s,0s,0s}
 .header-detail-nav button[hidden]{display:none}

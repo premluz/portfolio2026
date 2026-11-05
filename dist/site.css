@@ -1189,13 +1189,16 @@ header .discipline{--swap-in:1;--swap-out:3}
 .header-detail-nav [data-header-action="back"]{--swap-in:2;--swap-out:2}
 .header-detail-nav [data-header-action="previous"]{--swap-in:3;--swap-out:1}
 .header-detail-nav [data-header-action="next"]{--swap-in:4;--swap-out:0}
-:is(header .brand,header .discipline){transition:opacity var(--header-swap-duration) var(--ease-settle) calc(var(--swap-out) * var(--header-swap-step)),transform var(--header-swap-duration) var(--ease-settle) calc(var(--swap-out) * var(--header-swap-step))}
-:root.header-detail-active header :is(.brand,.discipline){transition-delay:calc(var(--swap-in) * var(--header-swap-step))}
+:is(header .brand,header .discipline){transition:opacity var(--header-swap-duration) var(--ease-settle) calc(var(--swap-out) * var(--header-swap-step)),transform var(--header-swap-duration) var(--ease-settle) calc(var(--swap-out) * var(--header-swap-step)),scale var(--glass-button-press-duration) var(--glass-button-press-ease)}
+:root.header-detail-active header :is(.brand,.discipline){transition-delay:calc(var(--swap-in) * var(--header-swap-step)),calc(var(--swap-in) * var(--header-swap-step)),0s}
+:is(header .brand,header .discipline):active{scale:var(--glass-button-press-scale);transition-duration:var(--glass-button-press-in-duration);transition-delay:0s}
 .header-detail-nav button{opacity:0;transform:translateX(var(--header-swap-shift))}
 :root.header-detail-active .header-detail-nav button{opacity:1;transform:none}
 :root.header-detail-active header :is(.brand,.discipline){opacity:0;transform:translateX(calc(-1 * var(--header-swap-shift)));pointer-events:none}
 @media(prefers-reduced-motion:reduce){:is(header .brand,header .discipline,.header-detail-nav button){transition-duration:0s;transition-delay:0s}}
+@media(prefers-reduced-motion:reduce){:is(header .brand,header .discipline):active{scale:1}}
 :root[data-animation="off"] :is(header .brand,header .discipline,.header-detail-nav button){transition-duration:0s;transition-delay:0s}
+:root[data-animation="off"] :is(header .brand,header .discipline):active{scale:1}
 .header-detail-nav button{display:inline-flex;align-items:center;justify-content:center;height:var(--nav-icon-size);min-width:var(--nav-icon-size);padding:0 var(--space-3);border-radius:var(--radius-icon-control);color:var(--body-ink);font:inherit;font-size:var(--font-size-body);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);cursor:pointer;transition:opacity var(--header-swap-duration) var(--ease-settle) calc(var(--swap-out) * var(--header-swap-step)),transform var(--header-swap-duration) var(--ease-settle) calc(var(--swap-out) * var(--header-swap-step)),scale var(--glass-button-press-duration) var(--glass-button-press-ease),background-color var(--nav-hover-out-duration) ease-out,border-color var(--nav-hover-out-duration) ease-out,box-shadow var(--nav-hover-out-duration) ease-out,color 160ms ease}
 :root.header-detail-active .header-detail-nav button{transition-delay:calc(var(--swap-in) * var(--header-swap-step)),calc(var(--swap-in) * var(--header-swap-step)),0s,0s,0s,0s,0s}
 .header-detail-nav button[hidden]{display:none}
@@ -1937,6 +1940,20 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 .block-media :is(img,video){display:block;width:100%;height:auto;border-radius:var(--radius-visual)}
 .block-media .block-caption{margin:var(--space-3) 0 0;line-height:var(--line-height-body)}
 .page-block-group+.page-block-group,.page-block-group+.article-section,.article-section+.page-block-group{margin-top:var(--space-page-rhythm-sm)}
+/* Design → Images → "Wrap images and videos in cards": the media sits centred on the card surface, with the card rounding;
+   the caption stays under the card. */
+:root[data-page-image-cards="on"] .block-media-frame{display:grid;place-items:center;padding:var(--page-image-card-padding);background:var(--card-surface);border-radius:var(--radius-card)}
+/* A section with layout.columns 2: its images and videos two to a row on desktop, one per row on phones. */
+.page-block-group[data-block-columns="2"]{max-width:none;margin-inline:auto}
+.page-block-group[data-block-columns="2"][data-block-width="content"]{max-width:var(--content-width-reading)}
+.page-block-group[data-block-columns="2"][data-block-width="960"]{max-width:var(--content-width-xs)}
+.page-block-group[data-block-columns="2"][data-block-width="1280"]{max-width:var(--content-width-media-wide)}
+.page-block-group[data-block-columns="2"]>.article-section:is([data-block-type="image"],[data-block-type="video"]){max-width:none}
+@media(min-width:751px){
+.page-block-group[data-block-columns="2"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-5);row-gap:var(--space-page-rhythm-sm);align-items:start}
+.page-block-group[data-block-columns="2"]>:is(.article-section,.page-block-group){grid-column:1 / -1;margin-top:0}
+.page-block-group[data-block-columns="2"]>.article-section:is([data-block-type="image"],[data-block-type="video"]){grid-column:auto;margin-inline:0}
+}
 .article-header{margin-bottom:var(--space-page-rhythm-md)}
 /* The title sits where any page's title does (top left); only the text below it is centred in its reading column. */
 .article-header .article-meta{margin:var(--space-4) 0 0;color:var(--eyebrow-ink)}
@@ -2081,7 +2098,7 @@ button.glass-surface:is(:hover,:focus-visible):not(:active),#dock .composer-sugg
 
 /* Suggestions start at the full dock's left edge, including contextual controls. */
 #dock .composer-suggestions{left:calc(-1 * var(--dock-back-space,0px));transform:none;width:calc(var(--dock-painted-width,var(--nav-main-width)) + var(--dock-back-space,0px));max-width:calc(100vw - 32px);justify-content:flex-start}
-#dock .assistant-back{position:absolute;left:calc(-1 * (var(--nav-back-width) + 10px));bottom:0;width:var(--nav-back-width);height:var(--nav-height);display:grid;place-items:center;padding:6px 12px;border:1px solid var(--dock-outline);border-radius:var(--nav-rounding);color:var(--composer-text-ink);font-size:var(--nav-item-font-size);line-height:var(--line-height-label);white-space:nowrap;pointer-events:auto;z-index:5}
+#dock .assistant-back{position:absolute;left:calc(-1 * (var(--nav-back-width) + 10px));bottom:0;width:var(--nav-back-width);height:var(--nav-height);display:grid;place-items:center;padding:6px 8px;border:1px solid var(--dock-outline);border-radius:var(--nav-rounding);color:var(--composer-text-ink);font-size:var(--font-size-body);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);line-height:var(--line-height-label);white-space:nowrap;pointer-events:auto;z-index:5}
 #dock .assistant-back[hidden]{display:none}
 #dock .assistant-back:is(:hover,:focus-visible){color:var(--ink);background:var(--nav-item-hover)}
 

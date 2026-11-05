@@ -286,6 +286,10 @@
 <div id="imagePaddingSettings"><p>Landscape images max out at 1000px wide. Portrait images max out at 600px wide and 700px high.</p><label>Image top padding <output id="bleedTopValue">0px</output><input id="bleedTop" type="range" min="0" max="240" step="4" value="0"></label><label>Image side padding <output id="bleedSideValue">0px</output><input id="bleedSide" type="range" min="0" max="100" step="2" value="0"></label><label>Image bottom padding <output id="bleedBottomValue">0px</output><input id="bleedBottom" type="range" min="0" max="120" step="2" value="0"></label></div>
 <div id="bleedSettings" hidden><label class="check"><input id="bleedBacking" type="checkbox" checked> Image gap fill</label><p>Image gap fill follows the card surface. When desktop labels are hidden in full-bleed mode, image top padding follows side padding.</p></div>
 <label>Image corner rounding <output id="imageRoundingValue">6px</output><input id="imageRounding" type="range" min="0" max="32" step="1" value="6"></label>
+<div class="setting-subsection">Page images (projects and articles)</div>
+<label class="check"><input id="pageImageCards" type="checkbox"> Wrap images and videos in cards</label>
+<label>Card padding <output id="pageImageCardPaddingValue">16%</output><input id="pageImageCardPadding" type="range" min="0" max="40" step="1" value="16"></label>
+<p>Cards use the card surface and card rounding; padding is a share of the card's width, so it scales on phones. Two images sit side by side (desktop only) when a section sets "layout": {"columns": 2}.</p>
 </div></details>
 <details class="developer-settings-group">
 <summary>Environment</summary><div class="developer-settings-content">

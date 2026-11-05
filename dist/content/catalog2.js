@@ -249,6 +249,70 @@ export const catalog={
             "columns": 2,
             "mediaFit": "contain"
           }
+        },
+        {
+          "id": "playstation-in-the-product",
+          "type": "section",
+          "title": "In the product",
+          "items": [
+            {
+              "id": "playstation-content-screen",
+              "type": "image",
+              "mediaId": "playstation-content",
+              "alt": "PlayStation Network content management screen for a game release",
+              "caption": "PlayStation Network content management screen for a game release",
+              "layout": {
+                "width": "page"
+              }
+            },
+            {
+              "id": "playstation-pipeline-intro",
+              "type": "text",
+              "title": "In the product",
+              "paragraphs": [
+                "Unified three regional systems into one publishing workflow and established design foundations across onboarding, international pricing, entitlements and issue management."
+              ]
+            },
+            {
+              "id": "playstation-content-pipeline",
+              "type": "video",
+              "mediaId": "sony-content-pipeline",
+              "posterMediaId": "playstation-content",
+              "layout": {
+                "width": "page"
+              }
+            },
+            {
+              "id": "playstation-pipeline-intro2",
+              "title": "In the product",
+              "type": "text",
+              "paragraphs": [
+                "Unified three regional systems into one publishing workflow and established design foundations across onboarding, international pricing, entitlements and issue management."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "playstation-screens",
+          "type": "section",
+          "layout": {
+            "columns": 2,
+            "width": "page"
+          },
+          "items": [
+            {
+              "id": "playstation-screen-left",
+              "type": "image",
+              "mediaId": "playstation-content",
+              "alt": "PlayStation Network content management screen for a game release"
+            },
+            {
+              "id": "playstation-screen-right",
+              "type": "image",
+              "mediaId": "tracr-transfer",
+              "alt": "Dark Tracr diamond provenance transfer review interface"
+            }
+          ]
         }
       ],
       "featured": true,

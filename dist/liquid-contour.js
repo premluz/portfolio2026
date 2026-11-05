@@ -13,18 +13,26 @@ export function roundedRectDistance(px,py,{x,y,width,height,radius}){
  return Math.hypot(Math.max(qx,0),Math.max(qy,0))+Math.min(Math.max(qx,qy),0)-r;
 }
 
-// Approximate distance to the ellipse inscribed in the rectangle (exact on the boundary, which is what
-// the traced zero contour needs). A growing piece is a dome before it is a pill.
+// Approximate distance to the ellipse inscribed in the rectangle. A growing piece is a dome before it is a
+// pill. Dividing by the gradient keeps the slope near 1 even for a thin ellipse; scaling by the short radius
+// left the field near zero far above and below a sliver, and the blend pulled that out as sharp horns.
 function ellipseDistance(px,py,{x,y,width,height}){
- const rx=Math.max(width/2,.001),ry=Math.max(height/2,.001),dx=(px-(x+rx))/rx,dy=(py-(y+ry))/ry;
- return (Math.hypot(dx,dy)-1)*Math.min(rx,ry);
+ const rx=Math.max(width/2,.001),ry=Math.max(height/2,.001),dx=px-(x+rx),dy=py-(y+ry);
+ const k0=Math.hypot(dx/rx,dy/ry),k1=Math.hypot(dx/(rx*rx),dy/(ry*ry));
+ return k1>0?k0*(k0-1)/k1:-Math.min(rx,ry);
 }
+const smooth01=value=>{const t=Math.max(0,Math.min(1,value));return t*t*(3-2*t);};
 // A shape is a rounded rectangle, optionally domed (`dome` 1 = ellipse), or a group of parts that
 // blend only with each other (`partsBlend`) before the group joins the rest with its own `blend`.
 export function shapeDistance(px,py,shape){
  if(shape.parts){let value=shapeDistance(px,py,shape.parts[0]);for(let index=1;index<shape.parts.length;index++)value=smoothMin(value,shapeDistance(px,py,shape.parts[index]),shape.partsBlend||0);return value;}
- const box=roundedRectDistance(px,py,shape),dome=shape.dome||0;
- return dome>0?box+(ellipseDistance(px,py,shape)-box)*dome:box;
+ // The corner radius itself grows from pill-round to settled, so the field stays an exact distance; mixing
+ // an ellipse into a large small-radius box let the box's corners show as sharp shoulders. Only the first
+ // slivers keep the ellipse, where a capsule would show a flat top.
+ const dome=shape.dome||0,full=Math.min(shape.width,shape.height)/2;
+ const box=roundedRectDistance(px,py,dome>0?{...shape,radius:shape.radius+(full-shape.radius)*dome}:shape);
+ const sliver=smooth01((dome-.5)*2);
+ return sliver>0?box+(ellipseDistance(px,py,shape)-box)*sliver:box;
 }
 
 // Polynomial smooth minimum: within `blend` pixels of each other two surfaces fuse with a fillet.
@@ -101,10 +109,13 @@ function smoothLoop(loop){
  return path+' Z';
 }
 
+// A piece still too thin to trace keeps the outline traced; the analytic path would stroke it as a hairline.
+const emerging=shapes=>shapes.length>1&&shapes.some(shape=>shape.moving&&!usable(shape));
+
 /** One closed outline (even-odd) for the blended shapes, or null when nothing is blending. */
 export function liquidOutline(shapes){
  const pieces=shapes.filter(usable);
- if(!pieces.length||!needsLiquid(pieces))return null;
+ if(!pieces.length||!needsLiquid(pieces)&&!emerging(shapes))return null;
  const box=bounds(pieces),grid=sampleGrid(pieces,box);
  return chainLoops(traceSegments(grid,box)).map(smoothLoop).join(' ');
 }
