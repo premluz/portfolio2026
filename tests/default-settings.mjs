@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {DEFAULT_JSON_STORAGE_VALUES,DEFAULT_STORAGE_VALUES,applyDefaultSettings} from '../dist/default-settings.js';
+import {DEFAULT_JSON_STORAGE_VALUES,DEFAULT_STORAGE_VALUES,RETIRED_STORAGE_KEYS,applyDefaultSettings} from '../dist/default-settings.js';
 
 const values=new Map();
 const storage={getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,String(value))};
@@ -31,4 +31,11 @@ for(const [previous,expected] of [['text','carousel'],['cards','cards']]){
 const legacyCarousel=new Map([['prem-carousel-description-in-card','true']]);
 const carouselStorage={getItem:key=>legacyCarousel.get(key)??null,setItem:(key,value)=>legacyCarousel.set(key,String(value))};
 applyDefaultSettings(carouselStorage);assert.equal(legacyCarousel.get('prem-carousel-description-in-card'),'true','Saved per-card carousel captions remain enabled');
+for(const key of RETIRED_STORAGE_KEYS)assert(key in DEFAULT_STORAGE_VALUES,`Retired setting ${key} has a preset to return to`);
+const retired=new Map(RETIRED_STORAGE_KEYS.map(key=>[key,'stale']));
+const retiredStorage={getItem:key=>retired.get(key)??null,setItem:(key,value)=>retired.set(key,String(value))};
+applyDefaultSettings(retiredStorage);
+for(const key of RETIRED_STORAGE_KEYS)assert.equal(retired.get(key),DEFAULT_STORAGE_VALUES[key],`${key} returns to its preset once`);
+retired.set('prem-hero-carousel','true');applyDefaultSettings(retiredStorage);
+assert.equal(retired.get('prem-hero-carousel'),'true','A retired value saved after the one-time reset persists');
 console.log('Default settings passed: every preset value is applied for new storage and existing preferences remain unchanged.');

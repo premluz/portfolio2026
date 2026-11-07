@@ -32,6 +32,12 @@ const productDisplayKey='prem-home-product-display';
 const splitControlsKey='prem-split-project-controls';
 const splitControlsDefaultKey='prem-split-project-controls-default';
 
+// Controls hidden from the panel (`setting-retired`, Flip/Flat layouts) that have no menu replacing them. A value
+// saved before they were retired would keep applying with nothing left to turn it off, so it returns to the
+// preset once. The marker lets later explicit choices (an import, say) persist.
+export const RETIRED_STORAGE_KEYS=Object.freeze(['prem-hero-timeline-enabled','prem-feature-stage','prem-hero-carousel','prem-hero-timeline-mode','prem-carousel-native-snap','prem-control-style-navigation','prem-control-style-projects','prem-control-style-carousels','prem-control-style-suggestions','prem-control-style-utilities','prem-card-glass-style','prem-image-blur-enabled','prem-image-ripple-enabled','prem-home-view']);
+const retiredResetKey='prem-retired-settings-reset';
+
 export function applyDefaultSettings(storage){
  if(storage===undefined)try{storage=globalThis.localStorage;}catch(error){console.warn('Portfolio defaults could not access browser storage.',error);return;}
  if(!storage)return;
@@ -44,6 +50,10 @@ export function applyDefaultSettings(storage){
   if(storage.getItem(splitControlsDefaultKey)===null){
    if(storage.getItem(splitControlsKey)==='false')storage.setItem(splitControlsKey,DEFAULT_STORAGE_VALUES[splitControlsKey]);
    storage.setItem(splitControlsDefaultKey,DEFAULT_STORAGE_VALUES[splitControlsKey]);
+  }
+  if(storage.getItem(retiredResetKey)===null){
+   for(const key of RETIRED_STORAGE_KEYS)if(storage.getItem(key)!==null)storage.setItem(key,DEFAULT_STORAGE_VALUES[key]);
+   storage.setItem(retiredResetKey,'true');
   }
   seedControlPreferences(storage);
   for(const [key,value] of Object.entries(DEFAULT_STORAGE_VALUES))if(storage.getItem(key)===null)storage.setItem(key,value);

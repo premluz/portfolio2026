@@ -10,6 +10,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 ---
 # Progress log
 
+## 2026-11-07 One-time reset of retired settings
+Retired controls without a replacing menu (hero carousel, featured stage, hero timeline and its mode, native snap, per-area control styles, card glass style, image blur and ripple, Flip/Flat home view) kept applying stored values with no visible control. `applyDefaultSettings` now returns the 14 `RETIRED_STORAGE_KEYS` to their presets once, guarded by `prem-retired-settings-reset`, so later choices and imports persist. Owner's settings exported first to `settings/prem-portfolio-settings-2026-11-07.json`. Evidence: all `tests/*.mjs` pass, including new reset and marker cases in tests/default-settings.mjs. Not browser-verified. Risk left: `prem-hero-timeline-text-enabled` has no preset, and the ripple/motion-blur sliders sit inside `prem-motion-settings`; neither is reset.
+
 ## 2026-11-07 Review fixes: proxy menus, dock radius, padding default
 Code review of the uncommitted settings-proxy work. Proxy menus now write a whole option or nothing (blocked while `busy`/`navigationPreparing`), refresh once per choice, and re-sync when `applyCardAppearance` sets their switches. The composer row no longer counts as wrapped with no actions (the radius was -Infinity). Added the `prem-page-image-card-share` default (16) and rejected a blank stored value. Regenerated `site.css`, which was missing the mobile `card-background-hidden` rule. Untracked `.DS_Store`. Evidence: all `tests/*.mjs` pass, including a new blocked-choice case in tests/settings-proxies.mjs. Risk left: retired controls still apply stored non-preset values with no visible control (needs owner decision); one menu choice still runs each switch's own relayout.
 
