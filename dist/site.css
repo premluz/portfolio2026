@@ -115,6 +115,10 @@
   --glass-button-press-ease: var(--ease-press);
   /* Glass card: inner light replaces the hairline; the broad top glow reads as light inside curved glass. */
   --glass-card-wash: oklch(0 0 0 / .012);
+  /* Send wash: a neutral sweep just off the composer surface. Mixed from --ink, so it lightens the dark theme
+     and darkens the light one without adding a hue. */
+  --send-wash: color-mix(in oklab, var(--ink) 9%, transparent);
+  --send-wash-edge: color-mix(in oklab, var(--ink) 4%, transparent);
   --glass-card-rim-top: oklch(1 0 0 / .7);
   --glass-card-rim-bottom: oklch(0.2404 0.0414 305.38 / .06);
   --glass-card-glow-low: oklch(1 0 0 / .12);
@@ -719,7 +723,7 @@ body.edge-shade-top .page-edge-shades .top,body.edge-shade-bottom .page-edge-sha
 /* The title group leaves layout flow but keeps its original box for transitions. */
 .image-card{--card-copy-inset-y:var(--card-padding-top);--card-copy-inset-x:var(--space-card-inset);--card-copy-inset-left:var(--card-padding-left,var(--card-copy-inset-x));--card-copy-inset-right:var(--card-padding-right,var(--card-copy-inset-x))}
 @media(max-width:850px){.image-card{--card-copy-inset-y:var(--card-padding-top);--card-copy-inset-x:var(--space-card-inset-compact-x)}}
-#settings label.setting-disabled{opacity:.45}#settings label.setting-disabled input{cursor:not-allowed}
+#settings .setting-retired{display:none}#settings label.setting-disabled{opacity:.45}#settings label.setting-disabled input{cursor:not-allowed}
 
 /* A stable hairline follows the contained screenshot, including native/canvas handoff. */
 .visual>.image-edge{position:absolute;z-index:2;pointer-events:none;box-shadow:inset 0 0 0 1px var(--image-edge)}
@@ -2159,7 +2163,7 @@ button.glass-surface:is(:hover,:focus-visible):not(:active),#dock .composer-sugg
 /* iconiq-chat-effects.css */
 /* Adapted from Iconiq, MIT © Edwin Vakayil. */
 .iconiq-send-wave{position:absolute;inset:0;z-index:10;overflow:hidden;pointer-events:none;border-radius:var(--nav-rounding)}
-.iconiq-send-wash{position:absolute;inset:0 0 auto;height:150%;filter:blur(20px);background:linear-gradient(180deg,transparent,rgba(34,211,238,.07),rgba(59,130,246,.09),rgba(217,70,239,.1),rgba(244,63,94,.09),rgba(249,115,22,.08),transparent);will-change:transform}
+.iconiq-send-wash{position:absolute;inset:0 0 auto;height:150%;filter:blur(20px);background:linear-gradient(180deg,transparent,var(--send-wash-edge),var(--send-wash),var(--send-wash-edge),transparent);will-change:transform}
 .iconiq-thinking{display:flex;align-items:center;gap:.6em;color:var(--eyebrow-ink);width:max-content}
 .iconiq-thinking svg{width:1lh;height:1lh;flex-shrink:0}
 .iconiq-thinking-glyph{transform-box:view-box;transform-origin:center;animation:iconiq-thinking-morph 4s ease-in-out infinite}
@@ -2711,3 +2715,5 @@ main:not(.home-view-split) .homepage-layout:has(.home-product-carousel:not([hidd
  #dock .composer-context-actions{--context-control-height:var(--touch-icon-size)}
  .corner-controls :is(#askToggle,#settingsToggle){width:var(--touch-icon-size);height:var(--touch-icon-size);padding:0;border-radius:var(--radius-icon-control)}
 }
+/* With the card surface hidden, its inner padding is only an invisible inset: let the media and copy sit on the page gutter like every other content block. */
+@media(max-width:850px){body.card-background-hidden .project-card.image-card{--card-copy-inset-left:0px;--card-copy-inset-right:0px;padding-inline:0}}

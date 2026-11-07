@@ -92,7 +92,7 @@ export class ComposerContext {
   }
   // A split row can be wider than its groups (it spans the dock), leaving empty space beside them; cutting one
   // row-wide rect would stretch each pill over that space, so each group keeps its own rect instead.
-  const bounds=[...groups.values()],wrapped=Math.max(...bounds.map(group=>group.top))-Math.min(...bounds.map(group=>group.top))>padding||natural.width-(Math.max(...bounds.map(group=>group.right))-Math.min(...bounds.map(group=>group.left)))>2*padding+1;
+  const bounds=[...groups.values()],wrapped=bounds.length>0&&(Math.max(...bounds.map(group=>group.top))-Math.min(...bounds.map(group=>group.top))>padding||natural.width-(Math.max(...bounds.map(group=>group.right))-Math.min(...bounds.map(group=>group.left)))>2*padding+1);
   this.splitRects=wrapped?bounds.map(group=>({left:group.left-natural.left-padding,top:group.top-natural.top-padding,width:group.right-group.left+2*padding,height:group.bottom-group.top+2*padding})):undefined;
   const radius=wrapped?Math.max(...this.splitRects.map(group=>group.height))/2:height/2;
   this.targetMetrics={anchor:'main',left,width,height,gap:12,radius};

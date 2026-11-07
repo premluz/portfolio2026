@@ -253,7 +253,7 @@
         "TASKS.md",
         "PROJECT_STATE.md"
       ],
-      "hash": "af60ea14cb4fee8876567fddd756c70552ad0941",
+      "hash": "acecb53b8d0aa4e61115c0d49785a52668b1bbe3",
       "items": []
     },
     {
@@ -333,8 +333,26 @@
         "PROJECT_STATE.md",
         "PROGRESS.md"
       ],
-      "hash": "f714a3c46c1a3bd13f05512b2da5e047a04b458b",
+      "hash": "06da0dd0265eb1cac6ca3102366b508966bb3fdc",
       "items": [
+        {
+          "id": "TASK-039",
+          "title": "Answer the developer-settings questions left by the tidy-up",
+          "status": "todo",
+          "tags": [
+            "area/settings",
+            "kind/debt"
+          ]
+        },
+        {
+          "id": "TASK-038",
+          "title": "Delete the retired developer settings' code paths",
+          "status": "todo",
+          "tags": [
+            "area/settings",
+            "kind/debt"
+          ]
+        },
         {
           "id": "TASK-037",
           "title": "Repair the twelve failing browser checks",

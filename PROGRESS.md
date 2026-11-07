@@ -10,7 +10,14 @@ related: [TASKS.md, PROJECT_STATE.md]
 ---
 # Progress log
 
+## 2026-11-07 Review fixes: proxy menus, dock radius, padding default
+Code review of the uncommitted settings-proxy work. Proxy menus now write a whole option or nothing (blocked while `busy`/`navigationPreparing`), refresh once per choice, and re-sync when `applyCardAppearance` sets their switches. The composer row no longer counts as wrapped with no actions (the radius was -Infinity). Added the `prem-page-image-card-share` default (16) and rejected a blank stored value. Regenerated `site.css`, which was missing the mobile `card-background-hidden` rule. Untracked `.DS_Store`. Evidence: all `tests/*.mjs` pass, including a new blocked-choice case in tests/settings-proxies.mjs. Risk left: retired controls still apply stored non-preset values with no visible control (needs owner decision); one menu choice still runs each switch's own relayout.
+
 Newest first. Add an entry after meaningful work: what changed, the evidence, and any risk left. Do not rewrite old entries; correct them with a new one.
+
+## 2026-11-06 Developer settings tidied: 33 controls retired, 15 switches behind 5 menus
+
+From an inventory of the panel's 201 controls against the published preset. Pass 1 hides rather than deletes (AGENTS.md): retired controls carry `.setting-retired` (`style.css`: `display:none`) and stay in the panel, so storage, export, import and publishing are unchanged (export still 202 keys). Retired as superseded and off in the preset: hero carousel and its three knobs, featured stage, hero timeline (+ text, interaction mode), the Flip and Flat homepage layouts (options hidden), native snap, glass cards, image ripple and directional blur (+ sliders and their note), and the five per-area control style overrides. Merged: new menus Client, Title and Description (7 card switches), Card hover (hide hover + effect) and Name and description (3 header switches). `settings-proxies.js` reads the retired switches, and on change sets only those that differ and fires their own `onchange`; the menus are `data-settings-scope="proxy"`, so they are not exported. Kept visible after checking the code: stiffness/damping (project drag physics), intensity (ambient light), reflections/afterglow/overshoot (materials and springs). Evidence: new `tests/settings-proxies.mjs`; `settings-transfer` coverage counts proxy controls separately; all 156 test files pass and `npm run check` passes; headless browser with the published preset: menus read hidden / category / companyYear / off / avatarLine, 0 retired controls visible, choosing "Above the title" adds `card-client-above` and stores it, choosing "Two lines" hides the avatar and drops one-line, 0 page errors. Follow-ups: TASK-038 (delete the code paths), TASK-039 (open questions).
 
 ## 2026-11-05 Header name and description press down
 

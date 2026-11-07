@@ -281,7 +281,7 @@ body.edge-shade-top .page-edge-shades .top,body.edge-shade-bottom .page-edge-sha
 /* The title group leaves layout flow but keeps its original box for transitions. */
 .image-card{--card-copy-inset-y:var(--card-padding-top);--card-copy-inset-x:var(--space-card-inset);--card-copy-inset-left:var(--card-padding-left,var(--card-copy-inset-x));--card-copy-inset-right:var(--card-padding-right,var(--card-copy-inset-x))}
 @media(max-width:850px){.image-card{--card-copy-inset-y:var(--card-padding-top);--card-copy-inset-x:var(--space-card-inset-compact-x)}}
-#settings label.setting-disabled{opacity:.45}#settings label.setting-disabled input{cursor:not-allowed}
+#settings .setting-retired{display:none}#settings label.setting-disabled{opacity:.45}#settings label.setting-disabled input{cursor:not-allowed}
 
 /* A stable hairline follows the contained screenshot, including native/canvas handoff. */
 .visual>.image-edge{position:absolute;z-index:2;pointer-events:none;box-shadow:inset 0 0 0 1px var(--image-edge)}

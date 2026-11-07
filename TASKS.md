@@ -14,6 +14,18 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 
 ## Open
 
+### TASK-039 Answer the developer-settings questions left by the tidy-up
+- Status: todo
+- Tags: area/settings, kind/debt
+- Acceptance: the owner has decided each item below and the panel reflects it.
+- Notes: (1) Navigation "Show Work / About / Lab / Contact / Index" are all off in the published preset while those items still show: find what they control, then relabel or retire them. (2) Content set (catalog / catalog2) is disabled in the panel: remove it or say why in its label. (3) Edge shades (4 switches) and the section width menus duplicated on the Home and About tabs were left as they are. (4) "Mascott" tab spelling. (5) Liquid intensity, reflections, afterglow and overshoot are 0 in the preset, but they also feed ambient light, drag physics and materials, so they stay visible.
+
+### TASK-038 Delete the retired developer settings' code paths
+- Status: todo
+- Tags: area/settings, kind/debt
+- Acceptance: after the owner has used the tidied panel for a week (from 2026-11-06), each `.setting-retired` control in group 1 (hero carousel, featured stage, hero timeline, Flip/Flat layouts, native snap, glass cards, image ripple and blur, per-area control style overrides) is removed with its code path, storage key, `default-settings.js` and `settings-transfer.js` entries, and import ignores the old keys. The switches behind the merged menus (`settings-proxies.js`) may instead move their storage behind the menus.
+- Notes: hiding rather than deleting first follows AGENTS.md; nothing is lost if a retired option is wanted back (remove its class).
+
 ### TASK-037 Repair the twelve failing browser checks
 - Status: todo
 - Tags: area/tests, kind/debt

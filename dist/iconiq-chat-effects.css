@@ -1,6 +1,6 @@
 /* Adapted from Iconiq, MIT © Edwin Vakayil. */
 .iconiq-send-wave{position:absolute;inset:0;z-index:10;overflow:hidden;pointer-events:none;border-radius:var(--nav-rounding)}
-.iconiq-send-wash{position:absolute;inset:0 0 auto;height:150%;filter:blur(20px);background:linear-gradient(180deg,transparent,rgba(34,211,238,.07),rgba(59,130,246,.09),rgba(217,70,239,.1),rgba(244,63,94,.09),rgba(249,115,22,.08),transparent);will-change:transform}
+.iconiq-send-wash{position:absolute;inset:0 0 auto;height:150%;filter:blur(20px);background:linear-gradient(180deg,transparent,var(--send-wash-edge),var(--send-wash),var(--send-wash-edge),transparent);will-change:transform}
 .iconiq-thinking{display:flex;align-items:center;gap:.6em;color:var(--eyebrow-ink);width:max-content}
 .iconiq-thinking svg{width:1lh;height:1lh;flex-shrink:0}
 .iconiq-thinking-glyph{transform-box:view-box;transform-origin:center;animation:iconiq-thinking-morph 4s ease-in-out infinite}

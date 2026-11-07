@@ -114,6 +114,10 @@
   --glass-button-press-ease: var(--ease-press);
   /* Glass card: inner light replaces the hairline; the broad top glow reads as light inside curved glass. */
   --glass-card-wash: oklch(0 0 0 / .012);
+  /* Send wash: a neutral sweep just off the composer surface. Mixed from --ink, so it lightens the dark theme
+     and darkens the light one without adding a hue. */
+  --send-wash: color-mix(in oklab, var(--ink) 9%, transparent);
+  --send-wash-edge: color-mix(in oklab, var(--ink) 4%, transparent);
   --glass-card-rim-top: oklch(1 0 0 / .7);
   --glass-card-rim-bottom: oklch(0.2404 0.0414 305.38 / .06);
   --glass-card-glow-low: oklch(1 0 0 / .12);

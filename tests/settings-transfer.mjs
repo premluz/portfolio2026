@@ -45,7 +45,11 @@ assert(!schema.has('plainNav')&&!schema.has('glassStyle'),'Legacy controls no lo
 const serverControls=controls.filter(input=>input.dataset.settingsScope==='server');
 assert.deepEqual(serverControls.map(input=>input.id),['contentSet'],'Only the content set picker is server-scoped');
 assert(![...schema.values()].some(field=>field.input?.id==='contentSet'),'The content set is not part of exported settings');
-assert.equal(schema.size,controls.length-serverControls.length+3,'Every other developer control is covered, including hidden and generated controls');
+// Merged menus (settings-proxies.js) only write the retired switches behind them, which are exported themselves.
+const proxyControls=controls.filter(input=>input.dataset.settingsScope==='proxy');
+assert.deepEqual(proxyControls.map(input=>input.id),['cardClientProxy','cardTitleProxy','cardDescriptionProxy','cardHoverProxy','brandProxy'],'Only the merged menus are proxy-scoped');
+assert(![...schema.values()].some(field=>proxyControls.includes(field.input)),'Merged menus are not part of exported settings');
+assert.equal(schema.size,controls.length-serverControls.length-proxyControls.length+3,'Every other developer control is covered, including hidden and generated controls');
 const preset=exportSettings(schema,storage,new Date('2026-10-12T12:00:00Z'));
 assert.equal(preset.settings.theme,'system');assert.equal(preset.settings.cardPaddingRight,null,'Automatic design-system padding stays automatic');assert.equal(preset.settings.cardPaddingLeft,40);
 assert.equal(preset.settings.cardShowClient,true);assert.equal(preset.settings.cardShowTitle,true);assert.equal(preset.settings.cardShowDescription,true,'Card text visibility controls are included in exported settings');

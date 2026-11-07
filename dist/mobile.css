@@ -42,3 +42,5 @@
  #dock .composer-context-actions{--context-control-height:var(--touch-icon-size)}
  .corner-controls :is(#askToggle,#settingsToggle){width:var(--touch-icon-size);height:var(--touch-icon-size);padding:0;border-radius:var(--radius-icon-control)}
 }
+/* With the card surface hidden, its inner padding is only an invisible inset: let the media and copy sit on the page gutter like every other content block. */
+@media(max-width:850px){body.card-background-hidden .project-card.image-card{--card-copy-inset-left:0px;--card-copy-inset-right:0px;padding-inline:0}}
