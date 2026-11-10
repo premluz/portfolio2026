@@ -49,7 +49,7 @@ assert(![...schema.values()].some(field=>field.input?.id==='contentSet'),'The co
 const proxyControls=controls.filter(input=>input.dataset.settingsScope==='proxy');
 assert.deepEqual(proxyControls.map(input=>input.id),['cardClientProxy','cardTitleProxy','cardDescriptionProxy','cardHoverProxy','brandProxy'],'Only the merged menus are proxy-scoped');
 assert(![...schema.values()].some(field=>proxyControls.includes(field.input)),'Merged menus are not part of exported settings');
-assert.equal(schema.size,controls.length-serverControls.length-proxyControls.length+3,'Every other developer control is covered, including hidden and generated controls');
+assert.equal(schema.size,controls.length-serverControls.length-proxyControls.length+2,'Every other developer control is covered, including hidden and generated controls (the theme select is the control behind the theme field)');
 const preset=exportSettings(schema,storage,new Date('2026-10-12T12:00:00Z'));
 assert.equal(preset.settings.theme,'system');assert.equal(preset.settings.cardPaddingRight,null,'Automatic design-system padding stays automatic');assert.equal(preset.settings.cardPaddingLeft,40);
 assert.equal(preset.settings.cardShowClient,true);assert.equal(preset.settings.cardShowTitle,true);assert.equal(preset.settings.cardShowDescription,true,'Card text visibility controls are included in exported settings');

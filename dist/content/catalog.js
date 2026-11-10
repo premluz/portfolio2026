@@ -5,11 +5,11 @@ export const catalog={
     {
       "id": "merlin",
       "slug": "merlin",
-      "title": "Designed an AI workspace that assembles itself around the analysis",
-      "pageTitle": "Designed an AI workspace that assembles itself around the analysis",
+      "title": "Designing a multi-pane financial workbench prototype with generative UI and assistant",
+      "pageTitle": "Designed a financial workbench prototype with generative UI and assistant",
       "name": "AI financial intelligence workspace",
       "client": "Merlin",
-      "summary": "R&D • AI assistant • Generative UI • Prototype",
+      "summary": "R&D • AI assistant • Generative UI • Prototype in code",
       "category": "Financial intelligence · R&D",
       "kind": "lab",
       "year": "2026",
@@ -714,11 +714,9 @@ export const catalog={
         }
       ],
       "watchPrototype": {
-        "label": "Watch prototype",
-        "url": "https://www.youtube.com/watch?v=ipIZ0LvNj7c"
+        "label": "",
+        "url": ""
       },
-      "qrCodeMediaId": "bastion-qr",
-      "qrCodeLabel": "TestFlight (iOS)",
       "aliases": [
         "Bastion",
         "Bastion wallet",
@@ -980,7 +978,7 @@ export const catalog={
           "id": "home-description",
           "type": "text",
           "paragraphs": [
-            "10+ years products for technical users and creators. Today, my focus is AI and genUI. Recently built Rios, Porter & Bastion."
+            "10+ years designing transformation and emerging tech for technical users. Today, my focus is AI and genUI. Recently built Rios, Porter & Bastion."
           ]
         },
         {
@@ -1078,12 +1076,6 @@ export const catalog={
               "id": "home-project-playstation",
               "type": "reference",
               "documentId": "playstation",
-              "presentation": "card"
-            },
-            {
-              "id": "home-project-porter",
-              "type": "reference",
-              "documentId": "porter",
               "presentation": "card"
             },
             {
@@ -2662,11 +2654,6 @@ export const catalog={
           "id": "gala-defi",
           "documentId": "gala-defi",
           "featured": true
-        },
-        {
-          "id": "porter",
-          "documentId": "porter",
-          "featured": false
         },
         {
           "id": "rios",

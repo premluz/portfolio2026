@@ -73,6 +73,13 @@ main.wide-project-hero{width:100%;max-width:calc(1920px + 2 * var(--hero-gutter)
 .wide-hero-card .description dd{max-width:400px;font-size:16px;line-height:1.75}
 .wide-project-hero>.detail-footer,.wide-project-hero>.story{width:100%;max-width:1384px;margin-inline:auto}
 .hero-layout-setting{display:flex!important;align-items:center;gap:10px}.hero-layout-setting input{accent-color:#8a70ba;width:17px;height:17px;margin:0}
+/* Full screen drops the gutters and rounding so the hero fills the viewport, still capped by main's max width. */
+body.hero-full-screen.wide-project-hero-page{--hero-gutter:0px;--hero-top:0px}
+body.hero-full-screen #main.wide-project-hero{max-width:var(--app-max-width);padding-inline:0}
+body.hero-full-screen .wide-hero-card{border-radius:0;min-height:100svh}
+/* With the page card hidden, the image is the visible hero, so it breaks out of the card padding to the app canvas, fills the viewport height and drops its rounding. */
+body.hero-full-screen .wide-hero-card .detail-media-column{width:var(--app-canvas-width);max-width:none;margin-inline:calc(50% - var(--app-canvas-width) / 2)}
+body.hero-full-screen .wide-hero-card .detail-media-column>.visual{--image-rounding:0px;--image-fit:cover;width:100%;height:100svh;aspect-ratio:auto;border-radius:0}
 @media(max-width:1000px){.wide-hero-card{padding:44px;border-radius:var(--radius-card);min-height:0}.wide-hero-card .detail-layout{gap:36px;grid-template-columns:minmax(230px,1fr) minmax(0,1.3fr)}.wide-hero-card .visual{height:360px}}
 @media(max-width:750px){.wide-project-hero-page{--hero-gutter:24px;--hero-top:32px}.wide-hero-card{padding:32px 28px;border-radius:var(--radius-card-compact)}.wide-hero-card h1{font-size:clamp(32px,5.5vw,40px);letter-spacing:-1px}.wide-hero-card .detail-layout{grid-template-columns:minmax(0,1fr);gap:30px;margin-top:36px}.wide-hero-card .visual{height:clamp(260px,65vw,400px);border-radius:28px}.wide-hero-card .description dt{font-size:13px}.wide-hero-card .description dd{max-width:none}.wide-hero-card>.eyebrow{margin-top:22px;font-size:12px}}
 @media(max-width:400px){.wide-project-hero-page{--hero-gutter:18px;--hero-top:26px}.wide-hero-card{padding:28px 24px;border-radius:var(--radius-card-flip-compact)}.wide-hero-card h1{font-size:30px}}
@@ -189,6 +196,8 @@ header .theme-toggle{margin-left:auto}
 
 /* A page-coloured resting fill lets the glass interpolate into hover. */
 body.card-background-hidden .surface.project-card{background:transparent!important}
+/* With no card surface the image is the card's visible shape, so Card rounding (fitted per card) rounds it; Image rounding keeps page images. */
+body.card-background-hidden .project-card.image-card{--image-rounding:var(--radius-card)}
 /* Page cards (project details, About, Contact, articles) have their own switch, apart from the listing cards above. */
 body.page-card-background-hidden .surface.detail{background:transparent!important}
 body.page-card-background-hidden .surface.detail>.liquid-skin,body:is(.card-background-hidden,.page-card-background-hidden) .flow-material{background:transparent!important}

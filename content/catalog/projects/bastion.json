@@ -57,9 +57,7 @@
     }
   ],
   "watchPrototype": {
-    "label": "Watch prototype",
-    "url": "https://www.youtube.com/watch?v=ipIZ0LvNj7c"
-  },
-  "qrCodeMediaId": "bastion-qr",
-  "qrCodeLabel": "TestFlight (iOS)"
+    "label": "",
+    "url": ""
+  }
 }

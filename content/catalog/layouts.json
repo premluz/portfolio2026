@@ -33,11 +33,6 @@
         "featured": true
       },
       {
-        "id": "porter",
-        "documentId": "porter",
-        "featured": false
-      },
-      {
         "id": "rios",
         "documentId": "rios",
         "featured": false

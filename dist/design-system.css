@@ -276,8 +276,8 @@ body.card-client-hidden .project-card.image-card>.card-copy>h3,body.card-client-
 body.card-client-hidden.card-title-hidden .project-card.image-card>.card-copy>.project-summary,body.card-client-hidden .project-card.image-card>.card-copy:not(:has(.card-client))>.project-summary{grid-row:1}
 body.card-client-hidden .project-card.image-card>.card-copy>.card-client,body.card-title-hidden .project-card.image-card>.card-copy>h3,body.card-description-hidden .project-card.image-card>.card-copy>.project-summary{display:none}
 
-/* Align customer and the first visible line on one shared baseline. */
-.project-card.image-card>.card-copy>h3{margin:0;line-height:var(--line-height-reading)}
+/* Titles that wrap need heading leading, not body leading; the grid's baseline alignment keeps the customer on the first line. */
+.project-card.image-card>.card-copy>h3{margin:0;line-height:var(--line-height-card)}
 #projectMenuToggle{display:none}
 #dock .project-menu:not(.site-settings-menu) button{font-size:var(--composer-font-size);color:var(--composer-text-ink);letter-spacing:var(--letter-spacing-body);font-weight:var(--font-weight-body)}
 

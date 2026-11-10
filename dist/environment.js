@@ -13,10 +13,12 @@ export function initEnvironment({onThemeChange=()=>{}}={}){let objectURL=null,lo
   commitThemeChange(document.documentElement,()=>{
    document.documentElement.dataset.theme=effective;document.documentElement.dataset.themePreference=theme;
    setIconSwitchState($('themeToggle'),theme);
+   const choice=$('themeChoice');if(choice)choice.value=theme;
    document.querySelectorAll('[data-theme-choice]').forEach(b=>{const active=b.dataset.themeChoice===theme;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
   });try{localStorage.setItem('prem-theme',theme);}catch{}if(announce)onThemeChange(theme);
  }
  setTheme(theme,false);$('themeToggle').onclick=()=>setTheme(nextSwitchState(['light','dark','system'],theme));document.querySelectorAll('[data-theme-choice]').forEach(b=>b.onclick=()=>setTheme(b.dataset.themeChoice));
+ const themeChoice=$('themeChoice');if(themeChoice)themeChoice.onchange=()=>setTheme(themeChoice.value);
  systemTheme.addEventListener('change',()=>{if(theme==='system')setTheme('system',false);});
  for(const [key,fallback,unit] of [['glassOpacity',45,'%'],['roomBlur',12,'px'],['roomShade',18,'%']]){const input=$(key);let value=fallback;try{value=Number(localStorage.getItem('prem-'+key)||fallback);}catch{}input.value=value;const apply=()=>{const v=+input.value;$(key+'Value').value=v+unit;if(key==='roomBlur')document.documentElement.dataset.roomBlur=v>0?'on':'off';document.documentElement.style.setProperty(key==='glassOpacity'?'--glass-alpha':key==='roomBlur'?'--room-blur':'--room-shade',key==='roomBlur'?v+'px':String(v/100));try{localStorage.setItem('prem-'+key,String(v));}catch{}};input.oninput=apply;apply();}
  function showRoom(data){if(objectURL)URL.revokeObjectURL(objectURL);objectURL=URL.createObjectURL(data.blob);$('roomBackdrop').style.backgroundImage=`url("${objectURL}")`;document.body.classList.add('has-room');$('roomName').textContent=data.name||'Room background';$('removeRoom').hidden=false;$('roomStatus').textContent='Room background applied.';}

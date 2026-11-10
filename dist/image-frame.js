@@ -42,6 +42,11 @@ export function readFrameRadius(el){
  const radius=parseFloat(getComputedStyle(el).borderTopLeftRadius);
  return Number.isFinite(radius)?Math.max(0,radius):24;
 }
+// A full screen hero crops to fill its frame (--image-fit: cover) instead of letterboxing inside it.
+export function coverGeometry(width,height,ratio){
+ const imageWidth=Math.max(width,height*ratio),imageHeight=imageWidth/ratio;
+ return {width:imageWidth,height:imageHeight,left:(width-imageWidth)/2,top:(height-imageHeight)/2,radius:0};
+}
 export function imageGeometry(width,height,ratio,radius=24,padding={},sourceCorners=null,sizeLimit=1,maxWidthLimit=Infinity,maxHeightLimit=Infinity,align='center',blockAlign='center'){
  // Clamp opposing insets together, keeping a usable frame at narrow sizes.
  const horizontal=Math.min(1,Math.max(0,width-1)/Math.max(1,(padding.left||0)+(padding.right||0)));
@@ -89,7 +94,9 @@ export class ImageFrame {
  fitCardRadius(){
   const card=this.card;if(!card?.style?.setProperty)return;
   const root=getComputedStyle(document.documentElement),setting=parseFloat(root.getPropertyValue('--radius-card'));
-  if(!Number.isFinite(setting)||setting<=0||!card.offsetWidth||!card.offsetHeight)return;
+  // A zero setting means square corners: drop the fitted override left by an earlier, larger setting.
+  if(setting===0){for(const name of ['--radius-card',...CARD_RADIUS_VARIANTS])card.style.removeProperty(name);return;}
+  if(!Number.isFinite(setting)||setting<0||!card.offsetWidth||!card.offsetHeight)return;
   const fitted=fittedCardRadius(setting,card.offsetWidth,card.offsetHeight),scale=fitted/setting;
   card.style.setProperty('--radius-card',fitted+'px');
   for(const name of CARD_RADIUS_VARIANTS){const value=parseFloat(root.getPropertyValue(name));if(Number.isFinite(value))card.style.setProperty(name,value*scale+'px');}
@@ -114,7 +121,8 @@ export class ImageFrame {
   this.radius=Number.isFinite(selected)?Math.max(0,selected):nestedRadius(frameRadius,inset(this.padding));
   // Backgrounds retain the nested frame shape. The screenshot, its edge and
   // canvas mask own their corners, without an ancestor clipping them again.
-  if(this.el.style)this.el.style.overflow=Number.isFinite(selected)?'visible':'hidden';
+  const cover=getComputedStyle(this.el).getPropertyValue('--image-fit').trim()==='cover';
+  if(this.el.style)this.el.style.overflow=Number.isFinite(selected)&&!cover?'visible':'hidden';
   this.ratio=width/height;
   if(this.el.style?.setProperty)this.el.style.setProperty('--image-source-ratio',String(this.ratio));
   // Current portrait cards use a frame fitted to the image's own capped size.
@@ -143,7 +151,7 @@ export class ImageFrame {
   this.sourceCorners={radius:sourceCornerRadius(src),width:declaredWidth||width};this.sourceInset=sourceEdgeInset(src);
   // Copy placed under the frame sets this, so a letterboxed image sits on the copy instead of floating above it.
   const blockAlign=this.blockAlign=getComputedStyle(this.el).getPropertyValue('--image-block-align').trim()==='end'?'end':'center';
-  const rect=imageGeometry(this.el.clientWidth,this.el.clientHeight,this.ratio,this.radius,this.padding,this.sourceCorners,1,this.maxWidth,this.maxHeight,this.align,blockAlign);
+  const rect=cover?coverGeometry(this.el.clientWidth,this.el.clientHeight,this.ratio):imageGeometry(this.el.clientWidth,this.el.clientHeight,this.ratio,this.radius,this.padding,this.sourceCorners,1,this.maxWidth,this.maxHeight,this.align,blockAlign);
   if(this.thumbnail)rect.radius=thumbnailImageRadius(this.radius,rect,this.card.dataset.cardOrientation,this.sourceCorners);
   const geometry={position:'absolute',width:rect.width+'px',height:rect.height+'px',left:rect.left+'px',top:rect.top+'px',borderRadius:rect.radius+'px'};
   Object.assign(this.img.style,geometry);
@@ -152,7 +160,7 @@ export class ImageFrame {
   Object.assign(this.edge.style,{...geometry,width:visible.width+'px',height:visible.height+'px',left:visible.left+'px',top:visible.top+'px'});
   if(this.preview){
    const video=this.preview.video,ratio=video.videoWidth&&video.videoHeight?video.videoWidth/video.videoHeight:this.ratio;
-   const bounds=imageGeometry(this.el.clientWidth,this.el.clientHeight,ratio,this.radius,this.padding,this.sourceCorners,1,this.maxWidth,this.maxHeight,this.align,blockAlign);
+   const bounds=cover?coverGeometry(this.el.clientWidth,this.el.clientHeight,ratio):imageGeometry(this.el.clientWidth,this.el.clientHeight,ratio,this.radius,this.padding,this.sourceCorners,1,this.maxWidth,this.maxHeight,this.align,blockAlign);
    Object.assign(video.style,{position:'absolute',width:bounds.width+'px',height:bounds.height+'px',left:bounds.left+'px',top:bounds.top+'px',borderRadius:bounds.radius+'px'});
   }
   this.onResize();

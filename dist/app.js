@@ -266,12 +266,15 @@ function applyGeometryTokens(){const root=document.documentElement,scale=cardRou
 let detailHeadingBeside=false;try{detailHeadingBeside=localStorage.getItem('prem-detail-heading-beside')==='true';}catch{}
 function applyDetailHeading(){
  $('#detailHeadingBeside').checked=detailHeadingBeside;const el=main.querySelector('.detail:not(.info-detail)');if(!el)return;
- el.classList.toggle('heading-beside-image',detailHeadingBeside);
- if(detailHeadingBeside){const visual=el.querySelector('.detail-layout>.detail-media-column>.visual');document.documentElement.style.setProperty('--detail-image-top-inset',Math.max(0,visual.getBoundingClientRect().top+scrollY)+'px');}
+ // A full screen hero spans the whole canvas, so the title moves above it instead of beside it.
+ const beside=detailHeadingBeside&&!document.body.classList.contains('hero-full-screen');
+ el.classList.toggle('heading-beside-image',beside);
+ if(beside){const visual=el.querySelector('.detail-layout>.detail-media-column>.visual');document.documentElement.style.setProperty('--detail-image-top-inset',Math.max(0,visual.getBoundingClientRect().top+scrollY)+'px');}
  for(const instance of instances)(instance.imageFrame||instance).resize();
 }
 addEventListener('resize',applyDetailHeading);
 let wideHero=true;try{wideHero=localStorage.getItem('prem-wide-hero')!=='false';}catch{}
+let heroFullScreen=false;try{heroFullScreen=localStorage.getItem('prem-hero-full-screen')==='true';}catch{}
 // Off by default: a project's backdrop photo behind its detail page, and the Home featured stage.
 const readFlag=key=>{try{return localStorage.getItem(key)==='true';}catch(error){console.warn('Preference '+key+' unreadable; using off',error);return false;}};
 const saveFlag=(key,value)=>{try{localStorage.setItem(key,String(value));}catch(error){console.warn('Preference '+key+' not saved',error);}};
@@ -305,7 +308,7 @@ document.documentElement.dataset.navPosition=navPosition;
 let plainCards=readFlag('prem-plain-cards');document.documentElement.dataset.plainCards=plainCards?'on':'off';
 let plainImages=readFlag('prem-plain-images');document.documentElement.dataset.plainImages=plainImages?'on':'off';
 const projectBackdrop=createProjectBackdrop({reduced:()=>reduce.matches,duration:()=>duration*(slow?2.5:1),before:$('.room-shade')?.nextSibling||null});
-function applyHeroLayout(){applyContentWidths();const enabled=wideHero&&cardIds.includes(current);main.classList.toggle('wide-project-hero',enabled);main.querySelector('.detail')?.classList.toggle('wide-hero-card',enabled);document.body.classList.toggle('wide-project-hero-page',enabled);$('#wideHero').checked=wideHero;applyDetailHeading();}
+function applyHeroLayout(){applyContentWidths();const enabled=(wideHero||heroFullScreen)&&cardIds.includes(current);main.classList.toggle('wide-project-hero',enabled);main.querySelector('.detail')?.classList.toggle('wide-hero-card',enabled);document.body.classList.toggle('wide-project-hero-page',enabled);document.body.classList.toggle('hero-full-screen',enabled&&heroFullScreen);$('#wideHero').checked=wideHero;$('#heroFullScreen').checked=heroFullScreen;applyDetailHeading();}
 const motionMaterial=new MotionMaterial(()=>intensity,()=>reduce.matches);
 let cardGalleries=[],pageTimelines=[];
 let carouselSettings=readCarouselSettings();
@@ -522,6 +525,7 @@ $('#cardPaddingAll').oninput=e=>{if(busy){applyCardPadding();return;}cardPadding
 for(const side of ['top','right','bottom','left'])$('#cardPadding'+side[0].toUpperCase()+side.slice(1)).oninput=e=>{if(busy){applyCardPadding();return;}cardPadding[side]=+e.target.value;applyCardPadding();try{localStorage.setItem('prem-card-padding-'+side,String(cardPadding[side]));}catch{}};
 $('#detailHeadingBeside').onchange=e=>setDetailLayout({heading:e.target.checked});
 $('#wideHero').onchange=e=>setDetailLayout({hero:e.target.checked});
+$('#heroFullScreen').onchange=e=>{if(busy){e.target.checked=heroFullScreen;return;}heroFullScreen=e.target.checked;applyHeroLayout();try{localStorage.setItem('prem-hero-full-screen',String(heroFullScreen));}catch{}};
 $('#projectBackdrop').checked=projectBackdropEnabled;$('#projectBackdrop').onchange=e=>{projectBackdropEnabled=e.target.checked;saveFlag('prem-project-backdrop',projectBackdropEnabled);const p=cards.find(card=>card.id===current);projectBackdrop.sync(projectBackdropEnabled&&p&&!p.body?p:null);};
 $('#plainCards').checked=plainCards;$('#plainImages').checked=plainImages;$('#plainImages').onchange=e=>{plainImages=e.target.checked;document.documentElement.dataset.plainImages=plainImages?'on':'off';saveFlag('prem-plain-images',plainImages);};$('#plainCards').onchange=e=>{plainCards=e.target.checked;document.documentElement.dataset.plainCards=plainCards?'on':'off';saveFlag('prem-plain-cards',plainCards);};
 
