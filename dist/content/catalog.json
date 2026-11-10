@@ -4,7 +4,7 @@
     {
       "id": "merlin",
       "slug": "merlin",
-      "title": "Designing a multi-pane financial workbench prototype with generative UI and assistant",
+      "title": "Designed a financial intelligence with generative assistant and genrative UI",
       "pageTitle": "Designed a financial workbench prototype with generative UI and assistant",
       "name": "AI financial intelligence workspace",
       "client": "Merlin",
@@ -105,7 +105,7 @@
       "type": "portfolio-item",
       "status": "published",
       "slug": "rios",
-      "title": "Life-first planner that makes your day a canvas",
+      "title": "Designed and built life-first planner that makes your day a canvas",
       "name": "Life-first planner",
       "summary": "0→1 • Everything solo",
       "category": "Life-first planner · Independent product",
@@ -2158,154 +2158,198 @@
       "type": "image",
       "status": "published",
       "url": "assets/playstation-content.jpg",
-      "alt": "PlayStation Network content management screen for a game release"
+      "alt": "PlayStation Network content management screen for a game release",
+      "width": 1440,
+      "height": 900
     },
     {
       "id": "sony-content-pipeline",
       "type": "video",
       "status": "published",
       "url": "assets/sony-content-pipeline.mp4",
-      "alt": ""
+      "alt": "",
+      "width": 1440,
+      "height": 900
     },
     {
       "id": "galachain-wallet",
       "type": "image",
       "status": "published",
       "url": "assets/galachain-wallet.jpg",
-      "alt": "Mobile crypto wallet home screen showing balance, assets and quick actions"
+      "alt": "Mobile crypto wallet home screen showing balance, assets and quick actions",
+      "width": 402,
+      "height": 858
     },
     {
       "id": "galachain-dex",
       "type": "image",
       "status": "published",
       "url": "assets/galachain-dex.png",
-      "alt": "GalaChain token exchange interface with swap controls and asset table"
+      "alt": "GalaChain token exchange interface with swap controls and asset table",
+      "width": 1440,
+      "height": 900
     },
     {
       "id": "galachain-competition",
       "type": "image",
       "status": "published",
       "url": "assets/galachain-competition.jpg",
-      "alt": "Mobile screen showing a live competition and digital collectible cards"
+      "alt": "Mobile screen showing a live competition and digital collectible cards",
+      "width": 402,
+      "height": 858
     },
     {
       "id": "tracr-transfer",
       "type": "image",
       "status": "published",
       "url": "assets/tracr-transfer.jpg",
-      "alt": "Dark Tracr diamond provenance transfer review interface"
+      "alt": "Dark Tracr diamond provenance transfer review interface",
+      "width": 1440,
+      "height": 900
     },
     {
       "id": "tracr-blockchain-traceability",
       "type": "video",
       "status": "published",
       "url": "assets/tracr-blockchain-traceability.mp4",
-      "alt": ""
+      "alt": "",
+      "width": 1440,
+      "height": 900
     },
     {
       "id": "daily-planner",
       "type": "image",
       "status": "published",
       "url": "assets/daily-planner.jpg",
-      "alt": "Mobile daily planner showing a day timeline and grouped activities"
+      "alt": "Mobile daily planner showing a day timeline and grouped activities",
+      "width": 402,
+      "height": 858
     },
     {
       "id": "vodafone-iot",
       "type": "image",
       "status": "published",
       "url": "assets/vodafone-iot.jpg",
-      "alt": "Vodafone IoT connectivity dashboard with fleet health and active profiles"
+      "alt": "Vodafone IoT connectivity dashboard with fleet health and active profiles",
+      "width": 2880,
+      "height": 1920
     },
     {
       "id": "iot-connectivity-platform",
       "type": "video",
       "status": "published",
       "url": "assets/iot-connectivity-platform.mp4",
-      "alt": ""
+      "alt": "",
+      "width": 1440,
+      "height": 900
     },
     {
       "id": "merlin-cover",
       "type": "image",
       "status": "published",
       "url": "assets/merlin.png",
-      "alt": "Merlin financial intelligence workspace with an AI agent assembling research and analysis panels"
+      "alt": "Merlin financial intelligence workspace with an AI agent assembling research and analysis panels",
+      "width": 1440,
+      "height": 900
     },
     {
       "id": "merlin-walkthrough",
       "type": "video",
       "status": "published",
       "url": "assets/merlin.mp4",
-      "alt": ""
+      "alt": "",
+      "width": 1440,
+      "height": 900
     },
     {
       "id": "rios-cover",
       "type": "image",
       "status": "published",
       "url": "assets/rios2.png",
-      "alt": "Rios life-first planner with a spatial timeline for shaping a changing day"
+      "alt": "Rios life-first planner with a spatial timeline for shaping a changing day",
+      "width": 786,
+      "height": 1706
     },
     {
       "id": "rios-walkthrough",
       "type": "video",
       "status": "published",
       "url": "assets/rios.mp4",
-      "alt": ""
+      "alt": "",
+      "width": 393,
+      "height": 852
     },
     {
       "id": "playstation-cover",
       "type": "image",
       "status": "published",
       "url": "assets/playstation.png",
-      "alt": "PlayStation publishing pipeline interface for preparing and releasing game content"
+      "alt": "PlayStation publishing pipeline interface for preparing and releasing game content",
+      "width": 2880,
+      "height": 1802
     },
     {
       "id": "playstation-walkthrough",
       "type": "video",
       "status": "published",
       "url": "assets/playstation.mp4",
-      "alt": ""
+      "alt": "",
+      "width": 1440,
+      "height": 900
     },
     {
       "id": "vodafone-cover",
       "type": "image",
       "status": "published",
       "url": "assets/vodafoneiot.png",
-      "alt": "Vodafone IoT connectivity platform for managing device fleets and SIM operations"
+      "alt": "Vodafone IoT connectivity platform for managing device fleets and SIM operations",
+      "width": 2160,
+      "height": 1350
     },
     {
       "id": "vodafone-walkthrough",
       "type": "video",
       "status": "published",
       "url": "assets/vodafoneiot.mp4",
-      "alt": ""
+      "alt": "",
+      "width": 1440,
+      "height": 900
     },
     {
       "id": "tracr-cover",
       "type": "image",
       "status": "published",
       "url": "assets/tracr.png",
-      "alt": "Tracr diamond provenance platform showing a transfer review with participant context"
+      "alt": "Tracr diamond provenance platform showing a transfer review with participant context",
+      "width": 2880,
+      "height": 1802
     },
     {
       "id": "tracr-walkthrough",
       "type": "video",
       "status": "published",
       "url": "assets/tracr.mp4",
-      "alt": ""
+      "alt": "",
+      "width": 1440,
+      "height": 900
     },
     {
       "id": "gala-cover",
       "type": "image",
       "status": "published",
       "url": "assets/galafilm.png",
-      "alt": "Gala Film creator publishing experience for a decentralised entertainment platform"
+      "alt": "Gala Film creator publishing experience for a decentralised entertainment platform",
+      "width": 2160,
+      "height": 1350
     },
     {
       "id": "gala-walkthrough",
       "type": "video",
       "status": "published",
       "url": "assets/galafilm.mp4",
-      "alt": ""
+      "alt": "",
+      "width": 1440,
+      "height": 900
     },
     {
       "id": "bastion-cover",
@@ -2313,8 +2357,8 @@
       "status": "published",
       "url": "assets/bastion.png",
       "alt": "Bastion AI wallet prototype with a persistent assistant and financial interface",
-      "width": 786,
-      "height": 1706
+      "width": 1440,
+      "height": 900
     },
     {
       "id": "bastion-qr",
@@ -2348,63 +2392,81 @@
       "type": "video",
       "status": "published",
       "url": "assets/porter.mp4",
-      "alt": ""
+      "alt": "",
+      "width": 1440,
+      "height": 900
     },
     {
       "id": "about-portrait",
       "type": "image",
       "status": "published",
       "url": "assets/prem.jpg",
-      "alt": "Portrait of Prem in a black sweater against a white background"
+      "alt": "Portrait of Prem in a black sweater against a white background",
+      "width": 600,
+      "height": 750
     },
     {
       "id": "unusual-well",
       "type": "image",
       "status": "published",
       "url": "assets/well.jpg",
-      "alt": "A newly built community water tower and the commemorative plaque for the project"
+      "alt": "A newly built community water tower and the commemorative plaque for the project",
+      "width": 1265,
+      "height": 723
     },
     {
       "id": "unusual-school",
       "type": "image",
       "status": "published",
       "url": "assets/school.jpg",
-      "alt": "Children and teachers gathered in front of the school built in Sri Lanka"
+      "alt": "Children and teachers gathered in front of the school built in Sri Lanka",
+      "width": 2000,
+      "height": 1333
     },
     {
       "id": "unusual-pilgrimage",
       "type": "image",
       "status": "published",
       "url": "assets/pilgrimage.jpg",
-      "alt": "Barefoot pilgrims with staffs on a forest track along the ancient route"
+      "alt": "Barefoot pilgrims with staffs on a forest track along the ancient route",
+      "width": 1200,
+      "height": 800
     },
     {
       "id": "unusual-fast",
       "type": "image",
       "status": "published",
       "url": "assets/fast.jpg",
-      "alt": "Prem speaking to camera on a London street during a 28-day fast"
+      "alt": "Prem speaking to camera on a London street during a 28-day fast",
+      "width": 1494,
+      "height": 993
     },
     {
       "id": "unusual-hypnotherapy",
       "type": "image",
       "status": "published",
       "url": "assets/hipnotherapy.jpg",
-      "alt": "Prem seated beside a hypnotherapy teacher in a wood-panelled room"
+      "alt": "Prem seated beside a hypnotherapy teacher in a wood-panelled room",
+      "width": 2000,
+      "height": 1429
     },
     {
       "id": "gala-defi-cover",
       "type": "image",
       "status": "published",
       "url": "assets/gala-defi.png",
-      "alt": "GalaSwap decentralised exchange interface with swap, liquidity pool and wallet views"
+      "alt": "GalaSwap decentralised exchange interface with swap, liquidity pool and wallet views",
+      "width": 2160,
+      "height": 1350
     },
     {
       "id": "gala-defi-walkthrough",
       "type": "video",
       "status": "published",
       "url": "assets/gala-defi.mp4",
-      "alt": ""
+      "alt": "",
+      "width": 1152,
+      "height": 720
     },
     {
       "id": "merlin-bg",
@@ -2501,7 +2563,7 @@
     {
       "documentId": "rios",
       "card": {
-        "orientation": "landscape",
+        "orientation": "portrait",
         "surface": [
           "#f5e5ee",
           "#e3ddf5"

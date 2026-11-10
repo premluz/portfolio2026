@@ -14,6 +14,7 @@ import {contentBlocks} from './content-blocks.js';
 import {content} from './content/local.js';
 import {escapeText} from './content/html.js';
 import {flipPose,masonryMinimumHeight,masonryPlan,clamp} from './placement.js';
+import {masonryRatioOn,measureRatioHeights} from './masonry-ratio.js';
 import {createStageReveal} from './feature-stage-reveal.js';
 import {homeOverviewMarkup} from './home-overview.js';
 
@@ -123,7 +124,8 @@ export class HomeLayout {
   const items=[...this.gallery.children].map(slot=>this.documents.find(doc=>doc.id===slot.dataset.slot)).map(doc=>this.featuredLarger||doc.featured!==true?doc:{...doc,featured:false});
   // Shared height modules suit multi-column boards; in a single column each
   // card should keep its own measured height instead of doubling portraits.
-  const matchHeights=count>2;this.gallery.dataset.masonryRhythm=String(matchHeights);
+  // A single column keeps each card's own measured height whatever the setting, so side-by-side copy is never clipped.
+  const byRatio=count>1&&masonryRatioOn(),matchHeights=count>2||byRatio;this.gallery.dataset.masonryRhythm=String(matchHeights);
   // Set widths together before measuring title wrapping. Never remount cards
   // or measure the fixed card height, which would feed back into the next pass.
   for(const item of items){const slot=this.slots.get(item.id),span=item.featured===true&&count>=3?2:1,current=slot.style.gridColumn?.match(/^(\d+) \/ span (\d+)$/),column=clamp(Number(current?.[1])||1,1,count-span+1);if(!current||Number(current[2])!==span||Number(current[1])!==column)slot.style.gridColumn=`${column} / span ${span}`;if(!matchHeights)slot.style.removeProperty('--masonry-card-height');}
@@ -131,6 +133,11 @@ export class HomeLayout {
    const heights=Object.fromEntries(items.map(item=>[item.id,this.slots.get(item.id).querySelector('[data-card]').offsetHeight]));
    const maximum=Math.max(1,...Object.values(heights));
    for(const pose of masonryPlan(items,count,maximum,gap,8,heights)){const slot=this.slots.get(pose.id),row=`${pose.row} / span ${pose.rowSpan}`,column=`${pose.column} / span ${pose.columnSpan}`;if(slot.style.gridRow!==row)slot.style.gridRow=row;if(slot.style.gridColumn!==column)slot.style.gridColumn=column;}
+   return;
+  }
+  if(byRatio){
+   const heights=measureRatioHeights(items,this.slots,{count,gap,width}),row=parseFloat(getComputedStyle(this.gallery).gridAutoRows)||8;
+   for(const pose of masonryPlan(items,count,1,gap,row,heights,{byRatio:true}))this.applyMasonryPose(pose);
    return;
   }
   const px=value=>parseFloat(value)||0;
@@ -145,12 +152,13 @@ export class HomeLayout {
   }));
   // The row unit comes from the stylesheet (8px; the images-only Lab uses 1px so cards end exactly at their image).
   const row=parseFloat(getComputedStyle(this.gallery).gridAutoRows)||8;
-  for(const pose of masonryPlan(items,count,minimum,gap,row)){
-   const slot=this.slots.get(pose.id),row=`${pose.row} / span ${pose.rowSpan}`,column=`${pose.column} / span ${pose.columnSpan}`,height=pose.height+'px';
-   if(slot.style.gridRow!==row)slot.style.gridRow=row;
-   if(slot.style.gridColumn!==column)slot.style.gridColumn=column;
-   if(slot.style.getPropertyValue('--masonry-card-height')!==height)slot.style.setProperty('--masonry-card-height',height);
-  }
+  for(const pose of masonryPlan(items,count,minimum,gap,row))this.applyMasonryPose(pose);
+ }
+ applyMasonryPose(pose){
+  const slot=this.slots.get(pose.id),row=`${pose.row} / span ${pose.rowSpan}`,column=`${pose.column} / span ${pose.columnSpan}`,height=pose.height+'px';
+  if(slot.style.gridRow!==row)slot.style.gridRow=row;
+  if(slot.style.gridColumn!==column)slot.style.gridColumn=column;
+  if(slot.style.getPropertyValue('--masonry-card-height')!==height)slot.style.setProperty('--masonry-card-height',height);
  }
  updateDescription(){
   const doc=this.mode!=='current'&&scrollY>8?this.documents.find(doc=>doc.id===this.activeId):null;

@@ -5,8 +5,10 @@ import {clientStyles} from '../scripts/client-styles.mjs';
 import {fileURLToPath} from 'node:url';
 import {DEFAULT_CONTENT_SET} from '../dist/content/content-set.js';
 import {contentSetNames,readContentSource} from '../scripts/content-source.mjs';
+import {withMeasuredMedia} from '../scripts/media-metadata.mjs';
 
 const contentDirectory=fileURLToPath(new URL('../content/',import.meta.url));
+const distDirectory=fileURLToPath(new URL('../dist/',import.meta.url));
 
 // Development reads content sets straight from content/ (a catalog*.json file or a catalog*/ folder), so a new set
 // or an edited page file appears without a build.
@@ -18,7 +20,7 @@ export async function readDevelopmentCatalog(set=DEFAULT_CONTENT_SET,directory=c
  let catalog;
  try{catalog=await readContentSource(directory,set);}
  catch(error){throw new Error(`Cannot read development catalog: ${set} in ${directory}: ${error.message}`,{cause:error});}
- return exportPublishedCatalog(prepareCatalog(catalog,await readDevelopmentAssistantData()));
+ return exportPublishedCatalog(prepareCatalog(await withMeasuredMedia(catalog,distDirectory),await readDevelopmentAssistantData()));
 }
 
 // Read on every request in development, so edits to content/assistant.json show without a restart.

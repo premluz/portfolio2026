@@ -544,6 +544,16 @@ let cardInstantHover=readFlag('prem-card-instant-hover');
 function applyInstantHover(){document.documentElement.dataset.hoverInstant=cardInstantHover?'on':'off';$('#cardInstantHover').checked=cardInstantHover;}
 applyInstantHover();
 $('#cardInstantHover').onchange=e=>{cardInstantHover=e.target.checked;saveFlag('prem-card-instant-hover',cardInstantHover);applyInstantHover();};
+let masonryRatio=readFlag('prem-masonry-ratio');
+// The setting is read where layout and image frames are measured, so a resize pass applies it to the open page.
+function applyMasonryRatio(){document.documentElement.dataset.masonryRatio=masonryRatio?'on':'off';$('#masonryRatio').checked=masonryRatio;}
+applyMasonryRatio();
+$('#masonryRatio').onchange=e=>{masonryRatio=e.target.checked;saveFlag('prem-masonry-ratio',masonryRatio);applyMasonryRatio();dispatchEvent(new Event('resize'));};
+let detailRatioLayout=readFlag('prem-detail-ratio-layout');
+// The shape rules are CSS keyed on this attribute; a resize pass lets the open page's image frame re-measure.
+function applyDetailRatioLayout(){document.documentElement.dataset.detailRatioLayout=detailRatioLayout?'on':'off';$('#detailRatioLayout').checked=detailRatioLayout;}
+applyDetailRatioLayout();
+$('#detailRatioLayout').onchange=e=>{detailRatioLayout=e.target.checked;saveFlag('prem-detail-ratio-layout',detailRatioLayout);applyDetailRatioLayout();dispatchEvent(new Event('resize'));};
 let cardTextTravel=readFlag('prem-card-text-travel');
 function applyCardTextTravel(){document.documentElement.dataset.cardText=cardTextTravel?'travel':'stagger';$('#cardTextTravel').checked=cardTextTravel;}
 applyCardTextTravel();

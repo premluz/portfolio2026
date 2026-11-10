@@ -22,7 +22,7 @@ This file is the single set of instructions for every agent. `CLAUDE.md` imports
 
 - `npm run dev` serves `dist/` and the catalog directly; add `?dev=1` to show the developer settings. For an isolated test server use `PORT=3417 HOST=127.0.0.1 node deploy/node-server.mjs --dev`; port 3000 normally runs the built copy.
 - `npm run images` after adding or replacing any image. `npm run build` then `npm run check`. Both stop on stale images and on invalid content.
-- Tests are `tests/*.mjs`. `npm run check` stops at the first failure, so to see them all run `for f in tests/*.mjs; do node "$f" >/dev/null 2>&1 || echo "FAIL $f"; done`.
+- Tests are `tests/*.mjs`. `npm run check` runs the build, image and memory checks first (each stops it if stale), then every test file in its own process, prints `FAIL <file>: <first error line>` for each failure, ends with `n of m test files passed`, and exits 1 if any failed.
 - Known failures are listed in [PROJECT_STATE.md](PROJECT_STATE.md). Any other failure is yours to explain or fix.
 - npm is the only package manager. Do not add a dependency without the owner's approval.
 

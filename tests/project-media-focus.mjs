@@ -12,7 +12,7 @@ for(const viewport of [{width:1800,height:1200},{width:390,height:844},{width:90
   assert(r.width<=1440);assert(r.left>=24-.001);if(portrait)assert(r.height<=viewport.height*.85+.001);
  }
 }
-assert.deepEqual(catalog.documents.filter(doc=>doc.prototype?.url||doc.watchPrototype?.url).map(doc=>doc.id).sort(),['bastion','galachain','merlin','tracr'],'Only the supplied projects (a prototype or a watch link) expose working prototype actions');
+assert.deepEqual(catalog.documents.filter(doc=>doc.prototype?.url||doc.watchPrototype?.url).map(doc=>doc.id).sort(),['galachain','merlin','tracr'],'Only the supplied projects (a prototype or a watch link) expose working prototype actions');
 for(const [size,portrait] of [[{width:1920,height:1080},false],[{width:600,height:1280},true]]){
  const pane=Object.create(ProjectMediaFocus.prototype);globalThis.innerWidth=390;globalThis.innerHeight=844;
  Object.assign(pane,{source:{naturalWidth:size.width,naturalHeight:size.height},sourceRect:{...size,left:20,top:100},portrait,image:{style:{}},frame:{style:{}},settled:false});

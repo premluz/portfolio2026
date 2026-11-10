@@ -35,14 +35,14 @@ In `content/catalog/`, update the matching asset entries:
 
 These are separate entries in the `assets` array. Keep their stable IDs so
 `heroMediaId`, `hoverVideoId`, `mediaId` and `posterMediaId` references still work.
-If an entry already has `width` and `height`, update them to the new dimensions.
+Do not type `width` and `height`: `npm run build` measures every published image (from `image-variants.js`) and MP4 (from its header) and fills them in. Backdrops and SVG are skipped. An authored size that differs from the measurement stops the build, and a rotated MP4 is refused. The build prints any poster/video pair whose proportions differ by more than 1%.
 Use matching poster/video proportions for a seamless hover handoff; for example,
 both exports can be 1440 × 900. Orientation does not rotate an image or remove
 padding embedded in the exported pixels.
 
-## 2. Set the card orientation
+## 2. Card orientation (optional override)
 
-Find the project's entry in `presentations`, not a carousel's scroll direction:
+Orientation is derived: the card is `portrait` when the hero image is taller than wide (measured width ÷ height below 1), otherwise `landscape`, and `landscape` when there is no hero media. Add `card.orientation` only to override that. Find the project's entry in `presentations`, not a carousel's scroll direction:
 
 ```json
 "documentId": "rios",
@@ -52,7 +52,7 @@ Find the project's entry in `presentations`, not a carousel's scroll direction:
 ```
 
 Change only `card.orientation`; preserve the other card/detail properties.
-Use `portrait` for vertical media. All placements referencing the same document
+All placements referencing the same document
 share this presentation setting, including the duplicate `rios-02` card.
 
 ## 3. Regenerate images, then build and test

@@ -17,12 +17,31 @@ export function masonryMinimumHeight({width,ratio=1.6,padding={},copyHeight=0,ma
  if(bleed)return Math.max(ends+copyHeight,Math.max(1,width-(imagePadding.left||0)-(imagePadding.right||0))/ratio+(imagePadding.top||0)+(imagePadding.bottom||0));
  return ends+copyHeight+margin+Math.max(1,width-sides+2*visualSideExpansion)/ratio;
 }
-export function masonryPlan(items,columns,minimumHeight,gap=28,row=8,heights=null){
+// A card whose image keeps its own ratio: the image is as wide as the column allows, then capped by the
+// maximum image width and height, and the card is as tall as its copy plus that image. No orientation involved.
+// In bleed mode the copy overlays the image, so the card is the taller of the two.
+export function ratioCardHeight({width,ratio,maxImageWidth=Infinity,maxImageHeight=Infinity,sides=0,ends=0,copyHeight=0,margin=0,bleed=false}){
+ if(!(ratio>0))return {imageWidth:0,imageHeight:0,cardHeight:ends+copyHeight};
+ const imageWidth=Math.min(Math.max(1,width-sides),maxImageWidth,maxImageHeight*ratio),imageHeight=imageWidth/ratio;
+ return {imageWidth,imageHeight,cardHeight:bleed?Math.max(ends+copyHeight,imageHeight+margin):ends+copyHeight+margin+imageHeight};
+}
+function median(values){const sorted=[...values].sort((a,b)=>a-b),middle=sorted.length>>1;return sorted.length%2?sorted[middle]:(sorted[middle-1]+sorted[middle])/2;}
+// With byRatio, every item needs a measured height and "tall" means a row span of at least 1.5 times the median,
+// so the planner never needs to know about portrait. Without it, tall still means a portrait card.
+export const TALL_SPAN_FACTOR=1.5;
+export function masonryPlan(items,columns,minimumHeight,gap=28,row=8,heights=null,{byRatio=false}={}){
  columns=clamp(Math.floor(columns)||1,1,4);
+ if(byRatio){
+  if(!heights)throw new Error('masonryPlan byRatio needs a height for every item.');
+  const missing=items.filter(item=>!Number.isFinite(heights[item.id]));
+  if(missing.length)throw new Error('masonryPlan byRatio has no height for: '+missing.map(item=>item.id).join(', '));
+ }
+ const tallLimit=byRatio&&items.length?TALL_SPAN_FACTOR*median(items.map(item=>masonryRows(heights[item.id],gap,row))):0;
+ const isTall=item=>byRatio?masonryRows(heights[item.id],gap,row)>=tallLimit:item.cardAspect==='portrait';
  const unitRows=masonryRows(minimumHeight,gap,row),occupied=[],poses=new Map(),portraitEnds=[0,0,0,0];
  function place(item,columnsToTry,floors=null){
   const columnSpan=item.featured===true&&columns>=3?2:1;
-  const units=item.cardAspect==='portrait'||columnSpan===2?2:1;
+  const units=isTall(item)||columnSpan===2?2:1;
   const height=heights?.[item.id]??units*unitRows*row-gap,rowSpan=heights?masonryRows(height,gap,row):units*unitRows;
   let y=0,x=0,found=false;
   // Fill the earliest available footprint, including gaps below wide cards.
@@ -39,17 +58,17 @@ export function masonryPlan(items,columns,minimumHeight,gap=28,row=8,heights=nul
  }
  // Reserve the complete portrait stacks first so packing a landscape cannot
  // push a later portrait out of its right-hand column. DOM order stays intact.
- if(columns===4)for(const item of items)if(item.cardAspect==='portrait'&&item.featured!==true){
+ if(columns===4)for(const item of items)if(isTall(item)&&item.featured!==true){
   const pose=place(item,[2,3]);portraitEnds[pose.column-1]=pose.row-1+pose.rowSpan;
  }
  for(const item of items){
   if(poses.has(item))continue;
   const columnSpan=item.featured===true&&columns>=3?2:1;
-  const preferred=item.featured===true?[0]:item.cardAspect==='portrait'?[columns-1]:null;
+  const preferred=item.featured===true?[0]:isTall(item)?[columns-1]:null;
   const columnsToTry=preferred??Array.from({length:columns-columnSpan+1},(_,column)=>column);
   // Small landscapes prefer the left tracks, but can use free space below
   // the right-side portraits instead of creating an isolated last row.
-  place(item,columnsToTry,columns===4&&item.cardAspect!=='portrait'?portraitEnds:null);
+  place(item,columnsToTry,columns===4&&!isTall(item)?portraitEnds:null);
  }
  return items.map(item=>poses.get(item));
 }

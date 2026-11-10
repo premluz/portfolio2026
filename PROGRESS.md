@@ -10,6 +10,9 @@ related: [TASKS.md, PROJECT_STATE.md]
 ---
 # Progress log
 
+## 2026-11-10 Project page layout follows the hero ratio (TASK-040, WP-05)
+New setting `prem-detail-ratio-layout` (off by default; developer panel, defaults, export). `detail()` now writes `data-detail-shape` from `cardRatio` (`detail-shape.js`: wide at 1.2 or more, tall below 0.8, else square). `detail-shape.css` applies only with the setting on: wide puts the media across the rail with copy below, tall puts copy beside a sticky image capped to the viewport (70svh and centred below 751px), square is an even split. Thresholds and caps are tokens. Evidence: tests/detail-shape.mjs, tests/visual/detail-shape.spec.mjs, `npm run check` 160 of 160. Risks: no catalogue project is square, so that shape was checked on a forced page only; three browser specs (detail-title-spacing, mobile-content-width tracr, settings-panel) fail identically at HEAD.
+
 ## 2026-11-07 One-time reset of retired settings
 Retired controls without a replacing menu (hero carousel, featured stage, hero timeline and its mode, native snap, per-area control styles, card glass style, image blur and ripple, Flip/Flat home view) kept applying stored values with no visible control. `applyDefaultSettings` now returns the 14 `RETIRED_STORAGE_KEYS` to their presets once, guarded by `prem-retired-settings-reset`, so later choices and imports persist. Owner's settings exported first to `settings/prem-portfolio-settings-2026-11-07.json`. Evidence: all `tests/*.mjs` pass, including new reset and marker cases in tests/default-settings.mjs. Not browser-verified. Risk left: `prem-hero-timeline-text-enabled` has no preset, and the ripple/motion-blur sliders sit inside `prem-motion-settings`; neither is reset.
 

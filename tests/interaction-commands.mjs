@@ -4,12 +4,12 @@ import {homeProjects,projects as allProjects} from '../dist/documents.js';
 
 // A layout may place a project twice; the second placement has its own id. The live layout has none, so add one here.
 const duplicate={...homeProjects.find(project=>project.id==='playstation'),id:'playstation-02',sourceProjectId:'playstation'};
-const catalog=createCommandCatalog([...homeProjects,duplicate,allProjects.find(project=>project.id==='porter')]);
-assert.equal(catalog.version,1);assert.equal(catalog.projects.length,9);
+const catalog=createCommandCatalog([...homeProjects,duplicate]);
+assert.equal(catalog.version,1);assert.equal(catalog.projects.length,8);
 for(const [phrase,id,target] of [
   ['Open PlayStation','project.open','playstation'],['open play station','project.open','playstation'],
   ['Please open the Sony project.','project.open','playstation'],['Open Tracer','project.open','tracr'],
-  ['Open Merlin','project.open','merlin'],['Open Bastion','project.open','bastion'],['Open Porter','project.open','porter'],
+  ['Open Merlin','project.open','merlin'],['Open Bastion','project.open','bastion'],
   ['Open Gala chain','project.open','galachain'],['Open Vodafone','project.open','vodafone-iot'],
   ['Open Amble','project.open','rios'],['open Rios','project.open','rios'],['Open Planner','project.open','rios'],
   ['Next','project.next'],['previous project','project.previous'],['Work','route.work'],

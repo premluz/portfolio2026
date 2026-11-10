@@ -1,6 +1,7 @@
 // Position the actual image bounds inside a transparent holding frame. Native
 // images and the liquid canvas use the same fit and corner geometry.
 import {HoverVideo} from './hover-video.js';
+import {masonryRatioOn} from './masonry-ratio.js';
 export function nestedRadius(outer,padding=0){return Math.max(0,outer-padding);}
 export function thumbnailImageRadius(radius,bounds,orientation='landscape',sourceCorners=null){
  const scale=Math.min(1,orientation==='portrait'?bounds.height/700:bounds.width/1000);
@@ -114,7 +115,7 @@ export class ImageFrame {
   const imageStyle=getComputedStyle(this.el);
   this.maxWidth=pixels(imageStyle.getPropertyValue('--image-max-width'))||Infinity;
   this.maxHeight=pixels(imageStyle.getPropertyValue('--image-max-height'))||Infinity;
-  this.align=this.el.closest?.('[data-card-orientation]')?.dataset.cardOrientation==='landscape'?'start':'center';
+  this.align=!masonryRatioOn()&&this.el.closest?.('[data-card-orientation]')?.dataset.cardOrientation==='landscape'?'start':'center';
   const frameRadius=readFrameRadius(this.el);
   if(this.el.style)this.el.style.borderRadius=frameRadius+'px';
   const selected=parseFloat(getComputedStyle(this.el).getPropertyValue('--image-rounding'));
@@ -134,7 +135,7 @@ export class ImageFrame {
   const bottom=position==='bottom';
   if(this.card?.dataset.cardPresentation==='current'&&(this.card.dataset.imageMode!=='bleed'||side||bottom)){
    const cardStyle=getComputedStyle(this.card),cardSides=pixels(cardStyle.paddingLeft)+pixels(cardStyle.paddingRight),imageSides=this.padding.left+this.padding.right,vertical=this.padding.top+this.padding.bottom;
-   const availableWidth=Math.max(1,side?this.el.clientWidth:this.card.clientWidth-cardSides),portrait=this.card.dataset.cardOrientation==='portrait';
+   const availableWidth=Math.max(1,side?this.el.clientWidth:this.card.clientWidth-cardSides),portrait=this.card.dataset.cardOrientation==='portrait'||masonryRatioOn();
    // Vertical padding adds room around the image instead of reducing its width.
    // Side padding stays inside the frame and continues to reduce image width.
    const room=portrait&&this.card.closest?.('.gallery-grid')?.dataset.masonryRhythm==='true'?masonryImageRoom(this.card,this.el)-vertical:Infinity;

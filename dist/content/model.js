@@ -51,7 +51,7 @@ export function createContentModel({documentTypes={},blockTypes={}}={}){
  const defs={
   evidence:object({id,kind:{enum:['statement','metric','quote']},text,provenance},['id','kind','text','provenance']),
   asset:{anyOf:['image','video'].map(type=>object({id,type:{const:type},status:{enum:['published','draft','archived']},url:short,alt:text,width:{type:'integer',minimum:1},height:{type:'integer',minimum:1},credit:text},['id','type','status','url',...(type==='image'?['alt']:[])]))},
-  presentation:object({documentId:id,card:object({orientation:{enum:['portrait','landscape']},surface,ambient:surface,backgroundMediaId:id},['orientation','surface']),detail:object({columns:{type:'integer',minimum:1,maximum:4}},['columns'])},['documentId','card','detail']),
+  presentation:object({documentId:id,card:object({orientation:{enum:['portrait','landscape']},surface,ambient:surface,backgroundMediaId:id},['surface']),detail:object({columns:{type:'integer',minimum:1,maximum:4}},['columns'])},['documentId','card','detail']),
   placement:object({id,documentId:id,featured:{type:'boolean'}},['id','documentId']),
   layout:object({id,items:list(ref('placement'))},['id','items'])
  };

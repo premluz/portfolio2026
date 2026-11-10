@@ -158,9 +158,7 @@
     "type": "image",
     "status": "published",
     "url": "assets/bastion.png",
-    "alt": "Bastion AI wallet prototype with a persistent assistant and financial interface",
-    "width": 786,
-    "height": 1706
+    "alt": "Bastion AI wallet prototype with a persistent assistant and financial interface"
   },
   {
     "id": "bastion-qr",
@@ -176,9 +174,7 @@
     "type": "video",
     "status": "published",
     "url": "assets/bastion.mp4",
-    "alt": "",
-    "width": 1440,
-    "height": 900
+    "alt": ""
   },
   {
     "id": "porter-cover",

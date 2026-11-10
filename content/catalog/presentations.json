@@ -43,7 +43,7 @@
   {
     "documentId": "rios",
     "card": {
-      "orientation": "landscape",
+      "orientation": "portrait",
       "surface": [
         "#f5e5ee",
         "#e3ddf5"

@@ -6,6 +6,7 @@ import {answerSchema,createContentStore} from '../dist/content/provider.js';
 import {DEFAULT_CONTENT_SET} from '../dist/content/content-set.js';
 import {prepareCatalog,readAssistantData} from '../dist/content/assistant-data.js';
 import {contentSetNames,contentSourceLabel,readContentSource} from './content-source.mjs';
+import {posterRatioMismatches,withMeasuredMedia} from './media-metadata.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const check=process.argv.includes('--check');
 // Every content/catalog*.json file or content/catalog*/ folder is a content set; all ship in one deploy and share the same media.
@@ -24,7 +25,7 @@ const files={
 };
 const counts=[];
 for(const set of sets){
- const catalog=await readContentSource(path.join(root,'content'),set);
+ const catalog=await withMeasuredMedia(await readContentSource(path.join(root,'content'),set),path.join(root,'dist'));
  const source=await contentSourceLabel(path.join(root,'content'),set);
  for(const doc of catalog.documents)knownIds.add(doc.id);
  const published=exportPublishedCatalog(prepareCatalog(catalog,assistant)),store=createContentStore(published);
@@ -34,6 +35,7 @@ for(const set of sets){
  files[`${set}.json`]=json(published);
  if(set===DEFAULT_CONTENT_SET)files['index.json']=json({schemaVersion:1,documents:store.list().map(d=>({id:d.id,type:d.type,title:d.title,pageTitle:d.pageTitle||d.title,summary:d.summary||'',domains:d.domains||[],capabilities:d.capabilities||[],tags:d.tags||[],kind:d.kind||null,client:d.client||null,evidenceIds:(d.evidence||[]).map(e=>e.id)}))});
  counts.push(`${set}: ${published.documents.length} documents, ${published.assets.length} assets`);
+ for(const line of posterRatioMismatches(published))console.warn(`Poster/video ratio differs by more than 1% (${set}): ${line}`);
 }
 const orphans=assistantIds.filter(id=>!knownIds.has(id));
 if(orphans.length)throw new Error(`content/assistant.json names documents no content set has: ${orphans.join(', ')}`);

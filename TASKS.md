@@ -95,6 +95,13 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 
 ## Done
 
+### TASK-040 Detail layout chosen from the hero ratio (WP-05)
+- Status: done
+- Tags: area/home, area/design-system, area/images
+- Acceptance: `data-detail-shape="wide|tall|square"` on the project page from `cardRatio`, with layouts keyed on it behind `prem-detail-ratio-layout` (off by default); tests for the three shapes; existing detail and handoff tests pass; one capture per shape on disk.
+- Evidence: tests/detail-shape.mjs and tests/visual/detail-shape.spec.mjs pass (the card image and the page image end on the same ratio within 1%; tall is sticky at 1440 and capped at 70svh and centred at 600); `npm run check` 160 of 160, 2026-11-10. Captures: scratchpad wp-05 folder (see PROGRESS.md). Registered as TASK-040 because WP-00 to WP-04 have no entries yet.
+
+
 ### TASK-036 Soften card hover and press timing
 - Status: done
 - Tags: area/home, area/motion

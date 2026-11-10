@@ -52,9 +52,9 @@ TASK-031/TASK-032 mascot integration is complete locally: WebGL retains the PNG 
 
 The About section-order assertion (`tests/about-page.mjs`) now expects How I work before Experience, as on the pages. The control-system build, thirteen focused unit checks and five browser checks pass (TASK-021).
 
-All 155 test files pass and `npm run check` and `npm run build` exit 0 (2026-11-03). The browser suite (`npm run test:visual`) does not: 12 of 75 fail, reproducibly (TASK-037). Eight already failed on 2cb9174 (card-padding, card-sphere screenshot, card-spiral, carousel-glow ×4, native-snap); assistant-info-card, errors and video-transition started with ca647d9 (2026-10-28, which also changed the published settings preset) and dock-flash with 9045a5a (2026-10-29, control-style consolidation). Any other failure is yours to explain or fix.
+All 159 test files pass (2026-11-10; the six that failed asserted a Porter home card and a Bastion prototype link, and were updated on owner decision D-1: Porter is published but has no home card, Bastion has no prototype). `npm run check` and `npm run build` exited 0 on 2026-11-03. The browser suite (`npm run test:visual`) does not: 12 of 75 fail, reproducibly (TASK-037). Eight already failed on 2cb9174 (card-padding, card-sphere screenshot, card-spiral, carousel-glow ×4, native-snap); assistant-info-card, errors and video-transition started with ca647d9 (2026-10-28, which also changed the published settings preset) and dock-flash with 9045a5a (2026-10-29, control-style consolidation). Any other failure is yours to explain or fix.
 
-`npm run check` stops at the first failing test, so use the loop in [AGENTS.md](AGENTS.md) to see them all.
+`npm run check` runs every test file and reports all failures in one pass (see [AGENTS.md](AGENTS.md)).
 
 ## Questions
 

@@ -259,6 +259,13 @@
   --portrait-detail-viewport-inset: clamp(96px, 14svh, 160px);
   --detail-image-top-inset: 160px;
   --detail-image-bottom-inset: max(80px, calc(env(safe-area-inset-bottom) + 56px));
+  /* Ratio-driven project pages (data-detail-shape). The two ratios twin detail-shape.js; tests/detail-shape.mjs compares them. */
+  --detail-wide-min-ratio: 1.2;
+  --detail-tall-max-ratio: .8;
+  --detail-tall-media-cap: calc(100svh - var(--header-total) - var(--detail-image-bottom-inset));
+  --detail-tall-media-cap-narrow: 70svh;
+  --detail-tall-sticky-top: calc(var(--header-total) + var(--space-4));
+  --detail-media-unbounded: 100000px;
   --edge-shade-top-depth: 23vh;
   --edge-shade-bottom-depth: 31vh;
   --edge-shade-side-depth: 18vw;

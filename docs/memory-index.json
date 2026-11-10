@@ -19,7 +19,7 @@
         "TASKS.md",
         "docs/CONSTITUTION.md"
       ],
-      "hash": "7ba7392179a049b84862516b3aeb26368728eeef",
+      "hash": "5f3892e2dd41a675dad894fd698b331c38f1d36f",
       "items": []
     },
     {
@@ -88,7 +88,7 @@
         "FRAMEWORK.md",
         "MEDIA_ASSETS.md"
       ],
-      "hash": "955062c229fe9dec7ffdf1933652be3697d5960d",
+      "hash": "247bfd5f62db539f1ee1359cc1e599764c5f086e",
       "items": []
     },
     {
@@ -216,7 +216,7 @@
         "ADR-001",
         "ADR-002"
       ],
-      "hash": "c82cbf6ef687fdc4da1b6a0f8c5746b3379c1ab0",
+      "hash": "23d55c9f6696334566f978b20b2ef0c491776554",
       "items": []
     },
     {
@@ -253,7 +253,7 @@
         "TASKS.md",
         "PROJECT_STATE.md"
       ],
-      "hash": "cf1bcde597c559555e8e2d55fe008eea22b37973",
+      "hash": "ef78c663ed3833b682cc805c1c26cf40aea45493",
       "items": []
     },
     {
@@ -273,7 +273,7 @@
         "PROGRESS.md",
         "HANDOFF.md"
       ],
-      "hash": "a37ac0ef510afeb135d385efc59d4b851f977388",
+      "hash": "3da3112e9f4620788dfde2473ac60f8bc490e36c",
       "items": [
         {
           "id": "Q-001",
@@ -333,7 +333,7 @@
         "PROJECT_STATE.md",
         "PROGRESS.md"
       ],
-      "hash": "06da0dd0265eb1cac6ca3102366b508966bb3fdc",
+      "hash": "346560d0b141a86d63ffef2751aaf1dc7f80b7e5",
       "items": [
         {
           "id": "TASK-039",
@@ -448,6 +448,16 @@
           "tags": [
             "area/images",
             "area/content"
+          ]
+        },
+        {
+          "id": "TASK-040",
+          "title": "Detail layout chosen from the hero ratio (WP-05)",
+          "status": "done",
+          "tags": [
+            "area/home",
+            "area/design-system",
+            "area/images"
           ]
         },
         {
@@ -710,6 +720,34 @@
         "MEDIA_ASSETS.md"
       ],
       "hash": "7decedffe4c588e57efdfbb0efcbf0a770fc59ca",
+      "items": []
+    },
+    {
+      "path": "docs/EXECUTION_BRIEF.md",
+      "id": null,
+      "title": "Execution brief for the 2026-11-10 review",
+      "type": "spec",
+      "status": "draft",
+      "updated": "2026-11-10",
+      "summary": "Work packages that turn the architecture and design-system review into changes an agent can execute one at a time, each with files, steps, acceptance and stop conditions.",
+      "tags": [
+        "area/tooling",
+        "area/content",
+        "area/images",
+        "area/assistant",
+        "area/design-system",
+        "area/motion",
+        "kind/process"
+      ],
+      "related": [
+        "AGENTS.md",
+        "TASKS.md",
+        "CONTENT_MODEL.md",
+        "MEDIA_ASSETS.md",
+        "MOTION.md",
+        "DESIGN_SYSTEM.md"
+      ],
+      "hash": "a854d490cb3ca48e356df5787e75e88296593ed5",
       "items": []
     },
     {

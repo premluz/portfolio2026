@@ -23,7 +23,7 @@ currently uses an embedded public snapshot; no external CMS or AI service is con
 | Block | An ordered, typed instance inside a document | A result card or a carousel containing project references |
 | Component document | Independently maintained, reusable content | Footer invitation or a shared carousel |
 | Asset | Media identity and metadata | Image/video URL, alt text, optional dimensions and credit |
-| Presentation | Display preferences separate from authored copy | Card orientation/colours and 1–4 detail columns |
+| Presentation | Display preferences separate from authored copy | Card colours, 1–4 detail columns and an optional card orientation override (derived from the hero image's measured ratio when absent) |
 | Placement | A document reference in a particular layout | A featured card or another appearance of the same project |
 
 Every `portfolio-item` has a required `projectStatus`: `Launched`, `Building` or `R&D`. It is separate from `status` (published/draft/archived), which is publication state, and from `kind` (shipped/lab).

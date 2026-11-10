@@ -260,6 +260,13 @@
   --portrait-detail-viewport-inset: clamp(96px, 14svh, 160px);
   --detail-image-top-inset: 160px;
   --detail-image-bottom-inset: max(80px, calc(env(safe-area-inset-bottom) + 56px));
+  /* Ratio-driven project pages (data-detail-shape). The two ratios twin detail-shape.js; tests/detail-shape.mjs compares them. */
+  --detail-wide-min-ratio: 1.2;
+  --detail-tall-max-ratio: .8;
+  --detail-tall-media-cap: calc(100svh - var(--header-total) - var(--detail-image-bottom-inset));
+  --detail-tall-media-cap-narrow: 70svh;
+  --detail-tall-sticky-top: calc(var(--header-total) + var(--space-4));
+  --detail-media-unbounded: 100000px;
   --edge-shade-top-depth: 23vh;
   --edge-shade-bottom-depth: 31vh;
   --edge-shade-side-depth: 18vw;
@@ -1932,6 +1939,35 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 :root[data-nav-position="top"] #dock.is-media-focus{opacity:var(--dock-return-reveal,1)}
 /* Previous, Next and Go Back leave and return one after another, like the other header controls, while a prototype is open. */
 :root.header-detail-active.media-focus-open .header-detail-nav button{opacity:0;transform:translateX(var(--header-swap-shift));pointer-events:none;transition-delay:calc(var(--swap-out) * var(--header-swap-step)),calc(var(--swap-out) * var(--header-swap-step)),0s,0s}
+
+/* detail-shape.css */
+/* Project pages follow the hero ratio (data-detail-shape from detail-shape.js), only while Settings > "Detail layout follows the hero ratio" is on.
+   Wide: media across the rail, copy below. Tall: copy beside a sticky, viewport-capped image. Square: even split. Every rule keeps the hero at its own ratio. */
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="wide"][data-card-orientation]:not(.text-only-detail)>.detail-layout>.detail-media-column>.visual{--image-max-width:var(--detail-media-unbounded);--image-max-height:var(--detail-media-unbounded);height:auto;max-height:none;aspect-ratio:var(--image-source-ratio,var(--detail-tall-max-ratio))}
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="tall"][data-card-orientation]:not(.text-only-detail)>.detail-layout>.detail-media-column>.visual{--image-max-width:var(--detail-media-unbounded);--image-max-height:var(--detail-media-unbounded);height:auto;max-height:none;aspect-ratio:var(--image-source-ratio,var(--detail-tall-max-ratio))}
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="square"][data-card-orientation]:not(.text-only-detail)>.detail-layout>.detail-media-column>.visual{--image-max-width:var(--detail-media-unbounded);--image-max-height:var(--detail-media-unbounded);height:auto;max-height:none;aspect-ratio:var(--image-source-ratio,var(--detail-tall-max-ratio))}
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="wide"][data-card-orientation]:not(.text-only-detail)>.detail-layout>.detail-media-column>.visual{width:100%;margin:0}
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="square"][data-card-orientation]:not(.text-only-detail)>.detail-layout>.detail-media-column>.visual{width:100%;margin:0}
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="tall"][data-card-orientation]:not(.text-only-detail)>.detail-layout>.detail-media-column>.visual{width:min(100%,calc(var(--detail-tall-media-cap-narrow) * var(--image-source-ratio,var(--detail-tall-max-ratio))));margin-inline:auto}
+@media(min-width:751px){
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="wide"][data-card-orientation]:not(.text-only-detail){grid-template-columns:minmax(0,1fr);grid-template-rows:none;column-gap:0}
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="wide"][data-card-orientation]:not(.text-only-detail)>.detail-caption{grid-column:1;grid-row:1;align-self:start;margin:0 0 var(--space-page-rhythm-md)}
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="wide"][data-card-orientation]:not(.text-only-detail)>.detail-layout>.detail-media-column{display:grid;grid-template-columns:minmax(0,1fr);grid-column:1;grid-row:2;row-gap:var(--space-5);height:max-content}
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="wide"][data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{grid-column:1;grid-row:3;max-width:var(--content-width-reading);margin:var(--card-gap) auto 0}
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="tall"][data-card-orientation]:not(.text-only-detail){grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);grid-template-rows:none;column-gap:var(--space-detail-columns)}
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="tall"][data-card-orientation]:not(.text-only-detail)>.detail-caption{grid-column:1;grid-row:1;align-self:start;margin:0 0 var(--space-page-rhythm-md)}
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="tall"][data-card-orientation]:not(.text-only-detail)>.detail-layout>.detail-media-column{display:grid;grid-template-columns:minmax(0,1fr);grid-column:2;grid-row:1 / span 3;align-self:start;row-gap:var(--space-5);height:max-content}
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="tall"][data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{grid-column:1;grid-row:2;max-width:var(--content-width-reading);margin:0}
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="square"][data-card-orientation]:not(.text-only-detail){grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:none;column-gap:var(--space-detail-columns)}
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="square"][data-card-orientation]:not(.text-only-detail)>.detail-caption{grid-column:1;grid-row:1;align-self:start;margin:0 0 var(--space-page-rhythm-md)}
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="square"][data-card-orientation]:not(.text-only-detail)>.detail-layout>.detail-media-column{display:grid;grid-template-columns:minmax(0,1fr);grid-column:2;grid-row:1 / span 3;align-self:start;row-gap:var(--space-5);height:max-content}
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="square"][data-card-orientation]:not(.text-only-detail)>.detail-layout>.description{grid-column:1;grid-row:2;max-width:var(--content-width-reading);margin:0}
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="tall"][data-card-orientation]:not(.text-only-detail)>.detail-layout>.detail-media-column{position:sticky;top:var(--detail-tall-sticky-top)}
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="tall"][data-card-orientation]:not(.text-only-detail)>.detail-layout>.detail-media-column>.visual{width:min(100%,calc(var(--detail-tall-media-cap) * var(--image-source-ratio,var(--detail-tall-max-ratio))))}
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="wide"][data-card-orientation]:not(.text-only-detail)>.detail-layout>.detail-media-column>:is(.visual,.detail-media-actions,.detail-project-qr){grid-column:1;grid-row:auto}
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="tall"][data-card-orientation]:not(.text-only-detail)>.detail-layout>.detail-media-column>:is(.visual,.detail-media-actions,.detail-project-qr){grid-column:1;grid-row:auto}
+html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="square"][data-card-orientation]:not(.text-only-detail)>.detail-layout>.detail-media-column>:is(.visual,.detail-media-actions,.detail-project-qr){grid-column:1;grid-row:auto}
+}
 
 /* article.css */
 /* Articles: one readable column built from the reading tokens, not the card grid used by information pages. */
