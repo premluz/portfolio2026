@@ -3,15 +3,23 @@ import fs from 'node:fs/promises';
 import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {clientStyles} from '../scripts/client-styles.mjs';
+import {moduleGraph,modulePreloadTags} from '../scripts/module-graph.mjs';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
 const build=spawnSync(process.execPath,['scripts/build-worker.mjs'],{cwd:root,encoding:'utf8'});
 assert.equal(build.status,0,build.stderr);
 const client=new URL('../dist/client/',import.meta.url);
-for(const file of ['index.html','site.css','app.js','media-loading.js','image-variants.js','home-about.css','home-about.js','home-sections.css','home-sections.js','home-services.js','home-service-illustrations.js','home-testimonials.js','portfolio-assistant.js','content/catalog.json']){
+for(const file of ['site.css','app.js','media-loading.js','image-variants.js','home-about.css','home-about.js','home-sections.css','home-sections.js','home-services.js','home-service-illustrations.js','home-testimonials.js','portfolio-assistant.js','content/catalog.json']){
  const actual=await fs.readFile(new URL(file,client));
  const authored=await fs.readFile(new URL('../dist/'+file,import.meta.url));
  assert(actual.equals(authored),`The hosted asset tree must preserve ${file}.`);
+}
+// The hosted page differs from the authored one by exactly the generated modulepreload list, placed before </head>.
+{
+ const authored=await fs.readFile(new URL('../dist/index.html',import.meta.url),'utf8');
+ const tags=modulePreloadTags(await moduleGraph('app.js',fileURLToPath(client)),authored);
+ assert(tags.length>0,'The preload list is not empty');
+ assert.equal(await fs.readFile(new URL('index.html',client),'utf8'),authored.replace('</head>',`${tags}</head>`),'The hosted index.html is the authored page plus the generated modulepreload list.');
 }
 const expectedCSS=(await Promise.all(clientStyles.map(file=>fs.readFile(new URL('../dist/'+file,import.meta.url),'utf8')))).map((style,index)=>`/* ${clientStyles[index]} */\n${style}`).join('\n');
 assert.equal(await fs.readFile(new URL('site.css',client),'utf8'),expectedCSS,'The hosted CSS bundle retains every current rule in its original cascade order');

@@ -4,6 +4,7 @@ import hashlib
 import json
 from io import BytesIO
 from PIL import Image, ImageOps
+from asset_roles import is_backdrop
 
 root = Path(__file__).resolve().parent.parent
 output = root / "dist/assets/optimised"
@@ -26,7 +27,7 @@ for asset in default_assets():
     if asset["type"] != "image" or not asset["url"].startswith("assets/"):
         continue
     # Project backdrops are ~16k px panoramas with their own pipeline (scripts/build-backgrounds.mjs).
-    if asset["id"].endswith("-bg"):
+    if is_backdrop(asset):
         continue
     source = root / "dist" / asset["url"]
     if not source.is_file():

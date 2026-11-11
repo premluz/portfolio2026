@@ -71,7 +71,7 @@ tooling and macOS `sips`:
   `dist/image-variants.js` with source dimensions, a checksum of the original and
   the variant URLs.
 - `scripts/build-backgrounds.mjs` makes web copies of project backdrops (every
-  asset whose id ends in `-bg`) in `dist/assets/backgrounds/`, cropping a whole
+  asset with `role: "backdrop"` or an id ending in `-bg`) in `dist/assets/backgrounds/`, cropping a whole
   design-canvas export to its photo frame first, and records each original's
   checksum in `dist/assets/backgrounds/sources.json`.
 
@@ -103,7 +103,7 @@ their deletion is separately intended and approved.
 
 ## Project backdrops
 
-A backdrop is an image asset whose id ends in `-bg` (for example `merlin-bg`, `generic-bg`). Put the original in `dist/assets/` and run `npm run images`. Link it from the project's presentation with `card.backgroundMediaId`; projects without a link use `generic-bg`.
+A backdrop is an image asset with `"role": "backdrop"`; an id ending in `-bg` (for example `merlin-bg`, `generic-bg`) is still recognised, so existing backdrops need no edit. Put the original in `dist/assets/` and run `npm run images`. Link it from the project's presentation with `card.backgroundMediaId`; projects without a link use `generic-bg`.
 
 - **Export just the photo.** The script writes 1920px and 3840px copies to `dist/assets/backgrounds/` (it never overwrites originals). If an export is a whole design canvas, with the photo at the top-left of a large white board, the script finds the photo frame and crops to it, trimming a few pixels from every edge. A photo-only export is detected as such and used whole. Larger exports give sharper full-screen backgrounds: copies are never upscaled beyond the photo's own width.
 - **The filename must match the catalog.** `scripts/build-content.mjs` stops on any missing local file, so a typo such as `plastation-bg.jpg` blocks the whole build.

@@ -95,6 +95,24 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 
 ## Done
 
+### TASK-043 Token leak ceilings and duration role tokens (WP-14)
+- Status: done
+- Tags: area/design-system, area/motion
+- Acceptance: a test caps hex, literal duration and literal font-size counts outside tokens.css; `--duration-*` tokens exist for the fixed MOTION.md roles with a JavaScript twin where a module uses the value; matching literals replaced; no computed value changes.
+- Evidence: tests/token-leaks.mjs passes with ceilings at the measured 74 hex colours, 133 durations and 67 font sizes (counting rules are in the test); tests/motion-tokens.mjs passes; computed tooltip animation and token reads checked in the page, 2026-11-10. Two literals became tokens (tooltip arrival, card copy fade-out); the rest do not match a role exactly and are listed in PROGRESS.md.
+
+### TASK-042 Load by route: card worlds, module graph and preload list (WP-08)
+- Status: done
+- Tags: area/tooling, area/images
+- Acceptance: a first visit to the home page does not download three.js or the card worlds; `scripts/module-graph.mjs` and `tests/module-graph.mjs` hold a budget; the hosted `index.html` preloads the static graph. Closed with the assistant, voice and dictation, hand tracking and developer settings left in the first load, by decision on 2026-11-10 (they mount at startup and are wired into the dock; converting them changes when the dock composer exists). Measured 2026-11-10: the code only they use is about 74 KB for the assistant (21 modules) and 12 KB for voice, against 839 KB total, because most of the assistant's 62-module subtree is shared with the rest of the app; recommended to close the task as done without converting them, unless the owner wants the saving.
+- Evidence: first-load graph 185 modules and 1555 KB before, 174 modules and 839 KB (859,316 bytes) after, three.js unreachable; tests/module-graph.mjs and tests/visual/card-world-loading.spec.mjs pass (home never requests three.js, direct and in-app visits to a card world draw it, a blocked download keeps the page and shows the toast); `npm run check`, 2026-11-10.
+
+### TASK-041 Asset roles are data, not naming (WP-06a)
+- Status: done
+- Tags: area/images, area/content
+- Acceptance: optional `role`, `sourceCornerRadius` and `sourceEdgeInset` on an asset; one `isBackdrop` used by every script (JavaScript and Python); the Tracr matte radius and PlayStation edge inset read from `assets.json`; rendered output unchanged. WP-06b (deleting unreferenced files) stays blocked on D-3.
+- Evidence: tests/asset-roles.mjs (Python twin agrees on every catalog asset, a `role`-only fixture is a backdrop in every script, schema accepts and rejects the new fields, quirks read from the catalog) and tests/nested-radii.mjs pass; `npm run check`, 2026-11-10.
+
 ### TASK-040 Detail layout chosen from the hero ratio (WP-05)
 - Status: done
 - Tags: area/home, area/design-system, area/images

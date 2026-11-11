@@ -1,4 +1,4 @@
-import {EASE} from './motion-tokens.js';
+import {EASE,DURATION} from './motion-tokens.js';
 import {captionRevealLines} from './caption-travel.js';
 const easing=EASE.settle;
 
@@ -17,7 +17,7 @@ function revealTargets(root){
 }
 
 export class DetailContentReveal{
- constructor(targets,{reduced=false,duration=220,stagger=44}={}){
+ constructor(targets,{reduced=false,duration=DURATION.detailReveal,stagger=44}={}){
   this.targets=targets.map(node=>({node,opacity:node.style.opacity||''}));
   this.reduced=reduced;this.duration=duration;this.stagger=stagger;this.animations=[];this.started=false;this.dead=false;this.reversing=false;
   if(!reduced)for(const {node} of this.targets)node.style.opacity='0';

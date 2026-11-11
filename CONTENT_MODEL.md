@@ -22,7 +22,7 @@ currently uses an embedded public snapshot; no external CMS or AI service is con
 | Block type | Schema for a piece of document content | `text`, `image`, `video`, `info-card`, `carousel`, `reference`, `metric`, `quote` |
 | Block | An ordered, typed instance inside a document | A result card or a carousel containing project references |
 | Component document | Independently maintained, reusable content | Footer invitation or a shared carousel |
-| Asset | Media identity and metadata | Image/video URL, alt text, optional dimensions and credit |
+| Asset | Media identity and metadata | Image/video URL, alt text, optional dimensions and credit; optional `role` (`backdrop`), and `sourceCornerRadius` and `sourceEdgeInset` (whole pixels of matte or frame baked into the export, which the image frame masks) |
 | Presentation | Display preferences separate from authored copy | Card colours, 1–4 detail columns and an optional card orientation override (derived from the hero image's measured ratio when absent) |
 | Placement | A document reference in a particular layout | A featured card or another appearance of the same project |
 
@@ -441,7 +441,7 @@ Services carousel alignment is independent of its section width. Full bleed star
 
 ## Backdrops, home overview and strapline
 
-- **Backdrops.** `presentations[].card.backgroundMediaId` names an image asset used as the project's featured-stage and detail-page backdrop. An id that is missing or not an image fails validation. Projects without one use the asset with id `generic-bg`. An asset whose id ends in `-bg` is a backdrop: it is skipped by the thumbnail generator and processed by the backdrop script instead (see [MEDIA_ASSETS.md](MEDIA_ASSETS.md)). The projected card carries the resolved path as `background`.
+- **Backdrops.** `presentations[].card.backgroundMediaId` names an image asset used as the project's featured-stage and detail-page backdrop. An id that is missing or not an image fails validation. Projects without one use the asset with id `generic-bg`. An asset with `role: "backdrop"`, or an id ending in `-bg`, is a backdrop: it is skipped by the thumbnail generator and processed by the backdrop script instead (see [MEDIA_ASSETS.md](MEDIA_ASSETS.md)). The projected card carries the resolved path as `background`.
 - **Disciplines.** `disciplines` (optional list of short strings) on a portfolio item feeds the tag row on cards when Card details is on. Tracr's three are the owner's wording; the others were drafted from each project's `role` text and are for the owner to edit. They are not the assistant's `tags`.
 - **Short category.** `shortCategory` (optional, short string) on a portfolio item is a few words naming what the project is, e.g. "Blockchain traceability". The Cards setting "Show category instead of title" (`prem-card-show-category`, off by default) swaps it in for the card title; items without one show their `name`. The longer `category` field is separate and unchanged.
 - **Year.** `year` (optional, short string) on a portfolio item is when the project happened, e.g. "2025". The Cards setting "Description is the company and year" (`prem-card-company-year`, off by default, shown only while Show project description is on) replaces a card's description line with `client · year`.

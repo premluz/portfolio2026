@@ -22,6 +22,20 @@
   /* A card's title line is its strongest text; the results line under it stays quieter. */
   --card-title-rest-strength: 100%;
   --card-summary-rest-strength: 80%;
+  /* Fixed duration roles from MOTION.md > Duration (the ones that scale with the Transition setting stay in motion-tokens.js).
+     The older per-component duration tokens carry the same values; tests/token-leaks.mjs keeps them equal. */
+  --duration-hover-in: 70ms;
+  --duration-hover-out: 420ms;
+  --duration-glow-in: 240ms;
+  --duration-glow-out: 1000ms;
+  --duration-press-in: 90ms;
+  --duration-press-out: 300ms;
+  --duration-card-content-in: 220ms;
+  --duration-card-content-out: 180ms;
+  --duration-toast-in: 240ms;
+  --duration-toast-out: 200ms;
+  --duration-tooltip-arrive: 240ms;
+  --duration-detail-reveal: 220ms;
   --surface-hover-in-duration: 240ms;
   --surface-hover-out-duration: 1000ms;
   --card-content-in-duration: 220ms;

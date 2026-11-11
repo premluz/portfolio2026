@@ -19,7 +19,7 @@
         "TASKS.md",
         "docs/CONSTITUTION.md"
       ],
-      "hash": "5f3892e2dd41a675dad894fd698b331c38f1d36f",
+      "hash": "634f3711309b6c01d4de53db9159d7c4414e38d9",
       "items": []
     },
     {
@@ -88,7 +88,7 @@
         "FRAMEWORK.md",
         "MEDIA_ASSETS.md"
       ],
-      "hash": "247bfd5f62db539f1ee1359cc1e599764c5f086e",
+      "hash": "fe952e875fd6b10cc82ede03313d64c23841b473",
       "items": []
     },
     {
@@ -216,7 +216,7 @@
         "ADR-001",
         "ADR-002"
       ],
-      "hash": "23d55c9f6696334566f978b20b2ef0c491776554",
+      "hash": "2e8481b9026c21ed57ffa5693e87e31ff2523029",
       "items": []
     },
     {
@@ -253,7 +253,7 @@
         "TASKS.md",
         "PROJECT_STATE.md"
       ],
-      "hash": "ef78c663ed3833b682cc805c1c26cf40aea45493",
+      "hash": "59bf7625ecbbd29d64a2d8fc5d9dc2bc0841cc3e",
       "items": []
     },
     {
@@ -333,7 +333,7 @@
         "PROJECT_STATE.md",
         "PROGRESS.md"
       ],
-      "hash": "346560d0b141a86d63ffef2751aaf1dc7f80b7e5",
+      "hash": "bb5309279ddf0d2ffcf8d825d99c3b7269ec6209",
       "items": [
         {
           "id": "TASK-039",
@@ -445,6 +445,33 @@
           "id": "TASK-007",
           "title": "Give Porter its own backdrop",
           "status": "todo",
+          "tags": [
+            "area/images",
+            "area/content"
+          ]
+        },
+        {
+          "id": "TASK-043",
+          "title": "Token leak ceilings and duration role tokens (WP-14)",
+          "status": "done",
+          "tags": [
+            "area/design-system",
+            "area/motion"
+          ]
+        },
+        {
+          "id": "TASK-042",
+          "title": "Load by route: card worlds, module graph and preload list (WP-08)",
+          "status": "done",
+          "tags": [
+            "area/tooling",
+            "area/images"
+          ]
+        },
+        {
+          "id": "TASK-041",
+          "title": "Asset roles are data, not naming (WP-06a)",
+          "status": "done",
           "tags": [
             "area/images",
             "area/content"

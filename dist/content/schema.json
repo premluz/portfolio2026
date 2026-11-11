@@ -167,6 +167,19 @@
             "credit": {
               "type": "string",
               "maxLength": 100000
+            },
+            "role": {
+              "enum": [
+                "backdrop"
+              ]
+            },
+            "sourceCornerRadius": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "sourceEdgeInset": {
+              "type": "integer",
+              "minimum": 0
             }
           },
           "required": [
@@ -215,6 +228,19 @@
             "credit": {
               "type": "string",
               "maxLength": 100000
+            },
+            "role": {
+              "enum": [
+                "backdrop"
+              ]
+            },
+            "sourceCornerRadius": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "sourceEdgeInset": {
+              "type": "integer",
+              "minimum": 0
             }
           },
           "required": [

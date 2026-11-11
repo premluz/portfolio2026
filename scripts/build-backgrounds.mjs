@@ -11,6 +11,7 @@ import os from 'node:os';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {BACKDROP_WIDTHS,GENERIC_BACKDROP_ID,backdropCopy} from '../dist/backdrop-sources.js';
+import {isBackdrop} from '../dist/asset-roles.js';
 import {findBackdropFrame} from './backdrop-frame.mjs';
 import {readContentSource} from './content-source.mjs';
 import {DEFAULT_CONTENT_SET} from '../dist/content/content-set.js';
@@ -19,9 +20,9 @@ import {chromium} from '@playwright/test';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const JPEG_QUALITY='62';
 const catalog=await readContentSource(path.join(root,'content'),DEFAULT_CONTENT_SET);
-// Every asset whose id ends in -bg is a backdrop (the same rule scripts/optimise-images.py skips by), linked or not yet.
+// Every backdrop asset (isBackdrop, the rule scripts/optimise-images.py shares through asset_roles.py) is built, linked or not yet.
 const backdropIds=new Set([GENERIC_BACKDROP_ID,...catalog.presentations.map(item=>item.card?.backgroundMediaId).filter(Boolean)]);
-const sources=catalog.assets.filter(asset=>asset.type==='image'&&(backdropIds.has(asset.id)||asset.id.endsWith('-bg'))).map(asset=>asset.url);
+const sources=catalog.assets.filter(asset=>asset.type==='image'&&(backdropIds.has(asset.id)||isBackdrop(asset))).map(asset=>asset.url);
 if(!sources.length)throw new Error('No presentations[].card.backgroundMediaId found in the default content set');
 const checksums={};
 const sips=args=>execFileSync('sips',args,{stdio:'pipe',encoding:'utf8'});

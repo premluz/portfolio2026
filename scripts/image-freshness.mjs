@@ -6,6 +6,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {BACKDROP_WIDTHS,backdropCopy} from '../dist/backdrop-sources.js';
+import {isBackdrop} from '../dist/asset-roles.js';
 import {contentSetNames,readContentSource} from './content-source.mjs';
 
 const FIX='npm run images';
@@ -14,8 +15,6 @@ const sha1=async file=>createHash('sha1').update(await fs.readFile(file)).digest
 const exists=file=>fs.access(file).then(()=>true,()=>false);
 const readJson=async file=>{try{return JSON.parse(await fs.readFile(file,'utf8'));}catch(error){if(error.code==='ENOENT')return null;throw new Error(`Cannot read ${file}`,{cause:error});}};
 
-// Backdrops are named by id suffix (see optimise-images.py and build-backgrounds.mjs).
-const isBackdrop=asset=>asset.id.endsWith('-bg');
 const isRaster=asset=>asset.type==='image'&&asset.url.startsWith('assets/')&&!asset.url.endsWith('.svg');
 
 async function catalogImages(root){

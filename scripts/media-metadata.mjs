@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {walkBlocks} from '../dist/content/model.js';
+import {isBackdrop} from '../dist/asset-roles.js';
 
 const BOX_HEADER=8,LARGE_BOX_HEADER=16,FIXED_ONE=0x10000,MATRIX_W=0x40000000;
 const IDENTITY_MATRIX=[FIXED_ONE,0,0,0,FIXED_ONE,0,0,0,MATRIX_W];
@@ -92,7 +93,7 @@ async function loadImageVariants(distDir){
 // Backdrops and SVG are not card or block media, so they are never measured. Remote URLs have no local file; authored values stand.
 export async function measureAsset(asset,distDir){
  const extension=path.extname(asset.url.split(/[?#]/)[0]).toLowerCase();
- if(/^https?:\/\//.test(asset.url)||asset.id.endsWith('-bg')||extension==='.svg')return null;
+ if(/^https?:\/\//.test(asset.url)||isBackdrop(asset)||extension==='.svg')return null;
  if(asset.type==='image'){
   const variant=(await loadImageVariants(distDir))[asset.url];
   if(!variant)throw new Error(`Asset ${asset.id}: no entry for ${asset.url} in image-variants.js; run npm run images`);

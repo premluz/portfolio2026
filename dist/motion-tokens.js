@@ -15,6 +15,8 @@ export const DURATION=Object.freeze({
  // Exits are always shorter than entrances: the user has already decided to go.
  exitShare:.5,exitMin:160,exitMax:240,
  enterMin:240,
+ // Twin of --duration-detail-reveal in tokens.css (tests/token-leaks.mjs).
+ detailReveal:220,
  // A stagger fits inside its phase: steps shrink when many items share it, so none is dropped.
  staggerStep:28,staggerSpan:.6
 });

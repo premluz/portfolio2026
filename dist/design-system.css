@@ -186,7 +186,7 @@ main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:0;padding-top:
 
 /* Hover-only titles remains in the card's layout and streams in word by word. */
 @media(min-width:751px) and (hover:hover) and (pointer:fine){
- .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-copy-hover="true"]>.card-copy>h3{opacity:0;pointer-events:none;transition:opacity 180ms var(--ease-settle)}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-copy-hover="true"]>.card-copy>h3{opacity:0;pointer-events:none;transition:opacity var(--duration-card-content-out) var(--ease-settle)}
  .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-copy-hover="true"]>.card-copy>h3 [data-card-copy-word]{opacity:0;transition:opacity 150ms ease-out}
  .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-copy-hover="true"]:is(:hover,:focus-visible,.gesture-hover)>.card-copy>h3{opacity:1;pointer-events:auto;transition-duration:90ms}
  .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-copy-hover="true"]:is(:hover,:focus-visible,.gesture-hover)>.card-copy>h3 [data-card-copy-word]{animation:card-copy-stream 190ms var(--ease-settle) both;animation-delay:calc(var(--card-copy-word-index,0) * 14ms)}

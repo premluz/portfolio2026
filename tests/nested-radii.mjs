@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict';
 import {ImageFrame,imageGeometry,readFrameRadius,imageEdgeGeometry,sourceEdgeInset} from '../dist/image-frame.js';
 import {LiquidImage} from '../dist/liquid-image.js';
+import {registerAssetQuirks} from '../dist/asset-quirks.js';
+import {catalog} from '../dist/content/catalog.js';
+
+// The image frame reads baked-matte facts from the asset records, as the page does once its catalog has loaded.
+registerAssetQuirks(catalog.assets);
 
 let imageRounding='',outer=64,cardPadding=40,padding={top:0,right:0,bottom:0,left:0};
 const card={dataset:{},classList:{contains:()=>true}};

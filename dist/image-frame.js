@@ -2,6 +2,7 @@
 // images and the liquid canvas use the same fit and corner geometry.
 import {HoverVideo} from './hover-video.js';
 import {masonryRatioOn} from './masonry-ratio.js';
+import {sourceCornerRadius,sourceEdgeInset} from './asset-quirks.js';
 export function nestedRadius(outer,padding=0){return Math.max(0,outer-padding);}
 export function thumbnailImageRadius(radius,bounds,orientation='landscape',sourceCorners=null){
  const scale=Math.min(1,orientation==='portrait'?bounds.height/700:bounds.width/1000);
@@ -16,14 +17,9 @@ function masonryImageRoom(card,frame){
  return Math.max(1,card.clientHeight-used-pixels(cardStyle.rowGap)*(flow-1));
 }
 const inset=padding=>Math.min(...['top','right','bottom','left'].map(side=>pixels(padding[side])));
-// This JPEG has white matte corners baked into its 1440px-wide source.
-// Mask that matte at its source scale, rather than adding a second outline.
-const sourceCornerRadii={'tracr-transfer.jpg':34};
-const sourceName=src=>String(src||'').split(/[?#]/)[0].split('/').pop();
-export const sourceCornerRadius=src=>sourceCornerRadii[sourceName(src)]||0;
-// PlayStation's still has a bright one-pixel frame encoded in the JPEG.
-// Two source pixels also exclude its resampling fringe; product content stays intact.
-export const sourceEdgeInset=src=>sourceName(src)==='playstation-content.jpg'?2:0;
+// Baked matte corners and one-pixel frames in an exported source are recorded on its asset (sourceCornerRadius,
+// sourceEdgeInset); the image masks them at source scale instead of adding a second outline.
+export {sourceCornerRadius,sourceEdgeInset};
 export function imageEdgeGeometry(bounds,sourceInset=0,sourceWidth=0){
  const inset=Math.min(bounds.width/2,bounds.height/2,sourceWidth>0?sourceInset*bounds.width/sourceWidth:0);
  return {...bounds,left:bounds.left+inset,top:bounds.top+inset,width:bounds.width-2*inset,height:bounds.height-2*inset,inset};

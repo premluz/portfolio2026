@@ -2160,6 +2160,7 @@ export const catalog={
       "status": "published",
       "url": "assets/playstation-content.jpg",
       "alt": "PlayStation Network content management screen for a game release",
+      "sourceEdgeInset": 2,
       "width": 1440,
       "height": 900
     },
@@ -2205,6 +2206,7 @@ export const catalog={
       "status": "published",
       "url": "assets/tracr-transfer.jpg",
       "alt": "Dark Tracr diamond provenance transfer review interface",
+      "sourceCornerRadius": 34,
       "width": 1440,
       "height": 900
     },

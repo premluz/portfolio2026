@@ -439,7 +439,7 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 .site-tooltip{position:fixed;z-index:100;max-width:min(280px,calc(100vw - 24px));padding:8px 11px;border-radius:10px;background:var(--chrome);color:var(--ink);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 4px 24px #00000012;font-size:12px;line-height:1.5;pointer-events:none}
 .site-tooltip[hidden]{display:none}
 @keyframes site-tooltip-arrive{0%{opacity:0;transform:translateY(2px) scale(.96)}64%{opacity:1;transform:translateY(-1px) scale(1.025)}83%{opacity:1;transform:translateY(0) scale(.99)}100%{opacity:1;transform:translateY(0) scale(1)}}
-.site-tooltip:not([hidden]){animation:site-tooltip-arrive 240ms var(--ease-settle) both}
+.site-tooltip:not([hidden]){animation:site-tooltip-arrive var(--duration-tooltip-arrive) var(--ease-settle) both}
 :root[data-animation="off"] .site-tooltip:not([hidden]){animation:none!important}
 @media(prefers-reduced-motion:reduce){.site-tooltip:not([hidden]){animation:none!important}}
 :root[data-animation="off"]{scroll-behavior:auto}

@@ -23,6 +23,7 @@ assert(!/\.about-detail\{--ease-standard/.test(css),'--ease-standard is defined 
 for(const file of (await readdir(dist)).filter(name=>name.endsWith('.js')&&name!=='motion-tokens.js')){
  assert(!(await readFile(new URL(file,dist),'utf8')).includes('cubic-bezier('),`${file} uses EASE roles, not literal curves`);
 }
-const tooltip=(await readFile(new URL('style.css',dist),'utf8')).match(/site-tooltip-arrive (\d+)ms/);
+assert((await readFile(new URL('style.css',dist),'utf8')).includes('site-tooltip-arrive var(--duration-tooltip-arrive)'),'Tooltips arrive on the tooltip duration role');
+const tooltip=tokens.match(/--duration-tooltip-arrive: (\d+)ms;/);
 assert(tooltip&&Number(tooltip[1])<=250,'Tooltips are high-frequency, so their arrival stays at or under 250ms');
 console.log('Motion tokens passed: CSS and JS curves agree, stylesheets and scripts use roles, every role is defined.');

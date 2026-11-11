@@ -1,6 +1,7 @@
 import {contentModel,exportPublishedCatalog,CONTENT_LIMITS,ContentValidationError,walkBlocks} from './model.js';
 import {validateSchema} from './schema-validator.js';
 import {GENERIC_BACKDROP_ID} from '../backdrop-sources.js';
+import {registerAssetQuirks} from '../asset-quirks.js';
 
 const clone=value=>JSON.parse(JSON.stringify(value));
 function freeze(value){if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value);}return value;}
@@ -27,6 +28,7 @@ export function createContentStore(catalog,{model=contentModel,includeUnpublishe
  freeze(snapshot);
  const documents=new Map(snapshot.documents.map(d=>[d.id,d])),assets=new Map(snapshot.assets.map(a=>[a.id,a])),presentations=new Map(snapshot.presentations.map(p=>[p.documentId,p]));
  const layouts=new Map(snapshot.layouts.map(l=>[l.id,l]));
+ registerAssetQuirks(snapshot.assets);
  const query=(filters={})=>{
   if(!filters||typeof filters!=='object'||Array.isArray(filters))throw new TypeError('Content filters must be an object.');
   for(const [key,value] of Object.entries(filters))if(!['type','kind','domain','capability','tag'].includes(key)||typeof value!=='string')throw new TypeError('Invalid content filter '+key);

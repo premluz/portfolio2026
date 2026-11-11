@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {buildClientStyles} from './client-styles.mjs';
+import {moduleGraph,modulePreloadTags} from './module-graph.mjs';
 import {contentSets} from '../dist/content/sets.js';
 import {DEFAULT_CONTENT_SET} from '../dist/content/content-set.js';
 
@@ -18,6 +19,10 @@ for(const entry of await fs.readdir(dist,{withFileTypes:true})){
  if(['client','server','.openai'].includes(entry.name))continue;
  await fs.cp(path.join(dist,entry.name),path.join(client,entry.name),{recursive:true});
 }
+// The preload list is written into the hosted copy only; the authored index.html stays free of generated lines.
+const hostedIndex=path.join(client,'index.html'),hostedHtml=await fs.readFile(hostedIndex,'utf8');
+if(hostedHtml.split('</head>').length!==2)throw new Error('dist/index.html must contain exactly one </head> to place the modulepreload list');
+await fs.writeFile(hostedIndex,hostedHtml.replace('</head>',`${modulePreloadTags(await moduleGraph('app.js',client),hostedHtml)}</head>`));
 await fs.mkdir(server,{recursive:true});
 // Each content set gets its own assistant documents so answers follow whichever set is live.
 const assistantDocuments=catalog=>catalog.documents

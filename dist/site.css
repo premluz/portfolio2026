@@ -23,6 +23,20 @@
   /* A card's title line is its strongest text; the results line under it stays quieter. */
   --card-title-rest-strength: 100%;
   --card-summary-rest-strength: 80%;
+  /* Fixed duration roles from MOTION.md > Duration (the ones that scale with the Transition setting stay in motion-tokens.js).
+     The older per-component duration tokens carry the same values; tests/token-leaks.mjs keeps them equal. */
+  --duration-hover-in: 70ms;
+  --duration-hover-out: 420ms;
+  --duration-glow-in: 240ms;
+  --duration-glow-out: 1000ms;
+  --duration-press-in: 90ms;
+  --duration-press-out: 300ms;
+  --duration-card-content-in: 220ms;
+  --duration-card-content-out: 180ms;
+  --duration-toast-in: 240ms;
+  --duration-toast-out: 200ms;
+  --duration-tooltip-arrive: 240ms;
+  --duration-detail-reveal: 220ms;
   --surface-hover-in-duration: 240ms;
   --surface-hover-out-duration: 1000ms;
   --card-content-in-duration: 220ms;
@@ -888,7 +902,7 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 .site-tooltip{position:fixed;z-index:100;max-width:min(280px,calc(100vw - 24px));padding:8px 11px;border-radius:10px;background:var(--chrome);color:var(--ink);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 4px 24px #00000012;font-size:12px;line-height:1.5;pointer-events:none}
 .site-tooltip[hidden]{display:none}
 @keyframes site-tooltip-arrive{0%{opacity:0;transform:translateY(2px) scale(.96)}64%{opacity:1;transform:translateY(-1px) scale(1.025)}83%{opacity:1;transform:translateY(0) scale(.99)}100%{opacity:1;transform:translateY(0) scale(1)}}
-.site-tooltip:not([hidden]){animation:site-tooltip-arrive 240ms var(--ease-settle) both}
+.site-tooltip:not([hidden]){animation:site-tooltip-arrive var(--duration-tooltip-arrive) var(--ease-settle) both}
 :root[data-animation="off"] .site-tooltip:not([hidden]){animation:none!important}
 @media(prefers-reduced-motion:reduce){.site-tooltip:not([hidden]){animation:none!important}}
 :root[data-animation="off"]{scroll-behavior:auto}
@@ -1313,7 +1327,7 @@ main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:0;padding-top:
 
 /* Hover-only titles remains in the card's layout and streams in word by word. */
 @media(min-width:751px) and (hover:hover) and (pointer:fine){
- .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-copy-hover="true"]>.card-copy>h3{opacity:0;pointer-events:none;transition:opacity 180ms var(--ease-settle)}
+ .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-copy-hover="true"]>.card-copy>h3{opacity:0;pointer-events:none;transition:opacity var(--duration-card-content-out) var(--ease-settle)}
  .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-copy-hover="true"]>.card-copy>h3 [data-card-copy-word]{opacity:0;transition:opacity 150ms ease-out}
  .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-copy-hover="true"]:is(:hover,:focus-visible,.gesture-hover)>.card-copy>h3{opacity:1;pointer-events:auto;transition-duration:90ms}
  .homepage-layout:not(.home-view-split) .gallery-grid[data-copy-layout="multiple"] .image-card[data-copy-hover="true"]:is(:hover,:focus-visible,.gesture-hover)>.card-copy>h3 [data-card-copy-word]{animation:card-copy-stream 190ms var(--ease-settle) both;animation-delay:calc(var(--card-copy-word-index,0) * 14ms)}
