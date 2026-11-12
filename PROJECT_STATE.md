@@ -3,7 +3,7 @@ title: Project state
 type: state
 status: active
 owner: Prem
-updated: 2026-10-29
+updated: 2026-11-11
 summary: Where the project is right now: what runs, what is switched on, what is failing, open questions and the next action. How I work content is consolidated in its independent component.
 tags: [area/docs, kind/process]
 related: [TASKS.md, PROGRESS.md, HANDOFF.md]
@@ -40,6 +40,8 @@ A buildless native-module portfolio for Prem Luczak: authored HTML, CSS and ES m
 | Ambient colour | automatic | Glow strength 100% |
 | Text size | Medium | Headings and body scale separately (ADR-006) |
 | Composer attach button | hidden | In the code, not removed |
+| Card height follows the image ratio (`prem-masonry-ratio`) | off | WP-04: masonry sizes every card from its hero ratio; one column keeps natural heights |
+| Project page layout follows the hero ratio (`prem-detail-ratio-layout`) | off | WP-05: wide, tall and square project pages from `data-detail-shape` |
 | Lab (dock, site menu) | visible | In-app route `#lab`: four-column grid of the home cards, ripple transition (ADR-011) |
 
 ## Tests
@@ -52,7 +54,7 @@ TASK-031/TASK-032 mascot integration is complete locally: WebGL retains the PNG 
 
 The About section-order assertion (`tests/about-page.mjs`) now expects How I work before Experience, as on the pages. The control-system build, thirteen focused unit checks and five browser checks pass (TASK-021).
 
-All 159 test files pass (2026-11-10; the six that failed asserted a Porter home card and a Bastion prototype link, and were updated on owner decision D-1: Porter is published but has no home card, Bastion has no prototype). `npm run check` and `npm run build` exited 0 on 2026-11-03. The browser suite (`npm run test:visual`) does not: 12 of 75 fail, reproducibly (TASK-037). Eight already failed on 2cb9174 (card-padding, card-sphere screenshot, card-spiral, carousel-glow ×4, native-snap); assistant-info-card, errors and video-transition started with ca647d9 (2026-10-28, which also changed the published settings preset) and dock-flash with 9045a5a (2026-10-29, control-style consolidation). Any other failure is yours to explain or fix.
+All 163 test files pass (2026-11-10, after WP-05 to WP-14; 159 before them; the six that failed asserted a Porter home card and a Bastion prototype link, and were updated on owner decision D-1: Porter is published but has no home card, Bastion has no prototype). `npm run check` and `npm run build` exited 0 on 2026-11-03. The browser suite (`npm run test:visual`) does not: 26 of 82 fail on 2026-11-10, and the same 26 fail on a clean build of HEAD (TASK-037, which lists them). Eight already failed on 2cb9174 (card-padding, card-sphere screenshot, card-spiral, carousel-glow ×4, native-snap); assistant-info-card, errors and video-transition started with ca647d9 (2026-10-28, which also changed the published settings preset) and dock-flash with 9045a5a (2026-10-29, control-style consolidation). Any other failure is yours to explain or fix.
 
 `npm run check` runs every test file and reports all failures in one pass (see [AGENTS.md](AGENTS.md)).
 
@@ -81,3 +83,5 @@ No. It stays above the hero heading.
 ## Next action
 
 Run `npm run memory:next`. On 2026-10-26 it listed TASK-001, TASK-002, TASK-003, TASK-004, TASK-006, TASK-007; TASK-005 is blocked. The memory MCP server is not used: the owner maintains Markdown memory only. The deploy-critical work (committed image copies and content exports) is done.
+
+Work packages from [docs/EXECUTION_BRIEF.md](docs/EXECUTION_BRIEF.md): WP-05 (TASK-040), WP-06a (TASK-041), WP-08 (TASK-042) and WP-14 (TASK-043) are done; WP-00 to WP-04 have no TASKS entries yet. Blocked on the owner: WP-07 (D-2), WP-06b (D-3), WP-09 (live headers), WP-15b (D-4), WP-16 (D-5), WP-18 (D-6). Unblocked and not started: WP-10, WP-11, WP-12, WP-13, WP-15a, WP-17. Everything is uncommitted alongside the owner's own changes.

@@ -170,7 +170,7 @@
       "title": "Project handoff",
       "type": "guide",
       "status": "active",
-      "updated": "2026-10-29",
+      "updated": "2026-11-11",
       "summary": "Architecture map, build and content workflow, open items and the transfer checklist.",
       "tags": [
         "area/docs",
@@ -180,7 +180,7 @@
         "PROJECT_STATE.md",
         "DEPLOYMENT.md"
       ],
-      "hash": "7150a7f990e620956e1b230714d1dc7f8eab0ea0",
+      "hash": "8cf9cc994f49623bbfe3fe190075b031ef1b0f5f",
       "items": []
     },
     {
@@ -262,7 +262,7 @@
       "title": "Project state",
       "type": "state",
       "status": "active",
-      "updated": "2026-10-29",
+      "updated": "2026-11-11",
       "summary": "Where the project is right now: what runs, what is switched on, what is failing, open questions and the next action. How I work content is consolidated in its independent component.",
       "tags": [
         "area/docs",
@@ -273,7 +273,7 @@
         "PROGRESS.md",
         "HANDOFF.md"
       ],
-      "hash": "3da3112e9f4620788dfde2473ac60f8bc490e36c",
+      "hash": "4ffe799281e3c60579a08b752970708dae663489",
       "items": [
         {
           "id": "Q-001",
@@ -333,7 +333,7 @@
         "PROJECT_STATE.md",
         "PROGRESS.md"
       ],
-      "hash": "bb5309279ddf0d2ffcf8d825d99c3b7269ec6209",
+      "hash": "e37cc892555d6b7d0b09435a30f8956f5593ce83",
       "items": [
         {
           "id": "TASK-039",
@@ -355,7 +355,7 @@
         },
         {
           "id": "TASK-037",
-          "title": "Repair the twelve failing browser checks",
+          "title": "Repair the failing browser checks",
           "status": "todo",
           "tags": [
             "area/tests",

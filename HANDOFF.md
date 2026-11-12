@@ -3,7 +3,7 @@ title: Project handoff
 type: guide
 status: active
 owner: Prem
-updated: 2026-10-29
+updated: 2026-11-11
 summary: Architecture map, build and content workflow, open items and the transfer checklist.
 tags: [area/docs, area/deploy]
 related: [PROJECT_STATE.md, DEPLOYMENT.md]
@@ -22,6 +22,9 @@ This is a modular portfolio frontend and content framework, not a CMS-dependent 
 | `dist/*.js`, `dist/*.css` | Browser modules, design tokens, layouts, navigation and motion |
 | `dist/control-preferences.js`, `dist/control-style.js`, `dist/control-style.css` | Global and local control variants; see DESIGN_SYSTEM.md and ADR-012 |
 | `dist/assets/` | Local project images and video |
+| `dist/asset-roles.js`, `dist/asset-quirks.js`, `scripts/asset_roles.py` | The one backdrop rule (JavaScript and Python) and per-asset image quirks read from the catalog |
+| `dist/detail-shape.js`, `dist/detail-shape.css` | Project page layout by hero ratio (setting off by default) |
+| `dist/card-world-loader.js`, `scripts/module-graph.mjs` | Card worlds (three.js) load on first use; the module graph and its budget are measured by `tests/module-graph.mjs` |
 | `dist/vendor/` | Bundled third-party assets and their notices |
 | `content/catalog/` | Editable content catalog, including projects, profile pages and reusable components |
 | `dist/content/` | Content model, schemas, generated content exports and render helpers |
@@ -58,12 +61,13 @@ The existing content model is CMS-agnostic: an eventual CMS or API can provide r
 - Project prototypes for Merlin, Tracr and Bastion are external URLs defined in `content/catalog/`. They need to remain reachable and permit iframe embedding, or be replaced with new URLs.
 - Local videos are large files; preserve HTTP byte-range support on hosts so browser video playback can seek efficiently. The included Node adapter supports range requests.
 
-## Open items (as of 2026-10-26)
+## Open items (as of 2026-11-11)
 
 The live list is in [TASKS.md](TASKS.md) and [PROJECT_STATE.md](PROJECT_STATE.md); this section is a snapshot for people who start here.
 
 - **Preset fixture drift (TASK-034).** settings-transfer/site-settings assume removed legacy style fields; the current profile has explicit controlStyle/cardGlassStyle values. The Mascott appearance/preset browser checks pass.
-- **Failing tests.** Six tests assert catalog contents that have since changed (`content-model`, `home-about`, `home-layout`, `home-sections`, `interaction-commands`, `project-media-focus`). `project-entry-memory` (card-sphere code reads `document` in a Node sandbox) and `text-list-hover` (a Porter fixture assertion) relate to in-progress card-sphere work. `masonry-placement` fails because Bastion is now a portrait card and also featured, which breaks the rule that portrait cards sit in the right-hand columns of a 3+ column grid.
+- **Failing tests.** The Node suite is green (163 of 163 on 2026-11-10). The browser suite is not: 26 of 82 fail, the same 26 on a clean HEAD build (TASK-037 lists them; the card-sphere baseline image looks stale).
+- **Ratio-driven layout, off by default.** `prem-masonry-ratio` (home grid) and `prem-detail-ratio-layout` (project pages) are new settings; the older portrait code paths remain until the owner switches them on. The brief is [docs/EXECUTION_BRIEF.md](docs/EXECUTION_BRIEF.md); its decisions D-2 to D-6 are still open.
 - **Navigation at the top.** The dock's attached menus still open upward, so the site index menu is mostly off screen; see `FRAMEWORK.md`.
 - **Bastion media.** `bastion.mp4` (portrait) is about 31MB against roughly 2MB for the other videos. Both content sets use it (`catalog2` extends `catalog` and only changes Tracr).
 - **Hidden controls.** The composer's attach button is hidden, not removed; see `FRAMEWORK.md`. The Lab is the in-app route `#lab` (four-column cards, ripple transition; ADR-011); `lab.html` only redirects.

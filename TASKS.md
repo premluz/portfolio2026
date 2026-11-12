@@ -26,11 +26,12 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 - Acceptance: after the owner has used the tidied panel for a week (from 2026-11-06), each `.setting-retired` control in group 1 (hero carousel, featured stage, hero timeline, Flip/Flat layouts, native snap, glass cards, image ripple and blur, per-area control style overrides) is removed with its code path, storage key, `default-settings.js` and `settings-transfer.js` entries, and import ignores the old keys. The switches behind the merged menus (`settings-proxies.js`) may instead move their storage behind the menus.
 - Notes: hiding rather than deleting first follows AGENTS.md; nothing is lost if a retired option is wanted back (remove its class).
 
-### TASK-037 Repair the twelve failing browser checks
+### TASK-037 Repair the failing browser checks
 - Status: todo
 - Tags: area/tests, kind/debt
 - Acceptance: `npm run test:visual` passes; for each failure decide, with the owner, whether the page or the check is wrong.
 - Evidence: 2026-11-03, 62 of 75 pass. Reproducible alone and on a clean worktree of HEAD (so not from uncommitted work). Already failing on 2cb9174: card-padding (bottom inset 59px with padding off), card-sphere (screenshot differs by 1%), card-spiral (a grid card does not open its project), carousel-glow ×4 (card image never finishes loading within 5s), native-snap (scroll-snap is `none`, expected `x mandatory`). Since ca647d9: assistant-info-card (`#askInput` never visible: the published preset hides the composer), errors (after Go Back the carousel centres a different card, so the next click opens Bastion, not Merlin), video-transition (the playing clip restarts 12 times across open and return). Since 9045a5a: dock-flash (detached glass briefly fuses back). Per-commit logs were taken with a script over ca647d9..481253a.
+- Update 2026-11-10: 26 of 82 browser checks fail, not 12 (56 pass, including the seven added for TASK-040 and TASK-042). The same 26 fail on a clean build of HEAD, so none comes from the WP-05 to WP-14 work. Failing spec files: assistant-info-card, card-padding, card-sphere, card-spiral, carousel-glow (4), detail-title-spacing, dock-flash, dock-liquid, errors, mascot-settings (2), mascot-travel (2), mascot-webgl (2), mobile-content-width (tracr at 768px), native-snap, navigation-recovery, screencast, settings-panel, still-settle, video-bridge, video-transition. The card-sphere baseline now differs by 86% of pixels (it was 1%); the sphere renders correctly, so its baseline image is probably stale after the Rios asset changes. Not yet separated into stale checks and real defects.
 
 ### TASK-034 Repair preset tests that assume legacy style fields
 - Status: done

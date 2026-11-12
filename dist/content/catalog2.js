@@ -2279,8 +2279,8 @@ export const catalog={
       "status": "published",
       "url": "assets/rios.mp4",
       "alt": "",
-      "width": 393,
-      "height": 852
+      "width": 1440,
+      "height": 900
     },
     {
       "id": "playstation-cover",
@@ -2566,7 +2566,7 @@ export const catalog={
     {
       "documentId": "rios",
       "card": {
-        "orientation": "portrait",
+        "orientation": "landscape",
         "surface": [
           "#f5e5ee",
           "#e3ddf5"
