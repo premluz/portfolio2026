@@ -2268,10 +2268,10 @@ export const catalog={
       "id": "rios-cover",
       "type": "image",
       "status": "published",
-      "url": "assets/rios2.png",
+      "url": "assets/rios.png",
       "alt": "Rios life-first planner with a spatial timeline for shaping a changing day",
-      "width": 786,
-      "height": 1706
+      "width": 1440,
+      "height": 900
     },
     {
       "id": "rios-walkthrough",
