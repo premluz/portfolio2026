@@ -207,6 +207,7 @@
 <label>Card hover <select id="cardHoverProxy" data-settings-scope="proxy"><option value="off">Off</option><option value="reveal">Liquid morph</option><option value="reveal-soft">Soft reveal · previous</option><option value="tint">Original colour hover</option><option value="glow">Ambient liquid glow</option></select></label>
 <label class="check setting-retired"><input id="hideCardHover" type="checkbox"> Hide card hover</label>
 <label class="check"><input id="cardHoverVideo" type="checkbox" checked> Card hover video (off = keep image)</label>
+<label class="check"><input id="cardClickThroughOff" type="checkbox"> Disable card click-through (Home cards stay on Home)</label>
 <label class="check"><input id="cardInstantHover" type="checkbox"> Remove hover trail (card hover in and out are instant)</label>
 <label class="check"><input id="masonryRatio" type="checkbox"> Card height follows the image ratio (masonry sizes every card from its hero ratio; no portrait special case)</label>
 <label class="check"><input id="detailRatioLayout" type="checkbox"> Project page layout follows the hero ratio (wide: media across, copy below; tall: copy beside a sticky image; square: even split)</label>
@@ -243,6 +244,7 @@
 <label class="check setting-retired"><input id="hideBranding" type="checkbox" checked> Hide logo &amp; tagline</label>
 <label class="check setting-retired"><input id="hideBrandAvatar" type="checkbox"> Hide the avatar (keep the name and description)</label>
 <label class="check setting-retired"><input id="brandOneLine" type="checkbox"> Name and description on one line</label>
+<label class="check"><input id="pinBrand" type="checkbox"> Pin the logo, name and description with the menu (off: they scroll with the page)</label>
 <div class="setting-subsection">Floating dock</div>
 <label>Bottom nav roundness <output id="navRoundingValue">24px</output><input id="navRounding" type="range" min="0" max="100" step="1" value="24"></label>
 <label>Nav item padding <output id="navItemPaddingValue">9px</output><input id="navItemPadding" type="range" min="4" max="14" step="1" value="9"></label>
@@ -376,9 +378,9 @@
 <label>Glimmer cycle <output data-text-effect-output="glimmerSpeed">1.6s</output><input id="textGlimmerSpeed" data-text-effect-control="glimmerSpeed" type="range" min="0.4" max="5" step="0.1" value="1.6"></label>
 <label>Glimmer band width <output data-text-effect-output="glimmerSpread">30%</output><input id="textGlimmerSpread" data-text-effect-control="glimmerSpread" type="range" min="10" max="45" step="5" value="30"></label>
 <label>Glimmer direction <select id="textGlimmerDirection" data-text-effect-control="glimmerDirection"><option value="ltr" selected>Left to right</option><option value="rtl">Right to left</option></select></label>
-<label class="check"><input id="heroGlimmer" data-text-effect-control="heroGlimmer" type="checkbox"> Glimmer on the home hero heading when the page lands (uses the look above)</label>
-<label>Hero heading sweeps <output data-text-effect-output="heroGlimmerPlays">2</output><input id="heroGlimmerPlays" data-text-effect-control="heroGlimmerPlays" type="range" min="1" max="6" step="1" value="2"></label>
-<p>Hero glimmer: <output id="heroGlimmerStatus" aria-live="polite"></output></p>
+<label class="check"><input id="pageGlimmer" data-text-effect-control="pageGlimmer" type="checkbox" checked> Glimmer on page headings when a page lands: home, projects, About, Lab, articles (uses the look above)</label>
+<label>Heading sweeps <output data-text-effect-output="pageGlimmerPlays">1</output><input id="pageGlimmerPlays" data-text-effect-control="pageGlimmerPlays" type="range" min="1" max="6" step="1" value="1"></label>
+<p>Heading glimmer: <output id="heroGlimmerStatus" aria-live="polite"></output></p>
 <button id="textEffectReplay" type="button">Replay effects</button>
 <p id="textEffectPreview"></p>
 <div id="textEffectThinking"></div>

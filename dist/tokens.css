@@ -246,6 +246,8 @@
   --space-story-inset: var(--space-8);
   --space-title-eyebrow: var(--space-2);
   --space-hero-heading-content: var(--space-6);
+  /* The home hero's heading-to-text gap; About and Contact use the same (design-system.css, about-page.css). */
+  --space-hero-heading-gap: var(--space-4);
   --space-text-media: var(--space-8);
   --space-card-copy: var(--space-4);
   --space-paragraph: var(--space-5);

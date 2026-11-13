@@ -10,14 +10,14 @@ const copy=()=>structuredClone(catalog);
 const invalid=(mutate,pattern)=>{const c=copy();mutate(c);assert.throws(()=>contentModel.assert(c),error=>error instanceof ContentValidationError&&pattern.test(error.message));};
 assert.deepEqual(contentModel.validate(catalog),[]);
 assert.deepEqual(JSON.parse(await fs.readFile(new URL('../dist/content/schema.json',import.meta.url))),contentModel.schema);
-assert.equal(content.list({type:'portfolio-item'}).length,9);
-assert.equal(cards.length,catalog.layouts.find(layout=>layout.id==='home').items.length+catalog.documents.filter(doc=>doc.listOnly===true&&doc.status==='published').length+catalog.documents.filter(doc=>doc.type==='article'&&doc.status==='published').length,'Every layout placement, list-only project and article is a route card');assert.equal(projects.length,8,'Project navigation includes authored projects and text-only list entries');
+assert.equal(content.list({type:'portfolio-item'}).length,11);
+assert.equal(cards.length,catalog.layouts.find(layout=>layout.id==='home').items.length+catalog.documents.filter(doc=>doc.listOnly===true&&doc.status==='published').length+catalog.documents.filter(doc=>doc.type==='article'&&doc.status==='published').length,'Every layout placement, list-only project and article is a route card');assert.equal(projects.length,9,'Project navigation includes authored projects and text-only list entries');
 for(const id of ['merlin','rios','playstation','vodafone-iot','tracr','galachain','bastion','porter'])assert(content.get(id),`The published portfolio includes ${id}`);
 assert.equal(content.get('planner'),null,'Rios has one canonical document, not an old-ID duplicate');
 assert.equal(content.get('rios').slug,'rios');
-{const withDuplicate=copy();withDuplicate.layouts.find(layout=>layout.id==='home').items.push({id:'rios-02',documentId:'rios'});const placed=createContentStore(withDuplicate).getLayoutCards('home').find(card=>card.id==='rios-02');assert.equal(placed.documentId,'rios');assert.equal(placed.sourceProjectId,'rios','A second placement of a project keeps its own id and points back to the project');}
+{const withDuplicate=copy();withDuplicate.layouts.find(layout=>layout.id==='home').items.push({id:'thebodyshop-02',documentId:'thebodyshop'});const placed=createContentStore(withDuplicate).getLayoutCards('home').find(card=>card.id==='thebodyshop-02');assert.equal(placed.documentId,'thebodyshop');assert.equal(placed.sourceProjectId,'thebodyshop','A second placement of a project keeps its own id and points back to the project');}
 assert(!cards.some(card=>['planner','planner-02'].includes(card.id)));
-assert.equal(content.get('home').blocks.find(block=>block.id==='home-projects').items.find(item=>item.documentId==='rios').id,'home-project-rios');
+assert.equal(content.get('home').blocks.find(block=>block.id==='home-projects').items.find(item=>item.documentId==='thebodyshop').id,'home-project-thebodyshop');
 for(const answer of assistantKnowledge.answers)for(const id of answer.sourceIds)assert(content.get(id),`Assistant source ${id} resolves to a published document`);
 assert(!content.get('porter').listOnly&&!catalog.layouts.find(layout=>layout.id==='home').items.some(item=>item.documentId==='porter'),'Porter is published but has no home card (owner decision D-1)');assert.equal(content.getCard('porter').image,'assets/porter.png');assert.equal(content.getCard('porter').videoUrl,'assets/porter.mp4');assert.equal(content.getCard('porter').client,content.get('porter').client,'The card carries the authored client label');
 assert(!content.get('home').blocks.find(block=>block.id==='home-projects').items.some(item=>item.documentId==='porter'),'The homepage carousel does not include Porter (owner decision D-1)');

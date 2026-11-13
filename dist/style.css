@@ -417,6 +417,7 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 /* Hover previews use the image holder's fit and corner geometry. */
 .visual>.project-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:1;pointer-events:none;opacity:0;transition:opacity 140ms ease}
 .visual.video-preview-playing>.project-video{opacity:1}.visual>.video-frame-bridge{z-index:1;pointer-events:none}
+:root[data-card-click-through="off"] .homepage-layout :is(.project-card,[data-content-card]){pointer-events:none;cursor:default}
 :root[data-card-hover-video="off"] .project-card .visual>.project-video,:root[data-detail-hero-video="off"] .detail .visual>.project-video{opacity:0;visibility:hidden}
 @media(prefers-reduced-motion:reduce){.visual>.project-video{transition:none}}
 

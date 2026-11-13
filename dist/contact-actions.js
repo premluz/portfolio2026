@@ -13,6 +13,9 @@ export async function copyContactEmail(notify,clipboard=globalThis.navigator?.cl
  }
 }
 
+// The footer's LinkedIn and Email actions as text links, for the Contact page where the footer is hidden.
+export const contactLinksMarkup=()=>`<nav class="contact-links" aria-label="Get in touch"><a href="${CONTACT_LINKEDIN_URL}" target="_blank" rel="noopener noreferrer">LinkedIn</a><button type="button" data-copy-email>Email</button></nav>`;
+
 // anchored: confirm under the clicked control instead of in the site toast.
 export function mountContactEmailCopy(root,notify,{anchored=false}={}){
  const copy=event=>{

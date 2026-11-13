@@ -26,14 +26,18 @@ export function applyGlimmer(element,{tint,color,speed,spread,direction}){
  element.style.setProperty('--text-glimmer-cycle',`${speed}s`);
 }
 
-// The home hero heading sweeps `plays` times when it lands, then rests as plain ink. The page's root carries the
-// state, so a heading that is rendered later (a return to home) plays too; text-effects.css paints it.
-const HERO_TITLE='[data-hero-title]',DONE='data-glimmer-done',listening=new WeakSet();
+// Each page's main heading sweeps `plays` times when the page lands, then rests as plain ink: the home hero, a
+// project's visible title, About, Lab, articles and info pages. The page's root carries the state, so every route
+// change plays it again; text-effects.css paints it and must list the same headings (tests/text-effects.mjs).
+export const PAGE_HEADINGS=Object.freeze(['[data-hero-title]','.detail-caption-title','.surface.detail>h1','.about-hero h1','.lab-heading h1','.article-header h1']);
+const HEADING=PAGE_HEADINGS.join(','),DONE='data-glimmer-done',listening=new WeakSet();
 export function applyHeroGlimmer(root,{enabled,tint,color,speed,spread,direction,plays}){
  if(!listening.has(root)){
   listening.add(root);
   // The finished heading drops the glimmer paint altogether, so nothing of the band stays at rest.
-  root.addEventListener('animationend',event=>{if(event.animationName?.startsWith('text-glimmer')&&event.target.matches?.(HERO_TITLE))event.target.setAttribute(DONE,'');});
+  root.addEventListener('animationend',event=>{if(event.animationName?.startsWith('text-glimmer')&&event.target.matches?.(HEADING))event.target.setAttribute(DONE,'');});
+  // Every route change is a landing: a heading the app keeps and brings back (home, returning from a project) plays again.
+  globalThis.addEventListener?.('hashchange',()=>{for(const title of root.querySelectorAll(HEADING))title.removeAttribute(DONE);});
  }
  if(!enabled){root.removeAttribute('data-hero-glimmer');return;}
  root.style.setProperty('--hero-glimmer-gradient',glimmerGradient(tint,color,spread,{base:'var(--ink)',peak:'var(--body-ink)'}));
@@ -43,6 +47,6 @@ export function applyHeroGlimmer(root,{enabled,tint,color,speed,spread,direction
 // Plays it again on the heading that is on screen (the settings panel's Replay).
 export function replayHeroGlimmer(root){
  const direction=root.getAttribute('data-hero-glimmer');if(direction===null)return;
- for(const title of root.querySelectorAll(HERO_TITLE))title.removeAttribute(DONE);
+ for(const title of root.querySelectorAll(HEADING))title.removeAttribute(DONE);
  root.removeAttribute('data-hero-glimmer');void root.offsetWidth;root.setAttribute('data-hero-glimmer',direction);
 }

@@ -55,6 +55,34 @@
     }
   },
   {
+    "documentId": "thebodyshop",
+    "card": {
+      "orientation": "landscape",
+      "surface": [
+        "#e4eedd",
+        "#dbe9d6"
+      ],
+      "backgroundMediaId": "generic-bg"
+    },
+    "detail": {
+      "columns": 2
+    }
+  },
+  {
+    "documentId": "vodafone-travel",
+    "card": {
+      "orientation": "landscape",
+      "surface": [
+        "#e2f0eb",
+        "#e5eaf3"
+      ],
+      "backgroundMediaId": "vodafone-bg"
+    },
+    "detail": {
+      "columns": 2
+    }
+  },
+  {
     "documentId": "vodafone-iot",
     "card": {
       "orientation": "landscape",

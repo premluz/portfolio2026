@@ -29,7 +29,7 @@ assert(/--empty-hero-lift: clamp\([^;]+\);/.test(tokens),'The lift is a token');
 // Top nav on a project or article page: the header's avatar and name give way to Go Back and Previous/Next, in one fade.
 {const app=await read('app.js');
 assert(index.includes('<nav class="header-detail-nav" id="headerDetailNav" aria-label="Page navigation" aria-hidden="true" inert><button class="detail-media-action glass-surface" type="button" data-header-action="back">Go Back</button>'),'The header holds Go Back and Previous/Next, hidden until needed');
-assert(app.includes("const headerDetail=route=>navPosition==='top'&&(projectIds.includes(route)||articleIds.includes(route));"),'Only with the nav on top, on a project or article page');
+assert(app.includes("const headerDetail=route=>effectiveNavPosition()==='top'&&(projectIds.includes(route)||articleIds.includes(route));"),'Only with the nav shown on top (not on a phone), on a project or article page');
 assert(app.includes('dockMorph.setBack(!composer&&showBackControl(route)&&!headerDetail(route),options);'),'The dock does not repeat Back while the header holds it');
 assert(design.includes(':root.header-detail-active header :is(.brand,.discipline){opacity:0;transform:translateX(calc(-1 * var(--header-swap-shift)));')&&design.includes(':root.header-detail-active .header-detail-nav button{opacity:1;transform:none}'),'The avatar and name slide out left as the controls slide in');
 assert(design.includes('header .brand{--swap-in:0;--swap-out:4}')&&design.includes('.header-detail-nav [data-header-action="next"]{--swap-in:4;--swap-out:0}'),'One staggered order in, the reverse order out');

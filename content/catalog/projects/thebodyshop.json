@@ -1,0 +1,46 @@
+{
+  "id": "thebodyshop",
+  "type": "portfolio-item",
+  "status": "published",
+  "slug": "thebodyshop",
+  "title": "Rebuilt a global beauty brand's online store as a responsive, touch-friendly experience",
+  "pageTitle": "Designed a responsive eCommerce experience and brand identity for The Body Shop",
+  "name": "Responsive eCommerce",
+  "client": "The Body Shop",
+  "summary": "Responsive eCommerce • New brand identity • Hybris CMS • Live Q2 2016",
+  "category": "eCommerce · Beauty retail",
+  "kind": "shipped",
+  "year": "2016",
+  "projectStatus": "Launched",
+  "disciplines": [
+    "UX",
+    "UI",
+    "Digital branding",
+    "Brand guidelines"
+  ],
+  "shortCategory": "Responsive eCommerce",
+  "homeCards": [
+    {
+      "id": "thebodyshop-home-1",
+      "mediaId": "thebodyshop-cover"
+    },
+    {
+      "id": "thebodyshop-home-2",
+      "mediaId": "thebodyshop-cover"
+    },
+    {
+      "id": "thebodyshop-home-3",
+      "mediaId": "thebodyshop-cover"
+    }
+  ],
+  "heroMediaId": "thebodyshop-cover",
+  "intro": "The high-street beauty brand wanted to revitalise its positioning and identity, launching a new responsive eCommerce site with an entirely new UX and brand identity.",
+  "context": "Founded in 1976 in Brighton, England, by Anita Roddick, The Body Shop is a global beauty brand with 3,048 stores across 63 markets, one of the world's largest masstige cosmetics networks. It offers high-quality, naturally-inspired skincare, hair care and make-up produced ethically and sustainably. Its target customer is men and women aged 16 to 60, and the company was looking to reignite the brand and take back market share in cosmetics.",
+  "challenge": "Reflect a fresh brand identity with a focus on the brand's core, its natural products, in a site whose user journey is built around sustainably sourced ingredients and supported communities. Content had to be mobile-first, so the most valuable information was immediately available while deeper details stayed easy to reach, all on rapid commercial timeframes.",
+  "role": "Translated wireframes into clean, minimal visual interface designs and applied the visual branding guidelines. Joined creative reviews with the International eCommerce director and manager and the internal delivery team, presenting concepts and amends in InVision prototypes. Worked with web developers on technology parameters and the feasibility of rich UI layouts and touch interactions.",
+  "keyWork": "Prioritised content mobile-first across the key journeys: home, product category, listing and detail (two types), ingredients, account, bag and a four-step checkout. Produced engaging creative content for core brand stories, with UX and UI solutions for a clean, linear user journey. Proposed the Enrich Not Exploit commitment pages and an interactive biodiversity map, showcasing the brand's transparent business practices and progress towards its targets.",
+  "impact": "Project live Q2 2016 • New responsive UX and brand identity on Hybris CMS • BOOST landing pages and Hybris templates delivered • Enrich Not Exploit commitment launched in 2016 with 14 targets to achieve by 2020",
+  "highlights": "Responsive eCommerce on Hybris · Live Q2 2016 · Enrich Not Exploit commitment",
+  "featured": false,
+  "blocks": []
+}

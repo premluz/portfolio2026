@@ -6,15 +6,8 @@
   "slug": "contact",
   "title": "Let's connect!",
   "name": "Contact",
-  "summary": "Have a complex product or an interesting idea?",
+  "summary": "Have a product, website or an interesting idea?",
   "category": "Let’s connect",
-  "links": [
-    {
-      "id": "primary",
-      "url": "https://prems.me/",
-      "label": "Find me at prems.me"
-    }
-  ],
   "blocks": [
     {
       "id": "contact-body",

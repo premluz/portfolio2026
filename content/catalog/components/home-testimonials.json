@@ -16,7 +16,7 @@
     {
       "id": "quote-matt",
       "type": "quote",
-      "text": "Exceptional technical depth. He designs with implementation in mind, anticipating edge cases and system constraints.",
+      "text": "Exceptional technical depth. He played a key role in creating and scaling the design system at Tracr, including the integration of design tokens, which significantly improved consistency, efficiency, and collaboration across teams. He has a rare ability to translate complex UX requirements into reusable, flexible UI components without sacrificing clarity or usability.",
       "attribution": "Matt Bindoff",
       "label": "Lead Engineer at Tracr"
     },

@@ -1,14 +1,14 @@
 // Logo strip under the hero description; the Content Home "Logo strip" switch shows it (data-home-section="logos").
 // Width and height come from each SVG's viewBox so the strip never reflows while the files load.
 export const HERO_LOGOS=Object.freeze([
+ {name:'GalaChain',file:'GalaChain.svg',width:108,height:23},
+ {name:'Tracr',file:'Tracr.svg',width:64,height:18},
  {name:'PlayStation',file:'PlayStation.svg',width:128,height:24},
+ {name:'DeEeers',file:'DeEeers.svg',width:127.56,height:35.926},
  {name:'Deutsche Bank',file:'Deutsche_Bank.svg',width:117,height:25},
  {name:'Vodafone',file:'Vodafone.svg',width:111,height:22},
  {name:'Kingfisher',file:'Kingfisher.svg',width:84,height:26},
- {name:'The Body Shop',file:'TheBodyShop.svg',width:150,height:21},
- {name:'Gala Games',file:'GalaGames.svg',width:117,height:23},
- {name:'GalaChain',file:'GalaChain.svg',width:108,height:23},
- {name:'Tracr',file:'Tracr.svg',width:92,height:18}
+ {name:'The Body Shop',file:'TheBodyShop.svg',width:150,height:21}
 ]);
 // Three identical copies: the track moves by exactly one copy per loop, and three keep the rail filled at the widest content width.
 export const HERO_LOGO_COPIES=3;

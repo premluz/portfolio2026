@@ -27,7 +27,7 @@
 body{font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
 button,input,select,textarea{font-family:var(--font-family-sans)}
 .hero-about h1,.surface.detail h1{font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);max-width:var(--measure-heading);text-wrap:balance}
-.hero-about h1,.home-view-split .hero-about h1{margin:0 0 var(--space-4)}
+.hero-about h1,.home-view-split .hero-about h1{margin:0 0 var(--space-hero-heading-gap)}
 .hero-copy,.home-view-split .hero-copy{font-size:var(--font-size-hero-support);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);max-width:var(--measure-body)}
 .hero-copy p+p{margin-top:var(--space-paragraph)}
 /* The strapline reads with the heading: a tight gap above, and it takes over the heading's space before the copy. */
@@ -88,6 +88,16 @@ header{height:var(--header-total);padding-top:var(--header-top-offset)}
    from the right; leaving reverses the order. --swap-in / --swap-out are each element's place in that order. */
 .header-detail-nav{position:absolute;left:calc(var(--nav-gutter) - var(--space-3));top:var(--header-top-offset);bottom:0;display:flex;align-items:center;gap:var(--space-1);pointer-events:none}
 :root.header-detail-active .header-detail-nav{pointer-events:auto}
+/* Unless "Pin the logo, name and description" is on, the brand scrolls away with the page and only the menu stays:
+   the header sits at the top of the document instead of the viewport. Go Back and Previous/Next are navigation, so
+   they stay fixed in the same place (same left and height as inside the header, now measured from the viewport). */
+/* Centred by auto margins instead of the pinned header's translate, so it keeps the nav content width (960, 1200…)
+   with the menu, and its fixed child below is not trapped by a transform. */
+:root.brand-scrolls header{position:absolute;left:0;right:0;margin-inline:auto;transform:none}
+:root.brand-scrolls.assistant-sidebar-open header{left:0;right:var(--assistant-sidebar-width)}
+/* Inside the header it sat at the header's left gutter; fixed, it adds the header's own offset (as the top dock does). */
+:root.brand-scrolls .header-detail-nav{position:fixed;left:calc((100vw - min(100vw, var(--nav-shell-width))) / 2 + var(--nav-gutter) - var(--space-3));bottom:auto;height:calc(var(--header-total) - var(--header-top-offset))}
+:root.brand-scrolls.assistant-sidebar-open .header-detail-nav{left:calc((100vw - var(--assistant-sidebar-width) - min(100vw - var(--assistant-sidebar-width), var(--nav-shell-width))) / 2 + var(--nav-gutter) - var(--space-3))}
 header .brand{--swap-in:0;--swap-out:4}
 header .discipline{--swap-in:1;--swap-out:3}
 .header-detail-nav [data-header-action="back"]{--swap-in:2;--swap-out:2}

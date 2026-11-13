@@ -53,6 +53,14 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 :root[data-hero-heading-space="spacious"] .home-canvas:not(.home-view-split) .home-hero{padding:var(--space-detail-heading-spacious) 0 calc(var(--space-detail-heading-spacious) / 2)}
 :root[data-hero-heading-space="grand"] .home-canvas:not(.home-view-split) .home-hero{padding:var(--space-detail-heading-grand) 0 calc(var(--space-detail-heading-grand) / 2)}
 :root[data-hero-heading-space="stage"] .home-canvas:not(.home-view-split) .home-hero{padding:var(--space-detail-heading-stage) 0 calc(var(--space-detail-heading-stage) / 2)}
+/* About and Contact (information pages) start their heading where the home hero does: the page's top by default, and the
+   hero's heading-space preset when one is set. The main's own top padding is dropped so the two measure the same. */
+main.wide-project-hero:has(>.info-detail){padding-top:0}
+main.wide-project-hero>.info-detail{padding-top:var(--page-content-top)}
+:root[data-hero-heading-space="roomy"] main.wide-project-hero>.info-detail{padding-top:var(--space-detail-heading-roomy)}
+:root[data-hero-heading-space="spacious"] main.wide-project-hero>.info-detail{padding-top:var(--space-detail-heading-spacious)}
+:root[data-hero-heading-space="grand"] main.wide-project-hero>.info-detail{padding-top:var(--space-detail-heading-grand)}
+:root[data-hero-heading-space="stage"] main.wide-project-hero>.info-detail{padding-top:var(--space-detail-heading-stage)}
 :root:is([data-detail-heading-space="roomy"],[data-detail-heading-space="default"][data-hero-heading-space="roomy"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-roomy) 0 calc(var(--space-detail-heading-roomy) / 2)}
 :root:is([data-detail-heading-space="spacious"],[data-detail-heading-space="default"][data-hero-heading-space="spacious"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-spacious) 0 calc(var(--space-detail-heading-spacious) / 2)}
 :root:is([data-detail-heading-space="grand"],[data-detail-heading-space="default"][data-hero-heading-space="grand"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-grand) 0 calc(var(--space-detail-heading-grand) / 2)}

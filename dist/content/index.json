@@ -52,9 +52,41 @@
       ]
     },
     {
+      "id": "thebodyshop",
+      "type": "portfolio-item",
+      "title": "Rebuilt a global beauty brand's online store as a responsive, touch-friendly experience",
+      "pageTitle": "Designed a responsive eCommerce experience and brand identity for The Body Shop",
+      "summary": "Responsive eCommerce • New brand identity • Hybris CMS • Live Q2 2016",
+      "domains": [],
+      "capabilities": [],
+      "tags": [],
+      "kind": "shipped",
+      "client": "The Body Shop",
+      "evidenceIds": [
+        "highlights",
+        "impact"
+      ]
+    },
+    {
+      "id": "vodafone-travel",
+      "type": "portfolio-item",
+      "title": "Launched a travel eSIM from zero, so travellers get online in minutes in 200+ countries",
+      "pageTitle": "Designed and launched Vodafone Travel, a new eSIM product for international travellers",
+      "summary": "0 → 1 product • 200+ countries • Web design • Brand • Marketing",
+      "domains": [],
+      "capabilities": [],
+      "tags": [],
+      "kind": "shipped",
+      "client": "Vodafone",
+      "evidenceIds": [
+        "highlights",
+        "impact"
+      ]
+    },
+    {
       "id": "playstation",
       "type": "portfolio-item",
-      "title": "Designed a unified workflow for developers and publishers",
+      "title": "First designer on large-scale transformation, set scalable foundations and interaction model.",
       "pageTitle": "Transformation saving hundreds of hours for developers and publishers",
       "summary": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 ",
       "domains": [
@@ -223,7 +255,7 @@
       "type": "page",
       "title": "Let's connect!",
       "pageTitle": "Let's connect!",
-      "summary": "Have a complex product or an interesting idea?",
+      "summary": "Have a product, website or an interesting idea?",
       "domains": [],
       "capabilities": [],
       "tags": [],

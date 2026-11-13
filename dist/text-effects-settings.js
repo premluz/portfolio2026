@@ -26,8 +26,10 @@ export const TEXT_EFFECT_CONTROLS=Object.freeze({
  glimmerSpeed:range(.4,5,1.6,'s'),
  glimmerSpread:range(10,45,30,'%'),
  glimmerDirection:choice(['ltr','rtl'],'ltr'),
- heroGlimmer:toggle(false),
- heroGlimmerPlays:range(1,6,2)
+ // On by default at the owner's request (2026-11-13), the one exception to ADR-005 here: page headings glimmer on
+ // landing. It replaced heroGlimmer (home only, default off), whose stored false would otherwise have kept it hidden.
+ pageGlimmer:toggle(true),
+ pageGlimmerPlays:range(1,6,1)
 });
 export const DEFAULT_TEXT_EFFECTS=Object.freeze(Object.fromEntries(Object.entries(TEXT_EFFECT_CONTROLS).map(([key,control])=>[key,control.value])));
 
@@ -45,5 +47,5 @@ export function readTextEffects(storage){
 }
 // The glimmer controls under their component's own option names.
 export const glimmerOptions=settings=>({enabled:settings.glimmer,tint:settings.glimmerTint,color:settings.glimmerColor,speed:settings.glimmerSpeed,spread:settings.glimmerSpread,direction:settings.glimmerDirection});
-// The home hero heading shares the glimmer's look and has its own switch and sweep count.
-export const heroGlimmerOptions=settings=>({...glimmerOptions(settings),enabled:settings.heroGlimmer,plays:settings.heroGlimmerPlays});
+// Page headings share the glimmer's look and have their own switch and sweep count.
+export const heroGlimmerOptions=settings=>({...glimmerOptions(settings),enabled:settings.pageGlimmer,plays:settings.pageGlimmerPlays});

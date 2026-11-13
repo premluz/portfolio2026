@@ -75,8 +75,15 @@
     "id": "merlin-cover",
     "type": "image",
     "status": "published",
-    "url": "assets/ui/merlin-hero.png",
+    "url": "assets/merlin.png",
     "alt": "Merlin financial intelligence workspace with an AI agent assembling research and analysis panels"
+  },
+  {
+    "id": "vodafone-travel-cover",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/vodafonetravel-hero.png",
+    "alt": "Vodafone Travel eSIM experience shown across devices"
   },
   {
     "id": "merlin-walkthrough",
@@ -84,6 +91,13 @@
     "status": "published",
     "url": "assets/merlin.mp4",
     "alt": ""
+  },
+  {
+    "id": "thebodyshop-cover",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/thebodyshop-hero.png",
+    "alt": "The Body Shop responsive eCommerce site shown across devices"
   },
   {
     "id": "rios-cover",
@@ -131,7 +145,7 @@
     "id": "tracr-hero",
     "type": "image",
     "status": "published",
-    "url": "assets/ui/tracr-hero.jpg",
+    "url": "assets/ui/tracr-hero.png",
     "alt": "Tracr diamond provenance platform showing a transfer review with participant context"
   },
   {

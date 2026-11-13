@@ -247,6 +247,8 @@
   --space-story-inset: var(--space-8);
   --space-title-eyebrow: var(--space-2);
   --space-hero-heading-content: var(--space-6);
+  /* The home hero's heading-to-text gap; About and Contact use the same (design-system.css, about-page.css). */
+  --space-hero-heading-gap: var(--space-4);
   --space-text-media: var(--space-8);
   --space-card-copy: var(--space-4);
   --space-paragraph: var(--space-5);
@@ -920,6 +922,7 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 /* Hover previews use the image holder's fit and corner geometry. */
 .visual>.project-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:1;pointer-events:none;opacity:0;transition:opacity 140ms ease}
 .visual.video-preview-playing>.project-video{opacity:1}.visual>.video-frame-bridge{z-index:1;pointer-events:none}
+:root[data-card-click-through="off"] .homepage-layout :is(.project-card,[data-content-card]){pointer-events:none;cursor:default}
 :root[data-card-hover-video="off"] .project-card .visual>.project-video,:root[data-detail-hero-video="off"] .detail .visual>.project-video{opacity:0;visibility:hidden}
 @media(prefers-reduced-motion:reduce){.visual>.project-video{transition:none}}
 
@@ -1221,7 +1224,7 @@ body.card-background-hidden [data-hover-effect~="glow"][data-image-mode="bleed"]
 body{font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
 button,input,select,textarea{font-family:var(--font-family-sans)}
 .hero-about h1,.surface.detail h1{font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);max-width:var(--measure-heading);text-wrap:balance}
-.hero-about h1,.home-view-split .hero-about h1{margin:0 0 var(--space-4)}
+.hero-about h1,.home-view-split .hero-about h1{margin:0 0 var(--space-hero-heading-gap)}
 .hero-copy,.home-view-split .hero-copy{font-size:var(--font-size-hero-support);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);max-width:var(--measure-body)}
 .hero-copy p+p{margin-top:var(--space-paragraph)}
 /* The strapline reads with the heading: a tight gap above, and it takes over the heading's space before the copy. */
@@ -1282,6 +1285,16 @@ header{height:var(--header-total);padding-top:var(--header-top-offset)}
    from the right; leaving reverses the order. --swap-in / --swap-out are each element's place in that order. */
 .header-detail-nav{position:absolute;left:calc(var(--nav-gutter) - var(--space-3));top:var(--header-top-offset);bottom:0;display:flex;align-items:center;gap:var(--space-1);pointer-events:none}
 :root.header-detail-active .header-detail-nav{pointer-events:auto}
+/* Unless "Pin the logo, name and description" is on, the brand scrolls away with the page and only the menu stays:
+   the header sits at the top of the document instead of the viewport. Go Back and Previous/Next are navigation, so
+   they stay fixed in the same place (same left and height as inside the header, now measured from the viewport). */
+/* Centred by auto margins instead of the pinned header's translate, so it keeps the nav content width (960, 1200…)
+   with the menu, and its fixed child below is not trapped by a transform. */
+:root.brand-scrolls header{position:absolute;left:0;right:0;margin-inline:auto;transform:none}
+:root.brand-scrolls.assistant-sidebar-open header{left:0;right:var(--assistant-sidebar-width)}
+/* Inside the header it sat at the header's left gutter; fixed, it adds the header's own offset (as the top dock does). */
+:root.brand-scrolls .header-detail-nav{position:fixed;left:calc((100vw - min(100vw, var(--nav-shell-width))) / 2 + var(--nav-gutter) - var(--space-3));bottom:auto;height:calc(var(--header-total) - var(--header-top-offset))}
+:root.brand-scrolls.assistant-sidebar-open .header-detail-nav{left:calc((100vw - var(--assistant-sidebar-width) - min(100vw - var(--assistant-sidebar-width), var(--nav-shell-width))) / 2 + var(--nav-gutter) - var(--space-3))}
 header .brand{--swap-in:0;--swap-out:4}
 header .discipline{--swap-in:1;--swap-out:3}
 .header-detail-nav [data-header-action="back"]{--swap-in:2;--swap-out:2}
@@ -1673,9 +1686,10 @@ body.page-card-background-hidden .info-detail>.liquid-skin{display:none!importan
 /* .about-highlight is a .text-gradient (design-system.css). */
 .about-hero{display:grid;grid-template-columns:minmax(0,var(--page-intro-width)) minmax(0,1fr);column-gap:var(--space-page-rhythm-sm);align-items:start}
 .about-hero-copy{min-width:0}
-:is(.about-hero-copy,.lab-heading) .info-body{margin-top:var(--space-hero-heading-content);max-width:none}
+/* About, the Lab and Contact space heading and text as the home hero does. */
+:is(.about-hero-copy,.lab-heading) .info-body{margin-top:var(--space-hero-heading-gap);max-width:none}
 /* Contact (a plain information page) has the same heading-then-body rhythm, without changing its text colour. */
-.info-detail:not(.about-detail)>h1+.info-body{margin-top:var(--space-hero-heading-content);max-width:var(--measure-body)}
+.info-detail:not(.about-detail)>h1+.info-body{margin-top:var(--space-hero-heading-gap);max-width:var(--measure-body)}
 :is(.about-hero-copy,.lab-heading) .info-body p{margin:0 0 var(--space-6);color:var(--ink);line-height:var(--line-height-body)}
 .info-detail:not(.about-detail)>h1+.info-body p{margin:0 0 var(--space-6);line-height:var(--line-height-body)}
 .about-portrait,.about-unusual-media{margin:0;overflow:hidden;border-radius:var(--radius-visual)}
@@ -1723,6 +1737,8 @@ body.page-card-background-hidden .info-detail>.liquid-skin{display:none!importan
 /* Contact with "show title" off: the title goes, its text stays and starts where the title did. */
 :root.contact-title-hidden [data-info-page="contact"]>h1{display:none}
 :root.contact-title-hidden [data-info-page="contact"]>h1+.info-body{margin-top:0}
+.contact-links{display:flex;flex-wrap:wrap;gap:var(--space-6);margin-top:var(--space-6)}
+.contact-links :is(a,button){font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
 
 /* about-illustrations.css */
 .about-trait-art{--trait-dur-short:180ms;--trait-dur:420ms;--trait-dur-long:600ms;--trait-spring:cubic-bezier(.34,1.56,.64,1);--trait-lift:-3px;--trait-tilt:-2deg;display:block;width:100%;height:auto;aspect-ratio:1;color:color-mix(in oklch,var(--ink) 48%,var(--card-surface))}
@@ -2022,6 +2038,14 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 :root[data-hero-heading-space="spacious"] .home-canvas:not(.home-view-split) .home-hero{padding:var(--space-detail-heading-spacious) 0 calc(var(--space-detail-heading-spacious) / 2)}
 :root[data-hero-heading-space="grand"] .home-canvas:not(.home-view-split) .home-hero{padding:var(--space-detail-heading-grand) 0 calc(var(--space-detail-heading-grand) / 2)}
 :root[data-hero-heading-space="stage"] .home-canvas:not(.home-view-split) .home-hero{padding:var(--space-detail-heading-stage) 0 calc(var(--space-detail-heading-stage) / 2)}
+/* About and Contact (information pages) start their heading where the home hero does: the page's top by default, and the
+   hero's heading-space preset when one is set. The main's own top padding is dropped so the two measure the same. */
+main.wide-project-hero:has(>.info-detail){padding-top:0}
+main.wide-project-hero>.info-detail{padding-top:var(--page-content-top)}
+:root[data-hero-heading-space="roomy"] main.wide-project-hero>.info-detail{padding-top:var(--space-detail-heading-roomy)}
+:root[data-hero-heading-space="spacious"] main.wide-project-hero>.info-detail{padding-top:var(--space-detail-heading-spacious)}
+:root[data-hero-heading-space="grand"] main.wide-project-hero>.info-detail{padding-top:var(--space-detail-heading-grand)}
+:root[data-hero-heading-space="stage"] main.wide-project-hero>.info-detail{padding-top:var(--space-detail-heading-stage)}
 :root:is([data-detail-heading-space="roomy"],[data-detail-heading-space="default"][data-hero-heading-space="roomy"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-roomy) 0 calc(var(--space-detail-heading-roomy) / 2)}
 :root:is([data-detail-heading-space="spacious"],[data-detail-heading-space="default"][data-hero-heading-space="spacious"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-spacious) 0 calc(var(--space-detail-heading-spacious) / 2)}
 :root:is([data-detail-heading-space="grand"],[data-detail-heading-space="default"][data-hero-heading-space="grand"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-grand) 0 calc(var(--space-detail-heading-grand) / 2)}
@@ -2412,12 +2436,14 @@ button.glass-surface:is(:hover,:focus-visible):not(:active),#dock .composer-sugg
 .iconiq-thinking[data-glimmer][data-direction="rtl"] .iconiq-thinking-label{animation-name:text-glimmer-rtl}
 @keyframes text-glimmer-ltr{from{background-position:100% 0}to{background-position:-100% 0}}
 @keyframes text-glimmer-rtl{from{background-position:-100% 0}to{background-position:100% 0}}
-/* Home hero heading: sweeps --hero-glimmer-plays times once the page has booted and the heading has faded in, then
-   applyHeroGlimmer marks it done and it rests as plain ink. fit-content makes the band cross the text, not the wider
-   block around it. Only the plain heading, not the Flip/Flat project titles; motion off means no sweep. */
+/* Page headings (PAGE_HEADINGS in text-glimmer.js): the home hero, a project's visible title, About, Lab, articles and
+   info pages sweep --hero-glimmer-plays times once the page has landed and the heading has faded in, then
+   applyHeroGlimmer marks them done and they rest as plain ink. fit-content makes the band cross the text, not the
+   wider block. #main only, so the retained home layer that fades out on the way to a project does not restart it;
+   the Flip/Flat home views swap the heading for project titles, so they are left out. Motion off means no sweep. */
 @media(prefers-reduced-motion:no-preference){
- :root[data-hero-glimmer]:not(.page-booting,[data-animation="off"]) .home-canvas:not(.home-view-split) [data-hero-title]:not([data-glimmer-done]){background-image:var(--hero-glimmer-gradient);background-size:250% 100%;background-repeat:repeat;background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;width:fit-content;animation:text-glimmer-ltr var(--hero-glimmer-cycle) linear var(--duration-hero-glimmer-delay) var(--hero-glimmer-plays) backwards}
- :root[data-hero-glimmer="rtl"]:not(.page-booting,[data-animation="off"]) .home-canvas:not(.home-view-split) [data-hero-title]:not([data-glimmer-done]){animation-name:text-glimmer-rtl}
+ :root[data-hero-glimmer]:not(.page-booting,[data-animation="off"]) #main:not(.home-view-split) :is([data-hero-title],.detail-caption-title,.surface.detail>h1,.about-hero h1,.lab-heading h1,.article-header h1):not([data-glimmer-done]){background-image:var(--hero-glimmer-gradient);background-size:250% 100%;background-repeat:repeat;background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;width:fit-content;animation:text-glimmer-ltr var(--hero-glimmer-cycle) linear var(--duration-hero-glimmer-delay) var(--hero-glimmer-plays) backwards}
+ :root[data-hero-glimmer="rtl"]:not(.page-booting,[data-animation="off"]) #main:not(.home-view-split) :is([data-hero-title],.detail-caption-title,.surface.detail>h1,.about-hero h1,.lab-heading h1,.article-header h1):not([data-glimmer-done]){animation-name:text-glimmer-rtl}
 }
 /* Still: plain resting ink, as the classic label. */
 :root[data-animation="off"] .iconiq-thinking[data-glimmer] .iconiq-thinking-label{background:none;color:var(--eyebrow-ink);animation:none}
@@ -2820,7 +2846,7 @@ body.card-client-above:not(.card-client-hidden) .project-card.image-card>.card-c
 
 body.card-status-shown .project-card.image-card>.card-copy>.card-status{display:inline-flex;align-items:center;margin:0 0 var(--space-5);padding:var(--space-1) var(--space-3);border:1px solid var(--card-status-border);border-radius:999px;color:var(--eyebrow-ink);font-size:var(--font-size-small);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body)}
 body.card-details .project-card.image-card>.card-copy>.card-tags{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--card-tags-gap);margin:var(--space-6) 0 0}
-body.card-details.card-description-hidden .project-card.image-card>.card-copy>.card-tags{margin-top:0}
+body.card-details.card-description-hidden .project-card.image-card>.card-copy>.card-tags{margin-top:var(--space-title-eyebrow)}
 
 /* note-cards.css */
 /* Note cards (card-renderer.js notesMarkup): under each featured project in Featured stage mode. They are always in the

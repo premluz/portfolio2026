@@ -100,9 +100,9 @@
           "presentation": "card"
         },
         {
-          "id": "home-project-merlin",
+          "id": "home-project-vodafone-travel",
           "type": "reference",
-          "documentId": "merlin",
+          "documentId": "vodafone-travel",
           "presentation": "card"
         },
         {
@@ -130,9 +130,9 @@
           "presentation": "card"
         },
         {
-          "id": "home-project-rios",
+          "id": "home-project-thebodyshop",
           "type": "reference",
-          "documentId": "rios",
+          "documentId": "thebodyshop",
           "presentation": "card"
         }
       ],

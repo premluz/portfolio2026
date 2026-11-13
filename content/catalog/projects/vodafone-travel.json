@@ -1,0 +1,46 @@
+{
+  "id": "vodafone-travel",
+  "type": "portfolio-item",
+  "status": "published",
+  "slug": "vodafone-travel",
+  "title": "Launched a travel eSIM from zero, so travellers get online in minutes in 200+ countries",
+  "pageTitle": "Designed and launched Vodafone Travel, a new eSIM product for international travellers",
+  "name": "Travel eSIM",
+  "client": "Vodafone",
+  "summary": "0 → 1 product • 200+ countries • Web design • Brand • Marketing",
+  "category": "Travel eSIM · Telecoms",
+  "kind": "shipped",
+  "year": "2019",
+  "projectStatus": "Launched",
+  "disciplines": [
+    "Web design",
+    "UI",
+    "Brand",
+    "Marketing"
+  ],
+  "shortCategory": "Travel eSIM",
+  "homeCards": [
+    {
+      "id": "vodafone-travel-home-1",
+      "mediaId": "vodafone-travel-cover"
+    },
+    {
+      "id": "vodafone-travel-home-2",
+      "mediaId": "vodafone-travel-cover"
+    },
+    {
+      "id": "vodafone-travel-home-3",
+      "mediaId": "vodafone-travel-cover"
+    }
+  ],
+  "heroMediaId": "vodafone-travel-cover",
+  "intro": "Vodafone Travel lets international travellers buy and install prepaid data plans straight onto an eSIM-compatible phone, without a physical SIM card.",
+  "context": "A new digital product from Vodafone's Travel Mobility team. It covers more than 200 countries and regions, with 5G in supported locations. Data-only plans run from 1 GB to 150 GB and last up to 90 days. The eSIM runs alongside the traveller's main SIM, so they keep their usual number for calls and messages.",
+  "challenge": "Build and launch a new product from zero on a very tight timeframe. eSIM was unfamiliar to most travellers, so buying a plan, installing it and keeping the main number had to feel simple and trustworthy before anyone left home.",
+  "role": "Owned design and drove the process end to end, from discovery through ideation and design to development. Planned the work, managed stakeholders and communicated the design aspiration, making sure user needs shaped the final implementation.",
+  "keyWork": "Designed the web experience, UI and brand expression for the new product, along with the marketing pages that introduce it. Shaped a short journey: choose a destination, pick a plan, then activate in minutes with a QR code or the app. Brought SEO insights and accessibility reviews into the design so the product could be found and used by everyone.",
+  "impact": "New product launched from zero on a tight timeframe • Instant setup by QR code or app • Coverage in 200+ countries with 5G where supported • SEO and accessibility built into the design",
+  "highlights": "0 → 1 launch · 200+ countries · Web design, brand and marketing",
+  "featured": false,
+  "blocks": []
+}

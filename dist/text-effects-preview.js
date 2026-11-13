@@ -1,7 +1,7 @@
 import {streamText} from './assistant-text-stream.js';
 import {mountThinkingIndicator} from './iconiq-chat-effects.js';
 import {TEXT_EFFECTS_KEY,TEXT_EFFECT_CONTROLS,heroGlimmerOptions,normalizeValue,readTextEffects} from './text-effects-settings.js';
-import {applyHeroGlimmer,replayHeroGlimmer} from './text-glimmer.js';
+import {PAGE_HEADINGS,applyHeroGlimmer,replayHeroGlimmer} from './text-glimmer.js';
 
 // Developer settings › Motion › Assistant text effects. Only the developer panel needs this module, so app.js loads
 // it on ?dev=1 and public visitors never download it. It binds the controls, and a replay runs the saved settings
@@ -25,16 +25,16 @@ export function mountTextEffectSettings(panel,{storage,onChange=()=>{}}={}){
  return {get value(){return {...value};}};
 }
 
-// Why the hero heading is or is not glimmering, in words, so a missing sweep is never a mystery.
+// Why the page heading is or is not glimmering, in words, so a missing sweep is never a mystery.
 export function heroGlimmerStatus({settings,root,reducedMotion}){
- if(!settings.heroGlimmer)return 'off. Switch it on above.';
+ if(!settings.pageGlimmer)return 'off. Switch it on above.';
  if(reducedMotion)return 'not playing: this device asks for reduced motion (macOS: System Settings › Accessibility › Display › Reduce motion).';
  if(root.getAttribute('data-animation')==='off')return 'not playing: Animation is off in the site settings.';
  if(root.querySelector('#main')?.classList.contains('home-view-split'))return 'not playing: the Flip and Flat home views show project titles instead of the heading.';
- const heading=root.querySelector('.home-canvas [data-hero-title]');
+ const heading=root.querySelector(PAGE_HEADINGS.map(selector=>'#main '+selector).join(','));
  if(heading?.getAnimations?.().some(animation=>animation.animationName?.startsWith('text-glimmer')&&animation.playState==='running'))return 'playing.';
- if(heading?.hasAttribute('data-glimmer-done'))return `played ${settings.heroGlimmerPlays}× on landing. Replay effects plays it again.`;
- return 'on. It plays when the home page lands.';
+ if(heading?.hasAttribute('data-glimmer-done'))return `played ${settings.pageGlimmerPlays}× as this page landed. Replay effects plays it again.`;
+ return 'on. It plays as each page lands.';
 }
 
 export function mountTextEffects(panel,{reduced=()=>false,storage,root=document.documentElement}={}){

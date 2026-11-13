@@ -31,12 +31,14 @@
 .iconiq-thinking[data-glimmer][data-direction="rtl"] .iconiq-thinking-label{animation-name:text-glimmer-rtl}
 @keyframes text-glimmer-ltr{from{background-position:100% 0}to{background-position:-100% 0}}
 @keyframes text-glimmer-rtl{from{background-position:-100% 0}to{background-position:100% 0}}
-/* Home hero heading: sweeps --hero-glimmer-plays times once the page has booted and the heading has faded in, then
-   applyHeroGlimmer marks it done and it rests as plain ink. fit-content makes the band cross the text, not the wider
-   block around it. Only the plain heading, not the Flip/Flat project titles; motion off means no sweep. */
+/* Page headings (PAGE_HEADINGS in text-glimmer.js): the home hero, a project's visible title, About, Lab, articles and
+   info pages sweep --hero-glimmer-plays times once the page has landed and the heading has faded in, then
+   applyHeroGlimmer marks them done and they rest as plain ink. fit-content makes the band cross the text, not the
+   wider block. #main only, so the retained home layer that fades out on the way to a project does not restart it;
+   the Flip/Flat home views swap the heading for project titles, so they are left out. Motion off means no sweep. */
 @media(prefers-reduced-motion:no-preference){
- :root[data-hero-glimmer]:not(.page-booting,[data-animation="off"]) .home-canvas:not(.home-view-split) [data-hero-title]:not([data-glimmer-done]){background-image:var(--hero-glimmer-gradient);background-size:250% 100%;background-repeat:repeat;background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;width:fit-content;animation:text-glimmer-ltr var(--hero-glimmer-cycle) linear var(--duration-hero-glimmer-delay) var(--hero-glimmer-plays) backwards}
- :root[data-hero-glimmer="rtl"]:not(.page-booting,[data-animation="off"]) .home-canvas:not(.home-view-split) [data-hero-title]:not([data-glimmer-done]){animation-name:text-glimmer-rtl}
+ :root[data-hero-glimmer]:not(.page-booting,[data-animation="off"]) #main:not(.home-view-split) :is([data-hero-title],.detail-caption-title,.surface.detail>h1,.about-hero h1,.lab-heading h1,.article-header h1):not([data-glimmer-done]){background-image:var(--hero-glimmer-gradient);background-size:250% 100%;background-repeat:repeat;background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;width:fit-content;animation:text-glimmer-ltr var(--hero-glimmer-cycle) linear var(--duration-hero-glimmer-delay) var(--hero-glimmer-plays) backwards}
+ :root[data-hero-glimmer="rtl"]:not(.page-booting,[data-animation="off"]) #main:not(.home-view-split) :is([data-hero-title],.detail-caption-title,.surface.detail>h1,.about-hero h1,.lab-heading h1,.article-header h1):not([data-glimmer-done]){animation-name:text-glimmer-rtl}
 }
 /* Still: plain resting ink, as the classic label. */
 :root[data-animation="off"] .iconiq-thinking[data-glimmer] .iconiq-thinking-label{background:none;color:var(--eyebrow-ink);animation:none}

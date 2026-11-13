@@ -3,9 +3,10 @@
 /* .about-highlight is a .text-gradient (design-system.css). */
 .about-hero{display:grid;grid-template-columns:minmax(0,var(--page-intro-width)) minmax(0,1fr);column-gap:var(--space-page-rhythm-sm);align-items:start}
 .about-hero-copy{min-width:0}
-:is(.about-hero-copy,.lab-heading) .info-body{margin-top:var(--space-hero-heading-content);max-width:none}
+/* About, the Lab and Contact space heading and text as the home hero does. */
+:is(.about-hero-copy,.lab-heading) .info-body{margin-top:var(--space-hero-heading-gap);max-width:none}
 /* Contact (a plain information page) has the same heading-then-body rhythm, without changing its text colour. */
-.info-detail:not(.about-detail)>h1+.info-body{margin-top:var(--space-hero-heading-content);max-width:var(--measure-body)}
+.info-detail:not(.about-detail)>h1+.info-body{margin-top:var(--space-hero-heading-gap);max-width:var(--measure-body)}
 :is(.about-hero-copy,.lab-heading) .info-body p{margin:0 0 var(--space-6);color:var(--ink);line-height:var(--line-height-body)}
 .info-detail:not(.about-detail)>h1+.info-body p{margin:0 0 var(--space-6);line-height:var(--line-height-body)}
 .about-portrait,.about-unusual-media{margin:0;overflow:hidden;border-radius:var(--radius-visual)}
@@ -53,3 +54,5 @@
 /* Contact with "show title" off: the title goes, its text stays and starts where the title did. */
 :root.contact-title-hidden [data-info-page="contact"]>h1{display:none}
 :root.contact-title-hidden [data-info-page="contact"]>h1+.info-body{margin-top:0}
+.contact-links{display:flex;flex-wrap:wrap;gap:var(--space-6);margin-top:var(--space-6)}
+.contact-links :is(a,button){font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}

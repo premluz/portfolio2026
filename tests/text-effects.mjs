@@ -5,7 +5,7 @@ import {streamEdgeText} from '../dist/text-stream-edge.js';
 import {streamText} from '../dist/assistant-text-stream.js';
 import {DEFAULT_TEXT_EFFECTS,TEXT_EFFECTS_KEY,TEXT_EFFECT_COLORS,TEXT_EFFECT_CONTROLS,glimmerOptions,heroGlimmerOptions,normalizeTextEffects,readTextEffects} from '../dist/text-effects-settings.js';
 import {heroGlimmerStatus,mountTextEffectSettings} from '../dist/text-effects-preview.js';
-import {applyGlimmer,applyHeroGlimmer,glimmerGradient,replayHeroGlimmer} from '../dist/text-glimmer.js';
+import {PAGE_HEADINGS,applyGlimmer,applyHeroGlimmer,glimmerGradient,replayHeroGlimmer} from '../dist/text-glimmer.js';
 import {mountThinkingIndicator} from '../dist/iconiq-chat-effects.js';
 import {clientStyles} from '../scripts/client-styles.mjs';
 
@@ -150,13 +150,14 @@ assert.equal(DEFAULT_TEXT_EFFECTS.effect,'classic','The live site is unchanged u
 
 // Hero heading glimmer ---------------------------------------------------------------------------------------
 {assert(glimmerGradient('single','blue',30,{base:'var(--ink)'}).startsWith('linear-gradient(90deg, var(--ink) 0%, var(--ink) 35%'),'The hero rests on the heading ink, not the label ink');
- assert.equal(DEFAULT_TEXT_EFFECTS.heroGlimmer,false,'Off by default (ADR-005)');assert.equal(DEFAULT_TEXT_EFFECTS.heroGlimmerPlays,2);
- assert.equal(normalizeTextEffects({heroGlimmerPlays:99}).heroGlimmerPlays,6);assert.equal(normalizeTextEffects({heroGlimmerPlays:0}).heroGlimmerPlays,1);
- const heading={attributes:{},matches:selector=>selector==='[data-hero-title]',setAttribute(key,value){this.attributes[key]=value;},removeAttribute(key){delete this.attributes[key];}};
+ assert.equal(DEFAULT_TEXT_EFFECTS.pageGlimmer,true,'On by default, at the owner\'s request');
+ assert.equal(normalizeTextEffects({heroGlimmer:false}).pageGlimmer,true,'A stored value of the old home-only switch no longer hides it');assert.equal(DEFAULT_TEXT_EFFECTS.pageGlimmerPlays,1);
+ assert.equal(normalizeTextEffects({pageGlimmerPlays:99}).pageGlimmerPlays,6);assert.equal(normalizeTextEffects({pageGlimmerPlays:0}).pageGlimmerPlays,1);
+ const heading={attributes:{},matches:selector=>selector.split(',').includes('[data-hero-title]'),setAttribute(key,value){this.attributes[key]=value;},removeAttribute(key){delete this.attributes[key];}};
  const root={attributes:{},style:{props:{},setProperty(key,value){this.props[key]=value;}},handlers:{},offsetWidth:0,
   setAttribute(key,value){this.attributes[key]=value;},getAttribute(key){return key in this.attributes?this.attributes[key]:null;},removeAttribute(key){delete this.attributes[key];},
   addEventListener(type,fn){this.handlers[type]=fn;},querySelectorAll:()=>[heading]};
- const on={...DEFAULT_TEXT_EFFECTS,heroGlimmer:true,glimmerDirection:'rtl',glimmerSpeed:2.4,heroGlimmerPlays:3};
+ const on={...DEFAULT_TEXT_EFFECTS,pageGlimmer:true,glimmerDirection:'rtl',glimmerSpeed:2.4,pageGlimmerPlays:3};
  applyHeroGlimmer(root,heroGlimmerOptions(on));
  assert.equal(root.attributes['data-hero-glimmer'],'rtl');assert.equal(root.style.props['--hero-glimmer-plays'],'3');assert.equal(root.style.props['--hero-glimmer-cycle'],'2.4s');
  assert(root.style.props['--hero-glimmer-gradient'].includes('var(--ink) 0%'));
@@ -167,20 +168,28 @@ assert.equal(DEFAULT_TEXT_EFFECTS.effect,'classic','The live site is unchanged u
  root.handlers.animationend({animationName:'text-glimmer-ltr',target:other});root.handlers.animationend({animationName:'something-else',target:heading});assert.deepEqual(other.attributes,{},'Other elements and other animations are ignored');
  applyHeroGlimmer(root,heroGlimmerOptions(on));assert.equal(Object.keys(root.handlers).length,1,'The end listener is added once');
  replayHeroGlimmer(root);assert(!('data-glimmer-done' in heading.attributes),'Replay clears done');assert.equal(root.attributes['data-hero-glimmer'],'rtl','…and restores the state after a reflow');
- applyHeroGlimmer(root,heroGlimmerOptions(DEFAULT_TEXT_EFFECTS));assert(!('data-hero-glimmer' in root.attributes),'Switching it off removes the state');
+ applyHeroGlimmer(root,heroGlimmerOptions({...DEFAULT_TEXT_EFFECTS,pageGlimmer:false}));assert(!('data-hero-glimmer' in root.attributes),'Switching it off removes the state');
  const idle={...root,attributes:{}};replayHeroGlimmer(idle);assert(!('data-hero-glimmer' in idle.attributes),'Replay does nothing while it is off');}
+
+// A route change is a landing: headings the app keeps (home, on the way back from a project) play again.
+{const windowHandlers={};globalThis.addEventListener=(type,fn)=>{windowHandlers[type]=fn;};
+ const kept={attributes:{'data-glimmer-done':''},removeAttribute(key){delete this.attributes[key];}};
+ const root={attributes:{},style:{setProperty(){}},setAttribute(key,value){this.attributes[key]=value;},removeAttribute(key){delete this.attributes[key];},addEventListener(){},querySelectorAll:()=>[kept]};
+ applyHeroGlimmer(root,heroGlimmerOptions(DEFAULT_TEXT_EFFECTS));
+ windowHandlers.hashchange();assert(!('data-glimmer-done' in kept.attributes),'Navigating clears done, so the heading plays again');
+ delete globalThis.addEventListener;}
 
 // Hero glimmer status: each reason it does not play is named.
 {const heading=(attrs={},running=false)=>({hasAttribute:key=>key in attrs,getAnimations:()=>running?[{animationName:'text-glimmer-ltr',playState:'running'}]:[]});
  const root=({animation='on',split=false,title=null}={})=>({getAttribute:key=>key==='data-animation'?animation:null,querySelector:selector=>selector==='#main'?{classList:{contains:name=>split&&name==='home-view-split'}}:title});
- const on={...DEFAULT_TEXT_EFFECTS,heroGlimmer:true};
- assert.match(heroGlimmerStatus({settings:DEFAULT_TEXT_EFFECTS,root:root(),reducedMotion:false}),/^off/);
+ const on={...DEFAULT_TEXT_EFFECTS,pageGlimmer:true};
+ assert.match(heroGlimmerStatus({settings:{...DEFAULT_TEXT_EFFECTS,pageGlimmer:false},root:root(),reducedMotion:false}),/^off/);
  assert.match(heroGlimmerStatus({settings:on,root:root(),reducedMotion:true}),/reduced motion/);
  assert.match(heroGlimmerStatus({settings:on,root:root({animation:'off'}),reducedMotion:false}),/Animation is off/);
  assert.match(heroGlimmerStatus({settings:on,root:root({split:true}),reducedMotion:false}),/Flip and Flat/);
  assert.match(heroGlimmerStatus({settings:on,root:root({title:heading({},true)}),reducedMotion:false}),/^playing/);
- assert.match(heroGlimmerStatus({settings:on,root:root({title:heading({'data-glimmer-done':''})}),reducedMotion:false}),/^played 2×/);
- assert.match(heroGlimmerStatus({settings:on,root:root(),reducedMotion:false}),/plays when the home page lands/);}
+ assert.match(heroGlimmerStatus({settings:on,root:root({title:heading({'data-glimmer-done':''})}),reducedMotion:false}),/^played 1× as this page landed/);
+ assert.match(heroGlimmerStatus({settings:on,root:root(),reducedMotion:false}),/plays as each page lands/);}
 
 // Styles ------------------------------------------------------------------------------------------------------
 {const tokens=read('tokens.css'),css=read('text-effects.css');
@@ -197,9 +206,11 @@ assert.equal(DEFAULT_TEXT_EFFECTS.effect,'classic','The live site is unchanged u
  // The classic label sets no-repeat; without an explicit repeat the glimmer's gradient leaves the text unpainted for part of each cycle.
  assert(read('iconiq-chat-effects.css').includes('background-repeat:no-repeat'));
  assert.equal((css.match(/background-repeat:repeat;/g)||[]).length,2,'Both glimmers tile their gradient');
- const hero=css.slice(css.indexOf('Home hero heading'));
+ const hero=css.slice(css.indexOf('Page headings (PAGE_HEADINGS'));
  assert(hero.includes('@media(prefers-reduced-motion:no-preference){')&&hero.includes(':not(.page-booting,[data-animation="off"])'),'The hero sweep waits for boot and respects reduced motion and Animation off');
- assert(hero.includes('.home-canvas:not(.home-view-split) [data-hero-title]:not([data-glimmer-done])'),'It is limited to the plain heading, and stops once done');
+ assert(hero.includes('#main:not(.home-view-split) :is(')&&hero.includes(':not([data-glimmer-done])'),'Only the live page (not the retained home layer), not the Flip/Flat views, and it stops once done');
+ assert.equal(hero.split(`:is(${PAGE_HEADINGS.join(',')})`).length-1,2,'Both glimmer rules list exactly the headings text-glimmer.js watches');
+ assert.deepEqual([...PAGE_HEADINGS],['[data-hero-title]','.detail-caption-title','.surface.detail>h1','.about-hero h1','.lab-heading h1','.article-header h1'],'Home, project title, info pages, About, Lab and articles');
  assert(/animation:text-glimmer-ltr var\(--hero-glimmer-cycle\) linear var\(--duration-hero-glimmer-delay\) var\(--hero-glimmer-plays\) backwards/.test(hero),'The sweep count is the iteration count, after a delay that holds the first frame');
  assert(hero.includes('width:fit-content'),'The band crosses the text, not the wider block');
  assert(read('tokens.css').includes('--duration-hero-glimmer-delay:'),'The delay is a token');}

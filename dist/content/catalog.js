@@ -12,6 +12,7 @@ export const catalog={
       "summary": "R&D • AI assistant • Generative UI • Prototype in code",
       "category": "Financial intelligence · R&D",
       "kind": "lab",
+      "listOnly": true,
       "year": "2026",
       "projectStatus": "R&D",
       "disciplines": [
@@ -198,11 +199,139 @@ export const catalog={
       ]
     },
     {
+      "id": "thebodyshop",
+      "type": "portfolio-item",
+      "status": "published",
+      "slug": "thebodyshop",
+      "title": "Rebuilt a global beauty brand's online store as a responsive, touch-friendly experience",
+      "pageTitle": "Designed a responsive eCommerce experience and brand identity for The Body Shop",
+      "name": "Responsive eCommerce",
+      "client": "The Body Shop",
+      "summary": "Responsive eCommerce • New brand identity • Hybris CMS • Live Q2 2016",
+      "category": "eCommerce · Beauty retail",
+      "kind": "shipped",
+      "year": "2016",
+      "projectStatus": "Launched",
+      "disciplines": [
+        "UX",
+        "UI",
+        "Digital branding",
+        "Brand guidelines"
+      ],
+      "shortCategory": "Responsive eCommerce",
+      "homeCards": [
+        {
+          "id": "thebodyshop-home-1",
+          "mediaId": "thebodyshop-cover"
+        },
+        {
+          "id": "thebodyshop-home-2",
+          "mediaId": "thebodyshop-cover"
+        },
+        {
+          "id": "thebodyshop-home-3",
+          "mediaId": "thebodyshop-cover"
+        }
+      ],
+      "heroMediaId": "thebodyshop-cover",
+      "intro": "The high-street beauty brand wanted to revitalise its positioning and identity, launching a new responsive eCommerce site with an entirely new UX and brand identity.",
+      "context": "Founded in 1976 in Brighton, England, by Anita Roddick, The Body Shop is a global beauty brand with 3,048 stores across 63 markets, one of the world's largest masstige cosmetics networks. It offers high-quality, naturally-inspired skincare, hair care and make-up produced ethically and sustainably. Its target customer is men and women aged 16 to 60, and the company was looking to reignite the brand and take back market share in cosmetics.",
+      "challenge": "Reflect a fresh brand identity with a focus on the brand's core, its natural products, in a site whose user journey is built around sustainably sourced ingredients and supported communities. Content had to be mobile-first, so the most valuable information was immediately available while deeper details stayed easy to reach, all on rapid commercial timeframes.",
+      "role": "Translated wireframes into clean, minimal visual interface designs and applied the visual branding guidelines. Joined creative reviews with the International eCommerce director and manager and the internal delivery team, presenting concepts and amends in InVision prototypes. Worked with web developers on technology parameters and the feasibility of rich UI layouts and touch interactions.",
+      "keyWork": "Prioritised content mobile-first across the key journeys: home, product category, listing and detail (two types), ingredients, account, bag and a four-step checkout. Produced engaging creative content for core brand stories, with UX and UI solutions for a clean, linear user journey. Proposed the Enrich Not Exploit commitment pages and an interactive biodiversity map, showcasing the brand's transparent business practices and progress towards its targets.",
+      "impact": "Project live Q2 2016 • New responsive UX and brand identity on Hybris CMS • BOOST landing pages and Hybris templates delivered • Enrich Not Exploit commitment launched in 2016 with 14 targets to achieve by 2020",
+      "highlights": "Responsive eCommerce on Hybris · Live Q2 2016 · Enrich Not Exploit commitment",
+      "featured": false,
+      "blocks": [],
+      "evidence": [
+        {
+          "id": "highlights",
+          "kind": "statement",
+          "text": "Responsive eCommerce on Hybris · Live Q2 2016 · Enrich Not Exploit commitment",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        },
+        {
+          "id": "impact",
+          "kind": "statement",
+          "text": "Project live Q2 2016 • New responsive UX and brand identity on Hybris CMS • BOOST landing pages and Hybris templates delivered • Enrich Not Exploit commitment launched in 2016 with 14 targets to achieve by 2020",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        }
+      ]
+    },
+    {
+      "id": "vodafone-travel",
+      "type": "portfolio-item",
+      "status": "published",
+      "slug": "vodafone-travel",
+      "title": "Launched a travel eSIM from zero, so travellers get online in minutes in 200+ countries",
+      "pageTitle": "Designed and launched Vodafone Travel, a new eSIM product for international travellers",
+      "name": "Travel eSIM",
+      "client": "Vodafone",
+      "summary": "0 → 1 product • 200+ countries • Web design • Brand • Marketing",
+      "category": "Travel eSIM · Telecoms",
+      "kind": "shipped",
+      "year": "2019",
+      "projectStatus": "Launched",
+      "disciplines": [
+        "Web design",
+        "UI",
+        "Brand",
+        "Marketing"
+      ],
+      "shortCategory": "Travel eSIM",
+      "homeCards": [
+        {
+          "id": "vodafone-travel-home-1",
+          "mediaId": "vodafone-travel-cover"
+        },
+        {
+          "id": "vodafone-travel-home-2",
+          "mediaId": "vodafone-travel-cover"
+        },
+        {
+          "id": "vodafone-travel-home-3",
+          "mediaId": "vodafone-travel-cover"
+        }
+      ],
+      "heroMediaId": "vodafone-travel-cover",
+      "intro": "Vodafone Travel lets international travellers buy and install prepaid data plans straight onto an eSIM-compatible phone, without a physical SIM card.",
+      "context": "A new digital product from Vodafone's Travel Mobility team. It covers more than 200 countries and regions, with 5G in supported locations. Data-only plans run from 1 GB to 150 GB and last up to 90 days. The eSIM runs alongside the traveller's main SIM, so they keep their usual number for calls and messages.",
+      "challenge": "Build and launch a new product from zero on a very tight timeframe. eSIM was unfamiliar to most travellers, so buying a plan, installing it and keeping the main number had to feel simple and trustworthy before anyone left home.",
+      "role": "Owned design and drove the process end to end, from discovery through ideation and design to development. Planned the work, managed stakeholders and communicated the design aspiration, making sure user needs shaped the final implementation.",
+      "keyWork": "Designed the web experience, UI and brand expression for the new product, along with the marketing pages that introduce it. Shaped a short journey: choose a destination, pick a plan, then activate in minutes with a QR code or the app. Brought SEO insights and accessibility reviews into the design so the product could be found and used by everyone.",
+      "impact": "New product launched from zero on a tight timeframe • Instant setup by QR code or app • Coverage in 200+ countries with 5G where supported • SEO and accessibility built into the design",
+      "highlights": "0 → 1 launch · 200+ countries · Web design, brand and marketing",
+      "featured": false,
+      "blocks": [],
+      "evidence": [
+        {
+          "id": "highlights",
+          "kind": "statement",
+          "text": "0 → 1 launch · 200+ countries · Web design, brand and marketing",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        },
+        {
+          "id": "impact",
+          "kind": "statement",
+          "text": "New product launched from zero on a tight timeframe • Instant setup by QR code or app • Coverage in 200+ countries with 5G where supported • SEO and accessibility built into the design",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        }
+      ]
+    },
+    {
       "id": "playstation",
       "type": "portfolio-item",
       "status": "published",
       "slug": "playstation",
-      "title": "Designed a unified workflow for developers and publishers",
+      "title": "First designer on large-scale transformation, set scalable foundations and interaction model.",
       "name": "Publishing pipeline",
       "summary": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 ",
       "category": "Publishing pipeline · PlayStation Network",
@@ -210,9 +339,9 @@ export const catalog={
       "year": "2018",
       "projectStatus": "Launched",
       "disciplines": [
-        "Research",
+        "UI",
         "Interaction",
-        "Prototyping"
+        "Design guidelines"
       ],
       "shortCategory": "Publishing pipeline",
       "homeCards": [
@@ -468,7 +597,9 @@ export const catalog={
       "disciplines": [
         "Design system",
         "Product",
-        "Brand"
+        "Web design",
+        "Brand",
+        "Marketing"
       ],
       "shortCategory": "Blockchain traceability",
       "homeCards": [
@@ -926,15 +1057,8 @@ export const catalog={
       "slug": "contact",
       "title": "Let's connect!",
       "name": "Contact",
-      "summary": "Have a complex product or an interesting idea?",
+      "summary": "Have a product, website or an interesting idea?",
       "category": "Let’s connect",
-      "links": [
-        {
-          "id": "primary",
-          "url": "https://prems.me/",
-          "label": "Find me at prems.me"
-        }
-      ],
       "blocks": [
         {
           "id": "contact-body",
@@ -1050,9 +1174,9 @@ export const catalog={
               "presentation": "card"
             },
             {
-              "id": "home-project-merlin",
+              "id": "home-project-vodafone-travel",
               "type": "reference",
-              "documentId": "merlin",
+              "documentId": "vodafone-travel",
               "presentation": "card"
             },
             {
@@ -1080,9 +1204,9 @@ export const catalog={
               "presentation": "card"
             },
             {
-              "id": "home-project-rios",
+              "id": "home-project-thebodyshop",
               "type": "reference",
-              "documentId": "rios",
+              "documentId": "thebodyshop",
               "presentation": "card"
             }
           ],
@@ -1387,7 +1511,7 @@ export const catalog={
         {
           "id": "quote-matt",
           "type": "quote",
-          "text": "Exceptional technical depth. He designs with implementation in mind, anticipating edge cases and system constraints.",
+          "text": "Exceptional technical depth. He played a key role in creating and scaling the design system at Tracr, including the integration of design tokens, which significantly improved consistency, efficiency, and collaboration across teams. He has a rare ability to translate complex UX requirements into reusable, flexible UI components without sacrificing clarity or usability.",
           "attribution": "Matt Bindoff",
           "label": "Lead Engineer at Tracr",
           "evidenceIds": [
@@ -1428,7 +1552,7 @@ export const catalog={
         {
           "id": "quote-matt",
           "kind": "quote",
-          "text": "Exceptional technical depth. He designs with implementation in mind, anticipating edge cases and system constraints.",
+          "text": "Exceptional technical depth. He played a key role in creating and scaling the design system at Tracr, including the integration of design tokens, which significantly improved consistency, efficiency, and collaboration across teams. He has a rare ability to translate complex UX requirements into reusable, flexible UI components without sacrificing clarity or usability.",
           "provenance": {
             "kind": "author-provided",
             "label": "Testimonial supplied by Prem"
@@ -2278,8 +2402,17 @@ export const catalog={
       "id": "merlin-cover",
       "type": "image",
       "status": "published",
-      "url": "assets/ui/merlin-hero.png",
+      "url": "assets/merlin.png",
       "alt": "Merlin financial intelligence workspace with an AI agent assembling research and analysis panels",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "id": "vodafone-travel-cover",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/vodafonetravel-hero.png",
+      "alt": "Vodafone Travel eSIM experience shown across devices",
       "width": 1440,
       "height": 1459
     },
@@ -2291,6 +2424,15 @@ export const catalog={
       "alt": "",
       "width": 1440,
       "height": 900
+    },
+    {
+      "id": "thebodyshop-cover",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/thebodyshop-hero.png",
+      "alt": "The Body Shop responsive eCommerce site shown across devices",
+      "width": 1440,
+      "height": 1459
     },
     {
       "id": "rios-cover",
@@ -2350,7 +2492,7 @@ export const catalog={
       "id": "tracr-hero",
       "type": "image",
       "status": "published",
-      "url": "assets/ui/tracr-hero.jpg",
+      "url": "assets/ui/tracr-hero.png",
       "alt": "Tracr diamond provenance platform showing a transfer review with participant context",
       "width": 1440,
       "height": 1459
@@ -2606,6 +2748,34 @@ export const catalog={
       }
     },
     {
+      "documentId": "thebodyshop",
+      "card": {
+        "orientation": "landscape",
+        "surface": [
+          "#e4eedd",
+          "#dbe9d6"
+        ],
+        "backgroundMediaId": "generic-bg"
+      },
+      "detail": {
+        "columns": 2
+      }
+    },
+    {
+      "documentId": "vodafone-travel",
+      "card": {
+        "orientation": "landscape",
+        "surface": [
+          "#e2f0eb",
+          "#e5eaf3"
+        ],
+        "backgroundMediaId": "vodafone-bg"
+      },
+      "detail": {
+        "columns": 2
+      }
+    },
+    {
       "documentId": "vodafone-iot",
       "card": {
         "orientation": "landscape",
@@ -2733,8 +2903,8 @@ export const catalog={
           "featured": true
         },
         {
-          "id": "merlin",
-          "documentId": "merlin",
+          "id": "vodafone-travel",
+          "documentId": "vodafone-travel",
           "featured": true
         },
         {
@@ -2748,8 +2918,8 @@ export const catalog={
           "featured": true
         },
         {
-          "id": "rios",
-          "documentId": "rios",
+          "id": "thebodyshop",
+          "documentId": "thebodyshop",
           "featured": false
         },
         {

@@ -178,7 +178,7 @@ Assistant text effects; defaults keep the original look (Classic, no glimmer).
 | Classic stream | 45–220 graphemes/s, each fades in over 400ms | The original: one span per character, blue to ink. |
 | Feather / scramble stream | `speed` 1–220 units/s, catch-up +3.5 units/s per unit waiting (cap 220), edge 1–24 units | Settled text, a moving edge and the pending rest, all laid out before the first frame so the paragraph never reflows. Feather fades the edge to nothing through one colour or the four-stop prism; scramble shows stand-in glyphs (code, letters, digits, binary) swapped every `swap` ms. Moves by character or word. Caret: step blink, `--duration-text-caret`. |
 | Thinking glimmer | cycle 0.4–5s, band 10–45%, either direction, linear | A band swept across the label over 250%-wide resting ink. The gradient tiles (`background-repeat: repeat`); without it the ink vanishes for part of each cycle. |
-| Hero heading glimmer | the same look, 1–6 sweeps once the page has booted | The plain home heading only (not the Flip/Flat project titles). Each landing plays it, then `animationend` marks the heading done and it rests as plain ink. Rests on the heading's own ink. |
+| Page heading glimmer | the same look, 1–6 sweeps (default 2), 600ms after the heading lands | Each page's main heading (`PAGE_HEADINGS`: home hero, a project's visible title, About, Lab, articles, info pages), on by default. Every landing, including a route change and a return home, plays it; `animationend` then marks the heading done and it rests on its own ink. Not in the Flip/Flat home views. |
 
 Tints are the `--text-effect-*` tokens. Reduced motion, and Animation off, show
 the text at once and the label as plain ink. Pacing, edge maths and scramble

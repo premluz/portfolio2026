@@ -8,6 +8,7 @@
   "summary": "R&D • AI assistant • Generative UI • Prototype in code",
   "category": "Financial intelligence · R&D",
   "kind": "lab",
+  "listOnly": true,
   "year": "2026",
   "projectStatus": "R&D",
   "disciplines": [
