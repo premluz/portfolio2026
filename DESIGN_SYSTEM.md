@@ -126,6 +126,12 @@ keep the still image. Only one hover preview plays at a time.
 
 The body floor is 13px. The project detail and footer headings share the hero size.
 
+**Heading size** (Type and spacing) sets `--heading-scale` on its own: Auto (default, follows Text size), Small .6, Medium .68, Large .78, Extra large 1.1, Display 1.5. Display gives a hero-style title (about 55px at 1280px with editorial headings). Its rules come after the Text size rules in `design-system.css`, so any choice other than Auto wins.
+
+**Hero and project title alignment and space.** "Hero heading centred" (Home -> Hero; `data-hero-heading-align="center"`) centres the Home hero block (badge, `h1`, strapline and description, not in the split layouts) and also centres the project detail caption when the title sits above the picture (never when beside it). "Details title centred" (Project details; `data-detail-heading-align="center"`) centres the project detail caption above the picture on its own. "Details title space" (Project details; `data-detail-heading-space`) is Default, Roomy (`--space-detail-heading-roomy`), Spacious (`--space-detail-heading-spacious`), Extra spacious (`--space-detail-heading-grand`) or Stage (`--space-detail-heading-stage`) of room above the caption, with half as much below. All three are off by default and read by `project-media-focus.css`.
+
+**Card titles as headings** (Cards -> Card content; `data-card-heading-style="heading"`, on by default). When on, `.project-card h3` and `.spatial-gallery-copy h3` use `--heading-article-size`, `--font-weight-heading`, `--line-height-card` and `--letter-spacing-card`; when off (`data-card-heading-style="body"`), they use the regular body text tokens (`--font-size-body`, `--font-weight-body`, `--line-height-body`, `--letter-spacing-body`).
+
 **Eyebrow text role.** `.text-eyebrow` is the small uppercase label above a value: caption size, light weight, label tracking and the eyebrow ink (`--eyebrow-ink`, with a dark value). Detail-page fact labels (`[data-detail-fact] dt`) and the card tag row use it. The older `.eyebrow` class and the `.description dt` rules still exist and give the same look; new labels should use `.text-eyebrow`.
 
 **Gradient text role.** `.text-gradient` is a reusable two-stop tint (`--text-gradient-from` / `--text-gradient-to`, with light and dark values in `tokens.css`). The About page's `.about-highlight` and the card results line (when Card details is on) use it; the declarations live once in `design-system.css`.

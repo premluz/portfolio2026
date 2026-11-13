@@ -20,7 +20,7 @@ async function ready(page,route='tracr'){
 }
 async function verifyVariant(page,variant,theme){
  await change(page,'controlStyle',variant);
- await page.evaluate(theme=>{document.documentElement.dataset.theme=theme;document.querySelector('#dock').classList.remove('always-dark-glass');},theme);
+ await page.evaluate(theme=>{document.documentElement.dataset.theme=theme;document.querySelector('#dock').classList.remove('always-dark-glass');document.documentElement.classList.remove('always-dark-glass');},theme);
  await page.mouse.move(0,0);await settle(page);
  const reference=await material(page.locator('[data-header-action="back"]'));
  await expect(page.locator('#projectMenuToggle')).toHaveClass(new RegExp('control-'+variant));
@@ -124,6 +124,8 @@ test('new settings UI keeps card glass independent of control style',async({page
 test('footer labels and icons inherit the shared control variants and Utilities override',async({page})=>{
  await ready(page,'work');
  await page.evaluate(()=>{
+  // Go Back follows the always-dark dock; the footer does not, so compare them on the shared base material.
+  document.documentElement.classList.remove('always-dark-glass');
   for(const id of ['showFooterContactLinks','footerLinksAsText']){
    const input=document.getElementById(id);input.checked=true;input.dispatchEvent(new Event('change',{bubbles:true}));
   }

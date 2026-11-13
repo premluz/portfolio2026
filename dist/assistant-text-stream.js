@@ -1,11 +1,12 @@
+import {graphemes} from './text-stream-engine.js';
+import {streamEdgeText} from './text-stream-edge.js';
+import {readTextEffects} from './text-effects-settings.js';
 const streamTiming=Object.freeze({minimumRate:45,maximumRate:220,ratePerPendingGrapheme:3.5,animationDuration:400});
 
-function graphemes(text){
- const segmenter=typeof Intl.Segmenter==='function'?new Intl.Segmenter(undefined,{granularity:'grapheme'}):null;
- return segmenter?[...segmenter.segment(text)].map(part=>part.segment):Array.from(text);
-}
-
-export function streamText(element,text,{reduced=false,onComplete=()=>{}}={}){
+// effects.effect picks the style (Developer settings › Motion › Assistant text effects): Classic is the original
+// per-character fade below; feather and scramble stream behind a moving edge (text-stream-edge.js).
+export function streamText(element,text,{reduced=false,onComplete=()=>{},effects=readTextEffects()}={}){
+ if(effects.effect!=='classic')return streamEdgeText(element,text,{reduced,onComplete,style:effects});
  const value=String(text||'');if(!element)return ()=>{};
  const parts=graphemes(value);let frame=0,timer=0,lastFrame=null,credit=0,shown=0,done=false;
  const finish=()=>{if(done)return;done=true;cancelAnimationFrame(frame);clearTimeout(timer);element.textContent=value;element.classList.remove('vivid-stream');element.setAttribute('aria-busy','false');onComplete();};

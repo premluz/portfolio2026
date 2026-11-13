@@ -1,0 +1,36 @@
+/* Assistant text effects: the streaming edge (feather, scramble) and the thinking label's glimmer.
+   Ported from PremLab's StreamingText and TextGlimmer. Tints are the --text-effect-* tokens (tokens.css). */
+
+/* Streaming edge. The paragraph holds settled text, the edge and the pending rest, all laid out, so it never reflows. */
+.edge-stream{white-space:pre-wrap}
+.edge-stream[data-font="mono"]{font-family:var(--font-family-mono)}
+.edge-stream[data-color="blue"]{--edge-stream-color:var(--text-effect-blue)}
+.edge-stream[data-color="purple"]{--edge-stream-color:var(--text-effect-purple)}
+.edge-stream[data-color="pink"]{--edge-stream-color:var(--text-effect-pink)}
+.edge-stream[data-color="orange"]{--edge-stream-color:var(--text-effect-orange)}
+.edge-stream[data-color="teal"]{--edge-stream-color:var(--text-effect-teal)}
+.edge-stream[data-color="green"]{--edge-stream-color:var(--text-effect-green)}
+.edge-stream[data-color="yellow"]{--edge-stream-color:var(--text-effect-yellow)}
+.edge-stream[data-color="red"]{--edge-stream-color:var(--text-effect-red)}
+/* Paint-only hiding: the text keeps its layout, and currentColor stays available to the gradient. */
+.edge-stream-pending,.edge-stream[data-effect="feather"] .edge-stream-edge{-webkit-text-fill-color:transparent}
+.edge-stream[data-effect="feather"] .edge-stream-edge{background-image:linear-gradient(to right,currentColor,transparent);background-clip:text;-webkit-background-clip:text}
+.edge-stream[data-effect="feather"][data-tint="single"] .edge-stream-edge{background-image:linear-gradient(to right,currentColor,var(--edge-stream-color) 55%,transparent)}
+.edge-stream[data-effect="feather"][data-tint="multi"] .edge-stream-edge{background-image:linear-gradient(to right,currentColor,var(--text-effect-prism-1) 22%,var(--text-effect-prism-2) 45%,var(--text-effect-prism-3) 68%,var(--text-effect-prism-4) 85%,transparent)}
+.edge-stream[data-effect="scramble"] .edge-stream-edge{color:var(--muted)}
+.edge-stream[data-effect="scramble"][data-tint="single"] .edge-stream-edge{color:var(--edge-stream-color)}
+.edge-stream[data-effect="scramble"][data-tint="multi"] .edge-stream-edge{background-image:linear-gradient(90deg,var(--text-effect-prism-1),var(--text-effect-prism-2) 33%,var(--text-effect-prism-3) 66%,var(--text-effect-prism-4));background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+/* Zero net width, so the caret never pushes text along. */
+.edge-stream-caret{border-inline-start:.08em solid currentColor;margin-inline-end:-.08em;animation:edge-stream-blink var(--duration-text-caret) step-end infinite}
+@keyframes edge-stream-blink{50%{opacity:0}}
+:root[data-animation="off"] .edge-stream-caret{animation:none}
+@media(prefers-reduced-motion:reduce){.edge-stream-caret{animation:none}}
+
+/* Thinking glimmer: replaces the classic shimmer on the label. The band comes from the properties applyGlimmer sets on the status. */
+.iconiq-thinking[data-glimmer] .iconiq-thinking-label{background-image:var(--text-glimmer-gradient);background-size:250% 100%;background-repeat:no-repeat;background-clip:text;-webkit-background-clip:text;color:transparent;animation:text-glimmer-ltr var(--text-glimmer-cycle) linear infinite}
+.iconiq-thinking[data-glimmer][data-direction="rtl"] .iconiq-thinking-label{animation-name:text-glimmer-rtl}
+@keyframes text-glimmer-ltr{from{background-position:100% 0}to{background-position:-100% 0}}
+@keyframes text-glimmer-rtl{from{background-position:-100% 0}to{background-position:100% 0}}
+/* Still: plain resting ink, as the classic label. */
+:root[data-animation="off"] .iconiq-thinking[data-glimmer] .iconiq-thinking-label{background:none;color:var(--eyebrow-ink);animation:none}
+@media(prefers-reduced-motion:reduce){:root .iconiq-thinking[data-glimmer] .iconiq-thinking-label{background:none;color:var(--eyebrow-ink);animation:none}}

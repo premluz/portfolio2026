@@ -8,6 +8,7 @@ export function playingVideoState(root){
 export const previewFor=video=>[...previews].find(preview=>preview.video===video)||null;
 // `except` may be a preview or its video element: the clip carried into a morph keeps playing.
 export function pauseVideoPreviews(except){for(const preview of previews)if(preview!==except&&preview.video!==except&&preview.active)preview.stop();}
+export function syncVideoPreviews(){for(const preview of previews)preview.sync();}
 const queue=()=>{if(frame||!globalThis.requestAnimationFrame)return;frame=requestAnimationFrame(()=>{frame=0;for(const preview of previews)preview.sync();});};
 const events=['scroll','resize','gallery-selection-change','portfolio-route-settled'];
 function watch(enabled){for(const event of events)globalThis[enabled?'addEventListener':'removeEventListener']?.(event,queue,{passive:true,capture:event==='scroll'});if(!enabled&&frame){cancelAnimationFrame(frame);frame=0;}}
@@ -34,9 +35,14 @@ export class HoverVideo {
   if(globalThis.IntersectionObserver){this.observer=new IntersectionObserver(()=>this.sync(),{threshold:[0,.25]});this.observer.observe(el);}
   queue();
  }
+ allowed(){
+  const ds=document.documentElement?.dataset;
+  if(this.el.closest?.('.detail'))return ds?.detailHeroVideo!=='off';
+  return ds?.cardHoverVideo!=='off';
+ }
  visible(){
   const hiddenSelector=this.decorative?'[hidden],.flow-shell,.drag-stage,.transition-clone':'[hidden],[aria-hidden="true"],.flow-shell,.drag-stage,.transition-clone';
-  if(this.dead||this.reduced.matches||document.hidden||!this.el.isConnected||this.el.closest?.(hiddenSelector)||getComputedStyle(this.el).visibility==='hidden'||document.documentElement?.classList?.contains('route-transition'))return false;
+  if(this.dead||!this.allowed()||this.reduced.matches||document.hidden||!this.el.isConnected||this.el.closest?.(hiddenSelector)||getComputedStyle(this.el).visibility==='hidden'||document.documentElement?.classList?.contains('route-transition'))return false;
   if(this.el.getBoundingClientRect){const r=this.el.getBoundingClientRect();return r.width>0&&r.height>0&&r.bottom>0&&r.top<innerHeight&&r.right>0&&r.left<innerWidth;}
   return true;
  }
@@ -47,7 +53,7 @@ export class HoverVideo {
   if(this.el.closest?.('.home-view-split'))return this.trigger.dataset?.videoSpotlight==='true'||this.el.closest?.('.card-placement')?.style.zIndex==='2';
   return false;
  }
- sync(){if(this.automatic())this.play({automatic:true});}
+ sync(){if(!this.allowed()){if(this.active)this.stop();return;}if(this.automatic())this.play({automatic:true});}
  async play({automatic=false}={}){
   if(this.active||!this.visible()||!automatic&&!this.hover.matches)return;
   this.active=true;const generation=++this.generation;

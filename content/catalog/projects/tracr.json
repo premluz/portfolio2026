@@ -19,15 +19,15 @@
   "homeCards": [
     {
       "id": "tracr-home-1",
-      "mediaId": "tracr-cover"
+      "mediaId": "tracr-hero"
     },
     {
       "id": "tracr-home-2",
-      "mediaId": "tracr-cover"
+      "mediaId": "tracr-hero"
     },
     {
       "id": "tracr-home-3",
-      "mediaId": "tracr-cover"
+      "mediaId": "tracr-hero"
     }
   ],
   "context": "Blockchain-based provenance and traceability across the regulated global diamond supply chain, including complex statuses, exceptions and conflict management.",
@@ -35,7 +35,7 @@
   "highlights": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
   "keyWork": "Used the design system as a vehicle for incremental redesign, reframed the architecture around the diamond and unified five independent workflows through one reusable action model.",
   "impact": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
-  "heroMediaId": "tracr-cover",
+  "heroMediaId": "tracr-hero",
   "hoverVideoId": "tracr-walkthrough",
   "blocks": [
     {
@@ -44,7 +44,7 @@
       "label": "Project walkthrough",
       "title": "Product in motion",
       "mediaId": "tracr-walkthrough",
-      "posterMediaId": "tracr-cover",
+      "posterMediaId": "tracr-hero",
       "caption": "Walkthrough video",
       "layout": {
         "columns": 2,

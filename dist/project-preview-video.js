@@ -7,10 +7,10 @@ export class ProjectPreviewVideo {
  }
  start(project){
   this.stop();
-  if(!project.videoUrl||this.reduced()||document.documentElement?.dataset.animation==='off')return;
+  if(!project.videoUrl||this.reduced()||document.documentElement?.dataset.animation==='off'||document.documentElement?.dataset.cardHoverVideo==='off')return;
   this.timer=setTimeout(()=>{
    this.timer=null;
-   if(this.reduced()||!this.root.classList.contains('is-visible')||document.documentElement?.dataset.animation==='off')return;
+   if(this.reduced()||!this.root.classList.contains('is-visible')||document.documentElement?.dataset.animation==='off'||document.documentElement?.dataset.cardHoverVideo==='off')return;
    this.video=document.createElement('video');this.video.className='project-menu-preview-video';
    this.video.dataset.videoUrl=project.videoUrl;this.video.preload='none';this.video.setAttribute('aria-hidden','true');
    this.root.append(this.video);this.player=this.createPlayer(this.root,this.video);void this.player.play();

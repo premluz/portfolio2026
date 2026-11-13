@@ -75,7 +75,7 @@
     "id": "merlin-cover",
     "type": "image",
     "status": "published",
-    "url": "assets/merlin.png",
+    "url": "assets/ui/merlin-hero.png",
     "alt": "Merlin financial intelligence workspace with an AI agent assembling research and analysis panels"
   },
   {
@@ -89,7 +89,7 @@
     "id": "rios-cover",
     "type": "image",
     "status": "published",
-    "url": "assets/rios.png",
+    "url": "assets/ui/rios-hero.jpg",
     "alt": "Rios life-first planner with a spatial timeline for shaping a changing day"
   },
   {
@@ -103,7 +103,7 @@
     "id": "playstation-cover",
     "type": "image",
     "status": "published",
-    "url": "assets/playstation.png",
+    "url": "assets/ui/playstation-hero.png",
     "alt": "PlayStation publishing pipeline interface for preparing and releasing game content"
   },
   {
@@ -117,7 +117,7 @@
     "id": "vodafone-cover",
     "type": "image",
     "status": "published",
-    "url": "assets/vodafoneiot.png",
+    "url": "assets/ui/vodafone-hero.png",
     "alt": "Vodafone IoT connectivity platform for managing device fleets and SIM operations"
   },
   {
@@ -128,10 +128,10 @@
     "alt": ""
   },
   {
-    "id": "tracr-cover",
+    "id": "tracr-hero",
     "type": "image",
     "status": "published",
-    "url": "assets/tracr.png",
+    "url": "assets/ui/tracr-hero.jpg",
     "alt": "Tracr diamond provenance platform showing a transfer review with participant context"
   },
   {
@@ -145,7 +145,7 @@
     "id": "gala-cover",
     "type": "image",
     "status": "published",
-    "url": "assets/galafilm.png",
+    "url": "assets/ui/galafilm-hero.png",
     "alt": "Gala Film creator publishing experience for a decentralised entertainment platform"
   },
   {
@@ -159,7 +159,7 @@
     "id": "bastion-cover",
     "type": "image",
     "status": "published",
-    "url": "assets/bastion.png",
+    "url": "assets/ui/bastion-hero.png",
     "alt": "Bastion AI wallet prototype with a persistent assistant and financial interface"
   },
   {
@@ -240,7 +240,7 @@
     "id": "gala-defi-cover",
     "type": "image",
     "status": "published",
-    "url": "assets/gala-defi.png",
+    "url": "assets/ui/galadefi-hero.png",
     "alt": "GalaSwap decentralised exchange interface with swap, liquidity pool and wallet views"
   },
   {

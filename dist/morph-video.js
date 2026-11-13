@@ -71,9 +71,11 @@ export function landVideo(carried,receiverVisual){
  if(!carried)return;
  const {video,placeholder,css,home,preview}=carried;
  const target=receiverVisual?.querySelector?.('video[data-video-url]');
- if(!target||target.dataset.videoUrl!==video.dataset.videoUrl){
+ const ds=document.documentElement?.dataset;
+ const receiverAllowed=receiverVisual?.closest?.('.detail')?ds?.detailHeroVideo!=='off':ds?.cardHoverVideo!=='off';
+ if(!target||!receiverAllowed||target.dataset.videoUrl!==video.dataset.videoUrl){
   const bridge=bridgeFrame(video,placeholder.parentNode,home);
-  video.style.cssText=css;moveNode(placeholder.parentNode,video,placeholder);placeholder.remove();preview?.adopt(video);bridge.release();return;
+  video.style.cssText=css;moveNode(placeholder.parentNode,video,placeholder);placeholder.remove();preview?.adopt(video);if(preview&&!preview.allowed())preview.stop();bridge.release();return;
  }
  const receiver=previewFor(target),targetCss=target.style.cssText;
  receiver?.release();

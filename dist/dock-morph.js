@@ -16,6 +16,23 @@ function roundedSegment(x,y,w,h,leftRadius,rightRadius){
  return `M ${p(x+l,y)} H ${x+w-r} C ${p(x+w-r+k*r,y)} ${p(x+w,y+r-k*r)} ${p(x+w,y+r)} V ${y+h-r} C ${p(x+w,y+h-r+k*r)} ${p(x+w-r+k*r,y+h)} ${p(x+w-r,y+h)} H ${x+l} C ${p(x+l-k*l,y+h)} ${p(x,y+h-l+k*l)} ${p(x,y+h-l)} V ${y+l} C ${p(x,y+l-k*l)} ${p(x+l-k*l,y)} ${p(x+l,y)} Z`;
 }
 
+// Mirrors an outline across the dock's horizontal midline (y -> h - y). The dock's own lobes are
+// symmetric about that line, so only branches change side. Paths here use only M, H, V, C and Z.
+export function mirrorPathY(path,h){
+ let command='',index=0;
+ return path.replace(/[MHVCZ]|-?(?:\d+\.?\d*|\.\d+)(?:e[-+]?\d+)?/g,token=>{
+  if(/^[MHVCZ]$/.test(token)){command=token;index=0;return token;}
+  if(command==='H')return token;
+  if(command==='V'||index++%2===1)return (h-Number(token)).toFixed(3);
+  return token;
+ });
+}
+export function mirrorBranch(branch,h){
+ if(!branch)return branch;
+ return {...branch,top:h-branch.top-branch.height,path:branch.path&&mirrorPathY(branch.path,h),edge:branch.edge&&mirrorPathY(branch.edge,h),
+  segments:branch.segments?.map(segment=>({...segment,top:h-(segment.top??branch.top)-(segment.height??branch.height)}))};
+}
+
 // A vertical branch of the very same perimeter, not a scaled popover skin.
 // Opening and closing traverse this contour in either direction.
 export function popoverGeometry(phase,{baseLeft=0,baseWidth=120,baseTop=0,width=330,height=480,left=-105,gap=14,radius=24,rootX=null}={}){
@@ -187,6 +204,9 @@ export class DockMorph {
   const receding=this.popover&&this.accessory?dockGeometry(phase,this.metrics,{...this.accessory,position:recedingPosition}):null;
   if(receding)shape.path+=' '+receding.path;
   const back=this.back&&this.backPosition>0?backGeometry(shape,this.backPosition*remaining,this.metrics):null;if(back)shape.path=back.path;
+  // A menu that opens below (nav on top) is the same outline mirrored; it is flipped only once every piece
+  // is joined, so the back pill's splice still finds its edge and no contour winds against another.
+  if(extension?.below){const h=this.metrics.height;shape.path=mirrorPathY(shape.path,h);shape.popover=mirrorBranch(shape.popover,h);if(receding)receding.popover=mirrorBranch(receding.popover,h);}
   const backSpace=back?.space||0;
   this.el.style.setProperty('--dock-back-space',backSpace+'px');
   this.el.style.setProperty('--dock-center-offset',(backSpace-this.settingsSpace*remaining)/2+'px');
@@ -198,7 +218,7 @@ export class DockMorph {
   const outline=liquid||shape.path;
   const clip=liquid?`path(evenodd, '${liquid}')`:`path('${shape.path.replace(/\s+/g,' ')}')`;
   this.content.style.clipPath=extension?`path('${dockGeometry(phase,this.metrics).path.replace(/\s+/g,' ')}')`:clip;this.main.style.width=shape.mainWidth+'px';
-  const branch=shape.popover,branches=[branch,receding?.popover].filter(Boolean),left=Math.min(0,...branches.map(item=>item.left),back?.left||0),top=Math.min(0,...branches.map(item=>item.top)),width=Math.max(shape.width,...branches.map(item=>item.left+item.width))-left,height=shape.height-top;
+  const branch=shape.popover,branches=[branch,receding?.popover].filter(Boolean),left=Math.min(0,...branches.map(item=>item.left),back?.left||0),top=Math.min(0,...branches.map(item=>item.top)),width=Math.max(shape.width,...branches.map(item=>item.left+item.width))-left,height=Math.max(shape.height,...branches.map(item=>item.top+item.height))-top;
   for(const node of [this.glass,this.rim])Object.assign(node.style,{left:left+'px',top:top+'px',width:width+'px',height:height+'px'});
   this.clipPath.setAttribute('d',outline);this.clipPath.setAttribute('clip-rule',liquid?'evenodd':'nonzero');this.clipPath.setAttribute('transform',`translate(${-left} ${-top})`);
   this.glass.style.clipPath=branch||back?`url(#${this.clipId})`:clip;

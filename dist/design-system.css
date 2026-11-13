@@ -2,6 +2,15 @@
    the existing image/card geometry controls are separate fine adjustments. */
 :root[data-type-size="small"]{--type-scale:.82;--heading-scale:.6}
 :root[data-type-size="large"]{--type-scale:1;--heading-scale:.78}
+/* Visitor Text size: the same step ratios as the Text size presets above (.82/.9 and 1/.9), applied to body text only. */
+:root[data-reader-text-size="small"]{--reader-text-scale:.91}
+:root[data-reader-text-size="large"]{--reader-text-scale:1.11}
+/* Heading size: Auto (no rule) follows Text size; any other choice wins over it because it comes later at the same specificity. */
+:root[data-heading-size="small"]{--heading-scale:.6}
+:root[data-heading-size="medium"]{--heading-scale:.68}
+:root[data-heading-size="large"]{--heading-scale:.78}
+:root[data-heading-size="xlarge"]{--heading-scale:1.1}
+:root[data-heading-size="display"]{--heading-scale:1.5}
 :root[data-space-size="small"]{--space-density:.8}
 :root[data-space-size="large"]{--space-density:1.2}
 :root[data-heading-weight="thin"]{--font-weight-heading:300}
@@ -37,7 +46,9 @@ button,input,select,textarea{font-family:var(--font-family-sans)}
 .hero-news li{padding-block:var(--space-6)}
 .hero-news h3{font-size:var(--font-size-body);font-weight:var(--font-weight-heading);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body)}
 
-.project-card h3,.project-card[data-card-presentation="flip"] h3,.spatial-gallery-copy h3{font-size:var(--heading-article-size);font-weight:var(--font-weight-heading);line-height:var(--line-height-card);letter-spacing:var(--letter-spacing-card)}
+/* Card titles read as normal body text by default; "Card titles as headings" (Cards) switches them onto the heading scale. */
+:root[data-card-heading-style="heading"]{--card-heading-size:var(--heading-article-size);--card-heading-weight:var(--font-weight-heading);--card-heading-line:var(--line-height-card);--card-heading-tracking:var(--letter-spacing-card)}
+.project-card h3,.project-card[data-card-presentation="flip"] h3,.spatial-gallery-copy h3{font-size:var(--card-heading-size);font-weight:var(--card-heading-weight);line-height:var(--card-heading-line);letter-spacing:var(--card-heading-tracking)}
 .project-card .eyebrow,.project-card[data-card-presentation="flip"] .eyebrow,.project-card[data-card-presentation="current"]:not([data-image-mode="bleed"])>.card-copy>.eyebrow{font-size:var(--font-size-caption);margin-top:var(--space-title-eyebrow)}
 .surface.detail>.eyebrow,.wide-hero-card>.eyebrow{margin-top:var(--space-detail-heading);font-size:var(--font-size-caption)}
 .detail.heading-beside-image>.eyebrow{margin:var(--space-detail-heading) 0 var(--space-detail-context)}

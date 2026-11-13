@@ -36,9 +36,31 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
    across the page under it, then the long title, summary and facts in a reading-width column. With "Details title beside image"
    on that column sits at the left; off, it is centred like a blog post. These rules outrank the older two-column ones in style.css. */
 .surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-caption{display:block;grid-column:1;grid-row:1;width:100%;max-width:var(--page-intro-width);margin:0 0 var(--space-page-rhythm-md)}
+/* Centred hero heading ("Hero heading centred" on Home, or "Details title centred" on Project details): centres the Home hero
+   block (not in the split layouts) and the project caption when the title sits above the picture (never when beside it).
+   "Details title space" adds hero-like room above the caption and half as much below, where the usual caption gap also applies (tokens.css). */
+:root[data-hero-heading-align="center"] .home-canvas:not(.home-view-split) .hero-about{text-align:center}
+:root[data-hero-heading-align="center"] .home-canvas:not(.home-view-split) .hero-about :is(h1,.hero-strapline){margin-inline:auto;text-wrap:balance}
+:root[data-hero-heading-align="center"] .home-canvas:not(.home-view-split) .hero-copy>[data-hero-description]{grid-column:1 / -1;max-width:var(--page-intro-width);margin-inline:auto}
+/* Centred, the heading and description take the middle four of the hero copy's six columns (content-widths.css); below 1000px they go full width. */
+@media(min-width:1001px){
+ :root[data-hero-heading-align="center"] .home-canvas:not(.home-view-split) .hero-about :is(h1,.hero-strapline){max-width:calc((100% - 5 * var(--space-6)) / 6 * 4 + 3 * var(--space-6))}
+ :root[data-hero-heading-align="center"] .home-canvas:not(.home-view-split) .hero-copy>[data-hero-description]{grid-column:2 / span 4;max-width:none}
+}
+:root:is([data-detail-heading-align="center"],[data-hero-heading-align="center"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{margin-inline:auto;text-align:center}
+:root:is([data-detail-heading-align="center"],[data-hero-heading-align="center"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption .detail-caption-title{margin-inline:auto}
+:root[data-hero-heading-space="roomy"] .home-canvas:not(.home-view-split) .home-hero{padding:var(--space-detail-heading-roomy) 0 calc(var(--space-detail-heading-roomy) / 2)}
+:root[data-hero-heading-space="spacious"] .home-canvas:not(.home-view-split) .home-hero{padding:var(--space-detail-heading-spacious) 0 calc(var(--space-detail-heading-spacious) / 2)}
+:root[data-hero-heading-space="grand"] .home-canvas:not(.home-view-split) .home-hero{padding:var(--space-detail-heading-grand) 0 calc(var(--space-detail-heading-grand) / 2)}
+:root[data-hero-heading-space="stage"] .home-canvas:not(.home-view-split) .home-hero{padding:var(--space-detail-heading-stage) 0 calc(var(--space-detail-heading-stage) / 2)}
+:root:is([data-detail-heading-space="roomy"],[data-detail-heading-space="default"][data-hero-heading-space="roomy"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-roomy) 0 calc(var(--space-detail-heading-roomy) / 2)}
+:root:is([data-detail-heading-space="spacious"],[data-detail-heading-space="default"][data-hero-heading-space="spacious"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-spacious) 0 calc(var(--space-detail-heading-spacious) / 2)}
+:root:is([data-detail-heading-space="grand"],[data-detail-heading-space="default"][data-hero-heading-space="grand"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-grand) 0 calc(var(--space-detail-heading-grand) / 2)}
+:root:is([data-detail-heading-space="stage"],[data-detail-heading-space="default"][data-hero-heading-space="stage"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-stage) 0 calc(var(--space-detail-heading-stage) / 2)}
 .detail-caption :is(p,h2){margin:0;font-size:var(--font-size-project-summary);font-weight:var(--font-weight-body);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body)}
 .detail-caption-title{color:var(--ink)}
 :root[data-heading-style="editorial"] .detail-caption .detail-caption-title{font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);text-transform:none;color:var(--ink);text-wrap:balance}
+:root[data-detail-heading-size="body"] .detail-caption .detail-caption-title,:root[data-detail-heading-size="body"] .surface.detail>h1{font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
 .detail-caption-lead{color:var(--eyebrow-ink)}
 .detail-caption-title + .detail-caption-lead{margin-top:var(--space-title-eyebrow)}
 .detail-caption .detail-caption-results{margin-top:var(--space-hero-heading-content);color:var(--body-ink)}

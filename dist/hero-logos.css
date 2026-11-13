@@ -1,0 +1,39 @@
+/* Logo strip under the hero description: an endless, linear marquee with softly blurred edges. */
+.hero-logos{
+ --logo-strip-height:calc(var(--space-unit) * 4.8);
+ --logo-strip-gap:calc(var(--space-unit) * 16);
+ --logo-strip-fade:calc(var(--space-unit) * 24);
+ --logo-strip-blur:var(--space-1);
+ --logo-strip-rest-opacity:.6;
+ /* Same rhythm as the gap below to the cards (.home-work margin-top), so the strip sits centred between description and cards. */
+ position:relative;overflow:hidden;margin-top:var(--space-page-rhythm-md);padding-block:var(--space-2);
+ -webkit-mask-image:linear-gradient(90deg,transparent,black var(--logo-strip-fade),black calc(100% - var(--logo-strip-fade)),transparent);
+ mask-image:linear-gradient(90deg,transparent,black var(--logo-strip-fade),black calc(100% - var(--logo-strip-fade)),transparent);
+ contain:layout paint;
+}
+.hero-logos[hidden]{display:none}
+/* The mask makes the strip its own backdrop root, so these blur only the passing logos, tapering towards the middle. */
+.hero-logos::before,.hero-logos::after{content:"";position:absolute;inset-block:0;width:var(--logo-strip-fade);z-index:1;pointer-events:none;-webkit-backdrop-filter:blur(var(--logo-strip-blur));backdrop-filter:blur(var(--logo-strip-blur))}
+.hero-logos::before{left:0;-webkit-mask-image:linear-gradient(90deg,black,transparent);mask-image:linear-gradient(90deg,black,transparent)}
+.hero-logos::after{right:0;-webkit-mask-image:linear-gradient(270deg,black,transparent);mask-image:linear-gradient(270deg,black,transparent)}
+.hero-logos-track{display:flex;width:max-content;will-change:transform;backface-visibility:hidden}
+/* The right padding equals the gap, so the seam between copies matches the spacing inside them. */
+.hero-logos-set{display:flex;align-items:center;gap:var(--logo-strip-gap);margin:0;padding:0 var(--logo-strip-gap) 0 0;list-style:none;flex:none}
+.hero-logos-set li{display:flex;flex:none}
+.hero-logos-set img{display:block;height:var(--logo-strip-height);width:auto;opacity:var(--logo-strip-rest-opacity);user-select:none;-webkit-user-drag:none}
+/* The source files are white; light mode turns them into ink. */
+:root:not([data-theme="dark"]) .hero-logos-set img{filter:brightness(0)}
+.home-canvas:not(.home-view-split) .hero-about>.hero-logos{max-width:none}
+/* The heading-space presets pad the hero's bottom; with the strip showing, that would stack on the gap to the cards, so the strip's own rhythm sets both sides. :root outranks the presets' selector. */
+:root .home-canvas:not(.home-view-split) .home-hero:has(.hero-logos:not([hidden])){padding-bottom:0}
+/* Straight under the heading, the gap above also holds the h1's bottom margin and the room below its baseline (half-leading plus descent), so the gap below grows by the same to look equal.
+   Padding, not margin: a bottom margin would collapse into the cards' larger top margin and vanish. */
+.hero-about:not(:has(.hero-copy>*)):not(:has(.hero-strapline:not([hidden])))>.hero-logos{
+ --logo-strip-heading-descent:.125;
+ padding-bottom:calc(var(--space-2) + var(--space-4) + var(--heading-title-size) * ((var(--heading-title-line) - 1) / 2 + var(--logo-strip-heading-descent)))
+}
+@media(prefers-reduced-motion:no-preference){
+ .hero-logos-track{animation:hero-logos-scroll var(--duration-logo-strip-loop) linear infinite}
+}
+/* One copy out of three (HERO_LOGO_COPIES in hero-logos.js). */
+@keyframes hero-logos-scroll{from{transform:translate3d(0,0,0)}to{transform:translate3d(calc(-100% / 3),0,0)}}

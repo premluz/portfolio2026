@@ -37,6 +37,8 @@
   --duration-toast-out: 200ms;
   --duration-tooltip-arrive: 240ms;
   --duration-detail-reveal: 220ms;
+  --duration-logo-strip-loop: 60s;
+  --duration-text-caret: 1s;
   --surface-hover-in-duration: 240ms;
   --surface-hover-out-duration: 1000ms;
   --card-content-in-duration: 220ms;
@@ -133,6 +135,19 @@
      and darkens the light one without adding a hue. */
   --send-wash: color-mix(in oklab, var(--ink) 9%, transparent);
   --send-wash-edge: color-mix(in oklab, var(--ink) 4%, transparent);
+  /* Assistant text effects (streaming edge, thinking glimmer): eight tints, and the four stops of the prism tint. */
+  --text-effect-blue: oklch(.58 .19 252);
+  --text-effect-purple: oklch(.55 .2 300);
+  --text-effect-pink: oklch(.62 .22 355);
+  --text-effect-orange: oklch(.68 .17 55);
+  --text-effect-teal: oklch(.62 .11 190);
+  --text-effect-green: oklch(.6 .16 150);
+  --text-effect-yellow: oklch(.78 .16 90);
+  --text-effect-red: oklch(.58 .21 25);
+  --text-effect-prism-1: var(--text-effect-blue);
+  --text-effect-prism-2: var(--text-effect-purple);
+  --text-effect-prism-3: var(--text-effect-pink);
+  --text-effect-prism-4: var(--text-effect-orange);
   --glass-card-rim-top: oklch(1 0 0 / .7);
   --glass-card-rim-bottom: oklch(0.2404 0.0414 305.38 / .06);
   --glass-card-glow-low: oklch(1 0 0 / .12);
@@ -148,6 +163,8 @@
   /* Text size (Small / Medium / Large) sets these two; the defaults here are Medium. Body text and headings
      scale separately so headings can be much smaller than body proportions alone would make them. */
   --type-scale: .9;
+  /* The visitor's Text size (site preferences) scales body text only; headings and labels keep the design scale. */
+  --reader-text-scale: 1;
   --heading-scale: .68;
   --space-density: 1;
   --font-weight-body: 400;
@@ -165,7 +182,7 @@
   --font-size-note: max(11px, calc(12px * var(--type-scale)));
   --font-size-small: max(12px, calc(13px * var(--type-scale)));
   --font-size-project-summary: clamp(14px, calc(15px * var(--type-scale)), 16px);
-  --font-size-body: max(13px, calc(16px * var(--type-scale)));
+  --font-size-body: max(13px, calc(16px * var(--type-scale) * var(--reader-text-scale)));
   /* Monospace reads larger than sans at the same size (wider glyphs), so the mono role sits below body. */
   --font-size-mono: max(11px, calc(var(--font-size-body) * .85));
   --font-size-reading: var(--font-size-body);
@@ -181,6 +198,11 @@
   --heading-title-line: var(--line-height-body);
   --heading-title-tracking: var(--letter-spacing-body);
   --heading-article-size: var(--font-size-reading);
+  /* Card titles (Cards -> "Card titles as headings"). Off is body text; on uses the editorial heading size, weight and tracking. */
+  --card-heading-size: var(--font-size-body);
+  --card-heading-weight: var(--font-weight-body);
+  --card-heading-line: var(--line-height-body);
+  --card-heading-tracking: var(--letter-spacing-body);
   --heading-label-size: var(--font-size-body);
   --heading-label-weight: var(--font-weight-body);
   --heading-label-line: var(--line-height-body);
@@ -192,6 +214,12 @@
   --space-detail-heading: var(--space-2);
   --space-detail-context: var(--space-4);
   --space-detail-sections: var(--space-8);
+  /* "Details title space" (Project details): breathing room above and below the title when it sits above the picture.
+     Spacious gives the caption a hero-like block; both follow Spacing (--space-density). */
+  --space-detail-heading-roomy: calc(var(--space-unit) * 14);
+  --space-detail-heading-spacious: clamp(calc(var(--space-unit) * 20), 16vh, calc(var(--space-unit) * 40));
+  --space-detail-heading-grand: clamp(calc(var(--space-unit) * 28), 24vh, calc(var(--space-unit) * 56));
+  --space-detail-heading-stage: clamp(calc(var(--space-unit) * 38), 32vh, calc(var(--space-unit) * 76));
   --line-height-body: 1.6;
   --line-height-reading: var(--line-height-body);
 
@@ -365,6 +393,14 @@
   --card-reflection-scale: .25;
   --card-glow-rgb: 13, 13, 15;
   --card-glow-scale: .3;
+  --text-effect-blue: oklch(.76 .14 245);
+  --text-effect-purple: oklch(.74 .15 300);
+  --text-effect-pink: oklch(.78 .15 355);
+  --text-effect-orange: oklch(.8 .13 60);
+  --text-effect-teal: oklch(.8 .1 190);
+  --text-effect-green: oklch(.8 .14 150);
+  --text-effect-yellow: oklch(.88 .13 95);
+  --text-effect-red: oklch(.74 .16 25);
   --ink: oklch(0.97184305 0.01472839 294.47299);
   --muted: oklch(0.80000842 0.02860611 299.43531);
   --body-ink: var(--muted);
@@ -880,6 +916,7 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 /* Hover previews use the image holder's fit and corner geometry. */
 .visual>.project-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:1;pointer-events:none;opacity:0;transition:opacity 140ms ease}
 .visual.video-preview-playing>.project-video{opacity:1}.visual>.video-frame-bridge{z-index:1;pointer-events:none}
+:root[data-card-hover-video="off"] .project-card .visual>.project-video,:root[data-detail-hero-video="off"] .detail .visual>.project-video{opacity:0;visibility:hidden}
 @media(prefers-reduced-motion:reduce){.visual>.project-video{transition:none}}
 
 /* Visitor preferences share the dock's liquid surface and quiet palette. */
@@ -887,7 +924,15 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 .dock-morph nav .site-settings-toggle{display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;padding:8px;margin-right:4px;border-radius:max(0px,calc(var(--nav-rounding) - 6px));background:transparent;color:var(--muted);transition:background-color var(--nav-hover-out-duration) ease-out}
 .site-settings-toggle svg{display:block;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .dock-morph nav .site-settings-toggle:is(:hover,:focus-visible,.hover-trail,[aria-expanded="true"]){background:var(--nav-item-hover);transition-duration:var(--nav-hover-in-duration)}
+/* The Settings gear belongs to the classic nav: off by its switch, and out of the way while the composer shows (as the index toggle). */
+.dock-morph nav .site-settings-toggle[hidden]{display:none}
+#dock.is-composer .dock-content nav>.site-settings-toggle{opacity:0;visibility:hidden;pointer-events:none}
 .dock-morph .site-settings-menu{padding:12px 18px}
+/* #dock .project-menu (menu-controls.css) zeroes menu padding and control-style.css clears resting control backgrounds
+   (:root #dock .control-item:not(...)); these out-rank both so the Settings menu keeps its inset and switch tracks. */
+#dock .project-menu.site-settings-menu{padding:var(--space-2) calc(var(--menu-inset) / 1.5)}
+:root #dock .site-settings-menu .preference-switch[role="switch"]{background:var(--nav-item-hover)}
+:root #dock .site-settings-menu .preference-switch[role="switch"][aria-checked="true"]{background:color-mix(in oklab,var(--ink) 30%,transparent)}
 .site-setting-row{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;font-size:var(--font-size-small);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body)}
 .setting-label{display:flex;align-items:center;gap:6px}
 .site-settings-menu .setting-info{display:grid;place-items:center;width:22px;height:22px;min-height:22px;padding:0;border-radius:50%;font-size:11px;color:var(--muted)}
@@ -951,9 +996,13 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 @media(max-width:600px){.content-grid>.surface[data-block-columns="1"],.content-grid>.surface[data-block-columns="2"]{grid-column:1/-1}.story [data-media-fit="full-bleed"] .content-media-frame{width:calc(100% + var(--space-story-inset) + var(--space-story-inset));height:clamp(220px,70vw,420px)}}
 
 /* The dock can keep the same smoked glass in light or dark site themes. */
-#dock.always-dark-glass{color:var(--ink);--ink:oklch(.94 .008 285);--muted:oklch(.76 .012 285);--body-ink:var(--muted);--eyebrow-ink:oklch(.70 .012 285);--chrome:oklch(.19 .006 285 / .88);--panel:oklch(.21 .006 285 / .94);--nav-glass-rgb:23,23,28;--nav-glass-alpha:.32;--dock-glass-alpha:.32;--dock-backdrop-brightness:.65;--nav-rim:oklch(.98 .004 285 / .08);--dock-outline:var(--dock-outline-dark);--nav-highlight:oklch(.98 .004 285 / .10);--nav-shadow:oklch(0 0 0 / .24);--nav-item-ink:oklch(.76 .012 285);--nav-active:oklch(.98 .004 285 / .12);--nav-item-hover:oklch(.98 .004 285 / .055)}
+#dock.always-dark-glass,:root.always-dark-glass .header-detail-nav{color:var(--ink);--ink:oklch(.94 .008 285);--muted:oklch(.76 .012 285);--body-ink:var(--muted);--eyebrow-ink:oklch(.70 .012 285);--chrome:oklch(.19 .006 285 / .88);--panel:oklch(.21 .006 285 / .94);--nav-glass-rgb:23,23,28;--nav-glass-alpha:.32;--dock-glass-alpha:.32;--dock-backdrop-brightness:.65;--nav-rim:oklch(.98 .004 285 / .08);--dock-outline:var(--dock-outline-dark);--nav-highlight:oklch(.98 .004 285 / .10);--nav-shadow:oklch(0 0 0 / .24);--nav-item-ink:oklch(.76 .012 285);--nav-active:oklch(.98 .004 285 / .12);--nav-item-hover:oklch(.98 .004 285 / .055)}
 #dock.always-dark-glass .dock-glass{background:linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));-webkit-backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness))}
 #dock.always-dark-glass .dock-outline{stroke:var(--dock-outline)}
+/* Header Go Back and Previous/Next follow the dock; text re-resolves against the dark palette above. */
+:root.always-dark-glass .header-detail-nav{--composer-text-ink:var(--muted)}
+/* Over a light page the thin dark glass turns mid-grey, so it is denser there and inactive links lighter: about 5.5:1 on the plain light background. */
+:root:not([data-theme="dark"]) :is(#dock.always-dark-glass,.always-dark-glass .header-detail-nav){--dock-glass-alpha:.5;--dock-backdrop-brightness:.45;--nav-link-ink:oklch(.84 .008 290)}
 /* Site settings has its own glass surface beside the navigation/composer. */
 #dock.dock-morph{left:calc(50% + var(--dock-center-offset,0px))}
 #dock>.site-settings-dock{position:absolute;left:calc(100% + 10px);bottom:0;transform:none;--nav-main-width:var(--nav-height);--nav-context-width:0px;--nav-section-gap:0px;z-index:5}
@@ -1143,6 +1192,15 @@ body.card-background-hidden [data-hover-effect~="glow"][data-image-mode="bleed"]
    the existing image/card geometry controls are separate fine adjustments. */
 :root[data-type-size="small"]{--type-scale:.82;--heading-scale:.6}
 :root[data-type-size="large"]{--type-scale:1;--heading-scale:.78}
+/* Visitor Text size: the same step ratios as the Text size presets above (.82/.9 and 1/.9), applied to body text only. */
+:root[data-reader-text-size="small"]{--reader-text-scale:.91}
+:root[data-reader-text-size="large"]{--reader-text-scale:1.11}
+/* Heading size: Auto (no rule) follows Text size; any other choice wins over it because it comes later at the same specificity. */
+:root[data-heading-size="small"]{--heading-scale:.6}
+:root[data-heading-size="medium"]{--heading-scale:.68}
+:root[data-heading-size="large"]{--heading-scale:.78}
+:root[data-heading-size="xlarge"]{--heading-scale:1.1}
+:root[data-heading-size="display"]{--heading-scale:1.5}
 :root[data-space-size="small"]{--space-density:.8}
 :root[data-space-size="large"]{--space-density:1.2}
 :root[data-heading-weight="thin"]{--font-weight-heading:300}
@@ -1178,7 +1236,9 @@ button,input,select,textarea{font-family:var(--font-family-sans)}
 .hero-news li{padding-block:var(--space-6)}
 .hero-news h3{font-size:var(--font-size-body);font-weight:var(--font-weight-heading);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body)}
 
-.project-card h3,.project-card[data-card-presentation="flip"] h3,.spatial-gallery-copy h3{font-size:var(--heading-article-size);font-weight:var(--font-weight-heading);line-height:var(--line-height-card);letter-spacing:var(--letter-spacing-card)}
+/* Card titles read as normal body text by default; "Card titles as headings" (Cards) switches them onto the heading scale. */
+:root[data-card-heading-style="heading"]{--card-heading-size:var(--heading-article-size);--card-heading-weight:var(--font-weight-heading);--card-heading-line:var(--line-height-card);--card-heading-tracking:var(--letter-spacing-card)}
+.project-card h3,.project-card[data-card-presentation="flip"] h3,.spatial-gallery-copy h3{font-size:var(--card-heading-size);font-weight:var(--card-heading-weight);line-height:var(--card-heading-line);letter-spacing:var(--card-heading-tracking)}
 .project-card .eyebrow,.project-card[data-card-presentation="flip"] .eyebrow,.project-card[data-card-presentation="current"]:not([data-image-mode="bleed"])>.card-copy>.eyebrow{font-size:var(--font-size-caption);margin-top:var(--space-title-eyebrow)}
 .surface.detail>.eyebrow,.wide-hero-card>.eyebrow{margin-top:var(--space-detail-heading);font-size:var(--font-size-caption)}
 .detail.heading-beside-image>.eyebrow{margin:var(--space-detail-heading) 0 var(--space-detail-context)}
@@ -1532,6 +1592,47 @@ body.page-card-background-hidden .info-detail>.liquid-skin{display:none!importan
 @media(max-width:600px){.timeline-track li{flex-basis:min(72vw,300px)}.timeline-track ol{gap:36px;padding-inline:24px}}
 .hero-timeline[data-timeline-graphic=false] .timeline-track{padding-top:0}
 
+/* hero-logos.css */
+/* Logo strip under the hero description: an endless, linear marquee with softly blurred edges. */
+.hero-logos{
+ --logo-strip-height:calc(var(--space-unit) * 4.8);
+ --logo-strip-gap:calc(var(--space-unit) * 16);
+ --logo-strip-fade:calc(var(--space-unit) * 24);
+ --logo-strip-blur:var(--space-1);
+ --logo-strip-rest-opacity:.6;
+ /* Same rhythm as the gap below to the cards (.home-work margin-top), so the strip sits centred between description and cards. */
+ position:relative;overflow:hidden;margin-top:var(--space-page-rhythm-md);padding-block:var(--space-2);
+ -webkit-mask-image:linear-gradient(90deg,transparent,black var(--logo-strip-fade),black calc(100% - var(--logo-strip-fade)),transparent);
+ mask-image:linear-gradient(90deg,transparent,black var(--logo-strip-fade),black calc(100% - var(--logo-strip-fade)),transparent);
+ contain:layout paint;
+}
+.hero-logos[hidden]{display:none}
+/* The mask makes the strip its own backdrop root, so these blur only the passing logos, tapering towards the middle. */
+.hero-logos::before,.hero-logos::after{content:"";position:absolute;inset-block:0;width:var(--logo-strip-fade);z-index:1;pointer-events:none;-webkit-backdrop-filter:blur(var(--logo-strip-blur));backdrop-filter:blur(var(--logo-strip-blur))}
+.hero-logos::before{left:0;-webkit-mask-image:linear-gradient(90deg,black,transparent);mask-image:linear-gradient(90deg,black,transparent)}
+.hero-logos::after{right:0;-webkit-mask-image:linear-gradient(270deg,black,transparent);mask-image:linear-gradient(270deg,black,transparent)}
+.hero-logos-track{display:flex;width:max-content;will-change:transform;backface-visibility:hidden}
+/* The right padding equals the gap, so the seam between copies matches the spacing inside them. */
+.hero-logos-set{display:flex;align-items:center;gap:var(--logo-strip-gap);margin:0;padding:0 var(--logo-strip-gap) 0 0;list-style:none;flex:none}
+.hero-logos-set li{display:flex;flex:none}
+.hero-logos-set img{display:block;height:var(--logo-strip-height);width:auto;opacity:var(--logo-strip-rest-opacity);user-select:none;-webkit-user-drag:none}
+/* The source files are white; light mode turns them into ink. */
+:root:not([data-theme="dark"]) .hero-logos-set img{filter:brightness(0)}
+.home-canvas:not(.home-view-split) .hero-about>.hero-logos{max-width:none}
+/* The heading-space presets pad the hero's bottom; with the strip showing, that would stack on the gap to the cards, so the strip's own rhythm sets both sides. :root outranks the presets' selector. */
+:root .home-canvas:not(.home-view-split) .home-hero:has(.hero-logos:not([hidden])){padding-bottom:0}
+/* Straight under the heading, the gap above also holds the h1's bottom margin and the room below its baseline (half-leading plus descent), so the gap below grows by the same to look equal.
+   Padding, not margin: a bottom margin would collapse into the cards' larger top margin and vanish. */
+.hero-about:not(:has(.hero-copy>*)):not(:has(.hero-strapline:not([hidden])))>.hero-logos{
+ --logo-strip-heading-descent:.125;
+ padding-bottom:calc(var(--space-2) + var(--space-4) + var(--heading-title-size) * ((var(--heading-title-line) - 1) / 2 + var(--logo-strip-heading-descent)))
+}
+@media(prefers-reduced-motion:no-preference){
+ .hero-logos-track{animation:hero-logos-scroll var(--duration-logo-strip-loop) linear infinite}
+}
+/* One copy out of three (HERO_LOGO_COPIES in hero-logos.js). */
+@keyframes hero-logos-scroll{from{transform:translate3d(0,0,0)}to{transform:translate3d(calc(-100% / 3),0,0)}}
+
 /* home-about.css */
 .home-about{--home-about-years-column:5.375em;margin-top:var(--space-page-rhythm-md);width:100%;min-width:0;grid-column:1 / -1}
 .home-about>h2{margin:0 0 var(--space-6);font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
@@ -1693,7 +1794,7 @@ body.page-card-background-hidden .info-detail>.liquid-skin{display:none!importan
 .home-product-carousel .spatial-gallery-caption{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6)}
 .home-product-carousel .spatial-gallery-copy{grid-column:var(--content-column-start) / span 2;grid-template-columns:minmax(0,1fr);width:100%}
 .spatial-gallery-copy{display:grid;grid-template-columns:fit-content(35%) minmax(0,1fr);column-gap:24px;row-gap:var(--space-title-eyebrow);flex:1;min-width:0;cursor:default;user-select:none}.spatial-gallery-copy[href]{cursor:pointer}
-.spatial-gallery-copy h3{grid-column:1;grid-row:2;width:100%;max-width:none;min-width:0;margin:0;color:var(--ink);font-size:var(--font-size-body);font-weight:var(--font-weight-heading);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-card)}
+.spatial-gallery-copy h3{grid-column:1;grid-row:2;width:100%;max-width:none;min-width:0;margin:0;color:var(--ink);font-size:var(--card-heading-size);font-weight:var(--card-heading-weight);line-height:var(--card-heading-line);letter-spacing:var(--card-heading-tracking)}
 .spatial-gallery-copy .spatial-gallery-description{grid-column:1;grid-row:3;margin:0;max-width:none;color:var(--muted);font-size:var(--font-size-project-summary);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body)}
 .spatial-gallery-copy .spatial-gallery-client{grid-column:1;grid-row:1;align-self:baseline;margin:0;color:var(--eyebrow-ink);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-body);text-wrap:pretty;overflow-wrap:anywhere}
 .spatial-gallery-copy:not(:has(.spatial-gallery-client:not([hidden]))){grid-template-columns:minmax(0,1fr)}
@@ -1827,7 +1928,7 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 .home-testimonials-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));--testimonial-gap:var(--space-6);column-gap:0;row-gap:var(--testimonial-gap);min-width:0;width:auto;max-width:100%}
 .home-testimonials{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);min-width:0}
 .home-testimonials>h2{grid-column:1/-1}
-.home-testimonials-grid{grid-column:var(--content-column-start) / span 2}
+.home-testimonials-grid{grid-column:1 / -1}
 .home-testimonial{grid-column:span 5;display:flex;flex-direction:column;min-height:0}
 .home-testimonial:nth-child(odd){margin-right:calc(var(--testimonial-gap) / 2)}
 .home-testimonial:nth-child(even){margin-left:calc(var(--testimonial-gap) / 2)}
@@ -1898,9 +1999,31 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
    across the page under it, then the long title, summary and facts in a reading-width column. With "Details title beside image"
    on that column sits at the left; off, it is centred like a blog post. These rules outrank the older two-column ones in style.css. */
 .surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-caption{display:block;grid-column:1;grid-row:1;width:100%;max-width:var(--page-intro-width);margin:0 0 var(--space-page-rhythm-md)}
+/* Centred hero heading ("Hero heading centred" on Home, or "Details title centred" on Project details): centres the Home hero
+   block (not in the split layouts) and the project caption when the title sits above the picture (never when beside it).
+   "Details title space" adds hero-like room above the caption and half as much below, where the usual caption gap also applies (tokens.css). */
+:root[data-hero-heading-align="center"] .home-canvas:not(.home-view-split) .hero-about{text-align:center}
+:root[data-hero-heading-align="center"] .home-canvas:not(.home-view-split) .hero-about :is(h1,.hero-strapline){margin-inline:auto;text-wrap:balance}
+:root[data-hero-heading-align="center"] .home-canvas:not(.home-view-split) .hero-copy>[data-hero-description]{grid-column:1 / -1;max-width:var(--page-intro-width);margin-inline:auto}
+/* Centred, the heading and description take the middle four of the hero copy's six columns (content-widths.css); below 1000px they go full width. */
+@media(min-width:1001px){
+ :root[data-hero-heading-align="center"] .home-canvas:not(.home-view-split) .hero-about :is(h1,.hero-strapline){max-width:calc((100% - 5 * var(--space-6)) / 6 * 4 + 3 * var(--space-6))}
+ :root[data-hero-heading-align="center"] .home-canvas:not(.home-view-split) .hero-copy>[data-hero-description]{grid-column:2 / span 4;max-width:none}
+}
+:root:is([data-detail-heading-align="center"],[data-hero-heading-align="center"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{margin-inline:auto;text-align:center}
+:root:is([data-detail-heading-align="center"],[data-hero-heading-align="center"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption .detail-caption-title{margin-inline:auto}
+:root[data-hero-heading-space="roomy"] .home-canvas:not(.home-view-split) .home-hero{padding:var(--space-detail-heading-roomy) 0 calc(var(--space-detail-heading-roomy) / 2)}
+:root[data-hero-heading-space="spacious"] .home-canvas:not(.home-view-split) .home-hero{padding:var(--space-detail-heading-spacious) 0 calc(var(--space-detail-heading-spacious) / 2)}
+:root[data-hero-heading-space="grand"] .home-canvas:not(.home-view-split) .home-hero{padding:var(--space-detail-heading-grand) 0 calc(var(--space-detail-heading-grand) / 2)}
+:root[data-hero-heading-space="stage"] .home-canvas:not(.home-view-split) .home-hero{padding:var(--space-detail-heading-stage) 0 calc(var(--space-detail-heading-stage) / 2)}
+:root:is([data-detail-heading-space="roomy"],[data-detail-heading-space="default"][data-hero-heading-space="roomy"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-roomy) 0 calc(var(--space-detail-heading-roomy) / 2)}
+:root:is([data-detail-heading-space="spacious"],[data-detail-heading-space="default"][data-hero-heading-space="spacious"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-spacious) 0 calc(var(--space-detail-heading-spacious) / 2)}
+:root:is([data-detail-heading-space="grand"],[data-detail-heading-space="default"][data-hero-heading-space="grand"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-grand) 0 calc(var(--space-detail-heading-grand) / 2)}
+:root:is([data-detail-heading-space="stage"],[data-detail-heading-space="default"][data-hero-heading-space="stage"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-stage) 0 calc(var(--space-detail-heading-stage) / 2)}
 .detail-caption :is(p,h2){margin:0;font-size:var(--font-size-project-summary);font-weight:var(--font-weight-body);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body)}
 .detail-caption-title{color:var(--ink)}
 :root[data-heading-style="editorial"] .detail-caption .detail-caption-title{font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);text-transform:none;color:var(--ink);text-wrap:balance}
+:root[data-detail-heading-size="body"] .detail-caption .detail-caption-title,:root[data-detail-heading-size="body"] .surface.detail>h1{font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
 .detail-caption-lead{color:var(--eyebrow-ink)}
 .detail-caption-title + .detail-caption-lead{margin-top:var(--space-title-eyebrow)}
 .detail-caption .detail-caption-results{margin-top:var(--space-hero-heading-content);color:var(--body-ink)}
@@ -2249,8 +2372,46 @@ button.glass-surface:is(:hover,:focus-visible):not(:active),#dock .composer-sugg
 :root[data-animation=off] .vivid-stream-character{animation:none!important;color:inherit}
 @media(prefers-reduced-motion:reduce){.iconiq-thinking *,.vivid-stream *{animation:none!important}.iconiq-thinking-label{background:none;color:var(--eyebrow-ink)}.vivid-stream-character{color:inherit}}
 
+/* text-effects.css */
+/* Assistant text effects: the streaming edge (feather, scramble) and the thinking label's glimmer.
+   Ported from PremLab's StreamingText and TextGlimmer. Tints are the --text-effect-* tokens (tokens.css). */
+
+/* Streaming edge. The paragraph holds settled text, the edge and the pending rest, all laid out, so it never reflows. */
+.edge-stream{white-space:pre-wrap}
+.edge-stream[data-font="mono"]{font-family:var(--font-family-mono)}
+.edge-stream[data-color="blue"]{--edge-stream-color:var(--text-effect-blue)}
+.edge-stream[data-color="purple"]{--edge-stream-color:var(--text-effect-purple)}
+.edge-stream[data-color="pink"]{--edge-stream-color:var(--text-effect-pink)}
+.edge-stream[data-color="orange"]{--edge-stream-color:var(--text-effect-orange)}
+.edge-stream[data-color="teal"]{--edge-stream-color:var(--text-effect-teal)}
+.edge-stream[data-color="green"]{--edge-stream-color:var(--text-effect-green)}
+.edge-stream[data-color="yellow"]{--edge-stream-color:var(--text-effect-yellow)}
+.edge-stream[data-color="red"]{--edge-stream-color:var(--text-effect-red)}
+/* Paint-only hiding: the text keeps its layout, and currentColor stays available to the gradient. */
+.edge-stream-pending,.edge-stream[data-effect="feather"] .edge-stream-edge{-webkit-text-fill-color:transparent}
+.edge-stream[data-effect="feather"] .edge-stream-edge{background-image:linear-gradient(to right,currentColor,transparent);background-clip:text;-webkit-background-clip:text}
+.edge-stream[data-effect="feather"][data-tint="single"] .edge-stream-edge{background-image:linear-gradient(to right,currentColor,var(--edge-stream-color) 55%,transparent)}
+.edge-stream[data-effect="feather"][data-tint="multi"] .edge-stream-edge{background-image:linear-gradient(to right,currentColor,var(--text-effect-prism-1) 22%,var(--text-effect-prism-2) 45%,var(--text-effect-prism-3) 68%,var(--text-effect-prism-4) 85%,transparent)}
+.edge-stream[data-effect="scramble"] .edge-stream-edge{color:var(--muted)}
+.edge-stream[data-effect="scramble"][data-tint="single"] .edge-stream-edge{color:var(--edge-stream-color)}
+.edge-stream[data-effect="scramble"][data-tint="multi"] .edge-stream-edge{background-image:linear-gradient(90deg,var(--text-effect-prism-1),var(--text-effect-prism-2) 33%,var(--text-effect-prism-3) 66%,var(--text-effect-prism-4));background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+/* Zero net width, so the caret never pushes text along. */
+.edge-stream-caret{border-inline-start:.08em solid currentColor;margin-inline-end:-.08em;animation:edge-stream-blink var(--duration-text-caret) step-end infinite}
+@keyframes edge-stream-blink{50%{opacity:0}}
+:root[data-animation="off"] .edge-stream-caret{animation:none}
+@media(prefers-reduced-motion:reduce){.edge-stream-caret{animation:none}}
+
+/* Thinking glimmer: replaces the classic shimmer on the label. The band comes from the properties applyGlimmer sets on the status. */
+.iconiq-thinking[data-glimmer] .iconiq-thinking-label{background-image:var(--text-glimmer-gradient);background-size:250% 100%;background-repeat:no-repeat;background-clip:text;-webkit-background-clip:text;color:transparent;animation:text-glimmer-ltr var(--text-glimmer-cycle) linear infinite}
+.iconiq-thinking[data-glimmer][data-direction="rtl"] .iconiq-thinking-label{animation-name:text-glimmer-rtl}
+@keyframes text-glimmer-ltr{from{background-position:100% 0}to{background-position:-100% 0}}
+@keyframes text-glimmer-rtl{from{background-position:-100% 0}to{background-position:100% 0}}
+/* Still: plain resting ink, as the classic label. */
+:root[data-animation="off"] .iconiq-thinking[data-glimmer] .iconiq-thinking-label{background:none;color:var(--eyebrow-ink);animation:none}
+@media(prefers-reduced-motion:reduce){:root .iconiq-thinking[data-glimmer] .iconiq-thinking-label{background:none;color:var(--eyebrow-ink);animation:none}}
+
 /* content-widths.css */
-:root{--app-max-width:1920px;--content-width-reading:600px;--content-width-xs:960px;--content-width-media-wide:1280px;--content-width-sm:1200px;--content-width-md:1440px;--content-width-lg:1760px;--content-width:var(--content-width-md);--content-gutter:clamp(24px,4vw,64px);--app-canvas-width:min(100vw,var(--app-max-width));--content-shell-width:min(var(--app-max-width),calc(var(--content-width) + 2 * var(--content-gutter)))}
+:root{--app-max-width:1920px;--content-width-reading:600px;--content-width-xs:960px;--content-width-media-wide:1280px;--content-width-sm:1340px;--content-width-md:1440px;--content-width-lg:1760px;--content-width:var(--content-width-md);--content-gutter:clamp(24px,4vw,64px);--app-canvas-width:min(100vw,var(--app-max-width));--content-shell-width:min(var(--app-max-width),calc(var(--content-width) + 2 * var(--content-gutter)))}
 html{background:var(--page)}
 body{width:100%;max-width:var(--app-max-width);margin-inline:auto}
 :is(#main,.retained-home),.site-footer{width:100%;max-width:var(--content-shell-width);padding-inline:var(--content-gutter)}

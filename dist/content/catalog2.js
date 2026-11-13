@@ -474,15 +474,15 @@ export const catalog={
       "homeCards": [
         {
           "id": "tracr-home-1",
-          "mediaId": "tracr-cover"
+          "mediaId": "tracr-hero"
         },
         {
           "id": "tracr-home-2",
-          "mediaId": "tracr-cover"
+          "mediaId": "tracr-hero"
         },
         {
           "id": "tracr-home-3",
-          "mediaId": "tracr-cover"
+          "mediaId": "tracr-hero"
         }
       ],
       "context": "Blockchain-based provenance and traceability across the regulated global diamond supply chain, including complex statuses, exceptions and conflict management.",
@@ -490,7 +490,7 @@ export const catalog={
       "highlights": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
       "keyWork": "Used the design system as a vehicle for incremental redesign, reframed the architecture around the diamond and unified five independent workflows through one reusable action model.",
       "impact": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
-      "heroMediaId": "tracr-cover",
+      "heroMediaId": "tracr-hero",
       "hoverVideoId": "tracr-walkthrough",
       "blocks": [
         {
@@ -499,7 +499,7 @@ export const catalog={
           "label": "Project walkthrough",
           "title": "Product in motion",
           "mediaId": "tracr-walkthrough",
-          "posterMediaId": "tracr-cover",
+          "posterMediaId": "tracr-hero",
           "caption": "Walkthrough video",
           "layout": {
             "columns": 2,
@@ -957,7 +957,7 @@ export const catalog={
       "template": "home",
       "status": "published",
       "slug": "work",
-      "title": "I make complex products feel simple.",
+      "title": "I design products, experiences, and systems.",
       "summary": "I started out building for the web and running a solo studio. For the last 10+ years, I’ve designed products for technical and expert users. Recently I built Rios and Porter. Today, my focus is AI conversational and generative UI experiences. ",
       "blocks": [
         {
@@ -2250,10 +2250,10 @@ export const catalog={
       "id": "merlin-cover",
       "type": "image",
       "status": "published",
-      "url": "assets/merlin.png",
+      "url": "assets/ui/merlin-hero.png",
       "alt": "Merlin financial intelligence workspace with an AI agent assembling research and analysis panels",
       "width": 1440,
-      "height": 900
+      "height": 1459
     },
     {
       "id": "merlin-walkthrough",
@@ -2268,10 +2268,10 @@ export const catalog={
       "id": "rios-cover",
       "type": "image",
       "status": "published",
-      "url": "assets/rios.png",
+      "url": "assets/ui/rios-hero.jpg",
       "alt": "Rios life-first planner with a spatial timeline for shaping a changing day",
       "width": 1440,
-      "height": 900
+      "height": 1459
     },
     {
       "id": "rios-walkthrough",
@@ -2286,10 +2286,10 @@ export const catalog={
       "id": "playstation-cover",
       "type": "image",
       "status": "published",
-      "url": "assets/playstation.png",
+      "url": "assets/ui/playstation-hero.png",
       "alt": "PlayStation publishing pipeline interface for preparing and releasing game content",
-      "width": 2880,
-      "height": 1802
+      "width": 1440,
+      "height": 1459
     },
     {
       "id": "playstation-walkthrough",
@@ -2304,10 +2304,10 @@ export const catalog={
       "id": "vodafone-cover",
       "type": "image",
       "status": "published",
-      "url": "assets/vodafoneiot.png",
+      "url": "assets/ui/vodafone-hero.png",
       "alt": "Vodafone IoT connectivity platform for managing device fleets and SIM operations",
-      "width": 2160,
-      "height": 1350
+      "width": 1440,
+      "height": 1459
     },
     {
       "id": "vodafone-walkthrough",
@@ -2319,13 +2319,13 @@ export const catalog={
       "height": 900
     },
     {
-      "id": "tracr-cover",
+      "id": "tracr-hero",
       "type": "image",
       "status": "published",
-      "url": "assets/tracr.png",
+      "url": "assets/ui/tracr-hero.jpg",
       "alt": "Tracr diamond provenance platform showing a transfer review with participant context",
-      "width": 2880,
-      "height": 1802
+      "width": 1440,
+      "height": 1459
     },
     {
       "id": "tracr-walkthrough",
@@ -2340,10 +2340,10 @@ export const catalog={
       "id": "gala-cover",
       "type": "image",
       "status": "published",
-      "url": "assets/galafilm.png",
+      "url": "assets/ui/galafilm-hero.png",
       "alt": "Gala Film creator publishing experience for a decentralised entertainment platform",
-      "width": 2160,
-      "height": 1350
+      "width": 1440,
+      "height": 1440
     },
     {
       "id": "gala-walkthrough",
@@ -2358,10 +2358,10 @@ export const catalog={
       "id": "bastion-cover",
       "type": "image",
       "status": "published",
-      "url": "assets/bastion.png",
+      "url": "assets/ui/bastion-hero.png",
       "alt": "Bastion AI wallet prototype with a persistent assistant and financial interface",
       "width": 1440,
-      "height": 900
+      "height": 1459
     },
     {
       "id": "bastion-qr",
@@ -2457,10 +2457,10 @@ export const catalog={
       "id": "gala-defi-cover",
       "type": "image",
       "status": "published",
-      "url": "assets/gala-defi.png",
+      "url": "assets/ui/galadefi-hero.png",
       "alt": "GalaSwap decentralised exchange interface with swap, liquidity pool and wallet views",
-      "width": 2160,
-      "height": 1350
+      "width": 1440,
+      "height": 1459
     },
     {
       "id": "gala-defi-walkthrough",

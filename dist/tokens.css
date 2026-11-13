@@ -36,6 +36,8 @@
   --duration-toast-out: 200ms;
   --duration-tooltip-arrive: 240ms;
   --duration-detail-reveal: 220ms;
+  --duration-logo-strip-loop: 60s;
+  --duration-text-caret: 1s;
   --surface-hover-in-duration: 240ms;
   --surface-hover-out-duration: 1000ms;
   --card-content-in-duration: 220ms;
@@ -132,6 +134,19 @@
      and darkens the light one without adding a hue. */
   --send-wash: color-mix(in oklab, var(--ink) 9%, transparent);
   --send-wash-edge: color-mix(in oklab, var(--ink) 4%, transparent);
+  /* Assistant text effects (streaming edge, thinking glimmer): eight tints, and the four stops of the prism tint. */
+  --text-effect-blue: oklch(.58 .19 252);
+  --text-effect-purple: oklch(.55 .2 300);
+  --text-effect-pink: oklch(.62 .22 355);
+  --text-effect-orange: oklch(.68 .17 55);
+  --text-effect-teal: oklch(.62 .11 190);
+  --text-effect-green: oklch(.6 .16 150);
+  --text-effect-yellow: oklch(.78 .16 90);
+  --text-effect-red: oklch(.58 .21 25);
+  --text-effect-prism-1: var(--text-effect-blue);
+  --text-effect-prism-2: var(--text-effect-purple);
+  --text-effect-prism-3: var(--text-effect-pink);
+  --text-effect-prism-4: var(--text-effect-orange);
   --glass-card-rim-top: oklch(1 0 0 / .7);
   --glass-card-rim-bottom: oklch(0.2404 0.0414 305.38 / .06);
   --glass-card-glow-low: oklch(1 0 0 / .12);
@@ -147,6 +162,8 @@
   /* Text size (Small / Medium / Large) sets these two; the defaults here are Medium. Body text and headings
      scale separately so headings can be much smaller than body proportions alone would make them. */
   --type-scale: .9;
+  /* The visitor's Text size (site preferences) scales body text only; headings and labels keep the design scale. */
+  --reader-text-scale: 1;
   --heading-scale: .68;
   --space-density: 1;
   --font-weight-body: 400;
@@ -164,7 +181,7 @@
   --font-size-note: max(11px, calc(12px * var(--type-scale)));
   --font-size-small: max(12px, calc(13px * var(--type-scale)));
   --font-size-project-summary: clamp(14px, calc(15px * var(--type-scale)), 16px);
-  --font-size-body: max(13px, calc(16px * var(--type-scale)));
+  --font-size-body: max(13px, calc(16px * var(--type-scale) * var(--reader-text-scale)));
   /* Monospace reads larger than sans at the same size (wider glyphs), so the mono role sits below body. */
   --font-size-mono: max(11px, calc(var(--font-size-body) * .85));
   --font-size-reading: var(--font-size-body);
@@ -180,6 +197,11 @@
   --heading-title-line: var(--line-height-body);
   --heading-title-tracking: var(--letter-spacing-body);
   --heading-article-size: var(--font-size-reading);
+  /* Card titles (Cards -> "Card titles as headings"). Off is body text; on uses the editorial heading size, weight and tracking. */
+  --card-heading-size: var(--font-size-body);
+  --card-heading-weight: var(--font-weight-body);
+  --card-heading-line: var(--line-height-body);
+  --card-heading-tracking: var(--letter-spacing-body);
   --heading-label-size: var(--font-size-body);
   --heading-label-weight: var(--font-weight-body);
   --heading-label-line: var(--line-height-body);
@@ -191,6 +213,12 @@
   --space-detail-heading: var(--space-2);
   --space-detail-context: var(--space-4);
   --space-detail-sections: var(--space-8);
+  /* "Details title space" (Project details): breathing room above and below the title when it sits above the picture.
+     Spacious gives the caption a hero-like block; both follow Spacing (--space-density). */
+  --space-detail-heading-roomy: calc(var(--space-unit) * 14);
+  --space-detail-heading-spacious: clamp(calc(var(--space-unit) * 20), 16vh, calc(var(--space-unit) * 40));
+  --space-detail-heading-grand: clamp(calc(var(--space-unit) * 28), 24vh, calc(var(--space-unit) * 56));
+  --space-detail-heading-stage: clamp(calc(var(--space-unit) * 38), 32vh, calc(var(--space-unit) * 76));
   --line-height-body: 1.6;
   --line-height-reading: var(--line-height-body);
 
@@ -364,6 +392,14 @@
   --card-reflection-scale: .25;
   --card-glow-rgb: 13, 13, 15;
   --card-glow-scale: .3;
+  --text-effect-blue: oklch(.76 .14 245);
+  --text-effect-purple: oklch(.74 .15 300);
+  --text-effect-pink: oklch(.78 .15 355);
+  --text-effect-orange: oklch(.8 .13 60);
+  --text-effect-teal: oklch(.8 .1 190);
+  --text-effect-green: oklch(.8 .14 150);
+  --text-effect-yellow: oklch(.88 .13 95);
+  --text-effect-red: oklch(.74 .16 25);
   --ink: oklch(0.97184305 0.01472839 294.47299);
   --muted: oklch(0.80000842 0.02860611 299.43531);
   --body-ink: var(--muted);

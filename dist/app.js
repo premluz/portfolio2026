@@ -12,6 +12,7 @@ import {ComposerContext,readContextualButtons} from './composer-context.js';
 import {CardRail,applySectionPresentation} from './card-rail.js';
 import {CardGallery} from './card-gallery.js';
 import {readCarouselSettings,mountCarouselSettings} from './carousel-settings.js';
+import {mountTextEffects} from './text-effects-preview.js';
 import {mountContextualPopovers} from './contextual-popovers.js';
 import {mountAgent} from './agent.js';
 import {mountMascotSettings} from './mascot-settings.js';
@@ -26,9 +27,10 @@ import {createDetailContentReveal} from './detail-content-reveal.js';
 import {handleProjectArrowKey} from './project-arrow-keys.js';
 import {readImageEffectPreferences} from './image-effect-preferences.js';
 import {installTooltips} from './tooltips.js';
-import {pauseVideoPreviews,playingVideoState} from './hover-video.js';
+import {pauseVideoPreviews,playingVideoState,syncVideoPreviews} from './hover-video.js';
 import {DockMorph} from './dock-morph.js';
 import {LiquidPopover} from './liquid-popover.js';
+import {mountSitePreferences} from './site-preferences.js';
 import {projectMenuMarkup,projectMenuProjectsMarkup} from './project-menu.js';
 import {setIconSwitchState} from './icon-switch.js';
 import {mountMenuIconSettings} from './menu-icon-settings.js';
@@ -174,7 +176,7 @@ function syncInlineComposer(){
  if(inline&&askForm.parentElement!==slot)slot.append(askForm);
  else if(!inline&&askForm.parentElement===slot)askFormHome.parent.insertBefore(askForm,askFormHome.next);
 }
-function applyDockPreferences(){dockMorph.el.classList.toggle('contextual-composer',contextualComposer);dockMorph.el.classList.toggle('always-dark-glass',alwaysDarkGlass);$('#contextualComposerPreference').setAttribute('aria-checked',String(contextualComposer));$('#alwaysDarkGlassPreference').setAttribute('aria-checked',String(alwaysDarkGlass));}
+function applyDockPreferences(){dockMorph.el.classList.toggle('contextual-composer',contextualComposer);dockMorph.el.classList.toggle('always-dark-glass',alwaysDarkGlass);document.documentElement.classList.toggle('always-dark-glass',alwaysDarkGlass);$('#contextualComposerPreference').setAttribute('aria-checked',String(contextualComposer));$('#alwaysDarkGlassPreference').setAttribute('aria-checked',String(alwaysDarkGlass));}
 applyDockPreferences();
 const showProjectControls=route=>projectIds.includes(route);
 // With the nav on top, a project or article page swaps the header's avatar and name for Go Back and Previous/Next, in one fade.
@@ -293,6 +295,18 @@ const labSettings=mountLabSettings($('#settings'),{onChange:()=>{if(labMode&&!bu
 // One heading style for the whole site: body size (default) or editorial (large titles, small-caps section labels).
 let editorialHeadings=readFlag('prem-editorial-headings');document.documentElement.dataset.headingStyle=editorialHeadings?'editorial':'body';
 $('#editorialHeadings').checked=editorialHeadings;$('#editorialHeadings').onchange=e=>{editorialHeadings=e.target.checked;document.documentElement.dataset.headingStyle=editorialHeadings?'editorial':'body';saveFlag('prem-editorial-headings',editorialHeadings);for(const instance of instances)(instance.imageFrame||instance).resize();};
+// Hero and project title alignment and room, plus whether card titles use the heading style or regular body text.
+let heroHeadingCenter=readFlag('prem-hero-heading-center'),heroHeadingSpace='default',detailHeadingBody=readFlag('prem-detail-heading-body'),detailHeadingCenter=readFlag('prem-detail-heading-center'),detailHeadingSpace='default',cardHeadingStyle=true,cardHoverVideo=true,detailHeroVideo=true;try{if(localStorage.getItem('prem-card-heading-style')==='false')cardHeadingStyle=false;if(localStorage.getItem('prem-card-hover-video')==='false')cardHoverVideo=false;if(localStorage.getItem('prem-detail-hero-video')==='false')detailHeroVideo=false;const savedHero=localStorage.getItem('prem-hero-heading-space');if(['default','roomy','spacious','grand','stage'].includes(savedHero))heroHeadingSpace=savedHero;const saved=localStorage.getItem('prem-detail-heading-space');if(['default','roomy','spacious','grand','stage'].includes(saved))detailHeadingSpace=saved;}catch{}
+function applyDetailHeadingStyle(){const root=document.documentElement;root.dataset.heroHeadingAlign=heroHeadingCenter?'center':'start';root.dataset.heroHeadingSpace=heroHeadingSpace;root.dataset.detailHeadingSize=detailHeadingBody?'body':'heading';root.dataset.detailHeadingAlign=detailHeadingCenter?'center':'start';root.dataset.detailHeadingSpace=detailHeadingSpace;root.dataset.cardHeadingStyle=cardHeadingStyle?'heading':'body';root.dataset.cardHoverVideo=cardHoverVideo?'on':'off';root.dataset.detailHeroVideo=detailHeroVideo?'on':'off';$('#heroHeadingCenter').checked=heroHeadingCenter;$('#heroHeadingSpace').value=heroHeadingSpace;$('#detailHeadingBody').checked=detailHeadingBody;$('#detailHeadingCenter').checked=detailHeadingCenter;$('#detailHeadingSpace').value=detailHeadingSpace;$('#cardHeadingStyle').checked=cardHeadingStyle;$('#cardHoverVideo').checked=cardHoverVideo;$('#detailHeroVideo').checked=detailHeroVideo;syncVideoPreviews();homeLayout?.flush(true);for(const instance of instances)(instance.imageFrame||instance).resize();}
+applyDetailHeadingStyle();
+$('#heroHeadingCenter').onchange=e=>{heroHeadingCenter=e.target.checked;saveFlag('prem-hero-heading-center',heroHeadingCenter);applyDetailHeadingStyle();};
+$('#heroHeadingSpace').onchange=e=>{heroHeadingSpace=e.target.value;try{localStorage.setItem('prem-hero-heading-space',heroHeadingSpace);}catch{}applyDetailHeadingStyle();};
+$('#detailHeadingBody').onchange=e=>{detailHeadingBody=e.target.checked;saveFlag('prem-detail-heading-body',detailHeadingBody);applyDetailHeadingStyle();};
+$('#detailHeadingCenter').onchange=e=>{detailHeadingCenter=e.target.checked;saveFlag('prem-detail-heading-center',detailHeadingCenter);applyDetailHeadingStyle();};
+$('#detailHeadingSpace').onchange=e=>{detailHeadingSpace=e.target.value;try{localStorage.setItem('prem-detail-heading-space',detailHeadingSpace);}catch{}applyDetailHeadingStyle();};
+$('#cardHeadingStyle').onchange=e=>{cardHeadingStyle=e.target.checked;saveFlag('prem-card-heading-style',cardHeadingStyle);applyDetailHeadingStyle();};
+$('#cardHoverVideo').onchange=e=>{cardHoverVideo=e.target.checked;saveFlag('prem-card-hover-video',cardHoverVideo);applyDetailHeadingStyle();};
+$('#detailHeroVideo').onchange=e=>{detailHeroVideo=e.target.checked;saveFlag('prem-detail-hero-video',detailHeroVideo);applyDetailHeadingStyle();};
 let contactTitle=readFlag('prem-contact-title');document.documentElement.classList.toggle('contact-title-hidden',!contactTitle);
 $('#contactTitle').checked=contactTitle;$('#contactTitle').onchange=e=>{contactTitle=e.target.checked;document.documentElement.classList.toggle('contact-title-hidden',!contactTitle);saveFlag('prem-contact-title',contactTitle);};
 let contentStartFirst=readFlag('prem-content-start-first');document.documentElement.classList.toggle('content-start-first',contentStartFirst);
@@ -590,7 +604,8 @@ const statusStack=mountStatusStack({dock:$('#dock'),hud:$('#interactionHud'),mes
 const menuPreview=new ProjectMenuPreview(projectMenu,projects,{reduced:()=>reduce.matches});
 installProjectMenuHover(projectMenu,{reduced:()=>reduce.matches,onHover:row=>menuPreview.show(row),onLeave:()=>menuPreview.hide()});
 function renderProjectMenu(){const focusId=projectMenu.contains(document.activeElement)?document.activeElement?.dataset?.projectMenuItem:null;menuPreview.hide();projectMenu.querySelector('.project-menu-projects').innerHTML=projectMenuProjectsMarkup(projects,canonicalProjectRoute(current));projectMenu.querySelectorAll('[data-project-menu-item]').forEach(button=>button.onclick=()=>dispatchCommand({id:'project.open',target:button.dataset.projectMenuItem,source:'pointer'}));projectMenu.querySelectorAll('[data-page-menu-item]').forEach(button=>button.onclick=()=>dispatchCommand({id:'route.'+button.dataset.pageMenuItem,source:'pointer'}));projectMenu.querySelectorAll('[data-page-menu-item]').forEach(button=>{const active=button.dataset.pageMenuItem===(labMode?'lab':current);button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current','page');});if(projectPopover.active){projectPopover.measure();projectPopover.paint();if(focusId)projectMenu.querySelector(`[data-project-menu-item="${focusId}"]`)?.focus({preventScroll:true});}}
-const projectPopover=new LiquidPopover(dockMorph,projectMenu,projectMenuToggle,{reduced:()=>reduce.matches,duration:()=>duration*(slow?2.5:1),beforeOpen:()=>{void composerContext?.setBlocked(true);void portfolioAssistant.dismissSuggestions();},onClosed:()=>composerContext?.setBlocked(false),onClose:()=>menuPreview.hide(),returnFocus:()=>composerShown(current)?$('#assistantIndexToggle'):showProjectControls(current)?projectMenuToggle:document.querySelector('#dock [data-nav=work]')});
+const projectPopover=new LiquidPopover(dockMorph,projectMenu,projectMenuToggle,{reduced:()=>reduce.matches,duration:()=>duration*(slow?2.5:1),below:()=>navPosition==='top',onOpen:()=>sitePreferences.close(),beforeOpen:()=>{void composerContext?.setBlocked(true);void portfolioAssistant.dismissSuggestions();},onClosed:()=>composerContext?.setBlocked(false),onClose:()=>menuPreview.hide(),returnFocus:()=>composerShown(current)?$('#assistantIndexToggle'):showProjectControls(current)?projectMenuToggle:document.querySelector('#dock [data-nav=work]')});
+const sitePreferences=mountSitePreferences({dock:dockMorph,toggle:$('#sitePreferencesToggle'),menu:$('#sitePreferencesMenu'),flagInput:$('#navShowSettings'),below:()=>navPosition==='top',reduced:()=>reduce.matches,duration:()=>duration*(slow?2.5:1),onOpen:()=>{if(projectPopover.active)projectPopover.setOpen(false,{immediate:true,restoreFocus:false});},onNavChange:applyNavItems});
 
 function syncDockComposer(options={}){
  syncAssistantLauncher();
@@ -783,7 +798,7 @@ syncAnimationPreference();systemReduce.addEventListener('change',()=>{if(!busy)r
 renderProjectMenu();
 mountGlassStyle($('#cardGlassStyle'));mountControlStyles($('#settings'));const simpleTransitions=mountSimpleTransitions({enabled:$('#simpleTransitions'),skipExit:$('#simpleTransitionsSkipExit')});initDesignSystem($('#settings'),{canChange:()=>!busy,onChange:()=>{homeLayout?.flush(true);applyDetailHeading();main.querySelectorAll('.image-card>.visual').forEach(updateImageShade);dockMorph.refresh();if(!projectMenu.hidden){projectPopover.measure();projectPopover.paint();}}});
 mountHeroCarouselSettings($('#settings'),{canChange:()=>!busy&&!navigationPreparing,onChange:settings=>{heroCarouselSettings=settings;applyHeroCarouselSettings(document.documentElement,settings);homeLayout?.carousel.measure();}});
-mountCarouselSettings($('#settings'),{canChange:()=>!busy&&!navigationPreparing,onChange:settings=>{carouselSettings=settings;document.documentElement.style.setProperty('--carousel-card-scale',String(settings.size/100));document.documentElement.style.setProperty('--carousel-gap',settings.gap+'px');for(const gallery of cardGalleries)if(gallery instanceof CardGallery)gallery.setArcSettings(settings);}});
+mountTextEffects($('#settings'),{reduced:()=>reduce.matches});mountCarouselSettings($('#settings'),{canChange:()=>!busy&&!navigationPreparing,onChange:settings=>{carouselSettings=settings;document.documentElement.style.setProperty('--carousel-card-scale',String(settings.size/100));document.documentElement.style.setProperty('--carousel-gap',settings.gap+'px');for(const gallery of cardGalleries)if(gallery instanceof CardGallery)gallery.setArcSettings(settings);}});
 $('#previous').onclick=()=>dispatchCommand({id:'project.previous',source:'pointer'});$('#next').onclick=()=>dispatchCommand({id:'project.next',source:'pointer'});for(const key of Object.keys(materialSettings)){const input=document.getElementById(key);input.value=materialSettings[key];input.oninput=()=>{materialSettings[key]=+input.value;document.getElementById(key+'Value').value=input.value+'%';document.documentElement.style.setProperty('--reflection-strength',String(materialSettings.reflections/100));document.documentElement.style.setProperty('--glow-strength',String(materialSettings.glow/100));};}document.documentElement.style.setProperty('--reflection-strength',String(materialSettings.reflections/100));
 $('#navContentWidth').onchange=e=>{navWidthPreset=e.target.value==='page'?'page':normaliseContentWidth(e.target.value);applyContentWidths();saveFlag('prem-nav-content-width',navWidthPreset);};
 $('#contentPageWidth').onchange=e=>{if(busy){applyContentWidths();return;}contentPageWidth=normaliseContentWidth(e.target.value);applyContentWidths();refreshImageFrames();try{localStorage.setItem('prem-content-page-width',contentPageWidth);}catch{}};

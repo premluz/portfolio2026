@@ -27,7 +27,7 @@ export const blockTypeDefinitions=Object.freeze({
  text:{label:'Text',properties:{paragraphs:list(text)},required:['paragraphs']},
  image:{label:'Image',properties:{mediaId:id,alt:text,caption:text},required:['mediaId']},
  video:{label:'Video',properties:{mediaId:id,posterMediaId:id,caption:text},required:['mediaId']},
- 'info-card':{label:'Info card',properties:{paragraphs:list(text),mediaId:id,link},required:['title']},
+ 'info-card':{label:'Info card',properties:{paragraphs:list(text),mediaId:id,link,hidden:{type:'boolean'}},required:['title']},
  // A section groups blocks under an optional heading (title, label); its blocks are any other blocks, in order.
  section:{label:'Section',properties:{items:{...list(ref('block')),minItems:1,maxItems:100}},required:['items']},
  timeline:{label:'Timeline',properties:{items:{...list(ref('block')),minItems:1,maxItems:100}},required:['items']},

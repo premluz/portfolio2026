@@ -1,10 +1,11 @@
 import {menuInitialTarget} from './menu-keyboard.js';
-import {dockGeometry,stepDockSpring} from './dock-morph.js';
+import {dockGeometry,stepDockSpring,mirrorBranch} from './dock-morph.js';
 
 // Shares the dock's glass and spring. Only list content lives in this element.
 export class LiquidPopover {
- constructor(dock,menu,toggle,{reduced=()=>false,duration=()=>400,anchor='context',onOpen=()=>{},onClose=()=>{},onClosed=()=>{},beforeOpen=null,returnFocus=()=>toggle}={}){
-  Object.assign(this,{dock,menu,toggle,reduced,duration,anchor,onOpen,onClose,onClosed,beforeOpen,returnFocus,position:0,velocity:0,target:0,openEpoch:0,closedNotified:true});
+ // below: open under the dock (nav on top) instead of above it. width: a fixed menu width instead of the anchor's default.
+ constructor(dock,menu,toggle,{reduced=()=>false,duration=()=>400,anchor='context',below=()=>false,width=null,onOpen=()=>{},onClose=()=>{},onClosed=()=>{},beforeOpen=null,returnFocus=()=>toggle}={}){
+  Object.assign(this,{dock,menu,toggle,reduced,duration,anchor,below,fixedWidth:width,onOpen,onClose,onClosed,beforeOpen,returnFocus,position:0,velocity:0,target:0,openEpoch:0,closedNotified:true});
   toggle.setAttribute('aria-controls',menu.id);toggle.setAttribute('aria-haspopup','dialog');
   menu.setAttribute('role','dialog');menu.inert=true;
   toggle.onclick=()=>this.setOpen(!this.target);
@@ -36,13 +37,15 @@ export class LiquidPopover {
   toggle.setAttribute('aria-expanded',String(!!this.target));
  }
  measure(){
-  const dockRect=this.dock.el.getBoundingClientRect(),availableHeight=Math.max(48,dockRect.top-30),width=Math.min(this.anchor==='main-start'?520:330,innerWidth-32);
+  const dockRect=this.dock.el.getBoundingClientRect(),below=!!this.below(),availableHeight=Math.max(48,below?innerHeight-dockRect.bottom-30:dockRect.top-30),width=Math.min(this.fixedWidth??(this.anchor==='main-start'?520:330),innerWidth-32);
   this.menu.style.width=width+'px';this.menu.style.maxHeight=availableHeight+'px';this.menu.style.height='auto';
   const height=Math.min(this.menu.scrollHeight,availableHeight),fromMain=this.anchor.startsWith('main');
   const anchor=fromMain?this.dock.main.getBoundingClientRect().left-dockRect.left+this.dock.metrics.main/2:this.dock.metrics.context/2;
   const left=Math.max(16-dockRect.left,Math.min(anchor-width/2,innerWidth-16-dockRect.left-width));
-  this.metrics={width,height,left,gap:14,radius:24,anchor:fromMain?'main':'context',...(this.anchor==='main-start'?{rootX:this.toggle.getBoundingClientRect().left-dockRect.left+this.toggle.getBoundingClientRect().width/2}:{})};
-  Object.assign(this.menu.style,{left:left+'px',top:-(height+14)+'px',height:height+'px'});
+  this.metrics={width,height,left,gap:14,radius:24,below,anchor:fromMain?'main':'context',...(this.anchor==='main-start'?{rootX:this.toggle.getBoundingClientRect().left-dockRect.left+this.toggle.getBoundingClientRect().width/2}:{})};
+  Object.assign(this.menu.style,{left:left+'px',top:this.menuTop()+'px',height:height+'px'});
+ }
+ menuTop(){const {height,gap,below}=this.metrics;return below?this.dock.metrics.height+gap:-height-gap;
  }
  setOpen(open,{restoreFocus=true,immediate=false,prepared=false}={}){
   if(open&&this.beforeOpen&&!this.target&&!prepared){const epoch=++this.openEpoch;this.opening=true;this.closedNotified=false;Promise.resolve(this.beforeOpen()).then(()=>{if(epoch!==this.openEpoch)return;this.opening=false;this.setOpen(true,{restoreFocus,immediate,prepared:true});});return;}
@@ -70,8 +73,9 @@ export class LiquidPopover {
   if(this.position===0&&this.target===0){this.menu.hidden=true;this.menu.inert=true;this.menu.style.opacity='0';this.dock.setPopover(null);if(!this.closedNotified){this.closedNotified=true;this.onClosed();}return;}
   this.menu.hidden=false;
   const popover={...this.metrics,position:this.position};this.dock.setPopover(popover);
-  const shape=dockGeometry(this.dock.position,this.dock.metrics,popover).popover;if(!shape)return;
-  const {left,width,height,gap}=this.metrics,top=-height-gap;
+  const raw=dockGeometry(this.dock.position,this.dock.metrics,popover).popover;if(!raw)return;
+  const shape=this.metrics.below?mirrorBranch(raw,this.dock.metrics.height):raw;
+  const {left,width,height}=this.metrics,top=this.menuTop();
   // Text stays at its destination; the growing glass reveals it rather than
   // squeezing screenshots/type through a scale animation.
   this.menu.style.clipPath=`inset(${Math.max(0,shape.top-top)}px ${Math.max(0,left+width-shape.left-shape.width)}px ${Math.max(0,top+height-shape.top-shape.height)}px ${Math.max(0,shape.left-left)}px round ${Math.min(24,shape.height/2)}px)`;

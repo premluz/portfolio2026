@@ -417,6 +417,7 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 /* Hover previews use the image holder's fit and corner geometry. */
 .visual>.project-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:1;pointer-events:none;opacity:0;transition:opacity 140ms ease}
 .visual.video-preview-playing>.project-video{opacity:1}.visual>.video-frame-bridge{z-index:1;pointer-events:none}
+:root[data-card-hover-video="off"] .project-card .visual>.project-video,:root[data-detail-hero-video="off"] .detail .visual>.project-video{opacity:0;visibility:hidden}
 @media(prefers-reduced-motion:reduce){.visual>.project-video{transition:none}}
 
 /* Visitor preferences share the dock's liquid surface and quiet palette. */
@@ -424,7 +425,15 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 .dock-morph nav .site-settings-toggle{display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;padding:8px;margin-right:4px;border-radius:max(0px,calc(var(--nav-rounding) - 6px));background:transparent;color:var(--muted);transition:background-color var(--nav-hover-out-duration) ease-out}
 .site-settings-toggle svg{display:block;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .dock-morph nav .site-settings-toggle:is(:hover,:focus-visible,.hover-trail,[aria-expanded="true"]){background:var(--nav-item-hover);transition-duration:var(--nav-hover-in-duration)}
+/* The Settings gear belongs to the classic nav: off by its switch, and out of the way while the composer shows (as the index toggle). */
+.dock-morph nav .site-settings-toggle[hidden]{display:none}
+#dock.is-composer .dock-content nav>.site-settings-toggle{opacity:0;visibility:hidden;pointer-events:none}
 .dock-morph .site-settings-menu{padding:12px 18px}
+/* #dock .project-menu (menu-controls.css) zeroes menu padding and control-style.css clears resting control backgrounds
+   (:root #dock .control-item:not(...)); these out-rank both so the Settings menu keeps its inset and switch tracks. */
+#dock .project-menu.site-settings-menu{padding:var(--space-2) calc(var(--menu-inset) / 1.5)}
+:root #dock .site-settings-menu .preference-switch[role="switch"]{background:var(--nav-item-hover)}
+:root #dock .site-settings-menu .preference-switch[role="switch"][aria-checked="true"]{background:color-mix(in oklab,var(--ink) 30%,transparent)}
 .site-setting-row{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;font-size:var(--font-size-small);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body)}
 .setting-label{display:flex;align-items:center;gap:6px}
 .site-settings-menu .setting-info{display:grid;place-items:center;width:22px;height:22px;min-height:22px;padding:0;border-radius:50%;font-size:11px;color:var(--muted)}
@@ -488,9 +497,13 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 @media(max-width:600px){.content-grid>.surface[data-block-columns="1"],.content-grid>.surface[data-block-columns="2"]{grid-column:1/-1}.story [data-media-fit="full-bleed"] .content-media-frame{width:calc(100% + var(--space-story-inset) + var(--space-story-inset));height:clamp(220px,70vw,420px)}}
 
 /* The dock can keep the same smoked glass in light or dark site themes. */
-#dock.always-dark-glass{color:var(--ink);--ink:oklch(.94 .008 285);--muted:oklch(.76 .012 285);--body-ink:var(--muted);--eyebrow-ink:oklch(.70 .012 285);--chrome:oklch(.19 .006 285 / .88);--panel:oklch(.21 .006 285 / .94);--nav-glass-rgb:23,23,28;--nav-glass-alpha:.32;--dock-glass-alpha:.32;--dock-backdrop-brightness:.65;--nav-rim:oklch(.98 .004 285 / .08);--dock-outline:var(--dock-outline-dark);--nav-highlight:oklch(.98 .004 285 / .10);--nav-shadow:oklch(0 0 0 / .24);--nav-item-ink:oklch(.76 .012 285);--nav-active:oklch(.98 .004 285 / .12);--nav-item-hover:oklch(.98 .004 285 / .055)}
+#dock.always-dark-glass,:root.always-dark-glass .header-detail-nav{color:var(--ink);--ink:oklch(.94 .008 285);--muted:oklch(.76 .012 285);--body-ink:var(--muted);--eyebrow-ink:oklch(.70 .012 285);--chrome:oklch(.19 .006 285 / .88);--panel:oklch(.21 .006 285 / .94);--nav-glass-rgb:23,23,28;--nav-glass-alpha:.32;--dock-glass-alpha:.32;--dock-backdrop-brightness:.65;--nav-rim:oklch(.98 .004 285 / .08);--dock-outline:var(--dock-outline-dark);--nav-highlight:oklch(.98 .004 285 / .10);--nav-shadow:oklch(0 0 0 / .24);--nav-item-ink:oklch(.76 .012 285);--nav-active:oklch(.98 .004 285 / .12);--nav-item-hover:oklch(.98 .004 285 / .055)}
 #dock.always-dark-glass .dock-glass{background:linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));-webkit-backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness))}
 #dock.always-dark-glass .dock-outline{stroke:var(--dock-outline)}
+/* Header Go Back and Previous/Next follow the dock; text re-resolves against the dark palette above. */
+:root.always-dark-glass .header-detail-nav{--composer-text-ink:var(--muted)}
+/* Over a light page the thin dark glass turns mid-grey, so it is denser there and inactive links lighter: about 5.5:1 on the plain light background. */
+:root:not([data-theme="dark"]) :is(#dock.always-dark-glass,.always-dark-glass .header-detail-nav){--dock-glass-alpha:.5;--dock-backdrop-brightness:.45;--nav-link-ink:oklch(.84 .008 290)}
 /* Site settings has its own glass surface beside the navigation/composer. */
 #dock.dock-morph{left:calc(50% + var(--dock-center-offset,0px))}
 #dock>.site-settings-dock{position:absolute;left:calc(100% + 10px);bottom:0;transform:none;--nav-main-width:var(--nav-height);--nav-context-width:0px;--nav-section-gap:0px;z-index:5}

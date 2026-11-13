@@ -22,6 +22,7 @@ for(const match of panelHTML.matchAll(/<input\b([^>]*)>/g)){const attrs=attribut
 for(const match of panelHTML.matchAll(/<select\b([^>]*)>([\s\S]*?)<\/select>/g))controls.push(control('select',attributes(match[1]),match[2]));
 for(const match of panelHTML.matchAll(/<button\b([^>]*)>/g)){const attrs=attributes(match[1]);if(attrs.role==='switch')controls.push(control('button',attrs));}
 for(const key of ['typeSize','spaceSize','typeTracking','typeLeading'])controls.push(control('select',{'data-design-control':key},'<option value="small">Small</option><option value="medium" selected>Medium</option><option value="large">Large</option>'));
+controls.push(control('select',{'data-design-control':'headingSize'},['auto','small','medium','large','xlarge','display'].map(value=>`<option value="${value}"${value==='auto'?' selected':''}>${value}</option>`).join('')));
 for(const key of ['headingWeight','bodyWeight'])controls.push(control('select',{'data-design-control':key},'<option value="thin">Thin (300)</option><option value="regular" selected>Regular (400)</option><option value="bold">Bold (500)</option>'));
 const status={textContent:''},file={value:'',files:[],click(){}},exportButton={},importButton={},extras=new Map([['#settingsTransferStatus',status],['#settingsImportFile',file],['#settingsExport',exportButton],['#settingsImport',importButton]]);
 const panel={querySelectorAll:()=>controls,querySelector:selector=>extras.get(selector),addEventListener(){}};
@@ -49,7 +50,8 @@ assert(![...schema.values()].some(field=>field.input?.id==='contentSet'),'The co
 const proxyControls=controls.filter(input=>input.dataset.settingsScope==='proxy');
 assert.deepEqual(proxyControls.map(input=>input.id),['cardClientProxy','cardTitleProxy','cardDescriptionProxy','cardHoverProxy','brandProxy'],'Only the merged menus are proxy-scoped');
 assert(![...schema.values()].some(field=>proxyControls.includes(field.input)),'Merged menus are not part of exported settings');
-assert.equal(schema.size,controls.length-serverControls.length-proxyControls.length+2,'Every other developer control is covered, including hidden and generated controls (the theme select is the control behind the theme field)');
+assert.equal(schema.size,controls.length-serverControls.length-proxyControls.length+3,'Every other developer control is covered, including hidden and generated controls (the theme select is the control behind the theme field; the visitor Text size has no developer control)');
+assert.deepEqual(schema.get('readerTextSize')?.options,['small','medium','large'],'The visitor Text size is exported with the other preferences');
 const preset=exportSettings(schema,storage,new Date('2026-10-12T12:00:00Z'));
 assert.equal(preset.settings.theme,'system');assert.equal(preset.settings.cardPaddingRight,null,'Automatic design-system padding stays automatic');assert.equal(preset.settings.cardPaddingLeft,40);
 assert.equal(preset.settings.cardShowClient,true);assert.equal(preset.settings.cardShowTitle,true);assert.equal(preset.settings.cardShowDescription,true,'Card text visibility controls are included in exported settings');
@@ -65,8 +67,8 @@ assert.equal(map.get('prem-composer-glow'),'true','Composer ambience defaults on
 assert.equal(map.get('prem-contextual-buttons'),'inline','Contextual button placement is included in settings exports');const integrated=parseSettings(JSON.stringify({...preset,settings:{contextualButtons:'composer'}}),schema);importSettings(integrated,schema,storage);assert.equal(map.get('prem-contextual-buttons'),'composer');
 assert.equal(map.get('prem-menu-gesture-visible'),'false');assert.equal(map.get('prem-menu-info-visible'),'false');assert.equal(map.get('prem-menu-animation-visible'),'false');
 const noComposerGlow=parseSettings(JSON.stringify({...preset,settings:{showComposerGlow:false}}),schema);importSettings(noComposerGlow,schema,storage);assert.equal(map.get('prem-composer-glow'),'false','The ambient composer glow preference can be imported as hidden');
-assert.deepEqual(JSON.parse(map.get('prem-design-system')),{typeSize:'medium',spaceSize:'medium',typeTracking:'medium',typeLeading:'medium',headingWeight:'regular',bodyWeight:'regular'});
-const legacyTypography=parseSettings(JSON.stringify({...preset,settings:{'design.typeWeight':'large'}}),schema);importSettings(legacyTypography,schema,storage);assert.deepEqual(JSON.parse(map.get('prem-design-system')),{typeSize:'medium',spaceSize:'medium',typeTracking:'medium',typeLeading:'medium',headingWeight:'bold',bodyWeight:'bold'},'Earlier settings with one shared weight migrate to both independent weight choices');
+assert.deepEqual(JSON.parse(map.get('prem-design-system')),{typeSize:'medium',headingSize:'auto',spaceSize:'medium',typeTracking:'medium',typeLeading:'medium',headingWeight:'regular',bodyWeight:'regular'});
+const legacyTypography=parseSettings(JSON.stringify({...preset,settings:{'design.typeWeight':'large'}}),schema);importSettings(legacyTypography,schema,storage);assert.deepEqual(JSON.parse(map.get('prem-design-system')),{typeSize:'medium',headingSize:'auto',spaceSize:'medium',typeTracking:'medium',typeLeading:'medium',headingWeight:'bold',bodyWeight:'bold'},'Earlier settings with one shared weight migrate to both independent weight choices');
 assert.equal(JSON.parse(map.get('prem-motion-settings')).duration,400);assert.equal(map.get('prem-assistant-session'),'keep conversation');assert.equal(map.get('unrelated-key'),'keep');
 
 function verifyStyleTransfer(){

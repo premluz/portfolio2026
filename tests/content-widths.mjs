@@ -39,7 +39,7 @@ assert.equal(sectionRail(contentRail(2560,'small',64),'edge').width,1920);
 assert.equal(contentRail(320,'large',24).content,272,'Mobile fitting wins over a desktop maximum');
 
 values.set('prem-home-section-spans',JSON.stringify({services:'edge',about:'app',experience:'invalid'}));
-assert.deepEqual(readHomeSectionSpans(storage),{heading:'content',available:'content',strapline:'content',overview:'content',approach:'content',services:'edge',about:'app','about-timeline':'content',experience:'content','side-projects':'content',testimonials:'content',writing:'content'});
+assert.deepEqual(readHomeSectionSpans(storage),{heading:'content',available:'content',strapline:'content',logos:'content',overview:'content',approach:'content',services:'edge',about:'app','about-timeline':'content',experience:'content','side-projects':'content',testimonials:'content',writing:'content'});
 const nodes=Object.fromEntries(['services','about','experience','side-projects','testimonials'].map(id=>[id,{dataset:{homeSection:id},hidden:false}]));
 const root={querySelectorAll:()=>Object.values(nodes),querySelector:()=>null};
 const selects=Object.entries(nodes).map(([id])=>({dataset:{homeSpanControl:id},value:'content',addEventListener(type,fn){this[type]=fn;}}));

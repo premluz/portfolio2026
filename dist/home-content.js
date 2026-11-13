@@ -3,6 +3,7 @@ import {timelineMarkup} from './hero-timeline.js';
 import {content} from './content/local.js';
 import {escapeText,headingText} from './content/html.js';
 import {badgeMarkup} from './badge.js';
+import {heroLogosMarkup} from './hero-logos.js';
 export function normalizeHeroContent(value='timeline'){
  if(value&&typeof value==='object')return {timeline:value.timeline!==false,timelineText:value.timelineText??value.timeline!==false,description:value.description===true};
  return value==='paragraph'?{timeline:false,timelineText:false,description:true}:{timeline:true,timelineText:true,description:false};
@@ -19,7 +20,7 @@ const straplineMarkup=hero=>{const text=hero.blocks.find(block=>block.id==='home
 export function homeHero({heroContent='timeline'}={}){const hero=content.get('home'),intro=hero.blocks.find(b=>b.id==='home-introduction'),selection=normalizeHeroContent(heroContent);return `<section class="home-hero" aria-label="Introduction">
  <div class="hero-about" data-hero-combined-content="${(selection.timeline||selection.timelineText)&&selection.description}">
   ${badgeMarkup(hero.badge,{section:'available'})}<h1 data-hero-title data-home-section="heading"><span class="hero-greeting">${headingText(hero.title)}</span> ${headingText(intro?.title||'')}</h1>${straplineMarkup(hero)}
-  <div class="hero-copy" data-hero-copy>${heroCopyMarkup(heroContent)}</div>
+  <div class="hero-copy" data-hero-copy>${heroCopyMarkup(heroContent)}</div>${heroLogosMarkup()}
  </div>
  </section>`;}
 export function hydrateFooter(root=document){
