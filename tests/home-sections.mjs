@@ -46,7 +46,13 @@ const approach=content.get('home-approach');assert.equal(approach.blocks.find(bl
 const services=content.get('home-services'),quotes=content.get('home-testimonials');
 assert.equal(services.type,'component');assert.equal(quotes.type,'component');
 const serviceHTML=homeServicesMarkup(),quoteHTML=homeTestimonialsMarkup();
-assert.equal((serviceHTML.match(/<article /g)||[]).length,6);assert.equal((serviceHTML.match(/<svg /g)||[]).length,8);
+assert.equal((serviceHTML.match(/<article /g)||[]).length,6);for(const title of ['Interim design lead','Hiring','Coaching'])assert(!serviceHTML.includes('>'+title+'<'),title+' is hidden from Services');
+const serviceArt=Object.fromEntries([...serviceHTML.matchAll(/<article class="home-service-card">(<svg[\s\S]*?<\/svg>)<h3>([^<]+)<\/h3>/g)].map(m=>[m[2],m[1]]));
+assert.equal(Object.keys(serviceArt).length,6,'Every visible service card has its illustration');
+for(const [title,svg] of Object.entries(serviceArt))assert(/<g class="service-move" data-step="\d+" transform="translate\(-?\d+ -?\d+\)">/.test(svg),title+' has parts that move on card hover');
+for(const title of ['Product design','Webdesign','Design systems'])assert(!serviceArt[title].includes('service-dashed'),title+' has no dotted lines');
+assert.equal((serviceArt['Product design'].match(/service-accent/g)||[]).length,1,'Product design has one dark module');
+assert.equal((serviceHTML.match(/<svg /g)||[]).length,8);
 assert.equal((quoteHTML.match(/<blockquote>/g)||[]).length,4);assert.equal((quoteHTML.match(/<figcaption>/g)||[]).length,4);
 assert((await (await import('node:fs/promises')).readFile(new URL('../dist/home-sections.css',import.meta.url),'utf8')).includes('font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body)'),'Testimonials use the site body typography');
 const sectionStyles=await (await import('node:fs/promises')).readFile(new URL('../dist/home-sections.css',import.meta.url),'utf8');

@@ -5,21 +5,22 @@ import {stageMotion} from './motion-viewport.js';
 export function fadeHomeChrome(layer,control,duration){
  const promises=[],fade=(node,delay=0)=>promises.push(control.track(node.animate([{opacity:getComputedStyle(node).opacity||'1'},{opacity:0}],{duration:duration*.4,delay,easing:EASE.leave,fill:'both'})).finished);
  for(const hero of layer.querySelectorAll('.home-hero')){
-  const heading=hero.querySelector('h1'),copy=hero.querySelector('[data-hero-copy]'),badge=hero.querySelector('.badge');
-  // The hero leaves bottom-up: description, then heading, then the badge above it, each one step later.
+  const heading=hero.querySelector('h1'),copy=hero.querySelector('[data-hero-copy]'),badge=hero.querySelector('.badge'),logos=hero.querySelector('.hero-logos:not([hidden])');
+  // The hero leaves bottom-up: the logo strip (when shown), the description, the heading, then the badge above it,
+  // each one step later.
   let delay=0;const step=duration*.12;
-  for(const node of [copy,heading,badge])if(node){fade(node,delay);delay+=step;}
+  for(const node of [logos,copy,heading,badge])if(node){fade(node,delay);delay+=step;}
   if(!copy&&!heading&&!badge)fade(hero);
  }
  for(const node of layer.querySelectorAll('.spatial-gallery-primary-action,.footer-note,[data-home-news],.home-about,.home-content-section'))fade(node);
  return promises;
 }
-// Going back, the hero returns as it left, reversed: top-down, the badge, then the heading, then the description,
-// with the same step and length as the exit. fill 'backwards' keeps each line hidden until its step begins.
+// Going back, the hero returns as it left, reversed: top-down, the badge, the heading, the description, then the
+// logo strip, with the same step and length as the exit. fill 'backwards' keeps each line hidden until its step begins.
 export function revealHomeHero(root,control,duration){
  const promises=[],step=duration*.12;
  for(const hero of root.querySelectorAll('.home-hero')){
-  const nodes=[hero.querySelector('.badge'),hero.querySelector('h1'),hero.querySelector('[data-hero-copy]')].filter(node=>node&&!node.hidden);
+  const nodes=[hero.querySelector('.badge'),hero.querySelector('h1'),hero.querySelector('[data-hero-copy]'),hero.querySelector('.hero-logos')].filter(node=>node&&!node.hidden);
   nodes.forEach((node,index)=>promises.push(control.track(node.animate([{opacity:0},{opacity:1}],{duration:duration*.4,delay:index*step,easing:EASE.settle,fill:'backwards'})).finished));
  }
  return promises;

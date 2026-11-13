@@ -25,11 +25,13 @@ export const TEXT_EFFECT_CONTROLS=Object.freeze({
  glimmerColor:choice(TEXT_EFFECT_COLORS,'blue'),
  glimmerSpeed:range(.4,5,1.6,'s'),
  glimmerSpread:range(10,45,30,'%'),
- glimmerDirection:choice(['ltr','rtl'],'ltr')
+ glimmerDirection:choice(['ltr','rtl'],'ltr'),
+ heroGlimmer:toggle(false),
+ heroGlimmerPlays:range(1,6,2)
 });
 export const DEFAULT_TEXT_EFFECTS=Object.freeze(Object.fromEntries(Object.entries(TEXT_EFFECT_CONTROLS).map(([key,control])=>[key,control.value])));
 
-function normalizeValue(control,value){
+export function normalizeValue(control,value){
  if(control.type==='toggle')return typeof value==='boolean'?value:control.value;
  if(control.type==='choice')return control.options.includes(value)?value:control.value;
  return typeof value==='number'&&Number.isFinite(value)?Math.max(control.min,Math.min(control.max,value)):control.value;
@@ -43,20 +45,5 @@ export function readTextEffects(storage){
 }
 // The glimmer controls under their component's own option names.
 export const glimmerOptions=settings=>({enabled:settings.glimmer,tint:settings.glimmerTint,color:settings.glimmerColor,speed:settings.glimmerSpeed,spread:settings.glimmerSpread,direction:settings.glimmerDirection});
-
-function bind(panel,key,control,value,save){
- const input=panel.querySelector(`[data-text-effect-control="${key}"]`),output=panel.querySelector(`[data-text-effect-output="${key}"]`);
- if(!input)throw new Error(`Text effect control "${key}" is missing from the settings panel`);
- const show=()=>{if(control.type==='toggle')input.checked=value[key];else input.value=String(value[key]);if(output)output.value=value[key]+control.unit;};
- show();
- input.addEventListener(control.type==='range'?'input':'change',()=>{
-  value[key]=normalizeValue(control,control.type==='toggle'?input.checked:control.type==='range'?Number(input.value):input.value);show();save();
- });
-}
-export function mountTextEffectSettings(panel,{storage,onChange=()=>{}}={}){
- try{storage??=globalThis.localStorage;}catch(error){console.warn('Text effect settings cannot be saved: storage is unavailable',error);}
- const value=readTextEffects(storage);
- const save=()=>{try{storage?.setItem(TEXT_EFFECTS_KEY,JSON.stringify(value));}catch(error){console.warn('Text effect settings not saved',error);}onChange({...value});};
- for(const [key,control] of Object.entries(TEXT_EFFECT_CONTROLS))bind(panel,key,control,value,save);
- return {get value(){return {...value};}};
-}
+// The home hero heading shares the glimmer's look and has its own switch and sweep count.
+export const heroGlimmerOptions=settings=>({...glimmerOptions(settings),enabled:settings.heroGlimmer,plays:settings.heroGlimmerPlays});

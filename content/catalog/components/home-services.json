@@ -3,8 +3,8 @@
   "type": "component",
   "status": "published",
   "title": "Services",
-  "summary": "Product design, working prototypes, brand and motion, interim design leadership, hiring and coaching.",
-  "revision": 1,
+  "summary": "Product design, webdesign, working prototypes, design systems, accessibility audits, brand and motion.",
+  "revision": 2,
   "blocks": [
     {
       "id": "service-product-design",
@@ -15,11 +15,35 @@
       ]
     },
     {
+      "id": "service-webdesign",
+      "type": "info-card",
+      "title": "Webdesign",
+      "paragraphs": [
+        "Responsive websites, digital experiences and interfaces."
+      ]
+    },
+    {
       "id": "service-prototyping",
       "type": "info-card",
       "title": "Prototyping in code",
       "paragraphs": [
         "Real, working prototypes, so you can try before you commit."
+      ]
+    },
+    {
+      "id": "service-design-systems",
+      "type": "info-card",
+      "title": "Design systems",
+      "paragraphs": [
+        "Scalable foundations, components and consistency."
+      ]
+    },
+    {
+      "id": "service-accessibility-audit",
+      "type": "info-card",
+      "title": "Accessibility audit",
+      "paragraphs": [
+        "Checking your product against WCAG, with fixes your team can ship."
       ]
     },
     {
@@ -36,7 +60,8 @@
       "title": "Interim design lead",
       "paragraphs": [
         "If the lead’s seat is empty, I can fill it for a while."
-      ]
+      ],
+      "hidden": true
     },
     {
       "id": "service-hiring",
@@ -44,7 +69,8 @@
       "title": "Hiring",
       "paragraphs": [
         "I’ll help you find and interview your next designer or head of design."
-      ]
+      ],
+      "hidden": true
     },
     {
       "id": "service-coaching",
@@ -52,7 +78,8 @@
       "title": "Coaching",
       "paragraphs": [
         "Time to talk craft, career and working through complex design problems."
-      ]
+      ],
+      "hidden": true
     }
   ]
 }

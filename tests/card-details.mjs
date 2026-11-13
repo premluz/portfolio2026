@@ -3,7 +3,7 @@ import {readFile} from 'node:fs/promises';
 import {card} from '../dist/card-renderer.js';
 import {cards} from '../dist/documents.js';
 
-// Projects carry a status and discipline tags into their card markup (hidden by CSS until Card details is on).
+// Projects carry a status and discipline tags into their card markup (hidden by CSS until Card status or Card details is on).
 const tracr=cards.find(item=>item.id==='tracr');
 assert.equal(tracr.projectStatus,'Launched');assert.deepEqual(tracr.disciplines,['Design system','Product','Brand']);
 const html=card(tracr,0,'regular',{link:false});
@@ -26,6 +26,10 @@ assert(/\.text-gradient,\.about-highlight,body\.card-details[^{]*\.project-summa
 assert(!/about-highlight\{/.test(about)&&!/--about-highlight/.test(about),'About no longer carries its own copy');
 assert((tokens.match(/--text-gradient-from:/g)||[]).length===2&&(tokens.match(/--text-gradient-to:/g)||[]).length===2,'Light and dark values exist');
 assert(/body\.card-client-above:not\(\.card-client-hidden\)[^{]*\.card-title-hidden|body\.card-client-above:not\(\.card-client-hidden\) \.project-card\.image-card>\.card-copy>h3>\.card-title-client\{display:none\}/.test(card_css),'Above hides the inline client prefix so it wins over inline');
+assert(card_css.includes('body.card-status-shown .project-card.image-card>.card-copy>.card-status{display:inline-flex')&&!/body\.card-details[^{]*\.card-status\{/.test(card_css),'The status pill shows with Card status alone, not Card details');
+assert(card_css.includes('body.card-details .project-card.image-card>.card-copy>.card-tags{display:flex')&&card_css.includes('body:is(.card-client-above,.card-status-shown,.card-details) .project-card.image-card>.card-copy{'),'Tags stay on Card details, and the status pill stacks the copy like the other two');
+const {DEFAULT_STORAGE_VALUES}=await import('../dist/default-settings.js');
+assert.equal(DEFAULT_STORAGE_VALUES['prem-card-status'],'false','Card status starts off');
 assert(!html.includes('<h2>')&&html.includes('<h3>'),'Project card titles use h3 semantics');
 assert(design.includes('var(--heading-article-size)'),'Project card title size follows the editorial heading token');
 console.log('Card details passed: status and tags markup and order, escaping, missing data, every project has disciplines, one shared gradient class.');

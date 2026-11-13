@@ -18,6 +18,9 @@ assert.deepEqual(calls[0].keyframes,[{opacity:0},{opacity:1}]);
 assert.equal(tracked.length,3,'The transition control owns them, so Escape mid-return reverses them too');
 calls.length=0;parts['.badge'].hidden=true;revealHomeHero(root,control,400);
 assert.deepEqual(calls.map(call=>[call.name,call.options.delay]),[['heading',0],['copy',48]],'A hidden badge takes no step');
+calls.length=0;parts['.badge'].hidden=false;parts['.hero-logos']=node('logos');revealHomeHero(root,control,400);
+assert.deepEqual(calls.map(call=>[call.name,call.options.delay]),[['badge',0],['heading',48],['copy',96],['logos',144]],'The logo strip returns last, one step after the description');
+calls.length=0;parts['.hero-logos'].hidden=true;revealHomeHero(root,control,400);assert(!calls.some(call=>call.name==='logos'),'A hidden strip is not revealed');
 
 const app=await readFile(new URL('../dist/app.js',import.meta.url),'utf8');
 assert(app.includes('if(restoreReturningHome)tasks.push(...revealHomeHero(main,activeTransition,duration*(slow?2.5:1)));'),'Only an animated return from a project runs it');

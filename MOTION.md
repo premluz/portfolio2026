@@ -82,7 +82,7 @@ one deliberate overshoot curve; nothing else uses a literal.
 | Featured stage reveal | card 490ms, photo 1400ms | Each time a stage is a quarter in view: the photo settles from 1.06 and the card rises 14px and grows from 0.94 (the simple-transition entrance), both on `gentle`. A stage that fully leaves resets instantly, so it replays on the next pass. |
 | Detail text reveal | 220ms each, 44ms step, 240ms cap | Facts and actions after the title and summary. |
 | Summary and title fade | 620ms | Fade mode of the summary stream. |
-| Home hero exit | `duration × 0.4`, 12% steps | Description, heading, then badge. |
+| Home hero exit | `duration × 0.4`, 12% steps | Bottom-up: logo strip (when shown), description, heading, then badge. The return is the reverse, the strip last. |
 | Card content | in 220ms, out 180ms | Hover copy. |
 | Toast | in 240ms, out 200ms | Rises 8px, settling 1px past rest; drops 8px on `leave`. |
 | Hover (nav, list) | in 70ms, out 420ms | Fast in, lingering out. |
@@ -166,6 +166,23 @@ interruptible, and reduced motion places it at once.
 Home is just right of the composer, or the Assistant button when the composer
 is hidden. Seats are chosen beside what the visitor is reading (the popover,
 the sentence around the marker), never over it, the pointer or other content.
+
+### Assistant text
+
+Answers stream and the Thinking label glimmers. Both are ported from PremLab
+(`StreamingText`, `TextGlimmer`) and set in Developer settings › Motion ›
+Assistant text effects; defaults keep the original look (Classic, no glimmer).
+
+| Moment | Value | Notes |
+|---|---|---|
+| Classic stream | 45–220 graphemes/s, each fades in over 400ms | The original: one span per character, blue to ink. |
+| Feather / scramble stream | `speed` 1–220 units/s, catch-up +3.5 units/s per unit waiting (cap 220), edge 1–24 units | Settled text, a moving edge and the pending rest, all laid out before the first frame so the paragraph never reflows. Feather fades the edge to nothing through one colour or the four-stop prism; scramble shows stand-in glyphs (code, letters, digits, binary) swapped every `swap` ms. Moves by character or word. Caret: step blink, `--duration-text-caret`. |
+| Thinking glimmer | cycle 0.4–5s, band 10–45%, either direction, linear | A band swept across the label over 250%-wide resting ink. The gradient tiles (`background-repeat: repeat`); without it the ink vanishes for part of each cycle. |
+| Hero heading glimmer | the same look, 1–6 sweeps once the page has booted | The plain home heading only (not the Flip/Flat project titles). Each landing plays it, then `animationend` marks the heading done and it rests as plain ink. Rests on the heading's own ink. |
+
+Tints are the `--text-effect-*` tokens. Reduced motion, and Animation off, show
+the text at once and the label as plain ink. Pacing, edge maths and scramble
+live in `dist/text-stream-engine.js`.
 
 ## When not to animate
 

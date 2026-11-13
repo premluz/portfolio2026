@@ -38,5 +38,6 @@ export function streamEdgeText(element,text,{reduced=false,onComplete=()=>{},sty
   progress=advance(progress,total,elapsed,pace);paint(Math.floor(now/style.swap));
   if(progress.shown<total)frame=requestAnimationFrame(step);else finish();
  };
- frame=requestAnimationFrame(step);return finish;
+ // Laid out before the first frame, so the paragraph already has its final height and never reflows.
+ paint(0);frame=requestAnimationFrame(step);return finish;
 }

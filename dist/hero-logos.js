@@ -8,7 +8,7 @@ export const HERO_LOGOS=Object.freeze([
  {name:'The Body Shop',file:'TheBodyShop.svg',width:150,height:21},
  {name:'Gala Games',file:'GalaGames.svg',width:117,height:23},
  {name:'GalaChain',file:'GalaChain.svg',width:108,height:23},
- {name:'Tracr',file:'Tracr.svg',width:152,height:30}
+ {name:'Tracr',file:'Tracr.svg',width:92,height:18}
 ]);
 // Three identical copies: the track moves by exactly one copy per loop, and three keep the rail filled at the widest content width.
 export const HERO_LOGO_COPIES=3;

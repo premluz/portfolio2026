@@ -565,9 +565,10 @@ export const catalog={
       "year": "2025",
       "projectStatus": "Launched",
       "disciplines": [
-        "UX",
-        "UI",
-        "Motion"
+        "Web design",
+        "Marketing",
+        "Motion",
+        "Visual design"
       ],
       "shortCategory": "Web3 film platform",
       "homeCards": [
@@ -957,7 +958,7 @@ export const catalog={
       "template": "home",
       "status": "published",
       "slug": "work",
-      "title": "I design products, experiences, and systems.",
+      "title": "I design products, websites, and systems.",
       "summary": "I started out building for the web and running a solo studio. For the last 10+ years, I’ve designed products for technical and expert users. Recently I built Rios and Porter. Today, my focus is AI conversational and generative UI experiences. ",
       "blocks": [
         {
@@ -978,7 +979,7 @@ export const catalog={
           "id": "home-description",
           "type": "text",
           "paragraphs": [
-            "10+ years designing transformation and emerging tech for technical users. Today, my focus is AI and genUI. Recently built Rios, Porter & Bastion."
+            "10+ years designing for global brands. Technically fluent, I'm most useful in complex, large-scale and messy systems where the way forward isn't clear. I value craft, simplicity and accessibility."
           ]
         },
         {
@@ -1285,8 +1286,8 @@ export const catalog={
       "type": "component",
       "status": "published",
       "title": "Services",
-      "summary": "Product design, working prototypes, brand and motion, interim design leadership, hiring and coaching.",
-      "revision": 1,
+      "summary": "Product design, webdesign, working prototypes, design systems, accessibility audits, brand and motion.",
+      "revision": 2,
       "blocks": [
         {
           "id": "service-product-design",
@@ -1297,11 +1298,35 @@ export const catalog={
           ]
         },
         {
+          "id": "service-webdesign",
+          "type": "info-card",
+          "title": "Webdesign",
+          "paragraphs": [
+            "Responsive websites, digital experiences and interfaces."
+          ]
+        },
+        {
           "id": "service-prototyping",
           "type": "info-card",
           "title": "Prototyping in code",
           "paragraphs": [
             "Real, working prototypes, so you can try before you commit."
+          ]
+        },
+        {
+          "id": "service-design-systems",
+          "type": "info-card",
+          "title": "Design systems",
+          "paragraphs": [
+            "Scalable foundations, components and consistency."
+          ]
+        },
+        {
+          "id": "service-accessibility-audit",
+          "type": "info-card",
+          "title": "Accessibility audit",
+          "paragraphs": [
+            "Checking your product against WCAG, with fixes your team can ship."
           ]
         },
         {
@@ -1318,7 +1343,8 @@ export const catalog={
           "title": "Interim design lead",
           "paragraphs": [
             "If the lead’s seat is empty, I can fill it for a while."
-          ]
+          ],
+          "hidden": true
         },
         {
           "id": "service-hiring",
@@ -1326,7 +1352,8 @@ export const catalog={
           "title": "Hiring",
           "paragraphs": [
             "I’ll help you find and interview your next designer or head of design."
-          ]
+          ],
+          "hidden": true
         },
         {
           "id": "service-coaching",
@@ -1334,7 +1361,8 @@ export const catalog={
           "title": "Coaching",
           "paragraphs": [
             "Time to talk craft, career and working through complex design problems."
-          ]
+          ],
+          "hidden": true
         }
       ]
     },

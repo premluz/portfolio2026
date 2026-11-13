@@ -39,6 +39,10 @@
   --duration-detail-reveal: 220ms;
   --duration-logo-strip-loop: 60s;
   --duration-text-caret: 1s;
+  /* The home heading fades in for about 400ms after boot; its glimmer waits until it is fully there. */
+  --duration-hero-glimmer-delay: 600ms;
+  /* CSS twin of DURATION.staggerStep in motion-tokens.js; tests/motion-tokens.mjs keeps them equal. */
+  --duration-stagger-step: 28ms;
   --surface-hover-in-duration: 240ms;
   --surface-hover-out-duration: 1000ms;
   --card-content-in-duration: 220ms;
@@ -1922,6 +1926,8 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 .home-service-card,.home-testimonial{min-width:0;margin:0;padding:var(--home-content-card-padding);border:1px solid color-mix(in oklch,var(--ink) 5%,transparent);border-radius:var(--radius-home-content-card);background:var(--card-surface)}
 .service-illustration{display:block;width:100%;height:auto;aspect-ratio:330 / 230;margin:0 0 var(--space-6);color:color-mix(in oklch,var(--ink) 48%,var(--card-surface))}
 .service-face{fill:color-mix(in oklch,var(--ink) 7%,var(--card-surface))}.service-side{fill:color-mix(in oklch,var(--ink) 12%,var(--card-surface))}.service-top{fill:var(--card-surface)}.service-accent{fill:var(--ink);stroke:var(--ink)}.service-dashed{stroke-dasharray:3 4}
+/* Card art: each moving part is drawn at its hover pose and held at rest by its transform attribute; hovering the card clears it. */
+.service-move{transition:transform var(--duration-glow-out) var(--ease-standard)}@media(hover:hover){.home-service-card:hover .service-move{transform:none;transition-duration:var(--duration-glow-in);transition-timing-function:var(--ease-settle)}.home-service-card:hover .service-move[data-step="1"]{transition-delay:var(--duration-stagger-step)}.home-service-card:hover .service-move[data-step="2"]{transition-delay:calc(2 * var(--duration-stagger-step))}.home-service-card:hover .service-move[data-step="3"]{transition-delay:calc(3 * var(--duration-stagger-step))}.home-service-card:hover .service-move[data-step="4"]{transition-delay:calc(4 * var(--duration-stagger-step))}.home-service-card:hover .service-move[data-step="5"]{transition-delay:calc(5 * var(--duration-stagger-step))}.home-service-card:hover .service-move[data-step="6"]{transition-delay:calc(6 * var(--duration-stagger-step))}}@media(prefers-reduced-motion:reduce){.service-move{transition:none}}:root[data-animation="off"] .service-move{transition:none}
 .home-service-card h3{margin:0 0 var(--space-3);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--ink)}
 .home-service-card p{max-width:34ch;margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
 .home-service-card p+p{margin-top:var(--space-3)}
@@ -2402,10 +2408,17 @@ button.glass-surface:is(:hover,:focus-visible):not(:active),#dock .composer-sugg
 @media(prefers-reduced-motion:reduce){.edge-stream-caret{animation:none}}
 
 /* Thinking glimmer: replaces the classic shimmer on the label. The band comes from the properties applyGlimmer sets on the status. */
-.iconiq-thinking[data-glimmer] .iconiq-thinking-label{background-image:var(--text-glimmer-gradient);background-size:250% 100%;background-repeat:no-repeat;background-clip:text;-webkit-background-clip:text;color:transparent;animation:text-glimmer-ltr var(--text-glimmer-cycle) linear infinite}
+.iconiq-thinking[data-glimmer] .iconiq-thinking-label{background-image:var(--text-glimmer-gradient);background-size:250% 100%;background-repeat:repeat;background-clip:text;-webkit-background-clip:text;color:transparent;animation:text-glimmer-ltr var(--text-glimmer-cycle) linear infinite}
 .iconiq-thinking[data-glimmer][data-direction="rtl"] .iconiq-thinking-label{animation-name:text-glimmer-rtl}
 @keyframes text-glimmer-ltr{from{background-position:100% 0}to{background-position:-100% 0}}
 @keyframes text-glimmer-rtl{from{background-position:-100% 0}to{background-position:100% 0}}
+/* Home hero heading: sweeps --hero-glimmer-plays times once the page has booted and the heading has faded in, then
+   applyHeroGlimmer marks it done and it rests as plain ink. fit-content makes the band cross the text, not the wider
+   block around it. Only the plain heading, not the Flip/Flat project titles; motion off means no sweep. */
+@media(prefers-reduced-motion:no-preference){
+ :root[data-hero-glimmer]:not(.page-booting,[data-animation="off"]) .home-canvas:not(.home-view-split) [data-hero-title]:not([data-glimmer-done]){background-image:var(--hero-glimmer-gradient);background-size:250% 100%;background-repeat:repeat;background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;width:fit-content;animation:text-glimmer-ltr var(--hero-glimmer-cycle) linear var(--duration-hero-glimmer-delay) var(--hero-glimmer-plays) backwards}
+ :root[data-hero-glimmer="rtl"]:not(.page-booting,[data-animation="off"]) .home-canvas:not(.home-view-split) [data-hero-title]:not([data-glimmer-done]){animation-name:text-glimmer-rtl}
+}
 /* Still: plain resting ink, as the classic label. */
 :root[data-animation="off"] .iconiq-thinking[data-glimmer] .iconiq-thinking-label{background:none;color:var(--eyebrow-ink);animation:none}
 @media(prefers-reduced-motion:reduce){:root .iconiq-thinking[data-glimmer] .iconiq-thinking-label{background:none;color:var(--eyebrow-ink);animation:none}}
@@ -2795,17 +2808,17 @@ main.lab-canvas .homepage-layout>:not(.lab-heading,.home-work){display:none}
 @media(max-width:700px){.home-overview-columns{grid-template-columns:minmax(0,1fr)}}
 
 /* card-details.css */
-/* Card client position "above" and Card details (Settings → Cards). Both stack the card copy in one column:
-   status pill, client, title, results (gradient, see .text-gradient) and discipline tags. */
+/* Card client position "above", Card status and Card details (Settings → Cards). Each stacks the card copy in one column:
+   status pill (Card status), client, title, results (gradient, see .text-gradient) and discipline tags (Card details). */
 .project-card.image-card>.card-copy>:is(.card-status,.card-tags){display:none}
-body:is(.card-client-above,.card-details) .project-card.image-card>.card-copy{display:flex;flex-direction:column;align-items:flex-start}
-body:is(.card-client-above,.card-details) .project-card.image-card>.card-copy>:is(h3,.project-summary){width:100%}
+body:is(.card-client-above,.card-status-shown,.card-details) .project-card.image-card>.card-copy{display:flex;flex-direction:column;align-items:flex-start}
+body:is(.card-client-above,.card-status-shown,.card-details) .project-card.image-card>.card-copy>:is(h3,.project-summary){width:100%}
 
 /* Client above: capitals with wide tracking on top. Wins over "client leads the title" (it comes later at equal weight). */
 body.card-client-above:not(.card-client-hidden) .project-card.image-card>.card-copy>.card-client{display:block;margin:0 0 var(--space-4);font-size:var(--font-size-body);letter-spacing:var(--client-eyebrow-tracking);text-transform:uppercase}
 body.card-client-above:not(.card-client-hidden) .project-card.image-card>.card-copy>h3>.card-title-client{display:none}
 
-body.card-details .project-card.image-card>.card-copy>.card-status{display:inline-flex;align-items:center;margin:0 0 var(--space-5);padding:var(--space-1) var(--space-3);border:1px solid var(--card-status-border);border-radius:999px;color:var(--eyebrow-ink);font-size:var(--font-size-small);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body)}
+body.card-status-shown .project-card.image-card>.card-copy>.card-status{display:inline-flex;align-items:center;margin:0 0 var(--space-5);padding:var(--space-1) var(--space-3);border:1px solid var(--card-status-border);border-radius:999px;color:var(--eyebrow-ink);font-size:var(--font-size-small);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body)}
 body.card-details .project-card.image-card>.card-copy>.card-tags{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--card-tags-gap);margin:var(--space-6) 0 0}
 body.card-details.card-description-hidden .project-card.image-card>.card-copy>.card-tags{margin-top:0}
 

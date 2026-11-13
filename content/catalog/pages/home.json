@@ -8,7 +8,7 @@
   "template": "home",
   "status": "published",
   "slug": "work",
-  "title": "I design products, experiences, and systems.",
+  "title": "I design products, websites, and systems.",
   "summary": "I started out building for the web and running a solo studio. For the last 10+ years, I’ve designed products for technical and expert users. Recently I built Rios and Porter. Today, my focus is AI conversational and generative UI experiences. ",
   "blocks": [
     {
@@ -29,7 +29,7 @@
       "id": "home-description",
       "type": "text",
       "paragraphs": [
-        "10+ years designing transformation and emerging tech for technical users. Today, my focus is AI and genUI. Recently built Rios, Porter & Bastion."
+        "10+ years designing for global brands. Technically fluent, I'm most useful in complex, large-scale and messy systems where the way forward isn't clear. I value craft, simplicity and accessibility."
       ]
     },
     {

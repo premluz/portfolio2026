@@ -32,7 +32,7 @@ A buildless native-module portfolio for Prem Luczak: authored HTML, CSS and ES m
 | Hero heading h1 (Content Home) | on | Current layout only; Flip and Flat keep it |
 | Available badge (Content Home) | on | The hero status pill; switch it off there |
 | Strapline, At a glance (Content Home) | off | Hero additions |
-| Card details, Client above (Cards) | off | Status pill, gradient results and tag row; client on top in wide tracking |
+| Card status, Card details, Client above (Cards) | off | Status pill (Card status); gradient results and tag row (Card details); client on top in wide tracking |
 | Plain cards (Cards) | off | Removes skin, reflections, edge glow and note-card panels |
 | Control style (Design → Controls) | Glass | Ghost / Outline / Glass, with local Inherit overrides; the legacy published profile migrates to Ghost |
 | Glass cards (Design system) | on | Independent of control styling |
@@ -66,7 +66,7 @@ None open. The owner answered these on 2026-10-26.
 - Status: answered
 - Tags: area/home, area/content
 
-Yes, as a pill above the client, through Card details on cards ([ADR-008](docs/decisions/ADR-008-card-detail-copy-is-opt-in-and-stacked.md), REQ-015). Not yet on detail pages.
+Yes, as a pill above the client, through Card status on cards ([ADR-008](docs/decisions/ADR-008-card-detail-copy-is-opt-in-and-stacked.md), REQ-015). Not yet on detail pages.
 
 ### Q-002 Where and when should the Lab page be linked?
 - Status: answered

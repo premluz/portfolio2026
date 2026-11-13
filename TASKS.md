@@ -14,6 +14,13 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 
 ## Open
 
+### TASK-044 Services: six isometric illustrations and three hidden cards
+- Status: blocked
+- Tags: area/home, area/content
+- Acceptance: Services shows Product design, Webdesign, Prototyping in code, Design systems, Accessibility audit, Brand and motion, each with its own isometric illustration; Interim design lead, Hiring and Coaching are kept in content with `hidden: true` and not rendered.
+- Evidence: `info-card` gained an optional `hidden` boolean (dist/content/model.js), honoured by `servicesMarkup`; tests/home-sections.mjs asserts six cards and the three hidden titles absent, and passes. The six cards measured rendered with tokens.css and home-sections.css, no console errors, 2026-11-13. Illustrations are the rest poses of Hairline figures kept in ../hairline/ (dock, breakpoints, live, library, loupe, mark).
+- Notes: tests/module-graph.mjs fails: first load 905,603 bytes against a 902,282 budget (+3.3 KB, from the illustration path data). Needs the owner to raise the budget or move the illustrations behind a route load. The Accessibility audit line is a placeholder awaiting the owner's copy.
+
 ### TASK-039 Answer the developer-settings questions left by the tidy-up
 - Status: todo
 - Tags: area/settings, kind/debt
@@ -95,6 +102,12 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 - Acceptance: a `porter-bg.jpg` (photo-only export) is added to dist/assets, linked with `backgroundMediaId` in both catalogs, `npm run images` run, and Porter shows it in the featured stage. Needs the image from the owner.
 
 ## Done
+
+### TASK-045 Card status as its own developer setting
+- Status: done
+- Tags: area/settings, area/home
+- Acceptance: the status pill (Launched, Building, R&D) has its own Cards toggle, separate from Card details, off by default, persisted and exported with the other settings; Card details covers only the results line and tag row.
+- Evidence: tests/card-details.mjs, tests/settings-transfer.mjs and tests/home-sections.mjs pass. In the dev page, toggling Card status and Card details in turn showed the pill and the tags independently, with the saved values surviving a reload and no page errors, 2026-11-13.
 
 ### TASK-043 Token leak ceilings and duration role tokens (WP-14)
 - Status: done

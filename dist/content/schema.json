@@ -1761,6 +1761,9 @@
           ],
           "additionalProperties": false
         },
+        "hidden": {
+          "type": "boolean"
+        },
         "type": {
           "const": "info-card"
         }

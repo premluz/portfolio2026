@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {readFile,readdir} from 'node:fs/promises';
-import {EASE,DISTANCE,BACKDROP} from '../dist/motion-tokens.js';
+import {EASE,DISTANCE,BACKDROP,DURATION} from '../dist/motion-tokens.js';
 import {HERO_IMAGE_ENTRANCE_SCALE} from '../dist/hero-image-entrance.js';
 
 const dist=new URL('../dist/',import.meta.url);
@@ -24,6 +24,7 @@ for(const file of (await readdir(dist)).filter(name=>name.endsWith('.js')&&name!
  assert(!(await readFile(new URL(file,dist),'utf8')).includes('cubic-bezier('),`${file} uses EASE roles, not literal curves`);
 }
 assert((await readFile(new URL('style.css',dist),'utf8')).includes('site-tooltip-arrive var(--duration-tooltip-arrive)'),'Tooltips arrive on the tooltip duration role');
+assert(tokens.includes(`--duration-stagger-step: ${DURATION.staggerStep}ms;`),'CSS --duration-stagger-step matches DURATION.staggerStep');
 const tooltip=tokens.match(/--duration-tooltip-arrive: (\d+)ms;/);
 assert(tooltip&&Number(tooltip[1])<=250,'Tooltips are high-frequency, so their arrival stays at or under 250ms');
 console.log('Motion tokens passed: CSS and JS curves agree, stylesheets and scripts use roles, every role is defined.');

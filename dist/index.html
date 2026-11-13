@@ -193,7 +193,8 @@
 <label class="check setting-retired"><input id="cardClientInline" type="checkbox"> Client leads the title (Client. Title)</label>
 <label class="check setting-retired"><input id="cardClientAbove" type="checkbox"> Client above the title · wide tracking (wins over inline)</label>
 <label class="check"><input id="cardHeadingStyle" type="checkbox" checked> Card titles as headings (off = regular body text size)</label>
-<label class="check"><input id="cardDetails" type="checkbox"> Card details · status, results and tags</label>
+<label class="check"><input id="cardStatus" type="checkbox"> Card status · Launched, Building or R&amp;D</label>
+<label class="check"><input id="cardDetails" type="checkbox"> Card details · results and tags</label>
 <label class="check setting-retired"><input id="cardShowTitle" type="checkbox" checked> Show project title</label>
 <label class="check setting-retired"><input id="cardShowCategory" type="checkbox"> Show category instead of title</label>
 <label class="check setting-retired"><input id="cardShowDescription" type="checkbox" checked> Show project description</label>
@@ -375,6 +376,9 @@
 <label>Glimmer cycle <output data-text-effect-output="glimmerSpeed">1.6s</output><input id="textGlimmerSpeed" data-text-effect-control="glimmerSpeed" type="range" min="0.4" max="5" step="0.1" value="1.6"></label>
 <label>Glimmer band width <output data-text-effect-output="glimmerSpread">30%</output><input id="textGlimmerSpread" data-text-effect-control="glimmerSpread" type="range" min="10" max="45" step="5" value="30"></label>
 <label>Glimmer direction <select id="textGlimmerDirection" data-text-effect-control="glimmerDirection"><option value="ltr" selected>Left to right</option><option value="rtl">Right to left</option></select></label>
+<label class="check"><input id="heroGlimmer" data-text-effect-control="heroGlimmer" type="checkbox"> Glimmer on the home hero heading when the page lands (uses the look above)</label>
+<label>Hero heading sweeps <output data-text-effect-output="heroGlimmerPlays">2</output><input id="heroGlimmerPlays" data-text-effect-control="heroGlimmerPlays" type="range" min="1" max="6" step="1" value="2"></label>
+<p>Hero glimmer: <output id="heroGlimmerStatus" aria-live="polite"></output></p>
 <button id="textEffectReplay" type="button">Replay effects</button>
 <p id="textEffectPreview"></p>
 <div id="textEffectThinking"></div>

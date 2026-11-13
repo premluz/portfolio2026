@@ -38,6 +38,10 @@
   --duration-detail-reveal: 220ms;
   --duration-logo-strip-loop: 60s;
   --duration-text-caret: 1s;
+  /* The home heading fades in for about 400ms after boot; its glimmer waits until it is fully there. */
+  --duration-hero-glimmer-delay: 600ms;
+  /* CSS twin of DURATION.staggerStep in motion-tokens.js; tests/motion-tokens.mjs keeps them equal. */
+  --duration-stagger-step: 28ms;
   --surface-hover-in-duration: 240ms;
   --surface-hover-out-duration: 1000ms;
   --card-content-in-duration: 220ms;
