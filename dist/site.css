@@ -1956,7 +1956,9 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 .home-testimonial:nth-child(even){margin-left:calc(var(--testimonial-gap) / 2)}
 .home-testimonial:nth-child(4n+1),.home-testimonial:nth-child(4n){grid-column:span 7}
 .home-testimonial blockquote{margin:0 0 var(--space-3)}
-.home-testimonial blockquote p{margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink);text-wrap:pretty}
+/* Plain wrapping: the longest quote sets its row's height, and with text-wrap:pretty Safari 26 can break the lines
+   it draws differently from the lines the grid measured, so the quote and its author ran out of the card. */
+.home-testimonial blockquote p{margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink);text-wrap:wrap}
 .home-testimonial figcaption{display:flex;flex-direction:column;gap:var(--space-1);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body)}
 .testimonial-author{color:var(--eyebrow-ink)}.testimonial-role{font-size:var(--font-size-body);color:var(--eyebrow-ink)}
 .home-testimonial.is-featured{background:var(--ink);border-color:transparent}.home-testimonial.is-featured blockquote p{color:color-mix(in oklch,var(--card-surface) 82%,var(--ink))}.home-testimonial.is-featured .testimonial-author{color:color-mix(in oklch,var(--card-surface) 68%,var(--ink))}.home-testimonial.is-featured .testimonial-role{color:color-mix(in oklch,var(--card-surface) 56%,var(--ink))}

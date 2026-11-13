@@ -4,7 +4,7 @@ export const HERO_LOGOS=Object.freeze([
  {name:'GalaChain',file:'GalaChain.svg',width:108,height:23},
  {name:'Tracr',file:'Tracr.svg',width:64,height:18},
  {name:'PlayStation',file:'PlayStation.svg',width:128,height:24},
- {name:'DeEeers',file:'DeEeers.svg',width:127.56,height:35.926},
+ {name:'De Beers',file:'DeBeers.svg',width:127.56,height:35.926},
  {name:'Deutsche Bank',file:'Deutsche_Bank.svg',width:117,height:25},
  {name:'Vodafone',file:'Vodafone.svg',width:111,height:22},
  {name:'Kingfisher',file:'Kingfisher.svg',width:84,height:26},
