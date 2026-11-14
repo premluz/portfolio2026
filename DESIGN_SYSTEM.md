@@ -138,6 +138,8 @@ keep the still image. Only one hover preview plays at a time.
 
 ## Type scale, mono text and spacing tokens
 
+**Type floors (setting `prem-type-floor`, off by default).** With it on, `dist/type-floor.css` sets caption and note sizes to at least 12px, makes `--font-size-reading` 16px at the Medium text size (it still follows the Text size and visitor text-size steps: 14.6px at Small, 17.8px at Large), uses tabular figures on years, metrics and times, and leads the sans stack with `system-ui`. The values are tokens (`--type-floor-min`, `--type-floor-reading`, `--type-floor-reading-min`, and `--type-scale-medium`, which twins the default `--type-scale`); `tests/type-floor.mjs` checks them. No literal font size was replaced with a role token: the role tokens scale with the Text size, so no literal equals one at every step.
+
 **Text size** (Small / Medium / Large in Type and spacing) sets two root variables. `--type-scale` scales body and small text; `--heading-scale` scales hero, section and footer headings, so headings can be much smaller than body proportions alone would make them. Medium is the default.
 
 | Text size | `--type-scale` | `--heading-scale` | Body | Hero heading at 1440px |

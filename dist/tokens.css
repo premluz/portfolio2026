@@ -196,6 +196,11 @@
   /* Monospace reads larger than sans at the same size (wider glyphs), so the mono role sits below body. */
   --font-size-mono: max(11px, calc(var(--font-size-body) * .85));
   --font-size-reading: var(--font-size-body);
+  /* Type floor setting (type-floor.css). --type-scale-medium twins the default --type-scale; tests/type-floor.mjs keeps them equal. */
+  --type-scale-medium: .9;
+  --type-floor-min: 12px;
+  --type-floor-reading: 16px;
+  --type-floor-reading-min: 13px;
   --font-size-home-heading: clamp(calc(31px * var(--heading-scale)), calc(2.86vw * var(--heading-scale)), calc(44px * var(--heading-scale)));
   --font-size-section-heading: clamp(calc(20px * var(--heading-scale)), calc(1.6vw * var(--heading-scale)), calc(26px * var(--heading-scale)));
   --font-size-footer-heading: var(--font-size-home-heading);

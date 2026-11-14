@@ -52,11 +52,11 @@ A WP marked **Blocked** cannot start until its decision is recorded here or in a
 | ID | Decision | Blocks |
 | --- | --- | --- |
 | D-1 | Are the six failing tests wrong, or is the Porter and Rios content unfinished? | WP-00 |
-| D-2 | The site's public origin (for canonical links, Open Graph and the sitemap) and the URL scheme. Proposed: `/work/<slug>`, `/writing/<slug>`, `/about`, `/contact`, `/lab`. | WP-07 |
-| D-3 | May the 13 unreferenced files in `dist/assets/` be deleted, and may originals move out of the served folder? | WP-06b |
+| D-2 | The site's public origin (for canonical links, Open Graph and the sitemap) and the URL scheme. Proposed: `/work/<slug>`, `/writing/<slug>`, `/about`, `/contact`, `/lab`. **Answered 2026-11-14: the proposed scheme is accepted. The public origin is still needed.** | WP-07 |
+| D-3 | May the 13 unreferenced files in `dist/assets/` be deleted, and may originals move out of the served folder? **Deferred by the owner on 2026-11-14; ask again later.** | WP-06b |
 | D-4 | Typeface, and the production type scale. | WP-15b |
-| D-5 | Which home layout and control style are the production ones (feeds TASK-038). | WP-16 |
-| D-6 | May a formatter be added as a dev dependency, and may authored code move from `dist/` to `src/`? | WP-18 |
+| D-5 | Which home layout and control style are the production ones (feeds TASK-038). **Answered 2026-11-14: the current ones in `settings/` (the active export: home view current, regular layout, 2 columns, cards, control style outline).** | WP-16 |
+| D-6 | May a formatter be added as a dev dependency, and may authored code move from `dist/` to `src/`? **Answered 2026-11-14: yes to both. WP-18 still has no specification and needs a clean worktree first.** | WP-18 |
 
 ## Order
 

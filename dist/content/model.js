@@ -6,6 +6,9 @@ const text={type:'string',maxLength:100000},short={type:'string',maxLength:500},
 const list=schema=>({type:'array',items:schema,maxItems:1000});
 const strings={...list(short),uniqueItems:true};
 const object=(properties,required=[])=>({type:'object',properties,required,additionalProperties:false});
+// Structured project facts (all optional; nothing renders from them yet). A period is an ISO year or year-month.
+const period={type:'string',pattern:'^\\d{4}(-(0[1-9]|1[0-2]))?$'};
+const projectFacts={timeline:object({start:period,end:period},['start']),team:object({size:{type:'integer',minimum:1},myRole:short,collaborators:strings}),outcomes:list(object({id,claim:text,metric:short,evidenceId:id},['id','claim'])),decisions:list(object({id,problem:text,options:{...list(short),minItems:2},choice:short,reason:text},['id','problem','options','choice','reason'])),tools:strings,platforms:strings};
 // A note card: a media asset in a roomy card, with an optional title and description. Used for a project's home and detail sets.
 const noteCard=object({id,title:short,description:text,mediaId:id},['id','mediaId']);
 const noteCards={...list(noteCard),maxItems:12};
@@ -17,7 +20,7 @@ export const BLOCK_WIDTHS=Object.freeze(['content','960','1280','page']);
 const blockBase={id,title:short,label:short,layout:object({columns:{enum:[1,2]},mediaFit:{enum:['max-side','contain','full-bleed']},span:{type:'integer',minimum:1,maximum:4},width:{enum:[...BLOCK_WIDTHS]}}),appearance:object({surface}),evidenceIds:strings};
 const common={id,status:{enum:['published','draft','archived']},slug:id,title:{...short,minLength:1},summary:text,name:short,aliases:strings,domains:strings,capabilities:strings,tags:strings,category:short,revision:{type:'integer',minimum:1},updatedAt:{type:'string'},links:list(link),evidence:list(ref('evidence')),blocks:{...list(ref('block')),maxItems:CONTENT_LIMITS.blocks}};
 export const documentTypeDefinitions=Object.freeze({
- 'portfolio-item':{label:'Portfolio item',properties:{prototype:object({url:short,label:short}),watchPrototype:object({url:short,label:short},['url','label']),qrCodeMediaId:id,qrCodeLabel:short,client:short,kind:{enum:['shipped','lab']},projectStatus:{enum:['Launched','Building','R&D']},disciplines:strings,shortCategory:short,year:short,homeCards:noteCards,detailCards:noteCards,featured:{type:'boolean'},listOnly:{type:'boolean'},pageTitle:short,intro:text,context:text,challenge:text,role:text,highlights:text,keyWork:text,impact:text,aftermath:text,lesson:text,heroMediaId:id,hoverVideoId:id},required:['slug','name','kind','projectStatus','context','role','keyWork']},
+ 'portfolio-item':{label:'Portfolio item',properties:{prototype:object({url:short,label:short}),watchPrototype:object({url:short,label:short},['url','label']),qrCodeMediaId:id,qrCodeLabel:short,client:short,kind:{enum:['shipped','lab']},projectStatus:{enum:['Launched','Building','R&D']},disciplines:strings,shortCategory:short,year:short,homeCards:noteCards,detailCards:noteCards,featured:{type:'boolean'},listOnly:{type:'boolean'},pageTitle:short,intro:text,context:text,challenge:text,role:text,highlights:text,keyWork:text,impact:text,aftermath:text,lesson:text,heroMediaId:id,hoverVideoId:id,...projectFacts},required:['slug','name','kind','projectStatus','context','role','keyWork']},
  page:{label:'Page',properties:{template:{enum:['home','information']},badge:object({label:short,tone:{enum:['success','error']}},['label'])},required:['slug']},
  news:{label:'News',properties:{publishedAt:short},required:['slug']},
  article:{label:'Article',properties:{publishedAt:{type:'string',pattern:'^\\d{4}-\\d{2}-\\d{2}$'},author:short,series:object({id,title:short,part:{type:'integer',minimum:1},of:{type:'integer',minimum:1}},['id','part','of']),sources:list(object({label:short,publisher:short,date:short,url:short},['label']))},required:['slug','publishedAt','author']},
@@ -50,7 +53,7 @@ export function createContentModel({documentTypes={},blockTypes={}}={}){
  }
  const defs={
   evidence:object({id,kind:{enum:['statement','metric','quote']},text,provenance},['id','kind','text','provenance']),
-  asset:{anyOf:['image','video'].map(type=>object({id,type:{const:type},status:{enum:['published','draft','archived']},url:short,alt:text,width:{type:'integer',minimum:1},height:{type:'integer',minimum:1},credit:text,role:{enum:['backdrop']},sourceCornerRadius:{type:'integer',minimum:0},sourceEdgeInset:{type:'integer',minimum:0}},['id','type','status','url',...(type==='image'?['alt']:[])]))},
+  asset:{anyOf:['image','video'].map(type=>object({id,type:{const:type},status:{enum:['published','draft','archived']},url:short,alt:text,width:{type:'integer',minimum:1},height:{type:'integer',minimum:1},credit:text,description:text,role:{enum:['backdrop']},sourceCornerRadius:{type:'integer',minimum:0},sourceEdgeInset:{type:'integer',minimum:0}},['id','type','status','url',...(type==='image'?['alt']:[])]))},
   presentation:object({documentId:id,card:object({orientation:{enum:['portrait','landscape']},surface,ambient:surface,backgroundMediaId:id},['surface']),detail:object({columns:{type:'integer',minimum:1,maximum:4}},['columns'])},['documentId','card','detail']),
   placement:object({id,documentId:id,featured:{type:'boolean'}},['id','documentId']),
   layout:object({id,items:list(ref('placement'))},['id','items'])
@@ -100,6 +103,10 @@ function validateCatalog(catalog,model){
   if(d.slug){if(slugs.has(d.slug))issues.push('Duplicate document slug '+d.slug);slugs.add(d.slug);}
   const evidence=new Set(),blockIds=new Set(),edges=[];inlineEdges.set(d.id,edges);
   for(const e of d.evidence||[]){if(evidence.has(e.id))issues.push(d.id+' has duplicate evidence ID '+e.id);evidence.add(e.id);if(e.provenance.source)visitLink(e.provenance.source,d.id+' evidence '+e.id);}
+  if(d.timeline?.end&&d.timeline.end<d.timeline.start)issues.push(d.id+' timeline ends before it starts');
+  for(const set of ['outcomes','decisions']){const factIds=new Set();for(const f of d[set]||[]){if(factIds.has(f.id))issues.push(d.id+'.'+set+' has duplicate ID '+f.id);factIds.add(f.id);}}
+  for(const o of d.outcomes||[])if(o.evidenceId&&!evidence.has(o.evidenceId))issues.push(d.id+'.outcomes.'+o.id+' references missing evidence '+o.evidenceId);
+  for(const x of d.decisions||[])if(!x.options.includes(x.choice))issues.push(d.id+'.decisions.'+x.id+' choice is not one of its options');
   if(d.prototype?.url){visitLink({url:d.prototype.url},d.id+' prototype');if(!/^https?:\/\//.test(d.prototype.url))issues.push(d.id+' prototype requires an HTTP(S) URL');}
   if(d.watchPrototype?.url){visitLink({url:d.watchPrototype.url},d.id+' watch prototype');if(!/^https?:\/\//.test(d.watchPrototype.url))issues.push(d.id+' watch prototype requires an HTTP(S) URL');}
   const linkIds=new Set();for(const l of d.links||[]){if(linkIds.has(l.id))issues.push(d.id+' has duplicate link ID '+l.id);linkIds.add(l.id);visitLink(l,d.id+' link '+l.id);}

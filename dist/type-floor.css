@@ -1,0 +1,10 @@
+/* "Type floors" setting (prem-type-floor, off by default): captions and notes never go below 12px, reading text is 16px at
+   the Medium text size and still follows the Text size and visitor text-size steps, years and metrics use tabular figures,
+   and the sans stack leads with system-ui. Everything is keyed on the attribute app.js sets on <html>. */
+html[data-type-floor="on"]{
+ --font-family-sans:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+ --font-size-caption:max(var(--type-floor-min),calc(11px * var(--type-scale)));
+ --font-size-note:max(var(--type-floor-min),calc(12px * var(--type-scale)));
+ --font-size-reading:max(var(--type-floor-reading-min),calc(var(--type-floor-reading) * var(--type-scale) / var(--type-scale-medium) * var(--reader-text-scale)));
+}
+html[data-type-floor="on"] :is(.detail-caption-lead,.home-about-years,.content-metric,time){font-variant-numeric:tabular-nums}

@@ -34,9 +34,9 @@ for(const role of ['Senior product designer: complex workflows, research, intera
  const question='Review Prem’s fit for this role:\n'+role+'\n'+'Responsibilities and evidence to evaluate. '.repeat(50);
  const review=await ask(question,'Overall fit\nA grounded review.\n\nStrongest matches\nRios supports the relevant product-design capabilities.\n\nRecommended projects to review\nRios.',['rios'],'job-fit');
  assert.equal(review.response.status,200);assert.equal(review.result.kind,'job-fit');assert.deepEqual(review.result.documentIds,['rios']);
- assert.equal(JSON.parse(review.sent.messages[1].content).question,question.trim(),'The complete pasted role reaches the model');
+ assert.equal(JSON.parse(review.sent.messages[2].content).question,question.trim(),'The complete pasted role reaches the model');
  const followUp=await ask('Which requirements should we confirm?','Confirm any material role-specific requirement.',[],'clarification',[{role:'user',text:question},{role:'assistant',text:review.result.text,documentIds:['rios']}]);
- assert.equal(JSON.parse(followUp.sent.messages[1].content).history[0].text,question,'A follow-up retains the pasted role');
+ assert.equal(JSON.parse(followUp.sent.messages[2].content).history[0].text,question,'A follow-up retains the pasted role');
 }
 const knowledge=await ask('Explain his current focus.','AI-native experiences.',['knowledge-focus'],'grounded');assert(knowledge.result.documentIds.includes('merlin'),'Knowledge citations link back to underlying project evidence');
 const offline=await requestAssistant('Role description '.repeat(100),[],{store:content,sessionId:'offline',fetcher:async()=>{throw new Error('Offline fixture');}});assert.equal(offline.responseMode,'local-fallback');assert(offline.notice&&offline.text.includes('has not been evaluated'));

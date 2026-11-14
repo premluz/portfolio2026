@@ -23,7 +23,9 @@ assert.equal(captured.options.headers.authorization,'Bearer test-only-secret');
 assert.equal(captured.body.model,'small-model');
 assert.equal(captured.body.temperature,0);
 assert.equal(captured.body.max_tokens,assistantLimits.outputTokens,'Room for a multi-project comparison or job-fit review');
-const supplied=JSON.parse(captured.body.messages[1].content);
+assert.equal(captured.body.messages.length,3,'Instructions, then the corpus, then the question');
+const supplied=JSON.parse(captured.body.messages[1].content),asked=JSON.parse(captured.body.messages[2].content);
+assert(asked.question&&!('sources' in asked)&&!('question' in supplied),'The corpus is its own stable first message; the question and history follow it');
 assert(supplied.sources.some(source=>source.id==='tracr'));
 const timeline=supplied.sources.find(source=>source.id==='home').sections.find(section=>section.title==='My path');
 assert(timeline.items.some(item=>item.paragraphs.some(text=>text.includes('Rios and Porter'))),'The full timeline must reach the model.');
@@ -51,7 +53,7 @@ const followUp=await handleAssistantRequest(makeRequest({sessionId:'follow-up',b
  ]
 })}),env,{documents,fetcher});
 assert.equal(followUp.status,200);
-const followUpInput=JSON.parse(captured.body.messages[1].content);
+const followUpInput={...JSON.parse(captured.body.messages[1].content),...JSON.parse(captured.body.messages[2].content)};
 assert.equal(followUpInput.question,'What was the result there?');
 assert.deepEqual(followUpInput.history.map(item=>item.role),['user','assistant','user','assistant']);
 assert.equal(followUpInput.history.at(-1).text.length,'Tracr simplified its platform. '.length+500);

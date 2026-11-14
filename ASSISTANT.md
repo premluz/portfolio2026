@@ -19,9 +19,11 @@ The model is given one record per published document, built by `usableDocuments(
 - **Projects** — every case-study field a visitor reads (summary, intro, context, challenge, role, highlights, key work, impact), plus client, category, kind and the prototype link, and the text of their blocks.
 - **Pages** — Home, About and Contact, including timeline items.
 - **Reusable sections** — Services, Experience and side projects, Approach, Testimonials (with attribution), and the About traits and unusual-things sections. Nested items keep both their title and their label (for example a role and its years).
+- **Articles and news** — published articles (with publication date, author and series) and news items, including the text of every block (paragraphs, quotes, tables).
+- **Media** — an image or video block's alt text and its asset's optional `description` (what the media shows; the owner writes these, so none exist yet). The worker receives an asset lookup (`assets`) from the generated `dist/server/content.js`; it never imports the client catalog.
 - **Not sent** — drafts and archived content, the site footer, and `inline-context` (popover copy that repeats project content).
 
-At this size (about 25,000 characters) it is simpler to send the whole set than to maintain a vector database. The model picks the relevant records while answering. A future semantic or vector retriever can replace `usableDocuments()` without changing the contract. `tests/assistant-sources.mjs` fails if a project field, a block's text or an attribution stops reaching the model, so new content types cannot be dropped silently.
+At this size (about 44,000 characters on 2026-11-11) it is simpler to send the whole set than to maintain a vector database. The model picks the relevant records while answering. A future semantic or vector retriever can replace `usableDocuments()` without changing the contract. `tests/assistant-sources.mjs` fails if a project field, a block's text or an attribution stops reaching the model, so new content types cannot be dropped silently.
 
 ## Conversation context
 
@@ -29,7 +31,7 @@ Each question carries up to 12 turns within a 48,000-character history budget. A
 
 ## Curated knowledge and answers
 
-Edit `dist/knowledge/profile.js` for approved public profile facts: stable `id`, `title`, `topic`, `text`, `route`, `tags`, and supporting published `sourceIds`. Project details remain in `content/catalog/`; do not duplicate case studies into profile facts. `dist/assistant-knowledge.js` owns offline recovery answers and suggested questions. The Worker validates profile provenance and returned source IDs, and links cited knowledge back to its published evidence. All shipped knowledge is public; keep private notes, drafts, credentials and unconfirmed claims outside `dist` and the corpus.
+Edit `content/knowledge.json` for approved public profile facts (`facts`: stable `id`, `title`, `topic`, `text`, `route`, `tags`, and supporting published `sourceIds`), the offline recovery answers (`answers`) and the suggested questions. `npm run build` validates it (every `sourceId` must be a published document in every content set; ids are unique) and generates `dist/knowledge/profile.js` and `dist/assistant-knowledge.js`, which are never edited by hand. Project details remain in `content/catalog/`; do not duplicate case studies into profile facts. The Worker validates profile provenance and returned source IDs, and links cited knowledge back to its published evidence. All shipped knowledge is public; keep private notes, drafts, credentials and unconfirmed claims outside `dist` and the corpus.
 
 Useful additions, when confirmed: problem-framing and validation methods; collaboration and stakeholder responsibilities; actual leadership scope and mentoring; implementation tools linked to projects; exact outcomes with attribution and limitations; lessons and trade-offs; and approved location, availability or engagement preferences. Never infer these from seniority or a job description.
 
@@ -46,6 +48,10 @@ Reviews compare professional requirements against documented evidence without in
 `worker/assistant-core.mjs` handles requests and source assembly; `assistant-model.mjs` handles provider calls; `assistant-policy.mjs` owns instructions and validation. Client rendering, composer/voice controls and submissions live in `dist/assistant-view.js`, `assistant-composer.js`, and `assistant-session.js`, with transport in `assistant-client.js`.
 
 Run `node tests/assistant-conversation.mjs`, `node tests/assistant-api.mjs`, `node tests/assistant-sources.mjs`, and `node tests/assistant-follow-up.mjs`. These use mocked providers and are not a live model-quality guarantee. `npm run dev` serves authored files and fresh catalog data; Node watch reloads imported policy/knowledge modules. Production knowledge/code changes need `npm run build` and a new deployment. Do not edit generated `dist/server` or `dist/client` copies.
+
+## Golden questions
+
+`content/assistant-eval.json` lists questions with the document ids a good answer must cite (`mustCite`), phrases it must not claim (`mustNotClaim`) and the acceptable answer `kind`. `node --env-file=.env scripts/assistant-eval.mjs` asks each one through the real request handler and the real model and prints a pass table; it exits 1 if any fail and 2 without `AI_API_BASE_URL`, `AI_API_KEY` (or `OPENAI_API_KEY`) and `AI_MODEL`. It costs money, so it is not part of `npm run check`; the script reads `process.env` only. An answer from the offline fallback counts as a failure. The ten seed questions were written by a coding agent and are for the owner to review and extend to 30 or more. `tests/assistant-eval.mjs` covers the scoring with a mocked provider.
 
 ## Runtime configuration
 

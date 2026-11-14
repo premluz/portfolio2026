@@ -1,5 +1,5 @@
 import {handleAssistantRequest} from '../worker/assistant-core.mjs';
-import {assistantDocumentSets} from '../dist/server/content.js';
+import {assistantDocumentSets,assistantAssetSets} from '../dist/server/content.js';
 import {contentSets} from '../dist/content/sets.js';
 import {DEFAULT_CONTENT_SET} from '../dist/content/content-set.js';
 import {activeContentSet,globalConfigStore} from '../worker/site-config-core.mjs';
@@ -12,6 +12,6 @@ export default {
  async fetch(request){
   const set=await activeContentSet(store,contentSets).catch(error=>{console.error('Content set read failed; answering from the default set.',error);return DEFAULT_CONTENT_SET;});
   const documents=assistantDocumentSets[set];
-  return handleAssistantRequest(vercelRequest(request),vercelEnvironment(),{documents});
+  return handleAssistantRequest(vercelRequest(request),vercelEnvironment(),{documents,assets:assistantAssetSets[set]});
  },
 };

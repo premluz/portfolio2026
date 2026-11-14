@@ -168,6 +168,10 @@
               "type": "string",
               "maxLength": 100000
             },
+            "description": {
+              "type": "string",
+              "maxLength": 100000
+            },
             "role": {
               "enum": [
                 "backdrop"
@@ -226,6 +230,10 @@
               "minimum": 1
             },
             "credit": {
+              "type": "string",
+              "maxLength": 100000
+            },
+            "description": {
               "type": "string",
               "maxLength": 100000
             },
@@ -683,6 +691,140 @@
           "type": "string",
           "pattern": "^[a-z][a-z0-9-]*$",
           "maxLength": 120
+        },
+        "timeline": {
+          "type": "object",
+          "properties": {
+            "start": {
+              "type": "string",
+              "pattern": "^\\d{4}(-(0[1-9]|1[0-2]))?$"
+            },
+            "end": {
+              "type": "string",
+              "pattern": "^\\d{4}(-(0[1-9]|1[0-2]))?$"
+            }
+          },
+          "required": [
+            "start"
+          ],
+          "additionalProperties": false
+        },
+        "team": {
+          "type": "object",
+          "properties": {
+            "size": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "myRole": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "collaborators": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "maxItems": 1000,
+              "uniqueItems": true
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "outcomes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$",
+                "maxLength": 120
+              },
+              "claim": {
+                "type": "string",
+                "maxLength": 100000
+              },
+              "metric": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "evidenceId": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$",
+                "maxLength": 120
+              }
+            },
+            "required": [
+              "id",
+              "claim"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 1000
+        },
+        "decisions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$",
+                "maxLength": 120
+              },
+              "problem": {
+                "type": "string",
+                "maxLength": 100000
+              },
+              "options": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "maxLength": 500
+                },
+                "maxItems": 1000,
+                "minItems": 2
+              },
+              "choice": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "reason": {
+                "type": "string",
+                "maxLength": 100000
+              }
+            },
+            "required": [
+              "id",
+              "problem",
+              "options",
+              "choice",
+              "reason"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 1000
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "maxItems": 1000,
+          "uniqueItems": true
+        },
+        "platforms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "maxItems": 1000,
+          "uniqueItems": true
         },
         "type": {
           "const": "portfolio-item"

@@ -28,7 +28,8 @@ This is a modular portfolio frontend and content framework, not a CMS-dependent 
 | `dist/vendor/` | Bundled third-party assets and their notices |
 | `content/catalog/` | Editable content catalog, including projects, profile pages and reusable components |
 | `dist/content/` | Content model, schemas, generated content exports and render helpers |
-| `dist/assistant-knowledge.js` | Curated answer facts, phrase routes and suggested questions |
+| `content/knowledge.json` | Source of the approved profile facts, curated answers and suggested questions; validated by the content build |
+| `dist/assistant-knowledge.js`, `dist/knowledge/profile.js` | Generated from it (do not edit); `dist/assistant-knowledge-lookup.js` is the authored lookup logic |
 | `worker/` | Assistant and voice handlers; provider keys are read only from runtime environment |
 | `deploy/node-server.mjs` | Node adapter that serves `dist/client/` and invokes the API handlers |
 | `scripts/` | Content generation, Worker packaging, style generation and checks |

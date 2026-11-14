@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "facts": [
+    {
+      "id": "knowledge-approach",
+      "title": "Prem’s background",
+      "topic": "background",
+      "text": "Prem started by building for the web and running a solo studio. For more than 10 years he has designed products for technical and expert users.",
+      "route": "#about",
+      "sourceIds": [
+        "home",
+        "about"
+      ],
+      "tags": [
+        "builder",
+        "designer",
+        "technical users"
+      ]
+    },
+    {
+      "id": "knowledge-focus",
+      "title": "Current focus",
+      "topic": "focus",
+      "text": "Prem focuses on AI-native experiences, generative interfaces and building prototypes in code. He also built Rios, a life-first planner.",
+      "route": "#about",
+      "sourceIds": [
+        "home",
+        "rios",
+        "merlin",
+        "bastion"
+      ],
+      "tags": [
+        "AI",
+        "generative UI",
+        "prototyping"
+      ]
+    },
+    {
+      "id": "knowledge-collaboration",
+      "title": "Product approach and collaboration",
+      "topic": "approach",
+      "text": "Prem works closely with product, engineering and leadership to frame problems and align decisions. His published approach includes prototyping in code, testing early, simplifying complex systems and staying involved through implementation and iteration.",
+      "route": "#about",
+      "sourceIds": [
+        "home-approach",
+        "home-about"
+      ],
+      "tags": [
+        "collaboration",
+        "research",
+        "systems",
+        "implementation"
+      ]
+    },
+    {
+      "id": "knowledge-independent-products",
+      "title": "Independent product ownership",
+      "topic": "ownership",
+      "text": "On Rios and Porter, Prem was the sole product designer and builder. Rios documents ownership across product strategy, interaction, information architecture, identity, motion and implementation on mobile and desktop. Porter documents ownership of its interaction model, information architecture, status language, motion and native implementation.",
+      "route": "#rios",
+      "sourceIds": [
+        "rios",
+        "porter"
+      ],
+      "tags": [
+        "product strategy",
+        "interaction design",
+        "solo builder",
+        "mobile",
+        "desktop"
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "id": "about-prem",
+      "phrases": [
+        "who is prem",
+        "tell me about prem",
+        "about prem",
+        "who is prem luczak"
+      ],
+      "text": "Prem is a builder turned designer. For the last 10+ years, he’s designed products for technical and expert users. Today, his focus is AI-native experiences, generative interfaces and building in code. He also built Rios, a life-first planner.",
+      "sourceIds": [
+        "home"
+      ],
+      "followUps": [
+        "What has Prem worked on?",
+        "What is Prem focused on now?"
+      ]
+    },
+    {
+      "id": "prem-work",
+      "phrases": [
+        "what is work by prem",
+        "what has prem worked on",
+        "what work has prem done",
+        "tell me about prems work",
+        "what projects has prem worked on"
+      ],
+      "text": "Prem has designed a PlayStation publishing pipeline, Vodafone’s IoT connectivity platform, Tracr’s diamond traceability platform and Gala Film’s creator experience. His independent work includes Rios, a life-first planner; Porter, a Mac switchboard for AI agents; and the AI prototypes Merlin and Bastion.",
+      "sourceIds": [
+        "playstation",
+        "vodafone-iot",
+        "tracr",
+        "galachain",
+        "rios",
+        "porter",
+        "merlin",
+        "bastion"
+      ],
+      "followUps": [
+        "What did Prem build with Porter?",
+        "What changed at Tracr?"
+      ]
+    }
+  ],
+  "suggestedQuestions": [
+    "Who is Prem?",
+    "What has Prem worked on?",
+    "Can I paste a job description?"
+  ]
+}

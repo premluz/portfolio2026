@@ -585,6 +585,11 @@ let masonryRatio=readFlag('prem-masonry-ratio');
 function applyMasonryRatio(){document.documentElement.dataset.masonryRatio=masonryRatio?'on':'off';$('#masonryRatio').checked=masonryRatio;}
 applyMasonryRatio();
 $('#masonryRatio').onchange=e=>{masonryRatio=e.target.checked;saveFlag('prem-masonry-ratio',masonryRatio);applyMasonryRatio();dispatchEvent(new Event('resize'));};
+let typeFloor=readFlag('prem-type-floor');
+// Pure CSS keyed on this attribute; a resize pass lets image frames and card heights re-measure with the new type sizes.
+function applyTypeFloor(){document.documentElement.dataset.typeFloor=typeFloor?'on':'off';$('#typeFloor').checked=typeFloor;}
+applyTypeFloor();
+$('#typeFloor').onchange=e=>{typeFloor=e.target.checked;saveFlag('prem-type-floor',typeFloor);applyTypeFloor();dispatchEvent(new Event('resize'));};
 let detailRatioLayout=readFlag('prem-detail-ratio-layout');
 // The shape rules are CSS keyed on this attribute; a resize pass lets the open page's image frame re-measure.
 function applyDetailRatioLayout(){document.documentElement.dataset.detailRatioLayout=detailRatioLayout?'on':'off';$('#detailRatioLayout').checked=detailRatioLayout;}

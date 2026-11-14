@@ -6,7 +6,8 @@ export function modelRequest(model,question,history,corpus,openAI){
  const titles=new Map(corpus.map(record=>[record.id,record.client?.split(' • ')[0]||record.title]));
  const turns=history.map(({role,text,documentIds})=>({role,text,...(documentIds.length?{shownProjects:documentIds.map(id=>titles.get(id)).filter(Boolean)}:{})}));
  const body={model,temperature:0,max_tokens:assistantLimits.outputTokens,messages:[
-  {role:'system',content:assistantInstructions},{role:'user',content:JSON.stringify({question,history:turns,sources:corpus})},
+  // The long, stable corpus leads as its own message so it is a cacheable prefix; the question and history vary after it.
+  {role:'system',content:assistantInstructions},{role:'user',content:JSON.stringify({sources:corpus})},{role:'user',content:JSON.stringify({question,history:turns})},
  ]};
  if(openAI){
   delete body.max_tokens;body.max_completion_tokens=assistantLimits.outputTokens;

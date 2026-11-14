@@ -42,7 +42,7 @@ resetAssistantRateLimitsForTests();
 const body=JSON.stringify({question:'Describe each',sessionId:'follow-up',history:[{role:'user',text:'What AI projects Prem worked on'},{role:'assistant',text:'Related work from Prem’s portfolio:',documentIds:['porter','bastion','not-a-document',42]}]});
 const response=await handleAssistantRequest(new Request('https://portfolio.example/api/assistant',{method:'POST',headers:{'content-type':'application/json',origin:'https://portfolio.example','cf-connecting-ip':'198.51.100.77'},body}),env,{documents:catalog.documents,fetcher});
 assert.equal(response.status,200);
-const prompt=JSON.parse(captured.messages[1].content);
+const prompt={...JSON.parse(captured.messages[1].content),...JSON.parse(captured.messages[2].content)};
 assert.deepEqual(prompt.history[1].shownProjects,['Porter','Bastion'],'Earlier cards are named for the model; unknown ids are dropped');
 assert(captured.messages[0].content.includes('shownProjects')&&captured.messages[0].content.includes('connect patterns'),'The model is told to use the shown projects and synthesize relevant context');
 assert(captured.max_tokens>420,'A detailed follow-up is not forced into the old short-answer cap');

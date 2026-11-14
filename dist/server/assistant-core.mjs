@@ -43,24 +43,32 @@ function consume(map,key,limit,now){
 // Page chrome (footer) and popover duplicates of project content are not.
 const COMPONENT_EXCLUDED_IDS=new Set(['inline-context','site-footer']);
 const text=value=>typeof value==='string'?value.trim():'';
-const isSourceDocument=document=>document.status==='published'&&(document.type==='portfolio-item'||document.type==='page'||(document.type==='component'&&!COMPONENT_EXCLUDED_IDS.has(document.id)));
+const isSourceDocument=document=>document.status==='published'&&(document.type==='portfolio-item'||document.type==='page'||document.type==='article'||document.type==='news'||(document.type==='component'&&!COMPONENT_EXCLUDED_IDS.has(document.id)));
 const NESTED_BLOCK_TYPES=new Set(['timeline','carousel','card-gallery']);
 // Block types carry their words in different fields; collect them all so no section is silently dropped.
-function blockLines(block){
+// An image or video says what it shows in its block alt text and in its asset's description (the owner's content);
+// the asset lookup is passed in so the worker never imports the client catalog.
+// A table's words are its column headings and every cell.
+const tableLines=block=>block.type==='table'?[...(block.columns||[]).map(text),...(block.rows||[]).flat().map(text)]:[];
+const mediaLines=(block,assets)=>['image','video'].includes(block.type)?[text(block.alt),text(assets[block.mediaId]?.description)]:[];
+function blockLines(block,assets){
  const quote=text(block.text)&&text(block.attribution)?[text(block.text),'— '+text(block.attribution)]:[text(block.text)];
  const metric=text(block.value)?[text(block.value),text(block.description)]:[text(block.description)];
- return [...(block.paragraphs||[]).map(text),...quote,...metric,text(block.caption),text(block.link?.label)].filter(Boolean);
+ return [...(block.paragraphs||[]).map(text),...quote,...metric,text(block.caption),text(block.link?.label),...tableLines(block),...mediaLines(block,assets)].filter(Boolean);
 }
 // An experience row has a title and a separate label (its years); keep both.
-function nestedItem(item){
+function nestedItem(item,assets){
  const title=text(item.title),label=text(item.label);
- return {label:title||label,paragraphs:[...(title&&label?[label]:[]),...blockLines(item)]};
+ return {label:title||label,paragraphs:[...(title&&label?[label]:[]),...blockLines(item,assets)]};
 }
-function blockSection(block){
- const items=NESTED_BLOCK_TYPES.has(block.type)?(block.items||[]).map(nestedItem).filter(item=>item.label||item.paragraphs.length):[];
- return {title:text(block.title)||text(block.label),paragraphs:blockLines(block),items};
+function blockSection(block,assets){
+ const items=NESTED_BLOCK_TYPES.has(block.type)?(block.items||[]).map(item=>nestedItem(item,assets)).filter(item=>item.label||item.paragraphs.length):[];
+ return {title:text(block.title)||text(block.label),paragraphs:blockLines(block,assets),items};
 }
-export function usableDocuments(documents){
+// Structured facts reach the model only when the owner has filled them in; a project with none is unchanged.
+const FACT_FIELDS=['timeline','team','outcomes','decisions','tools','platforms'];
+const projectFacts=document=>Object.fromEntries(FACT_FIELDS.filter(field=>document[field]!==undefined).map(field=>[field,document[field]]));
+export function usableDocuments(documents,assets={}){
  return documents.filter(isSourceDocument).map(document=>({
   id:document.id,
   type:document.type,
@@ -81,7 +89,9 @@ export function usableDocuments(documents){
   highlights:document.highlights||'',
   keyWork:document.keyWork||'',
   impact:document.impact||'',
-  sections:(document.blocks||[]).map(blockSection).filter(section=>section.title||section.paragraphs.length||section.items.length),
+  ...(document.type==='portfolio-item'?projectFacts(document):{}),
+  ...(document.type==='article'||document.type==='news'?{publishedAt:document.publishedAt||'',author:document.author||'',series:document.series?{id:document.series.id,title:document.series.title||'',part:document.series.part,of:document.series.of}:null}:{}),
+  sections:(document.blocks||[]).map(block=>blockSection(block,assets)).filter(section=>section.title||section.paragraphs.length||section.items.length),
  })).filter(record=>record.summary||record.intro||record.sections.length||record.context);
 }
 
@@ -124,7 +134,7 @@ function sourceCorpus(published){
 }
 
 async function answerRequest(context,fetcher){
- const {question,sessionId,history,documents,env,now}=context,published=usableDocuments(documents);
+ const {question,sessionId,history,documents,assets,env,now}=context,published=usableDocuments(documents,assets);
  const apiKey=env?.AI_API_KEY||env?.OPENAI_API_KEY,baseUrl=env?.AI_API_BASE_URL,model=env?.AI_MODEL;
  if(!apiKey||!baseUrl||!model){
   const curated=findCuratedAnswer(question);
@@ -146,7 +156,7 @@ async function answerRequest(context,fetcher){
  }catch(error){return recoverAnswer(error.message.startsWith('Assistant')?'invalid_model_response':'model_unavailable',502,context);}
 }
 
-export async function handleAssistantRequest(request,env,{documents=[],fetcher=globalThis.fetch,now=Date.now()}={}){
+export async function handleAssistantRequest(request,env,{documents=[],assets={},fetcher=globalThis.fetch,now=Date.now()}={}){
  const url=new URL(request.url);
  if(url.pathname!=='/api/assistant')return json({error:'not_found'},404);
  if(request.method!=='POST')return json({error:'method_not_allowed'},405);
@@ -154,7 +164,7 @@ export async function handleAssistantRequest(request,env,{documents=[],fetcher=g
  if(!request.headers.get('content-type')?.toLowerCase().includes('application/json'))return json({error:'json_required'},415);
  let payload;try{payload=JSON.parse(await readBoundedBody(request));}catch(error){return json({error:error instanceof RangeError?'request_too_large':'invalid_json'},error instanceof RangeError?413:400);}
  const parsed=requestPayload(payload);if(!parsed)return json({error:'invalid_question'},400);
- const context={...parsed,documents,env,now},ip=request.headers.get('cf-connecting-ip')||'unknown';
+ const context={...parsed,documents,assets,env,now},ip=request.headers.get('cf-connecting-ip')||'unknown';
  if(!consume(sessionHits,`${ip}:${parsed.sessionId}`,sessionLimit,now)||!consume(ipHits,ip,ipLimit,now))return recoverAnswer('rate_limited',429,context);
  return answerRequest(context,fetcher);
 }

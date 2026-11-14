@@ -28,6 +28,8 @@ currently uses an embedded public snapshot; no external CMS or AI service is con
 
 Every `portfolio-item` has a required `projectStatus`: `Launched`, `Building` or `R&D`. It is separate from `status` (published/draft/archived), which is publication state, and from `kind` (shipped/lab).
 
+A `portfolio-item` may also carry structured facts, all optional and none rendered yet; the assistant receives them when present: `timeline {start, end?}` (ISO year or year-month; the end is not before the start), `team {size, myRole, collaborators[]}`, `outcomes [{id, claim, metric?, evidenceId?}]` (an `evidenceId` must name one of the document's `evidence` records), `decisions [{id, problem, options[] (at least two), choice (one of the options), reason}]`, `tools[]` and `platforms[]`. The values are the owner's to write; `tests/project-facts.mjs` uses a fixture.
+
 `presentations[].card.surface` (required) is the card's two-stop background. `presentations[].card.ambient` (optional, two `#rrggbb` stops) is the project's manual ambient-glow pair; when present it wins over both ambient colour sources. Without it, the Glow recipe follows Developer settings → Ambient → Ambient colour: **Automatic** samples the card image, or the frame of a playing hover video, and **Project colours** uses the `surface` hues.
 
 ```json

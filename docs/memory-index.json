@@ -19,7 +19,7 @@
         "TASKS.md",
         "docs/CONSTITUTION.md"
       ],
-      "hash": "634f3711309b6c01d4de53db9159d7c4414e38d9",
+      "hash": "9411864dbfa01ff7b98b5d5ea857ecb6e497e4ac",
       "items": []
     },
     {
@@ -52,7 +52,7 @@
       "related": [
         "CONTENT_MODEL.md"
       ],
-      "hash": "4cd924f17bcf6fa471d706b798c1f850f6aef485",
+      "hash": "857120d3c5a01af5bf1945aa660b83b81795327c",
       "items": []
     },
     {
@@ -88,7 +88,7 @@
         "FRAMEWORK.md",
         "MEDIA_ASSETS.md"
       ],
-      "hash": "347b86a99125d674c0be7ac53404bab6d97a3d0d",
+      "hash": "3cd4373fd1a82a9cf895f25d4ce64c57855aa6ac",
       "items": []
     },
     {
@@ -138,7 +138,7 @@
         "FRAMEWORK.md",
         "MOTION.md"
       ],
-      "hash": "d69a3bf2b0286a1aad4ed511cdb3d76192019891",
+      "hash": "9c30a48927e5d74b50d154942ba59b3cbccd6af4",
       "items": []
     },
     {
@@ -180,7 +180,7 @@
         "PROJECT_STATE.md",
         "DEPLOYMENT.md"
       ],
-      "hash": "8cf9cc994f49623bbfe3fe190075b031ef1b0f5f",
+      "hash": "67a9edc2fa13b6ceae0665fbc9cfff4a0d645591",
       "items": []
     },
     {
@@ -253,7 +253,7 @@
         "TASKS.md",
         "PROJECT_STATE.md"
       ],
-      "hash": "87afd533790126af1e7ec4e426d9fbad92d1c4b9",
+      "hash": "2dc77ae313be022eac35cacd53e75ebd1d09e0c9",
       "items": []
     },
     {
@@ -273,7 +273,7 @@
         "PROGRESS.md",
         "HANDOFF.md"
       ],
-      "hash": "05b3fc9f1e0e527d22ba4be1483c29c7e817cf5c",
+      "hash": "e67dab20e0188a72185f5c5a3162aa5156dc92f1",
       "items": [
         {
           "id": "Q-001",
@@ -333,7 +333,7 @@
         "PROJECT_STATE.md",
         "PROGRESS.md"
       ],
-      "hash": "8100ac2be4ce0b0e615cb0a5e928e4a0f068be8d",
+      "hash": "7fdd551523816e3cb930ed7f82c1400c16b69961",
       "items": [
         {
           "id": "TASK-044",
@@ -492,6 +492,50 @@
           "status": "todo",
           "tags": [
             "area/images",
+            "area/content"
+          ]
+        },
+        {
+          "id": "TASK-054",
+          "title": "Type floors behind a setting (WP-15a)",
+          "status": "done",
+          "tags": [
+            "area/design-system"
+          ]
+        },
+        {
+          "id": "TASK-053",
+          "title": "Golden questions for the live model (WP-13)",
+          "status": "done",
+          "tags": [
+            "area/assistant",
+            "kind/process"
+          ]
+        },
+        {
+          "id": "TASK-052",
+          "title": "Knowledge moves into content/ (WP-12)",
+          "status": "done",
+          "tags": [
+            "area/assistant",
+            "area/content"
+          ]
+        },
+        {
+          "id": "TASK-051",
+          "title": "Structured project facts, schema only (WP-11)",
+          "status": "done",
+          "tags": [
+            "area/content",
+            "area/assistant"
+          ]
+        },
+        {
+          "id": "TASK-050",
+          "title": "The assistant reads everything a visitor can (WP-10)",
+          "status": "done",
+          "tags": [
+            "area/assistant",
             "area/content"
           ]
         },
@@ -800,7 +844,7 @@
         "FRAMEWORK.md",
         "MEDIA_ASSETS.md"
       ],
-      "hash": "7decedffe4c588e57efdfbb0efcbf0a770fc59ca",
+      "hash": "d2c573ba13e75eec4b22873cd15bf1c8dbac602f",
       "items": []
     },
     {
@@ -828,7 +872,7 @@
         "MOTION.md",
         "DESIGN_SYSTEM.md"
       ],
-      "hash": "a854d490cb3ca48e356df5787e75e88296593ed5",
+      "hash": "29ab9c4b118a4dfac9d69c5ef9af78d5c72dacfe",
       "items": []
     },
     {

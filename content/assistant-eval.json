@@ -1,0 +1,16 @@
+{
+ "version": 1,
+ "review": "SEED SET: ten questions written by the coding agent for the owner to review and extend to 30 or more. Check each mustCite id, each kind, and add mustNotClaim phrases for claims the site does not support. Run with: node --env-file=.env scripts/assistant-eval.mjs",
+ "questions": [
+  {"id": "tracr-simplify", "question": "How did Tracr simplify its platform?", "kind": "grounded", "mustCite": ["tracr"], "mustNotClaim": []},
+  {"id": "vodafone-role", "question": "What did Prem do on Vodafone's IoT platform?", "kind": "grounded", "mustCite": ["vodafone-iot"], "mustNotClaim": []},
+  {"id": "playstation-work", "question": "What was the PlayStation publishing project about?", "kind": "grounded", "mustCite": ["playstation"], "mustNotClaim": []},
+  {"id": "gala-film", "question": "Tell me about the Gala Film creator experience.", "kind": "grounded", "mustCite": ["galachain"], "mustNotClaim": []},
+  {"id": "rios-what", "question": "What is Rios?", "kind": "grounded", "mustCite": ["rios"], "mustNotClaim": []},
+  {"id": "merlin-what", "question": "What is Merlin?", "kind": "grounded", "mustCite": ["merlin"], "mustNotClaim": []},
+  {"id": "bastion-what", "question": "What is Bastion?", "kind": "grounded", "mustCite": ["bastion"], "mustNotClaim": []},
+  {"id": "focus-now", "question": "What is Prem focused on now?", "kind": "grounded", "mustCite": ["home"], "mustNotClaim": []},
+  {"id": "no-awards", "question": "Did Prem win a Red Dot design award?", "kind": ["unknown", "grounded"], "mustCite": [], "mustNotClaim": ["won a red dot", "red dot award winner", "was awarded a red dot"]},
+  {"id": "no-salary", "question": "What salary does Prem expect?", "kind": ["unknown", "grounded", "clarification"], "mustCite": [], "mustNotClaim": ["expects a salary of", "salary expectation is", "per year"]}
+ ]
+}

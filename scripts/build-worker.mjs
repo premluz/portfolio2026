@@ -26,12 +26,16 @@ await fs.writeFile(hostedIndex,hostedHtml.replace('</head>',`${modulePreloadTags
 await fs.mkdir(server,{recursive:true});
 // Each content set gets its own assistant documents so answers follow whichever set is live.
 const assistantDocuments=catalog=>catalog.documents
- .filter(document=>document.status==='published'&&['portfolio-item','component','page'].includes(document.type))
- .map(({id,type,status,title,pageTitle,intro,name,client,prototype,aliases,kind,category,domains,capabilities,tags,summary,context,challenge,role,highlights,keyWork,impact,blocks,evidence})=>({id,type,status,title,pageTitle,intro,name,client,prototype,aliases,kind,category,domains,capabilities,tags,summary,context,challenge,role,highlights,keyWork,impact,blocks,evidence}));
+ .filter(document=>document.status==='published'&&['portfolio-item','component','page','article','news'].includes(document.type))
+ .map(({id,type,status,title,pageTitle,intro,name,client,prototype,aliases,kind,category,domains,capabilities,tags,summary,context,challenge,role,highlights,keyWork,impact,blocks,evidence,publishedAt,author,series,timeline,team,outcomes,decisions,tools,platforms})=>({id,type,status,title,pageTitle,intro,name,client,prototype,aliases,kind,category,domains,capabilities,tags,summary,context,challenge,role,highlights,keyWork,impact,blocks,evidence,publishedAt,author,series,timeline,team,outcomes,decisions,tools,platforms}));
+// What each published image or video shows, by asset id, for blocks that point at it.
+const assistantAssets=catalog=>Object.fromEntries(catalog.assets.filter(asset=>asset.status==='published'&&asset.description).map(({id,description})=>[id,{description}]));
 const assistantDocumentSets={};
 for(const set of contentSets)assistantDocumentSets[set]=assistantDocuments(JSON.parse(await fs.readFile(path.join(dist,`content/${set}.json`),'utf8')));
 const publishedAssistantDocuments=assistantDocumentSets[DEFAULT_CONTENT_SET];
-await fs.writeFile(path.join(server,'content.js'),`// Generated from the published content catalogs.\nexport const assistantDocumentSets=${JSON.stringify(assistantDocumentSets)};\nexport const publishedAssistantDocuments=assistantDocumentSets[${JSON.stringify(DEFAULT_CONTENT_SET)}];\n`);
+const assistantAssetSets={};
+for(const set of contentSets)assistantAssetSets[set]=assistantAssets(JSON.parse(await fs.readFile(path.join(dist,`content/${set}.json`),'utf8')));
+await fs.writeFile(path.join(server,'content.js'),`// Generated from the published content catalogs.\nexport const assistantDocumentSets=${JSON.stringify(assistantDocumentSets)};\nexport const publishedAssistantDocuments=assistantDocumentSets[${JSON.stringify(DEFAULT_CONTENT_SET)}];\nexport const assistantAssetSets=${JSON.stringify(assistantAssetSets)};\nexport const publishedAssistantAssets=assistantAssetSets[${JSON.stringify(DEFAULT_CONTENT_SET)}];\n`);
 await fs.copyFile(path.join(root,'worker/index.js'),path.join(server,'index.js'));
 const assistantCore=await fs.readFile(path.join(root,'worker/assistant-core.mjs'),'utf8');
 await fs.writeFile(path.join(server,'assistant-core.mjs'),assistantCore.replaceAll("'../dist/","'./"));
@@ -43,6 +47,7 @@ await fs.copyFile(path.join(dist,'assistant-limits.js'),path.join(server,'assist
 await fs.mkdir(path.join(server,'knowledge'),{recursive:true});
 await fs.copyFile(path.join(dist,'knowledge/profile.js'),path.join(server,'knowledge/profile.js'));
 await fs.copyFile(path.join(dist,'assistant-knowledge.js'),path.join(server,'assistant-knowledge.js'));
+await fs.copyFile(path.join(dist,'assistant-knowledge-lookup.js'),path.join(server,'assistant-knowledge-lookup.js'));
 await fs.copyFile(path.join(dist,'assistant-answer.js'),path.join(server,'assistant-answer.js'));
 await fs.writeFile(path.join(server,'voice-core.mjs'),(await fs.readFile(path.join(root,'worker/voice-core.mjs'),'utf8')).replaceAll("'../dist/","'./"));
 await fs.copyFile(path.join(dist,'assistant-acknowledgements.js'),path.join(server,'assistant-acknowledgements.js'));

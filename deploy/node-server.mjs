@@ -11,7 +11,8 @@ import {activeContentSet,globalConfigStore,handleSiteConfigRequest,memoryStore} 
 const development=process.argv.includes('--dev');
 const {handleAssistantRequest}=await import(development?'../worker/assistant-core.mjs':'../dist/server/assistant-core.mjs');
 const {handleVoiceRequest}=await import(development?'../worker/voice-core.mjs':'../dist/server/voice-core.mjs');
-const assistantDocumentSets=development?null:(await import('../dist/server/content.js')).assistantDocumentSets;
+const assistantContent=development?null:await import('../dist/server/content.js');
+const assistantDocumentSets=assistantContent?.assistantDocumentSets;
 const builtContentSets=development?null:(await import('../dist/content/sets.js')).contentSets;
 // Without Global Config, development keeps the choice in memory so the dev panel still works locally.
 const siteConfigStore=globalConfigStore(process.env)||(development?memoryStore():null);
@@ -80,8 +81,10 @@ async function serveApi(incoming,response,url){
   if(siteConfig)result=await handleSiteConfigRequest(fetchRequest(incoming,url),siteConfigStore,{sets});
   else{
    const set=url.pathname==='/api/assistant'?await activeContentSet(siteConfigStore,sets):null;
-   const documents=set===null?null:development?(await readDevelopmentCatalog(set)).documents.filter(doc=>['portfolio-item','component','page'].includes(doc.type)):assistantDocumentSets[set];
-   result=await handler(fetchRequest(incoming,url),environment,{documents});
+   const catalog=set!==null&&development?await readDevelopmentCatalog(set):null;
+   const documents=set===null?null:catalog?catalog.documents.filter(doc=>['portfolio-item','component','page','article','news'].includes(doc.type)):assistantDocumentSets[set];
+   const assets=set===null?null:catalog?Object.fromEntries(catalog.assets.filter(asset=>asset.status==='published'&&asset.description).map(({id,description})=>[id,{description}])):assistantContent.assistantAssetSets[set];
+   result=await handler(fetchRequest(incoming,url),environment,{documents,assets});
   }
   response.statusCode=result.status;
   for(const [name,value] of result.headers)response.setHeader(name,value);

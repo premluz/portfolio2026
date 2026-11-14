@@ -197,6 +197,11 @@
   /* Monospace reads larger than sans at the same size (wider glyphs), so the mono role sits below body. */
   --font-size-mono: max(11px, calc(var(--font-size-body) * .85));
   --font-size-reading: var(--font-size-body);
+  /* Type floor setting (type-floor.css). --type-scale-medium twins the default --type-scale; tests/type-floor.mjs keeps them equal. */
+  --type-scale-medium: .9;
+  --type-floor-min: 12px;
+  --type-floor-reading: 16px;
+  --type-floor-reading-min: 13px;
   --font-size-home-heading: clamp(calc(31px * var(--heading-scale)), calc(2.86vw * var(--heading-scale)), calc(44px * var(--heading-scale)));
   --font-size-section-heading: clamp(calc(20px * var(--heading-scale)), calc(1.6vw * var(--heading-scale)), calc(26px * var(--heading-scale)));
   --font-size-footer-heading: var(--font-size-home-heading);
@@ -1535,6 +1540,18 @@ body.page-card-background-hidden .info-detail>.liquid-skin{display:none!importan
 /* Thin border on card images (Settings → Cards): on the picture itself, not its padded frame. An inset outline paints over the
    picture, follows its rounding and moves nothing. */
 :root[data-image-border="on"] .project-card>.visual :is(img,video){outline:1px solid color-mix(in oklch,var(--ink) 8%,transparent);outline-offset:-1px}
+
+/* type-floor.css */
+/* "Type floors" setting (prem-type-floor, off by default): captions and notes never go below 12px, reading text is 16px at
+   the Medium text size and still follows the Text size and visitor text-size steps, years and metrics use tabular figures,
+   and the sans stack leads with system-ui. Everything is keyed on the attribute app.js sets on <html>. */
+html[data-type-floor="on"]{
+ --font-family-sans:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+ --font-size-caption:max(var(--type-floor-min),calc(11px * var(--type-scale)));
+ --font-size-note:max(var(--type-floor-min),calc(12px * var(--type-scale)));
+ --font-size-reading:max(var(--type-floor-reading-min),calc(var(--type-floor-reading) * var(--type-scale) / var(--type-scale-medium) * var(--reader-text-scale)));
+}
+html[data-type-floor="on"] :is(.detail-caption-lead,.home-about-years,.content-metric,time){font-variant-numeric:tabular-nums}
 
 /* spatial-navigation.css */
 /* Local input feedback lives outside the moving canvas and uses the site's

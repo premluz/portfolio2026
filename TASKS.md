@@ -130,6 +130,36 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 
 ## Done
 
+### TASK-054 Type floors behind a setting (WP-15a)
+- Status: done
+- Tags: area/design-system
+- Acceptance: setting `prem-type-floor`, default off: caption and note at least 12px, reading 16px at Medium, tabular figures on years, metrics and times, `system-ui` first in the sans stack; captures on disk for the owner.
+- Evidence: tests/type-floor.mjs passes; computed in a real page with the setting on: caption and note 12px, reading 14.58px at Small, 16px at Medium, 17.78px at Large, `system-ui` first, `tabular-nums` on `time` and `.content-metric`; with it off, caption 10px, note 11px, reading 14.4px, as before; `npm run check` 162 of 175 (the 13 under TASK-050), 2026-11-11. Captures: scratchpad `wp-15a/` (see PROGRESS.md). No literal font size was replaced with a role token (see PROGRESS.md).
+
+### TASK-053 Golden questions for the live model (WP-13)
+- Status: done
+- Tags: area/assistant, kind/process
+- Acceptance: one command measures real answer quality; running without keys exits non-zero with a clear message; a mocked-provider test covers the scoring.
+- Evidence: tests/assistant-eval.mjs passes (seed file valid against the published documents, each scoring rule, six kinds of invalid file, a whole mocked run through the real request handler in which one answer fails as intended, and exit status 2 with the missing variables named when keys are absent); `npm run check` 161 of 174 (the 13 under TASK-050), 2026-11-11. Not run against a live model: no keys were used. The ten questions are a seed for the owner to review and extend to 30 or more.
+
+### TASK-052 Knowledge moves into content/ (WP-12)
+- Status: done
+- Tags: area/assistant, area/content
+- Acceptance: `content/knowledge.json` is the validated source of the profile facts, curated answers and suggested questions; the two existing modules are generated from it with identical exports; an unknown `sourceId` fails the build; generated files are marked in AGENTS.md and the constitution.
+- Evidence: before changing anything, the exports of `dist/knowledge/profile.js` and `dist/assistant-knowledge.js` and four lookup probes were saved; after generation they are deep-equal. tests/knowledge-source.mjs passes (valid against both content sets, generated text equals what the generator writes, `build-content --check` passes, twelve kinds of mistake fail with named messages); worker-artifact and the assistant tests pass; `npm run check` 160 of 173 (the 13 listed under TASK-050), 2026-11-11.
+
+### TASK-051 Structured project facts, schema only (WP-11)
+- Status: done
+- Tags: area/content, area/assistant
+- Acceptance: a `portfolio-item` accepts optional `timeline`, `team`, `outcomes`, `decisions`, `tools` and `platforms` with validation; they reach the model when present; a project with none is unchanged; no rendering and no invented values.
+- Evidence: tests/project-facts.mjs passes (every field validates; bad periods, shapes, a missing `evidenceId`, duplicate ids and a choice outside the options fail; facts are sent for a fixture project and not for projects without them or for pages), 2026-11-11. `npm run check` 159 of 172, the 13 failures being the ones listed under TASK-050.
+
+### TASK-050 The assistant reads everything a visitor can (WP-10)
+- Status: done
+- Tags: area/assistant, area/content
+- Acceptance: articles and news reach the model; an asset can carry a `description` that is sent with its blocks; the corpus is its own first message; tests fail if an article body, a news item or an asset description stops reaching the model; ASSISTANT.md updated.
+- Evidence: tests/assistant-sources.mjs (articles with date, author, series and every block, news, media fixture), assistant-api, assistant-conversation, assistant-follow-up and site-config pass, 2026-11-11. The new test also found that table blocks never reached the model; fixed. No asset has a `description` yet (the owner's content to write).
+
 ### TASK-045 Card status as its own developer setting
 - Status: done
 - Tags: area/settings, area/home
