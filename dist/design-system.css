@@ -11,8 +11,11 @@
 :root[data-heading-size="large"]{--heading-scale:.78}
 :root[data-heading-size="xlarge"]{--heading-scale:1.1}
 :root[data-heading-size="display"]{--heading-scale:1.5}
+:root[data-space-size="xsmall"]{--space-density:.6}
 :root[data-space-size="small"]{--space-density:.8}
 :root[data-space-size="large"]{--space-density:1.2}
+:root[data-space-size="xlarge"]{--space-density:1.45}
+:root[data-space-size="xxlarge"]{--space-density:1.75}
 :root[data-heading-weight="thin"]{--font-weight-heading:300}
 :root[data-heading-weight="regular"]{--font-weight-heading:400}
 :root[data-heading-weight="bold"]{--font-weight-heading:500}

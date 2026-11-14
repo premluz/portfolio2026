@@ -498,13 +498,15 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 @media(max-width:600px){.content-grid>.surface[data-block-columns="1"],.content-grid>.surface[data-block-columns="2"]{grid-column:1/-1}.story [data-media-fit="full-bleed"] .content-media-frame{width:calc(100% + var(--space-story-inset) + var(--space-story-inset));height:clamp(220px,70vw,420px)}}
 
 /* The dock can keep the same smoked glass in light or dark site themes. */
-#dock.always-dark-glass,:root.always-dark-glass .header-detail-nav{color:var(--ink);--ink:oklch(.94 .008 285);--muted:oklch(.76 .012 285);--body-ink:var(--muted);--eyebrow-ink:oklch(.70 .012 285);--chrome:oklch(.19 .006 285 / .88);--panel:oklch(.21 .006 285 / .94);--nav-glass-rgb:23,23,28;--nav-glass-alpha:.32;--dock-glass-alpha:.32;--dock-backdrop-brightness:.65;--nav-rim:oklch(.98 .004 285 / .08);--dock-outline:var(--dock-outline-dark);--nav-highlight:oklch(.98 .004 285 / .10);--nav-shadow:oklch(0 0 0 / .24);--nav-item-ink:oklch(.76 .012 285);--nav-active:oklch(.98 .004 285 / .12);--nav-item-hover:oklch(.98 .004 285 / .055)}
+/* The smoked palette needs a smoked surface behind it. Ghost paints none, so it keeps the theme ink. */
+#dock.always-dark-glass:not(.control-ghost){color:var(--ink)}
+#dock.always-dark-glass:not(.control-ghost),:root.always-dark-glass .header-detail-nav button:not(.control-ghost){--ink:oklch(.94 .008 285);--muted:oklch(.76 .012 285);--body-ink:var(--muted);--eyebrow-ink:oklch(.70 .012 285);--chrome:oklch(.19 .006 285 / .88);--panel:oklch(.21 .006 285 / .94);--nav-glass-rgb:23,23,28;--nav-glass-alpha:.32;--dock-glass-alpha:.32;--dock-backdrop-brightness:.65;--nav-rim:oklch(.98 .004 285 / .08);--dock-outline:var(--dock-outline-dark);--control-surface-rgb:var(--nav-glass-rgb);--control-surface-alpha:var(--dock-glass-alpha);--nav-highlight:oklch(.98 .004 285 / .10);--nav-shadow:oklch(0 0 0 / .24);--nav-item-ink:oklch(.76 .012 285);--nav-active:oklch(.98 .004 285 / .12);--nav-item-hover:oklch(.98 .004 285 / .055)}
 #dock.always-dark-glass .dock-glass{background:linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));-webkit-backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness))}
 #dock.always-dark-glass .dock-outline{stroke:var(--dock-outline)}
 /* Header Go Back and Previous/Next follow the dock; text re-resolves against the dark palette above. */
-:root.always-dark-glass .header-detail-nav{--composer-text-ink:var(--muted)}
-/* Over a light page the thin dark glass turns mid-grey, so it is denser there and inactive links lighter: about 5.5:1 on the plain light background. */
-:root:not([data-theme="dark"]) :is(#dock.always-dark-glass,.always-dark-glass .header-detail-nav){--dock-glass-alpha:.5;--dock-backdrop-brightness:.45;--nav-link-ink:oklch(.84 .008 290)}
+:root.always-dark-glass .header-detail-nav button:not(.control-ghost){--composer-text-ink:var(--muted)}
+/* Over a light page the thin dark glass turns mid-grey, so it is denser there and secondary ink lighter: 4.5:1 or more for labels, including the smaller Go Back surface. */
+:root:not([data-theme="dark"]) :is(#dock.always-dark-glass,.always-dark-glass .header-detail-nav button):not(.control-ghost){--dock-glass-alpha:.6;--dock-backdrop-brightness:.45;--muted:oklch(.84 .008 290);--nav-link-ink:var(--muted);--nav-item-ink:var(--muted);--glass-button-body-top:oklch(0 0 0 / .8);--glass-button-body-bottom:oklch(0 0 0 / .88)}
 /* Site settings has its own glass surface beside the navigation/composer. */
 #dock.dock-morph{left:calc(50% + var(--dock-center-offset,0px))}
 #dock>.site-settings-dock{position:absolute;left:calc(100% + 10px);bottom:0;transform:none;--nav-main-width:var(--nav-height);--nav-context-width:0px;--nav-section-gap:0px;z-index:5}

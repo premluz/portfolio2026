@@ -44,8 +44,12 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 :root[data-hero-heading-align="center"] .home-canvas:not(.home-view-split) .hero-copy>[data-hero-description]{grid-column:1 / -1;max-width:var(--page-intro-width);margin-inline:auto}
 /* Centred, the heading and description take the middle four of the hero copy's six columns (content-widths.css); below 1000px they go full width. */
 @media(min-width:1001px){
- :root[data-hero-heading-align="center"] .home-canvas:not(.home-view-split) .hero-about :is(h1,.hero-strapline){max-width:calc((100% - 5 * var(--space-6)) / 6 * 4 + 3 * var(--space-6))}
+ :root{--centred-heading-measure:calc((100% - 5 * var(--space-6)) / 6 * 4 + 3 * var(--space-6))}
+ :root[data-hero-heading-align="center"] .home-canvas:not(.home-view-split) .hero-about :is(h1,.hero-strapline){max-width:var(--centred-heading-measure)}
  :root[data-hero-heading-align="center"] .home-canvas:not(.home-view-split) .hero-copy>[data-hero-description]{grid-column:2 / span 4;max-width:none}
+ /* A centred project caption is as wide as the Home hero, its title and summary on the same middle four of six columns. */
+ :root:is([data-detail-heading-align="center"],[data-hero-heading-align="center"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{max-width:min(100%,var(--home-content-width,100%))}
+ :root:is([data-detail-heading-align="center"],[data-hero-heading-align="center"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption>*{max-width:var(--centred-heading-measure);margin-inline:auto}
 }
 :root:is([data-detail-heading-align="center"],[data-hero-heading-align="center"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{margin-inline:auto;text-align:center}
 :root:is([data-detail-heading-align="center"],[data-hero-heading-align="center"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption .detail-caption-title{margin-inline:auto}

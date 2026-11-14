@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
-import {captureSharedWords,copyOpacity,copyScale,createSharedWords,hasSharedLead,lockLineBreaks,sharedCopyNode} from '../dist/shared-copy.js';
+import {readFile} from 'node:fs/promises';
+import {captureSharedWords,copyOpacity,copyScale,createSharedWords,createStaticCopy,hasSharedLead,lockLineBreaks,sharedCopyNode} from '../dist/shared-copy.js';
 
 class Node{
  constructor(){this.style={};this.children=[];}
@@ -12,7 +13,7 @@ class Node{
 globalThis.getComputedStyle=node=>({opacity:node.opacity??'1',textTransform:'none',transform:node.transform||'none'});
 const measurements={
  createTreeWalker(node){let index=0;return {nextNode:()=>node.walk[index++]||null};},
- createRange(){return {setStart(node){this.node=node;},setEnd(){},getBoundingClientRect(){return this.node.rect;}};}
+ createRange(){return {setStart(node){this.node=node;},setEnd(){},getBoundingClientRect(){return this.node.rect;},getClientRects(){return [this.node.rect];}};}
 };
 const host=new Node(),part=new Node(),wordSpan=new Node();part.parentElement=host;part.opacity='.8';wordSpan.parentElement=part;wordSpan.opacity='.4';part.ownerDocument=measurements;
 for(const [key,standaloneSelector,cardSelector] of [['title','[data-gallery-title]','h1,h2,h3'],['client','[data-gallery-client]','.card-client,.project-client'],['summary','[data-gallery-description]','.project-summary,.info-summary']]){
@@ -46,5 +47,18 @@ assert.equal(createSharedWords({words},[{text:'Different'}],new Node(),'title',s
  assert.deepEqual(node.parts.map(part=>part.tag||part),['Turned a',{tag:'br'}.tag,'design-system brief','br','into'],'Words keep the measured rows, separated by explicit breaks');
  assert.equal(node.style.whiteSpace,'nowrap','Wrapping cannot change while width and font size animate');
  assert.equal(lockLineBreaks(node,null),false,'Without measurements the copy is left alone');
+ // "Research-informed" broken after its hyphen arrives as two fragments; the second continues the first's row-mate without a space.
+ assert.equal(lockLineBreaks(node,[word('Vodafone.',0),word('Research-',2),{...word('informed',31),joined:true},word('revamp',33)]),true);
+ assert.deepEqual(node.parts.map(part=>part.tag||part),['Vodafone. Research-','br','informed revamp'],'A word wrapped at its hyphen keeps that break');
 }
-console.log('Shared copy passed: word ranges, explicit line breaks, common lead isolation, partial opacity, scaled ancestors, continuous word placement and differing-content fallback.');
+{
+ // A centred project title keeps its alignment once its copy leaves the caption for the shell.
+ const clone={style:{},classList:{add(){}}},appended=[];
+ const copy=createStaticCopy({node:{cloneNode:()=>clone},rect:{left:400,top:200,width:600},textAlign:'center',fontFamily:'sans',fontSize:60,fontWeight:'700',lineHeight:1.1,letterSpacing:0,color:'black'},{append:node=>appended.push(node)});
+ assert.equal(copy.node.style.textAlign,'center','The static copy carries the measured alignment');
+ assert.equal(copy.node.style.width,'600px');assert.deepEqual(appended,[clone]);
+ const app=await readFile(new URL('../dist/app.js',import.meta.url),'utf8'),surface=await readFile(new URL('../dist/liquid-surface.js',import.meta.url),'utf8');
+ assert(app.includes('rect:node.getBoundingClientRect(),textAlign:style.textAlign,'),'The snapshot measures alignment before the copy is detached');
+ assert(surface.includes('opacity:copyOpacity(target,to),textAlign:style.textAlign,'),'The return-target copy measures it too');
+}
+console.log('Shared copy passed: static copy alignment, word ranges, explicit line breaks, common lead isolation, partial opacity, scaled ancestors, continuous word placement and differing-content fallback.');

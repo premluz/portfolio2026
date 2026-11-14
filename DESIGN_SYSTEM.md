@@ -21,7 +21,7 @@ new weight controls.
 | Control | Root attribute | Tokens |
 | --- | --- | --- |
 | Text size | `data-type-size` | `--type-scale`, semantic `--font-size-*` roles |
-| Spacing | `data-space-size` | `--space-density`, 4px spacing scale, semantic gaps |
+| Spacing | `data-space-size` (xsmall .6, small .8, medium 1, large 1.2, xlarge 1.45, xxlarge 1.75) | `--space-density`, 4px spacing scale, semantic gaps |
 | Header weight | `data-heading-weight` | `--font-weight-heading` |
 | Body weight | `data-body-weight` | `--font-weight-body` |
 | Letter spacing | `data-type-tracking` | heading, card, body and label tracking |
@@ -52,6 +52,28 @@ the quiet nav hairline, and Glass uses the illuminated glass material. Composite
 navigation applies its material to the outer silhouette and feedback to its
 links. Composer inputs retain their readable input surface. **Glass cards** is
 independent. Migration and rationale are recorded in [ADR-012](docs/decisions/ADR-012-controls-have-inherited-variants.md).
+Control ink follows the surface that is actually painted. Always dark glass applies
+its light-on-dark palette to Outline and Glass, which paint smoked glass (denser
+over a light page, and extended to the header Go Back/Previous/Next buttons);
+Ghost paints no surface, so it keeps the theme ink. Ghost navigation borrows the
+Outline surface while one of its menus is open, so the menu never sits bare on
+page content. In both themes every control label holds 4.5:1 and every icon
+3:1 in all three variants. Controls share the cards' material and read by
+tone, never by a line: light Outline and Glass are the neutral card grey
+(`--control-surface-rgb`, no colour cast), milky (`--control-surface-alpha`, the
+glass-button body tokens) with `--muted` secondary ink, so labels also hold over
+a dark photograph, and the current or hovered item lifts to the lighter `--panel`
+tone. No control edge is stronger than the card edge: Outline uses
+`--image-edge` in both themes and Glass has no border. The label or icon
+identifies each control, so no 3:1 edge is needed or wanted. The menu re-measures its
+width whenever an item resizes, so the reader text size never clips the last
+item. All of this is checked by `tests/visual/control-contrast.spec.mjs`.
+Connected items (the menu links and buttons, and the Theme and Text size groups)
+share one selection pill, an independent element behind the labels
+(`selection-pill.js`, `.selection-pill`). It rests on the current item, glides to
+the hovered or keyboard-focused one over `--selection-pill-duration`, and returns
+when the pointer leaves; the items themselves carry no highlight. It moves
+without animation under reduced motion or with site animation off.
 Footer contact controls follow the global/Utilities variant. Their text-labels-versus-icons option changes presentation only, including for older saved profiles.
 
 Project details use an unlabeled three-sentence context introduction, followed

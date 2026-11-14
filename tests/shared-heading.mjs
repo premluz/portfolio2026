@@ -38,7 +38,7 @@ async function scenario({fromLine=1.13,toLine=1.3,sourceHidden=false,targetHidde
  const targetCopy=new Node('copy');targetCopy.computed={opacity:targetCopyHidden?'0':'1',visibility:'visible'};target.closest=selector=>selector==='.card-copy'?targetCopy:null;
  target.computed={fontSize:'40px',lineHeight:toLine*40+'px',letterSpacing:'-1px',color:'rgb(20,20,20)',visibility:targetHidden?'hidden':'visible'};
  if(words){
-  const measurement={createTreeWalker:node=>{let i=0;return {nextNode:()=>node.texts?.[i++]||null};},createRange:()=>({setStart(node){this.node=node;},setEnd(){},getBoundingClientRect(){return this.node.rect;}})};
+  const measurement={createTreeWalker:node=>{let i=0;return {nextNode:()=>node.texts?.[i++]||null};},createRange:()=>({setStart(node){this.node=node;},setEnd(){},getBoundingClientRect(){return this.node.rect;},getClientRects(){return [this.node.rect];}})};
   for(const [node,rects] of [[heading,[{left:100,top:100,width:130,height:35},{left:240,top:100,width:120,height:35}]],[target,[{left:100,top:140,width:175,height:46},{left:100,top:192,width:160,height:46}]]]){
    node.ownerDocument=measurement;node.texts=['Content ','Pipeline'].map((text,index)=>({nodeType:3,textContent:text,parentElement:node,rect:rects[index]}));
   }

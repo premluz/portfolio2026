@@ -1,6 +1,6 @@
 // Keep the live homepage, including its image contexts and event handlers,
 // available until an opening transition commits or reverses.
-import {EASE} from './motion-tokens.js';
+import {EASE,DURATION} from './motion-tokens.js';
 import {stageMotion} from './motion-viewport.js';
 export function fadeHomeChrome(layer,control,duration){
  const promises=[],fade=(node,delay=0)=>promises.push(control.track(node.animate([{opacity:getComputedStyle(node).opacity||'1'},{opacity:0}],{duration:duration*.4,delay,easing:EASE.leave,fill:'both'})).finished);
@@ -17,11 +17,12 @@ export function fadeHomeChrome(layer,control,duration){
 }
 // Going back, the hero returns as it left, reversed: top-down, the badge, the heading, the description, then the
 // logo strip, with the same step and length as the exit. fill 'backwards' keeps each line hidden until its step begins.
+// It starts once the project's departing title has faded, so the two headings never overlap.
 export function revealHomeHero(root,control,duration){
- const promises=[],step=duration*.12;
+ const promises=[],step=duration*.12,start=duration*DURATION.returnCopyFade;
  for(const hero of root.querySelectorAll('.home-hero')){
   const nodes=[hero.querySelector('.badge'),hero.querySelector('h1'),hero.querySelector('[data-hero-copy]'),hero.querySelector('.hero-logos')].filter(node=>node&&!node.hidden);
-  nodes.forEach((node,index)=>promises.push(control.track(node.animate([{opacity:0},{opacity:1}],{duration:duration*.4,delay:index*step,easing:EASE.settle,fill:'backwards'})).finished));
+  nodes.forEach((node,index)=>promises.push(control.track(node.animate([{opacity:0},{opacity:1}],{duration:duration*.4,delay:start+index*step,easing:EASE.settle,fill:'backwards'})).finished));
  }
  return promises;
 }

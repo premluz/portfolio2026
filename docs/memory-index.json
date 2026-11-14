@@ -138,7 +138,7 @@
         "FRAMEWORK.md",
         "MOTION.md"
       ],
-      "hash": "870f893d66e53748128cbd24904003db9fd186c8",
+      "hash": "d69a3bf2b0286a1aad4ed511cdb3d76192019891",
       "items": []
     },
     {
@@ -253,7 +253,7 @@
         "TASKS.md",
         "PROJECT_STATE.md"
       ],
-      "hash": "929fb706a18df20c7c00c8f174658a5d43a6427b",
+      "hash": "87afd533790126af1e7ec4e426d9fbad92d1c4b9",
       "items": []
     },
     {
@@ -333,7 +333,7 @@
         "PROJECT_STATE.md",
         "PROGRESS.md"
       ],
-      "hash": "0b78b1d0af7a497c641c62b0f3cbad02543bdc3c",
+      "hash": "8100ac2be4ce0b0e615cb0a5e928e4a0f068be8d",
       "items": [
         {
           "id": "TASK-044",
@@ -360,6 +360,42 @@
           "tags": [
             "area/settings",
             "kind/debt"
+          ]
+        },
+        {
+          "id": "TASK-049",
+          "title": "One gliding selection pill for the menu and connected buttons",
+          "status": "done",
+          "tags": [
+            "area/dock",
+            "kind/feature"
+          ]
+        },
+        {
+          "id": "TASK-048",
+          "title": "Milky light controls, visible button edges and a menu that follows text size",
+          "status": "done",
+          "tags": [
+            "area/dock",
+            "kind/bug"
+          ]
+        },
+        {
+          "id": "TASK-047",
+          "title": "Lift dark-theme idle menu links to 4.5:1",
+          "status": "done",
+          "tags": [
+            "area/dock",
+            "kind/debt"
+          ]
+        },
+        {
+          "id": "TASK-046",
+          "title": "Make light-theme controls legible in Ghost, Outline and Glass",
+          "status": "done",
+          "tags": [
+            "area/dock",
+            "kind/bug"
           ]
         },
         {

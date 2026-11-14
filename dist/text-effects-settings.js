@@ -29,7 +29,17 @@ export const TEXT_EFFECT_CONTROLS=Object.freeze({
  // On by default at the owner's request (2026-11-13), the one exception to ADR-005 here: page headings glimmer on
  // landing. It replaced heroGlimmer (home only, default off), whose stored false would otherwise have kept it hidden.
  pageGlimmer:toggle(true),
- pageGlimmerPlays:range(1,6,1)
+ pageGlimmerPlays:range(1,6,1),
+ // Heading reveal (PremLab's TextReveal), used by the project title stream: defaults are the thinkingisfree
+ // theme's letter reveal, so any heading lands in about a third of a second. Glyphs and swap are shared.
+ revealEffect:choice(['feather','scramble'],'feather'),
+ revealTint:choice(TINTS,'none'),
+ revealColor:choice(TEXT_EFFECT_COLORS,'blue'),
+ revealUnit:choice(UNITS,'character'),
+ revealSpreadMax:range(0,2000,220,'ms'),
+ revealSpreadMin:range(0,1000,100,'ms'),
+ revealMaxStagger:range(1,200,25,'ms'),
+ revealFade:range(20,1000,140,'ms')
 });
 export const DEFAULT_TEXT_EFFECTS=Object.freeze(Object.fromEntries(Object.entries(TEXT_EFFECT_CONTROLS).map(([key,control])=>[key,control.value])));
 
@@ -49,3 +59,8 @@ export function readTextEffects(storage){
 export const glimmerOptions=settings=>({enabled:settings.glimmer,tint:settings.glimmerTint,color:settings.glimmerColor,speed:settings.glimmerSpeed,spread:settings.glimmerSpread,direction:settings.glimmerDirection});
 // Page headings share the glimmer's look and have their own switch and sweep count.
 export const heroGlimmerOptions=settings=>({...glimmerOptions(settings),enabled:settings.pageGlimmer,plays:settings.pageGlimmerPlays});
+// The heading reveal's edge look and timing, in streamEdgeText's terms.
+export const headingRevealOptions=settings=>({
+ style:{effect:settings.revealEffect,tint:settings.revealTint,color:settings.revealColor,unit:settings.revealUnit,glyphs:settings.glyphs,swap:settings.swap,font:'inherit',caret:false},
+ timing:{spreadMin:settings.revealSpreadMin,spreadMax:settings.revealSpreadMax,maxStagger:settings.revealMaxStagger,fade:settings.revealFade}
+});

@@ -65,19 +65,26 @@
   --dock-backdrop-brightness: 1;
   --nav-rim: oklch(0.99999999 0.00000004 0.00000 / 0.65);
   --dock-outline: oklch(0.25543328 0.01903326 298.77205 / 0.06);
+  /* Controls share the cards' material: the same neutral grey, milky enough that ink holds over a photograph,
+     and never an edge stronger than the card edge (--image-edge). A control reads by its tone, not by a line. */
+  --control-surface-rgb: var(--card-surface-rgb);
+  --control-surface-alpha: .9;
   --dock-outline-dark: oklch(0.97184305 0.01472839 294.47299 / 0.03);
   --nav-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.18);
   --nav-shadow: oklch(0.22773614 0.03305204 297.22251 / 0.09);
   /* Navigation follows the eyebrow hierarchy: quiet at rest, a small
-     tonal lift on hover, and a slightly denser selected surface. */
-  --nav-item-ink: var(--eyebrow-ink);
-  /* Menu links: the idle link and the current page both sit a step quieter than before; hover still goes to full ink. */
-  --nav-link-ink: oklch(.68 .006 304);
+     tonal lift on hover, and a slightly denser selected surface. Small menu
+     labels sit one step denser than eyebrows to hold 4.5:1 on the hover wash. */
+  --nav-item-ink: oklch(.52 .007 304);
+  /* Menu links: the idle link and the current page both sit a step quieter than before, with the idle link at 4.5:1 or more; hover still goes to full ink. */
+  --nav-link-ink: oklch(.55 .006 304);
   --nav-link-active-ink: var(--muted);
   --nav-active: oklch(0.25543328 0.01903326 298.77205 / 0.065);
   --nav-item-hover: oklch(0.25543328 0.01903326 298.77205 / 0.025);
   --nav-hover-in-duration: 70ms;
   --nav-hover-out-duration: 420ms;
+  /* The selection pill glides between connected items and settles without overshoot. */
+  --selection-pill-duration: 360ms;
   /* The header swaps its avatar and name for Go Back and Previous/Next one element after another: each moves
      --header-swap-shift over --header-swap-duration, starting --header-swap-step after the one before. */
   --header-swap-duration: 240ms;
@@ -107,9 +114,9 @@
   --ease-press: cubic-bezier(.2,.8,.2,1);
   --ease-standard: cubic-bezier(.4,0,.2,1);
   /* Glass button: lit top/bottom rims, darker side rims and an inner glow instead of a drop shadow. */
-  --glass-button-sheen: oklch(1 0 0 / .35);
-  --glass-button-body-top: oklch(1 0 0 / .45);
-  --glass-button-body-bottom: oklch(0.9499 0.0243 280.86 / .55);
+  --glass-button-sheen: oklch(1 0 0 / .2);
+  --glass-button-body-top: rgba(var(--card-surface-rgb), .88);
+  --glass-button-body-bottom: rgba(var(--card-surface-rgb), .94);
   --glass-button-rim-light: oklch(1 0 0 / .9);
   --glass-button-rim-dark: oklch(0.2404 0.0414 305.38 / .08);
   --glass-button-glow: oklch(1 0 0 / .25);
@@ -119,7 +126,7 @@
   --glass-dark-button-rim-light: oklch(0.9499 0.0243 280.86 / .2);
   --glass-dark-button-rim-dark: oklch(0 0 0 / .2);
   --glass-dark-button-glow: oklch(0.9499 0.0243 280.86 / .04);
-  --glass-button-blur: 10px;
+  --glass-button-blur: 20px;
   --glass-button-press-scale: .92;
   --card-hover-scale: .985;
   --card-press-scale: .97;
@@ -419,10 +426,12 @@
   --dock-backdrop-brightness: .65;
   --nav-rim: oklch(0.99999999 0.00000004 0.00000 / 0.04);
   --dock-outline: var(--dock-outline-dark);
+  --control-surface-rgb: var(--nav-glass-rgb);
+  --control-surface-alpha: var(--dock-glass-alpha);
   --nav-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.035);
   --nav-shadow: oklch(0.00000000 0.00000000 0.00000 / 0.18);
   --nav-item-ink: var(--eyebrow-ink);
-  --nav-link-ink: oklch(.58 .01 300);
+  --nav-link-ink: oklch(.64 .01 300);
   --nav-link-active-ink: var(--muted);
   --nav-active: oklch(0.99999999 0.00000004 0.00000 / 0.08);
   --nav-item-hover: oklch(0.99999999 0.00000004 0.00000 / 0.025);
@@ -438,9 +447,10 @@
   --text-shadow: 0 1px 4px oklch(0 0 0 / .25);
 }
 
-/* The dock can stay dark in the light theme, so button glass re-resolves the dark palette there too. */
+/* The dock and the header controls that follow it can stay dark in the light theme, so button glass re-resolves the dark palette there too. */
 :root[data-theme="dark"],
-#dock.always-dark-glass {
+#dock.always-dark-glass,
+:root.always-dark-glass .header-detail-nav button {
   --glass-button-sheen: var(--glass-dark-button-sheen);
   --glass-button-body-top: var(--glass-dark-button-body-top);
   --glass-button-body-bottom: var(--glass-dark-button-body-bottom);
@@ -450,7 +460,8 @@
 }
 
 :root,
-#dock.always-dark-glass {
+#dock.always-dark-glass,
+:root.always-dark-glass .header-detail-nav button {
   --glass-ghost-fill: linear-gradient(var(--glass-button-sheen), var(--glass-button-sheen));
   --glass-button-fill: linear-gradient(90deg, var(--glass-button-sheen), var(--glass-button-sheen)), linear-gradient(var(--glass-button-body-top), var(--glass-button-body-bottom));
   --glass-button-edge: inset -1px 0 1px var(--glass-button-rim-dark), inset 1px 0 1px var(--glass-button-rim-dark), inset 0 -1px 1px var(--glass-button-rim-light), inset 0 1px 1px var(--glass-button-rim-light), inset 0 -4px 4px var(--glass-button-glow), inset 0 4px 4px var(--glass-button-glow);

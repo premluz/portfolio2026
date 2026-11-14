@@ -208,7 +208,8 @@ assert.equal(DEFAULT_TEXT_EFFECTS.effect,'classic','The live site is unchanged u
  assert.equal((css.match(/background-repeat:repeat;/g)||[]).length,2,'Both glimmers tile their gradient');
  const hero=css.slice(css.indexOf('Page headings (PAGE_HEADINGS'));
  assert(hero.includes('@media(prefers-reduced-motion:no-preference){')&&hero.includes(':not(.page-booting,[data-animation="off"])'),'The hero sweep waits for boot and respects reduced motion and Animation off');
- assert(hero.includes('#main:not(.home-view-split) :is(')&&hero.includes(':not([data-glimmer-done])'),'Only the live page (not the retained home layer), not the Flip/Flat views, and it stops once done');
+ assert(hero.includes('#main:not(.home-view-split) :is(')&&hero.includes(':not([data-glimmer-done],.edge-stream)'),'Only the live page (not the retained home layer), not the Flip/Flat views, and it stops once done');
+ assert(!hero.includes(':not([data-glimmer-done])'),'A streaming title waits: its text-clipped sweep would paint the letters the stream has not reached');
  assert.equal(hero.split(`:is(${PAGE_HEADINGS.join(',')})`).length-1,2,'Both glimmer rules list exactly the headings text-glimmer.js watches');
  assert.deepEqual([...PAGE_HEADINGS],['[data-hero-title]','.detail-caption-title','.surface.detail>h1','.about-hero h1','.lab-heading h1','.article-header h1'],'Home, project title, info pages, About, Lab and articles');
  assert(/animation:text-glimmer-ltr var\(--hero-glimmer-cycle\) linear var\(--duration-hero-glimmer-delay\) var\(--hero-glimmer-plays\) backwards/.test(hero),'The sweep count is the iteration count, after a delay that holds the first frame');

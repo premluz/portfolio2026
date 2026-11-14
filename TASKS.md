@@ -33,6 +33,33 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 - Acceptance: after the owner has used the tidied panel for a week (from 2026-11-06), each `.setting-retired` control in group 1 (hero carousel, featured stage, hero timeline, Flip/Flat layouts, native snap, glass cards, image ripple and blur, per-area control style overrides) is removed with its code path, storage key, `default-settings.js` and `settings-transfer.js` entries, and import ignores the old keys. The switches behind the merged menus (`settings-proxies.js`) may instead move their storage behind the menus.
 - Notes: hiding rather than deleting first follows AGENTS.md; nothing is lost if a retired option is wanted back (remove its class).
 
+### TASK-049 One gliding selection pill for the menu and connected buttons
+- Status: done
+- Tags: area/dock, kind/feature
+- Acceptance: the selected background is a single independent element that is always present, glides to a hovered item and returns to the current one when the pointer leaves, in the menu and in connected setting buttons.
+- Evidence: 2026-11-13. `dist/selection-pill.js` mounted on the dock menu and the two `.theme-options` groups; styles in `control-style.css`, `--selection-pill-duration` in `tokens.css`. `tests/visual/selection-pill.spec.mjs` (three checks: follows hover and returns, glides and respects reduced motion, connected buttons) passes. `npm run check` 156 of 170, the same 14 as HEAD.
+- Notes: not placed behind a new setting, as it refines the existing highlight; it already follows the Animation setting. `tests/module-graph.mjs` was over its first-load budget on HEAD and this module adds about 3 KB to it.
+
+### TASK-048 Milky light controls, visible button edges and a menu that follows text size
+- Status: done
+- Tags: area/dock, kind/bug
+- Acceptance: light Outline and Glass stay legible over a photograph; controls read by tone with no edge stronger than the card edge and no colour cast; the menu does not clip its last item at any reader text size.
+- Evidence: 2026-11-13. Light Outline and Glass fill with the neutral card grey (`--control-surface-rgb`) at 90–97% and 88–94% with a 20px blur; painted light surfaces use `--muted` for secondary ink (labels 4.5:1 or more over solid black) and lift the current item to `--panel`. Outline's edge is `--image-edge` in both themes; Glass has none. A first attempt with a 3:1 outline and a tinted glass was rejected by the owner the same day and removed. A ResizeObserver on the menu items re-measures `--nav-main-width`; without it the Settings icon overflowed by 5px at Large text. `tests/visual/control-contrast.spec.mjs` now has five checks, all passing; the text-size check fails without the observer. `npm run check` 156 of 170 and the dock browser specs fail only where HEAD does.
+- Notes: Ghost has no surface, so it is not legible over a dark photograph by design. Dark-theme surfaces over a light photograph were not densified.
+
+### TASK-047 Lift dark-theme idle menu links to 4.5:1
+- Status: done
+- Evidence: 2026-11-13. Dark `--nav-link-ink` goes from .58 to .64 lightness; the dark-theme run of `tests/visual/control-contrast.spec.mjs` passes in all three variants with Always dark glass on and off.
+- Tags: area/dock, kind/debt
+- Acceptance: the idle navigation link holds 4.5:1 in the dark theme in Ghost, Outline and Glass, and `tests/visual/control-contrast.spec.mjs` covers the dark theme too.
+- Notes: measured 2026-11-13 at 4.35:1 (Ghost), 4.43:1 (Outline) and 3.90:1 (Glass); `--nav-link-ink` in the dark theme is `oklch(.58 .01 300)`. Left alone because TASK-046 was scoped to the light theme.
+
+### TASK-046 Make light-theme controls legible in Ghost, Outline and Glass
+- Status: done
+- Tags: area/dock, kind/bug
+- Acceptance: in the light theme, control labels hold 4.5:1 and icons 3:1 in all three variants, with Always dark glass on or off, and an open menu has a surface in Ghost.
+- Evidence: 2026-11-13. Cause: Always dark glass gave the dock and header controls light-on-dark ink in every variant, but only Outline painted a dark surface (measured 1.1–2.0:1 in Ghost and Glass, 2.6–4.1:1 for Outline's Go Back, arrows and menu options). The palette now skips Ghost; Glass and Outline are denser over a light page and the header buttons get the dark glass tokens; light `--nav-link-ink` and `--nav-item-ink` are darker; Ghost borrows the Outline surface while a menu is open. New `tests/visual/control-contrast.spec.mjs` passes (fails on HEAD's CSS). `npm run check`: 156 of 170, the same 14 failures as with these CSS files at HEAD. control-styles: 4 of 5, the footer press check fails identically on HEAD.
+
 ### TASK-037 Repair the failing browser checks
 - Status: todo
 - Tags: area/tests, kind/debt

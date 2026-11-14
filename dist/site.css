@@ -66,19 +66,26 @@
   --dock-backdrop-brightness: 1;
   --nav-rim: oklch(0.99999999 0.00000004 0.00000 / 0.65);
   --dock-outline: oklch(0.25543328 0.01903326 298.77205 / 0.06);
+  /* Controls share the cards' material: the same neutral grey, milky enough that ink holds over a photograph,
+     and never an edge stronger than the card edge (--image-edge). A control reads by its tone, not by a line. */
+  --control-surface-rgb: var(--card-surface-rgb);
+  --control-surface-alpha: .9;
   --dock-outline-dark: oklch(0.97184305 0.01472839 294.47299 / 0.03);
   --nav-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.18);
   --nav-shadow: oklch(0.22773614 0.03305204 297.22251 / 0.09);
   /* Navigation follows the eyebrow hierarchy: quiet at rest, a small
-     tonal lift on hover, and a slightly denser selected surface. */
-  --nav-item-ink: var(--eyebrow-ink);
-  /* Menu links: the idle link and the current page both sit a step quieter than before; hover still goes to full ink. */
-  --nav-link-ink: oklch(.68 .006 304);
+     tonal lift on hover, and a slightly denser selected surface. Small menu
+     labels sit one step denser than eyebrows to hold 4.5:1 on the hover wash. */
+  --nav-item-ink: oklch(.52 .007 304);
+  /* Menu links: the idle link and the current page both sit a step quieter than before, with the idle link at 4.5:1 or more; hover still goes to full ink. */
+  --nav-link-ink: oklch(.55 .006 304);
   --nav-link-active-ink: var(--muted);
   --nav-active: oklch(0.25543328 0.01903326 298.77205 / 0.065);
   --nav-item-hover: oklch(0.25543328 0.01903326 298.77205 / 0.025);
   --nav-hover-in-duration: 70ms;
   --nav-hover-out-duration: 420ms;
+  /* The selection pill glides between connected items and settles without overshoot. */
+  --selection-pill-duration: 360ms;
   /* The header swaps its avatar and name for Go Back and Previous/Next one element after another: each moves
      --header-swap-shift over --header-swap-duration, starting --header-swap-step after the one before. */
   --header-swap-duration: 240ms;
@@ -108,9 +115,9 @@
   --ease-press: cubic-bezier(.2,.8,.2,1);
   --ease-standard: cubic-bezier(.4,0,.2,1);
   /* Glass button: lit top/bottom rims, darker side rims and an inner glow instead of a drop shadow. */
-  --glass-button-sheen: oklch(1 0 0 / .35);
-  --glass-button-body-top: oklch(1 0 0 / .45);
-  --glass-button-body-bottom: oklch(0.9499 0.0243 280.86 / .55);
+  --glass-button-sheen: oklch(1 0 0 / .2);
+  --glass-button-body-top: rgba(var(--card-surface-rgb), .88);
+  --glass-button-body-bottom: rgba(var(--card-surface-rgb), .94);
   --glass-button-rim-light: oklch(1 0 0 / .9);
   --glass-button-rim-dark: oklch(0.2404 0.0414 305.38 / .08);
   --glass-button-glow: oklch(1 0 0 / .25);
@@ -120,7 +127,7 @@
   --glass-dark-button-rim-light: oklch(0.9499 0.0243 280.86 / .2);
   --glass-dark-button-rim-dark: oklch(0 0 0 / .2);
   --glass-dark-button-glow: oklch(0.9499 0.0243 280.86 / .04);
-  --glass-button-blur: 10px;
+  --glass-button-blur: 20px;
   --glass-button-press-scale: .92;
   --card-hover-scale: .985;
   --card-press-scale: .97;
@@ -420,10 +427,12 @@
   --dock-backdrop-brightness: .65;
   --nav-rim: oklch(0.99999999 0.00000004 0.00000 / 0.04);
   --dock-outline: var(--dock-outline-dark);
+  --control-surface-rgb: var(--nav-glass-rgb);
+  --control-surface-alpha: var(--dock-glass-alpha);
   --nav-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.035);
   --nav-shadow: oklch(0.00000000 0.00000000 0.00000 / 0.18);
   --nav-item-ink: var(--eyebrow-ink);
-  --nav-link-ink: oklch(.58 .01 300);
+  --nav-link-ink: oklch(.64 .01 300);
   --nav-link-active-ink: var(--muted);
   --nav-active: oklch(0.99999999 0.00000004 0.00000 / 0.08);
   --nav-item-hover: oklch(0.99999999 0.00000004 0.00000 / 0.025);
@@ -439,9 +448,10 @@
   --text-shadow: 0 1px 4px oklch(0 0 0 / .25);
 }
 
-/* The dock can stay dark in the light theme, so button glass re-resolves the dark palette there too. */
+/* The dock and the header controls that follow it can stay dark in the light theme, so button glass re-resolves the dark palette there too. */
 :root[data-theme="dark"],
-#dock.always-dark-glass {
+#dock.always-dark-glass,
+:root.always-dark-glass .header-detail-nav button {
   --glass-button-sheen: var(--glass-dark-button-sheen);
   --glass-button-body-top: var(--glass-dark-button-body-top);
   --glass-button-body-bottom: var(--glass-dark-button-body-bottom);
@@ -451,7 +461,8 @@
 }
 
 :root,
-#dock.always-dark-glass {
+#dock.always-dark-glass,
+:root.always-dark-glass .header-detail-nav button {
   --glass-ghost-fill: linear-gradient(var(--glass-button-sheen), var(--glass-button-sheen));
   --glass-button-fill: linear-gradient(90deg, var(--glass-button-sheen), var(--glass-button-sheen)), linear-gradient(var(--glass-button-body-top), var(--glass-button-body-bottom));
   --glass-button-edge: inset -1px 0 1px var(--glass-button-rim-dark), inset 1px 0 1px var(--glass-button-rim-dark), inset 0 -1px 1px var(--glass-button-rim-light), inset 0 1px 1px var(--glass-button-rim-light), inset 0 -4px 4px var(--glass-button-glow), inset 0 4px 4px var(--glass-button-glow);
@@ -1003,13 +1014,15 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 @media(max-width:600px){.content-grid>.surface[data-block-columns="1"],.content-grid>.surface[data-block-columns="2"]{grid-column:1/-1}.story [data-media-fit="full-bleed"] .content-media-frame{width:calc(100% + var(--space-story-inset) + var(--space-story-inset));height:clamp(220px,70vw,420px)}}
 
 /* The dock can keep the same smoked glass in light or dark site themes. */
-#dock.always-dark-glass,:root.always-dark-glass .header-detail-nav{color:var(--ink);--ink:oklch(.94 .008 285);--muted:oklch(.76 .012 285);--body-ink:var(--muted);--eyebrow-ink:oklch(.70 .012 285);--chrome:oklch(.19 .006 285 / .88);--panel:oklch(.21 .006 285 / .94);--nav-glass-rgb:23,23,28;--nav-glass-alpha:.32;--dock-glass-alpha:.32;--dock-backdrop-brightness:.65;--nav-rim:oklch(.98 .004 285 / .08);--dock-outline:var(--dock-outline-dark);--nav-highlight:oklch(.98 .004 285 / .10);--nav-shadow:oklch(0 0 0 / .24);--nav-item-ink:oklch(.76 .012 285);--nav-active:oklch(.98 .004 285 / .12);--nav-item-hover:oklch(.98 .004 285 / .055)}
+/* The smoked palette needs a smoked surface behind it. Ghost paints none, so it keeps the theme ink. */
+#dock.always-dark-glass:not(.control-ghost){color:var(--ink)}
+#dock.always-dark-glass:not(.control-ghost),:root.always-dark-glass .header-detail-nav button:not(.control-ghost){--ink:oklch(.94 .008 285);--muted:oklch(.76 .012 285);--body-ink:var(--muted);--eyebrow-ink:oklch(.70 .012 285);--chrome:oklch(.19 .006 285 / .88);--panel:oklch(.21 .006 285 / .94);--nav-glass-rgb:23,23,28;--nav-glass-alpha:.32;--dock-glass-alpha:.32;--dock-backdrop-brightness:.65;--nav-rim:oklch(.98 .004 285 / .08);--dock-outline:var(--dock-outline-dark);--control-surface-rgb:var(--nav-glass-rgb);--control-surface-alpha:var(--dock-glass-alpha);--nav-highlight:oklch(.98 .004 285 / .10);--nav-shadow:oklch(0 0 0 / .24);--nav-item-ink:oklch(.76 .012 285);--nav-active:oklch(.98 .004 285 / .12);--nav-item-hover:oklch(.98 .004 285 / .055)}
 #dock.always-dark-glass .dock-glass{background:linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));-webkit-backdrop-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness))}
 #dock.always-dark-glass .dock-outline{stroke:var(--dock-outline)}
 /* Header Go Back and Previous/Next follow the dock; text re-resolves against the dark palette above. */
-:root.always-dark-glass .header-detail-nav{--composer-text-ink:var(--muted)}
-/* Over a light page the thin dark glass turns mid-grey, so it is denser there and inactive links lighter: about 5.5:1 on the plain light background. */
-:root:not([data-theme="dark"]) :is(#dock.always-dark-glass,.always-dark-glass .header-detail-nav){--dock-glass-alpha:.5;--dock-backdrop-brightness:.45;--nav-link-ink:oklch(.84 .008 290)}
+:root.always-dark-glass .header-detail-nav button:not(.control-ghost){--composer-text-ink:var(--muted)}
+/* Over a light page the thin dark glass turns mid-grey, so it is denser there and secondary ink lighter: 4.5:1 or more for labels, including the smaller Go Back surface. */
+:root:not([data-theme="dark"]) :is(#dock.always-dark-glass,.always-dark-glass .header-detail-nav button):not(.control-ghost){--dock-glass-alpha:.6;--dock-backdrop-brightness:.45;--muted:oklch(.84 .008 290);--nav-link-ink:var(--muted);--nav-item-ink:var(--muted);--glass-button-body-top:oklch(0 0 0 / .8);--glass-button-body-bottom:oklch(0 0 0 / .88)}
 /* Site settings has its own glass surface beside the navigation/composer. */
 #dock.dock-morph{left:calc(50% + var(--dock-center-offset,0px))}
 #dock>.site-settings-dock{position:absolute;left:calc(100% + 10px);bottom:0;transform:none;--nav-main-width:var(--nav-height);--nav-context-width:0px;--nav-section-gap:0px;z-index:5}
@@ -1208,8 +1221,11 @@ body.card-background-hidden [data-hover-effect~="glow"][data-image-mode="bleed"]
 :root[data-heading-size="large"]{--heading-scale:.78}
 :root[data-heading-size="xlarge"]{--heading-scale:1.1}
 :root[data-heading-size="display"]{--heading-scale:1.5}
+:root[data-space-size="xsmall"]{--space-density:.6}
 :root[data-space-size="small"]{--space-density:.8}
 :root[data-space-size="large"]{--space-density:1.2}
+:root[data-space-size="xlarge"]{--space-density:1.45}
+:root[data-space-size="xxlarge"]{--space-density:1.75}
 :root[data-heading-weight="thin"]{--font-weight-heading:300}
 :root[data-heading-weight="regular"]{--font-weight-heading:400}
 :root[data-heading-weight="bold"]{--font-weight-heading:500}
@@ -1974,7 +1990,8 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 /* As on the project carousel, the arrows share the heading row at the content's right edge instead of trailing under the cards. */
 .home-services[data-services-layout="carousel"]{position:relative}
 .home-services[data-services-layout="carousel"] .card-rail-controls{position:absolute;top:0;right:0;align-items:center;height:calc(var(--heading-title-size) * var(--heading-title-line));margin-top:0}
-.card-rail-controls button{width:40px;height:40px;padding:0;border-radius:50%;color:var(--body-ink);font-size:20px}
+/* Same geometry as the project page's Previous and Next (.header-detail-nav button), so the chevron sits centred in its circle. */
+.card-rail-controls button{display:inline-flex;align-items:center;justify-content:center;width:var(--nav-icon-size);height:var(--nav-icon-size);padding:0;border-radius:var(--radius-icon-control);color:var(--body-ink);cursor:pointer}
 .card-rail-controls button:hover{color:var(--ink)}.card-rail-controls button:disabled{opacity:.3;cursor:default}
 [data-card-rail-viewport]:focus-visible{outline:2px solid var(--body-ink);outline-offset:4px}
 .home-testimonials[data-card-background="false"] .home-testimonial{padding:0;min-height:0;background:transparent;border:0;border-radius:0}
@@ -2034,8 +2051,12 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
 :root[data-hero-heading-align="center"] .home-canvas:not(.home-view-split) .hero-copy>[data-hero-description]{grid-column:1 / -1;max-width:var(--page-intro-width);margin-inline:auto}
 /* Centred, the heading and description take the middle four of the hero copy's six columns (content-widths.css); below 1000px they go full width. */
 @media(min-width:1001px){
- :root[data-hero-heading-align="center"] .home-canvas:not(.home-view-split) .hero-about :is(h1,.hero-strapline){max-width:calc((100% - 5 * var(--space-6)) / 6 * 4 + 3 * var(--space-6))}
+ :root{--centred-heading-measure:calc((100% - 5 * var(--space-6)) / 6 * 4 + 3 * var(--space-6))}
+ :root[data-hero-heading-align="center"] .home-canvas:not(.home-view-split) .hero-about :is(h1,.hero-strapline){max-width:var(--centred-heading-measure)}
  :root[data-hero-heading-align="center"] .home-canvas:not(.home-view-split) .hero-copy>[data-hero-description]{grid-column:2 / span 4;max-width:none}
+ /* A centred project caption is as wide as the Home hero, its title and summary on the same middle four of six columns. */
+ :root:is([data-detail-heading-align="center"],[data-hero-heading-align="center"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{max-width:min(100%,var(--home-content-width,100%))}
+ :root:is([data-detail-heading-align="center"],[data-hero-heading-align="center"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption>*{max-width:var(--centred-heading-measure);margin-inline:auto}
 }
 :root:is([data-detail-heading-align="center"],[data-hero-heading-align="center"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{margin-inline:auto;text-align:center}
 :root:is([data-detail-heading-align="center"],[data-hero-heading-align="center"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption .detail-caption-title{margin-inline:auto}
@@ -2444,11 +2465,12 @@ button.glass-surface:is(:hover,:focus-visible):not(:active),#dock .composer-sugg
 /* Page headings (PAGE_HEADINGS in text-glimmer.js): the home hero, a project's visible title, About, Lab, articles and
    info pages sweep --hero-glimmer-plays times once the page has landed and the heading has faded in, then
    applyHeroGlimmer marks them done and they rest as plain ink. fit-content makes the band cross the text, not the
-   wider block. #main only, so the retained home layer that fades out on the way to a project does not restart it;
+   wider block. A title still streaming (.edge-stream) waits: the sweep's text-clipped gradient would paint the
+   letters the stream has not reached yet, so the sweep starts once the stream lands. #main only, so the retained home layer that fades out on the way to a project does not restart it;
    the Flip/Flat home views swap the heading for project titles, so they are left out. Motion off means no sweep. */
 @media(prefers-reduced-motion:no-preference){
- :root[data-hero-glimmer]:not(.page-booting,[data-animation="off"]) #main:not(.home-view-split) :is([data-hero-title],.detail-caption-title,.surface.detail>h1,.about-hero h1,.lab-heading h1,.article-header h1):not([data-glimmer-done]){background-image:var(--hero-glimmer-gradient);background-size:250% 100%;background-repeat:repeat;background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;width:fit-content;animation:text-glimmer-ltr var(--hero-glimmer-cycle) linear var(--duration-hero-glimmer-delay) var(--hero-glimmer-plays) backwards}
- :root[data-hero-glimmer="rtl"]:not(.page-booting,[data-animation="off"]) #main:not(.home-view-split) :is([data-hero-title],.detail-caption-title,.surface.detail>h1,.about-hero h1,.lab-heading h1,.article-header h1):not([data-glimmer-done]){animation-name:text-glimmer-rtl}
+ :root[data-hero-glimmer]:not(.page-booting,[data-animation="off"]) #main:not(.home-view-split) :is([data-hero-title],.detail-caption-title,.surface.detail>h1,.about-hero h1,.lab-heading h1,.article-header h1):not([data-glimmer-done],.edge-stream){background-image:var(--hero-glimmer-gradient);background-size:250% 100%;background-repeat:repeat;background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;width:fit-content;animation:text-glimmer-ltr var(--hero-glimmer-cycle) linear var(--duration-hero-glimmer-delay) var(--hero-glimmer-plays) backwards}
+ :root[data-hero-glimmer="rtl"]:not(.page-booting,[data-animation="off"]) #main:not(.home-view-split) :is([data-hero-title],.detail-caption-title,.surface.detail>h1,.about-hero h1,.lab-heading h1,.article-header h1):not([data-glimmer-done],.edge-stream){animation-name:text-glimmer-rtl}
 }
 /* Still: plain resting ink, as the classic label. */
 :root[data-animation="off"] .iconiq-thinking[data-glimmer] .iconiq-thinking-label{background:none;color:var(--eyebrow-ink);animation:none}
@@ -2912,8 +2934,13 @@ main:not(.home-view-split) .homepage-layout:has(.home-product-carousel:not([hidd
 /* Variant classes own material; components retain geometry and route transforms. */
 /* An empty navigation has no surface, but composer and project actions remain usable. */
 :root #dock:not(.is-composer,.split,[data-separate-back="true"]):not(:has(>.dock-content>nav>:is(a,button):not([hidden]))){display:none}
-.control-outline{--control-fill:linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--dock-glass-alpha) + .07)),rgba(var(--nav-glass-rgb),var(--dock-glass-alpha)));--control-border:var(--dock-outline);--control-shadow:inset 0 1px 0 var(--nav-highlight);--control-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));--control-hover-fill:linear-gradient(var(--nav-item-hover),var(--nav-item-hover)),var(--control-fill);--control-hover-shadow:var(--control-shadow);--control-item-fill:var(--nav-item-hover);--control-item-shadow:none;--control-light-display:none}
+/* A transparent dock cannot carry an open menu over page content, so Ghost borrows the Outline surface while one is open. */
+.control-outline,#dock.control-ghost:has(>.project-menu:not([hidden])){--control-fill:linear-gradient(145deg,rgba(var(--control-surface-rgb),calc(var(--control-surface-alpha) + .07)),rgba(var(--control-surface-rgb),var(--control-surface-alpha)));--control-border:var(--image-edge);--control-shadow:inset 0 1px 0 var(--nav-highlight);--control-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));--control-hover-fill:linear-gradient(var(--nav-item-hover),var(--nav-item-hover)),var(--control-fill);--control-hover-shadow:var(--control-shadow);--control-item-fill:var(--nav-item-hover);--control-item-shadow:none;--control-light-display:none}
 .control-glass{--control-fill:var(--glass-button-fill);--control-border:transparent;--control-shadow:var(--glass-button-edge);--control-filter:blur(var(--glass-button-blur));--control-hover-fill:var(--glass-ghost-fill);--control-hover-shadow:var(--glass-button-edge);--control-item-fill:var(--glass-ghost-fill);--control-item-shadow:var(--glass-button-edge);--control-light-display:block}
+/* A painted light surface can sit over a photograph, so its secondary ink is a step denser than on the bare page. */
+:root:not([data-theme="dark"]) :is(.control-outline,.control-glass){--body-ink:var(--muted);--nav-link-ink:var(--muted);--nav-item-ink:var(--muted)}
+/* On the grey light surface the current and hovered item lift to the lighter panel tone instead of darkening. */
+:root:not([data-theme="dark"]) #dock:not(.always-dark-glass):is(.control-outline,.control-glass),:root:not([data-theme="dark"]) #dock:not(.always-dark-glass) :is(.control-outline,.control-glass){--control-item-fill:var(--panel)}
 .control-ghost{--control-fill:transparent;--control-border:transparent;--control-shadow:none;--control-filter:none;--control-hover-fill:var(--nav-item-hover);--control-hover-shadow:none;--control-item-fill:var(--nav-item-hover);--control-item-shadow:none;--control-light-display:none}
 :root .control-surface:not(.assistant-back):is(.control-ghost,.control-outline,.control-glass),:root #dock .control-surface:not(.assistant-back):is(.control-ghost,.control-outline,.control-glass){border:1px solid var(--control-border);background:var(--control-fill);box-shadow:var(--control-shadow);backdrop-filter:var(--control-filter);-webkit-backdrop-filter:var(--control-filter)}
 :root .control-surface:not(.assistant-back):is(:hover,:focus-visible):not(:disabled),:root #dock .control-surface:not(.assistant-back):is(:hover,:focus-visible):not(:disabled){background:var(--control-hover-fill);box-shadow:var(--control-hover-shadow);color:var(--ink)}
@@ -2933,6 +2960,14 @@ main:not(.home-view-split) .homepage-layout:has(.home-product-carousel:not([hidd
 :root #dock .control-item:not(:is(:hover,:focus-visible,.hover-trail,.active,[aria-pressed="true"])),:root .assistant-inline-composer .control-item:not(:is(:hover,:focus-visible,[aria-pressed="true"])){background:transparent;box-shadow:none}
 @media(prefers-reduced-motion:reduce){:root :is(.control-surface,.control-item):not(.project-media-focus-close):is(:hover,:active):not(:disabled){scale:1}}
 :root[data-animation="off"] :is(.control-surface,.control-item):not(.project-media-focus-close):is(:hover,:active):not(:disabled){scale:1}
+/* Connected items share one selection pill (selection-pill.js): the highlight is its own element behind the labels, so the items stay bare. */
+.has-selection-pill{isolation:isolate}
+.selection-pill{position:absolute;left:0;top:0;z-index:-1;width:var(--selection-pill-width);height:var(--selection-pill-height);border-radius:var(--selection-pill-radius);background:var(--control-item-fill);box-shadow:var(--control-item-shadow);translate:var(--selection-pill-x) var(--selection-pill-y);opacity:0;pointer-events:none;transition:translate var(--selection-pill-duration) var(--ease-settle),width var(--selection-pill-duration) var(--ease-settle),height var(--selection-pill-duration) var(--ease-settle),opacity var(--nav-hover-out-duration) ease-out,background var(--nav-hover-out-duration) ease-out}
+.selection-pill[data-shown="true"]{opacity:1}
+.selection-pill[data-instant="true"]{transition:none}
+:root #dock .has-selection-pill>.control-item:is(:hover,:focus-visible,.hover-trail,.active,[aria-pressed="true"]):not(:disabled){background:transparent;box-shadow:none}
+@media(prefers-reduced-motion:reduce){.selection-pill{transition:none}}
+:root[data-animation="off"] .selection-pill{transition:none}
 
 /* mobile.css */
 /* Keep editable text large enough to avoid Safari's automatic input zoom.

@@ -43,23 +43,39 @@ export function captureSharedWords(node,key){
   const text=current.textContent;texts.push({node:current,text,start:length,end:length+text.length});length+=text.length;
  }
  const text=texts.map(item=>item.text).join(''),words=[];
+ const measure=(start,end)=>{const first=texts.find(item=>item.end>start),last=texts.find(item=>item.end>=end);if(!first?.node||!last?.node)return null;const range=doc.createRange();range.setStart(first.node,start-first.start);range.setEnd(last.node,end-last.start);return {range,first};};
  for(const match of text.matchAll(/\S+/g)){
-  const start=match.index,end=start+match[0].length,first=texts.find(item=>item.end>start),last=texts.find(item=>item.end>=end);if(!first||!last)continue;
-  const range=doc.createRange();range.setStart(first.node,start-first.start);range.setEnd(last.node,end-last.start);
-  const rect=range.getBoundingClientRect(),style=getComputedStyle(first.node.parentElement);
-  if(!Number.isFinite(rect.left)||!rect.width||!rect.height)return null;
-  words.push({text:match[0],rect:{left:rect.left,top:rect.top,width:rect.width,height:rect.height},opacity:copyOpacity(first.node.parentElement,node),textTransform:style.textTransform||'none'});
+  const start=match.index,end=start+match[0].length;if(!measure(start,end))continue;
+  for(const [index,[from,to]] of wrappedFragments(measure,start,end).entries()){
+   const {range,first}=measure(from,to),rect=range.getBoundingClientRect(),style=getComputedStyle(first.node.parentElement);
+   if(!Number.isFinite(rect.left)||!rect.width||!rect.height)return null;
+   // A fragment continues the word before it (a break after a hyphen), so line locking adds no space.
+   words.push({text:text.slice(from,to),joined:index>0,rect:{left:rect.left,top:rect.top,width:rect.width,height:rect.height},opacity:copyOpacity(first.node.parentElement,node),textTransform:style.textTransform||'none'});
+  }
  }
  return words.length?words:null;
+}
+// A word the browser broke across lines (after a hyphen) is split where each line ends; its single bounding box would
+// otherwise place the whole word on its first line.
+function wrappedFragments(measure,start,end){
+ if(measure(start,end).range.getClientRects().length<2)return [[start,end]];
+ const fragments=[];let from=start,top=null;
+ for(let index=start;index<end;index++){
+  const rect=measure(index,index+1)?.range.getBoundingClientRect();if(!rect?.height)continue;
+  if(top!==null&&Math.abs(rect.top-top)>rect.height/2){fragments.push([from,index]);from=index;}
+  top=rect.top;
+ }
+ fragments.push([from,end]);
+ return fragments;
 }
 // A heading copy that cannot use per-word slots keeps the measured source rows. Width and
 // font size change every frame, so letting it wrap freely would re-break its lines mid-flight.
 export function lockLineBreaks(node,words){
  if(!node||!words?.length)return false;
  const rows=[];
- for(const word of words){const row=rows.find(item=>Math.abs(item.top-word.rect.top)<word.rect.height/2);if(row)row.words.push(word.text);else rows.push({top:word.rect.top,words:[word.text]});}
+ for(const word of words){const row=rows.find(item=>Math.abs(item.top-word.rect.top)<word.rect.height/2);if(row)row.text+=(word.joined?'':' ')+word.text;else rows.push({top:word.rect.top,text:word.text});}
  node.textContent='';
- rows.forEach((row,index)=>{if(index)node.append(node.ownerDocument.createElement('br'));node.append(row.words.join(' '));});
+ rows.forEach((row,index)=>{if(index)node.append(node.ownerDocument.createElement('br'));node.append(row.text);});
  node.style.whiteSpace='nowrap';
  return true;
 }
@@ -97,9 +113,10 @@ export function hasSharedHeading(from,to){
 }
 // Unshared gallery descriptions fade at their own measured caption slot.
 // They never inherit the moving card's layout or interpolate its typography.
+// The copy leaves its caption for the shell, so the alignment it inherited there (a centred project title) is carried.
 export function createStaticCopy(source,shell){
  const node=source.node.cloneNode(true);node.classList.add('flow-shared');
- Object.assign(node.style,{position:'absolute',margin:'0',maxWidth:'none',width:source.rect.width+'px',fontFamily:source.fontFamily,fontSize:source.fontSize+'px',fontWeight:source.fontWeight,lineHeight:String(source.lineHeight||1.5),letterSpacing:(source.letterSpacing||0)+'px',color:source.color,zIndex:'3'});
+ Object.assign(node.style,{position:'absolute',margin:'0',maxWidth:'none',width:source.rect.width+'px',textAlign:source.textAlign,fontFamily:source.fontFamily,fontSize:source.fontSize+'px',fontWeight:source.fontWeight,lineHeight:String(source.lineHeight||1.5),letterSpacing:(source.letterSpacing||0)+'px',color:source.color,zIndex:'3'});
  shell.append(node);
  return {node,paint(x,y,opacity){Object.assign(node.style,{left:source.rect.left-x+'px',top:source.rect.top-y+'px',opacity:String(opacity*(source.opacity??1))});}};
 }

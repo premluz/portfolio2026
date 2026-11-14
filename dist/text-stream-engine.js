@@ -1,5 +1,5 @@
 // Pacing and edge maths for streaming text, ported from PremLab's streaming-text engine
-// (studio-ui/packages/premlab/src/components/streaming-text/engine.ts). That engine adapted Iconiq's
+// (studio-ui/packages/premlab/src/text-stream/engine.ts, shared by StreamingText and TextReveal). That engine adapted Iconiq's
 // streaming-text (MIT © 2024–2026 Edwin Vakayil) by way of this project's own assistant stream.
 // The whole string stays laid out from the first frame, so nothing reflows as it streams.
 
@@ -57,4 +57,25 @@ export function scrambleGlyph(original,position,tick,set){
 // Every grapheme of a unit (one character, or a whole word with its trailing space) scrambles independently.
 export function scrambleUnit(unit,position,tick,set){
  return graphemes(unit).map((glyph,index)=>scrambleGlyph(glyph,position*POSITIONS_PER_UNIT+index,tick,set)).join('');
+}
+
+// Reveal timing (PremLab's TextReveal) for text known up front, such as a heading, in ms: {spreadMin, spreadMax,
+// maxStagger, fade}. The spread from the first unit starting to the last shrinks as the text grows and the gap is
+// capped, so a long heading lands about as quickly as a short one. Adapted from the thinkingisfree theme's
+// computeLetterStagger, whose spread turns negative past 101 units; here it holds at spreadMin.
+export function revealGap(count,{spreadMin,spreadMax,maxStagger}){
+ if(count<=1)return 0;
+ return Math.min(Math.max(spreadMin,spreadMax-(count-1)/100*(spreadMax-spreadMin))/(count-1),maxStagger);
+}
+// A unit's fade spans this many gaps, so the moving edge is that wide.
+export function revealEdge(count,timing){
+ const gap=revealGap(count,timing);return gap>0?Math.max(1,Math.round(timing.fade/gap)):1;
+}
+export function revealDuration(count,timing){return count>0?(count-1)*revealGap(count,timing)+timing.fade:0;}
+// The leading edge after elapsedMs, in split's terms: it reaches count + edge exactly when the duration is up.
+export function revealShown(elapsedMs,count,timing){
+ const edge=revealEdge(count,timing);
+ if(count===0||elapsedMs>=revealDuration(count,timing))return count+edge;
+ const gap=revealGap(count,timing),step=gap>0?gap:timing.fade;
+ return Math.min(count+edge,Math.floor(Math.max(0,elapsedMs)/step)+1);
 }

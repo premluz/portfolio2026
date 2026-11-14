@@ -338,6 +338,7 @@
 <label class="check"><input id="simpleTransitionsSkipExit" type="checkbox"> No fade out: the new page appears, then fades in</label>
 <div class="setting-subsection">Card movement</div>
 <label class="check"><input id="cardTextTravel" type="checkbox" checked> Card text travels into the project page (off: the page text staggers in)</label>
+<label class="check"><input id="projectTitleStream" type="checkbox"> Project title streams in on page enter (styled and timed by Heading reveal)</label>
 <label>Liquid intensity <output id="intensityValue">70%</output><input id="intensity" type="range" min="0" max="100" value="70"></label>
 <label>Transition duration <output id="durationValue">0.4s</output><input id="duration" type="range" min="100" max="2400" step="50" value="400"></label>
 <label>Directional stretch <output id="stretchValue">55%</output><input id="stretch" type="range" min="0" max="100" value="55"></label>
@@ -356,6 +357,18 @@
 <label class="check"><input type="checkbox" id="slow"> Slow motion</label>
 <p>Drag a card left and right to feel the response. Escape settles it back.</p>
 <button id="replay">Replay transition</button>
+</div></details>
+<details class="developer-settings-group">
+<summary>Heading reveal</summary><div class="developer-settings-content">
+<p>How a heading streams in when its page lands, timed so a long title lands as quickly as a short one. Used by "Project title streams in on page enter" (Motion). Glyphs and glyph swap follow the assistant text effects.</p>
+<label>Effect <select id="revealEffect" data-text-effect-control="revealEffect"><option value="feather" selected>Feather · a soft moving edge</option><option value="scramble">Scramble · stand-in glyphs resolve</option></select></label>
+<label>Edge tint <select id="revealTint" data-text-effect-control="revealTint"><option value="single">One colour</option><option value="multi">Prism</option><option value="none" selected>Text ink</option></select></label>
+<label>Edge colour <select id="revealColor" data-text-effect-control="revealColor"><option value="blue" selected>Blue</option><option value="purple">Purple</option><option value="pink">Pink</option><option value="orange">Orange</option><option value="teal">Teal</option><option value="green">Green</option><option value="yellow">Yellow</option><option value="red">Red</option></select></label>
+<label>Moves by <select id="revealUnit" data-text-effect-control="revealUnit"><option value="character" selected>Character</option><option value="word">Word</option></select></label>
+<label>Spread, short heading <output data-text-effect-output="revealSpreadMax">220ms</output><input id="revealSpreadMax" data-text-effect-control="revealSpreadMax" type="range" min="0" max="2000" step="10" value="220"></label>
+<label>Spread, long heading <output data-text-effect-output="revealSpreadMin">100ms</output><input id="revealSpreadMin" data-text-effect-control="revealSpreadMin" type="range" min="0" max="1000" step="10" value="100"></label>
+<label>Longest gap per unit <output data-text-effect-output="revealMaxStagger">25ms</output><input id="revealMaxStagger" data-text-effect-control="revealMaxStagger" type="range" min="1" max="200" step="1" value="25"></label>
+<label>Fade per unit <output data-text-effect-output="revealFade">140ms</output><input id="revealFade" data-text-effect-control="revealFade" type="range" min="20" max="1000" step="10" value="140"></label>
 </div></details>
 <details class="developer-settings-group">
 <summary>Assistant text effects</summary><div class="developer-settings-content">
