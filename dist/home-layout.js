@@ -189,7 +189,9 @@ export class HomeLayout {
  setHeroContent(mode){this.heroContent=normalizeHeroContent(mode);this.introduction.copy=heroCopyMarkup(this.heroContent);this.lastDescription=null;this.updateDescription();this.schedule();}
  setTimelineMode(mode){this.timelineMode=mode==='drag'?'drag':'cursor';this.timeline?.setMode(this.timelineMode);}
  setFeatureStage(enabled){enabled=!!enabled;if(enabled===this.featureStage)return;this.featureStage=enabled;this.syncCardComposition();this.flush(true);
-  this.stageReveal?.destroy();this.stageReveal=enabled?createStageReveal(this.gallery):null;}
+  this.mountStageReveal();}
+ mountStageReveal(){this.stageReveal?.destroy();this.stageReveal=this.featureStage?createStageReveal(this.gallery,{once:this.stageRevealOnce}):null;}
+ setStageRevealOnce(enabled){enabled=!!enabled;if(enabled===!!this.stageRevealOnce)return;this.stageRevealOnce=enabled;this.mountStageReveal();}
  setFeaturedLarger(enabled){enabled=!!enabled;if(enabled===this.featuredLarger)return;this.featuredLarger=enabled;this.flush(true);}
  setHeroCarousel(enabled){this.heroCarousel=!!enabled;this.carousel.setEnabled(this.mode==='current'&&this.heroCarousel&&this.productDisplay==='cards');this.flush(true);}
  pause(){this.textListHover?.hide();this.timeline?.stop();this.carousel?.pause();this.paused=true;cancelAnimationFrame(this.raf);this.raf=0;}

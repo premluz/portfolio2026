@@ -1,4 +1,4 @@
-.project-menu-preview{position:fixed;z-index:61;pointer-events:none;opacity:0;transform:scale(.92);transform-origin:center;transition:opacity 180ms var(--ease-standard),transform 260ms var(--ease-settle),top 240ms var(--ease-settle),left 240ms var(--ease-settle);will-change:opacity,transform}
+.project-menu-preview{position:fixed;left:0;top:0;z-index:61;pointer-events:none;opacity:0;transform:scale(.92);transform-origin:center;transition:opacity 180ms var(--ease-standard),transform 260ms var(--ease-settle),translate 240ms var(--ease-settle);will-change:opacity,transform,translate}
 .project-menu-preview.is-visible{opacity:1;transform:scale(1)}
 .project-menu-preview.is-visible:not(.no-motion){animation:project-preview-arrive 340ms var(--ease-settle) both}
 @keyframes project-preview-arrive{0%{opacity:0;transform:scale(.94)}64%{opacity:1;transform:scale(1.025)}83%{opacity:1;transform:scale(.99)}100%{opacity:1;transform:scale(1)}}

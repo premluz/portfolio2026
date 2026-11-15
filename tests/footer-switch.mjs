@@ -20,3 +20,6 @@ assert(!app.includes("if(footer)footer.hidden=false;"),'Nothing forces the foote
 // The footer is a flex container, which would override the hidden attribute without a rule.
 assert(design.includes('.site-footer[hidden]{display:none}'),'A hidden footer is removed from layout');
 console.log('Footer switch passed: default on, saved and exported, both pages, route changes respect it, hidden rule.');
+{const style=await (await import('node:fs/promises')).readFile(new URL('../dist/style.css',import.meta.url),'utf8');
+ assert(style.includes('.site-footer{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;'),'The footer fills the screen and centres its content, so at the end of the page the text sits in the middle');
+ assert(!/\.site-footer\{min-height:\d+svh\}/.test(style),'No narrower screen shortens it');}

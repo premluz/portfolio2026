@@ -20,7 +20,9 @@ export const DURATION=Object.freeze({
  // A stagger fits inside its phase: steps shrink when many items share it, so none is dropped.
  staggerStep:28,staggerSpan:.6,
  // Share of a card morph by which copy with nowhere to land has faded out; going back, the home hero waits for it.
- returnCopyFade:.42
+ returnCopyFade:.42,
+ // One leg of the service card art, rest to pose or back: slow enough to read as assembling, not twitching.
+ serviceArtLeg:900
 });
 export const DISTANCE=Object.freeze({
  // Small, consistent travel: motion suggests direction, it never carries content across the screen.

@@ -6,6 +6,8 @@ export function playingVideoState(root){
  return video?{element:video}:null;
 }
 export const previewFor=video=>[...previews].find(preview=>preview.video===video)||null;
+// A card's own hoverVideo ('on' | 'off') beats the Card hover video setting; any other value inherits it.
+export const cardHoverVideoAllowed=own=>own==='on'||own==='off'?own==='on':document.documentElement?.dataset?.cardHoverVideo!=='off';
 // `except` may be a preview or its video element: the clip carried into a morph keeps playing.
 export function pauseVideoPreviews(except){for(const preview of previews)if(preview!==except&&preview.video!==except&&preview.active)preview.stop();}
 export function syncVideoPreviews(){for(const preview of previews)preview.sync();}
@@ -32,13 +34,13 @@ export class HoverVideo {
   document.addEventListener('visibilitychange',this.visibility);
   this.reduced.addEventListener('change',this.cancel);this.hover.addEventListener('change',this.cancel);
   if(!previews.size)watch(true);previews.add(this);
-  if(globalThis.IntersectionObserver){this.observer=new IntersectionObserver(()=>this.sync(),{threshold:[0,.25]});this.observer.observe(el);}
+  if(globalThis.IntersectionObserver){this.observer=new IntersectionObserver(()=>this.sync(),{threshold:[0,.25,1]});this.observer.observe(el);}
   queue();
  }
  allowed(){
   const ds=document.documentElement?.dataset;
   if(this.el.closest?.('.detail'))return ds?.detailHeroVideo!=='off';
-  return ds?.cardHoverVideo!=='off';
+  return cardHoverVideoAllowed(this.video?.dataset?.hoverVideo);
  }
  visible(){
   const hiddenSelector=this.decorative?'[hidden],.flow-shell,.drag-stage,.transition-clone':'[hidden],[aria-hidden="true"],.flow-shell,.drag-stage,.transition-clone';
@@ -46,17 +48,28 @@ export class HoverVideo {
   if(this.el.getBoundingClientRect){const r=this.el.getBoundingClientRect();return r.width>0&&r.height>0&&r.bottom>0&&r.top<innerHeight&&r.right>0&&r.left<innerWidth;}
   return true;
  }
+ // A card with hoverVideo "on" also plays while the whole card is on screen, not only on hover.
+ viewing(){
+  if(this.video.dataset?.hoverVideo!=='on'||this.el.closest?.('.detail')||!this.visible())return false;
+  const r=this.trigger.getBoundingClientRect();
+  return r.top>=0&&r.left>=0&&r.bottom<=innerHeight&&r.right<=innerWidth;
+ }
  automatic(){
   if(!this.visible())return false;
+  if(this.viewing())return true;
   if(this.el.closest?.('.detail'))return true;
   const item=this.el.closest?.('[data-gallery-item]');if(item)return item.getAttribute('aria-current')==='true';
   if(this.el.closest?.('.home-view-split'))return this.trigger.dataset?.videoSpotlight==='true'||this.el.closest?.('.card-placement')?.style.zIndex==='2';
   return false;
  }
- sync(){if(!this.allowed()){if(this.active)this.stop();return;}if(this.automatic())this.play({automatic:true});}
+ sync(){
+  if(!this.allowed()){if(this.active)this.stop();return;}
+  if(this.active&&this.viewPlay&&!this.viewing()){this.stop();return;}
+  if(this.automatic())this.play({automatic:true});
+ }
  async play({automatic=false}={}){
   if(this.active||!this.visible()||!automatic&&!this.hover.matches)return;
-  this.active=true;const generation=++this.generation;
+  this.active=true;this.viewPlay=automatic&&this.viewing();const generation=++this.generation;
   if(!this.video.getAttribute('src'))this.video.setAttribute('src',this.video.dataset.videoUrl);
   try{
    if(this.video.readyState>0)this.video.currentTime=0;
@@ -74,7 +87,7 @@ export class HoverVideo {
   this.video=video;video.muted=true;video.defaultMuted=true;video.loop=false;video.playsInline=true;this.listen(video,true);
   if(!video.paused){this.active=true;this.el.classList.add('video-preview-playing');}
  }
- stop(){this.active=false;++this.generation;this.el.classList.remove('video-preview-playing');this.video.pause();}
+ stop(){this.active=false;this.viewPlay=false;++this.generation;this.el.classList.remove('video-preview-playing');this.video.pause();}
  destroy(){
   this.dead=true;this.stop();this.observer?.disconnect();previews.delete(this);if(!previews.size)watch(false);
   for(const [event,handler] of [['pointerenter',this.enter],['pointerleave',this.leave],['pointerdown',this.press],['focusin',this.enter],['focusout',this.leave]])this.trigger.removeEventListener(event,handler);

@@ -61,15 +61,23 @@
   --image-edge: oklch(0.25543328 0.01903326 298.77205 / 0.06);
   --nav-glass-rgb: 255, 255, 255;
   --nav-glass-alpha: .48;
-  --dock-glass-alpha: .30;
+  /* One light glass for the composer and the controls: dense enough that --control-glass-ink holds 4.5:1 over black. */
+  --dock-glass-alpha: .70;
   --dock-glass-blur: 22px;
   --dock-backdrop-brightness: 1;
   --nav-rim: oklch(0.99999999 0.00000004 0.00000 / 0.65);
   --dock-outline: oklch(0.25543328 0.01903326 298.77205 / 0.06);
-  /* Controls share the cards' material: the same neutral grey, milky enough that ink holds over a photograph,
-     and never an edge stronger than the card edge (--image-edge). A control reads by its tone, not by a line. */
-  --control-surface-rgb: var(--card-surface-rgb);
-  --control-surface-alpha: .9;
+  /* Controls share the composer's neutral glass, and never an edge stronger than the card edge (--image-edge).
+     A control reads by its tone, not by a line. */
+  --control-surface-rgb: var(--nav-glass-rgb);
+  --control-surface-alpha: var(--dock-glass-alpha);
+  /* Outline controls sit on a translucent well one surface step off the page (about the card tone once the page shows through), and the current item lifts above it.
+     Both themes define the same set: tone, density and lift. The light well is thin enough to show what is behind it, so its ink is denser to hold 4.5:1 over black. */
+  --dock-well-rgb: 242, 242, 242;
+  --dock-well-alpha: .62;
+  --dock-well-ink: oklch(.30 .02 301);
+  --control-item-lift: oklch(0.99999999 0.00000004 0.00000);
+  --control-glass-ink: oklch(.39 .02 301);
   --dock-outline-dark: oklch(0.97184305 0.01472839 294.47299 / 0.03);
   --nav-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.18);
   --nav-shadow: oklch(0.22773614 0.03305204 297.22251 / 0.09);
@@ -240,7 +248,9 @@
   --line-height-reading: var(--line-height-body);
 
   /* Spacing scale */
-  --space-unit: calc(4px * var(--space-density));
+  /* The 4px grid before Spacing density; things that must not follow Spacing (the logo strip) size from this. */
+  --space-base: 4px;
+  --space-unit: calc(var(--space-base) * var(--space-density));
   --space-1: var(--space-unit);
   --space-2: calc(var(--space-unit) * 2);
   --space-3: calc(var(--space-unit) * 3);
@@ -269,11 +279,14 @@
   --space-hero-bottom: clamp(var(--space-12), 11vh, calc(var(--space-unit) * 32));
   --space-footer-inset: clamp(calc(var(--space-unit) * 20), 12vh, calc(var(--space-unit) * 40));
   --space-footer-heading-content: var(--space-hero-heading-content);
-  /* Major page gaps: 10 / 20 / 40 spacing units. */
-  --space-page-rhythm-sm: calc(var(--space-unit) * 10);
-  --space-page-rhythm-md: calc(var(--space-unit) * 20);
-  --space-page-rhythm-lg: calc(var(--space-unit) * 40);
+  /* Major page gaps: 10 / 20 / 40 spacing units. Section spacing (--rhythm-scale) multiplies them on top of Spacing, so the gaps between sections can be set on their own. */
+  --rhythm-scale: 1;
+  --space-page-rhythm-sm: calc(var(--space-unit) * 10 * var(--rhythm-scale));
+  --space-page-rhythm-md: calc(var(--space-unit) * 20 * var(--rhythm-scale));
+  --space-page-rhythm-lg: calc(var(--space-unit) * 40 * var(--rhythm-scale));
   --space-page-rhythm: var(--space-page-rhythm-sm);
+  /* The hero and its logo strip run into the first section below with a tighter gap than the gap between sections. */
+  --space-hero-exit: calc(var(--space-unit) * 6 * var(--rhythm-scale));
   /* The chat page mascot stage: twice the dock character, matching its 2x image. */
   --assistant-mascot-size: 144px;
   /* Where the first line of page content starts: the home hero, About and a project detail all share it. */
@@ -434,6 +447,10 @@
   --dock-outline: var(--dock-outline-dark);
   --control-surface-rgb: var(--nav-glass-rgb);
   --control-surface-alpha: var(--dock-glass-alpha);
+  /* The dark well is lighter than the card colour because the dimmed page shows through it; over the page it lands a step above the cards. */
+  --dock-well-rgb: 32, 32, 32;
+  --dock-well-alpha: .62;
+  --control-item-lift: var(--nav-active);
   --nav-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.035);
   --nav-shadow: oklch(0.00000000 0.00000000 0.00000 / 0.18);
   --nav-item-ink: var(--eyebrow-ink);
@@ -646,7 +663,7 @@ main.home-canvas{max-width:1920px;padding-inline:clamp(24px,5.4vw,110px)}
 .home-news{max-width:900px;margin:var(--space-page-rhythm) 0 36px}
 .home-view-split [data-home-news]{display:none!important}
 .home-work{margin-bottom:0;padding-bottom:0}
-main.home-canvas:not(.home-view-split) .homepage-layout>.home-work{margin-top:var(--space-page-rhythm-md)}
+main.home-canvas:not(.home-view-split) .homepage-layout>.home-work{margin-top:var(--space-hero-exit)}
 [data-theme=dark] .hero-copy,[data-theme=dark] .hero-news h2{color:var(--muted)}
 [data-theme=dark] .hero-copy p span,[data-theme=dark] .hero-news h3{color:var(--ink)}
 [data-theme=dark] .hero-news li{border-color:rgba(255,255,255,.10)}
@@ -939,7 +956,7 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 .visual>.project-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:1;pointer-events:none;opacity:0;transition:opacity 140ms ease}
 .visual.video-preview-playing>.project-video{opacity:1}.visual>.video-frame-bridge{z-index:1;pointer-events:none}
 :root[data-card-click-through="off"] .homepage-layout :is(.project-card,[data-content-card]){pointer-events:none;cursor:default}
-:root[data-card-hover-video="off"] .project-card .visual>.project-video,:root[data-detail-hero-video="off"] .detail .visual>.project-video{opacity:0;visibility:hidden}
+:root[data-card-hover-video="off"] .project-card .visual>.project-video:not([data-hover-video="on"]),:root[data-detail-hero-video="off"] .detail .visual>.project-video{opacity:0;visibility:hidden}
 @media(prefers-reduced-motion:reduce){.visual>.project-video{transition:none}}
 
 /* Visitor preferences share the dock's liquid surface and quiet palette. */
@@ -984,7 +1001,7 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 .card-lab-mark svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.35;stroke-linecap:round;stroke-linejoin:round}
 
 /* A shared closing invitation, outside the moving card canvas. */
-.site-footer{min-height:90svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:var(--space-page-rhythm) clamp(24px,6vw,96px);text-align:center;color:var(--ink)}.site-footer[hidden]{display:none!important}
+.site-footer{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:var(--space-page-rhythm) clamp(24px,6vw,96px);text-align:center;color:var(--ink)}.site-footer[hidden]{display:none!important}
 .site-footer h2{max-width:1200px;margin:0;font-size:var(--font-size-footer-heading);font-weight:var(--font-weight-heading);line-height:1.04;letter-spacing:var(--letter-spacing-heading);text-wrap:balance}
 .footer-invitation{margin:var(--space-footer-heading-content) 0 0;font-size:var(--font-size-section-heading);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
 .footer-links{display:flex;align-items:center;justify-content:center;gap:var(--space-5);margin-top:var(--space-6)}
@@ -992,7 +1009,7 @@ header .theme-toggle{height:40px;padding:0 14px;border-radius:var(--radius-heade
 .footer-links :is(a,button){display:grid;place-items:center;width:60px;height:60px;border-radius:50%;color:var(--muted)}
 .footer-links svg{display:block;width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .footer-credit{max-width:var(--measure-body);margin:calc(var(--space-unit) * 18) 0 0;font-size:var(--font-size-caption);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--eyebrow-tracking);color:var(--eyebrow-ink);text-wrap:pretty}
-@media(max-width:600px){.site-footer{min-height:80svh}.footer-links :is(a,button){width:52px;height:52px}.footer-links svg{width:22px;height:22px}.footer-credit{margin-top:var(--space-12)}}
+@media(max-width:600px){.footer-links :is(a,button){width:52px;height:52px}.footer-links svg{width:22px;height:22px}.footer-credit{margin-top:var(--space-12)}}
 :root[data-animation="off"] .footer-links :is(a,button){transition:none}
 
 /* Typed content blocks use the same spacing and typography tokens. */
@@ -1231,6 +1248,17 @@ body.card-background-hidden [data-hover-effect~="glow"][data-image-mode="bleed"]
 :root[data-space-size="large"]{--space-density:1.2}
 :root[data-space-size="xlarge"]{--space-density:1.45}
 :root[data-space-size="xxlarge"]{--space-density:1.75}
+/* Logo size scales the home logo strip alone; Spacing never touches it (hero-logos.css). Medium is the unscaled strip. */
+:root[data-logo-size="small"]{--logo-scale:.75}
+:root[data-logo-size="medium"]{--logo-scale:1}
+:root[data-logo-size="large"]{--logo-scale:1.4}
+/* Section spacing: the vertical rhythm between page sections, on top of Spacing and independent of it (tokens.css). */
+:root[data-rhythm-size="xsmall"]{--rhythm-scale:.5}
+:root[data-rhythm-size="small"]{--rhythm-scale:.75}
+:root[data-rhythm-size="medium"]{--rhythm-scale:1}
+:root[data-rhythm-size="large"]{--rhythm-scale:1.35}
+:root[data-rhythm-size="xlarge"]{--rhythm-scale:1.75}
+:root[data-rhythm-size="xxlarge"]{--rhythm-scale:2.25}
 :root[data-heading-weight="thin"]{--font-weight-heading:300}
 :root[data-heading-weight="regular"]{--font-weight-heading:400}
 :root[data-heading-weight="bold"]{--font-weight-heading:500}
@@ -1369,7 +1397,8 @@ main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:0;padding-top:
 .home-news{margin-top:var(--space-page-rhythm)}
 .home-view-split .home-hero{margin-top:var(--space-page-rhythm-lg)}
 .home-view-split .home-work{padding-top:var(--space-page-rhythm)}
-.site-footer{padding-block:var(--space-page-rhythm-lg)}
+/* The footer fills the viewport and centres its content, so its inset ignores Section spacing; otherwise a large rhythm makes it taller than the screen and the heading rides up. The gap above it still follows the rhythm through main's bottom padding. */
+.site-footer{padding-block:var(--space-footer-inset)}
 .site-footer[hidden]{display:none}
 
 /* Footer follows the same type ladder as the header and page heroes. */
@@ -1378,8 +1407,8 @@ main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:0;padding-top:
 .footer-invitation[hidden]{display:none}
 .footer-link-label{display:none}
 /* Footer labels and icons share control materials; this option changes geometry and content only. */
-.site-footer[data-links="text"] .footer-links{gap:var(--space-6)}
-.site-footer[data-links="text"] .footer-links :is(a,button){display:inline-flex;align-items:center;justify-content:center;min-height:var(--nav-icon-size);padding:var(--space-2) var(--space-4);font-family:inherit;cursor:pointer;width:auto;height:auto;border-radius:var(--radius-pill);font-size:var(--font-size-body);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body);text-decoration:none}
+.site-footer[data-links="text"] .footer-links,.footer-links.contact-links{gap:var(--space-3)}
+.site-footer[data-links="text"] .footer-links :is(a,button),.footer-links.contact-links :is(a,button){display:inline-flex;align-items:center;justify-content:center;min-height:var(--nav-icon-size);padding:var(--space-2) var(--space-4);font-family:inherit;cursor:pointer;width:auto;height:auto;border-radius:var(--radius-pill);font-size:var(--font-size-body);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body);text-decoration:none}
 .site-footer[data-links="text"] .footer-links svg{display:none}
 .site-footer[data-links="text"] .footer-link-label{display:inline}
 .footer-credit{font-size:var(--font-size-caption);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--eyebrow-tracking);color:var(--eyebrow-ink)}
@@ -1485,6 +1514,9 @@ html[data-animation="off"] .image-card[data-copy-hover="true"]:is(:hover,:focus-
 /* Menu links sit in the composer's inset at the composer buttons' height, so both dock modes share one rhythm. */
 #dock nav a{display:inline-flex;align-items:center;box-sizing:border-box;height:var(--nav-icon-size);font-size:var(--font-size-body);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);line-height:var(--line-height-label);padding:0 min(calc(var(--nav-item-padding) + 5px),16px)}
 #dock .dock-content>nav{padding:var(--composer-control-inset)}
+/* The first and last items sit at the same inset as top and bottom, so the selected pill has an even gap on every side; spare width goes between items. */
+#dock .dock-content>nav{justify-content:space-between}
+#dock .dock-content>nav>.site-settings-toggle{flex-basis:var(--nav-icon-size);width:var(--nav-icon-size);height:var(--nav-icon-size);margin-right:0}
 #dock nav a[hidden]{display:none}
 @media(max-width:600px){#dock nav a{padding-inline:min(calc(var(--nav-item-padding) + 5px),12px)}}
 @media(max-width:380px){#dock nav a{font-size:min(var(--nav-item-font-size),14px);padding-inline:min(calc(var(--nav-item-padding) + 5px),6px)}}
@@ -1552,6 +1584,18 @@ html[data-type-floor="on"]{
  --font-size-reading:max(var(--type-floor-reading-min),calc(var(--type-floor-reading) * var(--type-scale) / var(--type-scale-medium) * var(--reader-text-scale)));
 }
 html[data-type-floor="on"] :is(.detail-caption-lead,.home-about-years,.content-metric,time){font-variant-numeric:tabular-nums}
+
+/* system-specimen.css */
+/* The #system specimen page (dist/system-specimen.js). Layout only; every component is styled by its own stylesheet. */
+:root{--system-card-width:360px;--system-gap:var(--space-8);--system-block-width:var(--content-width-media-wide)}
+.system-specimen{display:grid;gap:var(--system-gap);padding-block:var(--page-content-top) var(--space-10);width:min(100%,var(--content-width-lg));margin-inline:auto}
+.system-title,.system-heading{margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-heading)}
+.system-lede{margin:var(--space-2) 0 0;color:var(--muted);font-size:var(--font-size-small)}
+.system-section{display:grid;gap:var(--space-5)}
+.system-cards{display:flex;flex-wrap:wrap;gap:var(--space-5);align-items:flex-start}
+.system-card-slot{width:var(--system-card-width);flex:none}
+.system-blocks{display:grid;gap:var(--space-5);max-width:var(--system-block-width)}
+.system-item{min-width:0}
 
 /* spatial-navigation.css */
 /* Local input feedback lives outside the moving canvas and uses the site's
@@ -1645,13 +1689,14 @@ html[data-type-floor="on"] :is(.detail-caption-lead,.home-about-years,.content-m
 /* hero-logos.css */
 /* Logo strip under the hero description: an endless, linear marquee with softly blurred edges. */
 .hero-logos{
- --logo-strip-height:calc(var(--space-unit) * 4.8);
- --logo-strip-gap:calc(var(--space-unit) * 16);
- --logo-strip-fade:calc(var(--space-unit) * 24);
+ /* Sized from the fixed grid and the Logo size setting, not --space-unit, so Spacing density leaves the strip alone. */
+ --logo-strip-height:calc(var(--space-base) * 4.8 * var(--logo-scale,1));
+ --logo-strip-gap:calc(var(--space-base) * 16 * var(--logo-scale,1));
+ --logo-strip-fade:calc(var(--space-base) * 24 * var(--logo-scale,1));
  --logo-strip-blur:var(--space-1);
  --logo-strip-rest-opacity:.6;
- /* Same rhythm as the gap below to the cards (.home-work margin-top), so the strip sits centred between description and cards. */
- position:relative;overflow:hidden;margin-top:var(--space-page-rhythm-md);padding-block:var(--space-2);
+ /* The strip belongs to the hero: it sits close under the description (the small rhythm), while the cards below follow at the hero exit gap (--space-hero-exit). */
+ position:relative;overflow:hidden;margin-top:var(--space-page-rhythm-sm);padding-block:var(--space-2);
  -webkit-mask-image:linear-gradient(90deg,transparent,black var(--logo-strip-fade),black calc(100% - var(--logo-strip-fade)),transparent);
  mask-image:linear-gradient(90deg,transparent,black var(--logo-strip-fade),black calc(100% - var(--logo-strip-fade)),transparent);
  contain:layout paint;
@@ -1669,6 +1714,10 @@ html[data-type-floor="on"] :is(.detail-caption-lead,.home-about-years,.content-m
 /* The source files are white; light mode turns them into ink. */
 :root:not([data-theme="dark"]) .hero-logos-set img{filter:brightness(0)}
 .home-canvas:not(.home-view-split) .hero-about>.hero-logos{max-width:none}
+/* A centred hero puts heading, description and strip on the middle four of six columns (project-media-focus.css, 1-4-1). */
+@media(min-width:1001px){
+ :root[data-hero-heading-align="center"] .home-canvas:not(.home-view-split) .hero-about>.hero-logos{max-width:var(--centred-heading-measure);margin-inline:auto}
+}
 /* The heading-space presets pad the hero's bottom; with the strip showing, that would stack on the gap to the cards, so the strip's own rhythm sets both sides. :root outranks the presets' selector. */
 :root .home-canvas:not(.home-view-split) .home-hero:has(.hero-logos:not([hidden])){padding-bottom:0}
 /* Straight under the heading, the gap above also holds the h1's bottom margin and the room below its baseline (half-leading plus descent), so the gap below grows by the same to look equal.
@@ -1685,7 +1734,7 @@ html[data-type-floor="on"] :is(.detail-caption-lead,.home-about-years,.content-m
 
 /* home-about.css */
 .home-about{--home-about-years-column:5.375em;margin-top:var(--space-page-rhythm-md);width:100%;min-width:0;grid-column:1 / -1}
-.home-about>h2{margin:0 0 var(--space-6);font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
+.home-about>h2{margin:0 0 var(--space-6);font-size:var(--heading-article-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
 .home-about-copy{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6)}
 .home-about-copy{margin-top:0}
 .home-about-copy p{grid-column:calc(2 * var(--content-column-start) - 1) / span 3;margin:0;max-width:none;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
@@ -1717,23 +1766,29 @@ html[data-type-floor="on"] :is(.detail-caption-lead,.home-about-years,.content-m
 [data-about-section][hidden]{display:none!important}
 :root{--about-unusual-zoom:1.03;--about-unusual-duration:600ms}
 /* .about-highlight is a .text-gradient (design-system.css). */
-.about-hero{display:grid;grid-template-columns:minmax(0,var(--page-intro-width)) minmax(0,1fr);column-gap:var(--space-page-rhythm-sm);align-items:start}
-.about-hero-copy{min-width:0}
+.about-hero{display:grid;grid-template-columns:minmax(0,1fr)}
+.about-hero-copy{min-width:0;max-width:var(--measure-body);margin-inline:auto;text-align:center;text-wrap:balance}
+/* The title glimmer shrinks the h1 to fit-content while it plays; auto margins keep that shrunk box centred instead of left-aligned. */
+.about-hero-copy>h1{margin-inline:auto}
+/* The photos sit under the text as the logo strip does on Home (the small rhythm). The gallery's viewport adds its own 32px above and below the cards, so that inset is taken off the gap; the arrows then sit a space-6 step below the cards. */
+.about-photos{--gallery-viewport-inset:32px;--about-arrows-gap:var(--space-6);min-width:0;margin-top:calc(var(--space-page-rhythm-sm) - var(--gallery-viewport-inset));margin-bottom:var(--about-arrows-gap)}
+.about-hero-copy .info-body p:last-child{margin-bottom:0}
+.about-photos .spatial-gallery-primary-action{bottom:calc(-8px - var(--about-arrows-gap))}
 /* About, the Lab and Contact space heading and text as the home hero does. */
 :is(.about-hero-copy,.lab-heading) .info-body{margin-top:var(--space-hero-heading-gap);max-width:none}
 /* Contact (a plain information page) has the same heading-then-body rhythm, without changing its text colour. */
 .info-detail:not(.about-detail)>h1+.info-body{margin-top:var(--space-hero-heading-gap);max-width:var(--measure-body)}
 :is(.about-hero-copy,.lab-heading) .info-body p{margin:0 0 var(--space-6);color:var(--ink);line-height:var(--line-height-body)}
 .info-detail:not(.about-detail)>h1+.info-body p{margin:0 0 var(--space-6);line-height:var(--line-height-body)}
-.about-portrait,.about-unusual-media{margin:0;overflow:hidden;border-radius:var(--radius-visual)}
-.about-portrait img,.about-unusual-media img{display:block;width:100%;height:auto}
-/* The About page spans the dev-settings content width instead of the detail surface's inset. */
-.surface.detail.about-detail{padding-inline:0}
+.about-unusual-media{margin:0;overflow:hidden;border-radius:var(--radius-visual)}
+.about-unusual-media img{display:block;width:100%;height:auto}
+/* About and Contact span the dev-settings content width instead of the wide card's side inset, so both pages share one left edge. */
+.surface.detail:is(.about-detail,.info-detail){padding-inline:0}
 .about-section{min-width:0}
 /* Heading and its lead read as one header; the header-to-content gap matches the card sections. */
 .home-content-section.about-unusual>h2{margin:0}
 .about-traits .about-trait-art{width:100%;aspect-ratio:330 / 230;margin:0 0 var(--space-6)}
-.about-section>h2{max-width:27ch;margin:0;font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
+.about-section>h2{max-width:27ch;margin:0;font-size:var(--heading-article-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
 .about-section .about-section-lead{margin:var(--space-hero-heading-content) 0 0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
 .about-unusual-list{list-style:none;padding:0;margin:var(--space-page-rhythm-sm) 0 0;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--space-6);row-gap:var(--space-page-rhythm-md)}
 .about-unusual-item{min-width:0;display:grid;grid-template-columns:subgrid;grid-column:1 / span 4;align-content:start;row-gap:var(--space-6)}
@@ -1751,9 +1806,7 @@ html[data-type-floor="on"] :is(.detail-caption-lead,.home-about-years,.content-m
  .about-unusual-media img{transition:transform var(--about-unusual-duration) var(--ease-standard)}
  .about-unusual-item:hover .about-unusual-media img{transform:scale(var(--about-unusual-zoom))}
 }
-@media(max-width:900px){.about-hero{column-gap:var(--space-6)}}
 @media(max-width:750px){
- .about-hero{grid-template-columns:1fr;row-gap:var(--space-page-rhythm-sm)}
  .about-unusual-list{grid-template-columns:1fr}
  .about-unusual-item:nth-child(n){grid-column:1}
  .about-unusual-item:nth-child(n)>*{grid-column:1;grid-row:auto}
@@ -1767,11 +1820,14 @@ html[data-type-floor="on"] :is(.detail-caption-lead,.home-about-years,.content-m
 .lab-heading{max-width:var(--page-intro-width)}
 .surface.detail.info-detail:not(.about-detail)>h1,.surface.detail.info-detail:not(.about-detail)>h1+.info-body{max-width:var(--page-intro-width)}
 @media(max-width:1000px){:root{--page-intro-width:100%}}
+@media(min-width:1001px){
+ :root[data-page-heading-align="center"] .surface.detail.info-detail:not(.about-detail)>:is(h1,h1+.info-body){max-width:var(--centred-heading-measure);margin-inline:auto;text-align:center;text-wrap:balance}
+ :root[data-page-heading-align="center"] .surface.detail.info-detail:not(.about-detail) .contact-links{justify-content:center}
+}
 /* Contact with "show title" off: the title goes, its text stays and starts where the title did. */
 :root.contact-title-hidden [data-info-page="contact"]>h1{display:none}
 :root.contact-title-hidden [data-info-page="contact"]>h1+.info-body{margin-top:0}
-.contact-links{display:flex;flex-wrap:wrap;gap:var(--space-6);margin-top:var(--space-6)}
-.contact-links :is(a,button){font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
+.contact-links{flex-wrap:wrap;justify-content:flex-start}
 
 /* about-illustrations.css */
 .about-trait-art{--trait-dur-short:180ms;--trait-dur:420ms;--trait-dur-long:600ms;--trait-spring:cubic-bezier(.34,1.56,.64,1);--trait-lift:-3px;--trait-tilt:-2deg;display:block;width:100%;height:auto;aspect-ratio:1;color:color-mix(in oklch,var(--ink) 48%,var(--card-surface))}
@@ -1811,7 +1867,7 @@ html[data-type-floor="on"] :is(.detail-caption-lead,.home-about-years,.content-m
 .card-gallery-block{grid-column:1 / -1;min-width:0;margin:var(--space-page-rhythm-xs) 0;background:transparent;border:0;padding:0}
 .home-product-carousel>.story{margin-top:0}
 .homepage-layout[data-product-display="carousel"] .flip-index{display:none}
-.card-gallery-block>h2{font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);margin:0 0 var(--space-6);color:var(--ink)}
+.card-gallery-block>h2{font-size:var(--heading-article-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);margin:0 0 var(--space-6);color:var(--ink)}
 .card-gallery-block>p{font-size:var(--font-size-body);line-height:var(--line-height-body);color:var(--body-ink);margin:0 0 var(--space-8)}
 .spatial-card-gallery{--gallery-card-scale:var(--carousel-card-scale,1);--gallery-landscape-width:clamp(calc(340px * var(--gallery-card-scale)),calc(46vw * var(--gallery-card-scale)),calc(700px * var(--gallery-card-scale)));--gallery-portrait-width:clamp(calc(210px * var(--gallery-card-scale)),calc(26vw * var(--gallery-card-scale)),calc(360px * var(--gallery-card-scale)));--gallery-card-width:var(--gallery-landscape-width);--gallery-card-height:clamp(calc(340px * var(--gallery-card-scale)),calc(40vw * var(--gallery-card-scale)),calc(500px * var(--gallery-card-scale)));min-width:0}
 .spatial-gallery-viewport{position:relative;display:flex;align-items:center;gap:var(--space-6);height:calc(var(--gallery-card-height) + 64px);width:var(--app-canvas-width);margin-inline:calc((100% - var(--app-canvas-width))/2);padding:32px calc((var(--app-canvas-width) - var(--gallery-last-width,var(--gallery-card-width)))/2) 32px calc((var(--app-canvas-width) - var(--gallery-first-width,var(--gallery-card-width)))/2);overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none}
@@ -1910,7 +1966,7 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 .home-product-carousel .spatial-card-gallery:not([data-gallery-variant="circular"])[data-description-in-card="true"][data-gallery-axis="horizontal"] .spatial-gallery-viewport{padding-top:var(--gallery-controls-row);padding-bottom:calc(var(--space-4) + var(--gallery-copy-height,0px));height:calc(var(--gallery-controls-row) + var(--gallery-card-height) + var(--gallery-copy-height,0px) + var(--space-4) * 2)}
 /* The arrows float in the gap above the cards instead of reserving a row there, so the hero text, the cards and the next section sit one medium rhythm step apart whatever the arrows do. The stage's own slack under the caption is taken back. */
 .home-product-carousel:not([hidden]){margin-bottom:calc(-1 * var(--space-8))}
-.home-hero:not([hidden])~.home-product-carousel:not([hidden]){margin-top:var(--space-page-rhythm-md)}
+.home-hero:not([hidden])~.home-product-carousel:not([hidden]){margin-top:var(--space-hero-exit)}
 
 /* The Gap setting spaces the scroll carousel's cards as well as the circular one's minimum gap. */
 .spatial-card-gallery:not([data-gallery-variant="circular"],[data-gallery-axis="vertical"]) .spatial-gallery-viewport{gap:var(--carousel-gap,var(--space-6))}
@@ -1953,16 +2009,16 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 .sphere-viewer-actions [hidden]{display:none}
 
 /* home-sections.css */
-:root{--radius-home-content-card:20px;--home-content-card-padding:clamp(24px,2.6vw,40px);--font-size-testimonial:clamp(calc(22px * var(--type-scale)),calc(2.1vw * var(--type-scale)),calc(32px * var(--type-scale)))}
+:root{--radius-home-content-card:20px;--service-card-width:clamp(260px,28vw,400px);/* A service card: padding and border, the 330:230 art (see .service-illustration) at the carousel width, its gap, then a title and two lines. Testimonials take it as their minimum. */--home-content-card-min-height:calc(2 * (var(--home-content-card-padding) + 1px) + (var(--service-card-width) - 2 * var(--home-content-card-padding) - 2px) * 230 / 330 + var(--space-6) + 3 * var(--font-size-body) * var(--line-height-body));--home-content-card-padding:clamp(24px,2.6vw,40px);--font-size-testimonial:clamp(calc(22px * var(--type-scale)),calc(2.1vw * var(--type-scale)),calc(32px * var(--type-scale)))}
 /* Flip and Flat reuse the hero h1 for the active project, so the heading switch does not hide it there (design-system.css restores it). */
 [data-home-section][hidden]:not(.home-view-split [data-home-section="heading"]),.home-about[hidden]{display:none!important}
 .home-content-section{grid-column:1 / -1;min-width:0;width:100%;margin-top:var(--space-page-rhythm-md)}
-.home-content-section>h2{margin:0 0 var(--space-6);font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink)}
+.home-content-section>h2{margin:0 0 var(--space-6);font-size:var(--heading-article-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink)}
 .home-services-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-6)}
 .home-approach{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));column-gap:var(--space-6);align-items:start}
 .home-approach-intro{grid-column:1 / -1;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));column-gap:var(--space-6);row-gap:var(--space-6);min-width:0}
 .home-approach-principles{grid-column:calc(2 * var(--content-column-start) - 1) / span 3;min-width:0}
-.home-approach-intro h2{grid-column:1 / -1;margin:0;font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
+.home-approach-intro h2{grid-column:1 / -1;margin:0;font-size:var(--heading-article-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
 .home-approach p{margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink);text-wrap:pretty}
 .home-approach-intro>p{grid-column:calc(2 * var(--content-column-start) - 1) / span 3;min-width:0;max-width:none}
 .home-approach-intro>p+p{grid-column:calc(2 * var(--content-column-start) - 1) / span 3}
@@ -1975,16 +2031,15 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 .home-service-card,.home-testimonial{min-width:0;margin:0;padding:var(--home-content-card-padding);border:1px solid color-mix(in oklch,var(--ink) 5%,transparent);border-radius:var(--radius-home-content-card);background:var(--card-surface)}
 .service-illustration{display:block;width:100%;height:auto;aspect-ratio:330 / 230;margin:0 0 var(--space-6);color:color-mix(in oklch,var(--ink) 48%,var(--card-surface))}
 .service-face{fill:color-mix(in oklch,var(--ink) 7%,var(--card-surface))}.service-side{fill:color-mix(in oklch,var(--ink) 12%,var(--card-surface))}.service-top{fill:var(--card-surface)}.service-accent{fill:var(--ink);stroke:var(--ink)}.service-dashed{stroke-dasharray:3 4}
-/* Card art: each moving part is drawn at its hover pose and held at rest by its transform attribute; hovering the card clears it. */
-.service-move{transition:transform var(--duration-glow-out) var(--ease-standard)}@media(hover:hover){.home-service-card:hover .service-move{transform:none;transition-duration:var(--duration-glow-in);transition-timing-function:var(--ease-settle)}.home-service-card:hover .service-move[data-step="1"]{transition-delay:var(--duration-stagger-step)}.home-service-card:hover .service-move[data-step="2"]{transition-delay:calc(2 * var(--duration-stagger-step))}.home-service-card:hover .service-move[data-step="3"]{transition-delay:calc(3 * var(--duration-stagger-step))}.home-service-card:hover .service-move[data-step="4"]{transition-delay:calc(4 * var(--duration-stagger-step))}.home-service-card:hover .service-move[data-step="5"]{transition-delay:calc(5 * var(--duration-stagger-step))}.home-service-card:hover .service-move[data-step="6"]{transition-delay:calc(6 * var(--duration-stagger-step))}}@media(prefers-reduced-motion:reduce){.service-move{transition:none}}:root[data-animation="off"] .service-move{transition:none}
-.home-service-card h3{margin:0 0 var(--space-3);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--ink)}
+/* Card art: each moving part is drawn at its pose and held at rest by its transform attribute; service-art-motion.js animates it. */
+.home-service-card h3{margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--ink)}
 .home-service-card p{max-width:34ch;margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
 .home-service-card p+p{margin-top:var(--space-3)}
 .home-testimonials-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));--testimonial-gap:var(--space-6);column-gap:0;row-gap:var(--testimonial-gap);min-width:0;width:auto;max-width:100%}
 .home-testimonials{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);min-width:0}
 .home-testimonials>h2{grid-column:1/-1}
 .home-testimonials-grid{grid-column:1 / -1}
-.home-testimonial{grid-column:span 5;display:flex;flex-direction:column;min-height:0}
+.home-testimonial{grid-column:span 5;display:flex;flex-direction:column;min-height:var(--home-content-card-min-height)}
 .home-testimonial:nth-child(odd){margin-right:calc(var(--testimonial-gap) / 2)}
 .home-testimonial:nth-child(even){margin-left:calc(var(--testimonial-gap) / 2)}
 .home-testimonial:nth-child(4n+1),.home-testimonial:nth-child(4n){grid-column:span 7}
@@ -1999,22 +2054,38 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 @media(max-width:600px){.home-content-section{margin-top:var(--space-page-rhythm-md)}.home-services-grid,.home-testimonials-grid{grid-template-columns:1fr}.home-testimonial,.home-testimonial:nth-child(n){grid-column:1;min-height:0}.service-illustration{max-height:200px}.home-service-card{padding:var(--space-6)}}
 
 /* Section components keep their content and DOM when presentation changes. */
-.home-services[data-services-layout="carousel"] .home-services-grid{width:var(--app-canvas-width);max-width:none;margin-inline:calc((100% - var(--app-canvas-width))/2);padding-inline:var(--services-carousel-inset,var(--content-gutter));scroll-padding-inline:var(--services-carousel-inset,var(--content-gutter));grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:clamp(260px,28vw,400px);overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;align-items:stretch;padding-bottom:var(--space-3)}
+.home-services[data-services-layout="carousel"] .home-services-grid{width:var(--app-canvas-width);max-width:none;margin-inline:calc((100% - var(--app-canvas-width))/2);padding-inline:var(--services-carousel-inset,var(--content-gutter));scroll-padding-inline:var(--services-carousel-inset,var(--content-gutter));grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:var(--service-card-width);overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;align-items:stretch;padding-bottom:var(--space-3)}
 .home-services[data-services-layout="carousel"] .home-service-card{scroll-snap-align:start}
+/* While a trackpad or Magic Mouse swipe glides, the browser's nearest-card snap would pull it back mid-glide; CardRail settles it on the next card in the swipe's direction instead (card-rail.js). */
+.home-services[data-services-layout="carousel"] .home-services-grid[data-card-rail-gliding]{scroll-snap-type:none}
 .home-services[data-services-layout="carousel"] .home-services-grid::-webkit-scrollbar{display:none}
 .card-rail-controls{display:flex;justify-content:flex-end;gap:var(--space-2);margin-top:var(--space-6)}
 .home-services[data-services-layout="grid"] .card-rail-controls{display:none}
 /* As on the project carousel, the arrows share the heading row at the content's right edge instead of trailing under the cards. */
-.home-services[data-services-layout="carousel"]{position:relative}
-.home-services[data-services-layout="carousel"] .card-rail-controls{position:absolute;top:0;right:0;align-items:center;height:calc(var(--heading-title-size) * var(--heading-title-line));margin-top:0}
+.home-services[data-services-layout="carousel"]{display:grid;grid-template-columns:minmax(0,1fr)}
+.home-services[data-services-layout="carousel"]>h2{grid-row:1;grid-column:1}.home-services[data-services-layout="carousel"]>.home-services-grid{grid-row:2;grid-column:1}
+.home-services[data-services-layout="carousel"] .card-rail-controls{grid-row:1;grid-column:1;align-self:end;justify-self:end;align-items:center;margin-top:0;margin-bottom:var(--space-3)}
+/* A mouse can drag the cards; snapping is held off while it does (card-rail.js). */
+.home-services[data-services-layout="carousel"] .home-services-grid{cursor:grab}
+.home-services[data-services-layout="carousel"] .home-services-grid[data-card-rail-dragging]{cursor:grabbing;user-select:none}
 /* Same geometry as the project page's Previous and Next (.header-detail-nav button), so the chevron sits centred in its circle. */
 .card-rail-controls button{display:inline-flex;align-items:center;justify-content:center;width:var(--nav-icon-size);height:var(--nav-icon-size);padding:0;border-radius:var(--radius-icon-control);color:var(--body-ink);cursor:pointer}
 .card-rail-controls button:hover{color:var(--ink)}.card-rail-controls button:disabled{opacity:.3;cursor:default}
 [data-card-rail-viewport]:focus-visible{outline:2px solid var(--body-ink);outline-offset:4px}
+.home-testimonials[data-card-background="true"][data-featured="false"] .home-testimonial.is-featured{background:var(--card-surface);border-color:color-mix(in oklch,var(--ink) 5%,transparent)}.home-testimonials[data-card-background="true"][data-featured="false"] .home-testimonial.is-featured blockquote p{color:var(--body-ink)}.home-testimonials[data-card-background="true"][data-featured="false"] .home-testimonial.is-featured :is(.testimonial-author,.testimonial-role){color:var(--eyebrow-ink)}
+.home-testimonials[data-heading="false"]>h2{display:none}
 .home-testimonials[data-card-background="false"] .home-testimonial{padding:0;min-height:0;background:transparent;border:0;border-radius:0}
 .home-testimonials[data-card-background="false"] .home-testimonials-grid{--testimonial-gap:var(--space-page-rhythm-md)}
 .home-testimonials[data-card-background="false"] .home-testimonial blockquote p{color:var(--body-ink)}
 .home-testimonials[data-card-background="false"] :is(.testimonial-author,.testimonial-role){color:var(--eyebrow-ink)}
+/* Testimonial style "No cards, headings": one column, each quote set like a heading, the author on one quiet line under it. */
+.home-testimonials[data-card-background="false"][data-headings="true"] .home-testimonials-grid{grid-template-columns:minmax(0,1fr);--testimonial-gap:var(--space-page-rhythm-sm)}
+.home-testimonials[data-card-background="false"][data-headings="true"] .home-testimonial,.home-testimonials[data-card-background="false"][data-headings="true"] .home-testimonial:nth-child(n){grid-column:1;margin-inline:0}
+.home-testimonials[data-card-background="false"][data-headings="true"] .home-testimonial blockquote{margin-bottom:var(--space-6)}
+.home-testimonials[data-card-background="false"][data-headings="true"] .home-testimonial blockquote p{max-width:var(--measure-heading);font-size:var(--heading-article-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
+.home-testimonials[data-card-background="false"][data-headings="true"] .home-testimonial figcaption{display:block}
+.home-testimonials[data-card-background="false"][data-headings="true"] .testimonial-author:not(:last-child)::after{content:", "}
+.home-testimonials[data-card-background="false"][data-headings="true"] :is(.testimonial-author,.testimonial-role){display:inline}
 
 .home-services[data-services-carousel-alignment="content"]{--services-carousel-inset:max(var(--content-gutter),calc((var(--app-canvas-width) - var(--content-rail-width,var(--content-width)))/2))}
 
@@ -2060,6 +2131,11 @@ body:has(.project-media-focus) .site-tooltip{z-index:122}
    across the page under it, then the long title, summary and facts in a reading-width column. With "Details title beside image"
    on that column sits at the left; off, it is centred like a blog post. These rules outrank the older two-column ones in style.css. */
 .surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-caption{display:block;grid-column:1;grid-row:1;width:100%;max-width:var(--page-intro-width);margin:0 0 var(--space-page-rhythm-md)}
+/* A title above the image starts where the home hero's heading does: the page chrome above it (the main's and the card's top padding) is dropped, and the Hero heading space preset (the page's top by default) sets the distance.
+   The card's side inset goes too, so the page spans the same content width as Home, About and Contact at the same Page width preset. */
+main.wide-project-hero:has(>.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)){padding-top:0}
+.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail){padding-top:0;padding-inline:0}
+.surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding-top:var(--page-content-top)}
 /* Centred hero heading ("Hero heading centred" on Home, or "Details title centred" on Project details): centres the Home hero
    block (not in the split layouts) and the project caption when the title sits above the picture (never when beside it).
    "Details title space" adds hero-like room above the caption and half as much below, where the usual caption gap also applies (tokens.css). */
@@ -2089,10 +2165,12 @@ main.wide-project-hero>.info-detail{padding-top:var(--page-content-top)}
 :root[data-hero-heading-space="spacious"] main.wide-project-hero>.info-detail{padding-top:var(--space-detail-heading-spacious)}
 :root[data-hero-heading-space="grand"] main.wide-project-hero>.info-detail{padding-top:var(--space-detail-heading-grand)}
 :root[data-hero-heading-space="stage"] main.wide-project-hero>.info-detail{padding-top:var(--space-detail-heading-stage)}
-:root:is([data-detail-heading-space="roomy"],[data-detail-heading-space="default"][data-hero-heading-space="roomy"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-roomy) 0 calc(var(--space-detail-heading-roomy) / 2)}
-:root:is([data-detail-heading-space="spacious"],[data-detail-heading-space="default"][data-hero-heading-space="spacious"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-spacious) 0 calc(var(--space-detail-heading-spacious) / 2)}
-:root:is([data-detail-heading-space="grand"],[data-detail-heading-space="default"][data-hero-heading-space="grand"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-grand) 0 calc(var(--space-detail-heading-grand) / 2)}
-:root:is([data-detail-heading-space="stage"],[data-detail-heading-space="default"][data-hero-heading-space="stage"]) .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-stage) 0 calc(var(--space-detail-heading-stage) / 2)}
+:root[data-hero-heading-space="roomy"] .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-roomy) 0 calc(var(--space-detail-heading-roomy) / 2)}
+:root[data-hero-heading-space="spacious"] .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-spacious) 0 calc(var(--space-detail-heading-spacious) / 2)}
+:root[data-hero-heading-space="grand"] .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-grand) 0 calc(var(--space-detail-heading-grand) / 2)}
+:root[data-hero-heading-space="stage"] .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding:var(--space-detail-heading-stage) 0 calc(var(--space-detail-heading-stage) / 2)}
+/* Title above the image: the caption meets the hero image at the same tight hero exit gap as the home hero meets its cards (--space-hero-exit), instead of a full section gap plus half the heading space. Both data attributes are always set, so this matches and, coming later at equal specificity, outranks the heading-space presets above. */
+:root[data-detail-heading-space][data-hero-heading-space] .surface.detail[data-card-orientation]:not(.heading-beside-image,.text-only-detail)>.detail-caption{padding-bottom:0;margin-bottom:var(--space-hero-exit)}
 .detail-caption :is(p,h2){margin:0;font-size:var(--font-size-project-summary);font-weight:var(--font-weight-body);line-height:var(--line-height-reading);letter-spacing:var(--letter-spacing-body)}
 .detail-caption-title{color:var(--ink)}
 :root[data-heading-style="editorial"] .detail-caption .detail-caption-title{font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);text-transform:none;color:var(--ink);text-wrap:balance}
@@ -2198,6 +2276,7 @@ html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="square"][
 .block-media{margin:var(--space-text-media) 0 0}
 .block-media :is(img,video){display:block;width:100%;height:auto;border-radius:var(--radius-visual)}
 .block-media .block-caption{margin:var(--space-3) 0 0;line-height:var(--line-height-body)}
+.block-caption-title{display:block;color:var(--ink);font-weight:var(--font-weight-strong)}
 .page-block-group+.page-block-group,.page-block-group+.article-section,.article-section+.page-block-group{margin-top:var(--space-page-rhythm-sm)}
 /* Design → Images → "Wrap images and videos in cards": the media sits centred on the card surface, with the card rounding;
    the caption stays under the card. */
@@ -2208,10 +2287,13 @@ html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="square"][
 .page-block-group[data-block-columns="2"][data-block-width="960"]{max-width:var(--content-width-xs)}
 .page-block-group[data-block-columns="2"][data-block-width="1280"]{max-width:var(--content-width-media-wide)}
 .page-block-group[data-block-columns="2"]>.article-section:is([data-block-type="image"],[data-block-type="video"]){max-width:none}
+/* Items inside one section sit as close as the two columns do; the larger rhythm is kept for gaps between sections. */
+@media(max-width:750px){.page-block-group[data-block-columns="2"]>.article-section+.article-section{margin-top:var(--space-5)}}
 @media(min-width:751px){
-.page-block-group[data-block-columns="2"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-5);row-gap:var(--space-page-rhythm-sm);align-items:start}
+.page-block-group[data-block-columns="2"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-5);row-gap:var(--space-5);align-items:start}
 .page-block-group[data-block-columns="2"]>:is(.article-section,.page-block-group){grid-column:1 / -1;margin-top:0}
 .page-block-group[data-block-columns="2"]>.article-section:is([data-block-type="image"],[data-block-type="video"]){grid-column:auto;margin-inline:0}
+.page-block-group[data-block-columns="2"]>.article-section[data-block-span="2"]{grid-column:1 / -1}
 }
 .article-header{margin-bottom:var(--space-page-rhythm-md)}
 /* The title sits where any page's title does (top left); only the text below it is centred in its reading column. */
@@ -2221,6 +2303,8 @@ html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="square"][
 .article-series{max-width:var(--content-width-reading);margin:0 auto var(--space-page-rhythm-sm);color:var(--body-ink);font-size:var(--font-size-reading);line-height:var(--line-height-reading)}
 .article-series a,.article-sources a{color:var(--ink);text-underline-offset:.2em}
 .article-section+.article-section{margin-top:var(--space-page-rhythm-sm)}
+/* A section heading is its own block; a text block with no heading of its own sits under it like the paragraph of a headed text block. */
+.article-section:has(>h2:last-child)+.article-section[data-block-type="text"]:not(:has(h2)){margin-top:var(--space-4)}
 .article-section h2{margin:var(--space-page-rhythm-sm) 0 var(--space-4);font-size:var(--heading-article-size);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink)}
 .article-section p{margin:0 0 var(--space-4);color:var(--body-ink);font-size:var(--font-size-reading);line-height:var(--line-height-reading)}
 .content-table-scroll{overflow-x:auto}
@@ -2253,7 +2337,7 @@ html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="square"][
 :root[data-animation="off"] .badge-dot::after{animation:none;opacity:0}
 
 /* project-menu-preview.css */
-.project-menu-preview{position:fixed;z-index:61;pointer-events:none;opacity:0;transform:scale(.92);transform-origin:center;transition:opacity 180ms var(--ease-standard),transform 260ms var(--ease-settle),top 240ms var(--ease-settle),left 240ms var(--ease-settle);will-change:opacity,transform}
+.project-menu-preview{position:fixed;left:0;top:0;z-index:61;pointer-events:none;opacity:0;transform:scale(.92);transform-origin:center;transition:opacity 180ms var(--ease-standard),transform 260ms var(--ease-settle),translate 240ms var(--ease-settle);will-change:opacity,transform,translate}
 .project-menu-preview.is-visible{opacity:1;transform:scale(1)}
 .project-menu-preview.is-visible:not(.no-motion){animation:project-preview-arrive 340ms var(--ease-settle) both}
 @keyframes project-preview-arrive{0%{opacity:0;transform:scale(.94)}64%{opacity:1;transform:scale(1.025)}83%{opacity:1;transform:scale(.99)}100%{opacity:1;transform:scale(1)}}
@@ -2477,8 +2561,10 @@ button.glass-surface:is(:hover,:focus-visible):not(:active),#dock .composer-sugg
 /* Thinking glimmer: replaces the classic shimmer on the label. The band comes from the properties applyGlimmer sets on the status. */
 .iconiq-thinking[data-glimmer] .iconiq-thinking-label{background-image:var(--text-glimmer-gradient);background-size:250% 100%;background-repeat:repeat;background-clip:text;-webkit-background-clip:text;color:transparent;animation:text-glimmer-ltr var(--text-glimmer-cycle) linear infinite}
 .iconiq-thinking[data-glimmer][data-direction="rtl"] .iconiq-thinking-label{animation-name:text-glimmer-rtl}
-@keyframes text-glimmer-ltr{from{background-position:100% 0}to{background-position:-100% 0}}
-@keyframes text-glimmer-rtl{from{background-position:-100% 0}to{background-position:100% 0}}
+/* The band travels exactly one 250% tile (1.5 × 66.67% = 1 tile), from off-left to off-right, so the next copy of the
+   repeating band never enters at the end and each play joins the next seamlessly. Holds up to the 45% spread maximum. */
+@keyframes text-glimmer-ltr{from{background-position:133.33% 0}to{background-position:-33.33% 0}}
+@keyframes text-glimmer-rtl{from{background-position:-33.33% 0}to{background-position:133.33% 0}}
 /* Page headings (PAGE_HEADINGS in text-glimmer.js): the home hero, a project's visible title, About, Lab, articles and
    info pages sweep --hero-glimmer-plays times once the page has landed and the heading has faded in, then
    applyHeroGlimmer marks them done and they rest as plain ink. fit-content makes the band cross the text, not the
@@ -2513,10 +2599,11 @@ body>header,body.wide-project-hero-page>header{width:100%;max-width:var(--nav-sh
 :is(#main,.retained-home) .home-testimonials[data-content-span]{width:100%;max-width:100%;margin-inline:0}
 /* About-related home sections own one column; nested text must not halve it again. */
 :is(#main,.retained-home).home-canvas :is(.home-about,.home-approach,.home-about-list,.home-writing){width:calc((100% - var(--space-6)) / 2);max-width:none;margin-inline:0}
+:is(#main,.retained-home).home-canvas .home-services>h2{max-width:calc((100% - var(--space-6)) / 2);text-wrap:balance}
 .home-canvas :is(.home-about-copy,.home-approach,.home-approach-intro,.home-content-section.home-about-list,.home-writing){grid-template-columns:minmax(0,1fr)}
 .home-canvas :is(.home-about-copy,.home-approach,.home-approach-intro,.home-about-list,.home-writing)>*{grid-column:1 / -1}
 .home-canvas .home-about-copy p+p,.home-canvas .home-approach-intro>p+p{grid-column:1 / -1}
-@media(max-width:1000px){:is(#main,.retained-home).home-canvas :is(.home-about,.home-approach,.home-about-list,.home-writing){width:100%}}
+@media(max-width:1000px){:is(#main,.retained-home).home-canvas :is(.home-about,.home-approach,.home-about-list,.home-writing){width:100%}:is(#main,.retained-home).home-canvas .home-services>h2{max-width:none}}
 .home-hero .hero-about{max-width:100%;min-width:0}
 .home-hero .hero-about h1{max-width:none;text-wrap:wrap}
 .home-canvas:not(.home-view-split) .hero-about h1{max-width:var(--page-intro-width)}
@@ -2554,6 +2641,12 @@ body>header,body.wide-project-hero-page>header{width:100%;max-width:var(--nav-sh
 .ask-cards .text-only-card .visual{display:none}
 /* Generated hit areas and nested text use the same link cursor. */
 :is(.home-product-text a,.home-about-row[href],.home-writing-row,.spatial-gallery-copy[href]),:is(.home-product-text a,.home-about-row[href],.home-writing-row,.spatial-gallery-copy[href]) *,:is(.home-product-text a,.home-about-row[href],.home-writing-row,.spatial-gallery-copy[href])::before{cursor:pointer;user-select:none;-webkit-user-select:none}
+/* Project facts: Context, My role, Key work and Impact sit in one row above the narrative section (Challenge onward). */
+html[data-detail-ratio-layout] .surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description:has(>.detail-facts){max-width:none;margin-inline:0}
+.surface.detail .description>.detail-facts{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--space-detail-columns)}
+.surface.detail .description>.detail-story{max-width:var(--content-width-reading);margin-top:var(--space-detail-sections)}
+@media(max-width:750px){.surface.detail .description>.detail-facts{grid-template-columns:minmax(0,1fr)}}
+.surface.detail .description>.detail-facts>.detail-fact{grid-column:auto}
 
 /* menu-controls.css */
 /* Two persistent groups share the same icon switch and glass colour tokens. */
@@ -2955,9 +3048,15 @@ main:not(.home-view-split) .homepage-layout:has(.home-product-carousel:not([hidd
 .control-outline,#dock.control-ghost:has(>.project-menu:not([hidden])){--control-fill:linear-gradient(145deg,rgba(var(--control-surface-rgb),calc(var(--control-surface-alpha) + .07)),rgba(var(--control-surface-rgb),var(--control-surface-alpha)));--control-border:var(--image-edge);--control-shadow:inset 0 1px 0 var(--nav-highlight);--control-filter:blur(var(--dock-glass-blur)) saturate(1.25) brightness(var(--dock-backdrop-brightness));--control-hover-fill:linear-gradient(var(--nav-item-hover),var(--nav-item-hover)),var(--control-fill);--control-hover-shadow:var(--control-shadow);--control-item-fill:var(--nav-item-hover);--control-item-shadow:none;--control-light-display:none}
 .control-glass{--control-fill:var(--glass-button-fill);--control-border:transparent;--control-shadow:var(--glass-button-edge);--control-filter:blur(var(--glass-button-blur));--control-hover-fill:var(--glass-ghost-fill);--control-hover-shadow:var(--glass-button-edge);--control-item-fill:var(--glass-ghost-fill);--control-item-shadow:var(--glass-button-edge);--control-light-display:block}
 /* A painted light surface can sit over a photograph, so its secondary ink is a step denser than on the bare page. */
-:root:not([data-theme="dark"]) :is(.control-outline,.control-glass){--body-ink:var(--muted);--nav-link-ink:var(--muted);--nav-item-ink:var(--muted)}
-/* On the grey light surface the current and hovered item lift to the lighter panel tone instead of darkening. */
-:root:not([data-theme="dark"]) #dock:not(.always-dark-glass):is(.control-outline,.control-glass),:root:not([data-theme="dark"]) #dock:not(.always-dark-glass) :is(.control-outline,.control-glass){--control-item-fill:var(--panel)}
+:root:not([data-theme="dark"]) .control-glass{--body-ink:var(--muted);--nav-link-ink:var(--muted);--nav-item-ink:var(--muted)}
+/* The light Outline glass is thinner than the Glass body, so its secondary ink is denser again. */
+:root:not([data-theme="dark"]) .control-outline{--body-ink:var(--control-glass-ink);--nav-link-ink:var(--control-glass-ink);--nav-item-ink:var(--control-glass-ink)}
+:root:not([data-theme="dark"]) :is(#dock.always-dark-glass,.always-dark-glass .header-detail-nav button){--control-glass-ink:var(--muted)}
+/* On the well the current and hovered item lift above the surface instead of darkening: pure white in light, a lighter step in dark. */
+:root:not([data-theme="dark"]) #dock:not(.always-dark-glass):is(.control-outline,.control-glass),:root:not([data-theme="dark"]) #dock:not(.always-dark-glass) :is(.control-outline,.control-glass),:root[data-theme="dark"] #dock.control-outline:not(.always-dark-glass),:root[data-theme="dark"] #dock:not(.always-dark-glass) .control-outline{--control-item-fill:var(--control-item-lift)}
+/* Every Outline control (menu, arrows, Go Back) sits on the well tone of its theme and reads by tone alone, so it needs no keyline. */
+:root :is(.control-outline,#dock.control-ghost:has(>.project-menu:not([hidden]))):not(.always-dark-glass,.always-dark-glass *,#dock.is-composer){--control-surface-rgb:var(--dock-well-rgb);--control-surface-alpha:var(--dock-well-alpha);--control-border:transparent}
+:root:not([data-theme="dark"]) .control-outline:not(.always-dark-glass,.always-dark-glass *,#dock.is-composer){--control-glass-ink:var(--dock-well-ink)}
 .control-ghost{--control-fill:transparent;--control-border:transparent;--control-shadow:none;--control-filter:none;--control-hover-fill:var(--nav-item-hover);--control-hover-shadow:none;--control-item-fill:var(--nav-item-hover);--control-item-shadow:none;--control-light-display:none}
 :root .control-surface:not(.assistant-back):is(.control-ghost,.control-outline,.control-glass),:root #dock .control-surface:not(.assistant-back):is(.control-ghost,.control-outline,.control-glass){border:1px solid var(--control-border);background:var(--control-fill);box-shadow:var(--control-shadow);backdrop-filter:var(--control-filter);-webkit-backdrop-filter:var(--control-filter)}
 :root .control-surface:not(.assistant-back):is(:hover,:focus-visible):not(:disabled),:root #dock .control-surface:not(.assistant-back):is(:hover,:focus-visible):not(:disabled){background:var(--control-hover-fill);box-shadow:var(--control-hover-shadow);color:var(--ink)}

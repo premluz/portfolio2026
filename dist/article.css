@@ -16,6 +16,7 @@
 .block-media{margin:var(--space-text-media) 0 0}
 .block-media :is(img,video){display:block;width:100%;height:auto;border-radius:var(--radius-visual)}
 .block-media .block-caption{margin:var(--space-3) 0 0;line-height:var(--line-height-body)}
+.block-caption-title{display:block;color:var(--ink);font-weight:var(--font-weight-strong)}
 .page-block-group+.page-block-group,.page-block-group+.article-section,.article-section+.page-block-group{margin-top:var(--space-page-rhythm-sm)}
 /* Design → Images → "Wrap images and videos in cards": the media sits centred on the card surface, with the card rounding;
    the caption stays under the card. */
@@ -26,10 +27,13 @@
 .page-block-group[data-block-columns="2"][data-block-width="960"]{max-width:var(--content-width-xs)}
 .page-block-group[data-block-columns="2"][data-block-width="1280"]{max-width:var(--content-width-media-wide)}
 .page-block-group[data-block-columns="2"]>.article-section:is([data-block-type="image"],[data-block-type="video"]){max-width:none}
+/* Items inside one section sit as close as the two columns do; the larger rhythm is kept for gaps between sections. */
+@media(max-width:750px){.page-block-group[data-block-columns="2"]>.article-section+.article-section{margin-top:var(--space-5)}}
 @media(min-width:751px){
-.page-block-group[data-block-columns="2"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-5);row-gap:var(--space-page-rhythm-sm);align-items:start}
+.page-block-group[data-block-columns="2"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-5);row-gap:var(--space-5);align-items:start}
 .page-block-group[data-block-columns="2"]>:is(.article-section,.page-block-group){grid-column:1 / -1;margin-top:0}
 .page-block-group[data-block-columns="2"]>.article-section:is([data-block-type="image"],[data-block-type="video"]){grid-column:auto;margin-inline:0}
+.page-block-group[data-block-columns="2"]>.article-section[data-block-span="2"]{grid-column:1 / -1}
 }
 .article-header{margin-bottom:var(--space-page-rhythm-md)}
 /* The title sits where any page's title does (top left); only the text below it is centred in its reading column. */
@@ -39,6 +43,8 @@
 .article-series{max-width:var(--content-width-reading);margin:0 auto var(--space-page-rhythm-sm);color:var(--body-ink);font-size:var(--font-size-reading);line-height:var(--line-height-reading)}
 .article-series a,.article-sources a{color:var(--ink);text-underline-offset:.2em}
 .article-section+.article-section{margin-top:var(--space-page-rhythm-sm)}
+/* A section heading is its own block; a text block with no heading of its own sits under it like the paragraph of a headed text block. */
+.article-section:has(>h2:last-child)+.article-section[data-block-type="text"]:not(:has(h2)){margin-top:var(--space-4)}
 .article-section h2{margin:var(--space-page-rhythm-sm) 0 var(--space-4);font-size:var(--heading-article-size);font-weight:var(--font-weight-heading);line-height:var(--line-height-heading);letter-spacing:var(--letter-spacing-heading);color:var(--ink)}
 .article-section p{margin:0 0 var(--space-4);color:var(--body-ink);font-size:var(--font-size-reading);line-height:var(--line-height-reading)}
 .content-table-scroll{overflow-x:auto}

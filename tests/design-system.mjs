@@ -3,7 +3,7 @@ import {readFile} from 'node:fs/promises';
 import {applyDesignSettings,normalizeDesignSettings,initDesignSystem} from '../dist/design-system.js';
 
 const defaults=normalizeDesignSettings();
-assert.equal(Object.keys(defaults).length,7);assert.equal(defaults.headingWeight,'regular');assert.equal(defaults.bodyWeight,'regular');assert.equal(defaults.headingSize,'auto','Heading size follows Text size by default');assert(Object.entries(defaults).filter(([key])=>!['headingWeight','bodyWeight','headingSize'].includes(key)).every(([,value])=>value==='medium'));
+assert.equal(Object.keys(defaults).length,9);assert.equal(defaults.headingWeight,'regular');assert.equal(defaults.bodyWeight,'regular');assert.equal(defaults.headingSize,'auto','Heading size follows Text size by default');assert(Object.entries(defaults).filter(([key])=>!['headingWeight','bodyWeight','headingSize'].includes(key)).every(([,value])=>value==='medium'));
 for(const size of ['small','medium','large']){
  const input=Object.fromEntries(Object.keys(defaults).filter(key=>!['headingWeight','bodyWeight'].includes(key)).map(key=>[key,size]));input.headingWeight='bold';input.bodyWeight='thin';input.headingSize=size;const root={dataset:{}};
  assert.deepEqual(applyDesignSettings(root,input),input);assert.deepEqual(root.dataset,input,'All seven choices map to their CSS preset attributes');
@@ -15,10 +15,10 @@ globalThis.document={documentElement:root,createElement:()=>({className:'',inner
 globalThis.localStorage={getItem:()=>stored,setItem:(key,value)=>{assert.equal(key,'prem-design-system');stored=value;}};
 const panel={querySelector:selector=>selector==='[data-settings-slot="design-system"]'?null:{after:element=>inserted=element}};
 initDesignSystem(panel,{canChange:()=>allowed,onChange:()=>changes++});
-assert(inserted.innerHTML.includes('Type and spacing'));assert(inserted.innerHTML.includes('Header weight'));assert(inserted.innerHTML.includes('Body weight'));assert(inserted.innerHTML.includes('Bold (500)'));assert.equal((inserted.innerHTML.match(/<option /g)||[]).length,27,'Five three-step knobs, six heading sizes and six spacing steps');assert(inserted.innerHTML.includes('Heading size')&&inserted.innerHTML.includes('Auto (follows Text size)')&&inserted.innerHTML.includes('>Display<'));
+assert(inserted.innerHTML.includes('Type and spacing'));assert(inserted.innerHTML.includes('Header weight'));assert(inserted.innerHTML.includes('Body weight'));assert(inserted.innerHTML.includes('Bold (500)'));assert.equal((inserted.innerHTML.match(/<option /g)||[]).length,36,'Six three-step knobs, six heading sizes and two six-step spacings');assert(inserted.innerHTML.includes('Heading size')&&inserted.innerHTML.includes('Auto (follows Text size)')&&inserted.innerHTML.includes('>Display<'));
 assert.equal(root.dataset.typeSize,'small');assert.equal(root.dataset.spaceSize,'large');assert.equal(root.dataset.typeLeading,'medium');assert.equal(root.dataset.headingWeight,'regular');assert.equal(root.dataset.bodyWeight,'regular');
-selects[3].value='bold';selects[3].onchange();assert.equal(root.dataset.headingWeight,'bold');assert.equal(root.dataset.bodyWeight,'regular');assert.equal(JSON.parse(stored).headingWeight,'bold');assert.equal(changes,1,'Header weight can change independently of body weight');
-selects[4].value='thin';selects[4].onchange();assert.equal(root.dataset.bodyWeight,'thin');assert.equal(root.dataset.headingWeight,'bold');assert.equal(JSON.parse(stored).bodyWeight,'thin');
+selects[5].value='bold';selects[5].onchange();assert.equal(root.dataset.headingWeight,'bold');assert.equal(root.dataset.bodyWeight,'regular');assert.equal(JSON.parse(stored).headingWeight,'bold');assert.equal(changes,1,'Header weight can change independently of body weight');
+selects[6].value='thin';selects[6].onchange();assert.equal(root.dataset.bodyWeight,'thin');assert.equal(root.dataset.headingWeight,'bold');assert.equal(JSON.parse(stored).bodyWeight,'thin');
 allowed=false;selects[0].value='large';selects[0].onchange();assert.equal(selects[0].value,'small');assert.equal(root.dataset.typeSize,'small');assert.equal(changes,2,'Changing layout metrics mid-transition is blocked without remounting content');
 stored='invalid json';allowed=true;initDesignSystem(panel);assert.deepEqual(root.dataset,defaults,'Damaged storage restores balanced presets');
 let slotted;initDesignSystem({querySelector:selector=>selector==='[data-settings-slot="design-system"]'?{append:element=>slotted=element}:null});

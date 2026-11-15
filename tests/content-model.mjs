@@ -31,6 +31,10 @@ assert(Object.isFrozen(content.get('playstation').blocks[0].paragraphs));
 invalid(c=>c.schemaVersion=2,/schemaVersion/);
 invalid(c=>c.documents.push(c.documents[0]),/duplicate ID/);
 invalid(c=>c.documents[0].unknown='silent',/unknown field/);
+// A card's own hoverVideo is 'on' or 'off' and reaches the projected card; anything else is rejected.
+for(const value of ['on','off']){const c=copy();c.documents.find(d=>d.id==='bastion').hoverVideo=value;assert.deepEqual(contentModel.validate(c),[],`hoverVideo ${value} is valid`);assert.equal(createContentStore(c).getCard('bastion').hoverVideo,value,`hoverVideo ${value} reaches the card`);}
+invalid(c=>c.documents.find(d=>d.id==='bastion').hoverVideo='maybe',/hoverVideo/);
+assert.equal(content.getCard('tracr').hoverVideo,'','A card without hoverVideo inherits the global setting');
 invalid(c=>c.documents[1].slug='playstation',/Duplicate document slug/);
 invalid(c=>c.documents[0].type='mystery',/unknown content type/);
 invalid(c=>c.documents[0].blocks[0].type='mystery',/unknown content type/);

@@ -3,7 +3,7 @@ title: Media and image assets
 type: ops
 status: active
 owner: Prem
-updated: 2026-10-26
+updated: 2026-11-15
 summary: How to add or replace images and video, regenerate copies, backdrops, and why an old image can still show.
 tags: [area/images, area/content]
 related: [CONTENT_MODEL.md, ADR-001, ADR-002]
@@ -40,6 +40,11 @@ Use matching poster/video proportions for a seamless hover handoff; for example,
 both exports can be 1440 × 900. Orientation does not rotate an image or remove
 padding embedded in the exported pixels.
 
+A project plays its `hoverVideoId` clip on hover when Developer settings → Card hover video is on. Put
+`"hoverVideo": "on"` or `"hoverVideo": "off"` next to `hoverVideoId` to override that for one card: `on` plays it even
+with the setting off, `off` never plays it. Without the field the card follows the setting. Any other value fails the
+build.
+
 ## 2. Card orientation (optional override)
 
 Orientation is derived: the card is `portrait` when the hero image is taller than wide (measured width ÷ height below 1), otherwise `landscape`, and `landscape` when there is no hero media. Add `card.orientation` only to override that. Find the project's entry in `presentations`, not a carousel's scroll direction:
@@ -74,8 +79,15 @@ tooling and macOS `sips`:
   asset with `role: "backdrop"` or an id ending in `-bg`) in `dist/assets/backgrounds/`, cropping a whole
   design-canvas export to its photo frame first, and records each original's
   checksum in `dist/assets/backgrounds/sources.json`.
+- `scripts/optimise-videos.mjs` re-encodes every catalog MP4 with ffmpeg
+  (`brew install ffmpeg`; H.264 CRF 24, faststart, first audio track as AAC) into
+  `dist/assets/optimised/<name>-<source hash>.mp4`, keeps a copy only when it is
+  smaller than the original, and records each original's checksum in the generated
+  `dist/video-variants.js`. The page serves the copy through `videoSource` in
+  `dist/media-loading.js`; unchanged videos are skipped on later runs. The build
+  checks the committed copies without ffmpeg (`scripts/video-freshness.mjs`).
 
-Run it after any image replacement, including one that keeps the same filename.
+Run it after any image or video replacement, including one that keeps the same filename.
 Image URLs should be plain local paths; use versioned filenames instead of query
 strings for images.
 
@@ -116,8 +128,8 @@ A backdrop is an image asset with `"role": "backdrop"`; an id ending in `-bg` (f
   responsive WebP copies through `dist/image-variants.js`. Rebuilding without
   running `npm run images` used to serve the previous image silently; the build
   now stops and names the stale image instead.
-- **Old playback at the same URL:** replacing a video without changing its URL
-  can reuse cached media. A new filename gives the replacement a fresh URL.
+- **Old playback at the same URL:** the optimised copy's name carries the original's
+  hash, so a replaced video gets a fresh URL once `npm run images` has run.
 - **Landscape card with empty space:** images and videos preserve their source
   proportions. Letterboxing and padding baked into the asset are different from
   CSS padding; changing orientation does not crop the artwork.

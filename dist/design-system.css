@@ -16,6 +16,17 @@
 :root[data-space-size="large"]{--space-density:1.2}
 :root[data-space-size="xlarge"]{--space-density:1.45}
 :root[data-space-size="xxlarge"]{--space-density:1.75}
+/* Logo size scales the home logo strip alone; Spacing never touches it (hero-logos.css). Medium is the unscaled strip. */
+:root[data-logo-size="small"]{--logo-scale:.75}
+:root[data-logo-size="medium"]{--logo-scale:1}
+:root[data-logo-size="large"]{--logo-scale:1.4}
+/* Section spacing: the vertical rhythm between page sections, on top of Spacing and independent of it (tokens.css). */
+:root[data-rhythm-size="xsmall"]{--rhythm-scale:.5}
+:root[data-rhythm-size="small"]{--rhythm-scale:.75}
+:root[data-rhythm-size="medium"]{--rhythm-scale:1}
+:root[data-rhythm-size="large"]{--rhythm-scale:1.35}
+:root[data-rhythm-size="xlarge"]{--rhythm-scale:1.75}
+:root[data-rhythm-size="xxlarge"]{--rhythm-scale:2.25}
 :root[data-heading-weight="thin"]{--font-weight-heading:300}
 :root[data-heading-weight="regular"]{--font-weight-heading:400}
 :root[data-heading-weight="bold"]{--font-weight-heading:500}
@@ -154,7 +165,8 @@ main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:0;padding-top:
 .home-news{margin-top:var(--space-page-rhythm)}
 .home-view-split .home-hero{margin-top:var(--space-page-rhythm-lg)}
 .home-view-split .home-work{padding-top:var(--space-page-rhythm)}
-.site-footer{padding-block:var(--space-page-rhythm-lg)}
+/* The footer fills the viewport and centres its content, so its inset ignores Section spacing; otherwise a large rhythm makes it taller than the screen and the heading rides up. The gap above it still follows the rhythm through main's bottom padding. */
+.site-footer{padding-block:var(--space-footer-inset)}
 .site-footer[hidden]{display:none}
 
 /* Footer follows the same type ladder as the header and page heroes. */
@@ -163,8 +175,8 @@ main:not(.wide-project-hero):not(.home-canvas)>.detail{margin-top:0;padding-top:
 .footer-invitation[hidden]{display:none}
 .footer-link-label{display:none}
 /* Footer labels and icons share control materials; this option changes geometry and content only. */
-.site-footer[data-links="text"] .footer-links{gap:var(--space-6)}
-.site-footer[data-links="text"] .footer-links :is(a,button){display:inline-flex;align-items:center;justify-content:center;min-height:var(--nav-icon-size);padding:var(--space-2) var(--space-4);font-family:inherit;cursor:pointer;width:auto;height:auto;border-radius:var(--radius-pill);font-size:var(--font-size-body);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body);text-decoration:none}
+.site-footer[data-links="text"] .footer-links,.footer-links.contact-links{gap:var(--space-3)}
+.site-footer[data-links="text"] .footer-links :is(a,button),.footer-links.contact-links :is(a,button){display:inline-flex;align-items:center;justify-content:center;min-height:var(--nav-icon-size);padding:var(--space-2) var(--space-4);font-family:inherit;cursor:pointer;width:auto;height:auto;border-radius:var(--radius-pill);font-size:var(--font-size-body);line-height:var(--line-height-label);letter-spacing:var(--letter-spacing-body);text-decoration:none}
 .site-footer[data-links="text"] .footer-links svg{display:none}
 .site-footer[data-links="text"] .footer-link-label{display:inline}
 .footer-credit{font-size:var(--font-size-caption);font-weight:var(--font-weight-body);line-height:var(--line-height-label);letter-spacing:var(--eyebrow-tracking);color:var(--eyebrow-ink)}
@@ -270,6 +282,9 @@ html[data-animation="off"] .image-card[data-copy-hover="true"]:is(:hover,:focus-
 /* Menu links sit in the composer's inset at the composer buttons' height, so both dock modes share one rhythm. */
 #dock nav a{display:inline-flex;align-items:center;box-sizing:border-box;height:var(--nav-icon-size);font-size:var(--font-size-body);font-weight:var(--font-weight-body);letter-spacing:var(--letter-spacing-body);line-height:var(--line-height-label);padding:0 min(calc(var(--nav-item-padding) + 5px),16px)}
 #dock .dock-content>nav{padding:var(--composer-control-inset)}
+/* The first and last items sit at the same inset as top and bottom, so the selected pill has an even gap on every side; spare width goes between items. */
+#dock .dock-content>nav{justify-content:space-between}
+#dock .dock-content>nav>.site-settings-toggle{flex-basis:var(--nav-icon-size);width:var(--nav-icon-size);height:var(--nav-icon-size);margin-right:0}
 #dock nav a[hidden]{display:none}
 @media(max-width:600px){#dock nav a{padding-inline:min(calc(var(--nav-item-padding) + 5px),12px)}}
 @media(max-width:380px){#dock nav a{font-size:min(var(--nav-item-font-size),14px);padding-inline:min(calc(var(--nav-item-padding) + 5px),6px)}}

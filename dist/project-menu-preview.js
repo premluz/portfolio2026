@@ -31,7 +31,8 @@ export class ProjectMenuPreview{
   const rect=menuPreviewPosition(this.anchor(row).getBoundingClientRect(),row.getBoundingClientRect(),{width:innerWidth,height:innerHeight},this.size,this.placement,this.gap);
   if(!rect){this.el.classList.remove('is-visible');return false;}
   const entering=!this.el.classList.contains('is-visible');if(entering)this.el.classList.add('is-positioning');
-  for(const key of ['left','top','width','height'])this.el.style[key]=rect[key]+'px';
+  // Position rides on translate so moving between rows composites instead of re-running layout.
+  this.el.style.translate=`${rect.left}px ${rect.top}px`;for(const key of ['width','height'])this.el.style[key]=rect[key]+'px';
   if(entering){this.el.getBoundingClientRect();this.el.classList.remove('is-positioning');}return true;
  }
  load(url){

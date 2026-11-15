@@ -1,5 +1,6 @@
 import {content} from './content/local.js';
 import {escapeText,headingText} from './content/html.js';
+import {cardGalleryMarkup} from './card-gallery.js';
 import {imageMarkup} from './media-loading.js';
 import {traitIllustration} from './about-illustrations.js';
 import {servicesMarkup} from './home-services.js';
@@ -17,9 +18,12 @@ export const highlightedText=text=>String(text??'').split(highlightPattern).map(
 const paragraphs=values=>(values||[]).map(text=>`<p>${escapeText(text)}</p>`).join('');
 const figure=(asset,className)=>asset?`<figure class="${className}">${imageMarkup(asset.url,asset.alt??'')}</figure>`:'';
 
+// Photos reuse the Card gallery, so its variant, orientation and arc settings apply here as they do on Home.
+const photoMarkup=(item,store)=>{const asset=store.getAsset(item.mediaId);return asset?`<div class="visual content-media-frame">${imageMarkup(asset.url,item.alt??asset.alt??'')}</div>`:'';};
+
 export function aboutHeroMarkup(card,store=content){
- const portrait=card.blocks.find(block=>block.type==='image'&&block.id==='about-portrait');
- return `<div class="about-hero" data-about-section="hero"><div class="about-hero-copy"><h1 tabindex="-1" data-about-section="title">${headingText(card.title)}</h1><div class="info-body">${card.body.map(text=>`<p>${highlightedText(text)}</p>`).join('')}</div></div>${portrait?figure(store.getAsset(portrait.mediaId),'about-portrait'):''}</div>`;
+ const gallery=card.blocks.find(block=>block.type==='card-gallery'&&block.id==='about-gallery');
+ return `<div class="about-hero" data-about-section="hero"><div class="about-hero-copy"><h1 tabindex="-1" data-about-section="title">${headingText(card.title)}</h1><div class="info-body">${card.body.map(text=>`<p>${highlightedText(text)}</p>`).join('')}</div></div>${gallery?`<div class="about-photos">${cardGalleryMarkup(gallery,{store,render:item=>photoMarkup(item,store)})}</div>`:''}</div>`;
 }
 
 // Traits reuse the global card section, so the Card layout and Show card settings apply here too.

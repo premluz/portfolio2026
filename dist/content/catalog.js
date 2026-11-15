@@ -5,21 +5,20 @@ export const catalog={
     {
       "id": "merlin",
       "slug": "merlin",
-      "title": "Designed a financial intelligence with generative assistant and genrative UI",
+      "title": "Designed a financial intelligence platform with a generative assistant and generative UI",
       "pageTitle": "Designed a financial workbench prototype with generative UI and assistant",
       "name": "AI financial intelligence workspace",
       "client": "Merlin",
       "summary": "R&D • AI assistant • Generative UI • Prototype in code",
       "category": "Financial intelligence · R&D",
       "kind": "lab",
-      "listOnly": true,
       "year": "2026",
       "projectStatus": "R&D",
       "disciplines": [
-        "Product",
-        "Interaction",
         "Design system",
-        "Motion"
+        "Product",
+        "Visual language",
+        "Prototype"
       ],
       "shortCategory": "AI financial analysis",
       "homeCards": [
@@ -44,6 +43,7 @@ export const catalog={
       "impact": "0→1 prototype • Agent-assembled interfaces • Multi-pane workbench • 5 themes from one component system",
       "heroMediaId": "merlin-cover",
       "hoverVideoId": "merlin-walkthrough",
+      "hoverVideo": "on",
       "type": "portfolio-item",
       "status": "published",
       "featured": false,
@@ -107,7 +107,7 @@ export const catalog={
       "type": "portfolio-item",
       "status": "published",
       "slug": "rios",
-      "title": "Designed and built life-first planner that makes your day a canvas",
+      "title": "Designed and built a life-first planner that makes your day a canvas",
       "name": "Life-first planner",
       "summary": "0→1 • Everything solo",
       "category": "Life-first planner · Independent product",
@@ -116,9 +116,8 @@ export const catalog={
       "projectStatus": "Launched",
       "disciplines": [
         "Product",
-        "Interaction",
         "Brand",
-        "Motion"
+        "Build"
       ],
       "shortCategory": "Life-first planner",
       "homeCards": [
@@ -162,6 +161,7 @@ export const catalog={
       "intro": "I created Rios around a simple idea: planning is easy; reshaping the day when reality changes is the harder problem.",
       "challenge": "Traditional calendars make adding events easy but make busy days increasingly difficult to reorganise. I wanted replanning to feel direct, spatial and readable.",
       "hoverVideoId": "rios-walkthrough",
+      "hoverVideo": "on",
       "aliases": [
         "Rios",
         "Amble",
@@ -203,7 +203,7 @@ export const catalog={
       "type": "portfolio-item",
       "status": "published",
       "slug": "thebodyshop",
-      "title": "Rebuilt a global beauty brand's online store as a responsive, touch-friendly experience",
+      "title": "Rebuilt a global beauty brand's online store as a responsive, accessible, touch-friendly experience",
       "pageTitle": "Designed a responsive eCommerce experience and brand identity for The Body Shop",
       "name": "Responsive eCommerce",
       "client": "The Body Shop",
@@ -213,10 +213,9 @@ export const catalog={
       "year": "2016",
       "projectStatus": "Launched",
       "disciplines": [
-        "UX",
-        "UI",
-        "Digital branding",
-        "Brand guidelines"
+        "Web",
+        "Brand",
+        "Digital"
       ],
       "shortCategory": "Responsive eCommerce",
       "homeCards": [
@@ -277,10 +276,9 @@ export const catalog={
       "year": "2019",
       "projectStatus": "Launched",
       "disciplines": [
-        "Web design",
-        "UI",
-        "Brand",
-        "Marketing"
+        "Web",
+        "Product",
+        "Brand"
       ],
       "shortCategory": "Travel eSIM",
       "homeCards": [
@@ -331,7 +329,7 @@ export const catalog={
       "type": "portfolio-item",
       "status": "published",
       "slug": "playstation",
-      "title": "First designer on large-scale transformation, set scalable foundations and interaction model.",
+      "title": "First designer on large-scale transformation, set scalable foundations and interaction model",
       "name": "Publishing pipeline",
       "summary": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 ",
       "category": "Publishing pipeline · PlayStation Network",
@@ -339,9 +337,9 @@ export const catalog={
       "year": "2018",
       "projectStatus": "Launched",
       "disciplines": [
-        "UI",
-        "Interaction",
-        "Design guidelines"
+        "Visual language",
+        "Product",
+        "Interaction"
       ],
       "shortCategory": "Publishing pipeline",
       "homeCards": [
@@ -382,13 +380,21 @@ export const catalog={
         {
           "id": "playstation-in-the-product",
           "type": "section",
-          "title": "In the product",
+          "title": "In the product22",
           "items": [
+            {
+              "id": "playstation-new-paragraph",
+              "type": "text",
+              "paragraphs": [
+                "Your new paragraph goes here."
+              ]
+            },
             {
               "id": "playstation-content-screen",
               "type": "image",
               "mediaId": "playstation-content",
               "alt": "PlayStation Network content management screen for a game release",
+              "title": "PlayStation",
               "caption": "PlayStation Network content management screen for a game release",
               "layout": {
                 "width": "page"
@@ -499,9 +505,9 @@ export const catalog={
       "year": "2020",
       "projectStatus": "Launched",
       "disciplines": [
-        "Research",
+        "Product",
         "Interaction",
-        "Prototyping"
+        "Prototype"
       ],
       "shortCategory": "IoT connectivity",
       "homeCards": [
@@ -597,9 +603,7 @@ export const catalog={
       "disciplines": [
         "Design system",
         "Product",
-        "Web design",
-        "Brand",
-        "Marketing"
+        "Web"
       ],
       "shortCategory": "Blockchain traceability",
       "homeCards": [
@@ -636,6 +640,52 @@ export const catalog={
             "columns": 2,
             "mediaFit": "contain"
           }
+        },
+        {
+          "id": "tracr-assets-row-1",
+          "type": "section",
+          "title": "Assets",
+          "layout": {
+            "columns": 2
+          },
+          "items": [
+            {
+              "id": "tracr-asset-1",
+              "type": "image",
+              "mediaId": "tracr-asset-01",
+              "title": "Example title",
+              "caption": "Example description under the image.",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            },
+            {
+              "id": "tracr-asset-2",
+              "type": "image",
+              "mediaId": "tracr-asset-02",
+              "title": "Example title",
+              "caption": "Example description under the image."
+            },
+            {
+              "id": "tracr-asset-3",
+              "type": "image",
+              "mediaId": "tracr-asset-03",
+              "title": "Example title",
+              "caption": "Example description under the image."
+            },
+            {
+              "id": "tracr-asset-4",
+              "type": "image",
+              "mediaId": "tracr-asset-04",
+              "title": "Example title",
+              "caption": "Example description under the image.",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            }
+          ]
         }
       ],
       "featured": true,
@@ -690,16 +740,16 @@ export const catalog={
       "slug": "galachain",
       "title": "Made Web3 wiring invisible for fans and creators on a greenfield platform",
       "name": "Web3 film platform",
-      "summary": "End-to-end 0 → 1 → Growth and continous improvements",
+      "summary": "End-to-end 0 → 1 → Growth and continuous improvements",
       "category": "Web3 entertainment · Film and music",
       "kind": "shipped",
       "year": "2025",
       "projectStatus": "Launched",
       "disciplines": [
-        "Web design",
-        "Marketing",
-        "Motion",
-        "Visual design"
+        "Digital",
+        "Product",
+        "Brand",
+        ""
       ],
       "shortCategory": "Web3 film platform",
       "homeCards": [
@@ -800,7 +850,7 @@ export const catalog={
       "year": "2025",
       "projectStatus": "R&D",
       "disciplines": [
-        "Interaction",
+        "Product",
         "Visual language",
         "Motion"
       ],
@@ -827,6 +877,7 @@ export const catalog={
       "impact": "Assistant one gesture from every screen • Text + voice in one thread • Trust-aware financial flows • Dark + light themes from one component system",
       "heroMediaId": "bastion-cover",
       "hoverVideoId": "bastion-walkthrough",
+      "hoverVideo": "on",
       "type": "portfolio-item",
       "status": "published",
       "featured": false,
@@ -891,7 +942,7 @@ export const catalog={
       "type": "portfolio-item",
       "status": "published",
       "slug": "porter",
-      "title": "Created switchboard for the AI agents",
+      "title": "Created a switchboard for AI agents",
       "pageTitle": "I designed and built a Mac app that keeps track of your AI agents, so you never lose one or keep one waiting.",
       "name": "AI agent switchboard",
       "client": "Porter",
@@ -901,9 +952,9 @@ export const catalog={
       "year": "2026",
       "projectStatus": "Building",
       "disciplines": [
-        "Interaction",
-        "Character",
-        "Motion"
+        "Product",
+        "Brand",
+        "Build"
       ],
       "homeCards": [
         {
@@ -922,6 +973,7 @@ export const catalog={
       "listOnly": false,
       "heroMediaId": "porter-cover",
       "hoverVideoId": "porter-walkthrough",
+      "hoverVideo": "on",
       "intro": "People now work with several AI agents at once, and the real bottleneck is knowing which one needs attention and switching between multiple windows they operate in.",
       "context": "A native Mac utility that lists conversations from Claude, ChatGPT, Codex and Claude Code, wherever they live, and takes you to the exact tab or window in one click.",
       "challenge": "Agents are scattered across browser tabs, editor windows, desktop apps and terminals, and none of them can see the others. You can't tell which one is working, which has finished, or which is waiting for you, so an agent sits idle while you look in the wrong place. The tool also had to earn trust: it could not read conversations, send anything off the Mac, or claim a status it couldn't know.",
@@ -983,16 +1035,52 @@ export const catalog={
           "id": "about-body",
           "type": "text",
           "paragraphs": [
-            "Product designer with a technical background, 10+ years across Web3, DeFi, blockchain, IoT & Telco, 0→1 through growth and scale.",
-            "I solve complexity and ambiguity wherever they show up in product, system, team, or workflow.",
-            "Today, I’m building AI-native design systems and experiences."
+            "I'm an associative thinker with a passion for solving problems and making things better. Outside work, I’m into psychology, philosophy, health, biohacking, financial markets, and a few odd rabbit holes."
           ]
         },
         {
-          "id": "about-portrait",
-          "type": "image",
-          "mediaId": "about-portrait",
-          "alt": "Portrait of Prem"
+          "id": "about-gallery",
+          "type": "card-gallery",
+          "orientation": "horizontal",
+          "title": "Photos",
+          "items": [
+            {
+              "id": "about-gallery-photo-1",
+              "type": "image",
+              "mediaId": "about-photo-1",
+              "alt": "Prem laughing in Andean hat and poncho beside a llama and a local woman in colourful dress at Rainbow Mountain"
+            },
+            {
+              "id": "about-gallery-photo-2",
+              "type": "image",
+              "mediaId": "about-photo-2",
+              "alt": "Prem taking a selfie with a bright orange parrot perched on his shoulder"
+            },
+            {
+              "id": "about-gallery-photo-3",
+              "type": "image",
+              "mediaId": "about-photo-3",
+              "alt": "Black and white portrait of Prem smiling in a dark sweater"
+            },
+            {
+              "id": "about-gallery-photo-4",
+              "type": "image",
+              "mediaId": "about-photo-4",
+              "alt": "Prem standing on a rocky viewpoint above forest with a rock peak in the mist"
+            },
+            {
+              "id": "about-gallery-photo-5",
+              "type": "image",
+              "mediaId": "about-photo-5",
+              "alt": "Prem in a dark jacket and backpack with a misty valley and lake behind him"
+            },
+            {
+              "id": "about-gallery-photo-6",
+              "type": "image",
+              "mediaId": "about-photo-6",
+              "alt": "Prem crouching on a granite ledge above a snowy mountain valley"
+            }
+          ]
         },
         {
           "id": "about-timeline",
@@ -1082,13 +1170,13 @@ export const catalog={
       "template": "home",
       "status": "published",
       "slug": "work",
-      "title": "I design products, websites, and systems.",
+      "title": "I design digital products, brand experiences, and scalable systems",
       "summary": "I started out building for the web and running a solo studio. For the last 10+ years, I’ve designed products for technical and expert users. Recently I built Rios and Porter. Today, my focus is AI conversational and generative UI experiences. ",
       "blocks": [
         {
           "id": "home-introduction",
           "type": "text",
-          "label": "I make complex products feel simple.",
+          "label": "I design digital products, brand experiences, and scalable systems",
           "title": "  ",
           "paragraphs": []
         },
@@ -1096,14 +1184,14 @@ export const catalog={
           "id": "home-strapline",
           "type": "text",
           "paragraphs": [
-            "Product designer and builder. From technical platforms to AI-native experiences."
+            "Product designer. From technical platforms, brand experiences, to AI-native experiences."
           ]
         },
         {
           "id": "home-description",
           "type": "text",
           "paragraphs": [
-            "10+ years designing for global brands. Technically fluent, I'm most useful in complex, large-scale and messy systems where the way forward isn't clear. I value craft, simplicity and accessibility."
+            "Hey, I'm Prem, a multidisciplinary designer with 10+ years of experience working with global brands. Technically fluent, I'm most useful when priorities shift, many hats are needed, and the way forward isn't clear. I value craft, simplicity, and accessibility."
           ]
         },
         {
@@ -1162,18 +1250,6 @@ export const catalog={
           },
           "items": [
             {
-              "id": "home-project-galachain",
-              "type": "reference",
-              "documentId": "galachain",
-              "presentation": "card"
-            },
-            {
-              "id": "home-project-bastion",
-              "type": "reference",
-              "documentId": "bastion",
-              "presentation": "card"
-            },
-            {
               "id": "home-project-vodafone-travel",
               "type": "reference",
               "documentId": "vodafone-travel",
@@ -1186,15 +1262,9 @@ export const catalog={
               "presentation": "card"
             },
             {
-              "id": "home-project-vodafone-iot",
+              "id": "home-project-thebodyshop",
               "type": "reference",
-              "documentId": "vodafone-iot",
-              "presentation": "card"
-            },
-            {
-              "id": "home-project-gala-defi",
-              "type": "reference",
-              "documentId": "gala-defi",
+              "documentId": "thebodyshop",
               "presentation": "card"
             },
             {
@@ -1204,9 +1274,39 @@ export const catalog={
               "presentation": "card"
             },
             {
-              "id": "home-project-thebodyshop",
+              "id": "home-project-galachain",
               "type": "reference",
-              "documentId": "thebodyshop",
+              "documentId": "galachain",
+              "presentation": "card"
+            },
+            {
+              "id": "home-project-bastion",
+              "type": "reference",
+              "documentId": "bastion",
+              "presentation": "card"
+            },
+            {
+              "id": "home-project-vodafone-iot",
+              "type": "reference",
+              "documentId": "vodafone-iot",
+              "presentation": "card"
+            },
+            {
+              "id": "home-project-merlin",
+              "type": "reference",
+              "documentId": "merlin",
+              "presentation": "card"
+            },
+            {
+              "id": "home-project-porter",
+              "type": "reference",
+              "documentId": "porter",
+              "presentation": "card"
+            },
+            {
+              "id": "home-project-rios",
+              "type": "reference",
+              "documentId": "rios",
               "presentation": "card"
             }
           ],
@@ -1258,10 +1358,10 @@ export const catalog={
         {
           "id": "about-introduction",
           "type": "text",
-          "title": "From vision and strategy to shipping and improving.",
+          "title": "From rough brief to shipped detail",
           "label": "",
           "paragraphs": [
-            "Associative thinker drawn to complexity. I value craft and simplicity. Outside work, I’m into psychology, philosophy, health, biohacking, financial markets, and a few odd rabbit holes.",
+            "I partner with product, engineering, and marketings, working embedded in teams or independently across design systems, brand identity & campaigns, responsive web, motion, and interactive prototypes. Outside work, I’m into psychology, philosophy, health, biohacking, financial markets, and a few odd rabbit holes.",
             ""
           ]
         },
@@ -1309,7 +1409,7 @@ export const catalog={
               "id": "role-independent",
               "type": "text",
               "title": "Independent",
-              "label": "2006–Present",
+              "label": "2009–Present",
               "paragraphs": []
             }
           ]
@@ -1409,8 +1509,8 @@ export const catalog={
       "id": "home-services",
       "type": "component",
       "status": "published",
-      "title": "Services",
-      "summary": "Product design, webdesign, working prototypes, design systems, accessibility audits, brand and motion.",
+      "title": "From rough brief to shipped detail. I partner with product, engineering, and marketing, working embedded in teams or independently.",
+      "summary": "Product design, web design, working prototypes, design systems, accessibility audits, brand and motion.",
       "revision": 2,
       "blocks": [
         {
@@ -1424,7 +1524,7 @@ export const catalog={
         {
           "id": "service-webdesign",
           "type": "info-card",
-          "title": "Webdesign",
+          "title": "Web design",
           "paragraphs": [
             "Responsive websites, digital experiences and interfaces."
           ]
@@ -1501,7 +1601,7 @@ export const catalog={
         {
           "id": "quote-gabriele",
           "type": "quote",
-          "text": "His work is strongly informed by data and user research, and he’s especially good at tackling complex, trust-sensitive problems with very little steer, input or guidance.",
+          "text": "Especially good at tackling complex, trust-sensitive problems with very little steer, input or guidance.",
           "attribution": "Paul Wilsher",
           "label": "Product Manager at Gala",
           "evidenceIds": [
@@ -1511,7 +1611,7 @@ export const catalog={
         {
           "id": "quote-matt",
           "type": "quote",
-          "text": "Exceptional technical depth. He played a key role in creating and scaling the design system at Tracr, including the integration of design tokens, which significantly improved consistency, efficiency, and collaboration across teams. He has a rare ability to translate complex UX requirements into reusable, flexible UI components without sacrificing clarity or usability.",
+          "text": "Exceptional technical depth. He played a key role in creating and scaling the design system at Tracr.",
           "attribution": "Matt Bindoff",
           "label": "Lead Engineer at Tracr",
           "evidenceIds": [
@@ -1519,23 +1619,13 @@ export const catalog={
           ]
         },
         {
-          "id": "quote-santiago",
+          "id": "quote-beatrice",
           "type": "quote",
-          "text": "He challenged our approach and the results showed in our KPIs. He ramped up incredibly quickly and made a meaningful impact within his first month.",
-          "attribution": "Santiago Jaramillo",
-          "label": "Head of Product at Gala",
+          "text": "From SEO insights to accessibility reviews, Przemek has a multidisciplinary profile. He manages stakeholders well and earns their trust.",
+          "attribution": "Beatriz Lopez Mencia, PhD",
+          "label": "UX Manager at Vodafone",
           "evidenceIds": [
-            "quote-santiago"
-          ]
-        },
-        {
-          "id": "quote-jonathan",
-          "type": "quote",
-          "text": "He brought AI workflows into our design-to-dev process in ways that genuinely sped things up. He's creative and sharp, but always grounded in actual constraints, adapting quickly when things shift.",
-          "attribution": "Jonathan Burk",
-          "label": "Lead AI Engineer at Gala",
-          "evidenceIds": [
-            "quote-jonathan"
+            "quote-beatrice"
           ]
         }
       ],
@@ -1543,7 +1633,7 @@ export const catalog={
         {
           "id": "quote-gabriele",
           "kind": "quote",
-          "text": "His work is strongly informed by data and user research, and he’s especially good at tackling complex, trust-sensitive problems with very little steer, input or guidance.",
+          "text": "Especially good at tackling complex, trust-sensitive problems with very little steer, input or guidance.",
           "provenance": {
             "kind": "author-provided",
             "label": "Testimonial supplied by Prem"
@@ -1552,25 +1642,16 @@ export const catalog={
         {
           "id": "quote-matt",
           "kind": "quote",
-          "text": "Exceptional technical depth. He played a key role in creating and scaling the design system at Tracr, including the integration of design tokens, which significantly improved consistency, efficiency, and collaboration across teams. He has a rare ability to translate complex UX requirements into reusable, flexible UI components without sacrificing clarity or usability.",
+          "text": "Exceptional technical depth. He played a key role in creating and scaling the design system at Tracr.",
           "provenance": {
             "kind": "author-provided",
             "label": "Testimonial supplied by Prem"
           }
         },
         {
-          "id": "quote-santiago",
+          "id": "quote-beatrice",
           "kind": "quote",
-          "text": "He challenged our approach and the results showed in our KPIs. He ramped up incredibly quickly and made a meaningful impact within his first month.",
-          "provenance": {
-            "kind": "author-provided",
-            "label": "Testimonial supplied by Prem"
-          }
-        },
-        {
-          "id": "quote-jonathan",
-          "kind": "quote",
-          "text": "He brought AI workflows into our design-to-dev process in ways that genuinely sped things up. He's creative and sharp, but always grounded in actual constraints, adapting quickly when things shift.",
+          "text": "From SEO insights to accessibility reviews, Przemek has a multidisciplinary profile. He manages stakeholders well and earns their trust.",
           "provenance": {
             "kind": "author-provided",
             "label": "Testimonial supplied by Prem"
@@ -2363,6 +2444,42 @@ export const catalog={
       "height": 900
     },
     {
+      "id": "tracr-asset-01",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/tracr/tracr-asset-01.png",
+      "alt": "Tracr platform interface, screen 1",
+      "width": 3200,
+      "height": 2400
+    },
+    {
+      "id": "tracr-asset-02",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/tracr/tracr-asset-02.png",
+      "alt": "Tracr platform interface, screen 2",
+      "width": 3200,
+      "height": 2400
+    },
+    {
+      "id": "tracr-asset-03",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/tracr/tracr-asset-03.png",
+      "alt": "Tracr platform interface, screen 3",
+      "width": 3200,
+      "height": 2400
+    },
+    {
+      "id": "tracr-asset-04",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/tracr/tracr-asset-04.png",
+      "alt": "Tracr platform interface, screen 4",
+      "width": 3200,
+      "height": 2400
+    },
+    {
       "id": "tracr-blockchain-traceability",
       "type": "video",
       "status": "published",
@@ -2402,10 +2519,10 @@ export const catalog={
       "id": "merlin-cover",
       "type": "image",
       "status": "published",
-      "url": "assets/merlin.png",
+      "url": "assets/ui/merlin-hero.png",
       "alt": "Merlin financial intelligence workspace with an AI agent assembling research and analysis panels",
-      "width": 1440,
-      "height": 900
+      "width": 3200,
+      "height": 2400
     },
     {
       "id": "vodafone-travel-cover",
@@ -2413,8 +2530,8 @@ export const catalog={
       "status": "published",
       "url": "assets/ui/vodafonetravel-hero.png",
       "alt": "Vodafone Travel eSIM experience shown across devices",
-      "width": 1440,
-      "height": 1459
+      "width": 2400,
+      "height": 1800
     },
     {
       "id": "merlin-walkthrough",
@@ -2422,8 +2539,8 @@ export const catalog={
       "status": "published",
       "url": "assets/merlin.mp4",
       "alt": "",
-      "width": 1440,
-      "height": 900
+      "width": 1920,
+      "height": 1440
     },
     {
       "id": "thebodyshop-cover",
@@ -2431,17 +2548,17 @@ export const catalog={
       "status": "published",
       "url": "assets/ui/thebodyshop-hero.png",
       "alt": "The Body Shop responsive eCommerce site shown across devices",
-      "width": 1440,
-      "height": 1459
+      "width": 3200,
+      "height": 2400
     },
     {
       "id": "rios-cover",
       "type": "image",
       "status": "published",
-      "url": "assets/ui/rios-hero.jpg",
+      "url": "assets/ui/rios-hero.png",
       "alt": "Rios life-first planner with a spatial timeline for shaping a changing day",
-      "width": 1440,
-      "height": 1459
+      "width": 3200,
+      "height": 2400
     },
     {
       "id": "rios-walkthrough",
@@ -2449,8 +2566,8 @@ export const catalog={
       "status": "published",
       "url": "assets/rios.mp4",
       "alt": "",
-      "width": 1440,
-      "height": 900
+      "width": 1920,
+      "height": 1440
     },
     {
       "id": "playstation-cover",
@@ -2458,8 +2575,8 @@ export const catalog={
       "status": "published",
       "url": "assets/ui/playstation-hero.png",
       "alt": "PlayStation publishing pipeline interface for preparing and releasing game content",
-      "width": 1440,
-      "height": 1459
+      "width": 3200,
+      "height": 2400
     },
     {
       "id": "playstation-walkthrough",
@@ -2476,8 +2593,8 @@ export const catalog={
       "status": "published",
       "url": "assets/ui/vodafone-hero.png",
       "alt": "Vodafone IoT connectivity platform for managing device fleets and SIM operations",
-      "width": 1440,
-      "height": 1459
+      "width": 3200,
+      "height": 2400
     },
     {
       "id": "vodafone-walkthrough",
@@ -2494,8 +2611,8 @@ export const catalog={
       "status": "published",
       "url": "assets/ui/tracr-hero.png",
       "alt": "Tracr diamond provenance platform showing a transfer review with participant context",
-      "width": 1440,
-      "height": 1459
+      "width": 3200,
+      "height": 2400
     },
     {
       "id": "tracr-walkthrough",
@@ -2512,8 +2629,8 @@ export const catalog={
       "status": "published",
       "url": "assets/ui/galafilm-hero.png",
       "alt": "Gala Film creator publishing experience for a decentralised entertainment platform",
-      "width": 1440,
-      "height": 1440
+      "width": 2400,
+      "height": 1800
     },
     {
       "id": "gala-walkthrough",
@@ -2530,8 +2647,8 @@ export const catalog={
       "status": "published",
       "url": "assets/ui/bastion-hero.png",
       "alt": "Bastion AI wallet prototype with a persistent assistant and financial interface",
-      "width": 1440,
-      "height": 1459
+      "width": 3200,
+      "height": 2400
     },
     {
       "id": "bastion-qr",
@@ -2548,17 +2665,17 @@ export const catalog={
       "status": "published",
       "url": "assets/bastion.mp4",
       "alt": "",
-      "width": 1440,
-      "height": 900
+      "width": 1920,
+      "height": 1440
     },
     {
       "id": "porter-cover",
       "type": "image",
       "status": "published",
-      "url": "assets/porter.png",
+      "url": "assets/ui/porter-hero.png",
       "alt": "Porter Mac app for tracking AI agents and opening their conversations",
-      "width": 1440,
-      "height": 900
+      "width": 3200,
+      "height": 2400
     },
     {
       "id": "porter-walkthrough",
@@ -2566,8 +2683,8 @@ export const catalog={
       "status": "published",
       "url": "assets/porter.mp4",
       "alt": "",
-      "width": 1440,
-      "height": 900
+      "width": 1920,
+      "height": 1440
     },
     {
       "id": "about-portrait",
@@ -2577,6 +2694,60 @@ export const catalog={
       "alt": "Portrait of Prem in a black sweater against a white background",
       "width": 600,
       "height": 750
+    },
+    {
+      "id": "about-photo-1",
+      "type": "image",
+      "status": "published",
+      "url": "assets/about/about01.jpg",
+      "alt": "Prem laughing in Andean hat and poncho beside a llama and a local woman in colourful dress at Rainbow Mountain",
+      "width": 1383,
+      "height": 924
+    },
+    {
+      "id": "about-photo-2",
+      "type": "image",
+      "status": "published",
+      "url": "assets/about/about02.jpg",
+      "alt": "Prem taking a selfie with a bright orange parrot perched on his shoulder",
+      "width": 1395,
+      "height": 930
+    },
+    {
+      "id": "about-photo-3",
+      "type": "image",
+      "status": "published",
+      "url": "assets/about/about03.jpg",
+      "alt": "Black and white portrait of Prem smiling in a dark sweater",
+      "width": 972,
+      "height": 936
+    },
+    {
+      "id": "about-photo-4",
+      "type": "image",
+      "status": "published",
+      "url": "assets/about/about04.jpg",
+      "alt": "Prem standing on a rocky viewpoint above forest with a rock peak in the mist",
+      "width": 1398,
+      "height": 933
+    },
+    {
+      "id": "about-photo-5",
+      "type": "image",
+      "status": "published",
+      "url": "assets/about/about05.jpg",
+      "alt": "Prem in a dark jacket and backpack with a misty valley and lake behind him",
+      "width": 1410,
+      "height": 939
+    },
+    {
+      "id": "about-photo-6",
+      "type": "image",
+      "status": "published",
+      "url": "assets/about/about06.jpg",
+      "alt": "Prem crouching on a granite ledge above a snowy mountain valley",
+      "width": 1413,
+      "height": 942
     },
     {
       "id": "unusual-well",
@@ -2913,11 +3084,6 @@ export const catalog={
           "featured": true
         },
         {
-          "id": "gala-defi",
-          "documentId": "gala-defi",
-          "featured": true
-        },
-        {
           "id": "thebodyshop",
           "documentId": "thebodyshop",
           "featured": false
@@ -2925,6 +3091,21 @@ export const catalog={
         {
           "id": "playstation",
           "documentId": "playstation",
+          "featured": true
+        },
+        {
+          "id": "merlin",
+          "documentId": "merlin",
+          "featured": true
+        },
+        {
+          "id": "porter",
+          "documentId": "porter",
+          "featured": true
+        },
+        {
+          "id": "rios",
+          "documentId": "rios",
           "featured": true
         },
         {

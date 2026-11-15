@@ -3,7 +3,7 @@
   "type": "portfolio-item",
   "status": "published",
   "slug": "thebodyshop",
-  "title": "Rebuilt a global beauty brand's online store as a responsive, touch-friendly experience",
+  "title": "Rebuilt a global beauty brand's online store as a responsive, accessible, touch-friendly experience",
   "pageTitle": "Designed a responsive eCommerce experience and brand identity for The Body Shop",
   "name": "Responsive eCommerce",
   "client": "The Body Shop",
@@ -13,10 +13,9 @@
   "year": "2016",
   "projectStatus": "Launched",
   "disciplines": [
-    "UX",
-    "UI",
-    "Digital branding",
-    "Brand guidelines"
+    "Web",
+    "Brand",
+    "Digital"
   ],
   "shortCategory": "Responsive eCommerce",
   "homeCards": [

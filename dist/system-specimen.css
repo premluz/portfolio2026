@@ -1,0 +1,10 @@
+/* The #system specimen page (dist/system-specimen.js). Layout only; every component is styled by its own stylesheet. */
+:root{--system-card-width:360px;--system-gap:var(--space-8);--system-block-width:var(--content-width-media-wide)}
+.system-specimen{display:grid;gap:var(--system-gap);padding-block:var(--page-content-top) var(--space-10);width:min(100%,var(--content-width-lg));margin-inline:auto}
+.system-title,.system-heading{margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-heading)}
+.system-lede{margin:var(--space-2) 0 0;color:var(--muted);font-size:var(--font-size-small)}
+.system-section{display:grid;gap:var(--space-5)}
+.system-cards{display:flex;flex-wrap:wrap;gap:var(--space-5);align-items:flex-start}
+.system-card-slot{width:var(--system-card-width);flex:none}
+.system-blocks{display:grid;gap:var(--space-5);max-width:var(--system-block-width)}
+.system-item{min-width:0}

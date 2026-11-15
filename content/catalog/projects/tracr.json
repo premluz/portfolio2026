@@ -13,9 +13,7 @@
   "disciplines": [
     "Design system",
     "Product",
-    "Web design",
-    "Brand",
-    "Marketing"
+    "Web"
   ],
   "shortCategory": "Blockchain traceability",
   "homeCards": [
@@ -52,6 +50,18 @@
         "columns": 2,
         "mediaFit": "contain"
       }
+    },
+    {
+      "id": "tracr-assets-row-1",
+      "type": "section",
+      "title": "Assets",
+      "layout": {"columns": 2},
+      "items": [
+        {"id": "tracr-asset-1", "type": "image", "mediaId": "tracr-asset-01", "title": "Example title", "caption": "Example description under the image.", "layout": {"span": 2, "width": "page"}},
+        {"id": "tracr-asset-2", "type": "image", "mediaId": "tracr-asset-02", "title": "Example title", "caption": "Example description under the image."},
+        {"id": "tracr-asset-3", "type": "image", "mediaId": "tracr-asset-03", "title": "Example title", "caption": "Example description under the image."},
+        {"id": "tracr-asset-4", "type": "image", "mediaId": "tracr-asset-04", "title": "Example title", "caption": "Example description under the image.", "layout": {"span": 2, "width": "page"}}
+      ]
     }
   ],
   "featured": true,

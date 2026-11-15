@@ -88,7 +88,7 @@
         "FRAMEWORK.md",
         "MEDIA_ASSETS.md"
       ],
-      "hash": "3cd4373fd1a82a9cf895f25d4ce64c57855aa6ac",
+      "hash": "a5e3af97f4734e52bba21d5c4eb7b085aa5cc38c",
       "items": []
     },
     {
@@ -138,7 +138,7 @@
         "FRAMEWORK.md",
         "MOTION.md"
       ],
-      "hash": "9c30a48927e5d74b50d154942ba59b3cbccd6af4",
+      "hash": "d9c99f80c4fb8b5802d97ee8063de8610f0d9ab1",
       "items": []
     },
     {
@@ -180,7 +180,7 @@
         "PROJECT_STATE.md",
         "DEPLOYMENT.md"
       ],
-      "hash": "67a9edc2fa13b6ceae0665fbc9cfff4a0d645591",
+      "hash": "7a9dfcc5f447caad45e92069bda6ff0a318eabab",
       "items": []
     },
     {
@@ -253,7 +253,7 @@
         "TASKS.md",
         "PROJECT_STATE.md"
       ],
-      "hash": "2dc77ae313be022eac35cacd53e75ebd1d09e0c9",
+      "hash": "0e8d5fd6006a6818e4727355da53d2009d06d41f",
       "items": []
     },
     {
@@ -273,7 +273,7 @@
         "PROGRESS.md",
         "HANDOFF.md"
       ],
-      "hash": "e67dab20e0188a72185f5c5a3162aa5156dc92f1",
+      "hash": "4f2a8c3a4e176d126f01e70044a8eb395a6addc7",
       "items": [
         {
           "id": "Q-001",
@@ -333,7 +333,7 @@
         "PROJECT_STATE.md",
         "PROGRESS.md"
       ],
-      "hash": "7fdd551523816e3cb930ed7f82c1400c16b69961",
+      "hash": "69a25039ffab1fb59e58a96d7b1815e9d32cbd1c",
       "items": [
         {
           "id": "TASK-044",
@@ -493,6 +493,81 @@
           "tags": [
             "area/images",
             "area/content"
+          ]
+        },
+        {
+          "id": "TASK-063",
+          "title": "Chat width preset",
+          "status": "done",
+          "tags": [
+            "area/assistant"
+          ]
+        },
+        {
+          "id": "TASK-062",
+          "title": "Logo size preset",
+          "status": "done",
+          "tags": [
+            "area/design-system",
+            "area/home"
+          ]
+        },
+        {
+          "id": "TASK-061",
+          "title": "Section spacing preset",
+          "status": "done",
+          "tags": [
+            "area/design-system"
+          ]
+        },
+        {
+          "id": "TASK-060",
+          "title": "Spacing in six steps",
+          "status": "done",
+          "tags": [
+            "area/design-system"
+          ]
+        },
+        {
+          "id": "TASK-059",
+          "title": "Stage reveal once per visit (WP-17 item 4)",
+          "status": "done",
+          "tags": [
+            "area/motion",
+            "area/home"
+          ]
+        },
+        {
+          "id": "TASK-058",
+          "title": "WebGL contexts on home (WP-17 item 3)",
+          "status": "done",
+          "tags": [
+            "area/motion"
+          ]
+        },
+        {
+          "id": "TASK-057",
+          "title": "Blur budget (WP-17 item 2)",
+          "status": "done",
+          "tags": [
+            "area/motion"
+          ]
+        },
+        {
+          "id": "TASK-056",
+          "title": "Layout-animating rules (WP-17 item 1)",
+          "status": "done",
+          "tags": [
+            "area/motion"
+          ]
+        },
+        {
+          "id": "TASK-055",
+          "title": "Specimen page at #system (WP-16)",
+          "status": "done",
+          "tags": [
+            "area/design-system",
+            "area/tests"
           ]
         },
         {
@@ -891,7 +966,7 @@
       "related": [
         "MEDIA_ASSETS.md"
       ],
-      "hash": "2f4a3536c71fa7fb3505bc753582a0008e0e1bef",
+      "hash": "b284d4e0e9d16f03c22a56cb692923381552b13f",
       "items": [
         {
           "id": "FACT-001",
@@ -976,6 +1051,24 @@
         {
           "id": "FACT-011",
           "title": "A time-only cache-busting query can return a stale module",
+          "status": "verified",
+          "tags": [
+            "area/tooling",
+            "area/tests"
+          ]
+        },
+        {
+          "id": "FACT-012",
+          "title": "Without `--dev`, the Node server serves the last build, not the sources",
+          "status": "verified",
+          "tags": [
+            "area/tooling",
+            "area/tests"
+          ]
+        },
+        {
+          "id": "FACT-013",
+          "title": "Presetting localStorage before the first load does not set the page's settings",
           "status": "verified",
           "tags": [
             "area/tooling",

@@ -14,16 +14,52 @@
       "id": "about-body",
       "type": "text",
       "paragraphs": [
-        "Product designer with a technical background, 10+ years across Web3, DeFi, blockchain, IoT & Telco, 0→1 through growth and scale.",
-        "I solve complexity and ambiguity wherever they show up in product, system, team, or workflow.",
-        "Today, I’m building AI-native design systems and experiences."
+        "I'm an associative thinker with a passion for solving problems and making things better. Outside work, I’m into psychology, philosophy, health, biohacking, financial markets, and a few odd rabbit holes."
       ]
     },
     {
-      "id": "about-portrait",
-      "type": "image",
-      "mediaId": "about-portrait",
-      "alt": "Portrait of Prem"
+      "id": "about-gallery",
+      "type": "card-gallery",
+      "orientation": "horizontal",
+      "title": "Photos",
+      "items": [
+        {
+          "id": "about-gallery-photo-1",
+          "type": "image",
+          "mediaId": "about-photo-1",
+          "alt": "Prem laughing in Andean hat and poncho beside a llama and a local woman in colourful dress at Rainbow Mountain"
+        },
+        {
+          "id": "about-gallery-photo-2",
+          "type": "image",
+          "mediaId": "about-photo-2",
+          "alt": "Prem taking a selfie with a bright orange parrot perched on his shoulder"
+        },
+        {
+          "id": "about-gallery-photo-3",
+          "type": "image",
+          "mediaId": "about-photo-3",
+          "alt": "Black and white portrait of Prem smiling in a dark sweater"
+        },
+        {
+          "id": "about-gallery-photo-4",
+          "type": "image",
+          "mediaId": "about-photo-4",
+          "alt": "Prem standing on a rocky viewpoint above forest with a rock peak in the mist"
+        },
+        {
+          "id": "about-gallery-photo-5",
+          "type": "image",
+          "mediaId": "about-photo-5",
+          "alt": "Prem in a dark jacket and backpack with a misty valley and lake behind him"
+        },
+        {
+          "id": "about-gallery-photo-6",
+          "type": "image",
+          "mediaId": "about-photo-6",
+          "alt": "Prem crouching on a granite ledge above a snowy mountain valley"
+        }
+      ]
     },
     {
       "id": "about-timeline",

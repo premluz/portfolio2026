@@ -8,13 +8,13 @@
   "template": "home",
   "status": "published",
   "slug": "work",
-  "title": "I design products, websites, and systems.",
+  "title": "I design digital products, brand experiences, and scalable systems",
   "summary": "I started out building for the web and running a solo studio. For the last 10+ years, I’ve designed products for technical and expert users. Recently I built Rios and Porter. Today, my focus is AI conversational and generative UI experiences. ",
   "blocks": [
     {
       "id": "home-introduction",
       "type": "text",
-      "label": "I make complex products feel simple.",
+      "label": "I design digital products, brand experiences, and scalable systems",
       "title": "  ",
       "paragraphs": []
     },
@@ -22,14 +22,14 @@
       "id": "home-strapline",
       "type": "text",
       "paragraphs": [
-        "Product designer and builder. From technical platforms to AI-native experiences."
+        "Product designer. From technical platforms, brand experiences, to AI-native experiences."
       ]
     },
     {
       "id": "home-description",
       "type": "text",
       "paragraphs": [
-        "10+ years designing for global brands. Technically fluent, I'm most useful in complex, large-scale and messy systems where the way forward isn't clear. I value craft, simplicity and accessibility."
+        "Hey, I'm Prem, a multidisciplinary designer with 10+ years of experience working with global brands. Technically fluent, I'm most useful when priorities shift, many hats are needed, and the way forward isn't clear. I value craft, simplicity, and accessibility."
       ]
     },
     {
@@ -88,18 +88,6 @@
       },
       "items": [
         {
-          "id": "home-project-galachain",
-          "type": "reference",
-          "documentId": "galachain",
-          "presentation": "card"
-        },
-        {
-          "id": "home-project-bastion",
-          "type": "reference",
-          "documentId": "bastion",
-          "presentation": "card"
-        },
-        {
           "id": "home-project-vodafone-travel",
           "type": "reference",
           "documentId": "vodafone-travel",
@@ -112,15 +100,9 @@
           "presentation": "card"
         },
         {
-          "id": "home-project-vodafone-iot",
+          "id": "home-project-thebodyshop",
           "type": "reference",
-          "documentId": "vodafone-iot",
-          "presentation": "card"
-        },
-        {
-          "id": "home-project-gala-defi",
-          "type": "reference",
-          "documentId": "gala-defi",
+          "documentId": "thebodyshop",
           "presentation": "card"
         },
         {
@@ -130,9 +112,39 @@
           "presentation": "card"
         },
         {
-          "id": "home-project-thebodyshop",
+          "id": "home-project-galachain",
           "type": "reference",
-          "documentId": "thebodyshop",
+          "documentId": "galachain",
+          "presentation": "card"
+        },
+        {
+          "id": "home-project-bastion",
+          "type": "reference",
+          "documentId": "bastion",
+          "presentation": "card"
+        },
+        {
+          "id": "home-project-vodafone-iot",
+          "type": "reference",
+          "documentId": "vodafone-iot",
+          "presentation": "card"
+        },
+        {
+          "id": "home-project-merlin",
+          "type": "reference",
+          "documentId": "merlin",
+          "presentation": "card"
+        },
+        {
+          "id": "home-project-porter",
+          "type": "reference",
+          "documentId": "porter",
+          "presentation": "card"
+        },
+        {
+          "id": "home-project-rios",
+          "type": "reference",
+          "documentId": "rios",
           "presentation": "card"
         }
       ],

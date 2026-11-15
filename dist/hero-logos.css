@@ -1,12 +1,13 @@
 /* Logo strip under the hero description: an endless, linear marquee with softly blurred edges. */
 .hero-logos{
- --logo-strip-height:calc(var(--space-unit) * 4.8);
- --logo-strip-gap:calc(var(--space-unit) * 16);
- --logo-strip-fade:calc(var(--space-unit) * 24);
+ /* Sized from the fixed grid and the Logo size setting, not --space-unit, so Spacing density leaves the strip alone. */
+ --logo-strip-height:calc(var(--space-base) * 4.8 * var(--logo-scale,1));
+ --logo-strip-gap:calc(var(--space-base) * 16 * var(--logo-scale,1));
+ --logo-strip-fade:calc(var(--space-base) * 24 * var(--logo-scale,1));
  --logo-strip-blur:var(--space-1);
  --logo-strip-rest-opacity:.6;
- /* Same rhythm as the gap below to the cards (.home-work margin-top), so the strip sits centred between description and cards. */
- position:relative;overflow:hidden;margin-top:var(--space-page-rhythm-md);padding-block:var(--space-2);
+ /* The strip belongs to the hero: it sits close under the description (the small rhythm), while the cards below follow at the hero exit gap (--space-hero-exit). */
+ position:relative;overflow:hidden;margin-top:var(--space-page-rhythm-sm);padding-block:var(--space-2);
  -webkit-mask-image:linear-gradient(90deg,transparent,black var(--logo-strip-fade),black calc(100% - var(--logo-strip-fade)),transparent);
  mask-image:linear-gradient(90deg,transparent,black var(--logo-strip-fade),black calc(100% - var(--logo-strip-fade)),transparent);
  contain:layout paint;
@@ -24,6 +25,10 @@
 /* The source files are white; light mode turns them into ink. */
 :root:not([data-theme="dark"]) .hero-logos-set img{filter:brightness(0)}
 .home-canvas:not(.home-view-split) .hero-about>.hero-logos{max-width:none}
+/* A centred hero puts heading, description and strip on the middle four of six columns (project-media-focus.css, 1-4-1). */
+@media(min-width:1001px){
+ :root[data-hero-heading-align="center"] .home-canvas:not(.home-view-split) .hero-about>.hero-logos{max-width:var(--centred-heading-measure);margin-inline:auto}
+}
 /* The heading-space presets pad the hero's bottom; with the strip showing, that would stack on the gap to the cards, so the strip's own rhythm sets both sides. :root outranks the presets' selector. */
 :root .home-canvas:not(.home-view-split) .home-hero:has(.hero-logos:not([hidden])){padding-bottom:0}
 /* Straight under the heading, the gap above also holds the h1's bottom margin and the room below its baseline (half-leading plus descent), so the gap below grows by the same to look equal.

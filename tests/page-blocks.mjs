@@ -26,6 +26,9 @@ assert(html.includes('<h2>Unifying three systems</h2><p>First paragraph.</p><p>S
 const image=/<section class="article-section" data-block-type="image" data-block-width="960">(.*?)<\/section>/.exec(html)?.[1]||'';
 assert(image.startsWith('<figure class="block-media"><div class="block-media-frame"><img')&&image.includes('alt="The publishing flow"')&&image.includes('</div><figcaption class="block-caption">Publishing flow, end to end</figcaption></figure>'),'An image sits in its frame (the card, when cards are on) with the caption underneath, outside it');
 assert(!image.includes('class="visual'),'Body images are plain figures, with no card frame or liquid effect');
+const titled=pageBlocksMarkup([{id:'titled',type:'image',mediaId:'playstation-content',title:'Content <editor>',caption:'Release screen'}],{store});
+assert(titled.includes('<figcaption class="block-caption"><strong class="block-caption-title">Content &lt;editor&gt;</strong>Release screen</figcaption>'),'An image title sits under the image, leading the caption text, escaped');
+assert(!titled.includes('<h2>'),'An image title is not also a heading above the image');
 const video=/<section class="article-section" data-block-type="video" data-block-width="page">(.*?)<\/section>/.exec(html)?.[1]||'';
 assert(video.includes('<video class="content-video" controls playsinline preload="none" data-media-src=')&&video.includes('data-media-poster=')&&video.includes('Terms of sale</figcaption>'),'A video lazy-loads with its poster and caption');
 assert(html.includes('data-block-type="image"><figure')&&html.split('data-block-width=').length===3,'Only blocks that set a valid width carry one; the others follow the site setting');
@@ -53,6 +56,11 @@ assert(pageBlocksMarkup([{id:'pair',type:'section',layout:{columns:2,width:'1280
 assert(!pageBlocksMarkup([{id:'one',type:'section',layout:{columns:1},items:[{id:'l',type:'image',mediaId:'playstation-content'}]}],{store}).includes('data-block-columns'),'One column is the plain list');
 const css=await (await import('node:fs/promises')).readFile(new URL('../dist/article.css',import.meta.url),'utf8');
 assert(css.includes('@media(min-width:751px){\n.page-block-group[data-block-columns="2"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))'),'Two to a row on desktop only');
+// A 1 / 2 / 1 mosaic: span 2 marks a media item that takes the whole row; rows inside a section use the column gap.
+const mosaic=pageBlocksMarkup([{id:'mosaic',type:'section',layout:{columns:2},items:[{id:'w',type:'image',mediaId:'playstation-content',layout:{span:2}},{id:'n',type:'image',mediaId:'playstation-content'}]}],{store});
+assert(mosaic.includes('data-block-type="image" data-block-span="2"')&&(mosaic.match(/data-block-span/g)||[]).length===1,'Only the span 2 item takes the whole row');
+assert(css.includes('.page-block-group[data-block-columns="2"]>.article-section[data-block-span="2"]{grid-column:1 / -1}'),'A span 2 item fills the row on desktop');
+assert(css.includes('column-gap:var(--space-5);row-gap:var(--space-5)'),'Rows inside a section are as close as the columns');
 assert(css.includes(':root[data-page-image-cards="on"] .block-media-frame{display:grid;place-items:center;padding:var(--page-image-card-padding);background:var(--card-surface);border-radius:var(--radius-card)}'),'Cards use the card surface, the card rounding and the padding setting');
 const indexHtml=await (await import('node:fs/promises')).readFile(new URL('../dist/index.html',import.meta.url),'utf8');
 assert(indexHtml.includes('<input id="pageImageCards" type="checkbox"> Wrap images and videos in cards')&&indexHtml.includes('<input id="pageImageCardPadding" type="range" min="0" max="40" step="1" value="16">'),'The switch starts off; padding defaults to 16% of the card width');

@@ -2,6 +2,7 @@
 // available until an opening transition commits or reverses.
 import {EASE,DURATION} from './motion-tokens.js';
 import {stageMotion} from './motion-viewport.js';
+import {holdHeroLogoPhase,staggerHeroLogos} from './hero-logos.js';
 export function fadeHomeChrome(layer,control,duration){
  const promises=[],fade=(node,delay=0)=>promises.push(control.track(node.animate([{opacity:getComputedStyle(node).opacity||'1'},{opacity:0}],{duration:duration*.4,delay,easing:EASE.leave,fill:'both'})).finished);
  for(const hero of layer.querySelectorAll('.home-hero')){
@@ -16,13 +17,17 @@ export function fadeHomeChrome(layer,control,duration){
  return promises;
 }
 // Going back, the hero returns as it left, reversed: top-down, the badge, the heading, the description, then the
-// logo strip, with the same step and length as the exit. fill 'backwards' keeps each line hidden until its step begins.
+// logo strip, whose logos stagger in left to right, with the same step and length as the exit. fill 'backwards' keeps each line hidden until its step begins.
 // It starts once the project's departing title has faded, so the two headings never overlap.
 export function revealHomeHero(root,control,duration){
  const promises=[],step=duration*.12,start=duration*DURATION.returnCopyFade;
  for(const hero of root.querySelectorAll('.home-hero')){
-  const nodes=[hero.querySelector('.badge'),hero.querySelector('h1'),hero.querySelector('[data-hero-copy]'),hero.querySelector('.hero-logos')].filter(node=>node&&!node.hidden);
-  nodes.forEach((node,index)=>promises.push(control.track(node.animate([{opacity:0},{opacity:1}],{duration:duration*.4,delay:start+index*step,easing:EASE.settle,fill:'backwards'})).finished));
+  const logos=hero.querySelector('.hero-logos'),nodes=[hero.querySelector('.badge'),hero.querySelector('h1'),hero.querySelector('[data-hero-copy]'),logos].filter(node=>node&&!node.hidden);
+  nodes.forEach((node,index)=>{
+   const timing={duration:duration*.4,delay:start+index*step};
+   if(node===logos)promises.push(...staggerHeroLogos(node,{...timing,track:animation=>control.track(animation)}));
+   else promises.push(control.track(node.animate([{opacity:0},{opacity:1}],{...timing,easing:EASE.settle,fill:'backwards'})).finished);
+  });
  }
  return promises;
 }
@@ -35,7 +40,7 @@ export function retainHome(main,images){
  // Moving a scroller resets its scroll position (a native snap carousel, the perspective gallery), so it is carried over.
  const scrolled=[...main.querySelectorAll('*')].filter(node=>node.scrollLeft||node.scrollTop).map(node=>({node,left:node.scrollLeft,top:node.scrollTop}));
  const keepScroll=()=>{for(const item of scrolled)item.node.scrollTo({left:item.left,top:item.top,behavior:'instant'});};
- layer.append(...main.childNodes);const removeViewport=stageMotion(layer,18);keepScroll();
+ const resumeLogos=holdHeroLogoPhase(main);layer.append(...main.childNodes);const removeViewport=stageMotion(layer,18);keepScroll();resumeLogos();
  for(const item of sticky)Object.assign(item.node.style,{position:'absolute',left:item.rect.left-rect.left+'px',top:item.rect.top-rect.top+'px',width:item.rect.width+'px',height:item.rect.height+'px',margin:'0'});
  return {
   images,
@@ -44,7 +49,7 @@ export function retainHome(main,images){
   stash(){layer.style.opacity='0';layer.dataset.retainedDormant='true';images.forEach(image=>image.suspend?.());},
   fadeRest(control,selected,duration){return [...layer.children].filter(node=>node!==selected).map(node=>control.track(node.animate([{opacity:getComputedStyle(node).opacity},{opacity:0}],{duration:duration*.4,easing:'ease-out',fill:'both'})).finished);},
   fadeChrome(control,duration){return fadeHomeChrome(layer,control,duration);},
-  restore(){if(typeof className==='string')main.className=className;for(const item of sticky)item.node.style.cssText=item.css;main.replaceChildren(...layer.childNodes);keepScroll();removeViewport();},
+  restore(){if(typeof className==='string')main.className=className;for(const item of sticky)item.node.style.cssText=item.css;const resumeLogos=holdHeroLogoPhase(layer);main.replaceChildren(...layer.childNodes);keepScroll();removeViewport();resumeLogos();},
   dispose(){images.forEach(image=>image.destroy());removeViewport();}
  };
 }

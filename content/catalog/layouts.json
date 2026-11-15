@@ -28,11 +28,6 @@
         "featured": true
       },
       {
-        "id": "gala-defi",
-        "documentId": "gala-defi",
-        "featured": true
-      },
-      {
         "id": "thebodyshop",
         "documentId": "thebodyshop",
         "featured": false
@@ -40,6 +35,21 @@
       {
         "id": "playstation",
         "documentId": "playstation",
+        "featured": true
+      },
+      {
+        "id": "merlin",
+        "documentId": "merlin",
+        "featured": true
+      },
+      {
+        "id": "porter",
+        "documentId": "porter",
+        "featured": true
+      },
+      {
+        "id": "rios",
+        "documentId": "rios",
         "featured": true
       },
       {

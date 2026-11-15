@@ -4,7 +4,7 @@
     {
       "id": "merlin",
       "type": "portfolio-item",
-      "title": "Designed a financial intelligence with generative assistant and genrative UI",
+      "title": "Designed a financial intelligence platform with a generative assistant and generative UI",
       "pageTitle": "Designed a financial workbench prototype with generative UI and assistant",
       "summary": "R&D • AI assistant • Generative UI • Prototype in code",
       "domains": [
@@ -29,7 +29,7 @@
     {
       "id": "rios",
       "type": "portfolio-item",
-      "title": "Designed and built life-first planner that makes your day a canvas",
+      "title": "Designed and built a life-first planner that makes your day a canvas",
       "pageTitle": "A spatial planner designed around life changing the plan",
       "summary": "0→1 • Everything solo",
       "domains": [
@@ -54,7 +54,7 @@
     {
       "id": "thebodyshop",
       "type": "portfolio-item",
-      "title": "Rebuilt a global beauty brand's online store as a responsive, touch-friendly experience",
+      "title": "Rebuilt a global beauty brand's online store as a responsive, accessible, touch-friendly experience",
       "pageTitle": "Designed a responsive eCommerce experience and brand identity for The Body Shop",
       "summary": "Responsive eCommerce • New brand identity • Hybris CMS • Live Q2 2016",
       "domains": [],
@@ -86,7 +86,7 @@
     {
       "id": "playstation",
       "type": "portfolio-item",
-      "title": "First designer on large-scale transformation, set scalable foundations and interaction model.",
+      "title": "First designer on large-scale transformation, set scalable foundations and interaction model",
       "pageTitle": "Transformation saving hundreds of hours for developers and publishers",
       "summary": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 ",
       "domains": [
@@ -163,7 +163,7 @@
       "type": "portfolio-item",
       "title": "Made Web3 wiring invisible for fans and creators on a greenfield platform",
       "pageTitle": "Designed Web3 film platform rewarding creators and fans.",
-      "summary": "End-to-end 0 → 1 → Growth and continous improvements",
+      "summary": "End-to-end 0 → 1 → Growth and continuous improvements",
       "domains": [
         "Web3",
         "Entertainment",
@@ -214,7 +214,7 @@
     {
       "id": "porter",
       "type": "portfolio-item",
-      "title": "Created switchboard for the AI agents",
+      "title": "Created a switchboard for AI agents",
       "pageTitle": "I designed and built a Mac app that keeps track of your AI agents, so you never lose one or keep one waiting.",
       "summary": "Everything solo",
       "domains": [
@@ -266,8 +266,8 @@
     {
       "id": "home",
       "type": "page",
-      "title": "I design products, websites, and systems.",
-      "pageTitle": "I design products, websites, and systems.",
+      "title": "I design digital products, brand experiences, and scalable systems",
+      "pageTitle": "I design digital products, brand experiences, and scalable systems",
       "summary": "I started out building for the web and running a solo studio. For the last 10+ years, I’ve designed products for technical and expert users. Recently I built Rios and Porter. Today, my focus is AI conversational and generative UI experiences. ",
       "domains": [],
       "capabilities": [],
@@ -318,9 +318,9 @@
     {
       "id": "home-services",
       "type": "component",
-      "title": "Services",
-      "pageTitle": "Services",
-      "summary": "Product design, webdesign, working prototypes, design systems, accessibility audits, brand and motion.",
+      "title": "From rough brief to shipped detail. I partner with product, engineering, and marketing, working embedded in teams or independently.",
+      "pageTitle": "From rough brief to shipped detail. I partner with product, engineering, and marketing, working embedded in teams or independently.",
+      "summary": "Product design, web design, working prototypes, design systems, accessibility audits, brand and motion.",
       "domains": [],
       "capabilities": [],
       "tags": [],
@@ -342,8 +342,7 @@
       "evidenceIds": [
         "quote-gabriele",
         "quote-matt",
-        "quote-santiago",
-        "quote-jonathan"
+        "quote-beatrice"
       ]
     },
     {

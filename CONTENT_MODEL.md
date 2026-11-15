@@ -282,7 +282,7 @@ An article's `blocks` and a project's `blocks` (everything except the walkthroug
 | --- | --- |
 | `section` | `title`, optional `label`, and `items`: other blocks. A section only groups; its blocks keep their own width. |
 | `text` | optional `title` (the heading), `label`, and `paragraphs` |
-| `image` | `mediaId`, `alt`, `caption` (shown underneath) |
+| `image` | `mediaId`, `alt`, `caption` (shown underneath), optional `title` (a bold line under the image, just above the caption text) |
 | `video` | `mediaId`, optional `posterMediaId`, `caption` (shown underneath) |
 | `table`, `quote`, `metric`, `reference`, `info-card` | as on any page |
 
@@ -305,7 +305,9 @@ padding" around it (`prem-page-image-card-share`, 0–40% of the card's width, 1
 
 Two to a row (desktop only, 751px and wider): give a section `"layout": {"columns": 2}`. Its images and videos
 fill two columns across the section's `layout.width` (`page` unless set); its heading and any text span the full
-row; phones show one per row.
+row; phones show one per row. An image or video with `"layout": {"span": 2, "width": "page"}` takes a whole row, so a
+1 / 2 / 1 mosaic stays one section (Tracr's Assets). Rows inside a section use the column gap (`--space-5`); the larger
+page rhythm separates sections.
 
 ```json
 {"id": "screens", "type": "section", "layout": {"columns": 2}, "items": [

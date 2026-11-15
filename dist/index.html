@@ -65,6 +65,7 @@
 <div class="setting-subsection">Hero</div>
 <label class="check"><input type="checkbox" data-home-section-control="heading" checked> Hero heading (h1) · Current layout</label>
 <label class="check"><input id="heroHeadingCenter" type="checkbox"> Hero heading centred (also project details when title is above the image)</label>
+<label class="check"><input id="pageHeadingCenter" type="checkbox"> Page headings centred (About and Contact)</label>
 <label>Hero heading space <select id="heroHeadingSpace"><option value="default" selected>Default</option><option value="roomy">Roomy</option><option value="spacious">Spacious (hero)</option><option value="grand">Extra spacious (hero XL)</option><option value="stage">Stage (hero 2XL)</option></select></label>
 <label class="check"><input type="checkbox" data-home-section-control="available" checked> Available badge · above the hero heading</label>
 <label class="check"><input type="checkbox" data-home-section-control="strapline"> Strapline · one line under the hero heading</label>
@@ -88,7 +89,7 @@
 <label class="check"><input type="checkbox" data-home-section-control="writing" checked> Writing and opinions</label>
 <div class="setting-subsection">Homepage</div>
 <label>Product display <select id="homeProductDisplay"><option value="cards">Cards</option><option value="carousel" selected>Carousel</option><option value="text">Text</option></select></label>
-<label class="check setting-retired"><input id="featureStage" type="checkbox"> Featured stage · one per row, backdrop behind featured cards</label>
+<label class="check setting-retired"><input id="featureStage" type="checkbox"> Featured stage · one per row, backdrop behind featured cards</label><label class="check setting-retired"><input id="stageRevealOnce" type="checkbox"> Stage reveal once · each featured stage plays once per visit</label>
 <label class="check setting-retired" id="heroCarouselSetting"><input id="heroCarousel" type="checkbox"> Hero carousel · scroll into grid</label>
 <div id="heroCarouselKnobs" class="setting-retired" hidden>
 <label>Card size <output data-hero-carousel-output="size">100%</output><input id="heroCarouselSize" data-hero-carousel-control="size" type="range" min="50" max="180" step="5" value="100"></label>
@@ -286,7 +287,9 @@
 <label>Card layout <select id="servicesLayout"><option value="grid">Grid</option><option value="carousel" selected>Carousel</option></select></label>
 <label class="check"><input id="servicesCardBackground" type="checkbox" checked> Show card</label>
 <label>Card carousel start <select id="servicesCarouselAlignment"><option value="full-bleed">Full bleed · global side padding</option><option value="content">Align with content width</option></select></label>
-<label class="check"><input id="testimonialCardBackground" type="checkbox" checked> Testimonial card backgrounds</label>
+<label class="check"><input id="testimonialHeading" type="checkbox" checked> Testimonials heading</label>
+<label>Testimonial style <select id="testimonialStyle"><option value="cards">Cards</option><option value="plain">No cards</option><option value="headings">No cards, headings</option></select></label>
+<label class="check"><input id="testimonialFeatured" type="checkbox" checked> First testimonial dark (off: all the same grey)</label>
 </div></details>
 <details class="developer-settings-group">
 <summary>Ambient</summary><div class="developer-settings-content">

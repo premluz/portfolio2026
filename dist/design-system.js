@@ -6,8 +6,8 @@ const headingSizeLabels={auto:'Auto (follows Text size)',small:'Small',medium:'M
 // Spacing is a density multiplier, so it can reach further either way than the text presets (design-system.css).
 const spaceSizes=['xsmall','small','medium','large','xlarge','xxlarge'];
 const spaceSizeLabels={xsmall:'Extra small',small:'Small',medium:'Medium',large:'Large',xlarge:'Extra large',xxlarge:'Extra extra large'};
-const optionLabel=(key,option)=>key==='headingWeight'||key==='bodyWeight'?({thin:'Thin (300)',regular:'Regular (400)',bold:'Bold (500)'}[option]):key==='headingSize'?headingSizeLabels[option]:key==='spaceSize'?spaceSizeLabels[option]:option[0].toUpperCase()+option.slice(1);
-const controls=[['typeSize','Text size',sizes],['headingSize','Heading size',headingSizes],['spaceSize','Spacing',spaceSizes],['headingWeight','Header weight',weights],['bodyWeight','Body weight',weights],['typeTracking','Letter spacing',sizes],['typeLeading','Line spacing',sizes]];
+const optionLabel=(key,option)=>key==='headingWeight'||key==='bodyWeight'?({thin:'Thin (300)',regular:'Regular (400)',bold:'Bold (500)'}[option]):key==='headingSize'?headingSizeLabels[option]:key==='spaceSize'||key==='rhythmSize'?spaceSizeLabels[option]:option[0].toUpperCase()+option.slice(1);
+const controls=[['typeSize','Text size',sizes],['headingSize','Heading size',headingSizes],['spaceSize','Spacing',spaceSizes],['rhythmSize','Section spacing',spaceSizes],['logoSize','Logo size',sizes],['headingWeight','Header weight',weights],['bodyWeight','Body weight',weights],['typeTracking','Letter spacing',sizes],['typeLeading','Line spacing',sizes]];
 export {controls as designSettingControls};
 export function normalizeDesignSettings(value={}){
  const legacyWeight={small:'thin',medium:'regular',large:'bold'}[value?.typeWeight]||'regular';
@@ -20,7 +20,7 @@ export function initDesignSystem(panel,{canChange=()=>true,onChange=()=>{}}={}){
  let saved;try{saved=JSON.parse(localStorage.getItem('prem-design-system')||'null');}catch{}
  let settings=applyDesignSettings(document.documentElement,saved);
  const fieldset=document.createElement('fieldset');fieldset.className='design-system-controls';
- fieldset.innerHTML=`<legend>Type and spacing</legend>${controls.map(([key,label,options])=>`<label>${label}<select data-design-control="${key}" aria-label="${label}">${options.map(option=>`<option value="${option}">${optionLabel(key,option)}</option>`).join('')}</select></label>`).join('')}<p>Text weight: Thin (300), Regular (400), or Bold (500). Text size has three presets; spacing has six, from Extra small to Extra extra large. Heading size, when not Auto, sets heading size on its own, up to a Display scale for hero-style titles.</p>`;
+ fieldset.innerHTML=`<legend>Type and spacing</legend>${controls.map(([key,label,options])=>`<label>${label}<select data-design-control="${key}" aria-label="${label}">${options.map(option=>`<option value="${option}">${optionLabel(key,option)}</option>`).join('')}</select></label>`).join('')}<p>Text weight: Thin (300), Regular (400), or Bold (500). Text size and logo size have three presets; spacing has six, from Extra small to Extra extra large. Section spacing sets the vertical gaps between page sections on top of Spacing; logo size is independent of both. Heading size, when not Auto, sets heading size on its own, up to a Display scale for hero-style titles.</p>`;
  const slot=panel.querySelector('[data-settings-slot="design-system"]');
  if(slot)slot.append(fieldset);else panel.querySelector('.panel-heading').after(fieldset);
  for(const select of fieldset.querySelectorAll('select')){

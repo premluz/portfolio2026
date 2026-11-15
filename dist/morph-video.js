@@ -1,4 +1,4 @@
-import {previewFor} from './hover-video.js';
+import {cardHoverVideoAllowed,previewFor} from './hover-video.js';
 
 const GEOMETRY=['position','left','top','width','height','borderRadius','clipPath'];
 const BRIDGE_TIMEOUT_MS=400,BRIDGE_PRESENTED_FRAMES=2;
@@ -72,7 +72,7 @@ export function landVideo(carried,receiverVisual){
  const {video,placeholder,css,home,preview}=carried;
  const target=receiverVisual?.querySelector?.('video[data-video-url]');
  const ds=document.documentElement?.dataset;
- const receiverAllowed=receiverVisual?.closest?.('.detail')?ds?.detailHeroVideo!=='off':ds?.cardHoverVideo!=='off';
+ const receiverAllowed=receiverVisual?.closest?.('.detail')?ds?.detailHeroVideo!=='off':cardHoverVideoAllowed(target?.dataset.hoverVideo);
  if(!target||!receiverAllowed||target.dataset.videoUrl!==video.dataset.videoUrl){
   const bridge=bridgeFrame(video,placeholder.parentNode,home);
   video.style.cssText=css;moveNode(placeholder.parentNode,video,placeholder);placeholder.remove();preview?.adopt(video);if(preview&&!preview.allowed())preview.stop();bridge.release();return;

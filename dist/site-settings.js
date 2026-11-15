@@ -2,7 +2,7 @@ import {publishedSettings,settingsRevision} from './published-settings.js';
 import {settingsSchema,parseSettings,importSettings} from './settings-transfer.js';
 
 export const revisionKey='prem-site-settings-revision';
-const legacyControls=new Set(['plainNav','glassStyle']);
+const legacyControls=new Set(['plainNav','glassStyle','testimonialCardBackground']);
 
 // A published profile replaces the built-in one; if it cannot be applied the built-in settings still load, loudly.
 export function applyActiveSettings(published,options={}){

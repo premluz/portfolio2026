@@ -2,8 +2,8 @@
   "id": "home-services",
   "type": "component",
   "status": "published",
-  "title": "Services",
-  "summary": "Product design, webdesign, working prototypes, design systems, accessibility audits, brand and motion.",
+  "title": "From rough brief to shipped detail. I partner with product, engineering, and marketing, working embedded in teams or independently.",
+  "summary": "Product design, web design, working prototypes, design systems, accessibility audits, brand and motion.",
   "revision": 2,
   "blocks": [
     {
@@ -17,7 +17,7 @@
     {
       "id": "service-webdesign",
       "type": "info-card",
-      "title": "Webdesign",
+      "title": "Web design",
       "paragraphs": [
         "Responsive websites, digital experiences and interfaces."
       ]

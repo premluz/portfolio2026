@@ -21,7 +21,8 @@ const controls=[];
 for(const match of panelHTML.matchAll(/<input\b([^>]*)>/g)){const attrs=attributes(match[1]);if(['checkbox','range'].includes(attrs.type))controls.push(control('input',attrs));}
 for(const match of panelHTML.matchAll(/<select\b([^>]*)>([\s\S]*?)<\/select>/g))controls.push(control('select',attributes(match[1]),match[2]));
 for(const match of panelHTML.matchAll(/<button\b([^>]*)>/g)){const attrs=attributes(match[1]);if(attrs.role==='switch')controls.push(control('button',attrs));}
-for(const key of ['typeSize','spaceSize','typeTracking','typeLeading'])controls.push(control('select',{'data-design-control':key},'<option value="small">Small</option><option value="medium" selected>Medium</option><option value="large">Large</option>'));
+for(const key of ['typeSize','logoSize','typeTracking','typeLeading'])controls.push(control('select',{'data-design-control':key},'<option value="small">Small</option><option value="medium" selected>Medium</option><option value="large">Large</option>'));
+for(const key of ['spaceSize','rhythmSize'])controls.push(control('select',{'data-design-control':key},['xsmall','small','medium','large','xlarge','xxlarge'].map(value=>`<option value="${value}"${value==='medium'?' selected':''}>${value}</option>`).join('')));
 controls.push(control('select',{'data-design-control':'headingSize'},['auto','small','medium','large','xlarge','display'].map(value=>`<option value="${value}"${value==='auto'?' selected':''}>${value}</option>`).join('')));
 for(const key of ['headingWeight','bodyWeight'])controls.push(control('select',{'data-design-control':key},'<option value="thin">Thin (300)</option><option value="regular" selected>Regular (400)</option><option value="bold">Bold (500)</option>'));
 const status={textContent:''},file={value:'',files:[],click(){}},exportButton={},importButton={},extras=new Map([['#settingsTransferStatus',status],['#settingsImportFile',file],['#settingsExport',exportButton],['#settingsImport',importButton]]);
@@ -67,8 +68,8 @@ assert.equal(map.get('prem-composer-glow'),'true','Composer ambience defaults on
 assert.equal(map.get('prem-contextual-buttons'),'inline','Contextual button placement is included in settings exports');const integrated=parseSettings(JSON.stringify({...preset,settings:{contextualButtons:'composer'}}),schema);importSettings(integrated,schema,storage);assert.equal(map.get('prem-contextual-buttons'),'composer');
 assert.equal(map.get('prem-menu-gesture-visible'),'false');assert.equal(map.get('prem-menu-info-visible'),'false');assert.equal(map.get('prem-menu-animation-visible'),'false');
 const noComposerGlow=parseSettings(JSON.stringify({...preset,settings:{showComposerGlow:false}}),schema);importSettings(noComposerGlow,schema,storage);assert.equal(map.get('prem-composer-glow'),'false','The ambient composer glow preference can be imported as hidden');
-assert.deepEqual(JSON.parse(map.get('prem-design-system')),{typeSize:'medium',headingSize:'auto',spaceSize:'medium',typeTracking:'medium',typeLeading:'medium',headingWeight:'regular',bodyWeight:'regular'});
-const legacyTypography=parseSettings(JSON.stringify({...preset,settings:{'design.typeWeight':'large'}}),schema);importSettings(legacyTypography,schema,storage);assert.deepEqual(JSON.parse(map.get('prem-design-system')),{typeSize:'medium',headingSize:'auto',spaceSize:'medium',typeTracking:'medium',typeLeading:'medium',headingWeight:'bold',bodyWeight:'bold'},'Earlier settings with one shared weight migrate to both independent weight choices');
+assert.deepEqual(JSON.parse(map.get('prem-design-system')),{typeSize:'medium',headingSize:'auto',spaceSize:'medium',rhythmSize:'medium',logoSize:'medium',typeTracking:'medium',typeLeading:'medium',headingWeight:'regular',bodyWeight:'regular'});
+const legacyTypography=parseSettings(JSON.stringify({...preset,settings:{'design.typeWeight':'large'}}),schema);importSettings(legacyTypography,schema,storage);assert.deepEqual(JSON.parse(map.get('prem-design-system')),{typeSize:'medium',headingSize:'auto',spaceSize:'medium',rhythmSize:'medium',logoSize:'medium',typeTracking:'medium',typeLeading:'medium',headingWeight:'bold',bodyWeight:'bold'},'Earlier settings with one shared weight migrate to both independent weight choices');
 assert.equal(JSON.parse(map.get('prem-motion-settings')).duration,400);assert.equal(map.get('prem-assistant-session'),'keep conversation');assert.equal(map.get('unrelated-key'),'keep');
 
 function verifyStyleTransfer(){
@@ -164,3 +165,7 @@ assert.equal(map.get('prem-card-glass-style'),String(publishedSettings.settings.
 storage.setItem('prem-control-style','outline');const publishedOverrides=new Map(map);
 assert.equal(applySiteSettings({root:publishedRoot,storage}),false);assert.deepEqual(map,publishedOverrides,'The actual unchanged published revision preserves saved user overrides');
 console.log('Settings transfer passed: complete control coverage, current and legacy styles, published profile migration, validated JSON, exact storage mappings, automatic padding, motion restoration, partial/future files, quota rollback, import reload and chat isolation.');
+{
+ const legacy=on=>JSON.stringify({format:'prem-portfolio-settings',version:1,exportedAt:'2026-11-07T00:00:00.000Z',settings:{testimonialCardBackground:on}});
+ assert.equal(parseSettings(legacy(true),schema).get('testimonialStyle'),'cards','An export from before the style keeps its cards');
+ assert.equal(parseSettings(legacy(false),schema).get('testimonialStyle'),'plain','and its no-cards choice');}

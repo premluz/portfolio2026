@@ -1,7 +1,10 @@
 import {imageVariants} from './image-variants.js';
+import {videoVariants} from './video-variants.js';
 import {escapeText,safeHref} from './content/html.js';
 export function imageSource(url,width=960){const variants=imageVariants[url]?.variants;return variants?.find(item=>item.width>=width)?.url||variants?.at(-1)?.url||safeHref(url,{asset:true});}
 export const posterSource=url=>imageSource(url,960);
+// The smaller re-encode from scripts/optimise-videos.mjs, or the original when none beat it.
+export const videoSource=url=>safeHref(videoVariants[url]?.url||url,{asset:true});
 
 export function imageMarkup(url,alt,{eager=false}={}){
  const original=safeHref(url,{asset:true}),meta=imageVariants[url],variants=meta?.variants||[];

@@ -692,6 +692,12 @@
           "pattern": "^[a-z][a-z0-9-]*$",
           "maxLength": 120
         },
+        "hoverVideo": {
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
         "timeline": {
           "type": "object",
           "properties": {

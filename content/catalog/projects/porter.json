@@ -3,7 +3,7 @@
   "type": "portfolio-item",
   "status": "published",
   "slug": "porter",
-  "title": "Created switchboard for the AI agents",
+  "title": "Created a switchboard for AI agents",
   "pageTitle": "I designed and built a Mac app that keeps track of your AI agents, so you never lose one or keep one waiting.",
   "name": "AI agent switchboard",
   "client": "Porter",
@@ -13,9 +13,9 @@
   "year": "2026",
   "projectStatus": "Building",
   "disciplines": [
-    "Interaction",
-    "Character",
-    "Motion"
+    "Product",
+    "Brand",
+    "Build"
   ],
   "homeCards": [
     {
@@ -34,6 +34,7 @@
   "listOnly": false,
   "heroMediaId": "porter-cover",
   "hoverVideoId": "porter-walkthrough",
+  "hoverVideo": "on",
   "intro": "People now work with several AI agents at once, and the real bottleneck is knowing which one needs attention and switching between multiple windows they operate in.",
   "context": "A native Mac utility that lists conversations from Claude, ChatGPT, Codex and Claude Code, wherever they live, and takes you to the exact tab or window in one click.",
   "challenge": "Agents are scattered across browser tabs, editor windows, desktop apps and terminals, and none of them can see the others. You can't tell which one is working, which has finished, or which is waiting for you, so an agent sits idle while you look in the wrong place. The tool also had to earn trust: it could not read conversations, send anything off the Mac, or claim a status it couldn't know.",

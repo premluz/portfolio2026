@@ -44,6 +44,34 @@
     "sourceCornerRadius": 34
   },
   {
+    "id": "tracr-asset-01",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/tracr/tracr-asset-01.png",
+    "alt": "Tracr platform interface, screen 1"
+  },
+  {
+    "id": "tracr-asset-02",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/tracr/tracr-asset-02.png",
+    "alt": "Tracr platform interface, screen 2"
+  },
+  {
+    "id": "tracr-asset-03",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/tracr/tracr-asset-03.png",
+    "alt": "Tracr platform interface, screen 3"
+  },
+  {
+    "id": "tracr-asset-04",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/tracr/tracr-asset-04.png",
+    "alt": "Tracr platform interface, screen 4"
+  },
+  {
     "id": "tracr-blockchain-traceability",
     "type": "video",
     "status": "published",
@@ -75,7 +103,7 @@
     "id": "merlin-cover",
     "type": "image",
     "status": "published",
-    "url": "assets/merlin.png",
+    "url": "assets/ui/merlin-hero.png",
     "alt": "Merlin financial intelligence workspace with an AI agent assembling research and analysis panels"
   },
   {
@@ -103,7 +131,7 @@
     "id": "rios-cover",
     "type": "image",
     "status": "published",
-    "url": "assets/ui/rios-hero.jpg",
+    "url": "assets/ui/rios-hero.png",
     "alt": "Rios life-first planner with a spatial timeline for shaping a changing day"
   },
   {
@@ -196,10 +224,8 @@
     "id": "porter-cover",
     "type": "image",
     "status": "published",
-    "url": "assets/porter.png",
-    "alt": "Porter Mac app for tracking AI agents and opening their conversations",
-    "width": 1440,
-    "height": 900
+    "url": "assets/ui/porter-hero.png",
+    "alt": "Porter Mac app for tracking AI agents and opening their conversations"
   },
   {
     "id": "porter-walkthrough",
@@ -214,6 +240,48 @@
     "status": "published",
     "url": "assets/prem.jpg",
     "alt": "Portrait of Prem in a black sweater against a white background"
+  },
+  {
+    "id": "about-photo-1",
+    "type": "image",
+    "status": "published",
+    "url": "assets/about/about01.jpg",
+    "alt": "Prem laughing in Andean hat and poncho beside a llama and a local woman in colourful dress at Rainbow Mountain"
+  },
+  {
+    "id": "about-photo-2",
+    "type": "image",
+    "status": "published",
+    "url": "assets/about/about02.jpg",
+    "alt": "Prem taking a selfie with a bright orange parrot perched on his shoulder"
+  },
+  {
+    "id": "about-photo-3",
+    "type": "image",
+    "status": "published",
+    "url": "assets/about/about03.jpg",
+    "alt": "Black and white portrait of Prem smiling in a dark sweater"
+  },
+  {
+    "id": "about-photo-4",
+    "type": "image",
+    "status": "published",
+    "url": "assets/about/about04.jpg",
+    "alt": "Prem standing on a rocky viewpoint above forest with a rock peak in the mist"
+  },
+  {
+    "id": "about-photo-5",
+    "type": "image",
+    "status": "published",
+    "url": "assets/about/about05.jpg",
+    "alt": "Prem in a dark jacket and backpack with a misty valley and lake behind him"
+  },
+  {
+    "id": "about-photo-6",
+    "type": "image",
+    "status": "published",
+    "url": "assets/about/about06.jpg",
+    "alt": "Prem crouching on a granite ledge above a snowy mountain valley"
   },
   {
     "id": "unusual-well",

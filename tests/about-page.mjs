@@ -9,7 +9,9 @@ const card=content.getCard('about'),traits=content.get('about-traits'),unusual=c
 const html=aboutBodyMarkup(card);
 assert.equal(card.body.length,3,'The intro keeps its three authored paragraphs');
 assert(html.indexOf('about-hero')<html.indexOf('about-traits')&&html.indexOf('about-traits')<html.indexOf('about-unusual'),'Hero, traits and unusual things render in the authored order');
-assert(aboutHeroMarkup(card).includes('class="about-portrait"')&&aboutHeroMarkup(card).includes('prem'),'The portrait image renders beside the intro');
+const hero=aboutHeroMarkup(card);
+assert(hero.indexOf('about-hero-copy')<hero.indexOf('data-card-gallery="about-gallery"')&&(hero.match(/data-gallery-item/g)||[]).length===6&&hero.includes('assets/about/about01.jpg'),'The intro text sits above the photo gallery, with all six photos');
+assert(!hero.includes('about-portrait'),'The old portrait hero is gone');
 assert.equal((html.match(/class="about-highlight"/g)||[]).length,ABOUT_HIGHLIGHTS.length,'Both authored phrases are tinted');
 assert.equal(highlightedText('<b>x</b> & Web3, DeFi, blockchain, IoT & Telco, y'),'&lt;b&gt;x&lt;/b&gt; &amp; <span class="about-highlight">Web3, DeFi, blockchain, IoT &amp; Telco,</span> y','Text is escaped around highlights');
 
@@ -36,10 +38,10 @@ assert(!detail.includes('data-home-section')&&!detail.includes('<h2 id="home-abo
 assert(!new RegExp('id="([^"]+)"[\\s\\S]*id="\\1"').test(detail),'Reusing Home components adds no duplicate ids');
 const css=await readFile(new URL('../dist/about-page.css',import.meta.url),'utf8'),styles=await readFile(new URL('../scripts/client-styles.mjs',import.meta.url),'utf8');
 assert(styles.includes("'about-page.css'")&&styles.includes("'about-illustrations.css'"),'About stylesheets ship in the client bundle');
-assert(css.includes('.surface.detail.about-detail{padding-inline:0}'),'About content spans the page content width');
+assert(css.includes('.surface.detail:is(.about-detail,.info-detail){padding-inline:0}'),'About and Contact content span the page content width, sharing one left edge');
 for(const rule of ['.about-unusual-caption h3{','.about-unusual-caption p{'])assert(css.slice(css.indexOf(rule)).split('}')[0].includes('font-size:var(--font-size-body)'),'Unusual captions use body-size text: '+rule);
 const sections=await readFile(new URL('../dist/home-sections.css',import.meta.url),'utf8');
-assert(sections.includes('.home-service-card h3{margin:0 0 var(--space-3);font-size:var(--font-size-body)'),'Card titles are body-size text');
+assert(sections.includes('.home-service-card h3{margin:0;font-size:var(--font-size-body)'),'Card titles are body-size text with no gap above the description, like project cards');
 assert(sections.includes('.home-services[data-card-background="false"] .home-service-card{padding:0;background:transparent;border:0;border-radius:0}'),'Show card off removes the card surface');
 console.log('About page passed: authored order, escaped highlights, six drawn traits in the shared card section, body-size text, full content width, five responsive photos and bundled styles.');
 

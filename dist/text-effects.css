@@ -29,8 +29,10 @@
 /* Thinking glimmer: replaces the classic shimmer on the label. The band comes from the properties applyGlimmer sets on the status. */
 .iconiq-thinking[data-glimmer] .iconiq-thinking-label{background-image:var(--text-glimmer-gradient);background-size:250% 100%;background-repeat:repeat;background-clip:text;-webkit-background-clip:text;color:transparent;animation:text-glimmer-ltr var(--text-glimmer-cycle) linear infinite}
 .iconiq-thinking[data-glimmer][data-direction="rtl"] .iconiq-thinking-label{animation-name:text-glimmer-rtl}
-@keyframes text-glimmer-ltr{from{background-position:100% 0}to{background-position:-100% 0}}
-@keyframes text-glimmer-rtl{from{background-position:-100% 0}to{background-position:100% 0}}
+/* The band travels exactly one 250% tile (1.5 × 66.67% = 1 tile), from off-left to off-right, so the next copy of the
+   repeating band never enters at the end and each play joins the next seamlessly. Holds up to the 45% spread maximum. */
+@keyframes text-glimmer-ltr{from{background-position:133.33% 0}to{background-position:-33.33% 0}}
+@keyframes text-glimmer-rtl{from{background-position:-33.33% 0}to{background-position:133.33% 0}}
 /* Page headings (PAGE_HEADINGS in text-glimmer.js): the home hero, a project's visible title, About, Lab, articles and
    info pages sweep --hero-glimmer-plays times once the page has landed and the heading has faded in, then
    applyHeroGlimmer marks them done and they rest as plain ink. fit-content makes the band cross the text, not the

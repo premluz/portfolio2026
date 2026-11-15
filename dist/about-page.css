@@ -1,23 +1,29 @@
 [data-about-section][hidden]{display:none!important}
 :root{--about-unusual-zoom:1.03;--about-unusual-duration:600ms}
 /* .about-highlight is a .text-gradient (design-system.css). */
-.about-hero{display:grid;grid-template-columns:minmax(0,var(--page-intro-width)) minmax(0,1fr);column-gap:var(--space-page-rhythm-sm);align-items:start}
-.about-hero-copy{min-width:0}
+.about-hero{display:grid;grid-template-columns:minmax(0,1fr)}
+.about-hero-copy{min-width:0;max-width:var(--measure-body);margin-inline:auto;text-align:center;text-wrap:balance}
+/* The title glimmer shrinks the h1 to fit-content while it plays; auto margins keep that shrunk box centred instead of left-aligned. */
+.about-hero-copy>h1{margin-inline:auto}
+/* The photos sit under the text as the logo strip does on Home (the small rhythm). The gallery's viewport adds its own 32px above and below the cards, so that inset is taken off the gap; the arrows then sit a space-6 step below the cards. */
+.about-photos{--gallery-viewport-inset:32px;--about-arrows-gap:var(--space-6);min-width:0;margin-top:calc(var(--space-page-rhythm-sm) - var(--gallery-viewport-inset));margin-bottom:var(--about-arrows-gap)}
+.about-hero-copy .info-body p:last-child{margin-bottom:0}
+.about-photos .spatial-gallery-primary-action{bottom:calc(-8px - var(--about-arrows-gap))}
 /* About, the Lab and Contact space heading and text as the home hero does. */
 :is(.about-hero-copy,.lab-heading) .info-body{margin-top:var(--space-hero-heading-gap);max-width:none}
 /* Contact (a plain information page) has the same heading-then-body rhythm, without changing its text colour. */
 .info-detail:not(.about-detail)>h1+.info-body{margin-top:var(--space-hero-heading-gap);max-width:var(--measure-body)}
 :is(.about-hero-copy,.lab-heading) .info-body p{margin:0 0 var(--space-6);color:var(--ink);line-height:var(--line-height-body)}
 .info-detail:not(.about-detail)>h1+.info-body p{margin:0 0 var(--space-6);line-height:var(--line-height-body)}
-.about-portrait,.about-unusual-media{margin:0;overflow:hidden;border-radius:var(--radius-visual)}
-.about-portrait img,.about-unusual-media img{display:block;width:100%;height:auto}
-/* The About page spans the dev-settings content width instead of the detail surface's inset. */
-.surface.detail.about-detail{padding-inline:0}
+.about-unusual-media{margin:0;overflow:hidden;border-radius:var(--radius-visual)}
+.about-unusual-media img{display:block;width:100%;height:auto}
+/* About and Contact span the dev-settings content width instead of the wide card's side inset, so both pages share one left edge. */
+.surface.detail:is(.about-detail,.info-detail){padding-inline:0}
 .about-section{min-width:0}
 /* Heading and its lead read as one header; the header-to-content gap matches the card sections. */
 .home-content-section.about-unusual>h2{margin:0}
 .about-traits .about-trait-art{width:100%;aspect-ratio:330 / 230;margin:0 0 var(--space-6)}
-.about-section>h2{max-width:27ch;margin:0;font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
+.about-section>h2{max-width:27ch;margin:0;font-size:var(--heading-article-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
 .about-section .about-section-lead{margin:var(--space-hero-heading-content) 0 0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
 .about-unusual-list{list-style:none;padding:0;margin:var(--space-page-rhythm-sm) 0 0;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--space-6);row-gap:var(--space-page-rhythm-md)}
 .about-unusual-item{min-width:0;display:grid;grid-template-columns:subgrid;grid-column:1 / span 4;align-content:start;row-gap:var(--space-6)}
@@ -35,9 +41,7 @@
  .about-unusual-media img{transition:transform var(--about-unusual-duration) var(--ease-standard)}
  .about-unusual-item:hover .about-unusual-media img{transform:scale(var(--about-unusual-zoom))}
 }
-@media(max-width:900px){.about-hero{column-gap:var(--space-6)}}
 @media(max-width:750px){
- .about-hero{grid-template-columns:1fr;row-gap:var(--space-page-rhythm-sm)}
  .about-unusual-list{grid-template-columns:1fr}
  .about-unusual-item:nth-child(n){grid-column:1}
  .about-unusual-item:nth-child(n)>*{grid-column:1;grid-row:auto}
@@ -51,8 +55,11 @@
 .lab-heading{max-width:var(--page-intro-width)}
 .surface.detail.info-detail:not(.about-detail)>h1,.surface.detail.info-detail:not(.about-detail)>h1+.info-body{max-width:var(--page-intro-width)}
 @media(max-width:1000px){:root{--page-intro-width:100%}}
+@media(min-width:1001px){
+ :root[data-page-heading-align="center"] .surface.detail.info-detail:not(.about-detail)>:is(h1,h1+.info-body){max-width:var(--centred-heading-measure);margin-inline:auto;text-align:center;text-wrap:balance}
+ :root[data-page-heading-align="center"] .surface.detail.info-detail:not(.about-detail) .contact-links{justify-content:center}
+}
 /* Contact with "show title" off: the title goes, its text stays and starts where the title did. */
 :root.contact-title-hidden [data-info-page="contact"]>h1{display:none}
 :root.contact-title-hidden [data-info-page="contact"]>h1+.info-body{margin-top:0}
-.contact-links{display:flex;flex-wrap:wrap;gap:var(--space-6);margin-top:var(--space-6)}
-.contact-links :is(a,button){font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
+.contact-links{flex-wrap:wrap;justify-content:flex-start}

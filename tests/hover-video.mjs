@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {ImageFrame} from '../dist/image-frame.js';
-import {pauseVideoPreviews} from '../dist/hover-video.js';
+import {pauseVideoPreviews,cardHoverVideoAllowed} from '../dist/hover-video.js';
 import {card,cardDetail} from '../dist/card-renderer.js';
 import {projects} from '../dist/documents.js';
 
@@ -82,6 +82,18 @@ document.documentElement={dataset:{detailHeroVideo:'on'}};detail.preview.sync();
 detail.frame.destroy();hover.matches=true;
 const cardToggle=create();document.documentElement={dataset:{cardHoverVideo:'off'}};await cardToggle.preview.play();assert.equal(cardToggle.pending.length,0,'Turning off card hover video prevents hover playback');
 document.documentElement={dataset:{}};cardToggle.frame.destroy();
+// A card's own hoverVideo beats the global Card hover video setting; anything else inherits it.
+document.documentElement={dataset:{cardHoverVideo:'off'}};assert.equal(cardHoverVideoAllowed('on'),true,'on forces playback with the setting off');assert.equal(cardHoverVideoAllowed(''),false,'No override follows the setting');assert.equal(cardHoverVideoAllowed(undefined),false);
+document.documentElement={dataset:{}};assert.equal(cardHoverVideoAllowed('off'),false,'off blocks playback with the setting on');assert.equal(cardHoverVideoAllowed(''),true);assert.equal(cardHoverVideoAllowed('junk'),true,'An unknown value inherits the setting');
+// hoverVideo "on" also plays while the whole card is in the viewport, and stops once it is not.
+globalThis.innerHeight=900;globalThis.innerWidth=1440;
+const viewed=create();viewed.video.dataset.hoverVideo='on';let cardBox={top:100,left:0,bottom:500,right:700};viewed.trigger.getBoundingClientRect=()=>cardBox;
+viewed.preview.sync();assert.equal(viewed.pending.length,1,'A card fully in view plays without hover');viewed.pending.shift().resolve();await Promise.resolve();
+assert(viewed.preview.active,'The in-view clip is playing');
+cardBox={top:-50,left:0,bottom:350,right:700};viewed.preview.sync();assert(!viewed.preview.active,'Leaving the viewport stops an in-view clip');
+const partial=create();partial.video.dataset.hoverVideo='on';partial.trigger.getBoundingClientRect=()=>({top:700,left:0,bottom:1100,right:700});partial.preview.sync();assert.equal(partial.pending.length,0,'A partly visible card does not autoplay');
+const plain=create();plain.trigger.getBoundingClientRect=()=>({top:100,left:0,bottom:500,right:700});plain.preview.sync();assert.equal(plain.pending.length,0,'A card without hoverVideo on still waits for hover');
+viewed.frame.destroy();partial.frame.destroy();plain.frame.destroy();
 
 for(const p of projects){
  const html=card(p,0);

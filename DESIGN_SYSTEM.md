@@ -22,6 +22,8 @@ new weight controls.
 | --- | --- | --- |
 | Text size | `data-type-size` | `--type-scale`, semantic `--font-size-*` roles |
 | Spacing | `data-space-size` (xsmall .6, small .8, medium 1, large 1.2, xlarge 1.45, xxlarge 1.75) | `--space-density`, 4px spacing scale, semantic gaps |
+| Section spacing | `data-rhythm-size` (xsmall .5, small .75, medium 1, large 1.35, xlarge 1.75, xxlarge 2.25) | `--rhythm-scale`, multiplying the `--space-page-rhythm-*` gaps between sections on top of Spacing |
+| Logo size | `data-logo-size` (small .75, medium 1, large 1.4) | `--logo-scale`; the logo strip sizes from `--space-base`, so Spacing never changes it. Centred, the strip sits on the middle four of six columns like the heading |
 | Header weight | `data-heading-weight` | `--font-weight-heading` |
 | Body weight | `data-body-weight` | `--font-weight-body` |
 | Letter spacing | `data-type-tracking` | heading, card, body and label tracking |
@@ -59,11 +61,12 @@ Ghost paints no surface, so it keeps the theme ink. Ghost navigation borrows the
 Outline surface while one of its menus is open, so the menu never sits bare on
 page content. In both themes every control label holds 4.5:1 and every icon
 3:1 in all three variants. Controls share the cards' material and read by
-tone, never by a line: light Outline and Glass are the neutral card grey
-(`--control-surface-rgb`, no colour cast), milky (`--control-surface-alpha`, the
-glass-button body tokens) with `--muted` secondary ink, so labels also hold over
-a dark photograph, and the current or hovered item lifts to the lighter `--panel`
-tone. No control edge is stronger than the card edge: Outline uses
+tone, never by a line: light Outline is the composer's own glass
+(`--control-surface-rgb`/`--control-surface-alpha` resolve to `--nav-glass-rgb` and
+`--dock-glass-alpha` in both themes, so the nav and composer are one material), with
+`--control-glass-ink` secondary ink dense enough to hold 4.5:1 over black; light Glass
+keeps the neutral card-grey glass-button body with `--muted` ink. The current or
+hovered item lifts to the lighter `--panel` tone. No control edge is stronger than the card edge: Outline uses
 `--image-edge` in both themes and Glass has no border. The label or icon
 identifies each control, so no 3:1 edge is needed or wanted. The menu re-measures its
 width whenever an item resizes, so the reader text size never clips the last
@@ -135,6 +138,10 @@ share image padding and rounding. Leaving the card restores the image; entering
 again restarts the preview. Navigation, dragging, hidden tabs and disposal pause
 playback. Motion snapshots omit video elements, and reduced-motion preferences
 keep the still image. Only one hover preview plays at a time.
+
+## The specimen page (`#system`)
+
+`?dev=1#system` draws each component with the real renderers from synthetic fixtures with worst-case content (`dist/system-specimen.js`): six cards (a very long title and unbroken text, hero ratios 0.46, 1.0 and 1.6, a card with no media, a card with only a title), five project pages, and six page blocks (text, a huge metric, a long quote, a wide table, a wide and a tall captioned image). The media are four SVGs in `dist/assets/specimen/` at exact ratios (0.46, 1.0, 1.6, 2.33), so nothing depends on real projects. It is a route in the single page (ADR-011), only in developer mode: without `?dev=1` the hash falls back to Work. Nothing links to it and no fixture is a document. `tests/system-specimen.mjs` checks the fixtures; `tests/visual/system-specimen.spec.mjs` checks zero console errors and keeps one element-scoped baseline per component in `tests/visual/system-specimen.spec.mjs-snapshots/` (macOS only; the capture hides fixed chrome and uses reduced motion). Regenerate them on purpose with `npx playwright test tests/visual/system-specimen.spec.mjs --update-snapshots` after rebuilding, and check the count (17).
 
 ## Type scale, mono text and spacing tokens
 

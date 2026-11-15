@@ -90,6 +90,22 @@ For an abspos item, an `auto` end line means the container's padding edge, not "
 
 When code re-imports a rewritten file, make each URL unique with a counter as well as the time.
 
+## FACT-012 Without `--dev`, the Node server serves the last build, not the sources
+- Status: verified
+- Source: WP-17 item 1 (TASK-056). After an edit to `dist/project-menu-preview.js`, `node deploy/node-server.mjs` still served the old module from `dist/client/`: the preview's inline `translate` was empty. With `--dev` the edit was live.
+- Verified: 2026-11-15
+- Tags: area/tooling, area/tests
+
+Measure or test edited sources with `--dev`, or run `npm run build` first. A before/after comparison is only valid when both runs use the same server mode.
+
+## FACT-013 Presetting localStorage before the first load does not set the page's settings
+- Status: verified
+- Source: WP-17 item 3 (TASK-058). Keys seeded with `addInitScript` on a fresh browser profile were overwritten at boot. The published settings import over storage until `prem-site-settings-revision` matches (site-settings.js), retired keys such as `prem-home-view` and `prem-image-*-enabled` are reset once (default-settings.js), and the product display follows `dataset.pageProductDisplay`. Every layout measured as the default until the script checked the settings selects.
+- Verified: 2026-11-15
+- Tags: area/tooling, area/tests
+
+To put a page in a given state, boot it once, then either change the settings controls (dispatch `change`) or write storage and reload. Afterwards, assert the state the page reports, not the state you asked for.
+
 ## FACT-008 Hunk-staging a file shared with unfinished work can commit half of a change
 - Status: verified
 - Source: committing the card-details work while the owner's agent feature touched the same files; a moved pair of lines in tokens.css staged only its removal (the dark gradient values vanished from HEAD), and a hand-staged site.css no longer matched its sources. A clean `git worktree` of HEAD running the tests caught both

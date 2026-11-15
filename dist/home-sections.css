@@ -1,13 +1,13 @@
-:root{--radius-home-content-card:20px;--home-content-card-padding:clamp(24px,2.6vw,40px);--font-size-testimonial:clamp(calc(22px * var(--type-scale)),calc(2.1vw * var(--type-scale)),calc(32px * var(--type-scale)))}
+:root{--radius-home-content-card:20px;--service-card-width:clamp(260px,28vw,400px);/* A service card: padding and border, the 330:230 art (see .service-illustration) at the carousel width, its gap, then a title and two lines. Testimonials take it as their minimum. */--home-content-card-min-height:calc(2 * (var(--home-content-card-padding) + 1px) + (var(--service-card-width) - 2 * var(--home-content-card-padding) - 2px) * 230 / 330 + var(--space-6) + 3 * var(--font-size-body) * var(--line-height-body));--home-content-card-padding:clamp(24px,2.6vw,40px);--font-size-testimonial:clamp(calc(22px * var(--type-scale)),calc(2.1vw * var(--type-scale)),calc(32px * var(--type-scale)))}
 /* Flip and Flat reuse the hero h1 for the active project, so the heading switch does not hide it there (design-system.css restores it). */
 [data-home-section][hidden]:not(.home-view-split [data-home-section="heading"]),.home-about[hidden]{display:none!important}
 .home-content-section{grid-column:1 / -1;min-width:0;width:100%;margin-top:var(--space-page-rhythm-md)}
-.home-content-section>h2{margin:0 0 var(--space-6);font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink)}
+.home-content-section>h2{margin:0 0 var(--space-6);font-size:var(--heading-article-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink)}
 .home-services-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-6)}
 .home-approach{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));column-gap:var(--space-6);align-items:start}
 .home-approach-intro{grid-column:1 / -1;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));column-gap:var(--space-6);row-gap:var(--space-6);min-width:0}
 .home-approach-principles{grid-column:calc(2 * var(--content-column-start) - 1) / span 3;min-width:0}
-.home-approach-intro h2{grid-column:1 / -1;margin:0;font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
+.home-approach-intro h2{grid-column:1 / -1;margin:0;font-size:var(--heading-article-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
 .home-approach p{margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink);text-wrap:pretty}
 .home-approach-intro>p{grid-column:calc(2 * var(--content-column-start) - 1) / span 3;min-width:0;max-width:none}
 .home-approach-intro>p+p{grid-column:calc(2 * var(--content-column-start) - 1) / span 3}
@@ -20,16 +20,15 @@
 .home-service-card,.home-testimonial{min-width:0;margin:0;padding:var(--home-content-card-padding);border:1px solid color-mix(in oklch,var(--ink) 5%,transparent);border-radius:var(--radius-home-content-card);background:var(--card-surface)}
 .service-illustration{display:block;width:100%;height:auto;aspect-ratio:330 / 230;margin:0 0 var(--space-6);color:color-mix(in oklch,var(--ink) 48%,var(--card-surface))}
 .service-face{fill:color-mix(in oklch,var(--ink) 7%,var(--card-surface))}.service-side{fill:color-mix(in oklch,var(--ink) 12%,var(--card-surface))}.service-top{fill:var(--card-surface)}.service-accent{fill:var(--ink);stroke:var(--ink)}.service-dashed{stroke-dasharray:3 4}
-/* Card art: each moving part is drawn at its hover pose and held at rest by its transform attribute; hovering the card clears it. */
-.service-move{transition:transform var(--duration-glow-out) var(--ease-standard)}@media(hover:hover){.home-service-card:hover .service-move{transform:none;transition-duration:var(--duration-glow-in);transition-timing-function:var(--ease-settle)}.home-service-card:hover .service-move[data-step="1"]{transition-delay:var(--duration-stagger-step)}.home-service-card:hover .service-move[data-step="2"]{transition-delay:calc(2 * var(--duration-stagger-step))}.home-service-card:hover .service-move[data-step="3"]{transition-delay:calc(3 * var(--duration-stagger-step))}.home-service-card:hover .service-move[data-step="4"]{transition-delay:calc(4 * var(--duration-stagger-step))}.home-service-card:hover .service-move[data-step="5"]{transition-delay:calc(5 * var(--duration-stagger-step))}.home-service-card:hover .service-move[data-step="6"]{transition-delay:calc(6 * var(--duration-stagger-step))}}@media(prefers-reduced-motion:reduce){.service-move{transition:none}}:root[data-animation="off"] .service-move{transition:none}
-.home-service-card h3{margin:0 0 var(--space-3);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--ink)}
+/* Card art: each moving part is drawn at its pose and held at rest by its transform attribute; service-art-motion.js animates it. */
+.home-service-card h3{margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--ink)}
 .home-service-card p{max-width:34ch;margin:0;font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);letter-spacing:var(--letter-spacing-body);color:var(--body-ink)}
 .home-service-card p+p{margin-top:var(--space-3)}
 .home-testimonials-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));--testimonial-gap:var(--space-6);column-gap:0;row-gap:var(--testimonial-gap);min-width:0;width:auto;max-width:100%}
 .home-testimonials{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--space-6);min-width:0}
 .home-testimonials>h2{grid-column:1/-1}
 .home-testimonials-grid{grid-column:1 / -1}
-.home-testimonial{grid-column:span 5;display:flex;flex-direction:column;min-height:0}
+.home-testimonial{grid-column:span 5;display:flex;flex-direction:column;min-height:var(--home-content-card-min-height)}
 .home-testimonial:nth-child(odd){margin-right:calc(var(--testimonial-gap) / 2)}
 .home-testimonial:nth-child(even){margin-left:calc(var(--testimonial-gap) / 2)}
 .home-testimonial:nth-child(4n+1),.home-testimonial:nth-child(4n){grid-column:span 7}
@@ -44,22 +43,38 @@
 @media(max-width:600px){.home-content-section{margin-top:var(--space-page-rhythm-md)}.home-services-grid,.home-testimonials-grid{grid-template-columns:1fr}.home-testimonial,.home-testimonial:nth-child(n){grid-column:1;min-height:0}.service-illustration{max-height:200px}.home-service-card{padding:var(--space-6)}}
 
 /* Section components keep their content and DOM when presentation changes. */
-.home-services[data-services-layout="carousel"] .home-services-grid{width:var(--app-canvas-width);max-width:none;margin-inline:calc((100% - var(--app-canvas-width))/2);padding-inline:var(--services-carousel-inset,var(--content-gutter));scroll-padding-inline:var(--services-carousel-inset,var(--content-gutter));grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:clamp(260px,28vw,400px);overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;align-items:stretch;padding-bottom:var(--space-3)}
+.home-services[data-services-layout="carousel"] .home-services-grid{width:var(--app-canvas-width);max-width:none;margin-inline:calc((100% - var(--app-canvas-width))/2);padding-inline:var(--services-carousel-inset,var(--content-gutter));scroll-padding-inline:var(--services-carousel-inset,var(--content-gutter));grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:var(--service-card-width);overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;align-items:stretch;padding-bottom:var(--space-3)}
 .home-services[data-services-layout="carousel"] .home-service-card{scroll-snap-align:start}
+/* While a trackpad or Magic Mouse swipe glides, the browser's nearest-card snap would pull it back mid-glide; CardRail settles it on the next card in the swipe's direction instead (card-rail.js). */
+.home-services[data-services-layout="carousel"] .home-services-grid[data-card-rail-gliding]{scroll-snap-type:none}
 .home-services[data-services-layout="carousel"] .home-services-grid::-webkit-scrollbar{display:none}
 .card-rail-controls{display:flex;justify-content:flex-end;gap:var(--space-2);margin-top:var(--space-6)}
 .home-services[data-services-layout="grid"] .card-rail-controls{display:none}
 /* As on the project carousel, the arrows share the heading row at the content's right edge instead of trailing under the cards. */
-.home-services[data-services-layout="carousel"]{position:relative}
-.home-services[data-services-layout="carousel"] .card-rail-controls{position:absolute;top:0;right:0;align-items:center;height:calc(var(--heading-title-size) * var(--heading-title-line));margin-top:0}
+.home-services[data-services-layout="carousel"]{display:grid;grid-template-columns:minmax(0,1fr)}
+.home-services[data-services-layout="carousel"]>h2{grid-row:1;grid-column:1}.home-services[data-services-layout="carousel"]>.home-services-grid{grid-row:2;grid-column:1}
+.home-services[data-services-layout="carousel"] .card-rail-controls{grid-row:1;grid-column:1;align-self:end;justify-self:end;align-items:center;margin-top:0;margin-bottom:var(--space-3)}
+/* A mouse can drag the cards; snapping is held off while it does (card-rail.js). */
+.home-services[data-services-layout="carousel"] .home-services-grid{cursor:grab}
+.home-services[data-services-layout="carousel"] .home-services-grid[data-card-rail-dragging]{cursor:grabbing;user-select:none}
 /* Same geometry as the project page's Previous and Next (.header-detail-nav button), so the chevron sits centred in its circle. */
 .card-rail-controls button{display:inline-flex;align-items:center;justify-content:center;width:var(--nav-icon-size);height:var(--nav-icon-size);padding:0;border-radius:var(--radius-icon-control);color:var(--body-ink);cursor:pointer}
 .card-rail-controls button:hover{color:var(--ink)}.card-rail-controls button:disabled{opacity:.3;cursor:default}
 [data-card-rail-viewport]:focus-visible{outline:2px solid var(--body-ink);outline-offset:4px}
+.home-testimonials[data-card-background="true"][data-featured="false"] .home-testimonial.is-featured{background:var(--card-surface);border-color:color-mix(in oklch,var(--ink) 5%,transparent)}.home-testimonials[data-card-background="true"][data-featured="false"] .home-testimonial.is-featured blockquote p{color:var(--body-ink)}.home-testimonials[data-card-background="true"][data-featured="false"] .home-testimonial.is-featured :is(.testimonial-author,.testimonial-role){color:var(--eyebrow-ink)}
+.home-testimonials[data-heading="false"]>h2{display:none}
 .home-testimonials[data-card-background="false"] .home-testimonial{padding:0;min-height:0;background:transparent;border:0;border-radius:0}
 .home-testimonials[data-card-background="false"] .home-testimonials-grid{--testimonial-gap:var(--space-page-rhythm-md)}
 .home-testimonials[data-card-background="false"] .home-testimonial blockquote p{color:var(--body-ink)}
 .home-testimonials[data-card-background="false"] :is(.testimonial-author,.testimonial-role){color:var(--eyebrow-ink)}
+/* Testimonial style "No cards, headings": one column, each quote set like a heading, the author on one quiet line under it. */
+.home-testimonials[data-card-background="false"][data-headings="true"] .home-testimonials-grid{grid-template-columns:minmax(0,1fr);--testimonial-gap:var(--space-page-rhythm-sm)}
+.home-testimonials[data-card-background="false"][data-headings="true"] .home-testimonial,.home-testimonials[data-card-background="false"][data-headings="true"] .home-testimonial:nth-child(n){grid-column:1;margin-inline:0}
+.home-testimonials[data-card-background="false"][data-headings="true"] .home-testimonial blockquote{margin-bottom:var(--space-6)}
+.home-testimonials[data-card-background="false"][data-headings="true"] .home-testimonial blockquote p{max-width:var(--measure-heading);font-size:var(--heading-article-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);color:var(--ink);text-wrap:balance}
+.home-testimonials[data-card-background="false"][data-headings="true"] .home-testimonial figcaption{display:block}
+.home-testimonials[data-card-background="false"][data-headings="true"] .testimonial-author:not(:last-child)::after{content:", "}
+.home-testimonials[data-card-background="false"][data-headings="true"] :is(.testimonial-author,.testimonial-role){display:inline}
 
 .home-services[data-services-carousel-alignment="content"]{--services-carousel-inset:max(var(--content-gutter),calc((var(--app-canvas-width) - var(--content-rail-width,var(--content-width)))/2))}
 

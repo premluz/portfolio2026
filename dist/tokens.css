@@ -60,15 +60,23 @@
   --image-edge: oklch(0.25543328 0.01903326 298.77205 / 0.06);
   --nav-glass-rgb: 255, 255, 255;
   --nav-glass-alpha: .48;
-  --dock-glass-alpha: .30;
+  /* One light glass for the composer and the controls: dense enough that --control-glass-ink holds 4.5:1 over black. */
+  --dock-glass-alpha: .70;
   --dock-glass-blur: 22px;
   --dock-backdrop-brightness: 1;
   --nav-rim: oklch(0.99999999 0.00000004 0.00000 / 0.65);
   --dock-outline: oklch(0.25543328 0.01903326 298.77205 / 0.06);
-  /* Controls share the cards' material: the same neutral grey, milky enough that ink holds over a photograph,
-     and never an edge stronger than the card edge (--image-edge). A control reads by its tone, not by a line. */
-  --control-surface-rgb: var(--card-surface-rgb);
-  --control-surface-alpha: .9;
+  /* Controls share the composer's neutral glass, and never an edge stronger than the card edge (--image-edge).
+     A control reads by its tone, not by a line. */
+  --control-surface-rgb: var(--nav-glass-rgb);
+  --control-surface-alpha: var(--dock-glass-alpha);
+  /* Outline controls sit on a translucent well one surface step off the page (about the card tone once the page shows through), and the current item lifts above it.
+     Both themes define the same set: tone, density and lift. The light well is thin enough to show what is behind it, so its ink is denser to hold 4.5:1 over black. */
+  --dock-well-rgb: 242, 242, 242;
+  --dock-well-alpha: .62;
+  --dock-well-ink: oklch(.30 .02 301);
+  --control-item-lift: oklch(0.99999999 0.00000004 0.00000);
+  --control-glass-ink: oklch(.39 .02 301);
   --dock-outline-dark: oklch(0.97184305 0.01472839 294.47299 / 0.03);
   --nav-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.18);
   --nav-shadow: oklch(0.22773614 0.03305204 297.22251 / 0.09);
@@ -239,7 +247,9 @@
   --line-height-reading: var(--line-height-body);
 
   /* Spacing scale */
-  --space-unit: calc(4px * var(--space-density));
+  /* The 4px grid before Spacing density; things that must not follow Spacing (the logo strip) size from this. */
+  --space-base: 4px;
+  --space-unit: calc(var(--space-base) * var(--space-density));
   --space-1: var(--space-unit);
   --space-2: calc(var(--space-unit) * 2);
   --space-3: calc(var(--space-unit) * 3);
@@ -268,11 +278,14 @@
   --space-hero-bottom: clamp(var(--space-12), 11vh, calc(var(--space-unit) * 32));
   --space-footer-inset: clamp(calc(var(--space-unit) * 20), 12vh, calc(var(--space-unit) * 40));
   --space-footer-heading-content: var(--space-hero-heading-content);
-  /* Major page gaps: 10 / 20 / 40 spacing units. */
-  --space-page-rhythm-sm: calc(var(--space-unit) * 10);
-  --space-page-rhythm-md: calc(var(--space-unit) * 20);
-  --space-page-rhythm-lg: calc(var(--space-unit) * 40);
+  /* Major page gaps: 10 / 20 / 40 spacing units. Section spacing (--rhythm-scale) multiplies them on top of Spacing, so the gaps between sections can be set on their own. */
+  --rhythm-scale: 1;
+  --space-page-rhythm-sm: calc(var(--space-unit) * 10 * var(--rhythm-scale));
+  --space-page-rhythm-md: calc(var(--space-unit) * 20 * var(--rhythm-scale));
+  --space-page-rhythm-lg: calc(var(--space-unit) * 40 * var(--rhythm-scale));
   --space-page-rhythm: var(--space-page-rhythm-sm);
+  /* The hero and its logo strip run into the first section below with a tighter gap than the gap between sections. */
+  --space-hero-exit: calc(var(--space-unit) * 6 * var(--rhythm-scale));
   /* The chat page mascot stage: twice the dock character, matching its 2x image. */
   --assistant-mascot-size: 144px;
   /* Where the first line of page content starts: the home hero, About and a project detail all share it. */
@@ -433,6 +446,10 @@
   --dock-outline: var(--dock-outline-dark);
   --control-surface-rgb: var(--nav-glass-rgb);
   --control-surface-alpha: var(--dock-glass-alpha);
+  /* The dark well is lighter than the card colour because the dimmed page shows through it; over the page it lands a step above the cards. */
+  --dock-well-rgb: 32, 32, 32;
+  --dock-well-alpha: .62;
+  --control-item-lift: var(--nav-active);
   --nav-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.035);
   --nav-shadow: oklch(0.00000000 0.00000000 0.00000 / 0.18);
   --nav-item-ink: var(--eyebrow-ink);

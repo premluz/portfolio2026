@@ -15,8 +15,8 @@ assert(lists.indexOf('data-about-list="about-roles"')<lists.indexOf('data-about-
 assert(!html.includes('home-about-how')&&!html.includes('>How I work</h3>'),'The standalone How I work section is not duplicated inside About');
 const aboutStyles=await (await import('node:fs/promises')).readFile(new URL('../dist/home-about.css',import.meta.url),'utf8');
 assert(aboutStyles.includes('grid-template-columns:repeat(3,minmax(0,1fr))'),'About content uses three columns');
-assert(aboutStyles.includes('.home-about>h2{margin:0 0 var(--space-6);font-size:var(--heading-title-size);'),'About section heading uses the shared heading scale');
-const sectionStyles=await (await import('node:fs/promises')).readFile(new URL('../dist/home-sections.css',import.meta.url),'utf8');assert(sectionStyles.includes('.home-content-section>h2{margin:0 0 var(--space-6);font-size:var(--heading-title-size);'),'Independent sections use the shared main heading scale');
+assert(aboutStyles.includes('.home-about>h2{margin:0 0 var(--space-6);font-size:var(--heading-article-size);'),'About section heading uses the smaller section heading size');
+const sectionStyles=await (await import('node:fs/promises')).readFile(new URL('../dist/home-sections.css',import.meta.url),'utf8');assert(sectionStyles.includes('.home-content-section>h2{margin:0 0 var(--space-6);font-size:var(--heading-article-size);'),'Independent sections use the smaller section heading size');
 assert(aboutStyles.includes('--timeline-text-gap:clamp(36px,4vw,56px)')&&aboutStyles.includes('padding-inline:clamp(48px,6vw,120px)'),'The About timeline has clear label spacing and side insets');
 assert(aboutStyles.includes('.home-about-path{grid-column:1/-1;margin-top:var(--space-page-rhythm-md);'),'The About timeline uses the medium page rhythm above it');
 assert(aboutStyles.includes('.home-content-section.home-about-list>h2{grid-column:1 / -1}')&&aboutStyles.includes('.home-content-section.home-about-list>ul{grid-column:calc(2 * var(--content-column-start) - 1) / span 3}'),'Independent Experience and Side projects use the same main heading and half-width content column');

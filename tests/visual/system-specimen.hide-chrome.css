@@ -1,0 +1,2 @@
+/* Fixed chrome floats over whichever part of a tall specimen item is scrolled into view, so baselines hide it. */
+#dock,header,#headerDetailNav,.corner-controls,.site-footer,.page-edge-shades,.room-backdrop,#settings{display:none!important}

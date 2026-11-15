@@ -1,21 +1,20 @@
 {
   "id": "merlin",
   "slug": "merlin",
-  "title": "Designed a financial intelligence with generative assistant and genrative UI",
+  "title": "Designed a financial intelligence platform with a generative assistant and generative UI",
   "pageTitle": "Designed a financial workbench prototype with generative UI and assistant",
   "name": "AI financial intelligence workspace",
   "client": "Merlin",
   "summary": "R&D • AI assistant • Generative UI • Prototype in code",
   "category": "Financial intelligence · R&D",
   "kind": "lab",
-  "listOnly": true,
   "year": "2026",
   "projectStatus": "R&D",
   "disciplines": [
-    "Product",
-    "Interaction",
     "Design system",
-    "Motion"
+    "Product",
+    "Visual language",
+    "Prototype"
   ],
   "shortCategory": "AI financial analysis",
   "homeCards": [
@@ -40,6 +39,7 @@
   "impact": "0→1 prototype • Agent-assembled interfaces • Multi-pane workbench • 5 themes from one component system",
   "heroMediaId": "merlin-cover",
   "hoverVideoId": "merlin-walkthrough",
+  "hoverVideo": "on",
   "type": "portfolio-item",
   "status": "published",
   "featured": false,

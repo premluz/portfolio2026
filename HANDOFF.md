@@ -23,6 +23,7 @@ This is a modular portfolio frontend and content framework, not a CMS-dependent 
 | `dist/control-preferences.js`, `dist/control-style.js`, `dist/control-style.css` | Global and local control variants; see DESIGN_SYSTEM.md and ADR-012 |
 | `dist/assets/` | Local project images and video |
 | `dist/asset-roles.js`, `dist/asset-quirks.js`, `scripts/asset_roles.py` | The one backdrop rule (JavaScript and Python) and per-asset image quirks read from the catalog |
+| `dist/system-specimen.js`, `dist/system-specimen.css`, `dist/assets/specimen/` | The developer-mode `#system` specimen page and its synthetic media (DESIGN_SYSTEM.md) |
 | `dist/detail-shape.js`, `dist/detail-shape.css` | Project page layout by hero ratio (setting off by default) |
 | `dist/card-world-loader.js`, `scripts/module-graph.mjs` | Card worlds (three.js) load on first use; the module graph and its budget are measured by `tests/module-graph.mjs` |
 | `dist/vendor/` | Bundled third-party assets and their notices |

@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "node --watch deploy/node-server.mjs --dev",
     "dev:local": "node --env-file=.env --watch deploy/node-server.mjs --dev",
-    "images": "python3 scripts/optimise-images.py && node scripts/build-backgrounds.mjs",
+    "images": "python3 scripts/optimise-images.py && node scripts/build-backgrounds.mjs && node scripts/optimise-videos.mjs",
     "check:images": "node scripts/check-images.mjs",
     "memory:index": "node scripts/memory.mjs index",
     "memory:check": "node scripts/memory.mjs check",

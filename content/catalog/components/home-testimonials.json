@@ -9,30 +9,23 @@
     {
       "id": "quote-gabriele",
       "type": "quote",
-      "text": "His work is strongly informed by data and user research, and he’s especially good at tackling complex, trust-sensitive problems with very little steer, input or guidance.",
+      "text": "Especially good at tackling complex, trust-sensitive problems with very little steer, input or guidance.",
       "attribution": "Paul Wilsher",
       "label": "Product Manager at Gala"
     },
     {
       "id": "quote-matt",
       "type": "quote",
-      "text": "Exceptional technical depth. He played a key role in creating and scaling the design system at Tracr, including the integration of design tokens, which significantly improved consistency, efficiency, and collaboration across teams. He has a rare ability to translate complex UX requirements into reusable, flexible UI components without sacrificing clarity or usability.",
+      "text": "Exceptional technical depth. He played a key role in creating and scaling the design system at Tracr.",
       "attribution": "Matt Bindoff",
       "label": "Lead Engineer at Tracr"
-    },
-    {
-      "id": "quote-santiago",
+    }, 
+     {
+      "id": "quote-beatrice",
       "type": "quote",
-      "text": "He challenged our approach and the results showed in our KPIs. He ramped up incredibly quickly and made a meaningful impact within his first month.",
-      "attribution": "Santiago Jaramillo",
-      "label": "Head of Product at Gala"
-    },
-    {
-      "id": "quote-jonathan",
-      "type": "quote",
-      "text": "He brought AI workflows into our design-to-dev process in ways that genuinely sped things up. He's creative and sharp, but always grounded in actual constraints, adapting quickly when things shift.",
-      "attribution": "Jonathan Burk",
-      "label": "Lead AI Engineer at Gala"
+      "text": "From SEO insights to accessibility reviews, Przemek has a multidisciplinary profile. He manages stakeholders well and earns their trust.",
+      "attribution": "Beatriz Lopez Mencia, PhD",
+      "label": "UX Manager at Vodafone"
     }
   ]
 }

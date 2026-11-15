@@ -17,10 +17,11 @@ body>header,body.wide-project-hero-page>header{width:100%;max-width:var(--nav-sh
 :is(#main,.retained-home) .home-testimonials[data-content-span]{width:100%;max-width:100%;margin-inline:0}
 /* About-related home sections own one column; nested text must not halve it again. */
 :is(#main,.retained-home).home-canvas :is(.home-about,.home-approach,.home-about-list,.home-writing){width:calc((100% - var(--space-6)) / 2);max-width:none;margin-inline:0}
+:is(#main,.retained-home).home-canvas .home-services>h2{max-width:calc((100% - var(--space-6)) / 2);text-wrap:balance}
 .home-canvas :is(.home-about-copy,.home-approach,.home-approach-intro,.home-content-section.home-about-list,.home-writing){grid-template-columns:minmax(0,1fr)}
 .home-canvas :is(.home-about-copy,.home-approach,.home-approach-intro,.home-about-list,.home-writing)>*{grid-column:1 / -1}
 .home-canvas .home-about-copy p+p,.home-canvas .home-approach-intro>p+p{grid-column:1 / -1}
-@media(max-width:1000px){:is(#main,.retained-home).home-canvas :is(.home-about,.home-approach,.home-about-list,.home-writing){width:100%}}
+@media(max-width:1000px){:is(#main,.retained-home).home-canvas :is(.home-about,.home-approach,.home-about-list,.home-writing){width:100%}:is(#main,.retained-home).home-canvas .home-services>h2{max-width:none}}
 .home-hero .hero-about{max-width:100%;min-width:0}
 .home-hero .hero-about h1{max-width:none;text-wrap:wrap}
 .home-canvas:not(.home-view-split) .hero-about h1{max-width:var(--page-intro-width)}
@@ -58,3 +59,9 @@ body>header,body.wide-project-hero-page>header{width:100%;max-width:var(--nav-sh
 .ask-cards .text-only-card .visual{display:none}
 /* Generated hit areas and nested text use the same link cursor. */
 :is(.home-product-text a,.home-about-row[href],.home-writing-row,.spatial-gallery-copy[href]),:is(.home-product-text a,.home-about-row[href],.home-writing-row,.spatial-gallery-copy[href]) *,:is(.home-product-text a,.home-about-row[href],.home-writing-row,.spatial-gallery-copy[href])::before{cursor:pointer;user-select:none;-webkit-user-select:none}
+/* Project facts: Context, My role, Key work and Impact sit in one row above the narrative section (Challenge onward). */
+html[data-detail-ratio-layout] .surface.detail[data-card-orientation]:not(.text-only-detail)>.detail-layout>.description:has(>.detail-facts){max-width:none;margin-inline:0}
+.surface.detail .description>.detail-facts{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--space-detail-columns)}
+.surface.detail .description>.detail-story{max-width:var(--content-width-reading);margin-top:var(--space-detail-sections)}
+@media(max-width:750px){.surface.detail .description>.detail-facts{grid-template-columns:minmax(0,1fr)}}
+.surface.detail .description>.detail-facts>.detail-fact{grid-column:auto}

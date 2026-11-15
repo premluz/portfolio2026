@@ -1,7 +1,7 @@
 .card-gallery-block{grid-column:1 / -1;min-width:0;margin:var(--space-page-rhythm-xs) 0;background:transparent;border:0;padding:0}
 .home-product-carousel>.story{margin-top:0}
 .homepage-layout[data-product-display="carousel"] .flip-index{display:none}
-.card-gallery-block>h2{font-size:var(--heading-title-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);margin:0 0 var(--space-6);color:var(--ink)}
+.card-gallery-block>h2{font-size:var(--heading-article-size);font-weight:var(--font-weight-heading);line-height:var(--heading-title-line);letter-spacing:var(--heading-title-tracking);margin:0 0 var(--space-6);color:var(--ink)}
 .card-gallery-block>p{font-size:var(--font-size-body);line-height:var(--line-height-body);color:var(--body-ink);margin:0 0 var(--space-8)}
 .spatial-card-gallery{--gallery-card-scale:var(--carousel-card-scale,1);--gallery-landscape-width:clamp(calc(340px * var(--gallery-card-scale)),calc(46vw * var(--gallery-card-scale)),calc(700px * var(--gallery-card-scale)));--gallery-portrait-width:clamp(calc(210px * var(--gallery-card-scale)),calc(26vw * var(--gallery-card-scale)),calc(360px * var(--gallery-card-scale)));--gallery-card-width:var(--gallery-landscape-width);--gallery-card-height:clamp(calc(340px * var(--gallery-card-scale)),calc(40vw * var(--gallery-card-scale)),calc(500px * var(--gallery-card-scale)));min-width:0}
 .spatial-gallery-viewport{position:relative;display:flex;align-items:center;gap:var(--space-6);height:calc(var(--gallery-card-height) + 64px);width:var(--app-canvas-width);margin-inline:calc((100% - var(--app-canvas-width))/2);padding:32px calc((var(--app-canvas-width) - var(--gallery-last-width,var(--gallery-card-width)))/2) 32px calc((var(--app-canvas-width) - var(--gallery-first-width,var(--gallery-card-width)))/2);overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none}
@@ -100,7 +100,7 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 .home-product-carousel .spatial-card-gallery:not([data-gallery-variant="circular"])[data-description-in-card="true"][data-gallery-axis="horizontal"] .spatial-gallery-viewport{padding-top:var(--gallery-controls-row);padding-bottom:calc(var(--space-4) + var(--gallery-copy-height,0px));height:calc(var(--gallery-controls-row) + var(--gallery-card-height) + var(--gallery-copy-height,0px) + var(--space-4) * 2)}
 /* The arrows float in the gap above the cards instead of reserving a row there, so the hero text, the cards and the next section sit one medium rhythm step apart whatever the arrows do. The stage's own slack under the caption is taken back. */
 .home-product-carousel:not([hidden]){margin-bottom:calc(-1 * var(--space-8))}
-.home-hero:not([hidden])~.home-product-carousel:not([hidden]){margin-top:var(--space-page-rhythm-md)}
+.home-hero:not([hidden])~.home-product-carousel:not([hidden]){margin-top:var(--space-hero-exit)}
 
 /* The Gap setting spaces the scroll carousel's cards as well as the circular one's minimum gap. */
 .spatial-card-gallery:not([data-gallery-variant="circular"],[data-gallery-axis="vertical"]) .spatial-gallery-viewport{gap:var(--carousel-gap,var(--space-6))}

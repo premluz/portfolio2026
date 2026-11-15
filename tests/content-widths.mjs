@@ -34,7 +34,12 @@ assert(projectStyles.includes('.surface.detail[data-card-orientation]:not(.text-
 assert.equal((html.match(/<option value="xsmall">Extra small · 960px<\/option>/g)||[]).length,5,'Every page-width dropdown, including the navigation one, offers Extra small');
 assert(html.includes('<select id="navContentWidth"><option value="page" selected>Same as the page</option>'),'The navigation width follows the page unless chosen');
 assert(html.includes('<select id="chatWidth"><option value="default" selected>Default</option>'),'The chat page has its own width dropdown, starting on its default column');
-const chatCss=await read('portfolio-assistant.css');assert(chatCss.includes('.assistant-thread{width:min(100%,var(--chat-width,900px))'),'The chat column follows --chat-width, 900px by default');}
+const chatCss=await read('portfolio-assistant.css');assert(chatCss.includes('.assistant-thread{width:min(100%,var(--chat-width,900px))'),'The chat column follows --chat-width, 900px by default');
+// The dropdown once existed with no handler, so choosing a width changed nothing: it must be read, applied and saved.
+const app=await read('app.js');
+assert(app.includes("layoutStorage?.getItem('prem-chat-width')"),'The saved chat width is read at start');
+assert(app.includes("root.style.setProperty('--chat-width',CONTENT_WIDTHS[chatWidthPreset]+'px')")&&app.includes("root.style.removeProperty('--chat-width')"),'A chosen width sets --chat-width and Default clears it');
+assert(app.includes("$('#chatWidth').onchange=")&&app.includes("saveFlag('prem-chat-width',chatWidthPreset)"),'Choosing a chat width applies and saves it');}
 assert.equal(sectionRail(contentRail(2560,'small',64),'edge').width,1920);
 assert.equal(contentRail(320,'large',24).content,272,'Mobile fitting wins over a desktop maximum');
 
@@ -68,3 +73,6 @@ values.set('prem-content-page-width','small');values.set('prem-detail-content-wi
 assert.equal(readContentWidth(storage,'content'),'small');assert.equal(readContentWidth(storage,'details'),'large');
 assert.equal(pageTemplateForRoute('work',['tracr']),'home');assert.equal(pageTemplateForRoute('tracr',['tracr']),'project-details');
 for(const route of ['about','contact','assistant'])assert.equal(pageTemplateForRoute(route,['tracr']),'content');
+{const css=await (await import('node:fs/promises')).readFile(new URL('../dist/content-widths.css',import.meta.url),'utf8');
+ assert(css.includes('.home-canvas .home-services>h2{max-width:calc((100% - var(--space-6)) / 2);text-wrap:balance}'),'The Services heading wraps in the same half width as About, balanced');
+ assert(css.includes('.home-canvas .home-services>h2{max-width:none}}'),'It goes full width where About does (1000px and below)');}

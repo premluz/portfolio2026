@@ -46,6 +46,7 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 - Acceptance: light Outline and Glass stay legible over a photograph; controls read by tone with no edge stronger than the card edge and no colour cast; the menu does not clip its last item at any reader text size.
 - Evidence: 2026-11-13. Light Outline and Glass fill with the neutral card grey (`--control-surface-rgb`) at 90–97% and 88–94% with a 20px blur; painted light surfaces use `--muted` for secondary ink (labels 4.5:1 or more over solid black) and lift the current item to `--panel`. Outline's edge is `--image-edge` in both themes; Glass has none. A first attempt with a 3:1 outline and a tinted glass was rejected by the owner the same day and removed. A ResizeObserver on the menu items re-measures `--nav-main-width`; without it the Settings icon overflowed by 5px at Large text. `tests/visual/control-contrast.spec.mjs` now has five checks, all passing; the text-size check fails without the observer. `npm run check` 156 of 170 and the dock browser specs fail only where HEAD does.
 - Notes: Ghost has no surface, so it is not legible over a dark photograph by design. Dark-theme surfaces over a light photograph were not densified.
+- Update 2026-11-14: light Outline now uses the composer's glass (white, 70%) instead of the card grey at 90–97%; see PROGRESS.md.
 
 ### TASK-047 Lift dark-theme idle menu links to 4.5:1
 - Status: done
@@ -129,6 +130,60 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 - Acceptance: a `porter-bg.jpg` (photo-only export) is added to dist/assets, linked with `backgroundMediaId` in both catalogs, `npm run images` run, and Porter shows it in the featured stage. Needs the image from the owner.
 
 ## Done
+
+### TASK-063 Chat width preset
+- Status: done
+- Tags: area/assistant
+- Acceptance: the chat column takes its own width preset; Default leaves the built-in widths alone.
+- Evidence: recorded after the fact on 2026-11-15 from the uncommitted diff. Control `#chatWidth`, setting `prem-chat-width` (default `default`, exported). Default removes `--chat-width`, so portfolio-assistant.css keeps its own widths; a preset sets it from `CONTENT_WIDTHS` (app.js). tests/content-widths.mjs asserts the control, the mapping and the Default path, and passes 2026-11-15.
+
+### TASK-062 Logo size preset
+- Status: done
+- Tags: area/design-system, area/home
+- Acceptance: the hero logo strip has its own size and does not change with Spacing.
+- Evidence: recorded after the fact on 2026-11-15 from the uncommitted diff. `data-logo-size` small .75, medium 1, large 1.4 sets `--logo-scale` (design-system.css). The strip sizes from the new `--space-base` (4px, before Spacing density), so Spacing never changes it; centred, it spans the middle four of six columns. Documented in DESIGN_SYSTEM.md. tests/design-system.mjs passes but does not assert `logoSize`, so no test covers it.
+
+### TASK-061 Section spacing preset
+- Status: done
+- Tags: area/design-system
+- Acceptance: the gaps between sections can be set on their own, on top of Spacing.
+- Evidence: recorded after the fact on 2026-11-15 from the uncommitted diff. `data-rhythm-size` xsmall .5, small .75, medium 1, large 1.35, xlarge 1.75, xxlarge 2.25 sets `--rhythm-scale`, which multiplies `--space-page-rhythm-sm/md/lg` (tokens.css). The new `--space-hero-exit` (6 units × rhythm) replaces the section gap between the home hero and the work below it, and between a project title and its hero image. Documented in DESIGN_SYSTEM.md. tests/design-system.mjs passes but does not assert `rhythmSize`, so no test covers it.
+
+### TASK-060 Spacing in six steps
+- Status: done
+- Tags: area/design-system
+- Acceptance: Spacing offers six densities.
+- Evidence: recorded after the fact on 2026-11-15. Committed in 4e416c3 (2026-11-14) without an entry: `spaceSizes` xsmall to xxlarge in design-system.js, with `--space-density` .6, .8, 1 (medium, no rule), 1.2, 1.45 and 1.75 in design-system.css. tests/design-system.mjs covers `spaceSize` and passes 2026-11-15.
+
+### TASK-059 Stage reveal once per visit (WP-17 item 4)
+- Status: done
+- Tags: area/motion, area/home
+- Acceptance: behind a setting, default off, each featured stage reveal plays once per visit instead of replaying after it leaves the screen.
+- Evidence: setting `prem-stage-reveal-once` (control `#stageRevealOnce` beside the retired Featured stage control, default `false`, in settings-transfer.js). `dist/feature-stage-reveal.js` remembers played stages by card id for the page load, so re-renders do not replay them either. `scripts/measure-stage-reveal.mjs` uses 6 stages and 3 scroll passes: off gives 18 reveals (3 per stage), as before; on gives 6 (1 per stage); two runs each, 2026-11-15. tests/feature-stage-reveal.mjs passes. `npm run check` 160 of 178, the same 18 failures as before this work. module-graph's first load grew 1.1KB (it was already 42KB over budget).
+
+### TASK-058 WebGL contexts on home (WP-17 item 3)
+- Status: done
+- Tags: area/motion
+- Acceptance: count live WebGL contexts with all home cards mounted, in each home layout; if the count scales with cards, report it with the module that creates them.
+- Evidence: `scripts/measure-webgl-contexts.mjs` covers 11 home layouts (carousel, text, and cards × 3 views × 3 layouts), all 16 cards mounted, with a wheel scroll down and up plus two layout reflows after every image has loaded. Each layout is checked against the live settings selects. Defaults (ripple and blur off): 1 live context in every layout, from `mascott-embed.js`. With `--effects`: a peak of 3 (the mascot plus at most 2 from `liquid-image.js`), and up to 7 created in total, so they are released as motion ends. The count does not scale with cards. Two runs with effects on were identical, 2026-11-15. Not covered: carousel drag momentum, and the card world (three.js), which is a route, not a home layout.
+
+### TASK-057 Blur budget (WP-17 item 2)
+- Status: done
+- Tags: area/motion
+- Acceptance: count elements with a non-`none` computed `backdrop-filter` in the viewport on home, a project page and the assistant; report the counts; propose a cap, do not apply it.
+- Evidence: `scripts/measure-blur-budget.mjs`, two identical runs, 2026-11-15, counting elements and `::before`/`::after` at four scroll stops. Peak layers in view at 1440×900: home 6, project (`#galachain`) 6, assistant 5. At 390×844: home 4, project 3, assistant 5. Every layer uses 22px (`--dock-glass-blur`); peak share of the viewport covered by blurred layers is 2.3% on desktop and 14.9% on the phone assistant. The DOM holds 31 to 33 blurred elements, most of them off-screen or hidden. `#rios` no longer opens a project page, so `#galachain` stands in. The proposed cap (see PROGRESS.md 2026-11-15) was approved by the owner and is now enforced by tests/visual/blur-budget.spec.mjs: at most 6 layers in view, a radius no higher than `--dock-glass-blur`, no layer above 25% of the viewport, across 3 routes, 2 viewports and 4 scroll stops. It passes 6 of 6 twice. With the cap at 5, exactly home and project at 1440×900 fail.
+
+### TASK-056 Layout-animating rules (WP-17 item 1)
+- Status: done
+- Tags: area/motion
+- Acceptance: measure in the page first; report each `will-change`/transition naming layout properties with what it animates and whether transform is feasible; change only the ones the owner picks.
+- Evidence: `scripts/measure-layout-motion.mjs` (CDP counters, single process, `--dev` server). Card open and return: about 120 to 140 layouts costing 14 to 16ms, against 110 to 160ms of style recalculation, so layout is around a tenth of the work. `.flow-shell` and `.motion-afterglow` stay as they are, because scaling would distort the children and the radius that changes per frame. The owner chose the recommendations; the only rule changed is `.project-menu-preview`, which moved from `top`/`left` to `translate` with the same placement (preview centre equals row centre, 470/470). `.context-shape` matches no element (dead CSS, reported, not removed). `.selection-pill` keeps its `width`/`height`, because scaling would distort its radius. tests/project-menu-preview.mjs passes; the `durations` ceiling in tests/token-leaks.mjs drops to 132 (one literal fewer); `npm run check` 159 of 177, and none of the 18 failures imports the preview, 2026-11-15.
+
+### TASK-055 Specimen page at #system (WP-16)
+- Status: done
+- Tags: area/design-system, area/tests
+- Acceptance: a `#system` route renders each component from the real renderers with worst-case fixtures; the route has zero console errors; each component has a baseline; no existing page changes.
+- Evidence: tests/system-specimen.mjs passes (17 components, exact ratios 0.46, 1.0, 1.6 and 2.33, project page shapes, worst-case and hostile content escaped, no links, developer mode only); tests/visual/system-specimen.spec.mjs passes 19 of 19 twice (zero console and page errors, a visitor without `?dev=1` never sees it, 17 element-scoped baselines, stable on a second run); `npm run check` 163 of 176 (the 13 under TASK-050), 2026-11-11. Two baselines were looked at and approved. Baselines are macOS only.
 
 ### TASK-054 Type floors behind a setting (WP-15a)
 - Status: done

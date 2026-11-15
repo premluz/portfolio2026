@@ -19,10 +19,15 @@ assert.deepEqual(calls[0].keyframes,[{opacity:0},{opacity:1}]);
 assert.equal(tracked.length,3,'The transition control owns them, so Escape mid-return reverses them too');
 calls.length=0;parts['.badge'].hidden=true;revealHomeHero(root,control,400);
 assert.deepEqual(calls.map(call=>[call.name,call.options.delay]),[['heading',168],['copy',216]],'A hidden badge takes no step');
-calls.length=0;parts['.badge'].hidden=false;parts['.hero-logos']=node('logos');revealHomeHero(root,control,400);
-assert.deepEqual(calls.map(call=>[call.name,call.options.delay]),[['badge',168],['heading',216],['copy',264],['logos',312]],'The logo strip returns last, one step after the description');
-calls.length=0;parts['.hero-logos'].hidden=true;revealHomeHero(root,control,400);assert(!calls.some(call=>call.name==='logos'),'A hidden strip is not revealed');
+// The strip's own logos stagger in from its step (hero-logos.js); the strip itself is not faded as one block.
+const logo=name=>({...node(name),getBoundingClientRect:()=>({left:0,right:80})});
+const strip={...node('strip'),getBoundingClientRect:()=>({left:0,right:1000}),querySelectorAll:()=>[logo('logo')]};
+calls.length=0;tracked.length=0;parts['.badge'].hidden=false;parts['.hero-logos']=strip;revealHomeHero(root,control,400);
+assert.deepEqual(calls.map(call=>[call.name,call.options.delay]),[['badge',168],['heading',216],['copy',264],['logo',312]],'The logos return last, starting one step after the description');
+assert(calls.every(call=>call.options.duration===160&&call.options.easing===EASE.settle&&call.options.fill==='backwards'),'The logos share the hero lines\' length, curve and hidden-until-step fill');
+assert.equal(tracked.length,4,'The logo animations belong to the transition too');
+calls.length=0;parts['.hero-logos'].hidden=true;revealHomeHero(root,control,400);assert(!calls.some(call=>call.name==='logo'||call.name==='strip'),'A hidden strip is not revealed');
 
 const app=await readFile(new URL('../dist/app.js',import.meta.url),'utf8');
 assert(app.includes('if(restoreReturningHome)tasks.push(...revealHomeHero(main,activeTransition,duration*(slow?2.5:1)));'),'Only an animated return from a project runs it');
-console.log('Home hero return passed: top-down stagger mirroring the exit, hidden badge skipped, tracked by the transition.');
+console.log('Home hero return passed: top-down stagger mirroring the exit, logos staggered last, hidden badge skipped, tracked by the transition.');

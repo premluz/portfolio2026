@@ -3,7 +3,7 @@
   "type": "portfolio-item",
   "status": "published",
   "slug": "playstation",
-  "title": "First designer on large-scale transformation, set scalable foundations and interaction model.",
+  "title": "First designer on large-scale transformation, set scalable foundations and interaction model",
   "name": "Publishing pipeline",
   "summary": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 ",
   "category": "Publishing pipeline · PlayStation Network",
@@ -11,9 +11,9 @@
   "year": "2018",
   "projectStatus": "Launched",
   "disciplines": [
-    "UI",
-    "Interaction",
-    "Design guidelines"
+   "Visual language",
+    "Product",
+    "Interaction"
   ],
   "shortCategory": "Publishing pipeline",
   "homeCards": [
@@ -54,13 +54,21 @@
     {
       "id": "playstation-in-the-product",
       "type": "section",
-      "title": "In the product",
+      "title": "In the product22",
       "items": [
+        {
+          "id": "playstation-new-paragraph",
+          "type": "text",
+          "paragraphs": [
+            "Your new paragraph goes here."
+          ]
+        },
         {
           "id": "playstation-content-screen",
           "type": "image",
           "mediaId": "playstation-content",
           "alt": "PlayStation Network content management screen for a game release",
+          "title": "PlayStation",
           "caption": "PlayStation Network content management screen for a game release",
           "layout": {
             "width": "page"
@@ -69,7 +77,7 @@
         {
           "id": "playstation-pipeline-intro",
           "type": "text",
-      "title": "In the product",
+          "title": "In the product",
           "paragraphs": [
             "Unified three regional systems into one publishing workflow and established design foundations across onboarding, international pricing, entitlements and issue management."
           ]

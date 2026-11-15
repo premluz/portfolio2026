@@ -11,7 +11,7 @@
   "year": "2025",
   "projectStatus": "R&D",
   "disciplines": [
-    "Interaction",
+    "Product",
     "Visual language",
     "Motion"
   ],
@@ -38,6 +38,7 @@
   "impact": "Assistant one gesture from every screen • Text + voice in one thread • Trust-aware financial flows • Dark + light themes from one component system",
   "heroMediaId": "bastion-cover",
   "hoverVideoId": "bastion-walkthrough",
+  "hoverVideo": "on",
   "type": "portfolio-item",
   "status": "published",
   "featured": false,
