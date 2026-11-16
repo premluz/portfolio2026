@@ -1,7 +1,7 @@
 {
   "format": "prem-portfolio-settings",
   "version": 1,
-  "exportedAt": "2026-11-16T07:39:44.500Z",
+  "exportedAt": "2026-11-16T08:02:52.020Z",
   "settings": {
     "section.heading": true,
     "heroHeadingCenter": true,
@@ -204,6 +204,7 @@
     "simpleTransitionsSkipExit": false,
     "cardTextTravel": false,
     "projectTitleStream": true,
+    "pageSlide": false,
     "intensity": 0,
     "duration": 450,
     "stretch": 100,
