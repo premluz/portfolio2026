@@ -8,23 +8,13 @@
         "featured": false
       },
       {
-        "id": "bastion",
-        "documentId": "bastion",
-        "featured": true
-      },
-      {
-        "id": "tracr",
-        "documentId": "tracr",
-        "featured": true
-      },
-      {
         "id": "vodafone-travel",
         "documentId": "vodafone-travel",
         "featured": true
       },
       {
-        "id": "vodafone-iot",
-        "documentId": "vodafone-iot",
+        "id": "tracr",
+        "documentId": "tracr",
         "featured": true
       },
       {
@@ -35,6 +25,16 @@
       {
         "id": "playstation",
         "documentId": "playstation",
+        "featured": true
+      },
+      {
+        "id": "bastion",
+        "documentId": "bastion",
+        "featured": true
+      },
+      {
+        "id": "vodafone-iot",
+        "documentId": "vodafone-iot",
         "featured": true
       },
       {

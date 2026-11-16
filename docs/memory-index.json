@@ -88,7 +88,7 @@
         "FRAMEWORK.md",
         "MEDIA_ASSETS.md"
       ],
-      "hash": "a5e3af97f4734e52bba21d5c4eb7b085aa5cc38c",
+      "hash": "f28c175a70ff79848b8adf128248bfcacd3c6ccd",
       "items": []
     },
     {
@@ -205,7 +205,7 @@
       "title": "Media and image assets",
       "type": "ops",
       "status": "active",
-      "updated": "2026-10-26",
+      "updated": "2026-11-15",
       "summary": "How to add or replace images and video, regenerate copies, backdrops, and why an old image can still show.",
       "tags": [
         "area/images",
@@ -216,7 +216,7 @@
         "ADR-001",
         "ADR-002"
       ],
-      "hash": "2e8481b9026c21ed57ffa5693e87e31ff2523029",
+      "hash": "b098311b6ba95f75cb54d6ce73c4842919d5088c",
       "items": []
     },
     {
@@ -234,7 +234,7 @@
         "FRAMEWORK.md",
         "DESIGN_SYSTEM.md"
       ],
-      "hash": "323dd4c242dc8165cd3f3eebbf16e0839dabc8a8",
+      "hash": "2b9dfdaa8d3d75a9ee828891797ddccde13d6961",
       "items": []
     },
     {
@@ -253,7 +253,7 @@
         "TASKS.md",
         "PROJECT_STATE.md"
       ],
-      "hash": "0e8d5fd6006a6818e4727355da53d2009d06d41f",
+      "hash": "a47a79846a0f05f76bb70054483e8f50adb2bd49",
       "items": []
     },
     {
@@ -333,7 +333,7 @@
         "PROJECT_STATE.md",
         "PROGRESS.md"
       ],
-      "hash": "69a25039ffab1fb59e58a96d7b1815e9d32cbd1c",
+      "hash": "9ad358367eab7aecbb06b5b2e49eccffe8ffc91b",
       "items": [
         {
           "id": "TASK-044",
@@ -493,6 +493,43 @@
           "tags": [
             "area/images",
             "area/content"
+          ]
+        },
+        {
+          "id": "TASK-067",
+          "title": "About, Contact and Home enter like a project",
+          "status": "done",
+          "tags": [
+            "area/motion",
+            "kind/feature"
+          ]
+        },
+        {
+          "id": "TASK-066",
+          "title": "One control size for nav, buttons and arrows",
+          "status": "done",
+          "tags": [
+            "area/design-system",
+            "kind/feature"
+          ]
+        },
+        {
+          "id": "TASK-065",
+          "title": "Load the first visible images first",
+          "status": "done",
+          "tags": [
+            "area/images",
+            "kind/feature"
+          ]
+        },
+        {
+          "id": "TASK-064",
+          "title": "Fade images in as they load and scroll into view",
+          "status": "done",
+          "tags": [
+            "area/images",
+            "area/motion",
+            "kind/feature"
           ]
         },
         {

@@ -54,13 +54,13 @@
     {
       "id": "tracr-assets-row-1",
       "type": "section",
-      "title": "Assets",
+      "title": "",
       "layout": {"columns": 2},
       "items": [
-        {"id": "tracr-asset-1", "type": "image", "mediaId": "tracr-asset-01", "title": "Example title", "caption": "Example description under the image.", "layout": {"span": 2, "width": "page"}},
-        {"id": "tracr-asset-2", "type": "image", "mediaId": "tracr-asset-02", "title": "Example title", "caption": "Example description under the image."},
-        {"id": "tracr-asset-3", "type": "image", "mediaId": "tracr-asset-03", "title": "Example title", "caption": "Example description under the image."},
-        {"id": "tracr-asset-4", "type": "image", "mediaId": "tracr-asset-04", "title": "Example title", "caption": "Example description under the image.", "layout": {"span": 2, "width": "page"}}
+        {"id": "tracr-asset-1", "type": "image", "mediaId": "tracr-asset-01", "title": "", "caption": "", "layout": {"span": 2, "width": "page"}},
+        {"id": "tracr-asset-2", "type": "image", "mediaId": "tracr-asset-02", "title": "", "caption": ""},
+        {"id": "tracr-asset-3", "type": "image", "mediaId": "tracr-asset-03", "title": "", "caption": ""},
+        {"id": "tracr-asset-4", "type": "image", "mediaId": "tracr-asset-04", "title": "", "caption": "", "layout": {"span": 2, "width": "page"}}
       ]
     }
   ],

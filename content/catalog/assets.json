@@ -47,29 +47,64 @@
     "id": "tracr-asset-01",
     "type": "image",
     "status": "published",
-    "url": "assets/ui/tracr/tracr-asset-01.png",
+    "url": "assets/ui/tracr/trac-asset-01.png",
     "alt": "Tracr platform interface, screen 1"
   },
   {
     "id": "tracr-asset-02",
     "type": "image",
     "status": "published",
-    "url": "assets/ui/tracr/tracr-asset-02.png",
+    "url": "assets/ui/tracr/trac-asset-02.png",
     "alt": "Tracr platform interface, screen 2"
   },
   {
     "id": "tracr-asset-03",
     "type": "image",
     "status": "published",
-    "url": "assets/ui/tracr/tracr-asset-03.png",
+    "url": "assets/ui/tracr/trac-asset-03.png",
     "alt": "Tracr platform interface, screen 3"
   },
   {
     "id": "tracr-asset-04",
     "type": "image",
     "status": "published",
-    "url": "assets/ui/tracr/tracr-asset-04.png",
+    "url": "assets/ui/tracr/trac-asset-04.png",
     "alt": "Tracr platform interface, screen 4"
+  },
+  {
+    "id": "vodtra-asset-01",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/vodafonetravel/vodtra-asset-01.png",
+    "alt": "Vodafone Travel eSIM interface, screen 1"
+  },
+  {
+    "id": "vodtra-asset-02",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/vodafonetravel/vodtra-asset-02.png",
+    "alt": "Vodafone Travel eSIM interface, screen 2"
+  },
+  {
+    "id": "vodtra-asset-03",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/vodafonetravel/vodtra-asset-03.png",
+    "alt": "Vodafone Travel eSIM interface, screen 3"
+  },
+  {
+    "id": "vodtra-asset-04",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/vodafonetravel/vodtra-asset-04.png",
+    "alt": "Vodafone Travel eSIM interface, screen 4"
+  },
+  {
+    "id": "vodtra-asset-05",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/vodafonetravel/vodtra-asset-05.png",
+    "alt": "Vodafone Travel eSIM interface, screen 5"
   },
   {
     "id": "tracr-blockchain-traceability",
@@ -331,6 +366,62 @@
     "status": "published",
     "url": "assets/gala-defi.mp4",
     "alt": ""
+  },
+  {
+    "id": "gala-asset-01",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/gala/gala-asset-01.png",
+    "alt": "Gala Film platform interface, screen 1"
+  },
+  {
+    "id": "gala-asset-02",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/gala/gala-asset-02.png",
+    "alt": "Gala Film platform interface, screen 2"
+  },
+  {
+    "id": "gala-asset-03",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/gala/gala-asset-03.png",
+    "alt": "Gala Film platform interface, screen 3"
+  },
+  {
+    "id": "gala-asset-04",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/gala/gala-asset-04.png",
+    "alt": "Gala Film platform interface, screen 4"
+  },
+  {
+    "id": "gala-asset-05",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/gala/gala-asset-05.png",
+    "alt": "Gala Film platform interface, screen 5"
+  },
+  {
+    "id": "gala-asset-06",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/gala/gala-asset-06.png",
+    "alt": "Gala Film platform interface, screen 6"
+  },
+  {
+    "id": "gala-asset-07",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/gala/gala-asset-07.png",
+    "alt": "Gala Film platform interface, screen 7"
+  },
+  {
+    "id": "gala-asset-08",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/gala/gala-asset-08.png",
+    "alt": "Gala Film platform interface, screen 8"
   },
   {
     "id": "merlin-bg",

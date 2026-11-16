@@ -88,6 +88,12 @@
       },
       "items": [
         {
+          "id": "home-project-galachain",
+          "type": "reference",
+          "documentId": "galachain",
+          "presentation": "card"
+        },
+        {
           "id": "home-project-vodafone-travel",
           "type": "reference",
           "documentId": "vodafone-travel",
@@ -109,12 +115,6 @@
           "id": "home-project-playstation",
           "type": "reference",
           "documentId": "playstation",
-          "presentation": "card"
-        },
-        {
-          "id": "home-project-galachain",
-          "type": "reference",
-          "documentId": "galachain",
           "presentation": "card"
         },
         {

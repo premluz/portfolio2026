@@ -24,7 +24,7 @@ export class DetailContentReveal{
   this.reduced=reduced;this.duration=duration;this.stagger=stagger;this.animations=[];this.started=false;this.dead=false;this.reversing=false;
   if(!reduced)for(const {node} of this.targets)node.style.opacity='0';
   // The streamed title leaves the opacity fade: the stream's moving edge is what reveals it.
-  this.title=titleStream&&!reduced?targets.find(node=>node.classList?.contains('detail-caption-title'))||null:null;
+  this.title=titleStream&&!reduced?targets.find(node=>node.classList?.contains('detail-caption-title')||node.hasAttribute?.('data-page-title'))||null:null;
   this.effects=effects;this.titleTimer=0;this.titleWaiting=false;this.titleShown=false;this.finishTitle=null;
  }
  // The title is a heading, not an answer: it takes the Heading reveal settings, paced to land in a near-fixed time.
@@ -83,6 +83,20 @@ export class DetailContentReveal{
 
 export function createDetailContentReveal(root,options={}){
  return new DetailContentReveal(revealTargets(root),options);
+}
+
+// About and Contact enter as a project does: the heading streams, then its paragraphs, links, photos and each
+// following section fade in, one step apart.
+function pageRevealTargets(root){
+ const page=root?.querySelector?.('.detail.info-detail');if(!page)return [];
+ const title=page.querySelector('h1');title?.setAttribute('data-page-title','');
+ const body=[...page.querySelectorAll('.info-body')].flatMap(node=>[...node.children]);
+ const rest=[...page.children].filter(node=>!node.matches('.liquid-skin,h1,.info-body')&&!node.contains(title));
+ const hero=page.querySelector('.about-photos');
+ return [...new Set([title,...body,hero,...rest].filter(Boolean))];
+}
+export function createPageContentReveal(root,options={}){
+ return new DetailContentReveal(pageRevealTargets(root),{...options,titleStream:true});
 }
 
 // A streaming title rewrites its own markup each frame on the hidden live page, so its clone, cloned with the whole

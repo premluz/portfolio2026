@@ -131,6 +131,30 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 
 ## Done
 
+### TASK-067 About, Contact and Home enter like a project
+- Status: done
+- Tags: area/motion, kind/feature
+- Acceptance: About and Contact enter through the page transition with the project reveal: the h1 streams (Heading reveal settings), then the intro paragraph, links, photos and each following section fade in a step apart. Returning to Home from a project, About or Contact streams the hero h1 (its markup restored when it settles) and staggers the logos in. Motion → "Page slide" (`prem-page-slide`, exported) restores the previous sideways slide and fade. Default is the new motion at the owner's request, an exception to ADR-005.
+- Evidence: 2026-11-16. Headless Chrome at 1280px, sampled every 70ms: with Page slide off, the About, Contact and Home headings stream and paragraphs and logos fade 0→1, including Back from Tracr; with it on, the old slide and fade are unchanged; no page errors. tests/home-hero-return.mjs and tests/simple-transitions.mjs updated to the new call sites. `npm run check`: 158 of 180; the other failures follow owner content edits, plus the first-load budget.
+
+### TASK-066 One control size for nav, buttons and arrows
+- Status: done
+- Tags: area/design-system, kind/feature
+- Acceptance: Settings → Design system → "Control size" (Default, Small 32px, Medium 36px, Large 44px; tokens `--control-size-sm|md|lg`) sets one height for nav items, the dock, footer and contact pills, rail and carousel arrows, the settings and assistant toggles, glass utility buttons and media actions, from 651px up; phones keep the 44px touch size. Default keeps each control's previous size (ADR-005); setting `prem-control-size`, exported. The Nav item padding, Nav container padding and Nav font size knobs are removed: nav padding is fixed at the published 4px (`--nav-item-padding`), container padding at 0, and nav text follows the global body size at every width.
+- Evidence: 2026-11-16. Headless Chrome on About at 1280px: Small 32, Medium 36, Large 44 for nav, arrows, rail, toggles and footer pills; Default unchanged (nav 36, arrows and toggles 40); 390px stays 44. Removed keys dropped from settings/prem-portfolio-settings-2026-11-07.json so published settings load without the "unsupported controls" error. 25 related tests pass.
+
+### TASK-065 Load the first visible images first
+- Status: done
+- Tags: area/images, kind/feature
+- Acceptance: when a view renders, the `LEAD_IMAGES` (2) content images with the most visible area load at once at high priority, without waiting a frame for the observer; chosen once per view; backdrops and below-fold images keep their place in the queue. Home's project order in `layouts.json` matches `home.json` (Vodafone Travel, Tracr, The Body Shop, PlayStation, Gala, Bastion, Vodafone IoT, Merlin, Porter, Rios).
+- Evidence: 2026-11-15. tests/media-loading.mjs covers the leads, visible-area ranking, once per view and the queue after. Headless Chrome at 1440x900: Home requests Vodafone Travel and Tracr at High; About requests the two most visible photos at High and the other four at Low (before: all content images Low, and About boosted four, missing the centred photo). `npm run check`: 159 of 179, no new failures.
+
+### TASK-064 Fade images in as they load and scroll into view
+- Status: done
+- Tags: area/images, area/motion, kind/feature
+- Acceptance: with Settings → Images → "Fade images in" on, a content image fades in (opacity, `--duration-media-reveal` 420ms, `--ease-settle`) when its bytes arrive; one below the fold at first render waits until it scrolls into view, then fades. Backdrops keep their own entrance, morph targets never fade, and reduced motion or animation off shows images at once. Off by default (ADR-005), setting `prem-media-reveal`, exported.
+- Evidence: 2026-11-15. tests/media-loading.mjs covers fade on load, waiting below the fold, backdrops, morph targets and the setting off. Headless browser at 1440x900 with the setting on: Home faded 2 images on load and 8 more on scroll, About 5 on load and 5 on scroll; no image left at opacity 0. Skullet (npm, 0.0.3, React/Vue/Svelte peers) was reviewed and not added; only its reveal approach was borrowed.
+
 ### TASK-063 Chat width preset
 - Status: done
 - Tags: area/assistant

@@ -137,7 +137,7 @@ items. Order is top-down on entry and bottom-up on exit.
 ### Feedback
 
 - **Press:** quick in (90ms), springy release (300ms).
-- **Card scale feedback:** hover settles over 300ms on `standard`, press over 160ms on `press`, and release over 360ms on `gentle`. Card timing is independent of button timing and the instant surface-colour switch; scales remain 0.985 on hover and 0.97 on press, centred and interruptible. Reduced motion and Animation Off remove the scale feedback.
+- **Card scale feedback:** hover settles over 300ms on `standard`, press over 160ms on `press`, and release over 360ms on `gentle`. Card timing is independent of button timing and the instant surface-colour switch; project cards lift to 1.015 on hover (controls keep 0.985) and press to 0.97, centred and interruptible. The card holding the ambient glow stacks above its neighbours so the glow is never covered. Reduced motion and Animation Off remove the scale feedback.
 - **Hover:** appears almost instantly, leaves slowly, so passing the pointer
   across a list feels calm.
 - **Tooltips:** wait 350ms so passing over controls stays quiet; once one is

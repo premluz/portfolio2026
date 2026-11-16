@@ -13,11 +13,15 @@ assert(styles.includes("'design-system.css'"),'The shared press rules ship in th
 for(const selector of ['nav a','.context-nav button','.site-settings-toggle','.project-menu button','.header-detail-nav button','.project-card'])assert(design.includes(selector),`Press feedback covers ${selector}`);
 assert(/\.project-card\{[^}]*transform-origin:center/.test(design),'Card press feedback scales from the visual center');
 assert(tokens.includes('--card-hover-scale: .985'),'Cards have a named slight hover scale');
+assert(tokens.includes('--card-lift-scale: 1.015'),'Project cards have a named slight hover lift');
 assert(tokens.includes('--card-press-scale: .97'),'Cards have a softer named press scale');
 const hoverScale=Number(tokens.match(/--card-hover-scale:\s*([\d.]+)/)?.[1]);
+const liftScale=Number(tokens.match(/--card-lift-scale:\s*([\d.]+)/)?.[1]);
+assert(liftScale>1,'Project cards rise rather than sink on hover');
 const pressScale=Number(tokens.match(/--card-press-scale:\s*([\d.]+)/)?.[1]);
 assert(pressScale<hoverScale&&pressScale>.92,'Card press is deeper than hover without using the firmer glass-button scale');
-assert(design.includes('.project-card:hover:not(:active){transform:scale(var(--card-hover-scale))'),'Cards press slightly on hover');
+assert(design.includes('.project-card:hover:not(:active){transform:scale(var(--card-lift-scale))'),'Cards lift slightly on hover');
+assert(design.includes('.project-card:has(>.ambient-light-field){z-index:1}'),'The card holding the ambient glow stacks above its neighbours');
 assert(design.includes('.project-card:active{transform:scale(var(--card-press-scale))'),'Cards press further with their softer scale');
 assert(design.includes('.project-card:hover:not(:active){transform:none}'),'Card hover press is disabled for reduced motion');
 for(const token of ['card-hover-duration','card-press-in-duration','card-release-duration','card-hover-ease','card-press-ease','card-release-ease'])assert(design.includes(`var(--${token})`),`Card feedback has independent ${token}`);

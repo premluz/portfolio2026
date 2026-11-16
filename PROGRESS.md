@@ -10,6 +10,22 @@ related: [TASKS.md, PROJECT_STATE.md]
 ---
 # Progress log
 
+## 2026-11-16 About, Contact and Home enter like a project (TASK-067)
+- About and Contact stream their h1 and fade their content in; Home's h1 streams back with the logos after any page. The old slide sits behind Motion → Page slide, off by default at the owner's request.
+- Evidence: in-browser sampling of heading stream and opacity on each route; related tests pass.
+- Risk: departs from ADR-005 by owner request; first-load budget still over (module-graph).
+
+## 2026-11-16 One control size; nav knobs removed (TASK-066)
+- Added Settings → Design system → Control size (Default / Small / Medium / Large), so nav items, buttons and arrows share one height on desktop; Default keeps today's sizes. Removed the nav item padding, container padding and font size knobs; the nav keeps the published values and the global body text size.
+- Evidence: headless measurements at 1280px and 390px; 25 related tests pass.
+- Risk: the knob is desktop-only (≥651px); phones keep 44px touch targets. The size is not in the published settings until it is chosen and published.
+
+## 2026-11-15 First visible images load first (TASK-065)
+`MediaLoader.lead` loads the two images with the most visible area at once, at high priority, once per view (`LEAD_IMAGES`). Ranking by visible rather than full area keeps a square centred carousel photo ahead of wider neighbours that are mostly off screen. Also put Home's project order into `layouts.json`, which drives the grid and project navigation; the earlier reorder had only changed `home.json`. Evidence: tests/media-loading.mjs, request priorities in headless Chrome on Home and About, `npm run check` 159 of 179 with no new failures. Left: images still start only after the app's JS has rendered the page; a static preload would have to guess the home layout, which follows settings.
+
+## 2026-11-15 Images fade in on load and on scroll (TASK-064)
+New setting "Fade images in" (off by default, `prem-media-reveal`). `media-loading.js` marks a freshly loaded content image `data-media-fade` and holds below-fold images with `data-media-waiting` until a second IntersectionObserver sees them; `media-reveal.css` runs one opacity animation (`--duration-media-reveal`, `--ease-settle`), an animation rather than a transition so each image keeps its own transitions. `image-handoff.js` clears both markers so a morph never dips. Evidence: tests/media-loading.mjs and a headless run on Home and About (all images reached full opacity). Also updated tests/header-spacing.mjs for the centred About intro. Risk: `npm run check` has 20 other failures, from content edits and the first-load budget (tests/module-graph.mjs, 957,867 bytes against 902,282); this change adds under 2 KB of it.
+
 ## 2026-11-15 Earlier design-system work recorded (TASK-060 to TASK-063)
 
 An earlier session left four changes without entries; they are recorded from the code as it stands. Spacing in six steps (in commit 4e416c3), and three that are still uncommitted: Section spacing (`--rhythm-scale` and `--space-hero-exit`), Logo size (`--logo-scale`, sized from `--space-base` so Spacing leaves it alone) and Chat width (`prem-chat-width`).

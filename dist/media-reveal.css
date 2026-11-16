@@ -1,0 +1,9 @@
+/* Media reveal (Settings → Images → Fade images in). An image fades in when its bytes arrive; one below the fold
+   waits (data-media-waiting) until it scrolls into view, so content arrives softly the first time someone scrolls.
+   media-loading.js sets the attributes. An animation rather than a transition, so each image keeps its own
+   transitions (hover zoom, morphs). Timing follows the house enter curve. */
+@keyframes media-reveal{from{opacity:0}}
+:root[data-media-reveal="on"] img[data-media-waiting]{opacity:0}
+:root[data-media-reveal="on"] img[data-media-fade]{animation:media-reveal var(--duration-media-reveal) var(--ease-settle) both}
+:root[data-animation="off"] img[data-media-fade]{animation:none}
+@media(prefers-reduced-motion:reduce){img[data-media-fade]{animation:none}}

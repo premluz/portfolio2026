@@ -37,6 +37,7 @@
   --duration-toast-out: 200ms;
   --duration-tooltip-arrive: 240ms;
   --duration-detail-reveal: 220ms;
+  --duration-media-reveal: 420ms;
   --duration-logo-strip-loop: 60s;
   --duration-text-caret: 1s;
   /* The home heading fades in for about 400ms after boot; its glimmer waits until it is fully there. */
@@ -100,9 +101,12 @@
   --header-swap-step: 60ms;
   --header-swap-shift: 12px;
   --nav-rounding: 24px;
-  --nav-item-padding: 9px;
-  --nav-item-font-size: 12px;
+  --nav-item-padding: 4px;
   --nav-container-padding: 0px;
+  /* Settings → Control size: one height for nav items, buttons and arrows. */
+  --control-size-sm: 32px;
+  --control-size-md: 36px;
+  --control-size-lg: 44px;
   --nav-height: 48px;
   --nav-main-width: 252px;
   --nav-context-width: 120px;
@@ -138,6 +142,8 @@
   --glass-button-blur: 20px;
   --glass-button-press-scale: .92;
   --card-hover-scale: .985;
+  /* Project cards lift on hover so they read as raised above their neighbours; controls keep the slight press above. */
+  --card-lift-scale: 1.015;
   --card-press-scale: .97;
   --card-hover-duration: 300ms;
   --card-press-in-duration: 160ms;
@@ -1495,7 +1501,9 @@ html[data-animation="off"] .image-card[data-copy-hover="true"]:is(:hover,:focus-
 .dock-morph .project-menu button:not(.active):is(:hover,:focus-visible,.hover-trail){background:var(--nav-item-hover);color:var(--ink)}
 .dock-morph nav a,.dock-morph .context-nav button,.dock-morph nav .site-settings-toggle,.dock-morph .project-menu button{transition:background-color var(--nav-hover-out-duration) ease-out,color var(--nav-hover-out-duration) ease,transform var(--glass-button-press-duration) var(--glass-button-press-ease)}
 .project-card{transform-origin:center;transition:transform var(--card-release-duration) var(--card-release-ease)}
-@media(hover:hover) and (pointer:fine){.project-card:hover:not(:active){transform:scale(var(--card-hover-scale));transition-duration:var(--card-hover-duration);transition-timing-function:var(--card-hover-ease)}}
+/* The ambient glow is reparented into the card that owns it and spills past its edge; raising that card keeps the glow above later siblings, matching the lift. */
+.project-card:has(>.ambient-light-field){z-index:1}
+@media(hover:hover) and (pointer:fine){.project-card:hover:not(:active){transform:scale(var(--card-lift-scale));transition-duration:var(--card-hover-duration);transition-timing-function:var(--card-hover-ease)}}
 .project-card:active{transform:scale(var(--card-press-scale));transition-duration:var(--card-press-in-duration);transition-timing-function:var(--card-press-ease);transition-delay:0s}
 @media(prefers-reduced-motion:reduce){.project-card:active,.project-card:hover:not(:active){transform:none}}
 :root[data-animation="off"] .project-card:is(:active,:hover:not(:active)){transform:none}
@@ -1519,7 +1527,7 @@ html[data-animation="off"] .image-card[data-copy-hover="true"]:is(:hover,:focus-
 #dock .dock-content>nav>.site-settings-toggle{flex-basis:var(--nav-icon-size);width:var(--nav-icon-size);height:var(--nav-icon-size);margin-right:0}
 #dock nav a[hidden]{display:none}
 @media(max-width:600px){#dock nav a{padding-inline:min(calc(var(--nav-item-padding) + 5px),12px)}}
-@media(max-width:380px){#dock nav a{font-size:min(var(--nav-item-font-size),14px);padding-inline:min(calc(var(--nav-item-padding) + 5px),6px)}}
+@media(max-width:380px){#dock nav a{padding-inline:min(calc(var(--nav-item-padding) + 5px),6px)}}
 
 /* Reserve a glimpse of work as the window becomes shorter, using measured hero content. */
 main.home-canvas:not(.home-view-split) .home-hero{--hero-padding:min(var(--space-page-rhythm-lg),var(--hero-viewport-space,var(--space-page-rhythm-lg)));--hero-top-bias:min(32px,var(--hero-padding));padding-top:var(--page-content-top);padding-bottom:0}
@@ -1946,7 +1954,8 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 .spatial-gallery-extrusion>i{position:absolute;transform-origin:0 0;backface-visibility:hidden;background:linear-gradient(128deg,var(--gallery-metal-light) 0%,var(--gallery-metal-mid) 20%,var(--gallery-metal-shadow) 42%,var(--gallery-metal-shine) 54%,var(--gallery-metal-mid) 64%,var(--gallery-metal-shadow) 100%);box-shadow:inset 0 1px 0 color-mix(in oklch,var(--gallery-metal-shine) 65%,transparent),inset 0 -1px 0 var(--gallery-metal-shadow)}
 .spatial-gallery-extrusion>i:nth-child(2n){background:linear-gradient(128deg,var(--gallery-metal-mid),var(--gallery-metal-shadow) 42%,var(--gallery-metal-light) 54%,var(--gallery-metal-mid) 67%,var(--gallery-metal-shadow))}
 
-@media(max-width:600px){.spatial-gallery-controls{display:none}.spatial-gallery-copy{width:100%}}
+@media(max-width:750px){.spatial-gallery-controls{display:none}}
+@media(max-width:600px){.spatial-gallery-copy{width:100%}}
 
 .spatial-gallery-stage{position:relative;isolation:isolate}
 .spatial-gallery-ambient{position:absolute;inset:0;z-index:0;pointer-events:none}
@@ -2274,7 +2283,7 @@ html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="square"][
 .article-section[data-block-width="page"]{max-width:none}
 /* Body images and videos are plain figures: they keep their own proportions at whatever width the block sets. */
 .block-media{margin:var(--space-text-media) 0 0}
-.block-media :is(img,video){display:block;width:100%;height:auto;border-radius:var(--radius-visual)}
+.block-media :is(img,video){display:block;width:100%;height:auto;border-radius:var(--image-rounding)}
 .block-media .block-caption{margin:var(--space-3) 0 0;line-height:var(--line-height-body)}
 .block-caption-title{display:block;color:var(--ink);font-weight:var(--font-weight-strong)}
 .page-block-group+.page-block-group,.page-block-group+.article-section,.article-section+.page-block-group{margin-top:var(--space-page-rhythm-sm)}
@@ -2648,6 +2657,17 @@ html[data-detail-ratio-layout] .surface.detail[data-card-orientation]:not(.text-
 @media(max-width:750px){.surface.detail .description>.detail-facts{grid-template-columns:minmax(0,1fr)}}
 .surface.detail .description>.detail-facts>.detail-fact{grid-column:auto}
 
+/* media-reveal.css */
+/* Media reveal (Settings → Images → Fade images in). An image fades in when its bytes arrive; one below the fold
+   waits (data-media-waiting) until it scrolls into view, so content arrives softly the first time someone scrolls.
+   media-loading.js sets the attributes. An animation rather than a transition, so each image keeps its own
+   transitions (hover zoom, morphs). Timing follows the house enter curve. */
+@keyframes media-reveal{from{opacity:0}}
+:root[data-media-reveal="on"] img[data-media-waiting]{opacity:0}
+:root[data-media-reveal="on"] img[data-media-fade]{animation:media-reveal var(--duration-media-reveal) var(--ease-settle) both}
+:root[data-animation="off"] img[data-media-fade]{animation:none}
+@media(prefers-reduced-motion:reduce){img[data-media-fade]{animation:none}}
+
 /* menu-controls.css */
 /* Two persistent groups share the same icon switch and glass colour tokens. */
 :root{--nav-icon-size:36px;--touch-icon-size:44px;--radius-icon-control:50%;--control-glass-inset:5px}
@@ -2674,6 +2694,17 @@ html[data-detail-ratio-layout] .surface.detail[data-card-orientation]:not(.text-
 #interactionFeedback{position:fixed;inset:auto 24px 24px auto;transform:none;z-index:150;max-width:min(320px,calc(100vw - 32px));padding:12px 16px;border-radius:16px;border:1px solid color-mix(in oklch,var(--ink) 7%,transparent);background:color-mix(in oklch,var(--page) 75%,transparent);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 8px 32px #0000000a;font-size:var(--font-size-small);line-height:var(--line-height-label);color:var(--body-ink);pointer-events:none}
 #interactionFeedback[hidden]{display:none}
 @media(max-width:600px){#interactionFeedback{right:16px;bottom:calc(var(--nav-height) + var(--dock-bottom,20px) + 16px)}}
+/* Control size: nav items, footer and contact pills, rail and carousel arrows and glass buttons share one height.
+   Phones keep the touch size from mobile.css. */
+@media(min-width:651px){
+ :root[data-control-size="sm"]{--nav-icon-size:var(--control-size-sm)}
+ :root[data-control-size="md"]{--nav-icon-size:var(--control-size-md)}
+ :root[data-control-size="lg"]{--nav-icon-size:var(--control-size-lg)}
+ :root:is([data-control-size="sm"],[data-control-size="md"],[data-control-size="lg"]) #dock{--nav-height:calc(var(--nav-icon-size) + 2 * var(--control-glass-inset))}
+ :root:is([data-control-size="sm"],[data-control-size="md"],[data-control-size="lg"]) :is(.glass-utility-button,button.detail-media-action){min-height:var(--nav-icon-size);padding-block:0}
+ :root:is([data-control-size="sm"],[data-control-size="md"],[data-control-size="lg"]) :is(.spatial-gallery-controls button,.corner-controls #settingsToggle,header #settingsToggle,#askToggle){width:var(--nav-icon-size);height:var(--nav-icon-size)}
+ :root:is([data-control-size="sm"],[data-control-size="md"],[data-control-size="lg"]) .footer-links :is(a,button){height:var(--nav-icon-size);padding-block:0}
+}
 
 /* composer-controls.css */
 :is(#dock,.assistant-inline-composer) .composer-draft{position:relative;display:block;flex:1 1 auto;min-width:0;height:100%}

@@ -29,5 +29,5 @@ assert.equal(tracked.length,4,'The logo animations belong to the transition too'
 calls.length=0;parts['.hero-logos'].hidden=true;revealHomeHero(root,control,400);assert(!calls.some(call=>call.name==='logo'||call.name==='strip'),'A hidden strip is not revealed');
 
 const app=await readFile(new URL('../dist/app.js',import.meta.url),'utf8');
-assert(app.includes('if(restoreReturningHome)tasks.push(...revealHomeHero(main,activeTransition,duration*(slow?2.5:1)));'),'Only an animated return from a project runs it');
+assert(app.includes('if(restoreReturningHome)tasks.push(...revealHomeHero(main,activeTransition,duration*(slow?2.5:1),{stream:!pageSlide&&!reduce.matches}));'),'Only an animated return from a project runs it, streaming the heading unless Page slide is on');
 console.log('Home hero return passed: top-down stagger mirroring the exit, logos staggered last, hidden badge skipped, tracked by the transition.');

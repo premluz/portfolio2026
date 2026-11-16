@@ -31,8 +31,8 @@
       "mediaId": "gala-cover"
     }
   ],
-  "context": "Film and music ecosystem where creators monetise their work directly and reward participating fans.",
-  "role": "Product designer dedicated to Gala Film from 0→1, with supporting work across Gala Music and the broader ecosystem. Worked across UX, UI, motion and front-end as priorities shifted.",
+  "context": "Web3 ecosystems where creators monetise their work directly and reward participating fans.",
+  "role": "Product designer dedicated to Gala Film from 0→1, with supporting work across Gala Music and the broader ecosystem. Worked across UX, UI, web, digital, motion and front-end as priorities shifted.",
   "highlights": "End-to-end design across 0 → 1 → Growth and continuous improvements",
   "keyWork": "Designed retention mechanics and creator publishing, validated key concepts with users and maintained a live architecture spanning 15+ interconnected flows across design, product and engineering.",
   "impact": "MVP launched across film and music • Blockchain mechanics surfaced without Web3 terminology • Reward concepts validated • Creator publishing moved toward self-service",
@@ -50,13 +50,29 @@
         "columns": 2,
         "mediaFit": "contain"
       }
+    },
+    {
+      "id": "galachain-assets-row-1",
+      "type": "section",
+      "title": "",
+      "layout": {"columns": 2},
+      "items": [
+        {"id": "galachain-asset-1", "type": "image", "mediaId": "gala-asset-01", "title": "", "caption": "", "layout": {"span": 2, "width": "page"}},
+        {"id": "galachain-asset-2", "type": "image", "mediaId": "gala-asset-02", "title": "", "caption": ""},
+        {"id": "galachain-asset-3", "type": "image", "mediaId": "gala-asset-03", "title": "", "caption": ""},
+        {"id": "galachain-asset-4", "type": "image", "mediaId": "gala-asset-04", "title": "", "caption": "", "layout": {"span": 2, "width": "page"}},
+        {"id": "galachain-asset-5", "type": "image", "mediaId": "gala-asset-05", "title": "", "caption": "", "layout": {"span": 2, "width": "page"}},
+        {"id": "galachain-asset-6", "type": "image", "mediaId": "gala-asset-06", "title": "", "caption": "", "layout": {"span": 2, "width": "page"}},
+        {"id": "galachain-asset-7", "type": "image", "mediaId": "gala-asset-07", "title": "", "caption": ""},
+        {"id": "galachain-asset-8", "type": "image", "mediaId": "gala-asset-08", "title": "", "caption": ""}
+      ]
     }
   ],
   "featured": false,
   "client": "Gala",
   "pageTitle": "Designed Web3 film platform rewarding creators and fans.",
   "intro": "I designed a decentralised entertainment platform where fans could watch, collect and earn while creators could publish and monetise directly.",
-  "challenge": "Make unfamiliar Web3 concepts disappear into familiar consumer and creator workflows while inventing ownership, monetisation and distribution models from scratch.",
+  "challenge": "",
   "hoverVideoId": "gala-walkthrough",
   "watchPrototype": {
     "label": "Launch reel",

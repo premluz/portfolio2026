@@ -31,7 +31,7 @@ export function handoffImage(image,visual,{beforeReveal=()=>{}}={}){
  handoffs.get(visual)?.dispose();
  let gate,observer,dead=false;
  const sync=()=>{if(sameImageAsset({originalSrc:image.dataset?.originalImage,src:candidate(image)},target))for(const key of ['position','left','top','width','height','borderRadius','clipPath'])image.style[key]=target.style[key]||'';};
- image.classList.add('morph-image-bridge');image.removeAttribute('data-media-pending');
+ image.classList.add('morph-image-bridge');for(const key of ['data-media-pending','data-media-waiting','data-media-fade'])image.removeAttribute(key);
  image.style.setProperty('visibility','visible','important');image.style.setProperty('opacity','1','important');image.style.zIndex='3';
  visual.append(image);sync();
  const dispose=()=>{if(dead)return;dead=true;gate?.dispose();observer?.disconnect();image.remove();if(handoffs.get(visual)?.image===image)handoffs.delete(visual);};
@@ -39,7 +39,7 @@ export function handoffImage(image,visual,{beforeReveal=()=>{}}={}){
  if(typeof ResizeObserver!=='undefined'){observer=new ResizeObserver(sync);observer.observe(visual);}
  gate=new ImageDecodeGate(target,()=>{
   if(dead)return;if(visual.isConnected===false){dispose();return;}
-  target.removeAttribute('data-media-pending');beforeReveal();dispose();
+  for(const key of ['data-media-pending','data-media-waiting','data-media-fade'])target.removeAttribute(key);beforeReveal();dispose();
  });
  return dispose;
 }

@@ -23,3 +23,14 @@
 #interactionFeedback{position:fixed;inset:auto 24px 24px auto;transform:none;z-index:150;max-width:min(320px,calc(100vw - 32px));padding:12px 16px;border-radius:16px;border:1px solid color-mix(in oklch,var(--ink) 7%,transparent);background:color-mix(in oklch,var(--page) 75%,transparent);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 8px 32px #0000000a;font-size:var(--font-size-small);line-height:var(--line-height-label);color:var(--body-ink);pointer-events:none}
 #interactionFeedback[hidden]{display:none}
 @media(max-width:600px){#interactionFeedback{right:16px;bottom:calc(var(--nav-height) + var(--dock-bottom,20px) + 16px)}}
+/* Control size: nav items, footer and contact pills, rail and carousel arrows and glass buttons share one height.
+   Phones keep the touch size from mobile.css. */
+@media(min-width:651px){
+ :root[data-control-size="sm"]{--nav-icon-size:var(--control-size-sm)}
+ :root[data-control-size="md"]{--nav-icon-size:var(--control-size-md)}
+ :root[data-control-size="lg"]{--nav-icon-size:var(--control-size-lg)}
+ :root:is([data-control-size="sm"],[data-control-size="md"],[data-control-size="lg"]) #dock{--nav-height:calc(var(--nav-icon-size) + 2 * var(--control-glass-inset))}
+ :root:is([data-control-size="sm"],[data-control-size="md"],[data-control-size="lg"]) :is(.glass-utility-button,button.detail-media-action){min-height:var(--nav-icon-size);padding-block:0}
+ :root:is([data-control-size="sm"],[data-control-size="md"],[data-control-size="lg"]) :is(.spatial-gallery-controls button,.corner-controls #settingsToggle,header #settingsToggle,#askToggle){width:var(--nav-icon-size);height:var(--nav-icon-size)}
+ :root:is([data-control-size="sm"],[data-control-size="md"],[data-control-size="lg"]) .footer-links :is(a,button){height:var(--nav-icon-size);padding-block:0}
+}

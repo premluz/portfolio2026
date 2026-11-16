@@ -3,6 +3,8 @@
 import {EASE,DURATION} from './motion-tokens.js';
 import {stageMotion} from './motion-viewport.js';
 import {holdHeroLogoPhase,staggerHeroLogos} from './hero-logos.js';
+import {streamEdgeText} from './text-stream-edge.js';
+import {headingRevealOptions,readTextEffects} from './text-effects-settings.js';
 export function fadeHomeChrome(layer,control,duration){
  const promises=[],fade=(node,delay=0)=>promises.push(control.track(node.animate([{opacity:getComputedStyle(node).opacity||'1'},{opacity:0}],{duration:duration*.4,delay,easing:EASE.leave,fill:'both'})).finished);
  for(const hero of layer.querySelectorAll('.home-hero')){
@@ -18,19 +20,40 @@ export function fadeHomeChrome(layer,control,duration){
 }
 // Going back, the hero returns as it left, reversed: top-down, the badge, the heading, the description, then the
 // logo strip, whose logos stagger in left to right, with the same step and length as the exit. fill 'backwards' keeps each line hidden until its step begins.
-// It starts once the project's departing title has faded, so the two headings never overlap.
-export function revealHomeHero(root,control,duration){
- const promises=[],step=duration*.12,start=duration*DURATION.returnCopyFade;
+// It starts once the project's departing title has faded, so the two headings never overlap. With stream, the heading
+// arrives through the Heading reveal stream instead of a fade, as a project title does.
+export function revealHomeHero(root,control,duration,{stream=false,start=duration*DURATION.returnCopyFade}={}){
+ const promises=[],step=duration*.12;
  for(const hero of root.querySelectorAll('.home-hero')){
-  const logos=hero.querySelector('.hero-logos'),nodes=[hero.querySelector('.badge'),hero.querySelector('h1'),hero.querySelector('[data-hero-copy]'),logos].filter(node=>node&&!node.hidden);
+  const logos=hero.querySelector('.hero-logos'),heading=hero.querySelector('h1'),nodes=[hero.querySelector('.badge'),heading,hero.querySelector('[data-hero-copy]'),logos].filter(node=>node&&!node.hidden);
   nodes.forEach((node,index)=>{
    const timing={duration:duration*.4,delay:start+index*step};
    if(node===logos)promises.push(...staggerHeroLogos(node,{...timing,track:animation=>control.track(animation)}));
+   else if(node===heading&&stream)promises.push(streamHeading(node,timing.delay));
    else promises.push(control.track(node.animate([{opacity:0},{opacity:1}],{...timing,easing:EASE.settle,fill:'backwards'})).finished);
   });
  }
  return promises;
 }
+// The stream rewrites the heading as plain text, so its own markup (the greeting span) comes back when it settles.
+const streams=new Set();
+function streamHeading(heading,delay){
+ const markup=heading.innerHTML,text=heading.textContent.replace(/\s+/g,' ').trim(),opacity=heading.style.opacity;
+ heading.style.opacity='0';
+ return new Promise(resolve=>{
+  const entry={finish:null,timer:0};
+  const settle=()=>{streams.delete(entry);heading.innerHTML=markup;heading.removeAttribute('aria-busy');resolve();};
+  entry.timer=setTimeout(()=>{
+   heading.style.opacity=opacity;
+   const {style,timing}=headingRevealOptions(readTextEffects());
+   entry.finish=streamEdgeText(heading,text,{style,timing,onComplete:settle});
+  },delay);
+  entry.settleEarly=()=>{clearTimeout(entry.timer);heading.style.opacity=opacity;if(entry.finish)entry.finish();else settle();};
+  streams.add(entry);
+ });
+}
+// A page change mid-stream settles the heading at once, so a retained or reused hero never keeps a half-written title.
+export function settleHomeHeadingStreams(){for(const entry of [...streams])entry.settleEarly();}
 export function retainHome(main,images){
  const rect=main.getBoundingClientRect(),style=getComputedStyle(main),className=main.className;
  const sticky=[...main.querySelectorAll('.home-hero')].filter(node=>getComputedStyle(node).position==='sticky').map(node=>({node,rect:node.getBoundingClientRect(),css:node.style.cssText}));

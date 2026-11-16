@@ -14,7 +14,7 @@
 .article-section[data-block-width="page"]{max-width:none}
 /* Body images and videos are plain figures: they keep their own proportions at whatever width the block sets. */
 .block-media{margin:var(--space-text-media) 0 0}
-.block-media :is(img,video){display:block;width:100%;height:auto;border-radius:var(--radius-visual)}
+.block-media :is(img,video){display:block;width:100%;height:auto;border-radius:var(--image-rounding)}
 .block-media .block-caption{margin:var(--space-3) 0 0;line-height:var(--line-height-body)}
 .block-caption-title{display:block;color:var(--ink);font-weight:var(--font-weight-strong)}
 .page-block-group+.page-block-group,.page-block-group+.article-section,.article-section+.page-block-group{margin-top:var(--space-page-rhythm-sm)}

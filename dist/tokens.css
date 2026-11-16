@@ -36,6 +36,7 @@
   --duration-toast-out: 200ms;
   --duration-tooltip-arrive: 240ms;
   --duration-detail-reveal: 220ms;
+  --duration-media-reveal: 420ms;
   --duration-logo-strip-loop: 60s;
   --duration-text-caret: 1s;
   /* The home heading fades in for about 400ms after boot; its glimmer waits until it is fully there. */
@@ -99,9 +100,12 @@
   --header-swap-step: 60ms;
   --header-swap-shift: 12px;
   --nav-rounding: 24px;
-  --nav-item-padding: 9px;
-  --nav-item-font-size: 12px;
+  --nav-item-padding: 4px;
   --nav-container-padding: 0px;
+  /* Settings → Control size: one height for nav items, buttons and arrows. */
+  --control-size-sm: 32px;
+  --control-size-md: 36px;
+  --control-size-lg: 44px;
   --nav-height: 48px;
   --nav-main-width: 252px;
   --nav-context-width: 120px;
@@ -137,6 +141,8 @@
   --glass-button-blur: 20px;
   --glass-button-press-scale: .92;
   --card-hover-scale: .985;
+  /* Project cards lift on hover so they read as raised above their neighbours; controls keep the slight press above. */
+  --card-lift-scale: 1.015;
   --card-press-scale: .97;
   --card-hover-duration: 300ms;
   --card-press-in-duration: 160ms;

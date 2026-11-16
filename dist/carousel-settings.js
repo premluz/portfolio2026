@@ -4,7 +4,7 @@ export const carouselControls=Object.freeze({
  spread:{value:100,min:60,max:180,unit:'%'},
  depth:{value:100,min:0,max:200,unit:'%'},
  size:{value:100,min:70,max:130,unit:'%'},
- gap:{value:32,min:8,max:96,unit:'px'},
+ gap:{value:32,min:0,max:96,unit:'px'},
  peek:{value:12,min:0,max:32,unit:'px'},
  speed:{value:100,min:25,max:200,unit:'%'}
 });

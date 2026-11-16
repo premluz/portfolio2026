@@ -202,7 +202,7 @@
       "type": "portfolio-item",
       "status": "published",
       "slug": "thebodyshop",
-      "title": "Rebuilt a global beauty brand's online store as a responsive, accessible, touch-friendly experience",
+      "title": "Revamped a global online store as a responsive, accessible experience",
       "pageTitle": "Designed a responsive eCommerce experience and brand identity for The Body Shop",
       "name": "Responsive eCommerce",
       "client": "The Body Shop",
@@ -234,7 +234,7 @@
       "heroMediaId": "thebodyshop-cover",
       "intro": "The high-street beauty brand wanted to revitalise its positioning and identity, launching a new responsive eCommerce site with an entirely new UX and brand identity.",
       "context": "Founded in 1976 in Brighton, England, by Anita Roddick, The Body Shop is a global beauty brand with 3,048 stores across 63 markets, one of the world's largest masstige cosmetics networks. It offers high-quality, naturally-inspired skincare, hair care and make-up produced ethically and sustainably. Its target customer is men and women aged 16 to 60, and the company was looking to reignite the brand and take back market share in cosmetics.",
-      "challenge": "Reflect a fresh brand identity with a focus on the brand's core, its natural products, in a site whose user journey is built around sustainably sourced ingredients and supported communities. Content had to be mobile-first, so the most valuable information was immediately available while deeper details stayed easy to reach, all on rapid commercial timeframes.",
+      "challenge": "",
       "role": "Translated wireframes into clean, minimal visual interface designs and applied the visual branding guidelines. Joined creative reviews with the International eCommerce director and manager and the internal delivery team, presenting concepts and amends in InVision prototypes. Worked with web developers on technology parameters and the feasibility of rich UI layouts and touch interactions.",
       "keyWork": "Prioritised content mobile-first across the key journeys: home, product category, listing and detail (two types), ingredients, account, bag and a four-step checkout. Produced engaging creative content for core brand stories, with UX and UI solutions for a clean, linear user journey. Proposed the Enrich Not Exploit commitment pages and an interactive biodiversity map, showcasing the brand's transparent business practices and progress towards its targets.",
       "impact": "Project live Q2 2016 • New responsive UX and brand identity on Hybris CMS • BOOST landing pages and Hybris templates delivered • Enrich Not Exploit commitment launched in 2016 with 14 targets to achieve by 2020",
@@ -265,11 +265,11 @@
       "type": "portfolio-item",
       "status": "published",
       "slug": "vodafone-travel",
-      "title": "Launched a travel eSIM from zero, so travellers get online in minutes in 200+ countries",
+      "title": "Launched a travel eSIM from zero, so travellers get online in minutes",
       "pageTitle": "Designed and launched Vodafone Travel, a new eSIM product for international travellers",
       "name": "Travel eSIM",
       "client": "Vodafone",
-      "summary": "0 → 1 product • 200+ countries • Web design • Brand • Marketing",
+      "summary": "0 → 1 product • Web design • Brand • Marketing",
       "category": "Travel eSIM · Telecoms",
       "kind": "shipped",
       "year": "2019",
@@ -296,19 +296,77 @@
       ],
       "heroMediaId": "vodafone-travel-cover",
       "intro": "Vodafone Travel lets international travellers buy and install prepaid data plans straight onto an eSIM-compatible phone, without a physical SIM card.",
-      "context": "A new digital product from Vodafone's Travel Mobility team. It covers more than 200 countries and regions, with 5G in supported locations. Data-only plans run from 1 GB to 150 GB and last up to 90 days. The eSIM runs alongside the traveller's main SIM, so they keep their usual number for calls and messages.",
-      "challenge": "Build and launch a new product from zero on a very tight timeframe. eSIM was unfamiliar to most travellers, so buying a plan, installing it and keeping the main number had to feel simple and trustworthy before anyone left home.",
+      "context": "A new digital product from Vodafone's Travel Mobility team. It covers more than 40 countries, with 5G in supported locations. Data-only plans run from 1 GB to 150 GB and last up to 90 days. The eSIM runs alongside the traveller's main SIM, so they keep their usual number for calls and messages.",
+      "challenge": "",
       "role": "Owned design and drove the process end to end, from discovery through ideation and design to development. Planned the work, managed stakeholders and communicated the design aspiration, making sure user needs shaped the final implementation.",
       "keyWork": "Designed the web experience, UI and brand expression for the new product, along with the marketing pages that introduce it. Shaped a short journey: choose a destination, pick a plan, then activate in minutes with a QR code or the app. Brought SEO insights and accessibility reviews into the design so the product could be found and used by everyone.",
-      "impact": "New product launched from zero on a tight timeframe • Instant setup by QR code or app • Coverage in 200+ countries with 5G where supported • SEO and accessibility built into the design",
-      "highlights": "0 → 1 launch · 200+ countries · Web design, brand and marketing",
+      "impact": "New product launched from zero on a tight timeframe • Instant setup by QR code or app • Coverage in 40+ countries with 5G where supported • SEO and accessibility built into the design",
+      "highlights": "0 → 1 launch · 40+ countries · Web design, brand and marketing",
       "featured": false,
-      "blocks": [],
+      "blocks": [
+        {
+          "id": "vodafone-travel-assets-row-1",
+          "type": "section",
+          "title": "",
+          "layout": {
+            "columns": 2
+          },
+          "items": [
+            {
+              "id": "vodafone-travel-asset-1",
+              "type": "image",
+              "mediaId": "vodtra-asset-01",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            },
+            {
+              "id": "vodafone-travel-asset-2",
+              "type": "image",
+              "mediaId": "vodtra-asset-02",
+              "title": "",
+              "caption": ""
+            },
+            {
+              "id": "vodafone-travel-asset-3",
+              "type": "image",
+              "mediaId": "vodtra-asset-03",
+              "title": "",
+              "caption": ""
+            },
+            {
+              "id": "vodafone-travel-asset-4",
+              "type": "image",
+              "mediaId": "vodtra-asset-04",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            },
+            {
+              "id": "vodafone-travel-asset-5",
+              "type": "image",
+              "mediaId": "vodtra-asset-05",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            }
+          ]
+        }
+      ],
       "evidence": [
         {
           "id": "highlights",
           "kind": "statement",
-          "text": "0 → 1 launch · 200+ countries · Web design, brand and marketing",
+          "text": "0 → 1 launch · 40+ countries · Web design, brand and marketing",
           "provenance": {
             "kind": "author-provided"
           }
@@ -316,7 +374,7 @@
         {
           "id": "impact",
           "kind": "statement",
-          "text": "New product launched from zero on a tight timeframe • Instant setup by QR code or app • Coverage in 200+ countries with 5G where supported • SEO and accessibility built into the design",
+          "text": "New product launched from zero on a tight timeframe • Instant setup by QR code or app • Coverage in 40+ countries with 5G where supported • SEO and accessibility built into the design",
           "provenance": {
             "kind": "author-provided"
           }
@@ -643,7 +701,7 @@
         {
           "id": "tracr-assets-row-1",
           "type": "section",
-          "title": "Assets",
+          "title": "",
           "layout": {
             "columns": 2
           },
@@ -652,8 +710,8 @@
               "id": "tracr-asset-1",
               "type": "image",
               "mediaId": "tracr-asset-01",
-              "title": "Example title",
-              "caption": "Example description under the image.",
+              "title": "",
+              "caption": "",
               "layout": {
                 "span": 2,
                 "width": "page"
@@ -663,22 +721,22 @@
               "id": "tracr-asset-2",
               "type": "image",
               "mediaId": "tracr-asset-02",
-              "title": "Example title",
-              "caption": "Example description under the image."
+              "title": "",
+              "caption": ""
             },
             {
               "id": "tracr-asset-3",
               "type": "image",
               "mediaId": "tracr-asset-03",
-              "title": "Example title",
-              "caption": "Example description under the image."
+              "title": "",
+              "caption": ""
             },
             {
               "id": "tracr-asset-4",
               "type": "image",
               "mediaId": "tracr-asset-04",
-              "title": "Example title",
-              "caption": "Example description under the image.",
+              "title": "",
+              "caption": "",
               "layout": {
                 "span": 2,
                 "width": "page"
@@ -765,8 +823,8 @@
           "mediaId": "gala-cover"
         }
       ],
-      "context": "Film and music ecosystem where creators monetise their work directly and reward participating fans.",
-      "role": "Product designer dedicated to Gala Film from 0→1, with supporting work across Gala Music and the broader ecosystem. Worked across UX, UI, motion and front-end as priorities shifted.",
+      "context": "Web3 ecosystems where creators monetise their work directly and reward participating fans.",
+      "role": "Product designer dedicated to Gala Film from 0→1, with supporting work across Gala Music and the broader ecosystem. Worked across UX, UI, web, digital, motion and front-end as priorities shifted.",
       "highlights": "End-to-end design across 0 → 1 → Growth and continuous improvements",
       "keyWork": "Designed retention mechanics and creator publishing, validated key concepts with users and maintained a live architecture spanning 15+ interconnected flows across design, product and engineering.",
       "impact": "MVP launched across film and music • Blockchain mechanics surfaced without Web3 terminology • Reward concepts validated • Creator publishing moved toward self-service",
@@ -784,13 +842,95 @@
             "columns": 2,
             "mediaFit": "contain"
           }
+        },
+        {
+          "id": "galachain-assets-row-1",
+          "type": "section",
+          "title": "",
+          "layout": {
+            "columns": 2
+          },
+          "items": [
+            {
+              "id": "galachain-asset-1",
+              "type": "image",
+              "mediaId": "gala-asset-01",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            },
+            {
+              "id": "galachain-asset-2",
+              "type": "image",
+              "mediaId": "gala-asset-02",
+              "title": "",
+              "caption": ""
+            },
+            {
+              "id": "galachain-asset-3",
+              "type": "image",
+              "mediaId": "gala-asset-03",
+              "title": "",
+              "caption": ""
+            },
+            {
+              "id": "galachain-asset-4",
+              "type": "image",
+              "mediaId": "gala-asset-04",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            },
+            {
+              "id": "galachain-asset-5",
+              "type": "image",
+              "mediaId": "gala-asset-05",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            },
+            {
+              "id": "galachain-asset-6",
+              "type": "image",
+              "mediaId": "gala-asset-06",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            },
+            {
+              "id": "galachain-asset-7",
+              "type": "image",
+              "mediaId": "gala-asset-07",
+              "title": "",
+              "caption": ""
+            },
+            {
+              "id": "galachain-asset-8",
+              "type": "image",
+              "mediaId": "gala-asset-08",
+              "title": "",
+              "caption": ""
+            }
+          ]
         }
       ],
       "featured": false,
       "client": "Gala",
       "pageTitle": "Designed Web3 film platform rewarding creators and fans.",
       "intro": "I designed a decentralised entertainment platform where fans could watch, collect and earn while creators could publish and monetise directly.",
-      "challenge": "Make unfamiliar Web3 concepts disappear into familiar consumer and creator workflows while inventing ownership, monetisation and distribution models from scratch.",
+      "challenge": "",
       "hoverVideoId": "gala-walkthrough",
       "watchPrototype": {
         "label": "Launch reel",
@@ -1249,6 +1389,12 @@
           },
           "items": [
             {
+              "id": "home-project-galachain",
+              "type": "reference",
+              "documentId": "galachain",
+              "presentation": "card"
+            },
+            {
               "id": "home-project-vodafone-travel",
               "type": "reference",
               "documentId": "vodafone-travel",
@@ -1270,12 +1416,6 @@
               "id": "home-project-playstation",
               "type": "reference",
               "documentId": "playstation",
-              "presentation": "card"
-            },
-            {
-              "id": "home-project-galachain",
-              "type": "reference",
-              "documentId": "galachain",
               "presentation": "card"
             },
             {
@@ -1340,9 +1480,9 @@
         {
           "id": "footer-invitation",
           "type": "info-card",
-          "title": "Building something\ncomplex?",
+          "title": "Let's connect",
           "paragraphs": [
-            "Let's make it happen"
+            "Request full cases, discuss a project or just say hi. I’m always happy to connect with other designers, engineers, and product people."
           ]
         }
       ]
@@ -2446,7 +2586,7 @@
       "id": "tracr-asset-01",
       "type": "image",
       "status": "published",
-      "url": "assets/ui/tracr/tracr-asset-01.png",
+      "url": "assets/ui/tracr/trac-asset-01.png",
       "alt": "Tracr platform interface, screen 1",
       "width": 3200,
       "height": 2400
@@ -2455,7 +2595,7 @@
       "id": "tracr-asset-02",
       "type": "image",
       "status": "published",
-      "url": "assets/ui/tracr/tracr-asset-02.png",
+      "url": "assets/ui/tracr/trac-asset-02.png",
       "alt": "Tracr platform interface, screen 2",
       "width": 3200,
       "height": 2400
@@ -2464,7 +2604,7 @@
       "id": "tracr-asset-03",
       "type": "image",
       "status": "published",
-      "url": "assets/ui/tracr/tracr-asset-03.png",
+      "url": "assets/ui/tracr/trac-asset-03.png",
       "alt": "Tracr platform interface, screen 3",
       "width": 3200,
       "height": 2400
@@ -2473,8 +2613,53 @@
       "id": "tracr-asset-04",
       "type": "image",
       "status": "published",
-      "url": "assets/ui/tracr/tracr-asset-04.png",
+      "url": "assets/ui/tracr/trac-asset-04.png",
       "alt": "Tracr platform interface, screen 4",
+      "width": 3200,
+      "height": 2400
+    },
+    {
+      "id": "vodtra-asset-01",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/vodafonetravel/vodtra-asset-01.png",
+      "alt": "Vodafone Travel eSIM interface, screen 1",
+      "width": 3200,
+      "height": 2400
+    },
+    {
+      "id": "vodtra-asset-02",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/vodafonetravel/vodtra-asset-02.png",
+      "alt": "Vodafone Travel eSIM interface, screen 2",
+      "width": 3200,
+      "height": 2400
+    },
+    {
+      "id": "vodtra-asset-03",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/vodafonetravel/vodtra-asset-03.png",
+      "alt": "Vodafone Travel eSIM interface, screen 3",
+      "width": 3200,
+      "height": 2400
+    },
+    {
+      "id": "vodtra-asset-04",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/vodafonetravel/vodtra-asset-04.png",
+      "alt": "Vodafone Travel eSIM interface, screen 4",
+      "width": 3200,
+      "height": 2400
+    },
+    {
+      "id": "vodtra-asset-05",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/vodafonetravel/vodtra-asset-05.png",
+      "alt": "Vodafone Travel eSIM interface, screen 5",
       "width": 3200,
       "height": 2400
     },
@@ -2812,6 +2997,78 @@
       "height": 720
     },
     {
+      "id": "gala-asset-01",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/gala/gala-asset-01.png",
+      "alt": "Gala Film platform interface, screen 1",
+      "width": 3200,
+      "height": 2200
+    },
+    {
+      "id": "gala-asset-02",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/gala/gala-asset-02.png",
+      "alt": "Gala Film platform interface, screen 2",
+      "width": 3200,
+      "height": 2200
+    },
+    {
+      "id": "gala-asset-03",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/gala/gala-asset-03.png",
+      "alt": "Gala Film platform interface, screen 3",
+      "width": 3200,
+      "height": 2200
+    },
+    {
+      "id": "gala-asset-04",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/gala/gala-asset-04.png",
+      "alt": "Gala Film platform interface, screen 4",
+      "width": 3200,
+      "height": 2382
+    },
+    {
+      "id": "gala-asset-05",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/gala/gala-asset-05.png",
+      "alt": "Gala Film platform interface, screen 5",
+      "width": 3200,
+      "height": 2200
+    },
+    {
+      "id": "gala-asset-06",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/gala/gala-asset-06.png",
+      "alt": "Gala Film platform interface, screen 6",
+      "width": 3200,
+      "height": 2993
+    },
+    {
+      "id": "gala-asset-07",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/gala/gala-asset-07.png",
+      "alt": "Gala Film platform interface, screen 7",
+      "width": 3200,
+      "height": 2435
+    },
+    {
+      "id": "gala-asset-08",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/gala/gala-asset-08.png",
+      "alt": "Gala Film platform interface, screen 8",
+      "width": 3200,
+      "height": 2435
+    },
+    {
       "id": "merlin-bg",
       "type": "image",
       "status": "published",
@@ -3063,23 +3320,13 @@
           "featured": false
         },
         {
-          "id": "bastion",
-          "documentId": "bastion",
-          "featured": true
-        },
-        {
-          "id": "tracr",
-          "documentId": "tracr",
-          "featured": true
-        },
-        {
           "id": "vodafone-travel",
           "documentId": "vodafone-travel",
           "featured": true
         },
         {
-          "id": "vodafone-iot",
-          "documentId": "vodafone-iot",
+          "id": "tracr",
+          "documentId": "tracr",
           "featured": true
         },
         {
@@ -3090,6 +3337,16 @@
         {
           "id": "playstation",
           "documentId": "playstation",
+          "featured": true
+        },
+        {
+          "id": "bastion",
+          "documentId": "bastion",
+          "featured": true
+        },
+        {
+          "id": "vodafone-iot",
+          "documentId": "vodafone-iot",
           "featured": true
         },
         {
