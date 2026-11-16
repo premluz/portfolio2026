@@ -56,6 +56,19 @@
         "columns": 2,
         "mediaFit": "contain"
       }
+    },
+    {
+      "id": "merlin-assets-row-1",
+      "type": "section",
+      "title": "",
+      "layout": {"columns": 2},
+      "items": [
+        {"id": "merlin-asset-1", "type": "image", "mediaId": "merlin-asset-01", "title": "", "caption": "", "layout": {"span": 2, "width": "page"}},
+        {"id": "merlin-asset-2", "type": "image", "mediaId": "merlin-asset-02", "title": "", "caption": ""},
+        {"id": "merlin-asset-3", "type": "image", "mediaId": "merlin-asset-03", "title": "", "caption": ""},
+        {"id": "merlin-asset-4", "type": "image", "mediaId": "merlin-asset-04", "title": "", "caption": "", "layout": {"span": 2, "width": "page"}},
+        {"id": "merlin-asset-5", "type": "image", "mediaId": "merlin-asset-05", "title": "", "caption": "", "layout": {"span": 2, "width": "page"}}
+      ]
     }
   ],
   "prototype": {

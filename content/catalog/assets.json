@@ -191,6 +191,83 @@
     "alt": ""
   },
   {
+    "id": "playstation-asset-00",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/playstation/playstation-asset-00.png",
+    "alt": "PlayStation publishing pipeline interface, screen 0"
+  },
+  {
+    "id": "playstation-asset-01",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/playstation/playstation-asset-01.png",
+    "alt": "PlayStation publishing pipeline interface, screen 1"
+  },
+  {
+    "id": "playstation-asset-02",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/playstation/playstation-asset-02.png",
+    "alt": "PlayStation publishing pipeline interface, screen 2"
+  },
+  {
+    "id": "playstation-asset-03",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/playstation/playstation-asset-03.png",
+    "alt": "PlayStation publishing pipeline interface, screen 3"
+  },
+  {
+    "id": "playstation-asset-04",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/playstation/playstation-asset-04.png",
+    "alt": "PlayStation publishing pipeline interface, screen 4"
+  },
+  {
+    "id": "playstation-asset-04-1",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/playstation/playstation-asset-04-1.png",
+    "alt": "PlayStation publishing pipeline interface, screen 4 variant"
+  },
+  {
+    "id": "merlin-asset-01",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/merlin/merlin-asset-01.png",
+    "alt": "Merlin financial workbench interface, screen 1"
+  },
+  {
+    "id": "merlin-asset-02",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/merlin/merlin-asset-02.png",
+    "alt": "Merlin financial workbench interface, screen 2"
+  },
+  {
+    "id": "merlin-asset-03",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/merlin/merlin-asset-03.png",
+    "alt": "Merlin financial workbench interface, screen 3"
+  },
+  {
+    "id": "merlin-asset-04",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/merlin/merlin-asset-04.png",
+    "alt": "Merlin financial workbench interface, screen 4"
+  },
+  {
+    "id": "merlin-asset-05",
+    "type": "image",
+    "status": "published",
+    "url": "assets/ui/merlin/merlin-asset-05.png",
+    "alt": "Merlin financial workbench interface, screen 5"
+  },
+  {
     "id": "vodafone-cover",
     "type": "image",
     "status": "published",

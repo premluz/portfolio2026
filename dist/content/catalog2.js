@@ -60,6 +60,63 @@ export const catalog={
             "columns": 2,
             "mediaFit": "contain"
           }
+        },
+        {
+          "id": "merlin-assets-row-1",
+          "type": "section",
+          "title": "",
+          "layout": {
+            "columns": 2
+          },
+          "items": [
+            {
+              "id": "merlin-asset-1",
+              "type": "image",
+              "mediaId": "merlin-asset-01",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            },
+            {
+              "id": "merlin-asset-2",
+              "type": "image",
+              "mediaId": "merlin-asset-02",
+              "title": "",
+              "caption": ""
+            },
+            {
+              "id": "merlin-asset-3",
+              "type": "image",
+              "mediaId": "merlin-asset-03",
+              "title": "",
+              "caption": ""
+            },
+            {
+              "id": "merlin-asset-4",
+              "type": "image",
+              "mediaId": "merlin-asset-04",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            },
+            {
+              "id": "merlin-asset-5",
+              "type": "image",
+              "mediaId": "merlin-asset-05",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            }
+          ]
         }
       ],
       "prototype": {
@@ -436,74 +493,62 @@ export const catalog={
           }
         },
         {
-          "id": "playstation-in-the-product",
+          "id": "playstation-assets-row-1",
           "type": "section",
-          "title": "In the product22",
-          "items": [
-            {
-              "id": "playstation-new-paragraph",
-              "type": "text",
-              "paragraphs": [
-                "Your new paragraph goes here."
-              ]
-            },
-            {
-              "id": "playstation-content-screen",
-              "type": "image",
-              "mediaId": "playstation-content",
-              "alt": "PlayStation Network content management screen for a game release",
-              "title": "PlayStation",
-              "caption": "PlayStation Network content management screen for a game release",
-              "layout": {
-                "width": "page"
-              }
-            },
-            {
-              "id": "playstation-pipeline-intro",
-              "type": "text",
-              "title": "In the product",
-              "paragraphs": [
-                "Unified three regional systems into one publishing workflow and established design foundations across onboarding, international pricing, entitlements and issue management."
-              ]
-            },
-            {
-              "id": "playstation-content-pipeline",
-              "type": "video",
-              "mediaId": "sony-content-pipeline",
-              "posterMediaId": "playstation-content",
-              "layout": {
-                "width": "page"
-              }
-            },
-            {
-              "id": "playstation-pipeline-intro2",
-              "title": "In the product",
-              "type": "text",
-              "paragraphs": [
-                "Unified three regional systems into one publishing workflow and established design foundations across onboarding, international pricing, entitlements and issue management."
-              ]
-            }
-          ]
-        },
-        {
-          "id": "playstation-screens",
-          "type": "section",
+          "title": "",
           "layout": {
-            "columns": 2,
-            "width": "page"
+            "columns": 2
           },
           "items": [
             {
-              "id": "playstation-screen-left",
+              "id": "playstation-asset-1",
               "type": "image",
-              "mediaId": "playstation-content",
-              "alt": "PlayStation Network content management screen for a game release"
+              "mediaId": "playstation-asset-00",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
             },
             {
-              "id": "playstation-screen-right",
+              "id": "playstation-asset-2",
               "type": "image",
-              "mediaId": "tracr-transfer",
-              "alt": "Dark Tracr diamond provenance transfer review interface"
+              "mediaId": "playstation-asset-01",
+              "title": "",
+              "caption": ""
+            },
+            {
+              "id": "playstation-asset-3",
+              "type": "image",
+              "mediaId": "playstation-asset-02",
+              "title": "",
+              "caption": ""
+            },
+            {
+              "id": "playstation-asset-4",
+              "type": "image",
+              "mediaId": "playstation-asset-03",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            },
+            {
+              "id": "playstation-asset-5",
+              "type": "image",
+              "mediaId": "playstation-asset-04",
+              "title": "",
+              "caption": ""
+            },
+            {
+              "id": "playstation-asset-6",
+              "type": "image",
+              "mediaId": "playstation-asset-04-1",
+              "title": "",
+              "caption": ""
             }
           ]
         }
@@ -2771,6 +2816,105 @@ export const catalog={
       "alt": "",
       "width": 1440,
       "height": 900
+    },
+    {
+      "id": "playstation-asset-00",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/playstation/playstation-asset-00.png",
+      "alt": "PlayStation publishing pipeline interface, screen 0",
+      "width": 3200,
+      "height": 2400
+    },
+    {
+      "id": "playstation-asset-01",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/playstation/playstation-asset-01.png",
+      "alt": "PlayStation publishing pipeline interface, screen 1",
+      "width": 3200,
+      "height": 2400
+    },
+    {
+      "id": "playstation-asset-02",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/playstation/playstation-asset-02.png",
+      "alt": "PlayStation publishing pipeline interface, screen 2",
+      "width": 3200,
+      "height": 2400
+    },
+    {
+      "id": "playstation-asset-03",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/playstation/playstation-asset-03.png",
+      "alt": "PlayStation publishing pipeline interface, screen 3",
+      "width": 3200,
+      "height": 2400
+    },
+    {
+      "id": "playstation-asset-04",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/playstation/playstation-asset-04.png",
+      "alt": "PlayStation publishing pipeline interface, screen 4",
+      "width": 3200,
+      "height": 2400
+    },
+    {
+      "id": "playstation-asset-04-1",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/playstation/playstation-asset-04-1.png",
+      "alt": "PlayStation publishing pipeline interface, screen 4 variant",
+      "width": 3200,
+      "height": 2400
+    },
+    {
+      "id": "merlin-asset-01",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/merlin/merlin-asset-01.png",
+      "alt": "Merlin financial workbench interface, screen 1",
+      "width": 3200,
+      "height": 2400
+    },
+    {
+      "id": "merlin-asset-02",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/merlin/merlin-asset-02.png",
+      "alt": "Merlin financial workbench interface, screen 2",
+      "width": 3200,
+      "height": 2400
+    },
+    {
+      "id": "merlin-asset-03",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/merlin/merlin-asset-03.png",
+      "alt": "Merlin financial workbench interface, screen 3",
+      "width": 3200,
+      "height": 2400
+    },
+    {
+      "id": "merlin-asset-04",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/merlin/merlin-asset-04.png",
+      "alt": "Merlin financial workbench interface, screen 4",
+      "width": 3200,
+      "height": 2400
+    },
+    {
+      "id": "merlin-asset-05",
+      "type": "image",
+      "status": "published",
+      "url": "assets/ui/merlin/merlin-asset-05.png",
+      "alt": "Merlin financial workbench interface, screen 5",
+      "width": 3200,
+      "height": 2400
     },
     {
       "id": "vodafone-cover",
