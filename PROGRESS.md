@@ -10,6 +10,15 @@ related: [TASKS.md, PROJECT_STATE.md]
 ---
 # Progress log
 
+## 2026-11-16 Return to Home no longer flashes the project
+- The morph restores its source's visibility when it ends, but the retained project layer is disposed only after `activeTransition.wait()`, so the project surface (hero image, h1) showed for about 2 frames as Home settled. `fadeRest` in `retained-home.js` now also holds the source at opacity 0 through a tracked single-keyframe animation; a reversal returns it to its own opacity.
+- Evidence: per-frame sampling of a Galachain → Home return shows no visible retained surface after the first frame (it was visible at 507 and 516ms before); back then forward mid-return leaves the project at opacity 1. home-return-stage, home-hero-return, morph-video and project-media-focus pass.
+- Risk: card-return-lifecycle now fails on `serviceArtMotions is not defined`, which comes from an owner edit to `cleanup()` in app.js that the test harness doesn't stub. It is unrelated to this fix.
+
+## 2026-11-16 Project slide keeps its ambient glow
+- During a route transition `#main` clipped both axes, cutting the incoming project's ambient glow (it reaches about 170px past main's sides) at main's edge while sliding. It now clips vertically only; html and body already clip sideways, so no horizontal scroll appears.
+- Evidence: mid-slide crop (Rios → Gala) shows a hard edge with the old rule and a continuous glow with the new; scrollWidth equals the viewport mid-slide; 15 transition and style tests pass.
+
 ## 2026-11-16 Dragging a page image no longer sets the room background
 - Chrome reports an image dragged from the page (header avatar, About photos) as a file, so a small drag set it as the room background, saved in IndexedDB. `environment.js` now ignores drops from drags that began on the page.
 - Evidence: synthetic drag from the avatar leaves the room unset; a dropped outside file still sets it.

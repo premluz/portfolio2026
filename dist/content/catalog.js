@@ -387,7 +387,7 @@ export const catalog={
       "type": "portfolio-item",
       "status": "published",
       "slug": "playstation",
-      "title": "First designer on large-scale transformation, set scalable foundations and interaction model",
+      "title": "First designer on large-scale transformation, set scalable foundations",
       "name": "Publishing pipeline",
       "summary": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 ",
       "category": "Publishing pipeline · PlayStation Network",

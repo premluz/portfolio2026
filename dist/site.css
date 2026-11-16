@@ -549,7 +549,8 @@ html.page-booting::before{opacity:1;visibility:visible;transition:none}
 .motion-viewport{position:fixed;inset:0;overflow:hidden;contain:paint;isolation:isolate;pointer-events:none}
 html,body{overflow-x:hidden}
 @supports(overflow:clip){html,body{overflow-x:clip}}
-html.route-transition #main{overflow:clip}
+/* Vertical only: html and body already clip sideways at the viewport, and a page's ambient glow reaches past main's sides as it slides in. */
+html.route-transition #main{overflow-x:visible;overflow-y:clip}
 @media(hover:none) and (pointer:coarse){html.route-transition{scrollbar-width:none}html.route-transition::-webkit-scrollbar{display:none}}
 .detail-layout>*{min-width:0}
 .flow-picture{position:absolute;display:block;object-fit:cover;max-width:none;z-index:2}

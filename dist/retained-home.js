@@ -70,7 +70,9 @@ export function retainHome(main,images){
   // Preserve the original, already-sized DOM between opening and closing.
   // The viewport keeps its layout; opacity hides it without zero-size observers.
   stash(){layer.style.opacity='0';layer.dataset.retainedDormant='true';images.forEach(image=>image.suspend?.());},
-  fadeRest(control,selected,duration){return [...layer.children].filter(node=>node!==selected).map(node=>control.track(node.animate([{opacity:getComputedStyle(node).opacity},{opacity:0}],{duration:duration*.4,easing:'ease-out',fill:'both'})).finished);},
+  // The morph un-hides its source when it ends, a few frames before the layer is disposed, so the source also holds
+  // opacity 0. Its start is implicit (the underlying value), so a reversal hands the page back fully visible.
+  fadeRest(control,selected,duration){const rest=[...layer.children].filter(node=>node!==selected).map(node=>control.track(node.animate([{opacity:getComputedStyle(node).opacity},{opacity:0}],{duration:duration*.4,easing:'ease-out',fill:'both'})).finished);if(selected&&layer.contains(selected))rest.push(control.track(selected.animate([{opacity:0}],{duration:duration*.4,fill:'both'})).finished);return rest;},
   fadeChrome(control,duration){return fadeHomeChrome(layer,control,duration);},
   restore(){if(typeof className==='string')main.className=className;for(const item of sticky)item.node.style.cssText=item.css;const resumeLogos=holdHeroLogoPhase(layer);main.replaceChildren(...layer.childNodes);keepScroll();removeViewport();resumeLogos();},
   dispose(){images.forEach(image=>image.destroy());removeViewport();}
