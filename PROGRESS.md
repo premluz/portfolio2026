@@ -10,6 +10,10 @@ related: [TASKS.md, PROJECT_STATE.md]
 ---
 # Progress log
 
+## 2026-11-16 Dragging a page image no longer sets the room background
+- Chrome reports an image dragged from the page (header avatar, About photos) as a file, so a small drag set it as the room background, saved in IndexedDB. `environment.js` now ignores drops from drags that began on the page.
+- Evidence: synthetic drag from the avatar leaves the room unset; a dropped outside file still sets it.
+
 ## 2026-11-16 About, Contact and Home enter like a project (TASK-067)
 - About and Contact stream their h1 and fade their content in; Home's h1 streams back with the logos after any page. The old slide sits behind Motion → Page slide, off by default at the owner's request.
 - Evidence: in-browser sampling of heading stream and opacity on each route; related tests pass.
