@@ -59,7 +59,7 @@ let now=0,id=0,reduced=false;const frames=new Map();
 globalThis.performance={now:()=>now};
 globalThis.requestAnimationFrame=fn=>{frames.set(++id,fn);return id;};globalThis.cancelAnimationFrame=id=>frames.delete(id);
 const flush=()=>{for(let n=0;frames.size&&n<200;n++){now+=16;const callbacks=[...frames];frames.clear();for(const [,fn] of callbacks)fn(now);}assert.equal(frames.size,0,'Motion stops after settling');};
-const node=()=>({dataset:{},style:{setProperty(k,v){this[k]=v;}},listeners:new Map(),addEventListener(k,fn){this.listeners.set(k,fn);},removeEventListener(k){this.listeners.delete(k);},dispatchEvent(event){this.listeners.get(event.type)?.(event);},setAttribute(k,v){this[k]=v;}});
+const node=()=>({dataset:{},classList:{add(){},remove(){}},style:{setProperty(k,v){this[k]=v;}},listeners:new Map(),addEventListener(k,fn){this.listeners.set(k,fn);},removeEventListener(k){this.listeners.delete(k);},dispatchEvent(event){this.listeners.get(event.type)?.(event);},setAttribute(k,v){this[k]=v;}});
 globalThis.ResizeObserver=class{observe(){}disconnect(){}};
 const root=node();root.dataset={galleryVariant:'circular',galleryAxis:'horizontal',galleryIndex:'2'};
 const viewport=node();Object.assign(viewport,{clientWidth:1440,clientHeight:564,scrollLeft:0,scrollTop:0,focus(){},scrollTo(p){this.scrollLeft=p.left;this.scrollTop=p.top;},getBoundingClientRect(){return {left:0,top:0,width:1440,height:564};}});
@@ -80,29 +80,33 @@ const identities=[...gallery.items];gallery.go(4);flush();assert.equal(gallery.i
 gallery.onNext();gallery.onNext();flush();assert.equal(gallery.index,2,'Rapid input advances the destination without waiting for the previous motion');
 gallery.setOrientation('vertical');flush();assert(items[2].style.transform.includes('rotateX(0'));assert.equal(gallery.index,2);
 gallery.setOrientation('horizontal');flush();
-gallery.onDown({pointerType:'touch',button:0,pointerId:1,clientX:0,clientY:0});
-gallery.onMove({pointerType:'touch',pointerId:1,clientX:2,clientY:40,preventDefault(){throw Error('Vertical page scrolling should remain native');}});assert.equal(gallery.drag,null);
-gallery.onDown({pointerType:'touch',button:0,pointerId:2,clientX:0,clientY:0});
-gallery.onMove({pointerType:'touch',pointerId:2,clientX:-330,clientY:0,preventDefault(){}});assert.equal(root.dataset.galleryDragging,'true');gallery.onUp({pointerId:2});flush();assert.equal(root.dataset.galleryDragging,undefined);
+const input=gallery.input,up=(event,cancelled=false)=>input.up(event,cancelled);
+input.down({pointerType:'touch',button:0,pointerId:1,clientX:0,clientY:0});
+input.move({pointerType:'touch',pointerId:1,clientX:2,clientY:40,preventDefault(){throw Error('Vertical page scrolling should remain native');}});assert.equal(input.drag,null);
+input.down({pointerType:'touch',button:0,pointerId:2,clientX:0,clientY:0});
+input.move({pointerType:'touch',pointerId:2,clientX:-330,clientY:0,preventDefault(){}});assert.equal(root.dataset.galleryDragging,'true');up({pointerId:2});flush();assert.equal(root.dataset.galleryDragging,undefined);
+// Coasting records every frame's angle, so a reversal (a snap back) would show.
+const coastAngles=()=>{const angles=[];for(let n=0;frames.size&&n<400;n++){now+=16;const callbacks=[...frames];frames.clear();for(const [,fn] of callbacks)fn(now);angles.push(gallery.circular.angle);}assert.equal(frames.size,0,'Momentum runs out');return angles;};
 for(const [pointerType,width] of [['mouse',1440],['touch',390]]){
  viewport.clientWidth=width;items.forEach((item,index)=>item.offsetWidth=width<=600?width-(index%2?64:48):widths[index]);gallery.onResize();flush();gallery.go(0,false);
- const press=now,event={pointerType,button:0,pointerId:3,clientX:0,clientY:0,timeStamp:press};gallery.onDown(event);
- for(let step=1;step<=6;step++){now=press+step*16;gallery.onMove({...event,clientX:-step*60,timeStamp:now,preventDefault(){}});}
- const releaseAngle=gallery.circular.angle;gallery.onUp({...event,timeStamp:now,type:'pointerup'});assert(gallery.circular.momentum.velocity<0,'Mouse and touch flicks retain release speed');
- let prevented=false;gallery.onClick({target:{closest:()=>items[0]},preventDefault(){prevented=true;},stopPropagation(){}});assert(prevented,'Releasing a drag never opens a project');
- flush();assert(gallery.circular.angle<releaseAngle-Math.PI*2/items.length,'One flick continues beyond another complete card');assert(Math.abs(wrapAngle(gallery.circular.angle+gallery.circular.angles[gallery.index]))<.001,'Momentum ends on a centred card');
- gallery.onDown({...event,timeStamp:now});now+=16;gallery.onMove({...event,clientX:150,timeStamp:now,preventDefault(){}});gallery.onUp({...event,type:'pointercancel',timeStamp:now});assert.equal(gallery.circular.momentum.velocity,0,'A cancelled pointer cannot launch a spin');flush();
- gallery.onDown({...event,timeStamp:now});now+=16;gallery.onMove({...event,clientX:-180,timeStamp:now,preventDefault(){}});gallery.onUp({...event,type:'pointerup',timeStamp:now});assert(gallery.circular.momentum.velocity);
- gallery.onDown({...event,timeStamp:now});assert.equal(gallery.circular.momentum.velocity,0,'Pressing a moving carousel catches it immediately');gallery.onUp({...event,type:'pointerup',timeStamp:now});flush();
+ const press=now,event={pointerType,button:0,pointerId:3,clientX:0,clientY:0,timeStamp:press,preventDefault(){}};input.down(event);
+ for(let step=1;step<=6;step++){now=press+step*16;input.move({...event,clientX:-step*60,timeStamp:now});}
+ const releaseAngle=gallery.circular.angle;up({...event,timeStamp:now});assert(gallery.circular.momentum<0,'Mouse and touch flicks retain release speed');
+ let prevented=false;input.onClick({preventDefault(){prevented=true;},stopPropagation(){}});assert(prevented,'Releasing a drag never opens a project');
+ const angles=coastAngles();assert(angles.at(-1)<releaseAngle-Math.PI*2/items.length,'One flick continues beyond another complete card');
+ assert(angles.every((angle,index)=>!index||angle<=angles[index-1]),'The coast slows to a stop and never comes back to snap');
+ input.down({...event,timeStamp:now});now+=16;input.move({...event,clientX:150,timeStamp:now});up({...event,timeStamp:now},true);assert.equal(gallery.circular.momentum,0,'A cancelled pointer cannot launch a spin');flush();
+ input.down({...event,timeStamp:now});now+=16;input.move({...event,clientX:-180,timeStamp:now});up({...event,timeStamp:now});assert(gallery.circular.momentum);
+ input.down({...event,timeStamp:now});assert.equal(gallery.circular.momentum,0,'Pressing a moving carousel catches it immediately');up({...event,timeStamp:now});flush();
 }
 let dragPaints=0,captures=0;
 const originalPaint=gallery.circular.paint.bind(gallery.circular);
 gallery.circular.paint=()=>{dragPaints++;originalPaint();};viewport.setPointerCapture=()=>captures++;
-gallery.onDown({pointerType:'touch',button:0,pointerId:4,clientX:0,clientY:0,timeStamp:now});
-for(let step=1;step<=60;step++)gallery.onMove({pointerType:'touch',pointerId:4,clientX:-step*5,clientY:0,timeStamp:now+step,preventDefault(){}});
+input.down({pointerType:'touch',button:0,pointerId:4,clientX:0,clientY:0,timeStamp:now});
+for(let step=1;step<=60;step++)input.move({pointerType:'touch',pointerId:4,clientX:-step*5,clientY:0,timeStamp:now+step,preventDefault(){}});
 assert.equal(dragPaints,0,'Touch events only sample movement until the next animation frame');assert.equal(captures,1,'A drag captures its pointer only once');
 flush();assert.equal(dragPaints,1,'A burst of movement produces one visual paint');
-gallery.onUp({pointerId:4,type:'pointercancel',timeStamp:now});flush();
+up({pointerId:4,timeStamp:now},true);flush();
 let selectionWrites=0,paintEvents=0;
 const setters=items.map(item=>item.setAttribute);items.forEach((item,index)=>item.setAttribute=(...args)=>{selectionWrites++;setters[index].apply(item,args);});
 const onPaint=()=>paintEvents++;root.addEventListener('gallery-paint',onPaint);
@@ -112,4 +116,4 @@ items.forEach((item,index)=>item.setAttribute=setters[index]);root.removeEventLi
 gallery.go(0,false);gallery.setVariant('perspective');gallery.updateSelection(0);assert.equal(previous.disabled,true,'Native end controls update when the variant changes at the same selection');flush();assert.equal(gallery.circular,null);assert(items.every(item=>item.style.transform===''&&item.style.visibility===''&&item.style.pointerEvents===''));assert.deepEqual(gallery.items,identities,'Changing placement retains and reveals the native cards');
 gallery.setVariant('circular');flush();assert(gallery.circular);reduced=true;gallery.setVariant('circular');flush();assert.equal(gallery.circular,null,'Reduced motion falls back to native scrolling');assert.equal(root.dataset.galleryReduced,'true');
 reduced=false;gallery.setVariant('circular');gallery.go(3);gallery.destroy();flush();assert.equal(viewport.listeners.size,0);assert(items.every(item=>item.style.transform===''),'Disposal clears ring transforms and pending animation');
-console.log('Circular gallery passed: mixed proportions, front/back depth, shared cards, both axes, captions, rapid navigation/wrap, touch scrolling, retained variant switching, reduced motion and cleanup.');
+console.log('Circular gallery passed: mixed proportions, front/back depth, shared cards, both axes, captions, rapid navigation/wrap, touch scrolling, spec drag and coast without a return snap, retained variant switching, reduced motion and cleanup.');

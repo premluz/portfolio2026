@@ -38,6 +38,11 @@
   --duration-detail-reveal: 220ms;
   --duration-media-reveal: 420ms;
   --duration-logo-strip-loop: 60s;
+  /* Draggable carousels: cards ease to their pressed size, the Drag cursor grows in, and the hero filmstrip arrives after the page reveal. */
+  --duration-drag-press: 500ms;
+  --duration-drag-cursor: 350ms;
+  --duration-filmstrip-reveal: 800ms;
+  --duration-filmstrip-reveal-delay: 300ms;
   --duration-text-caret: 1s;
   /* The home heading fades in for about 400ms after boot; its glimmer waits until it is fully there. */
   --duration-hero-glimmer-delay: 600ms;
@@ -73,7 +78,8 @@
   --control-surface-alpha: var(--dock-glass-alpha);
   /* Outline controls sit on a translucent well one surface step off the page (about the card tone once the page shows through), and the current item lifts above it.
      Both themes define the same set: tone, density and lift. The light well is thin enough to show what is behind it, so its ink is denser to hold 4.5:1 over black. */
-  --dock-well-rgb: 242, 242, 242;
+  /* Solved so that over the page the well lands exactly on --card-surface: (card − page·(1 − alpha)) / alpha. */
+  --dock-well-rgb: 235, 235, 234;
   --dock-well-alpha: .62;
   --dock-well-ink: oklch(.30 .02 301);
   --control-item-lift: oklch(0.99999999 0.00000004 0.00000);
@@ -452,8 +458,8 @@
   --dock-outline: var(--dock-outline-dark);
   --control-surface-rgb: var(--nav-glass-rgb);
   --control-surface-alpha: var(--dock-glass-alpha);
-  /* The dark well is lighter than the card colour because the dimmed page shows through it; over the page it lands a step above the cards. */
-  --dock-well-rgb: 32, 32, 32;
+  /* Solved so that over the dimmed page the well lands exactly on --card-surface: (card − page·brightness·(1 − alpha)) / alpha. */
+  --dock-well-rgb: 27, 27, 27;
   --dock-well-alpha: .62;
   --control-item-lift: var(--nav-active);
   --nav-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.035);

@@ -57,6 +57,11 @@
 /* A mouse can drag the cards; snapping is held off while it does (card-rail.js). */
 .home-services[data-services-layout="carousel"] .home-services-grid{cursor:grab}
 .home-services[data-services-layout="carousel"] .home-services-grid[data-card-rail-dragging]{cursor:grabbing;user-select:none}
+/* Dragging presses the cards back a little; hover devices see the shared Drag cursor instead of the arrow. */
+.home-services[data-services-layout="carousel"] .home-service-card{transition:scale var(--duration-drag-press) var(--ease-settle)}
+.home-services[data-services-layout="carousel"] .home-services-grid.is-dragging .home-service-card{scale:.93}
+@media(hover:hover){.home-services[data-services-layout="carousel"] .home-services-grid,.home-services[data-services-layout="carousel"] .home-services-grid[data-card-rail-dragging],.home-services[data-services-layout="carousel"] .home-services-grid :is(a,button){cursor:none}}
+@media(prefers-reduced-motion:reduce){.home-services[data-services-layout="carousel"] .home-services-grid.is-dragging .home-service-card{scale:none}}
 /* Same geometry as the project page's Previous and Next (.header-detail-nav button), so the chevron sits centred in its circle. */
 .card-rail-controls button{display:inline-flex;align-items:center;justify-content:center;width:var(--nav-icon-size);height:var(--nav-icon-size);padding:0;border-radius:var(--radius-icon-control);color:var(--body-ink);cursor:pointer}
 .card-rail-controls button:hover{color:var(--ink)}.card-rail-controls button:disabled{opacity:.3;cursor:default}

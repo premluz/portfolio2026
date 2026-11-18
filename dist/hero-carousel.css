@@ -1,17 +1,49 @@
-/* Only the optional lower hero strip changes; the introduction keeps its layout. */
+/* Hero filmstrip: a full-bleed row of project covers that drifts and can be dragged; the introduction keeps its layout.
+   The card sizes are this component's own geometry. hero-carousel.js reads them from layout, never from a copy. */
+.hero-carousel-stage{
+  --filmstrip-height:508px;--filmstrip-standard:739px;--filmstrip-narrow:238px;--filmstrip-wide:722px;--filmstrip-gap:24px;
+  --filmstrip-shell:4px;--filmstrip-image-radius:28px;--filmstrip-drag-scale:.93;
+  --filmstrip-reveal-lift:30px;--filmstrip-reveal-blur:6px;
+  position:relative;width:100vw;margin:var(--hero-carousel-gap,64px) calc(50% - 50vw) 0;padding:40px 0 56px;overflow:clip;
+  touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab
+}
 .hero-carousel-stage[hidden]{display:none}
-.hero-carousel-stage{position:relative;height:calc(clamp(220px,32svh,340px) * var(--hero-carousel-size,1));margin-top:var(--hero-carousel-gap,64px);margin-bottom:clamp(80px,12vh,140px);touch-action:pan-y}
-.hero-carousel-controls{position:absolute;inset:auto 0 -48px;display:flex;align-items:center;justify-content:center;gap:14px;color:var(--muted);font-size:12px;z-index:2}
-.hero-carousel-controls span{margin-inline:6px}
-.hero-carousel-controls button{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;color:var(--ink);font-size:17px}
-.home-carousel-active .card-placement{position:relative;transform-origin:0 0;touch-action:pan-y}
-.home-carousel-active .card-slot{position:relative}
-.home-carousel-active .image-card[data-image-mode="bleed"]{display:flex;flex-direction:column;height:auto!important;min-height:0!important;padding:0!important}
-.home-carousel-active .image-card[data-image-mode="bleed"]>.visual{position:relative;inset:auto;order:0;flex:none;width:100%!important;height:auto!important;aspect-ratio:var(--image-source-ratio,var(--image-frame-regular-aspect));margin:0!important;border-radius:inherit}
-.home-carousel-active .image-card[data-image-mode="bleed"]>.card-copy{position:relative;inset:auto;order:1;z-index:2;display:grid;grid-template-columns:minmax(0,1fr);width:100%;max-width:none;margin:var(--space-card-copy) 0 0;padding:0 var(--card-padding-right,var(--space-card-inset)) var(--card-padding-bottom) var(--card-padding-left,var(--space-card-inset));color:var(--ink);text-shadow:none}
-.home-carousel-active .image-card>.card-copy{opacity:var(--hero-carousel-copy,1)}
-.home-carousel-active .image-card[data-image-mode="bleed"]>.card-copy>.card-client{grid-column:1;grid-row:1}
-.home-carousel-active .image-card[data-image-mode="bleed"]>.card-copy>h3{grid-column:1;grid-row:2;width:100%;max-width:none}
-.home-carousel-active .image-card[data-image-mode="bleed"]>.card-copy>.project-summary{grid-column:1;grid-row:3;width:100%;max-width:none}
-body:has(.home-carousel-active){overflow-x:clip}
-@media(max-width:600px){.hero-carousel-stage{height:calc(clamp(220px,34svh,300px) * var(--hero-carousel-size,1));margin-bottom:80px}.hero-carousel-controls{font-size:11px;gap:8px}}
+body:has(.hero-carousel-stage:not([hidden])){overflow-x:clip}
+.hero-filmstrip-track{display:flex;gap:var(--filmstrip-gap);width:max-content;margin:0;padding:0;list-style:none;will-change:transform}
+.hero-filmstrip-card{
+  flex:none;width:calc(var(--filmstrip-standard) * var(--hero-carousel-size,1));height:calc(var(--filmstrip-height) * var(--hero-carousel-size,1));
+  padding:var(--filmstrip-shell);border-radius:calc(var(--filmstrip-image-radius) + var(--filmstrip-shell));background:var(--card-surface);
+  box-shadow:0 12px 32px var(--nav-shadow);transition:scale var(--duration-drag-press) var(--ease-settle)
+}
+.hero-filmstrip-card[data-filmstrip-shape="narrow"]{width:calc(var(--filmstrip-narrow) * var(--hero-carousel-size,1))}
+.hero-filmstrip-card[data-filmstrip-shape="wide"]{width:calc(var(--filmstrip-wide) * var(--hero-carousel-size,1))}
+.hero-filmstrip-card img{display:block;width:100%;height:100%;object-fit:cover;border-radius:var(--filmstrip-image-radius);pointer-events:none;-webkit-user-drag:none}
+.hero-carousel-stage.is-dragging .hero-filmstrip-card{scale:var(--filmstrip-drag-scale)}
+.hero-carousel-stage:not([hidden]){animation:hero-filmstrip-in var(--duration-filmstrip-reveal) var(--ease-gentle) var(--duration-filmstrip-reveal-delay) both}
+@keyframes hero-filmstrip-in{from{opacity:0;translate:0 var(--filmstrip-reveal-lift)}}
+@keyframes hero-filmstrip-in-blur{from{opacity:0;translate:0 var(--filmstrip-reveal-lift);filter:blur(var(--filmstrip-reveal-blur))}}
+/* Blur is costly on phones' GPUs, so only hover devices get it; the same devices get the Drag cursor. */
+@media(hover:hover){
+  .hero-carousel-stage:not([hidden]){animation-name:hero-filmstrip-in-blur;cursor:none}
+}
+@media(max-width:1200px){.hero-carousel-stage{--filmstrip-height:380px;--filmstrip-standard:500px;--filmstrip-narrow:180px;--filmstrip-wide:500px}}
+@media(max-width:767px){.hero-carousel-stage{--filmstrip-height:340px;--filmstrip-standard:494px;--filmstrip-narrow:159px;--filmstrip-wide:483px;cursor:auto}}
+/* Without motion the row is an ordinary scroller: no drift, no copies, a visible scrollbar for keyboard and pointer. */
+@media(prefers-reduced-motion:reduce){
+  .hero-carousel-stage{overflow-x:auto;cursor:auto;touch-action:auto}
+  .hero-carousel-stage:not([hidden]){animation:none;cursor:auto}
+  .hero-filmstrip-card[data-filmstrip-copy]{display:none}
+  .hero-filmstrip-card{transition:none}
+}
+
+.drag-cursor{
+  --drag-cursor-size:100px;--drag-cursor-blur:8px;
+  position:fixed;left:0;top:0;z-index:9999;width:var(--drag-cursor-size);height:var(--drag-cursor-size);margin:calc(var(--drag-cursor-size) / -2);
+  display:grid;place-items:center;border:1px solid var(--ink);border-radius:var(--radius-pill);
+  background:color-mix(in oklch,var(--ink) 55%,transparent);color:var(--card-surface);box-shadow:0 12px 32px var(--nav-shadow);
+  backdrop-filter:blur(var(--drag-cursor-blur));-webkit-backdrop-filter:blur(var(--drag-cursor-blur));
+  font-size:14px;font-weight:var(--font-weight-label);pointer-events:none;
+  opacity:0;visibility:hidden;scale:.01;transition:opacity var(--duration-drag-cursor) var(--ease-gentle),scale var(--duration-drag-cursor) var(--ease-gentle),visibility var(--duration-drag-cursor) step-end
+}
+.drag-cursor.is-visible{opacity:1;visibility:visible;scale:1;transition-timing-function:var(--ease-gentle),var(--ease-gentle),step-start}
+@media(hover:none){.drag-cursor{display:none}}

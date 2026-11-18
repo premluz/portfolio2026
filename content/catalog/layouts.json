@@ -8,8 +8,8 @@
         "featured": false
       },
       {
-        "id": "vodafone-travel",
-        "documentId": "vodafone-travel",
+        "id": "bastion",
+        "documentId": "bastion",
         "featured": true
       },
       {
@@ -18,18 +18,8 @@
         "featured": true
       },
       {
-        "id": "thebodyshop",
-        "documentId": "thebodyshop",
-        "featured": false
-      },
-      {
-        "id": "playstation",
-        "documentId": "playstation",
-        "featured": true
-      },
-      {
-        "id": "bastion",
-        "documentId": "bastion",
+        "id": "merlin",
+        "documentId": "merlin",
         "featured": true
       },
       {
@@ -38,14 +28,24 @@
         "featured": true
       },
       {
-        "id": "merlin",
-        "documentId": "merlin",
+        "id": "vodafone-travel",
+        "documentId": "vodafone-travel",
+        "featured": true
+      },
+      {
+        "id": "playstation",
+        "documentId": "playstation",
         "featured": true
       },
       {
         "id": "porter",
         "documentId": "porter",
         "featured": true
+      },
+      {
+        "id": "thebodyshop",
+        "documentId": "thebodyshop",
+        "featured": false
       },
       {
         "id": "rios",

@@ -7,7 +7,7 @@ import {homeTestimonialsMarkup} from './home-testimonials.js';
 import {homeWritingMarkup} from './home-writing.js';
 import {fitHeroToViewport} from './hero-viewport.js';
 import {HeroTimeline} from './hero-timeline.js';
-import {HeroCarousel} from './hero-carousel.js';
+import {HeroCarousel,filmstripMarkup} from './hero-carousel.js';
 import {homeHero,heroCopyMarkup,normalizeHeroContent} from './home-content.js';
 import {card} from './card-renderer.js';
 import {contentBlocks} from './content-blocks.js';
@@ -26,7 +26,7 @@ export function homeMarkup(documents,layout,{heroContent='timeline'}={}){
  const projects=documents.filter(doc=>!doc.body&&!doc.listOnly);
  const slot=(doc,index)=>`<div class="card-slot" data-slot="${doc.id}"><div class="card-placement">${card(doc,index,layout)}</div></div>`;
  const gallery=content.get('home')?.blocks.find(block=>block.id==='home-projects');
- return `<div class="homepage-layout">${homeHero({heroContent})}${homeOverviewMarkup()}${homeProductText(documents)}<div class="home-product-carousel" data-home-product-gallery hidden>${gallery?contentBlocks([gallery],2):''}</div><section class="hero-carousel-stage" data-hero-carousel aria-label="Selected projects carousel" hidden><div class="hero-carousel-controls" data-carousel-controls><button class="glass-surface" type="button" data-carousel-previous aria-label="Previous projects">←</button><span>Drag to browse · Scroll to explore</span><button class="glass-surface" type="button" data-carousel-pause aria-label="Pause carousel" aria-pressed="false">Ⅱ</button><button class="glass-surface" type="button" data-carousel-next aria-label="Next projects">→</button></div></section><div class="home-work">
+ return `<div class="homepage-layout">${homeHero({heroContent})}${homeOverviewMarkup()}${homeProductText(documents)}<div class="home-product-carousel" data-home-product-gallery hidden>${gallery?contentBlocks([gallery],2):''}</div>${filmstripMarkup(projects)}<div class="home-work">
  <h2 class="sr">Selected work & explorations</h2>
  <div class="gallery-grid" data-gallery>${projects.map((doc,index)=>slot(doc,index)).join('')}</div>
  <div class="grid info-grid" data-information hidden></div>
@@ -41,11 +41,11 @@ export const HOME_LAYOUTS=Object.freeze(['masonry','regular','alternating']);
 export const readHomeLayout=value=>HOME_LAYOUTS.includes(value)?value:'masonry';
 export function alternatingSpan(index,count){return index%3===0||index===count-1&&index%3===1?'full':'half';}
 export class HomeLayout {
- constructor(root,documents,{mode='current',layout='masonry',columns=2,oneColumnPosition='top',multiColumnPosition='top',showCopyOnHover=false,productDisplay='cards',heroContent='timeline',timelineMode='cursor',heroCarousel=false,carouselState={},heroCarouselSettings=()=>({}),featuredLarger=true,reduced=()=>false,onMotion=()=>{}}={}){
+ constructor(root,documents,{mode='current',layout='masonry',columns=2,oneColumnPosition='top',multiColumnPosition='top',showCopyOnHover=false,productDisplay='cards',heroContent='timeline',timelineMode='cursor',heroCarousel=false,featuredLarger=true,reduced=()=>false,onMotion=()=>{}}={}){
   this.root=root;this.heroContent=normalizeHeroContent(heroContent);this.timelineMode=timelineMode;this.documents=documents;this.reduced=reduced;this.onMotion=onMotion;
   this.gallery=root.querySelector('[data-gallery]');this.information=root.querySelector('[data-information]');
   this.slots=new Map([...root.querySelectorAll('[data-slot]')].map(slot=>[slot.dataset.slot,slot]));
-  this.heroCarousel=!!heroCarousel;this.carousel=new HeroCarousel(root,this.slots,{reduced,state:carouselState,settings:heroCarouselSettings});
+  this.heroCarousel=!!heroCarousel;this.carousel=new HeroCarousel(root,{reduced});
   this.heroGreeting=root.querySelector('[data-hero-greeting]');this.heroAbout=root.querySelector('.hero-about');this.heroTitle=root.querySelector('[data-hero-title]');this.heroCopy=root.querySelector('[data-hero-copy]');
   this.introduction={title:this.heroTitle.textContent,titleHTML:this.heroTitle.innerHTML,copy:this.heroCopy.innerHTML};
   this.poses=new Map();this.activeId=documents[0]?.id;this.paused=false;this.dead=false;

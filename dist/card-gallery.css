@@ -14,7 +14,7 @@
 .spatial-card-gallery[data-gallery-variant="scroll"][data-gallery-axis="horizontal"] .spatial-gallery-viewport{padding-inline:max(var(--content-gutter),calc((var(--app-canvas-width) - var(--content-rail-width,var(--content-width)))/2))}
 .spatial-card-gallery[data-gallery-variant="scroll"] [data-gallery-details]{display:none}
 .spatial-gallery-item[data-gallery-orientation="portrait"]{--gallery-card-width:var(--gallery-portrait-width)}
-.spatial-gallery-pose{position:relative;width:100%;height:100%;transform-style:preserve-3d;transform-origin:center;transition:transform 120ms ease-out,opacity 120ms ease-out}
+.spatial-gallery-pose{position:relative;width:100%;height:100%;transform-style:preserve-3d;transform-origin:center;transition:transform 120ms ease-out,opacity 120ms ease-out,scale var(--duration-drag-press) var(--ease-settle)}
 .spatial-gallery-pose>.content-block{position:relative;z-index:1;height:100%;padding:0;background:transparent;border:0}
 .spatial-gallery-pose :is(.project-card,.content-media-frame){height:100%;width:100%;min-height:0;max-width:none;margin:0;border-radius:var(--radius-home-content-card)}
 .spatial-gallery-pose .project-card{padding:var(--space-4)!important}
@@ -63,7 +63,7 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 .spatial-gallery-snap{position:absolute;top:0;width:1px;height:1px;scroll-snap-align:start;pointer-events:none}
 .spatial-card-gallery[data-gallery-variant="circular"][data-gallery-reduced="false"][data-gallery-axis="horizontal"] .spatial-gallery-viewport{overflow-x:clip;overflow-y:visible}
 .spatial-card-gallery[data-gallery-variant="circular"][data-gallery-reduced="false"] .spatial-gallery-item{position:absolute;left:50%;top:50%;scroll-snap-align:none;transform-origin:center;transform-style:preserve-3d}
-.spatial-card-gallery[data-gallery-variant="circular"][data-gallery-reduced="false"] .spatial-gallery-pose{transition:none}
+.spatial-card-gallery[data-gallery-variant="circular"][data-gallery-reduced="false"] .spatial-gallery-pose{transition:scale var(--duration-drag-press) var(--ease-settle)}
 .spatial-card-gallery[data-gallery-variant="circular"][data-gallery-reduced="false"][data-gallery-axis="vertical"] .spatial-gallery-viewport{touch-action:pan-x pinch-zoom}
 @media(max-width:600px){.spatial-card-gallery{--gallery-card-scale:max(var(--carousel-card-scale,1),var(--gallery-mobile-scale-floor));--gallery-landscape-width:calc((var(--app-canvas-width) - var(--gallery-mobile-inset-landscape)) * var(--gallery-card-scale));--gallery-portrait-width:calc((var(--app-canvas-width) - var(--gallery-mobile-inset-portrait)) * var(--gallery-card-scale));--gallery-card-height:calc(360px * var(--gallery-card-scale))}.spatial-gallery-viewport{gap:var(--gallery-mobile-gap)}.home-product-carousel .spatial-gallery-caption{display:block}.home-product-carousel .spatial-gallery-copy{width:100%}[data-gallery-axis="vertical"] .spatial-gallery-viewport{height:640px;padding-block:calc((640px - var(--gallery-card-height))/2)}}
 /* Phones: the frame follows the landscape media instead of a fixed height, so no empty band sits above the image. */
@@ -108,3 +108,7 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 /* Card rounding reaches the carousel as it does the grid: each card's --radius-card is fitted to its size. */
 .spatial-gallery-pose .project-card{--gallery-card-radius:var(--radius-card)}
 .spatial-gallery-pose :is(.project-card,.content-media-frame){border-radius:var(--gallery-card-radius)}
+/* Dragging presses every card back a little (carousel-drag.js marks the viewport); hover devices see the Drag cursor instead of the arrow. */
+.spatial-gallery-viewport.is-dragging .spatial-gallery-pose{scale:.93}
+@media(hover:hover){.spatial-gallery-viewport,.spatial-gallery-viewport :is(a,button),.spatial-card-gallery[data-gallery-dragging="true"] .spatial-gallery-viewport{cursor:none}}
+@media(prefers-reduced-motion:reduce){.spatial-gallery-viewport.is-dragging .spatial-gallery-pose{scale:none}}

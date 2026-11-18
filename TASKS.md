@@ -131,6 +131,14 @@ Statuses: `todo`, `in-progress`, `blocked`, `done`, `dropped`. A task is `done` 
 
 ## Done
 
+### TASK-068 One drag feel for every carousel
+- Status: done
+- Tags: area/motion, area/home, kind/feature
+- Acceptance: every draggable carousel uses `dist/carousel-drag.js` (1:1 drag, speed sampled per 16 ms frame, momentum ×0.95 per frame stopping under 0.2, 10px touch slop with axis lock, multi-touch cancels, no click after a fling or a real drag) and `dist/drag-cursor.js` (circular Drag cursor on hover devices only). Done for the hero filmstrip, the card gallery (all variants) and the card rail (Services, About traits). `card-infinite.js` is excluded: it is a 2D/3D flight space with its own physics, not a horizontal carousel, and an axis lock would break its vertical panning.
+- Evidence: Phase 1: 2026-11-18. `tests/hero-carousel.mjs` rewritten, `tests/hero-carousel-settings.mjs` follows the CSS; headless Chromium with the filmstrip setting on: cards 739×508 / 500×380 / 494×340 at 1440 / 1000 / 390px, 24px gaps, drift 51.3 / 34.9 px/s (one set per 150 s), no horizontal page overflow, the Drag cursor shown on hover and absent on touch, the 0.93 press scale and 1:1 mouse drag, a 150px touch swipe moves 151px, a vertical swipe scrolls the page, 0 page errors. `npm run check`: 158 of 179; all 21 failures also fail on a clean HEAD.
+  Phase 2: 2026-11-18. `card-gallery.js` takes its input from `CarouselDrag` and shows the Drag cursor; the circular ring coasts on the shared decay and stops where the momentum runs out (no snap after a drag; arrows, keys and the wheel still snap); the scroll variants coast a mouse fling and then centre the nearest card, while touch stays native. `tests/circular-card-gallery.mjs` asserts the coast never reverses; `tests/card-gallery.mjs` drives the new input. Headless Chromium at 1440px, circular and perspective: cursor shown, 0.93 press scale, 0 direction changes while coasting, no navigation from the fling, 0 page errors; at 390px touch drags the ring and a vertical swipe scrolls the page. `npm run check`: the same 158 of 179.
+  Phase 3: 2026-11-18. `card-rail.js` takes mouse input from `CarouselDrag` (1:1 from the first pixel), coasts a fling with snapping held off, then settles on the next card in the travel's direction; touch stays native. `tests/card-rail.mjs` asserts 1:1 drag, a coast that never reverses, a forward-only settle and no click after a fling. Headless Chromium, Services as a carousel at 1440px: a 150px drag moved 150px, 0.93 press scale, Drag cursor shown, 36 coasting frames with 0 backward steps, 0 page errors. A lost mouse release (a move with no button held, lost capture, window blur) now ends any drag, reproduced in Chromium on both gallery variants. `npm run check`: the same 158 of 179.
+
 ### TASK-067 About, Contact and Home enter like a project
 - Status: done
 - Tags: area/motion, kind/feature

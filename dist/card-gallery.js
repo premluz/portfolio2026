@@ -3,6 +3,8 @@ import {CircularCardPlacement} from './circular-card-gallery.js';
 import {GalleryExtrusion} from './gallery-extrusion.js';
 import {normaliseCarouselSettings} from './carousel-settings.js';
 import {mountGalleryCardCopy} from './gallery-card-copy.js';
+import {CarouselDrag,coast,frameDelta} from './carousel-drag.js';
+import {DragCursor} from './drag-cursor.js';
 
 export function galleryPose(offset,reduced=false){
  const distance=Math.abs(offset),bend=Math.max(0,distance-.18);
@@ -31,12 +33,14 @@ export class CardGallery{
   this.onKey=event=>{if(event.target?.closest?.('input,textarea,select,[contenteditable="true"]'))return;if(event.key==='Enter'&&event.target===this.viewport){const link=this.items[this.index]?.querySelector('a,button');if(link){event.preventDefault();link.click();}return;}const vertical=this.axis==='vertical',direction=event.key===(vertical?'ArrowUp':'ArrowLeft')?-1:event.key===(vertical?'ArrowDown':'ArrowRight')?1:0;if(!direction&&!['Home','End'].includes(event.key))return;event.preventDefault();event.stopPropagation();this.viewport.focus({preventScroll:true});this.go(event.key==='Home'?0:event.key==='End'?this.items.length-1:(this.circular?.requestedIndex??this.index)+direction);};
   this.onClick=event=>{const item=event.target.closest('[data-gallery-item]'),index=this.items.indexOf(item);if(this.variant!=='scroll'&&index>=0&&index!==this.index){event.preventDefault();event.stopPropagation();this.go(index);}};
   this.onPrevious=()=>this.go((this.circular?.requestedIndex??this.index)-1);this.onNext=()=>this.go((this.circular?.requestedIndex??this.index)+1);
-  this.onDown=event=>{if(((!this.circular||this.circular.nativeScroll)&&event.pointerType!=='mouse')||event.button!==0||event.isPrimary===false||this.drag)return;this.drag={id:event.pointerId,x:event.clientX,y:event.clientY,left:this.viewport.scrollLeft,top:this.viewport.scrollTop,moved:false,caught:this.circular?.beginDrag(event.timeStamp??performance.now())||false};};
-  this.onMove=event=>{const drag=this.drag;if(!drag||event.pointerId!==drag.id)return;const delta=this.axis==='vertical'?event.clientY-drag.y:event.clientX-drag.x,cross=this.axis==='vertical'?event.clientX-drag.x:event.clientY-drag.y;if(!drag.moved){if(event.pointerType!=='mouse'&&Math.abs(cross)>=6&&Math.abs(cross)>Math.abs(delta)){this.circular?.release(event.timeStamp??performance.now(),true);this.drag=null;return;}if(Math.abs(delta)<6)return;this.viewport.setPointerCapture?.(drag.id);this.root.dataset.galleryDragging='true';}drag.moved=true;event.preventDefault();if(this.circular){this.circular.drag(delta,event.timeStamp??performance.now());return;}this.viewport.scrollTo({left:this.axis==='horizontal'?drag.left-delta:0,top:this.axis==='vertical'?drag.top-delta:0,behavior:'instant'});this.schedule();};
-  this.onUp=event=>{const drag=this.drag;if(!drag||event.pointerId!==drag.id)return;this.drag=null;delete this.root.dataset.galleryDragging;if(this.viewport.hasPointerCapture?.(drag.id))this.viewport.releasePointerCapture(drag.id);if(drag.moved||drag.caught){this.suppressClick=true;clearTimeout(this.clickTimer);this.clickTimer=setTimeout(()=>this.suppressClick=false,250);}if(this.circular){this.circular.release(event.timeStamp??performance.now(),event.type==='pointercancel'||!drag.moved);return;}if(drag.moved)this.go(this.nearestIndex());};
-  const selectClick=this.onClick;this.onClick=event=>{if(this.suppressClick){event.preventDefault();event.stopPropagation();return;}selectClick(event);};
-  this.onImageDrag=event=>event.preventDefault();
-  for(const [name,handler] of [['pointerdown',this.onDown],['pointermove',this.onMove],['pointerup',this.onUp],['pointercancel',this.onUp],['dragstart',this.onImageDrag]])this.viewport.addEventListener(name,handler);
+  // Touch on the scroll variants stays native; the ring takes touch itself, unless the native-snap experiment owns it.
+  this.input=new CarouselDrag(this.viewport,{axis:()=>this.axis,
+   canStart:event=>event.pointerType==='mouse'||!!this.circular&&!this.circular.nativeScroll,
+   onPress:()=>{const coasting=!!this.coastFrame;this.stopCoast();return (this.circular?.catch()||false)||coasting;},
+   onStart:()=>{this.root.dataset.galleryDragging='true';this.pressed={left:this.viewport.scrollLeft,top:this.viewport.scrollTop};this.circular?.beginDrag();},
+   onMove:delta=>{if(this.circular){this.circular.drag(delta);return;}this.scrollBy(delta);},
+   onRelease:(velocity,cancelled)=>{if(this.circular){delete this.root.dataset.galleryDragging;this.circular.release(velocity,cancelled);return;}this.coastScroll(cancelled?0:velocity);}});
+  this.cursor=new DragCursor(this.viewport);
   this.viewport.addEventListener('scroll',this.onScroll,{passive:true});this.root.addEventListener('keydown',this.onKey);this.viewport.addEventListener('click',this.onClick,true);this.previous.addEventListener('click',this.onPrevious);this.next.addEventListener('click',this.onNext);
   this.observer=new ResizeObserver(this.onResize);this.observer.observe(this.viewport);
   this.extrusions=this.items.map(item=>new GalleryExtrusion(item,()=>{this.circular?.measure();this.schedule();}));
@@ -80,6 +84,19 @@ export class CardGallery{
   if(this.lastCaption!==best){this.lastCaption=best;const active=this.items[best];if(this.client){this.client.textContent=active.dataset.galleryClient||'';this.client.hidden=!this.client.textContent;}this.title.textContent=active.dataset.galleryTitle;this.description.textContent=active.dataset.galleryDescription;this.title.hidden=!this.title.textContent;this.description.hidden=!this.description.textContent;const copy=this.title.parentElement;this.captionAnimation?.cancel();if(!this.reduced())this.captionAnimation=copy.animate([{opacity:0},{opacity:1}],{duration:180,easing:'ease-out'});globalThis.dispatchEvent?.(new Event('gallery-selection-change'));}
   this.root.dispatchEvent(new Event('gallery-paint'));
  }
+ scrollBy(delta){const vertical=this.axis==='vertical';this.viewport.scrollTo({left:vertical?0:this.pressed.left-delta,top:vertical?this.pressed.top-delta:0,behavior:'instant'});this.schedule();}
+ // A mouse fling on the scroll variants coasts with the shared physics, then centres the nearest card;
+ // snapping stays off until then, so the browser cannot cut the coast short.
+ coastScroll(velocity){
+  this.stopCoast();let momentum=this.reduced()?0:velocity,previous=0;const vertical=this.axis==='vertical';
+  const finish=()=>{this.coastFrame=0;delete this.root.dataset.galleryDragging;this.go(this.nearestIndex());};
+  if(!momentum){finish();return;}
+  const step=now=>{const next=coast(momentum,frameDelta(now,previous));previous=now;momentum=next.momentum;
+   this.viewport.scrollTo({left:vertical?0:this.viewport.scrollLeft-next.travel,top:vertical?this.viewport.scrollTop-next.travel:0,behavior:'instant'});this.schedule();
+   if(momentum)this.coastFrame=requestAnimationFrame(step);else finish();};
+  this.coastFrame=requestAnimationFrame(step);
+ }
+ stopCoast(){cancelAnimationFrame(this.coastFrame);this.coastFrame=0;}
  schedule(){if(this.dead||this.frame)return;this.frame=requestAnimationFrame(()=>{this.frame=0;this.paint();});}
- destroy(){this.dead=true;this.cardCopyLayout?.destroy();this.circular?.destroy();this.circular=null;this.extrusions.forEach(edge=>edge.destroy());this.captionAnimation?.cancel();cancelAnimationFrame(this.frame);clearTimeout(this.clickTimer);this.observer.disconnect();if(this.drag&&this.viewport.hasPointerCapture?.(this.drag.id))this.viewport.releasePointerCapture(this.drag.id);this.drag=null;delete this.root.dataset.galleryDragging;for(const [name,handler] of [['pointerdown',this.onDown],['pointermove',this.onMove],['pointerup',this.onUp],['pointercancel',this.onUp],['dragstart',this.onImageDrag]])this.viewport.removeEventListener(name,handler);this.viewport.removeEventListener('scroll',this.onScroll);this.root.removeEventListener('keydown',this.onKey);this.viewport.removeEventListener('click',this.onClick,true);this.previous.removeEventListener('click',this.onPrevious);this.next.removeEventListener('click',this.onNext);}
+ destroy(){this.dead=true;this.cardCopyLayout?.destroy();this.circular?.destroy();this.circular=null;this.extrusions.forEach(edge=>edge.destroy());this.captionAnimation?.cancel();cancelAnimationFrame(this.frame);this.stopCoast();this.observer.disconnect();this.input.destroy();this.cursor.destroy();delete this.root.dataset.galleryDragging;this.viewport.removeEventListener('scroll',this.onScroll);this.root.removeEventListener('keydown',this.onKey);this.viewport.removeEventListener('click',this.onClick,true);this.previous.removeEventListener('click',this.onPrevious);this.next.removeEventListener('click',this.onNext);}
 }

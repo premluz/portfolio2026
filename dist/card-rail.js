@@ -1,4 +1,6 @@
 import {escapeText} from './content/html.js';
+import {CarouselDrag,coast,frameDelta} from './carousel-drag.js';
+import {DragCursor} from './drag-cursor.js';
 export const cardRailControlsMarkup=({label='cards'}={})=>`<div class="card-rail-controls"><button class="glass-surface" type="button" data-card-rail-previous aria-label="Previous ${escapeText(label)}" data-tooltip="Previous ${escapeText(label)}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m14.5 5-7 7 7 7"/></svg></button><button class="glass-surface" type="button" data-card-rail-next aria-label="Next ${escapeText(label)}" data-tooltip="Next ${escapeText(label)}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m9.5 5 7 7-7 7"/></svg></button></div>`;
 
 // A wheel gesture (trackpad or Magic Mouse momentum included) has ended once no wheel event arrives for this long.
@@ -7,43 +9,37 @@ const WHEEL_GESTURE_IDLE_MS=140;
 const WHEEL_NUDGE_PX=24;
 // Browsers without scrollend restore native snapping after this long, by which time a smooth settle has finished.
 const SETTLE_FALLBACK_MS=700;
-// A mouse press becomes a drag after this much travel, so a plain click on a card is left alone.
-const DRAG_START_PX=6;
 
 // A flat carousel controller independent of page layout and card contents.
 export class CardRail{
  constructor(root,{reduced=()=>false}={}){
   this.root=root;this.reduced=reduced;this.viewport=root.querySelector('[data-card-rail-viewport]');this.previous=root.querySelector('[data-card-rail-previous]');this.next=root.querySelector('[data-card-rail-next]');
-  this.onPrevious=()=>this.move(-1);this.onNext=()=>this.move(1);this.onScroll=()=>this.refresh();this.onWheel=event=>this.wheel(event);this.onSettled=()=>this.release();this.onDown=event=>this.down(event);this.onDrag=event=>this.drag(event);this.onDrop=event=>this.drop(event);this.onKey=event=>{if(root.dataset.cardRailMode==='grid'||event.target?.closest?.('input,textarea,select,[contenteditable="true"]'))return;const direction=event.key==='ArrowLeft'?-1:event.key==='ArrowRight'?1:0;if(!direction)return;event.preventDefault();event.stopPropagation();this.move(direction);};
-  this.previous.addEventListener('click',this.onPrevious);this.next.addEventListener('click',this.onNext);this.viewport.addEventListener('scroll',this.onScroll,{passive:true});this.viewport.addEventListener('wheel',this.onWheel,{passive:true});for(const [name,handler] of [['pointerdown',this.onDown],['pointermove',this.onDrag],['pointerup',this.onDrop],['pointercancel',this.onDrop]])this.viewport.addEventListener(name,handler);this.viewport.addEventListener('keydown',this.onKey);this.observer=new ResizeObserver(()=>this.refresh());this.observer.observe(this.viewport);this.refresh();
+  this.onPrevious=()=>this.move(-1);this.onNext=()=>this.move(1);this.onScroll=()=>this.refresh();this.onWheel=event=>this.wheel(event);this.onSettled=()=>this.release();this.onKey=event=>{if(root.dataset.cardRailMode==='grid'||event.target?.closest?.('input,textarea,select,[contenteditable="true"]'))return;const direction=event.key==='ArrowLeft'?-1:event.key==='ArrowRight'?1:0;if(!direction)return;event.preventDefault();event.stopPropagation();this.move(direction);};
+  this.previous.addEventListener('click',this.onPrevious);this.next.addEventListener('click',this.onNext);this.viewport.addEventListener('scroll',this.onScroll,{passive:true});this.viewport.addEventListener('wheel',this.onWheel,{passive:true});this.viewport.addEventListener('keydown',this.onKey);
+  // Mouse only: touch keeps native scrolling. The rail follows the pointer 1:1 and a fling coasts (carousel-drag.js).
+  const carousel=()=>this.root.dataset.cardRailMode!=='grid';
+  this.input=new CarouselDrag(this.viewport,{canStart:event=>event.pointerType==='mouse'&&carousel(),onPress:()=>{const coasting=!!this.coastFrame;this.stopCoast();return coasting;},onStart:()=>this.grab(),onMove:delta=>{this.viewport.scrollLeft=this.pressLeft-delta;},onRelease:(velocity,cancelled)=>this.throw(cancelled?0:velocity)});
+  this.cursor=new DragCursor(this.viewport,{enabled:carousel});this.observer=new ResizeObserver(()=>this.refresh());this.observer.observe(this.viewport);this.refresh();
  }
  move(direction){this.viewport.scrollBy({left:direction*this.viewport.clientWidth*.8,behavior:this.reduced()?'instant':'smooth'});}
  // Native snap picks the nearest card when a glide slows, which can pull a swipe back; snapping is held off while the gesture runs, then the rail settles in the swipe's direction.
  wheel(event){
   if(this.root.dataset.cardRailMode==='grid'||Math.abs(event.deltaX)<=Math.abs(event.deltaY))return;
-  if(!this.glide){this.release();this.glide={start:this.viewport.scrollLeft,travel:0};this.viewport.dataset.cardRailGliding='';}
+  this.stopCoast();if(!this.glide){this.release();this.glide={start:this.viewport.scrollLeft,travel:0};this.viewport.dataset.cardRailGliding='';}
   this.glide.travel+=event.deltaX;clearTimeout(this.glideTimer);this.glideTimer=setTimeout(()=>this.settle(),WHEEL_GESTURE_IDLE_MS);
  }
- // Mouse drag only: touch keeps its native scrolling. The rail follows the pointer, then settles on a card like a swipe.
- down(event){
-  if(event.pointerType!=='mouse'||event.button!==0||this.root.dataset.cardRailMode==='grid')return;
-  this.pull={id:event.pointerId,x:event.clientX,last:event.clientX,left:this.viewport.scrollLeft,moved:false};
+ grab(){this.release();this.pressLeft=this.viewport.scrollLeft;this.viewport.dataset.cardRailGliding='';this.viewport.dataset.cardRailDragging='';}
+ // Snapping stays off while the fling coasts, then the rail settles on the next card in the travel's direction,
+ // so the settle continues the same movement instead of pulling back.
+ throw(velocity){
+  delete this.viewport.dataset.cardRailDragging;this.stopCoast();
+  let momentum=this.reduced()?0:velocity,previous=0;
+  const finish=()=>{this.coastFrame=0;this.glide={start:this.pressLeft,travel:this.viewport.scrollLeft-this.pressLeft};this.settle();};
+  if(!momentum){finish();return;}
+  const step=now=>{const next=coast(momentum,frameDelta(now,previous));previous=now;momentum=next.momentum;this.viewport.scrollLeft-=next.travel;if(momentum)this.coastFrame=requestAnimationFrame(step);else finish();};
+  this.coastFrame=requestAnimationFrame(step);
  }
- drag(event){
-  const pull=this.pull;if(!pull||event.pointerId!==pull.id)return;
-  if(!pull.moved){
-   if(Math.abs(event.clientX-pull.x)<DRAG_START_PX)return;
-   pull.moved=true;this.release();this.viewport.dataset.cardRailGliding='';this.viewport.dataset.cardRailDragging='';this.viewport.setPointerCapture(pull.id);
-  }
-  pull.last=event.clientX;this.viewport.scrollLeft=pull.left-(event.clientX-pull.x);
- }
- drop(event){
-  const pull=this.pull;if(!pull||event.pointerId!==pull.id)return;
-  this.pull=null;if(!pull.moved)return;
-  delete this.viewport.dataset.cardRailDragging;
-  if(this.viewport.hasPointerCapture?.(pull.id))this.viewport.releasePointerCapture(pull.id);
-  this.glide={start:pull.left,travel:pull.x-pull.last};this.settle();
- }
+ stopCoast(){cancelAnimationFrame(this.coastFrame);this.coastFrame=0;}
  settle(){
   const glide=this.glide;this.glide=null;if(this.dead||!glide)return;
   const left=this.viewport.scrollLeft,target=this.settleTarget(left,Math.abs(left-glide.start)<WHEEL_NUDGE_PX?0:Math.sign(glide.travel));
@@ -62,7 +58,7 @@ export class CardRail{
  }
  release(){clearTimeout(this.settleTimer);this.viewport.removeEventListener('scrollend',this.onSettled);delete this.viewport.dataset.cardRailGliding;}
  refresh(){if(this.dead||this.frame)return;this.frame=requestAnimationFrame(()=>{this.frame=0;const enabled=this.root.dataset.cardRailMode!=='grid',maximum=Math.max(0,this.viewport.scrollWidth-this.viewport.clientWidth);this.viewport.tabIndex=enabled?0:-1;this.previous.disabled=!enabled||this.viewport.scrollLeft<=1;this.next.disabled=!enabled||this.viewport.scrollLeft>=maximum-1;});}
- destroy(){this.dead=true;cancelAnimationFrame(this.frame);clearTimeout(this.glideTimer);this.release();this.viewport.removeEventListener('wheel',this.onWheel);for(const [name,handler] of [['pointerdown',this.onDown],['pointermove',this.onDrag],['pointerup',this.onDrop],['pointercancel',this.onDrop]])this.viewport.removeEventListener(name,handler);delete this.viewport.dataset.cardRailDragging;this.observer.disconnect();this.previous.removeEventListener('click',this.onPrevious);this.next.removeEventListener('click',this.onNext);this.viewport.removeEventListener('scroll',this.onScroll);this.viewport.removeEventListener('keydown',this.onKey);}
+ destroy(){this.dead=true;cancelAnimationFrame(this.frame);clearTimeout(this.glideTimer);this.stopCoast();this.release();this.viewport.removeEventListener('wheel',this.onWheel);this.input.destroy();this.cursor.destroy();delete this.viewport.dataset.cardRailDragging;this.observer.disconnect();this.previous.removeEventListener('click',this.onPrevious);this.next.removeEventListener('click',this.onNext);this.viewport.removeEventListener('scroll',this.onScroll);this.viewport.removeEventListener('keydown',this.onKey);}
 }
 
 const TESTIMONIAL_STYLES=Object.freeze(['cards','plain','headings']);

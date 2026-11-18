@@ -253,7 +253,7 @@
         "TASKS.md",
         "PROJECT_STATE.md"
       ],
-      "hash": "90912628c535d7ebe6079a04a48337878b99dd89",
+      "hash": "2d394b4904d8fbf2a01da6df997d1007d4b2f183",
       "items": []
     },
     {
@@ -333,7 +333,7 @@
         "PROJECT_STATE.md",
         "PROGRESS.md"
       ],
-      "hash": "9ad358367eab7aecbb06b5b2e49eccffe8ffc91b",
+      "hash": "2c0542ff36fc11ae87458622f2f3b52dfda1fed1",
       "items": [
         {
           "id": "TASK-044",
@@ -493,6 +493,16 @@
           "tags": [
             "area/images",
             "area/content"
+          ]
+        },
+        {
+          "id": "TASK-068",
+          "title": "One drag feel for every carousel",
+          "status": "done",
+          "tags": [
+            "area/motion",
+            "area/home",
+            "kind/feature"
           ]
         },
         {

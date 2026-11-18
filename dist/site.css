@@ -39,6 +39,11 @@
   --duration-detail-reveal: 220ms;
   --duration-media-reveal: 420ms;
   --duration-logo-strip-loop: 60s;
+  /* Draggable carousels: cards ease to their pressed size, the Drag cursor grows in, and the hero filmstrip arrives after the page reveal. */
+  --duration-drag-press: 500ms;
+  --duration-drag-cursor: 350ms;
+  --duration-filmstrip-reveal: 800ms;
+  --duration-filmstrip-reveal-delay: 300ms;
   --duration-text-caret: 1s;
   /* The home heading fades in for about 400ms after boot; its glimmer waits until it is fully there. */
   --duration-hero-glimmer-delay: 600ms;
@@ -74,7 +79,8 @@
   --control-surface-alpha: var(--dock-glass-alpha);
   /* Outline controls sit on a translucent well one surface step off the page (about the card tone once the page shows through), and the current item lifts above it.
      Both themes define the same set: tone, density and lift. The light well is thin enough to show what is behind it, so its ink is denser to hold 4.5:1 over black. */
-  --dock-well-rgb: 242, 242, 242;
+  /* Solved so that over the page the well lands exactly on --card-surface: (card − page·(1 − alpha)) / alpha. */
+  --dock-well-rgb: 235, 235, 234;
   --dock-well-alpha: .62;
   --dock-well-ink: oklch(.30 .02 301);
   --control-item-lift: oklch(0.99999999 0.00000004 0.00000);
@@ -453,8 +459,8 @@
   --dock-outline: var(--dock-outline-dark);
   --control-surface-rgb: var(--nav-glass-rgb);
   --control-surface-alpha: var(--dock-glass-alpha);
-  /* The dark well is lighter than the card colour because the dimmed page shows through it; over the page it lands a step above the cards. */
-  --dock-well-rgb: 32, 32, 32;
+  /* Solved so that over the dimmed page the well lands exactly on --card-surface: (card − page·brightness·(1 − alpha)) / alpha. */
+  --dock-well-rgb: 27, 27, 27;
   --dock-well-alpha: .62;
   --control-item-lift: var(--nav-active);
   --nav-highlight: oklch(0.99999999 0.00000004 0.00000 / 0.035);
@@ -1889,7 +1895,7 @@ html[data-type-floor="on"] :is(.detail-caption-lead,.home-about-years,.content-m
 .spatial-card-gallery[data-gallery-variant="scroll"][data-gallery-axis="horizontal"] .spatial-gallery-viewport{padding-inline:max(var(--content-gutter),calc((var(--app-canvas-width) - var(--content-rail-width,var(--content-width)))/2))}
 .spatial-card-gallery[data-gallery-variant="scroll"] [data-gallery-details]{display:none}
 .spatial-gallery-item[data-gallery-orientation="portrait"]{--gallery-card-width:var(--gallery-portrait-width)}
-.spatial-gallery-pose{position:relative;width:100%;height:100%;transform-style:preserve-3d;transform-origin:center;transition:transform 120ms ease-out,opacity 120ms ease-out}
+.spatial-gallery-pose{position:relative;width:100%;height:100%;transform-style:preserve-3d;transform-origin:center;transition:transform 120ms ease-out,opacity 120ms ease-out,scale var(--duration-drag-press) var(--ease-settle)}
 .spatial-gallery-pose>.content-block{position:relative;z-index:1;height:100%;padding:0;background:transparent;border:0}
 .spatial-gallery-pose :is(.project-card,.content-media-frame){height:100%;width:100%;min-height:0;max-width:none;margin:0;border-radius:var(--radius-home-content-card)}
 .spatial-gallery-pose .project-card{padding:var(--space-4)!important}
@@ -1938,7 +1944,7 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 .spatial-gallery-snap{position:absolute;top:0;width:1px;height:1px;scroll-snap-align:start;pointer-events:none}
 .spatial-card-gallery[data-gallery-variant="circular"][data-gallery-reduced="false"][data-gallery-axis="horizontal"] .spatial-gallery-viewport{overflow-x:clip;overflow-y:visible}
 .spatial-card-gallery[data-gallery-variant="circular"][data-gallery-reduced="false"] .spatial-gallery-item{position:absolute;left:50%;top:50%;scroll-snap-align:none;transform-origin:center;transform-style:preserve-3d}
-.spatial-card-gallery[data-gallery-variant="circular"][data-gallery-reduced="false"] .spatial-gallery-pose{transition:none}
+.spatial-card-gallery[data-gallery-variant="circular"][data-gallery-reduced="false"] .spatial-gallery-pose{transition:scale var(--duration-drag-press) var(--ease-settle)}
 .spatial-card-gallery[data-gallery-variant="circular"][data-gallery-reduced="false"][data-gallery-axis="vertical"] .spatial-gallery-viewport{touch-action:pan-x pinch-zoom}
 @media(max-width:600px){.spatial-card-gallery{--gallery-card-scale:max(var(--carousel-card-scale,1),var(--gallery-mobile-scale-floor));--gallery-landscape-width:calc((var(--app-canvas-width) - var(--gallery-mobile-inset-landscape)) * var(--gallery-card-scale));--gallery-portrait-width:calc((var(--app-canvas-width) - var(--gallery-mobile-inset-portrait)) * var(--gallery-card-scale));--gallery-card-height:calc(360px * var(--gallery-card-scale))}.spatial-gallery-viewport{gap:var(--gallery-mobile-gap)}.home-product-carousel .spatial-gallery-caption{display:block}.home-product-carousel .spatial-gallery-copy{width:100%}[data-gallery-axis="vertical"] .spatial-gallery-viewport{height:640px;padding-block:calc((640px - var(--gallery-card-height))/2)}}
 /* Phones: the frame follows the landscape media instead of a fixed height, so no empty band sits above the image. */
@@ -1983,6 +1989,10 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 /* Card rounding reaches the carousel as it does the grid: each card's --radius-card is fitted to its size. */
 .spatial-gallery-pose .project-card{--gallery-card-radius:var(--radius-card)}
 .spatial-gallery-pose :is(.project-card,.content-media-frame){border-radius:var(--gallery-card-radius)}
+/* Dragging presses every card back a little (carousel-drag.js marks the viewport); hover devices see the Drag cursor instead of the arrow. */
+.spatial-gallery-viewport.is-dragging .spatial-gallery-pose{scale:.93}
+@media(hover:hover){.spatial-gallery-viewport,.spatial-gallery-viewport :is(a,button),.spatial-card-gallery[data-gallery-dragging="true"] .spatial-gallery-viewport{cursor:none}}
+@media(prefers-reduced-motion:reduce){.spatial-gallery-viewport.is-dragging .spatial-gallery-pose{scale:none}}
 
 /* card-world.css */
 /* Card worlds: the spiral scrolls through a tall section with a pinned stage; the infinite space fills
@@ -2078,6 +2088,11 @@ body.card-client-hidden .spatial-gallery-copy .spatial-gallery-client,body.card-
 /* A mouse can drag the cards; snapping is held off while it does (card-rail.js). */
 .home-services[data-services-layout="carousel"] .home-services-grid{cursor:grab}
 .home-services[data-services-layout="carousel"] .home-services-grid[data-card-rail-dragging]{cursor:grabbing;user-select:none}
+/* Dragging presses the cards back a little; hover devices see the shared Drag cursor instead of the arrow. */
+.home-services[data-services-layout="carousel"] .home-service-card{transition:scale var(--duration-drag-press) var(--ease-settle)}
+.home-services[data-services-layout="carousel"] .home-services-grid.is-dragging .home-service-card{scale:.93}
+@media(hover:hover){.home-services[data-services-layout="carousel"] .home-services-grid,.home-services[data-services-layout="carousel"] .home-services-grid[data-card-rail-dragging],.home-services[data-services-layout="carousel"] .home-services-grid :is(a,button){cursor:none}}
+@media(prefers-reduced-motion:reduce){.home-services[data-services-layout="carousel"] .home-services-grid.is-dragging .home-service-card{scale:none}}
 /* Same geometry as the project page's Previous and Next (.header-detail-nav button), so the chevron sits centred in its circle. */
 .card-rail-controls button{display:inline-flex;align-items:center;justify-content:center;width:var(--nav-icon-size);height:var(--nav-icon-size);padding:0;border-radius:var(--radius-icon-control);color:var(--body-ink);cursor:pointer}
 .card-rail-controls button:hover{color:var(--ink)}.card-rail-controls button:disabled{opacity:.3;cursor:default}
@@ -2366,23 +2381,55 @@ html[data-detail-ratio-layout="on"] .surface.detail[data-detail-shape="square"][
 .preview-morph-proxy img{display:block;width:100%;height:100%;object-fit:cover}
 
 /* hero-carousel.css */
-/* Only the optional lower hero strip changes; the introduction keeps its layout. */
+/* Hero filmstrip: a full-bleed row of project covers that drifts and can be dragged; the introduction keeps its layout.
+   The card sizes are this component's own geometry. hero-carousel.js reads them from layout, never from a copy. */
+.hero-carousel-stage{
+  --filmstrip-height:508px;--filmstrip-standard:739px;--filmstrip-narrow:238px;--filmstrip-wide:722px;--filmstrip-gap:24px;
+  --filmstrip-shell:4px;--filmstrip-image-radius:28px;--filmstrip-drag-scale:.93;
+  --filmstrip-reveal-lift:30px;--filmstrip-reveal-blur:6px;
+  position:relative;width:100vw;margin:var(--hero-carousel-gap,64px) calc(50% - 50vw) 0;padding:40px 0 56px;overflow:clip;
+  touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab
+}
 .hero-carousel-stage[hidden]{display:none}
-.hero-carousel-stage{position:relative;height:calc(clamp(220px,32svh,340px) * var(--hero-carousel-size,1));margin-top:var(--hero-carousel-gap,64px);margin-bottom:clamp(80px,12vh,140px);touch-action:pan-y}
-.hero-carousel-controls{position:absolute;inset:auto 0 -48px;display:flex;align-items:center;justify-content:center;gap:14px;color:var(--muted);font-size:12px;z-index:2}
-.hero-carousel-controls span{margin-inline:6px}
-.hero-carousel-controls button{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;color:var(--ink);font-size:17px}
-.home-carousel-active .card-placement{position:relative;transform-origin:0 0;touch-action:pan-y}
-.home-carousel-active .card-slot{position:relative}
-.home-carousel-active .image-card[data-image-mode="bleed"]{display:flex;flex-direction:column;height:auto!important;min-height:0!important;padding:0!important}
-.home-carousel-active .image-card[data-image-mode="bleed"]>.visual{position:relative;inset:auto;order:0;flex:none;width:100%!important;height:auto!important;aspect-ratio:var(--image-source-ratio,var(--image-frame-regular-aspect));margin:0!important;border-radius:inherit}
-.home-carousel-active .image-card[data-image-mode="bleed"]>.card-copy{position:relative;inset:auto;order:1;z-index:2;display:grid;grid-template-columns:minmax(0,1fr);width:100%;max-width:none;margin:var(--space-card-copy) 0 0;padding:0 var(--card-padding-right,var(--space-card-inset)) var(--card-padding-bottom) var(--card-padding-left,var(--space-card-inset));color:var(--ink);text-shadow:none}
-.home-carousel-active .image-card>.card-copy{opacity:var(--hero-carousel-copy,1)}
-.home-carousel-active .image-card[data-image-mode="bleed"]>.card-copy>.card-client{grid-column:1;grid-row:1}
-.home-carousel-active .image-card[data-image-mode="bleed"]>.card-copy>h3{grid-column:1;grid-row:2;width:100%;max-width:none}
-.home-carousel-active .image-card[data-image-mode="bleed"]>.card-copy>.project-summary{grid-column:1;grid-row:3;width:100%;max-width:none}
-body:has(.home-carousel-active){overflow-x:clip}
-@media(max-width:600px){.hero-carousel-stage{height:calc(clamp(220px,34svh,300px) * var(--hero-carousel-size,1));margin-bottom:80px}.hero-carousel-controls{font-size:11px;gap:8px}}
+body:has(.hero-carousel-stage:not([hidden])){overflow-x:clip}
+.hero-filmstrip-track{display:flex;gap:var(--filmstrip-gap);width:max-content;margin:0;padding:0;list-style:none;will-change:transform}
+.hero-filmstrip-card{
+  flex:none;width:calc(var(--filmstrip-standard) * var(--hero-carousel-size,1));height:calc(var(--filmstrip-height) * var(--hero-carousel-size,1));
+  padding:var(--filmstrip-shell);border-radius:calc(var(--filmstrip-image-radius) + var(--filmstrip-shell));background:var(--card-surface);
+  box-shadow:0 12px 32px var(--nav-shadow);transition:scale var(--duration-drag-press) var(--ease-settle)
+}
+.hero-filmstrip-card[data-filmstrip-shape="narrow"]{width:calc(var(--filmstrip-narrow) * var(--hero-carousel-size,1))}
+.hero-filmstrip-card[data-filmstrip-shape="wide"]{width:calc(var(--filmstrip-wide) * var(--hero-carousel-size,1))}
+.hero-filmstrip-card img{display:block;width:100%;height:100%;object-fit:cover;border-radius:var(--filmstrip-image-radius);pointer-events:none;-webkit-user-drag:none}
+.hero-carousel-stage.is-dragging .hero-filmstrip-card{scale:var(--filmstrip-drag-scale)}
+.hero-carousel-stage:not([hidden]){animation:hero-filmstrip-in var(--duration-filmstrip-reveal) var(--ease-gentle) var(--duration-filmstrip-reveal-delay) both}
+@keyframes hero-filmstrip-in{from{opacity:0;translate:0 var(--filmstrip-reveal-lift)}}
+@keyframes hero-filmstrip-in-blur{from{opacity:0;translate:0 var(--filmstrip-reveal-lift);filter:blur(var(--filmstrip-reveal-blur))}}
+/* Blur is costly on phones' GPUs, so only hover devices get it; the same devices get the Drag cursor. */
+@media(hover:hover){
+  .hero-carousel-stage:not([hidden]){animation-name:hero-filmstrip-in-blur;cursor:none}
+}
+@media(max-width:1200px){.hero-carousel-stage{--filmstrip-height:380px;--filmstrip-standard:500px;--filmstrip-narrow:180px;--filmstrip-wide:500px}}
+@media(max-width:767px){.hero-carousel-stage{--filmstrip-height:340px;--filmstrip-standard:494px;--filmstrip-narrow:159px;--filmstrip-wide:483px;cursor:auto}}
+/* Without motion the row is an ordinary scroller: no drift, no copies, a visible scrollbar for keyboard and pointer. */
+@media(prefers-reduced-motion:reduce){
+  .hero-carousel-stage{overflow-x:auto;cursor:auto;touch-action:auto}
+  .hero-carousel-stage:not([hidden]){animation:none;cursor:auto}
+  .hero-filmstrip-card[data-filmstrip-copy]{display:none}
+  .hero-filmstrip-card{transition:none}
+}
+
+.drag-cursor{
+  --drag-cursor-size:100px;--drag-cursor-blur:8px;
+  position:fixed;left:0;top:0;z-index:9999;width:var(--drag-cursor-size);height:var(--drag-cursor-size);margin:calc(var(--drag-cursor-size) / -2);
+  display:grid;place-items:center;border:1px solid var(--ink);border-radius:var(--radius-pill);
+  background:color-mix(in oklch,var(--ink) 55%,transparent);color:var(--card-surface);box-shadow:0 12px 32px var(--nav-shadow);
+  backdrop-filter:blur(var(--drag-cursor-blur));-webkit-backdrop-filter:blur(var(--drag-cursor-blur));
+  font-size:14px;font-weight:var(--font-weight-label);pointer-events:none;
+  opacity:0;visibility:hidden;scale:.01;transition:opacity var(--duration-drag-cursor) var(--ease-gentle),scale var(--duration-drag-cursor) var(--ease-gentle),visibility var(--duration-drag-cursor) step-end
+}
+.drag-cursor.is-visible{opacity:1;visibility:visible;scale:1;transition-timing-function:var(--ease-gentle),var(--ease-gentle),step-start}
+@media(hover:none){.drag-cursor{display:none}}
 
 /* portfolio-assistant.css */
 #askToggle{width:40px;height:40px;display:grid;place-items:center;padding:0;color:var(--muted);border-radius:var(--radius-header-control);background:linear-gradient(145deg,rgba(var(--nav-glass-rgb),calc(var(--nav-glass-alpha) + .14)),rgba(var(--nav-glass-rgb),var(--nav-glass-alpha)));backdrop-filter:blur(24px) saturate(1.4);-webkit-backdrop-filter:blur(24px) saturate(1.4);box-shadow:inset 0 1px 0 var(--nav-highlight),0 6px 22px var(--nav-shadow);border:1px solid var(--nav-rim)}

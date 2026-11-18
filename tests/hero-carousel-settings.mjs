@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {normaliseHeroCarouselSettings,readHeroCarouselSettings,mountHeroCarouselSettings,applyHeroCarouselSettings,defaultHeroCarouselSettings} from '../dist/hero-carousel-settings.js';
-import {carouselRow} from '../dist/hero-carousel.js';
 
 assert.deepEqual(normaliseHeroCarouselSettings(),{size:100,gap:64,copy:true},'Defaults leave a larger gap and keep the description');
 assert.deepEqual(normaliseHeroCarouselSettings({size:999,gap:-5,copy:'no'}),{size:180,gap:0,copy:true},'Out-of-range or wrong-type values are clamped to safe ones');
@@ -20,18 +19,8 @@ const storage=memory(),changes=[];mountHeroCarouselSettings(panel,{storage,onCha
 inputs.size.value='140';listeners.get('size')();inputs.copy.checked=false;listeners.get('copy')();
 assert.deepEqual(changes.at(-1),{size:140,gap:64,copy:false});assert.deepEqual(JSON.parse(storage.values['prem-hero-carousel-settings']),{size:140,gap:64,copy:false},'Knobs persist together');assert.equal(outputs.size.value,'140%');
 
-// Layout: a larger size makes bigger cards; hiding the description centres the picture alone.
-const item={width:1000,height:700,visualHeight:560};
-const base=carouselRow([item],{width:1600,height:300,top:0});
-const bigger=carouselRow([item],{width:1600,height:600,top:0,size:1.5});
-assert(bigger[0].width>base[0].width,'A larger size makes larger cards');
-assert(bigger[0].width<=1600*.92,'Cards never exceed the viewport');
-const withCopy=carouselRow([item],{width:1600,height:300,top:0,copy:true}),noCopy=carouselRow([item],{width:1600,height:300,top:0,copy:false});
-assert(noCopy[0].scale>withCopy[0].scale,'Without the description the picture can use the full band height');
-assert(Math.abs(noCopy[0].top+noCopy[0].height/2-150)<1,'The picture alone is centred in the band');
-
 const css=await readFile(new URL('../dist/hero-carousel.css',import.meta.url),'utf8'),html=await readFile(new URL('../dist/index.html',import.meta.url),'utf8');
-assert(css.includes('margin-top:var(--hero-carousel-gap,64px)')&&css.includes('* var(--hero-carousel-size,1)'),'The strip leaves a gap below the intro and scales its band with the size knob');
-assert(css.includes('.home-carousel-active .image-card>.card-copy{opacity:var(--hero-carousel-copy,1)}'),'The description fades in as the strip lands in the grid when hidden, in both image layouts');
+assert(css.includes('margin:var(--hero-carousel-gap,64px) calc(50% - 50vw) 0'),'The filmstrip leaves the gap knob below the intro');
+assert(css.includes('width:calc(var(--filmstrip-standard) * var(--hero-carousel-size,1))')&&css.includes('height:calc(var(--filmstrip-height) * var(--hero-carousel-size,1))'),'The size knob scales every card');
 for(const key of ['size','gap','copy'])assert(html.includes(`data-hero-carousel-control="${key}"`),key+' knob is in the dev panel');
-console.log('Hero carousel settings passed: defaults, clamping, persistence, CSS properties, size scaling, picture-only centring and panel controls.');
+console.log('Hero carousel settings passed: defaults, clamping, persistence, CSS properties, size and gap reaching the filmstrip, and panel controls.');

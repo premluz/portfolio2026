@@ -2,163 +2,6 @@
   "schemaVersion": 1,
   "documents": [
     {
-      "id": "merlin",
-      "type": "portfolio-item",
-      "title": "Designed a financial intelligence platform with a generative assistant and generative UI",
-      "pageTitle": "Designed a financial workbench prototype with generative UI and assistant",
-      "summary": "R&D • AI assistant • Generative UI • Prototype in code",
-      "domains": [
-        "AI",
-        "Financial intelligence",
-        "Generative interfaces"
-      ],
-      "capabilities": [
-        "Product strategy",
-        "Interaction design",
-        "Prototyping",
-        "Front-end development"
-      ],
-      "tags": [],
-      "kind": "lab",
-      "client": "Merlin",
-      "evidenceIds": [
-        "highlights",
-        "impact"
-      ]
-    },
-    {
-      "id": "rios",
-      "type": "portfolio-item",
-      "title": "Designed and built a life-first planner that makes your day a canvas",
-      "pageTitle": "A spatial planner designed around life changing the plan",
-      "summary": "0→1 • Everything solo",
-      "domains": [
-        "Planning",
-        "Independent product",
-        "Mobile"
-      ],
-      "capabilities": [
-        "Product strategy",
-        "Interaction design",
-        "Product design",
-        "Implementation"
-      ],
-      "tags": [],
-      "kind": "shipped",
-      "client": "Rios",
-      "evidenceIds": [
-        "highlights",
-        "impact"
-      ]
-    },
-    {
-      "id": "thebodyshop",
-      "type": "portfolio-item",
-      "title": "Revamped a global online store as a responsive, accessible experience",
-      "pageTitle": "Designed a responsive eCommerce experience and brand identity for The Body Shop",
-      "summary": "Responsive eCommerce • New brand identity • Hybris CMS • Live Q2 2016",
-      "domains": [],
-      "capabilities": [],
-      "tags": [],
-      "kind": "shipped",
-      "client": "The Body Shop",
-      "evidenceIds": [
-        "highlights",
-        "impact"
-      ]
-    },
-    {
-      "id": "vodafone-travel",
-      "type": "portfolio-item",
-      "title": "Launched a travel eSIM from zero, so travellers get online in minutes",
-      "pageTitle": "Designed and launched Vodafone Travel, a new eSIM product for international travellers",
-      "summary": "0 → 1 product • Web design • Brand • Marketing",
-      "domains": [],
-      "capabilities": [],
-      "tags": [],
-      "kind": "shipped",
-      "client": "Vodafone",
-      "evidenceIds": [
-        "highlights",
-        "impact"
-      ]
-    },
-    {
-      "id": "playstation",
-      "type": "portfolio-item",
-      "title": "First designer on large-scale transformation, set scalable foundations",
-      "pageTitle": "Transformation saving hundreds of hours for developers and publishers",
-      "summary": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 ",
-      "domains": [
-        "Enterprise",
-        "Publishing platforms",
-        "PlayStation Network"
-      ],
-      "capabilities": [
-        "Product design",
-        "Workflow strategy",
-        "Team leadership",
-        "Research"
-      ],
-      "tags": [],
-      "kind": "shipped",
-      "client": "PlayStation",
-      "evidenceIds": [
-        "highlights",
-        "impact"
-      ]
-    },
-    {
-      "id": "vodafone-iot",
-      "type": "portfolio-item",
-      "title": "Research-informed revamp of IoT connectivity platform for technical users",
-      "pageTitle": "Redesigned a fragmented IoT platform around one scalable interaction model",
-      "summary": "180+ regions · 240M+ devices · NPS –33 → +62",
-      "domains": [
-        "Enterprise",
-        "Connectivity",
-        "Internet of Things"
-      ],
-      "capabilities": [
-        "Product design",
-        "Research",
-        "Information architecture",
-        "Interaction design"
-      ],
-      "tags": [],
-      "kind": "shipped",
-      "client": "Vodafone",
-      "evidenceIds": [
-        "highlights",
-        "impact"
-      ]
-    },
-    {
-      "id": "tracr",
-      "type": "portfolio-item",
-      "title": "Strategic redesign of fragmented blockchain platform",
-      "pageTitle": "Turned a design-system brief into a broader platform redesign",
-      "summary": "Design System 0→1 + platform redesign • ~2× faster dev & QA",
-      "domains": [
-        "Enterprise",
-        "Supply chain",
-        "Blockchain traceability"
-      ],
-      "capabilities": [
-        "Product design",
-        "Design systems ",
-        "Product architecture",
-        "Incremental redesign"
-      ],
-      "tags": [],
-      "kind": "shipped",
-      "client": "Tracr",
-      "evidenceIds": [
-        "highlights",
-        "impact"
-      ]
-    },
-    {
       "id": "galachain",
       "type": "portfolio-item",
       "title": "Made Web3 wiring invisible for fans and creators on a greenfield platform",
@@ -212,6 +55,122 @@
       ]
     },
     {
+      "id": "tracr",
+      "type": "portfolio-item",
+      "title": "Strategic redesign of fragmented blockchain platform",
+      "pageTitle": "Turned a design-system brief into a broader platform redesign",
+      "summary": "Design System 0→1 + platform redesign • ~2× faster dev & QA",
+      "domains": [
+        "Enterprise",
+        "Supply chain",
+        "Blockchain traceability"
+      ],
+      "capabilities": [
+        "Product design",
+        "Design systems ",
+        "Product architecture",
+        "Incremental redesign"
+      ],
+      "tags": [],
+      "kind": "shipped",
+      "client": "Tracr",
+      "evidenceIds": [
+        "highlights",
+        "impact"
+      ]
+    },
+    {
+      "id": "merlin",
+      "type": "portfolio-item",
+      "title": "Designed a financial intelligence platform with a generative assistant and generative UI",
+      "pageTitle": "Designed a financial workbench prototype with generative UI and assistant",
+      "summary": "R&D • AI assistant • Generative UI • Prototype in code",
+      "domains": [
+        "AI",
+        "Financial intelligence",
+        "Generative interfaces"
+      ],
+      "capabilities": [
+        "Product strategy",
+        "Interaction design",
+        "Prototyping",
+        "Front-end development"
+      ],
+      "tags": [],
+      "kind": "lab",
+      "client": "Merlin",
+      "evidenceIds": [
+        "highlights",
+        "impact"
+      ]
+    },
+    {
+      "id": "vodafone-iot",
+      "type": "portfolio-item",
+      "title": "Research-informed revamp of IoT connectivity platform for technical users",
+      "pageTitle": "Redesigned a fragmented IoT platform around one scalable interaction model",
+      "summary": "180+ regions · 240M+ devices · NPS –33 → +62",
+      "domains": [
+        "Enterprise",
+        "Connectivity",
+        "Internet of Things"
+      ],
+      "capabilities": [
+        "Product design",
+        "Research",
+        "Information architecture",
+        "Interaction design"
+      ],
+      "tags": [],
+      "kind": "shipped",
+      "client": "Vodafone",
+      "evidenceIds": [
+        "highlights",
+        "impact"
+      ]
+    },
+    {
+      "id": "vodafone-travel",
+      "type": "portfolio-item",
+      "title": "Launched a travel eSIM from zero, so travellers get online in minutes",
+      "pageTitle": "Designed and launched Vodafone Travel, a new eSIM product for international travellers",
+      "summary": "0 → 1 product • Web design • Brand • Marketing",
+      "domains": [],
+      "capabilities": [],
+      "tags": [],
+      "kind": "shipped",
+      "client": "Vodafone",
+      "evidenceIds": [
+        "highlights",
+        "impact"
+      ]
+    },
+    {
+      "id": "playstation",
+      "type": "portfolio-item",
+      "title": "First designer on large-scale transformation, set scalable foundations",
+      "pageTitle": "Transformation saving hundreds of hours for developers and publishers",
+      "summary": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 ",
+      "domains": [
+        "Enterprise",
+        "Publishing platforms",
+        "PlayStation Network"
+      ],
+      "capabilities": [
+        "Product design",
+        "Workflow strategy",
+        "Team leadership",
+        "Research"
+      ],
+      "tags": [],
+      "kind": "shipped",
+      "client": "PlayStation",
+      "evidenceIds": [
+        "highlights",
+        "impact"
+      ]
+    },
+    {
       "id": "porter",
       "type": "portfolio-item",
       "title": "Created a switchboard for AI agents",
@@ -232,6 +191,47 @@
       "tags": [],
       "kind": "lab",
       "client": "Porter",
+      "evidenceIds": [
+        "highlights",
+        "impact"
+      ]
+    },
+    {
+      "id": "thebodyshop",
+      "type": "portfolio-item",
+      "title": "Revamped a global online store as a responsive, accessible experience",
+      "pageTitle": "Designed a responsive eCommerce experience and brand identity for The Body Shop",
+      "summary": "Responsive eCommerce • New brand identity • Hybris CMS • Live Q2 2016",
+      "domains": [],
+      "capabilities": [],
+      "tags": [],
+      "kind": "shipped",
+      "client": "The Body Shop",
+      "evidenceIds": [
+        "highlights",
+        "impact"
+      ]
+    },
+    {
+      "id": "rios",
+      "type": "portfolio-item",
+      "title": "Designed and built a life-first planner that makes your day a canvas",
+      "pageTitle": "A spatial planner designed around life changing the plan",
+      "summary": "0→1 • Everything solo",
+      "domains": [
+        "Planning",
+        "Independent product",
+        "Mobile"
+      ],
+      "capabilities": [
+        "Product strategy",
+        "Interaction design",
+        "Product design",
+        "Implementation"
+      ],
+      "tags": [],
+      "kind": "shipped",
+      "client": "Rios",
       "evidenceIds": [
         "highlights",
         "impact"

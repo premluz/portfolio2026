@@ -18,21 +18,26 @@ console.log('Card rail passed: bounds, keyboard, responsive steps, reduced motio
 {const section=node(),presented={querySelectorAll:selector=>selector.includes('testimonials')?[section]:[]};
  applySectionPresentation(presented,{});assert.equal(section.dataset.featured,'true','The first testimonial stays dark until switched off');
  applySectionPresentation(presented,{testimonialFeatured:false});assert.equal(section.dataset.featured,'false','Off: every testimonial shares the card grey');}
-// Mouse drag: the rail follows the pointer past a small threshold, snapping is held off, then it settles like a swipe.
-{const dragRoot=node(),dragView=node(),captured=new Set(),scrolls=[];dragRoot.dataset.cardRailMode='carousel';
+// Mouse drag (carousel-drag.js): the rail follows the pointer 1:1 with snapping held off, a fling coasts, and the
+// settle continues in the travel's direction, never back.
+{const dragRoot=node(),dragView=node(),captured=new Set(),scrolls=[],classes=new Set();dragRoot.dataset.cardRailMode='carousel';
  globalThis.getComputedStyle=()=>({scrollPaddingInlineStart:'auto'});
- Object.assign(dragView,{clientWidth:600,scrollWidth:1800,scrollLeft:300,children:[0,450,900,1350].map(start=>({getBoundingClientRect:()=>({left:start-dragView.scrollLeft})})),setPointerCapture:id=>captured.add(id),releasePointerCapture:id=>captured.delete(id),hasPointerCapture:id=>captured.has(id),scrollTo:options=>scrolls.push(options),getBoundingClientRect:()=>({left:0})});
+ Object.assign(dragView,{classList:{add:k=>classes.add(k),remove:k=>classes.delete(k)},clientWidth:600,scrollWidth:1800,children:[0,450,900,1350].map(start=>({getBoundingClientRect:()=>({left:start-dragView.scrollLeft})})),setPointerCapture:id=>captured.add(id),releasePointerCapture:id=>captured.delete(id),hasPointerCapture:id=>captured.has(id),scrollTo:options=>scrolls.push(options),getBoundingClientRect:()=>({left:0})});
+ {let left=300;Object.defineProperty(dragView,'scrollLeft',{get:()=>left,set:value=>{left=Math.max(0,Math.min(1200,value));}});}
  dragRoot.querySelector=selector=>({'[data-card-rail-viewport]':dragView,'[data-card-rail-previous]':node(),'[data-card-rail-next]':node()})[selector];
- const dragRail=new CardRail(dragRoot,{reduced:()=>false});flush();
- const event=(type,extra)=>({pointerId:1,pointerType:'mouse',button:0,...extra});
- dragView.listeners.get('pointerdown')(event('down',{clientX:400}));
- dragView.listeners.get('pointermove')(event('move',{clientX:397}));assert.equal(dragView.scrollLeft,300,'A few pixels is still a click');assert(!('cardRailDragging' in dragView.dataset));
- dragView.listeners.get('pointermove')(event('move',{clientX:300}));assert.equal(dragView.scrollLeft,400,'Dragging left moves the cards left');
- assert('cardRailDragging' in dragView.dataset&&'cardRailGliding' in dragView.dataset,'Snapping is off while dragging');assert(captured.has(1));
- dragView.listeners.get('pointerup')(event('up',{clientX:300}));assert(!('cardRailDragging' in dragView.dataset));assert(!captured.has(1));assert.deepEqual(scrolls.map(scroll=>scroll.left),[450],'Released after a drag to the left, it settles on the next card');
- for(const [name] of [['pointerdown'],['pointermove'],['pointerup'],['pointercancel']])assert(dragView.listeners.has(name));
- dragView.listeners.get('pointerdown')({pointerId:2,pointerType:'touch',button:0,clientX:200});dragView.listeners.get('pointermove')({pointerId:2,pointerType:'touch',clientX:50});assert.equal(dragView.scrollLeft,400,'Touch keeps native scrolling');
- dragRoot.dataset.cardRailMode='grid';dragView.listeners.get('pointerdown')(event('down',{clientX:400}));dragView.listeners.get('pointermove')(event('move',{clientX:100}));assert.equal(dragView.scrollLeft,400,'A grid does not drag');
+ const dragRail=new CardRail(dragRoot,{reduced:()=>false});flush();const input=dragRail.input;
+ const event=extra=>({pointerId:1,pointerType:'mouse',button:0,preventDefault(){},...extra});
+ input.down(event({clientX:400,timeStamp:1000}));input.move(event({clientX:300,timeStamp:1016}));assert.equal(dragView.scrollLeft,400,'Dragging left moves the cards left, 1:1');
+ assert('cardRailDragging' in dragView.dataset&&'cardRailGliding' in dragView.dataset,'Snapping is off while dragging');assert(captured.has(1));assert(classes.has('is-dragging'),'Cards press back while dragging');
+ input.up(event({clientX:300,timeStamp:1300}),false);assert(!('cardRailDragging' in dragView.dataset));assert(!captured.has(1));assert.equal(frames.size,0,'A held release does not coast');
+ assert.deepEqual(scrolls.map(scroll=>scroll.left),[450],'Released after a drag to the left, it settles on the next card');scrolls.length=0;
+ input.down(event({clientX:400,timeStamp:2000}));input.move(event({clientX:380,timeStamp:2016}));input.up(event({clientX:380,timeStamp:2016}),false);
+ const released=dragView.scrollLeft;const lefts=[];for(let n=0;frames.size&&n<300;n++){flush();lefts.push(dragView.scrollLeft);}
+ assert(lefts.at(-1)>released+200&&lefts.at(-1)<1200,'A fling coasts on');assert(lefts.every((left,i)=>!i||left>=lefts[i-1]),'The coast never reverses');
+ assert.equal(scrolls.length,1);assert(scrolls[0].left>=lefts.at(-1),'The settle continues forward, never back');
+ let prevented=false;input.onClick({preventDefault(){prevented=true;},stopPropagation(){}});assert(prevented,'A fling never clicks a card');
+ const before=dragView.scrollLeft;input.down({pointerId:2,pointerType:'touch',button:0,clientX:200,clientY:0});input.move({pointerId:2,pointerType:'touch',clientX:50,clientY:0,preventDefault(){}});assert.equal(dragView.scrollLeft,before,'Touch keeps native scrolling');
+ dragRoot.dataset.cardRailMode='grid';input.down(event({clientX:400,timeStamp:3000}));input.move(event({clientX:100,timeStamp:3016}));assert.equal(dragView.scrollLeft,before,'A grid does not drag');
  dragRail.destroy();assert.equal(dragView.listeners.size,0,'Destroy removes every listener');}
 {const section=node(),presented={querySelectorAll:selector=>selector.includes('testimonials')?[section]:[]};
  applySectionPresentation(presented,{});assert.equal(section.dataset.headings,'false','Quotes are plain text until the headings style is chosen');

@@ -94,9 +94,9 @@
           "presentation": "card"
         },
         {
-          "id": "home-project-vodafone-travel",
+          "id": "home-project-bastion",
           "type": "reference",
-          "documentId": "vodafone-travel",
+          "documentId": "bastion",
           "presentation": "card"
         },
         {
@@ -106,21 +106,9 @@
           "presentation": "card"
         },
         {
-          "id": "home-project-thebodyshop",
+          "id": "home-project-merlin",
           "type": "reference",
-          "documentId": "thebodyshop",
-          "presentation": "card"
-        },
-        {
-          "id": "home-project-playstation",
-          "type": "reference",
-          "documentId": "playstation",
-          "presentation": "card"
-        },
-        {
-          "id": "home-project-bastion",
-          "type": "reference",
-          "documentId": "bastion",
+          "documentId": "merlin",
           "presentation": "card"
         },
         {
@@ -130,15 +118,27 @@
           "presentation": "card"
         },
         {
-          "id": "home-project-merlin",
+          "id": "home-project-vodafone-travel",
           "type": "reference",
-          "documentId": "merlin",
+          "documentId": "vodafone-travel",
+          "presentation": "card"
+        },
+        {
+          "id": "home-project-playstation",
+          "type": "reference",
+          "documentId": "playstation",
           "presentation": "card"
         },
         {
           "id": "home-project-porter",
           "type": "reference",
           "documentId": "porter",
+          "presentation": "card"
+        },
+        {
+          "id": "home-project-thebodyshop",
+          "type": "reference",
+          "documentId": "thebodyshop",
           "presentation": "card"
         },
         {

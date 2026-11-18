@@ -3,840 +3,6 @@ export const catalog={
   "schemaVersion": 1,
   "documents": [
     {
-      "id": "merlin",
-      "slug": "merlin",
-      "title": "Designed a financial intelligence platform with a generative assistant and generative UI",
-      "pageTitle": "Designed a financial workbench prototype with generative UI and assistant",
-      "name": "AI financial intelligence workspace",
-      "client": "Merlin",
-      "summary": "R&D • AI assistant • Generative UI • Prototype in code",
-      "category": "Financial intelligence · R&D",
-      "kind": "lab",
-      "year": "2026",
-      "projectStatus": "R&D",
-      "disciplines": [
-        "Design system",
-        "Product",
-        "Visual language",
-        "Prototype"
-      ],
-      "shortCategory": "AI financial analysis",
-      "homeCards": [
-        {
-          "id": "merlin-home-1",
-          "mediaId": "merlin-cover"
-        },
-        {
-          "id": "merlin-home-2",
-          "mediaId": "merlin-cover"
-        },
-        {
-          "id": "merlin-home-3",
-          "mediaId": "merlin-cover"
-        }
-      ],
-      "intro": "When an agent does the analysis, the interface should become part of the answer.",
-      "context": "Financial intelligence platform where users ask questions, follow the reasoning and work with interfaces generated around the answer.",
-      "challenge": "Generative interfaces often feel like chat with a chart attached. I wanted something analysts could trust, inspect and continue working in rather than a disposable response.",
-      "role": "Sole designer and builder. Defined the product concept, interaction model, design system, motion and implementation.",
-      "keyWork": "Designed a multi-pane workbench connecting reasoning, artifacts and linked entities. Built it on a component registry and token system so generated screens and five themes reuse the same foundation.",
-      "impact": "0→1 prototype • Agent-assembled interfaces • Multi-pane workbench • 5 themes from one component system",
-      "heroMediaId": "merlin-cover",
-      "hoverVideoId": "merlin-walkthrough",
-      "hoverVideo": "on",
-      "type": "portfolio-item",
-      "status": "published",
-      "featured": false,
-      "blocks": [
-        {
-          "id": "merlin-walkthrough",
-          "type": "video",
-          "label": "Project walkthrough",
-          "title": "Product in motion",
-          "mediaId": "merlin-walkthrough",
-          "posterMediaId": "merlin-cover",
-          "caption": "Walkthrough video",
-          "layout": {
-            "columns": 2,
-            "mediaFit": "contain"
-          }
-        },
-        {
-          "id": "merlin-assets-row-1",
-          "type": "section",
-          "title": "",
-          "layout": {
-            "columns": 2
-          },
-          "items": [
-            {
-              "id": "merlin-asset-1",
-              "type": "image",
-              "mediaId": "merlin-asset-01",
-              "title": "",
-              "caption": "",
-              "layout": {
-                "span": 2,
-                "width": "page"
-              }
-            },
-            {
-              "id": "merlin-asset-2",
-              "type": "image",
-              "mediaId": "merlin-asset-02",
-              "title": "",
-              "caption": ""
-            },
-            {
-              "id": "merlin-asset-3",
-              "type": "image",
-              "mediaId": "merlin-asset-03",
-              "title": "",
-              "caption": ""
-            },
-            {
-              "id": "merlin-asset-4",
-              "type": "image",
-              "mediaId": "merlin-asset-04",
-              "title": "",
-              "caption": "",
-              "layout": {
-                "span": 2,
-                "width": "page"
-              }
-            },
-            {
-              "id": "merlin-asset-5",
-              "type": "image",
-              "mediaId": "merlin-asset-05",
-              "title": "",
-              "caption": "",
-              "layout": {
-                "span": 2,
-                "width": "page"
-              }
-            }
-          ]
-        }
-      ],
-      "prototype": {
-        "label": "View prototype",
-        "url": "https://merlin-sazb.vercel.app/"
-      },
-      "aliases": [
-        "Merlin",
-        "Merlin AI",
-        "Financial intelligence workspace",
-        "AI analyst"
-      ],
-      "domains": [
-        "AI",
-        "Financial intelligence",
-        "Generative interfaces"
-      ],
-      "capabilities": [
-        "Product strategy",
-        "Interaction design",
-        "Prototyping",
-        "Front-end development"
-      ],
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "0→1 prototype • Desktop + mobile • Solo designer/builder",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "0→1 prototype • Agent-assembled interfaces • Multi-pane workbench • 5 themes from one component system",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ]
-    },
-    {
-      "id": "rios",
-      "type": "portfolio-item",
-      "status": "published",
-      "slug": "rios",
-      "title": "Designed and built a life-first planner that makes your day a canvas",
-      "name": "Life-first planner",
-      "summary": "0→1 • Everything solo",
-      "category": "Life-first planner · Independent product",
-      "kind": "shipped",
-      "year": "2026",
-      "projectStatus": "Launched",
-      "disciplines": [
-        "Product",
-        "Brand",
-        "Build"
-      ],
-      "shortCategory": "Life-first planner",
-      "homeCards": [
-        {
-          "id": "rios-home-1",
-          "mediaId": "rios-cover"
-        },
-        {
-          "id": "rios-home-2",
-          "mediaId": "rios-cover"
-        },
-        {
-          "id": "rios-home-3",
-          "mediaId": "rios-cover"
-        }
-      ],
-      "context": "Cross-platform planner combining daily planning, unscheduled Things, recurring Patterns and calendar import and sync.",
-      "role": "Sole product designer and builder. Owned product strategy, interaction model, IA, visual identity, motion and implementation across mobile and desktop.",
-      "highlights": "0 → 1 product · design · build",
-      "keyWork": "Designed a spatial timeline with direct manipulation, readable overlaps and cascading schedule changes, supported by Zones, What Matters and a unified Things → Days → Patterns model.",
-      "impact": "0→1 product • Mobile + desktop • Unified product + brand system • New spatial planning model",
-      "heroMediaId": "rios-cover",
-      "blocks": [
-        {
-          "id": "rios-walkthrough",
-          "type": "video",
-          "label": "Project walkthrough",
-          "title": "Product in motion",
-          "mediaId": "rios-walkthrough",
-          "posterMediaId": "rios-cover",
-          "caption": "Walkthrough video",
-          "layout": {
-            "columns": 2,
-            "mediaFit": "contain"
-          }
-        }
-      ],
-      "featured": false,
-      "client": "Rios",
-      "pageTitle": "A spatial planner designed around life changing the plan",
-      "intro": "I created Rios around a simple idea: planning is easy; reshaping the day when reality changes is the harder problem.",
-      "challenge": "Traditional calendars make adding events easy but make busy days increasingly difficult to reorganise. I wanted replanning to feel direct, spatial and readable.",
-      "hoverVideoId": "rios-walkthrough",
-      "hoverVideo": "on",
-      "aliases": [
-        "Rios",
-        "Amble",
-        "Planner",
-        "Life-first planner"
-      ],
-      "domains": [
-        "Planning",
-        "Independent product",
-        "Mobile"
-      ],
-      "capabilities": [
-        "Product strategy",
-        "Interaction design",
-        "Product design",
-        "Implementation"
-      ],
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "0 → 1 product · design · build",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "0→1 product • Mobile + desktop • Unified product + brand system • New spatial planning model",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ]
-    },
-    {
-      "id": "thebodyshop",
-      "type": "portfolio-item",
-      "status": "published",
-      "slug": "thebodyshop",
-      "title": "Revamped a global online store as a responsive, accessible experience",
-      "pageTitle": "Designed a responsive eCommerce experience and brand identity for The Body Shop",
-      "name": "Responsive eCommerce",
-      "client": "The Body Shop",
-      "summary": "Responsive eCommerce • New brand identity • Hybris CMS • Live Q2 2016",
-      "category": "eCommerce · Beauty retail",
-      "kind": "shipped",
-      "year": "2016",
-      "projectStatus": "Launched",
-      "disciplines": [
-        "Web",
-        "Brand",
-        "Digital"
-      ],
-      "shortCategory": "Responsive eCommerce",
-      "homeCards": [
-        {
-          "id": "thebodyshop-home-1",
-          "mediaId": "thebodyshop-cover"
-        },
-        {
-          "id": "thebodyshop-home-2",
-          "mediaId": "thebodyshop-cover"
-        },
-        {
-          "id": "thebodyshop-home-3",
-          "mediaId": "thebodyshop-cover"
-        }
-      ],
-      "heroMediaId": "thebodyshop-cover",
-      "intro": "The high-street beauty brand wanted to revitalise its positioning and identity, launching a new responsive eCommerce site with an entirely new UX and brand identity.",
-      "context": "Founded in 1976 in Brighton, England, by Anita Roddick, The Body Shop is a global beauty brand with 3,048 stores across 63 markets, one of the world's largest masstige cosmetics networks. It offers high-quality, naturally-inspired skincare, hair care and make-up produced ethically and sustainably. Its target customer is men and women aged 16 to 60, and the company was looking to reignite the brand and take back market share in cosmetics.",
-      "challenge": "",
-      "role": "Translated wireframes into clean, minimal visual interface designs and applied the visual branding guidelines. Joined creative reviews with the International eCommerce director and manager and the internal delivery team, presenting concepts and amends in InVision prototypes. Worked with web developers on technology parameters and the feasibility of rich UI layouts and touch interactions.",
-      "keyWork": "Prioritised content mobile-first across the key journeys: home, product category, listing and detail (two types), ingredients, account, bag and a four-step checkout. Produced engaging creative content for core brand stories, with UX and UI solutions for a clean, linear user journey. Proposed the Enrich Not Exploit commitment pages and an interactive biodiversity map, showcasing the brand's transparent business practices and progress towards its targets.",
-      "impact": "Project live Q2 2016 • New responsive UX and brand identity on Hybris CMS • BOOST landing pages and Hybris templates delivered • Enrich Not Exploit commitment launched in 2016 with 14 targets to achieve by 2020",
-      "highlights": "Responsive eCommerce on Hybris · Live Q2 2016 · Enrich Not Exploit commitment",
-      "featured": false,
-      "blocks": [],
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "Responsive eCommerce on Hybris · Live Q2 2016 · Enrich Not Exploit commitment",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "Project live Q2 2016 • New responsive UX and brand identity on Hybris CMS • BOOST landing pages and Hybris templates delivered • Enrich Not Exploit commitment launched in 2016 with 14 targets to achieve by 2020",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ]
-    },
-    {
-      "id": "vodafone-travel",
-      "type": "portfolio-item",
-      "status": "published",
-      "slug": "vodafone-travel",
-      "title": "Launched a travel eSIM from zero, so travellers get online in minutes",
-      "pageTitle": "Designed and launched Vodafone Travel, a new eSIM product for international travellers",
-      "name": "Travel eSIM",
-      "client": "Vodafone",
-      "summary": "0 → 1 product • Web design • Brand • Marketing",
-      "category": "Travel eSIM · Telecoms",
-      "kind": "shipped",
-      "year": "2019",
-      "projectStatus": "Launched",
-      "disciplines": [
-        "Web",
-        "Product",
-        "Brand"
-      ],
-      "shortCategory": "Travel eSIM",
-      "homeCards": [
-        {
-          "id": "vodafone-travel-home-1",
-          "mediaId": "vodafone-travel-cover"
-        },
-        {
-          "id": "vodafone-travel-home-2",
-          "mediaId": "vodafone-travel-cover"
-        },
-        {
-          "id": "vodafone-travel-home-3",
-          "mediaId": "vodafone-travel-cover"
-        }
-      ],
-      "heroMediaId": "vodafone-travel-cover",
-      "intro": "Vodafone Travel lets international travellers buy and install prepaid data plans straight onto an eSIM-compatible phone, without a physical SIM card.",
-      "context": "A new digital product from Vodafone's Travel Mobility team. It covers more than 40 countries, with 5G in supported locations. Data-only plans run from 1 GB to 150 GB and last up to 90 days. The eSIM runs alongside the traveller's main SIM, so they keep their usual number for calls and messages.",
-      "challenge": "",
-      "role": "Owned design and drove the process end to end, from discovery through ideation and design to development. Planned the work, managed stakeholders and communicated the design aspiration, making sure user needs shaped the final implementation.",
-      "keyWork": "Designed the web experience, UI and brand expression for the new product, along with the marketing pages that introduce it. Shaped a short journey: choose a destination, pick a plan, then activate in minutes with a QR code or the app. Brought SEO insights and accessibility reviews into the design so the product could be found and used by everyone.",
-      "impact": "New product launched from zero on a tight timeframe • Instant setup by QR code or app • Coverage in 40+ countries with 5G where supported • SEO and accessibility built into the design",
-      "highlights": "0 → 1 launch · 40+ countries · Web design, brand and marketing",
-      "featured": false,
-      "blocks": [
-        {
-          "id": "vodafone-travel-assets-row-1",
-          "type": "section",
-          "title": "",
-          "layout": {
-            "columns": 2
-          },
-          "items": [
-            {
-              "id": "vodafone-travel-asset-1",
-              "type": "image",
-              "mediaId": "vodtra-asset-01",
-              "title": "",
-              "caption": "",
-              "layout": {
-                "span": 2,
-                "width": "page"
-              }
-            },
-            {
-              "id": "vodafone-travel-asset-2",
-              "type": "image",
-              "mediaId": "vodtra-asset-02",
-              "title": "",
-              "caption": ""
-            },
-            {
-              "id": "vodafone-travel-asset-3",
-              "type": "image",
-              "mediaId": "vodtra-asset-03",
-              "title": "",
-              "caption": ""
-            },
-            {
-              "id": "vodafone-travel-asset-4",
-              "type": "image",
-              "mediaId": "vodtra-asset-04",
-              "title": "",
-              "caption": "",
-              "layout": {
-                "span": 2,
-                "width": "page"
-              }
-            },
-            {
-              "id": "vodafone-travel-asset-5",
-              "type": "image",
-              "mediaId": "vodtra-asset-05",
-              "title": "",
-              "caption": "",
-              "layout": {
-                "span": 2,
-                "width": "page"
-              }
-            }
-          ]
-        }
-      ],
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "0 → 1 launch · 40+ countries · Web design, brand and marketing",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "New product launched from zero on a tight timeframe • Instant setup by QR code or app • Coverage in 40+ countries with 5G where supported • SEO and accessibility built into the design",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ]
-    },
-    {
-      "id": "playstation",
-      "type": "portfolio-item",
-      "status": "published",
-      "slug": "playstation",
-      "title": "First designer on large-scale transformation, set scalable foundations",
-      "name": "Publishing pipeline",
-      "summary": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 ",
-      "category": "Publishing pipeline · PlayStation Network",
-      "kind": "shipped",
-      "year": "2018",
-      "projectStatus": "Launched",
-      "disciplines": [
-        "Visual language",
-        "Product",
-        "Interaction"
-      ],
-      "shortCategory": "Publishing pipeline",
-      "homeCards": [
-        {
-          "id": "playstation-home-1",
-          "mediaId": "playstation-cover"
-        },
-        {
-          "id": "playstation-home-2",
-          "mediaId": "playstation-cover"
-        },
-        {
-          "id": "playstation-home-3",
-          "mediaId": "playstation-cover"
-        }
-      ],
-      "context": "Self-service content pipeline for developers and publishers managing product details, regional rules and publishing across PlayStation Network.",
-      "role": "First designer. Led end-to-end design across discovery, research, prototyping, testing and implementation support through launch, while helping align four product teams.",
-      "highlights": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 • 4 teams aligned",
-      "keyWork": "Unified three regional systems into one publishing workflow and established design foundations across onboarding, international pricing, entitlements and issue management.",
-      "impact": "3 systems → 1 workflow • 4 teams aligned • Hundreds of hours saved across partner and internal workflows",
-      "heroMediaId": "playstation-cover",
-      "hoverVideoId": "playstation-walkthrough",
-      "blocks": [
-        {
-          "id": "playstation-walkthrough",
-          "type": "video",
-          "label": "Project walkthrough",
-          "title": "Product in motion",
-          "mediaId": "playstation-walkthrough",
-          "posterMediaId": "playstation-cover",
-          "caption": "Walkthrough video",
-          "layout": {
-            "columns": 2,
-            "mediaFit": "contain"
-          }
-        },
-        {
-          "id": "playstation-assets-row-1",
-          "type": "section",
-          "title": "",
-          "layout": {
-            "columns": 2
-          },
-          "items": [
-            {
-              "id": "playstation-asset-1",
-              "type": "image",
-              "mediaId": "playstation-asset-00",
-              "title": "",
-              "caption": "",
-              "layout": {
-                "span": 2,
-                "width": "page"
-              }
-            },
-            {
-              "id": "playstation-asset-2",
-              "type": "image",
-              "mediaId": "playstation-asset-01",
-              "title": "",
-              "caption": ""
-            },
-            {
-              "id": "playstation-asset-3",
-              "type": "image",
-              "mediaId": "playstation-asset-02",
-              "title": "",
-              "caption": ""
-            },
-            {
-              "id": "playstation-asset-4",
-              "type": "image",
-              "mediaId": "playstation-asset-03",
-              "title": "",
-              "caption": "",
-              "layout": {
-                "span": 2,
-                "width": "page"
-              }
-            },
-            {
-              "id": "playstation-asset-5",
-              "type": "image",
-              "mediaId": "playstation-asset-04",
-              "title": "",
-              "caption": ""
-            },
-            {
-              "id": "playstation-asset-6",
-              "type": "image",
-              "mediaId": "playstation-asset-04-1",
-              "title": "",
-              "caption": ""
-            }
-          ]
-        }
-      ],
-      "featured": true,
-      "client": "PlayStation",
-      "pageTitle": "Transformation saving hundreds of hours for developers and publishers",
-      "intro": "I joined as the first designer on a programme that had already failed twice and was later described as the largest IT transformation in PlayStation history.",
-      "challenge": "Three ageing regional systems created duplicated work, inconsistent workflows and operational overhead, while three organisations had to align around a programme with little inherited trust.",
-      "aliases": [
-        "PlayStation",
-        "Play Station",
-        "Sony",
-        "PlayStation content",
-        "PlayStation Content Pipeline"
-      ],
-      "domains": [
-        "Enterprise",
-        "Publishing platforms",
-        "PlayStation Network"
-      ],
-      "capabilities": [
-        "Product design",
-        "Workflow strategy",
-        "Team leadership",
-        "Research"
-      ],
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 • 4 teams aligned",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "3 systems → 1 workflow • 4 teams aligned • Hundreds of hours saved across partner and internal workflows",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ]
-    },
-    {
-      "id": "vodafone-iot",
-      "type": "portfolio-item",
-      "status": "published",
-      "slug": "vodafone-iot",
-      "title": "Research-informed revamp of IoT connectivity platform for technical users",
-      "name": "IoT connectivity",
-      "summary": "180+ regions · 240M+ devices · NPS –33 → +62",
-      "category": "IoT connectivity · Enterprise",
-      "kind": "shipped",
-      "year": "2020",
-      "projectStatus": "Launched",
-      "disciplines": [
-        "Product",
-        "Interaction",
-        "Prototype"
-      ],
-      "shortCategory": "IoT connectivity",
-      "homeCards": [
-        {
-          "id": "vodafone-iot-home-1",
-          "mediaId": "vodafone-cover"
-        },
-        {
-          "id": "vodafone-iot-home-2",
-          "mediaId": "vodafone-cover"
-        },
-        {
-          "id": "vodafone-iot-home-3",
-          "mediaId": "vodafone-cover"
-        }
-      ],
-      "context": "Enterprise self-service platform for managing IoT connectivity and SIM operations at scale.",
-      "role": "Senior product designer, one of three alongside a design manager. Owned research, IA, interaction design, UI, prototyping, testing and delivery support.",
-      "highlights": "NPS –33 → +62 · Operations time reduced to under 10 seconds · 240M+ devices",
-      "keyWork": "Reframed users around power and occasional behaviour, designed a configurable dashboard and unified key workflows through contextual actions and progressive disclosure.",
-      "impact": "NPS −33 → +62 • Operations reduced from ~1 minute to under 10 seconds • Complex workflows opened to non-technical users without losing specialist depth",
-      "heroMediaId": "vodafone-cover",
-      "hoverVideoId": "vodafone-walkthrough",
-      "blocks": [
-        {
-          "id": "vodafone-iot-walkthrough",
-          "type": "video",
-          "label": "Project walkthrough",
-          "title": "Product in motion",
-          "mediaId": "vodafone-walkthrough",
-          "posterMediaId": "vodafone-cover",
-          "caption": "Walkthrough video",
-          "layout": {
-            "columns": 2,
-            "mediaFit": "contain"
-          }
-        }
-      ],
-      "featured": true,
-      "client": "Vodafone",
-      "pageTitle": "Redesigned a fragmented IoT platform around one scalable interaction model",
-      "intro": "I redesigned an operational platform serving users with very different levels of expertise, frequency of use and operational needs.",
-      "challenge": "Years of feature additions had created fragmented workflows, inconsistent patterns and screens shared by experts and occasional operators alike. High-volume anomalies were hard to spot and no suitable design system existed.",
-      "aliases": [
-        "Vodafone",
-        "Voda phone",
-        "Vodaphone",
-        "Vodafone IoT",
-        "Vodafone IoT Connectivity"
-      ],
-      "domains": [
-        "Enterprise",
-        "Connectivity",
-        "Internet of Things"
-      ],
-      "capabilities": [
-        "Product design",
-        "Research",
-        "Information architecture",
-        "Interaction design"
-      ],
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "NPS –33 → +62 · Operations time reduced to under 10 seconds · 240M+ devices",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "NPS −33 → +62 • Operations reduced from ~1 minute to under 10 seconds • Complex workflows opened to non-technical users without losing specialist depth",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ]
-    },
-    {
-      "id": "tracr",
-      "type": "portfolio-item",
-      "status": "published",
-      "slug": "tracr",
-      "title": "Strategic redesign of fragmented blockchain platform",
-      "name": "Blockchain traceability",
-      "summary": "Design System 0→1 + platform redesign • ~2× faster dev & QA",
-      "category": "Blockchain traceability · Regulated supply chain",
-      "kind": "shipped",
-      "year": "2023",
-      "projectStatus": "Launched",
-      "disciplines": [
-        "Design system",
-        "Product",
-        "Brand"
-      ],
-      "shortCategory": "Blockchain traceability",
-      "homeCards": [
-        {
-          "id": "tracr-home-1",
-          "mediaId": "tracr-hero"
-        },
-        {
-          "id": "tracr-home-2",
-          "mediaId": "tracr-hero"
-        },
-        {
-          "id": "tracr-home-3",
-          "mediaId": "tracr-hero"
-        }
-      ],
-      "context": "Blockchain-based provenance and traceability across the regulated global diamond supply chain, including complex statuses, exceptions and conflict management.",
-      "role": "Poduct designer. Owned the design system, product redesign and web design. Governance and adoption, product architecture, North Star and strategic design direction",
-      "highlights": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
-      "keyWork": "Used the design system as a vehicle for incremental redesign of the web identity, reframed the architecture around the diamond and unified five independent workflows through one reusable action model.",
-      "impact": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
-      "heroMediaId": "tracr-hero",
-      "hoverVideoId": "tracr-walkthrough",
-      "blocks": [
-        {
-          "id": "tracr-walkthrough",
-          "type": "video",
-          "label": "Project walkthrough",
-          "title": "Product in motion",
-          "mediaId": "tracr-walkthrough",
-          "posterMediaId": "tracr-hero",
-          "caption": "Walkthrough video",
-          "layout": {
-            "columns": 2,
-            "mediaFit": "contain"
-          }
-        },
-        {
-          "id": "tracr-assets-row-1",
-          "type": "section",
-          "title": "",
-          "layout": {
-            "columns": 2
-          },
-          "items": [
-            {
-              "id": "tracr-asset-1",
-              "type": "image",
-              "mediaId": "tracr-asset-01",
-              "title": "",
-              "caption": "",
-              "layout": {
-                "span": 2,
-                "width": "page"
-              }
-            },
-            {
-              "id": "tracr-asset-2",
-              "type": "image",
-              "mediaId": "tracr-asset-02",
-              "title": "",
-              "caption": ""
-            },
-            {
-              "id": "tracr-asset-3",
-              "type": "image",
-              "mediaId": "tracr-asset-03",
-              "title": "",
-              "caption": ""
-            },
-            {
-              "id": "tracr-asset-4",
-              "type": "image",
-              "mediaId": "tracr-asset-04",
-              "title": "",
-              "caption": "",
-              "layout": {
-                "span": 2,
-                "width": "page"
-              }
-            }
-          ]
-        }
-      ],
-      "featured": true,
-      "client": "Tracr",
-      "pageTitle": "Turned a design-system brief into a broader platform redesign",
-      "intro": "Tracr brought me in to introduce a design system. I discovered the deeper problem was fragmented architecture and interaction, so the remit expanded into product strategy and redesign.",
-      "challenge": "The live platform had inconsistent workflows, repeated solutions and low design maturity. Every improvement needed to ship incrementally while rebuilding stakeholder trust.",
-      "prototype": {
-        "label": "View prototype",
-        "url": "https://tracr-beryl.vercel.app/"
-      },
-      "aliases": [
-        "Tracr",
-        "Tracker",
-        "Tracer",
-        "Tracr Regulated Supply Chain"
-      ],
-      "domains": [
-        "Enterprise",
-        "Supply chain",
-        "Blockchain traceability"
-      ],
-      "capabilities": [
-        "Product design",
-        "Design systems ",
-        "Product architecture",
-        "Incremental redesign"
-      ],
-      "evidence": [
-        {
-          "id": "highlights",
-          "kind": "statement",
-          "text": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        },
-        {
-          "id": "impact",
-          "kind": "statement",
-          "text": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
-          "provenance": {
-            "kind": "author-provided"
-          }
-        }
-      ]
-    },
-    {
       "id": "galachain",
       "type": "portfolio-item",
       "status": "published",
@@ -1123,6 +289,681 @@ export const catalog={
       ]
     },
     {
+      "id": "tracr",
+      "type": "portfolio-item",
+      "status": "published",
+      "slug": "tracr",
+      "title": "Strategic redesign of fragmented blockchain platform",
+      "name": "Blockchain traceability",
+      "summary": "Design System 0→1 + platform redesign • ~2× faster dev & QA",
+      "category": "Blockchain traceability · Regulated supply chain",
+      "kind": "shipped",
+      "year": "2023",
+      "projectStatus": "Launched",
+      "disciplines": [
+        "Design system",
+        "Product",
+        "Brand"
+      ],
+      "shortCategory": "Blockchain traceability",
+      "homeCards": [
+        {
+          "id": "tracr-home-1",
+          "mediaId": "tracr-hero"
+        },
+        {
+          "id": "tracr-home-2",
+          "mediaId": "tracr-hero"
+        },
+        {
+          "id": "tracr-home-3",
+          "mediaId": "tracr-hero"
+        }
+      ],
+      "context": "Blockchain-based provenance and traceability across the regulated global diamond supply chain, including complex statuses, exceptions and conflict management.",
+      "role": "Poduct designer. Owned the design system, product redesign and web design. Governance and adoption, product architecture, North Star and strategic design direction",
+      "highlights": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
+      "keyWork": "Used the design system as a vehicle for incremental redesign of the web identity, reframed the architecture around the diamond and unified five independent workflows through one reusable action model.",
+      "impact": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
+      "heroMediaId": "tracr-hero",
+      "hoverVideoId": "tracr-walkthrough",
+      "blocks": [
+        {
+          "id": "tracr-walkthrough",
+          "type": "video",
+          "label": "Project walkthrough",
+          "title": "Product in motion",
+          "mediaId": "tracr-walkthrough",
+          "posterMediaId": "tracr-hero",
+          "caption": "Walkthrough video",
+          "layout": {
+            "columns": 2,
+            "mediaFit": "contain"
+          }
+        },
+        {
+          "id": "tracr-assets-row-1",
+          "type": "section",
+          "title": "",
+          "layout": {
+            "columns": 2
+          },
+          "items": [
+            {
+              "id": "tracr-asset-1",
+              "type": "image",
+              "mediaId": "tracr-asset-01",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            },
+            {
+              "id": "tracr-asset-2",
+              "type": "image",
+              "mediaId": "tracr-asset-02",
+              "title": "",
+              "caption": ""
+            },
+            {
+              "id": "tracr-asset-3",
+              "type": "image",
+              "mediaId": "tracr-asset-03",
+              "title": "",
+              "caption": ""
+            },
+            {
+              "id": "tracr-asset-4",
+              "type": "image",
+              "mediaId": "tracr-asset-04",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            }
+          ]
+        }
+      ],
+      "featured": true,
+      "client": "Tracr",
+      "pageTitle": "Turned a design-system brief into a broader platform redesign",
+      "intro": "Tracr brought me in to introduce a design system. I discovered the deeper problem was fragmented architecture and interaction, so the remit expanded into product strategy and redesign.",
+      "challenge": "The live platform had inconsistent workflows, repeated solutions and low design maturity. Every improvement needed to ship incrementally while rebuilding stakeholder trust.",
+      "prototype": {
+        "label": "View prototype",
+        "url": "https://tracr-beryl.vercel.app/"
+      },
+      "aliases": [
+        "Tracr",
+        "Tracker",
+        "Tracer",
+        "Tracr Regulated Supply Chain"
+      ],
+      "domains": [
+        "Enterprise",
+        "Supply chain",
+        "Blockchain traceability"
+      ],
+      "capabilities": [
+        "Product design",
+        "Design systems ",
+        "Product architecture",
+        "Incremental redesign"
+      ],
+      "evidence": [
+        {
+          "id": "highlights",
+          "kind": "statement",
+          "text": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        },
+        {
+          "id": "impact",
+          "kind": "statement",
+          "text": "Design System 0→1 + platform redesign • ~2× faster dev & QA • Architecture 10→3",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        }
+      ]
+    },
+    {
+      "id": "merlin",
+      "slug": "merlin",
+      "title": "Designed a financial intelligence platform with a generative assistant and generative UI",
+      "pageTitle": "Designed a financial workbench prototype with generative UI and assistant",
+      "name": "AI financial intelligence workspace",
+      "client": "Merlin",
+      "summary": "R&D • AI assistant • Generative UI • Prototype in code",
+      "category": "Financial intelligence · R&D",
+      "kind": "lab",
+      "year": "2026",
+      "projectStatus": "R&D",
+      "disciplines": [
+        "Design system",
+        "Product",
+        "Visual language",
+        "Prototype"
+      ],
+      "shortCategory": "AI financial analysis",
+      "homeCards": [
+        {
+          "id": "merlin-home-1",
+          "mediaId": "merlin-cover"
+        },
+        {
+          "id": "merlin-home-2",
+          "mediaId": "merlin-cover"
+        },
+        {
+          "id": "merlin-home-3",
+          "mediaId": "merlin-cover"
+        }
+      ],
+      "intro": "When an agent does the analysis, the interface should become part of the answer.",
+      "context": "Financial intelligence platform where users ask questions, follow the reasoning and work with interfaces generated around the answer.",
+      "challenge": "Generative interfaces often feel like chat with a chart attached. I wanted something analysts could trust, inspect and continue working in rather than a disposable response.",
+      "role": "Sole designer and builder. Defined the product concept, interaction model, design system, motion and implementation.",
+      "keyWork": "Designed a multi-pane workbench connecting reasoning, artifacts and linked entities. Built it on a component registry and token system so generated screens and five themes reuse the same foundation.",
+      "impact": "0→1 prototype • Agent-assembled interfaces • Multi-pane workbench • 5 themes from one component system",
+      "heroMediaId": "merlin-cover",
+      "hoverVideoId": "merlin-walkthrough",
+      "hoverVideo": "on",
+      "type": "portfolio-item",
+      "status": "published",
+      "featured": false,
+      "blocks": [
+        {
+          "id": "merlin-walkthrough",
+          "type": "video",
+          "label": "Project walkthrough",
+          "title": "Product in motion",
+          "mediaId": "merlin-walkthrough",
+          "posterMediaId": "merlin-cover",
+          "caption": "Walkthrough video",
+          "layout": {
+            "columns": 2,
+            "mediaFit": "contain"
+          }
+        },
+        {
+          "id": "merlin-assets-row-1",
+          "type": "section",
+          "title": "",
+          "layout": {
+            "columns": 2
+          },
+          "items": [
+            {
+              "id": "merlin-asset-1",
+              "type": "image",
+              "mediaId": "merlin-asset-01",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            },
+            {
+              "id": "merlin-asset-2",
+              "type": "image",
+              "mediaId": "merlin-asset-02",
+              "title": "",
+              "caption": ""
+            },
+            {
+              "id": "merlin-asset-3",
+              "type": "image",
+              "mediaId": "merlin-asset-03",
+              "title": "",
+              "caption": ""
+            },
+            {
+              "id": "merlin-asset-4",
+              "type": "image",
+              "mediaId": "merlin-asset-04",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            },
+            {
+              "id": "merlin-asset-5",
+              "type": "image",
+              "mediaId": "merlin-asset-05",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            }
+          ]
+        }
+      ],
+      "prototype": {
+        "label": "View prototype",
+        "url": "https://merlin-sazb.vercel.app/"
+      },
+      "aliases": [
+        "Merlin",
+        "Merlin AI",
+        "Financial intelligence workspace",
+        "AI analyst"
+      ],
+      "domains": [
+        "AI",
+        "Financial intelligence",
+        "Generative interfaces"
+      ],
+      "capabilities": [
+        "Product strategy",
+        "Interaction design",
+        "Prototyping",
+        "Front-end development"
+      ],
+      "evidence": [
+        {
+          "id": "highlights",
+          "kind": "statement",
+          "text": "0→1 prototype • Desktop + mobile • Solo designer/builder",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        },
+        {
+          "id": "impact",
+          "kind": "statement",
+          "text": "0→1 prototype • Agent-assembled interfaces • Multi-pane workbench • 5 themes from one component system",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        }
+      ]
+    },
+    {
+      "id": "vodafone-iot",
+      "type": "portfolio-item",
+      "status": "published",
+      "slug": "vodafone-iot",
+      "title": "Research-informed revamp of IoT connectivity platform for technical users",
+      "name": "IoT connectivity",
+      "summary": "180+ regions · 240M+ devices · NPS –33 → +62",
+      "category": "IoT connectivity · Enterprise",
+      "kind": "shipped",
+      "year": "2020",
+      "projectStatus": "Launched",
+      "disciplines": [
+        "Product",
+        "Interaction",
+        "Prototype"
+      ],
+      "shortCategory": "IoT connectivity",
+      "homeCards": [
+        {
+          "id": "vodafone-iot-home-1",
+          "mediaId": "vodafone-cover"
+        },
+        {
+          "id": "vodafone-iot-home-2",
+          "mediaId": "vodafone-cover"
+        },
+        {
+          "id": "vodafone-iot-home-3",
+          "mediaId": "vodafone-cover"
+        }
+      ],
+      "context": "Enterprise self-service platform for managing IoT connectivity and SIM operations at scale.",
+      "role": "Senior product designer, one of three alongside a design manager. Owned research, IA, interaction design, UI, prototyping, testing and delivery support.",
+      "highlights": "NPS –33 → +62 · Operations time reduced to under 10 seconds · 240M+ devices",
+      "keyWork": "Reframed users around power and occasional behaviour, designed a configurable dashboard and unified key workflows through contextual actions and progressive disclosure.",
+      "impact": "NPS −33 → +62 • Operations reduced from ~1 minute to under 10 seconds • Complex workflows opened to non-technical users without losing specialist depth",
+      "heroMediaId": "vodafone-cover",
+      "hoverVideoId": "vodafone-walkthrough",
+      "blocks": [
+        {
+          "id": "vodafone-iot-walkthrough",
+          "type": "video",
+          "label": "Project walkthrough",
+          "title": "Product in motion",
+          "mediaId": "vodafone-walkthrough",
+          "posterMediaId": "vodafone-cover",
+          "caption": "Walkthrough video",
+          "layout": {
+            "columns": 2,
+            "mediaFit": "contain"
+          }
+        }
+      ],
+      "featured": true,
+      "client": "Vodafone",
+      "pageTitle": "Redesigned a fragmented IoT platform around one scalable interaction model",
+      "intro": "I redesigned an operational platform serving users with very different levels of expertise, frequency of use and operational needs.",
+      "challenge": "Years of feature additions had created fragmented workflows, inconsistent patterns and screens shared by experts and occasional operators alike. High-volume anomalies were hard to spot and no suitable design system existed.",
+      "aliases": [
+        "Vodafone",
+        "Voda phone",
+        "Vodaphone",
+        "Vodafone IoT",
+        "Vodafone IoT Connectivity"
+      ],
+      "domains": [
+        "Enterprise",
+        "Connectivity",
+        "Internet of Things"
+      ],
+      "capabilities": [
+        "Product design",
+        "Research",
+        "Information architecture",
+        "Interaction design"
+      ],
+      "evidence": [
+        {
+          "id": "highlights",
+          "kind": "statement",
+          "text": "NPS –33 → +62 · Operations time reduced to under 10 seconds · 240M+ devices",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        },
+        {
+          "id": "impact",
+          "kind": "statement",
+          "text": "NPS −33 → +62 • Operations reduced from ~1 minute to under 10 seconds • Complex workflows opened to non-technical users without losing specialist depth",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        }
+      ]
+    },
+    {
+      "id": "vodafone-travel",
+      "type": "portfolio-item",
+      "status": "published",
+      "slug": "vodafone-travel",
+      "title": "Launched a travel eSIM from zero, so travellers get online in minutes",
+      "pageTitle": "Designed and launched Vodafone Travel, a new eSIM product for international travellers",
+      "name": "Travel eSIM",
+      "client": "Vodafone",
+      "summary": "0 → 1 product • Web design • Brand • Marketing",
+      "category": "Travel eSIM · Telecoms",
+      "kind": "shipped",
+      "year": "2019",
+      "projectStatus": "Launched",
+      "disciplines": [
+        "Web",
+        "Product",
+        "Brand"
+      ],
+      "shortCategory": "Travel eSIM",
+      "homeCards": [
+        {
+          "id": "vodafone-travel-home-1",
+          "mediaId": "vodafone-travel-cover"
+        },
+        {
+          "id": "vodafone-travel-home-2",
+          "mediaId": "vodafone-travel-cover"
+        },
+        {
+          "id": "vodafone-travel-home-3",
+          "mediaId": "vodafone-travel-cover"
+        }
+      ],
+      "heroMediaId": "vodafone-travel-cover",
+      "intro": "Vodafone Travel lets international travellers buy and install prepaid data plans straight onto an eSIM-compatible phone, without a physical SIM card.",
+      "context": "A new digital product from Vodafone's Travel Mobility team. It covers more than 40 countries, with 5G in supported locations. Data-only plans run from 1 GB to 150 GB and last up to 90 days. The eSIM runs alongside the traveller's main SIM, so they keep their usual number for calls and messages.",
+      "challenge": "",
+      "role": "Owned design and drove the process end to end, from discovery through ideation and design to development. Planned the work, managed stakeholders and communicated the design aspiration, making sure user needs shaped the final implementation.",
+      "keyWork": "Designed the web experience, UI and brand expression for the new product, along with the marketing pages that introduce it. Shaped a short journey: choose a destination, pick a plan, then activate in minutes with a QR code or the app. Brought SEO insights and accessibility reviews into the design so the product could be found and used by everyone.",
+      "impact": "New product launched from zero on a tight timeframe • Instant setup by QR code or app • Coverage in 40+ countries with 5G where supported • SEO and accessibility built into the design",
+      "highlights": "0 → 1 launch · 40+ countries · Web design, brand and marketing",
+      "featured": false,
+      "blocks": [
+        {
+          "id": "vodafone-travel-assets-row-1",
+          "type": "section",
+          "title": "",
+          "layout": {
+            "columns": 2
+          },
+          "items": [
+            {
+              "id": "vodafone-travel-asset-1",
+              "type": "image",
+              "mediaId": "vodtra-asset-01",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            },
+            {
+              "id": "vodafone-travel-asset-2",
+              "type": "image",
+              "mediaId": "vodtra-asset-02",
+              "title": "",
+              "caption": ""
+            },
+            {
+              "id": "vodafone-travel-asset-3",
+              "type": "image",
+              "mediaId": "vodtra-asset-03",
+              "title": "",
+              "caption": ""
+            },
+            {
+              "id": "vodafone-travel-asset-4",
+              "type": "image",
+              "mediaId": "vodtra-asset-04",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            },
+            {
+              "id": "vodafone-travel-asset-5",
+              "type": "image",
+              "mediaId": "vodtra-asset-05",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "highlights",
+          "kind": "statement",
+          "text": "0 → 1 launch · 40+ countries · Web design, brand and marketing",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        },
+        {
+          "id": "impact",
+          "kind": "statement",
+          "text": "New product launched from zero on a tight timeframe • Instant setup by QR code or app • Coverage in 40+ countries with 5G where supported • SEO and accessibility built into the design",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        }
+      ]
+    },
+    {
+      "id": "playstation",
+      "type": "portfolio-item",
+      "status": "published",
+      "slug": "playstation",
+      "title": "First designer on large-scale transformation, set scalable foundations",
+      "name": "Publishing pipeline",
+      "summary": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 ",
+      "category": "Publishing pipeline · PlayStation Network",
+      "kind": "shipped",
+      "year": "2018",
+      "projectStatus": "Launched",
+      "disciplines": [
+        "Visual language",
+        "Product",
+        "Interaction"
+      ],
+      "shortCategory": "Publishing pipeline",
+      "homeCards": [
+        {
+          "id": "playstation-home-1",
+          "mediaId": "playstation-cover"
+        },
+        {
+          "id": "playstation-home-2",
+          "mediaId": "playstation-cover"
+        },
+        {
+          "id": "playstation-home-3",
+          "mediaId": "playstation-cover"
+        }
+      ],
+      "context": "Self-service content pipeline for developers and publishers managing product details, regional rules and publishing across PlayStation Network.",
+      "role": "First designer. Led end-to-end design across discovery, research, prototyping, testing and implementation support through launch, while helping align four product teams.",
+      "highlights": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 • 4 teams aligned",
+      "keyWork": "Unified three regional systems into one publishing workflow and established design foundations across onboarding, international pricing, entitlements and issue management.",
+      "impact": "3 systems → 1 workflow • 4 teams aligned • Hundreds of hours saved across partner and internal workflows",
+      "heroMediaId": "playstation-cover",
+      "hoverVideoId": "playstation-walkthrough",
+      "blocks": [
+        {
+          "id": "playstation-walkthrough",
+          "type": "video",
+          "label": "Project walkthrough",
+          "title": "Product in motion",
+          "mediaId": "playstation-walkthrough",
+          "posterMediaId": "playstation-cover",
+          "caption": "Walkthrough video",
+          "layout": {
+            "columns": 2,
+            "mediaFit": "contain"
+          }
+        },
+        {
+          "id": "playstation-assets-row-1",
+          "type": "section",
+          "title": "",
+          "layout": {
+            "columns": 2
+          },
+          "items": [
+            {
+              "id": "playstation-asset-1",
+              "type": "image",
+              "mediaId": "playstation-asset-00",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            },
+            {
+              "id": "playstation-asset-2",
+              "type": "image",
+              "mediaId": "playstation-asset-01",
+              "title": "",
+              "caption": ""
+            },
+            {
+              "id": "playstation-asset-3",
+              "type": "image",
+              "mediaId": "playstation-asset-02",
+              "title": "",
+              "caption": ""
+            },
+            {
+              "id": "playstation-asset-4",
+              "type": "image",
+              "mediaId": "playstation-asset-03",
+              "title": "",
+              "caption": "",
+              "layout": {
+                "span": 2,
+                "width": "page"
+              }
+            },
+            {
+              "id": "playstation-asset-5",
+              "type": "image",
+              "mediaId": "playstation-asset-04",
+              "title": "",
+              "caption": ""
+            },
+            {
+              "id": "playstation-asset-6",
+              "type": "image",
+              "mediaId": "playstation-asset-04-1",
+              "title": "",
+              "caption": ""
+            }
+          ]
+        }
+      ],
+      "featured": true,
+      "client": "PlayStation",
+      "pageTitle": "Transformation saving hundreds of hours for developers and publishers",
+      "intro": "I joined as the first designer on a programme that had already failed twice and was later described as the largest IT transformation in PlayStation history.",
+      "challenge": "Three ageing regional systems created duplicated work, inconsistent workflows and operational overhead, while three organisations had to align around a programme with little inherited trust.",
+      "aliases": [
+        "PlayStation",
+        "Play Station",
+        "Sony",
+        "PlayStation content",
+        "PlayStation Content Pipeline"
+      ],
+      "domains": [
+        "Enterprise",
+        "Publishing platforms",
+        "PlayStation Network"
+      ],
+      "capabilities": [
+        "Product design",
+        "Workflow strategy",
+        "Team leadership",
+        "Research"
+      ],
+      "evidence": [
+        {
+          "id": "highlights",
+          "kind": "statement",
+          "text": "3 systems → 1 workflow • 1st designer • Scaled team 1  → 5 • 4 teams aligned",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        },
+        {
+          "id": "impact",
+          "kind": "statement",
+          "text": "3 systems → 1 workflow • 4 teams aligned • Hundreds of hours saved across partner and internal workflows",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        }
+      ]
+    },
+    {
       "id": "porter",
       "type": "portfolio-item",
       "status": "published",
@@ -1198,6 +1039,165 @@ export const catalog={
           "id": "impact",
           "kind": "statement",
           "text": "0→1 product • 7 sources → 1 list • 3 panel states",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        }
+      ]
+    },
+    {
+      "id": "thebodyshop",
+      "type": "portfolio-item",
+      "status": "published",
+      "slug": "thebodyshop",
+      "title": "Revamped a global online store as a responsive, accessible experience",
+      "pageTitle": "Designed a responsive eCommerce experience and brand identity for The Body Shop",
+      "name": "Responsive eCommerce",
+      "client": "The Body Shop",
+      "summary": "Responsive eCommerce • New brand identity • Hybris CMS • Live Q2 2016",
+      "category": "eCommerce · Beauty retail",
+      "kind": "shipped",
+      "year": "2016",
+      "projectStatus": "Launched",
+      "disciplines": [
+        "Web",
+        "Brand",
+        "Digital"
+      ],
+      "shortCategory": "Responsive eCommerce",
+      "homeCards": [
+        {
+          "id": "thebodyshop-home-1",
+          "mediaId": "thebodyshop-cover"
+        },
+        {
+          "id": "thebodyshop-home-2",
+          "mediaId": "thebodyshop-cover"
+        },
+        {
+          "id": "thebodyshop-home-3",
+          "mediaId": "thebodyshop-cover"
+        }
+      ],
+      "heroMediaId": "thebodyshop-cover",
+      "intro": "The high-street beauty brand wanted to revitalise its positioning and identity, launching a new responsive eCommerce site with an entirely new UX and brand identity.",
+      "context": "Founded in 1976 in Brighton, England, by Anita Roddick, The Body Shop is a global beauty brand with 3,048 stores across 63 markets, one of the world's largest masstige cosmetics networks. It offers high-quality, naturally-inspired skincare, hair care and make-up produced ethically and sustainably. Its target customer is men and women aged 16 to 60, and the company was looking to reignite the brand and take back market share in cosmetics.",
+      "challenge": "",
+      "role": "Translated wireframes into clean, minimal visual interface designs and applied the visual branding guidelines. Joined creative reviews with the International eCommerce director and manager and the internal delivery team, presenting concepts and amends in InVision prototypes. Worked with web developers on technology parameters and the feasibility of rich UI layouts and touch interactions.",
+      "keyWork": "Prioritised content mobile-first across the key journeys: home, product category, listing and detail (two types), ingredients, account, bag and a four-step checkout. Produced engaging creative content for core brand stories, with UX and UI solutions for a clean, linear user journey. Proposed the Enrich Not Exploit commitment pages and an interactive biodiversity map, showcasing the brand's transparent business practices and progress towards its targets.",
+      "impact": "Project live Q2 2016 • New responsive UX and brand identity on Hybris CMS • BOOST landing pages and Hybris templates delivered • Enrich Not Exploit commitment launched in 2016 with 14 targets to achieve by 2020",
+      "highlights": "Responsive eCommerce on Hybris · Live Q2 2016 · Enrich Not Exploit commitment",
+      "featured": false,
+      "blocks": [],
+      "evidence": [
+        {
+          "id": "highlights",
+          "kind": "statement",
+          "text": "Responsive eCommerce on Hybris · Live Q2 2016 · Enrich Not Exploit commitment",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        },
+        {
+          "id": "impact",
+          "kind": "statement",
+          "text": "Project live Q2 2016 • New responsive UX and brand identity on Hybris CMS • BOOST landing pages and Hybris templates delivered • Enrich Not Exploit commitment launched in 2016 with 14 targets to achieve by 2020",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        }
+      ]
+    },
+    {
+      "id": "rios",
+      "type": "portfolio-item",
+      "status": "published",
+      "slug": "rios",
+      "title": "Designed and built a life-first planner that makes your day a canvas",
+      "name": "Life-first planner",
+      "summary": "0→1 • Everything solo",
+      "category": "Life-first planner · Independent product",
+      "kind": "shipped",
+      "year": "2026",
+      "projectStatus": "Launched",
+      "disciplines": [
+        "Product",
+        "Brand",
+        "Build"
+      ],
+      "shortCategory": "Life-first planner",
+      "homeCards": [
+        {
+          "id": "rios-home-1",
+          "mediaId": "rios-cover"
+        },
+        {
+          "id": "rios-home-2",
+          "mediaId": "rios-cover"
+        },
+        {
+          "id": "rios-home-3",
+          "mediaId": "rios-cover"
+        }
+      ],
+      "context": "Cross-platform planner combining daily planning, unscheduled Things, recurring Patterns and calendar import and sync.",
+      "role": "Sole product designer and builder. Owned product strategy, interaction model, IA, visual identity, motion and implementation across mobile and desktop.",
+      "highlights": "0 → 1 product · design · build",
+      "keyWork": "Designed a spatial timeline with direct manipulation, readable overlaps and cascading schedule changes, supported by Zones, What Matters and a unified Things → Days → Patterns model.",
+      "impact": "0→1 product • Mobile + desktop • Unified product + brand system • New spatial planning model",
+      "heroMediaId": "rios-cover",
+      "blocks": [
+        {
+          "id": "rios-walkthrough",
+          "type": "video",
+          "label": "Project walkthrough",
+          "title": "Product in motion",
+          "mediaId": "rios-walkthrough",
+          "posterMediaId": "rios-cover",
+          "caption": "Walkthrough video",
+          "layout": {
+            "columns": 2,
+            "mediaFit": "contain"
+          }
+        }
+      ],
+      "featured": false,
+      "client": "Rios",
+      "pageTitle": "A spatial planner designed around life changing the plan",
+      "intro": "I created Rios around a simple idea: planning is easy; reshaping the day when reality changes is the harder problem.",
+      "challenge": "Traditional calendars make adding events easy but make busy days increasingly difficult to reorganise. I wanted replanning to feel direct, spatial and readable.",
+      "hoverVideoId": "rios-walkthrough",
+      "hoverVideo": "on",
+      "aliases": [
+        "Rios",
+        "Amble",
+        "Planner",
+        "Life-first planner"
+      ],
+      "domains": [
+        "Planning",
+        "Independent product",
+        "Mobile"
+      ],
+      "capabilities": [
+        "Product strategy",
+        "Interaction design",
+        "Product design",
+        "Implementation"
+      ],
+      "evidence": [
+        {
+          "id": "highlights",
+          "kind": "statement",
+          "text": "0 → 1 product · design · build",
+          "provenance": {
+            "kind": "author-provided"
+          }
+        },
+        {
+          "id": "impact",
+          "kind": "statement",
+          "text": "0→1 product • Mobile + desktop • Unified product + brand system • New spatial planning model",
           "provenance": {
             "kind": "author-provided"
           }
@@ -1441,9 +1441,9 @@ export const catalog={
               "presentation": "card"
             },
             {
-              "id": "home-project-vodafone-travel",
+              "id": "home-project-bastion",
               "type": "reference",
-              "documentId": "vodafone-travel",
+              "documentId": "bastion",
               "presentation": "card"
             },
             {
@@ -1453,21 +1453,9 @@ export const catalog={
               "presentation": "card"
             },
             {
-              "id": "home-project-thebodyshop",
+              "id": "home-project-merlin",
               "type": "reference",
-              "documentId": "thebodyshop",
-              "presentation": "card"
-            },
-            {
-              "id": "home-project-playstation",
-              "type": "reference",
-              "documentId": "playstation",
-              "presentation": "card"
-            },
-            {
-              "id": "home-project-bastion",
-              "type": "reference",
-              "documentId": "bastion",
+              "documentId": "merlin",
               "presentation": "card"
             },
             {
@@ -1477,15 +1465,27 @@ export const catalog={
               "presentation": "card"
             },
             {
-              "id": "home-project-merlin",
+              "id": "home-project-vodafone-travel",
               "type": "reference",
-              "documentId": "merlin",
+              "documentId": "vodafone-travel",
+              "presentation": "card"
+            },
+            {
+              "id": "home-project-playstation",
+              "type": "reference",
+              "documentId": "playstation",
               "presentation": "card"
             },
             {
               "id": "home-project-porter",
               "type": "reference",
               "documentId": "porter",
+              "presentation": "card"
+            },
+            {
+              "id": "home-project-thebodyshop",
+              "type": "reference",
+              "documentId": "thebodyshop",
               "presentation": "card"
             },
             {
@@ -3465,8 +3465,8 @@ export const catalog={
           "featured": false
         },
         {
-          "id": "vodafone-travel",
-          "documentId": "vodafone-travel",
+          "id": "bastion",
+          "documentId": "bastion",
           "featured": true
         },
         {
@@ -3475,18 +3475,8 @@ export const catalog={
           "featured": true
         },
         {
-          "id": "thebodyshop",
-          "documentId": "thebodyshop",
-          "featured": false
-        },
-        {
-          "id": "playstation",
-          "documentId": "playstation",
-          "featured": true
-        },
-        {
-          "id": "bastion",
-          "documentId": "bastion",
+          "id": "merlin",
+          "documentId": "merlin",
           "featured": true
         },
         {
@@ -3495,14 +3485,24 @@ export const catalog={
           "featured": true
         },
         {
-          "id": "merlin",
-          "documentId": "merlin",
+          "id": "vodafone-travel",
+          "documentId": "vodafone-travel",
+          "featured": true
+        },
+        {
+          "id": "playstation",
+          "documentId": "playstation",
           "featured": true
         },
         {
           "id": "porter",
           "documentId": "porter",
           "featured": true
+        },
+        {
+          "id": "thebodyshop",
+          "documentId": "thebodyshop",
+          "featured": false
         },
         {
           "id": "rios",

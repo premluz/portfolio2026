@@ -13,7 +13,7 @@ const count=pattern=>authored.reduce((sum,sheet)=>sum+(sheet.text.match(pattern)
 // What counts as a leak: a hex colour; a duration written as <n>ms or <n>s; a font-size whose value holds a number
 // and no var(). Measured 2026-11-10 over the authored stylesheets in clientStyles except tokens.css. A ceiling only
 // goes down: replace literals with tokens, then lower the number to the new count.
-const CEILINGS={hexColours:74,durations:132,fontSizes:66};
+const CEILINGS={hexColours:74,durations:132,fontSizes:64};
 const leaks={
  hexColours:count(/#[0-9a-fA-F]{3,8}\b/g),
  durations:count(/(?<![\w.-])\d*\.?\d+(?:ms|s)\b/g),
